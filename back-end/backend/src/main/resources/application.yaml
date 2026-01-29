@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: backend
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: "jdbc:mysql://localhost:3306/headhunt"
+    username: root
+    password: root
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    from: noreply@bookverse.app
+
+server:
+  port: 8080
+  servlet:
+    context-path: /headhunt
+
+jwt:
+  signerKey: HCMcity9998hIrNT3QZjFzSdzZ3YvFWhQyoV4HnOrMbcsrIKMgHMlVctgWscP2zi
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs # OpenAPI JSON path (default)
+  swagger-ui:
+    path: /docs # UI entry path (redirects to /swagger-ui/index.html)
+    display-request-duration: true
+    operations-sorter: method
+    tags-sorter: alpha
+
+# src/main/resources/application.yaml
+cors:
+  allowed-origins:
+    - "http://localhost:3000"
+    - "http://127.0.0.1:3000"
+    - "http://localhost:5173" # Vite React default port
+    - "http://127.0.0.1:5173"
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
