@@ -20,7 +20,7 @@ spring:
           auth: true
           starttls:
             enable: true
-    from: noreply@bookverse.app
+    from: noreply@headhunt.app
 
 server:
   port: 8080
@@ -28,7 +28,7 @@ server:
     context-path: /headhunt
 
 jwt:
-  signerKey: HCMcity9998hIrNT3QZjFzSdzZ3YvFWhQyoV4HnOrMbcsrIKMgHMlVctgWscP2zi
+  signerKey: RikkeisoftHCMcity9998hIrNT3QZjFzSdzZ3YvFWhQyoV4HnOrMbcsrIKMgHMlV
 
 springdoc:
   api-docs:
@@ -51,3 +51,8 @@ logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
+
+azure:
+  storage:
+    connection-string: "DefaultEndpointsProtocol=https;AccountName=headhunterstorage;AccountKey=J5wBrVeufVXHdxnrBWSIKSE8Q8SnJ4onHA+NZW58mXJWUvn/4TcljiAGeQQh2EE9qjZUWUql36GF+AStVmQeJA==;EndpointSuffix=core.windows.net"
+    container-name: "uploads"

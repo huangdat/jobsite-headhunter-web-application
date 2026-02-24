@@ -3,15 +3,16 @@ package com.rikkeisoft.backend.model.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE) // Set default access level for fields to private
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class APIResponse <T> {
-    int code = 200; // Default response code if not provided
+    HttpStatus status;
     String message;
     T result;
 }

@@ -14,7 +14,7 @@ public class GobalExceptionHandler {
     ResponseEntity<APIResponse> handlingRuntimeException(RuntimeException e) {
         APIResponse response = new APIResponse();
 
-        response.setCode(ErrorCode.INTERNAL_SERVER_ERROR.getCode());
+        response.setStatus(ErrorCode.INTERNAL_SERVER_ERROR.getHttpStatus());
         response.setMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage());
 
         return ResponseEntity.badRequest().body(response);
@@ -29,7 +29,7 @@ public class GobalExceptionHandler {
     ResponseEntity<APIResponse> handlingAppException(AppException e) {
         ErrorCode errorCode = e.getErrorCode();
         APIResponse response = new APIResponse();
-        response.setCode(errorCode.getCode());
+        response.setStatus(errorCode.getHttpStatus());
         response.setMessage(errorCode.getMessage());
         return ResponseEntity.badRequest().body(response);
     }
@@ -57,7 +57,7 @@ public class GobalExceptionHandler {
 
         APIResponse response = new APIResponse();
 
-        response.setCode(errorCode.getCode());
+        response.setStatus(errorCode.getHttpStatus());
         response.setMessage(errorCode.getMessage());
 
         return ResponseEntity.badRequest().body(response);
@@ -73,7 +73,7 @@ public class GobalExceptionHandler {
     ResponseEntity<APIResponse> handlingHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         APIResponse response = new APIResponse();
 
-        response.setCode(ErrorCode.METHOD_NOT_ALLOWED.getCode());
+        response.setStatus(ErrorCode.METHOD_NOT_ALLOWED.getHttpStatus());
         response.setMessage(ErrorCode.METHOD_NOT_ALLOWED.getMessage());
 
         return ResponseEntity.status(405).body(response);
