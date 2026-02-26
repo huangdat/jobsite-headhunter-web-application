@@ -17,6 +17,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 @Slf4j
 @Configuration
@@ -38,6 +39,9 @@ public class AppStartConfig {
             // Create an admin account if it has not existed
             if (accountRepo.findByUsername("admin").isEmpty()) {
 
+                HashSet roles = new HashSet();
+                roles.add("ADMIN");
+
                 Account admin = Account.builder()
                         .username("admin")
                         .email("datnh.work@gmail.com")
@@ -46,7 +50,7 @@ public class AppStartConfig {
                         .phone("0123456789")
                         .imageUrl("src/main/resources/static/img/admin-avatar.webp")
                         .gender(Gender.OTHER)
-                        .role(Role.ADMIN)
+                        .roles(roles)
                         .authProvider(AuthProvider.LOCAL)
                         .providerId("")
                         .status(AccountStatus.ACTIVE)

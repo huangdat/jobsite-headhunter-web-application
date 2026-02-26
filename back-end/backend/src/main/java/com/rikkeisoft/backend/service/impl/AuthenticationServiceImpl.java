@@ -5,6 +5,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.req.auth.AuthenticationReq;
@@ -27,6 +28,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String token = generateToken(user.getUsername());
         AuthenticationResp response = AuthenticationResp.builder()
                 .accessToken(token) // Include the generated token in the resp
+                .authenticated(authenticated) // always true if pass the exception check
                 .build();
         return response;
     }
@@ -74,10 +77,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
         // define the claims for the JWT
-        Account account = accountRepo.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
-        String accountId = account.getId();
-        String role = account.getRole().name();
-
+        Set<String> roles = accountRepo.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND)).getRoles();
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .subject(username)
                 .issuer("http://localhost:8080/headhunt")
@@ -85,7 +85,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .expirationTime(new Date(
                         Instant.now().plus(24, ChronoUnit.HOURS).toEpochMilli()
                 ))
-                .claim("scope", String.join(" ", role))
+                .claim("scope", String.join(" ", roles))
                 .build();
 
         // Create a payload with the claims
@@ -119,8 +119,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
         var verified = signedJWT.verify(verifier);
-        boolean isActive = accountRepo.findByUsername(signedJWT.getJWTClaimsSet().getSubject())
-                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND)).getStatus().name().equals("ACTIVE");
+        AccountStatus status = accountRepo.findByUsername(signedJWT.getJWTClaimsSet().getSubject())
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND)).getStatus();
 
         return TokenValidateResp.builder()
                 .valid(verified && expiryTime.after(new Date()))
@@ -128,7 +128,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .id(accountRepo.findByUsername(signedJWT.getJWTClaimsSet().getSubject())
                         .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND)).getId().toString())
                 .role(signedJWT.getJWTClaimsSet().getStringClaim("scope"))
-                .isActive(isActive)
+                .status(status)
                 .build();
     }
 }

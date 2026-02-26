@@ -1,6 +1,6 @@
 package com.rikkeisoft.backend.repository;
 
-import com.rikkeisoft.backend.enums.ForumComment;
+import com.rikkeisoft.backend.model.entity.ForumComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

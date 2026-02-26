@@ -2,6 +2,8 @@ package com.rikkeisoft.backend.service.impl;
 
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
+import com.rikkeisoft.backend.enums.ErrorCode;
+import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.service.UploadService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +41,7 @@ public class UploadServiceImpl implements UploadService {
             return blobClient.getBlobUrl();
 
         } catch (IOException e) {
-            throw new RuntimeException("Failed to upload file to Azure", e);
+            throw new AppException(ErrorCode.FILE_UPLOAD_ERROR);
         }
     }
 }

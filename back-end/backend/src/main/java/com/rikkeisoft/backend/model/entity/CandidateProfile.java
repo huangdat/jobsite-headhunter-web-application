@@ -15,27 +15,27 @@ import java.time.LocalDateTime;
 public class CandidateProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @OneToOne
     @JoinColumn(name = "account_id", nullable = false, unique = true)
-    private Account account;
+    Account account;
 
-    private String currentTitle;
+    String currentTitle;
 
-    private Float yearsOfExperience;
+    Float yearsOfExperience;
 
-    private Double expectedSalaryMin;
+    Double expectedSalaryMin;
 
-    private Double expectedSalaryMax;
+    Double expectedSalaryMax;
 
     @Column(columnDefinition = "TEXT")
-    private String bio;
+    String bio;
 
-    private String city;
+    String city;
 
     @Builder.Default
-    private Boolean openForWork = true;
+    Boolean openForWork = true;
 
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }

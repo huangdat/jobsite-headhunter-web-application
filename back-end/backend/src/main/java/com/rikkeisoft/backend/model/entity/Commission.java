@@ -18,23 +18,23 @@ import java.time.LocalDateTime;
 public class Commission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @OneToOne
     @JoinColumn(name = "application_id", nullable = false)
-    private Application application;
+    Application application;
 
     @ManyToOne
     @JoinColumn(name = "collaborator_account_id", nullable = false)
-    private Account collaborator;
+    Account collaborator;
 
-    private Double salaryAmount;
+    Double salaryAmount;
 
-    private Double commissionAmount;
+    Double commissionAmount;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private CommissionStatus status = CommissionStatus.PENDING;
+    CommissionStatus status = CommissionStatus.PENDING;
 
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }

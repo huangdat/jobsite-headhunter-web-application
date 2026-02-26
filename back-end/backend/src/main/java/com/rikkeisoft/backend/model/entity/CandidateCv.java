@@ -16,17 +16,17 @@ import java.time.LocalDateTime;
 public class CandidateCv {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @ManyToOne
     @JoinColumn(name = "candidate_account_id", nullable = false)
-    private Account candidate;
+    Account candidate;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String cvUrl;
+    String cvUrl;
 
     @Builder.Default
-    private Boolean isVisible = true;
+    Boolean isVisible = true;
 
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }

@@ -3,12 +3,13 @@ package com.rikkeisoft.backend.model.entity;
 import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.enums.AuthProvider;
 import com.rikkeisoft.backend.enums.Gender;
-import com.rikkeisoft.backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,40 +21,44 @@ import java.time.LocalDateTime;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    String id;
 
     @Column(nullable = false, unique = true, length = 100)
-    private String username;
+    String username;
 
     @Column(unique = true)
-    private String email;
+    String email;
 
-    private String password;
+    String password;
 
-    private String fullName;
+    String fullName;
 
-    private String phone;
+    String phone;
 
     @Column(columnDefinition = "TEXT")
-    private String imageUrl;
+    String imageUrl;
 
     @Enumerated(EnumType.STRING)
-    private Gender gender;
+    Gender gender;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
+    AuthProvider authProvider;
 
-    @Enumerated(EnumType.STRING)
-    private AuthProvider authProvider;
-
-    private String providerId;
+    String providerId;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private AccountStatus status = AccountStatus.PENDING;
+    AccountStatus status = AccountStatus.PENDING;
 
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id")
+    )
+    @Column(name = "role")
+    Set<String> roles = new HashSet<>();
+
+
 }

@@ -16,26 +16,26 @@ import java.time.LocalDateTime;
 public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @ManyToOne
     @JoinColumn(name = "job_id", nullable = false)
-    private Job job;
+    Job job;
 
     @ManyToOne
     @JoinColumn(name = "candidate_account_id", nullable = false)
-    private Account candidate;
+    Account candidate;
 
     @ManyToOne
     @JoinColumn(name = "collaborator_account_id")
-    private Account collaborator;
+    Account collaborator;
 
     @Column(columnDefinition = "TEXT")
-    private String cvSnapshotUrl;
+    String cvSnapshotUrl;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private ApplicationStatus status = ApplicationStatus.SUBMITTED;
+    ApplicationStatus status = ApplicationStatus.SUBMITTED;
 
-    private LocalDateTime appliedAt;
+    LocalDateTime appliedAt;
 }

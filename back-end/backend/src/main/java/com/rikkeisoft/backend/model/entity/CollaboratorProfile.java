@@ -13,18 +13,18 @@ import lombok.experimental.FieldDefaults;
 public class CollaboratorProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @OneToOne
     @JoinColumn(name = "account_id", nullable = false, unique = true)
-    private Account account;
+    Account account;
 
     @ManyToOne
     @JoinColumn(name = "managed_by_headhunter_id")
-    private Account managedByHeadhunter;
+    Account managedByHeadhunter;
 
     @Column(columnDefinition = "TEXT")
-    private String bankInfo;
+    String bankInfo;
 
-    private Double commissionRate;
+    Double commissionRate;
 }

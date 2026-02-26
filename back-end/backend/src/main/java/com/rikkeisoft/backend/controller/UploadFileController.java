@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequestMapping("/api/upload")
 public class UploadFileController {
-    @Autowired
     UploadService uploadService;
 
     @PostMapping

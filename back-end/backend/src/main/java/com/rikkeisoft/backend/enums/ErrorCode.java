@@ -21,6 +21,9 @@ public enum ErrorCode {
 
     INVALID_KEY(HttpStatus.BAD_REQUEST, "Invalid message key provided"),
 
+    // Custom error codes for File Upload
+    FILE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred during file upload"),
+
     // Custom error codes for Account module
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, "Account not found"),
     NO_ACCOUNTS_STORED(HttpStatus.NOT_FOUND, "No accounts stored")

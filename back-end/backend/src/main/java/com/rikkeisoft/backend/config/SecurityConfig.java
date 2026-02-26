@@ -41,8 +41,8 @@ public class SecurityConfig {
 
     // Define endpoint access rules based on user roles and HTTP methods
 
-    String[] PUBLIC_POST_ENDPOINTS = {};
-    String[] PUBLIC_GET_ENDPOINTS = {};
+    String[] PUBLIC_POST_ENDPOINTS = {"api/upload", "api/auth/**"};
+    String[] PUBLIC_GET_ENDPOINTS = {"api/auth/**"};
     String[] PUBLIC_PUT_ENDPOINTS = {};
 
     /**

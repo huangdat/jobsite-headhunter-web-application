@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.model.dto.resp.auth;
 
+import com.rikkeisoft.backend.enums.AccountStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,5 +14,5 @@ public class TokenValidateResp {
     String id;
     String username;
     String role;
-    Boolean isActive;
+    AccountStatus status;
 }

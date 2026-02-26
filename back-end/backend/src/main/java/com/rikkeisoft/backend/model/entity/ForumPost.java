@@ -17,29 +17,29 @@ import java.time.LocalDateTime;
 public class ForumPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @ManyToOne
     @JoinColumn(name = "author_account_id", nullable = false)
-    private Account author;
+    Account author;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private ForumCategory category;
+    ForumCategory category;
 
     @ManyToOne
     @JoinColumn(name = "job_id", nullable = false)
-    private Job job;
+    Job job;
 
     @Column(nullable = false)
-    private String title;
+    String title;
 
     @Column(columnDefinition = "TEXT")
-    private String content;
+    String content;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private PostStatus status = PostStatus.VISIBLE;
+    PostStatus status = PostStatus.VISIBLE;
 
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }

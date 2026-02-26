@@ -16,28 +16,28 @@ public class BusinessProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @OneToOne
     @JoinColumn(name = "account_id", nullable = false, unique = true)
-    private Account account;
+    Account account;
 
     @Column(nullable = false)
-    private String companyName;
+    String companyName;
 
-    private String taxCode;
+    String taxCode;
 
-    private String websiteUrl;
+    String websiteUrl;
 
     @Column(columnDefinition = "TEXT")
-    private String addressMain;
+    String addressMain;
 
-    private String companyScale;
+    String companyScale;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private VerificationStatus verificationStatus = VerificationStatus.PENDING;
+    VerificationStatus verificationStatus = VerificationStatus.PENDING;
 
     @Column(columnDefinition = "TEXT")
-    private String noteByAdmin;
+    String noteByAdmin;
 }

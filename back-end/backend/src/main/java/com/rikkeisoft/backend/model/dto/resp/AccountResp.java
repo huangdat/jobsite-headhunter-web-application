@@ -1,7 +1,13 @@
 package com.rikkeisoft.backend.model.dto.resp;
 
+import com.rikkeisoft.backend.enums.AccountStatus;
+import com.rikkeisoft.backend.enums.AuthProvider;
+import com.rikkeisoft.backend.enums.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Builder
@@ -14,7 +20,11 @@ public class AccountResp {
     String email;
     String fullName;
     String phone;
-    String city;
-    String image;
-    Boolean isActive;
+    String imageUrl;
+    Gender gender;
+    AuthProvider authProvider;
+    AccountStatus status;
+    Set<String> roles;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }

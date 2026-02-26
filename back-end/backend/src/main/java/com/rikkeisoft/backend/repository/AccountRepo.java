@@ -1,6 +1,5 @@
 package com.rikkeisoft.backend.repository;
 
-import com.rikkeisoft.backend.enums.Role;
 import com.rikkeisoft.backend.model.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -20,5 +19,5 @@ public interface AccountRepo extends JpaRepository<Account, String> {
 
     boolean existsByEmail(String email);
 
-    List<Account> findByRole(Role role);
+    List<Account> findByRolesContaining(String role);
 }

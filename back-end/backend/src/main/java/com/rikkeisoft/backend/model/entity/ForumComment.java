@@ -1,7 +1,5 @@
-package com.rikkeisoft.backend.enums;
+package com.rikkeisoft.backend.model.entity;
 
-import com.rikkeisoft.backend.model.entity.Account;
-import com.rikkeisoft.backend.model.entity.ForumPost;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,22 +16,22 @@ import java.time.LocalDateTime;
 public class ForumComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
-    private ForumPost post;
+    ForumPost post;
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
+    Account account;
 
     @ManyToOne
     @JoinColumn(name = "parent_comment_id")
-    private ForumComment parentComment;
+    ForumComment parentComment;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;
+    String content;
 
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }

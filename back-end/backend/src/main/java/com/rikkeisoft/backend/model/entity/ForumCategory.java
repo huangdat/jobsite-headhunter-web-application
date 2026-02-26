@@ -14,8 +14,8 @@ import lombok.experimental.FieldDefaults;
 public class ForumCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(nullable = false)
-    private String name;
+    String name;
 }

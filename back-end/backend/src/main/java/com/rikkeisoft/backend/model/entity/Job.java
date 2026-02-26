@@ -18,37 +18,37 @@ import java.time.LocalDateTime;
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private String jobCode;
+    String jobCode;
 
     @ManyToOne
     @JoinColumn(name = "headhunter_account_id", nullable = false)
-    private Account headhunter;
+    Account headhunter;
 
     @Column(nullable = false)
-    private String title;
+    String title;
 
-    private Integer quantity;
+    Integer quantity;
 
     @Enumerated(EnumType.STRING)
-    private WorkingType workingType;
+    WorkingType workingType;
 
-    private Double salaryMin;
-    private Double salaryMax;
+    Double salaryMin;
+    Double salaryMax;
 
-    private String currency;
+    String currency;
 
     @Column(columnDefinition = "TEXT")
-    private String description;
+    String description;
 
-    private LocalDate deadline;
+    LocalDate deadline;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private JobStatus status = JobStatus.DRAFT;
+    JobStatus status = JobStatus.DRAFT;
 
-    private String city;
+    String city;
 
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }
