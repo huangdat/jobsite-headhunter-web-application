@@ -26,7 +26,19 @@ public enum ErrorCode {
 
     // Custom error codes for Account module
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, "Account not found"),
-    NO_ACCOUNTS_STORED(HttpStatus.NOT_FOUND, "No accounts stored")
+    NO_ACCOUNTS_STORED(HttpStatus.NOT_FOUND, "No accounts stored"),
+    USER_EXISTED(HttpStatus.CONFLICT, "Username already exists"),
+    EMAIL_EXISTED(HttpStatus.CONFLICT, "Email already exists"),
+    PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "Password and re-password do not match"),
+    INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Invalid username or password"),
+    INVALID_ACCOUNT_STATUS(HttpStatus.BAD_REQUEST, "Invalid account status"),
+
+    // Custom error code for OTP module
+    OTP_NOT_FOUND(HttpStatus.NOT_FOUND, "OTP not found"),
+    OTP_EXPIRED(HttpStatus.BAD_REQUEST, "OTP has expired"),
+    OTP_INVALID(HttpStatus.BAD_REQUEST, "Invalid OTP"),
+    OTP_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send OTP"),
+    EMAIL_INVALID(HttpStatus.BAD_REQUEST, "Invalid email")
     ;
 
     private final HttpStatus httpStatus;

@@ -1,7 +1,7 @@
 package com.rikkeisoft.backend.service;
 
-import com.rikkeisoft.backend.model.dto.req.AccountCreateReq;
-import com.rikkeisoft.backend.model.dto.req.AccountUpdateReq;
+import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
+import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.AccountResp;
 
 import java.util.List;
@@ -9,8 +9,9 @@ import java.util.List;
 public interface AccountService {
     List<AccountResp> getAllAccounts();
     AccountResp getAccountById(String id);
+    AccountResp getMyInfo();
     AccountResp createAccount(AccountCreateReq req);
-    AccountResp updateAccount(String id, AccountUpdateReq req);
-    AccountResp lockAccount(String id);
+    AccountResp updateMyAccount(AccountUpdateReq req);
+    AccountResp updateStatus(String id, String status);
 
 }
