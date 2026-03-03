@@ -15,10 +15,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AccountChangePasswordreq {
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z0-9_]+$", message = "PASSWORD_INVALID")
-    @Size(min = 8, max = 16, message = "PASSWORD_INVALID")
+    // @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z0-9_]+$", message =
+    // "PASSWORD_INVALID")
+    // @Size(min = 8, max = 16, message = "PASSWORD_INVALID")
     String oldPassword;
-    
+
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z0-9_]+$", message = "PASSWORD_INVALID")
     @Size(min = 8, max = 16, message = "PASSWORD_INVALID")
     String newPassword;

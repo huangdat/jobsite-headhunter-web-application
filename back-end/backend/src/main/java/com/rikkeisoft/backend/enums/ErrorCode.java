@@ -34,6 +34,7 @@ public enum ErrorCode {
     INVALID_ACCOUNT_STATUS(HttpStatus.BAD_REQUEST, "Invalid account status"),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "Old password is incorrect"),
     PASSWORD_SAME_AS_OLD(HttpStatus.BAD_REQUEST, "The new password must not be the same as the old password."),
+    PASSWORD_INVALID(HttpStatus.BAD_REQUEST, "Invalid password! Must be 8-16 characters long, including uppercase letters, lowercase letters, and numbers."),
     // Custom error code for OTP module
     OTP_NOT_FOUND(HttpStatus.NOT_FOUND, "OTP not found"),
     OTP_EXPIRED(HttpStatus.BAD_REQUEST, "OTP has expired"),

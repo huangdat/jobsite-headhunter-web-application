@@ -175,19 +175,19 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
 
         // 2. Verify old password matches
-        // if (!passwordEncoder.matches(req.getOldPassword(), account.getPassword())) {
-        //     throw new AppException(ErrorCode.INVALID_PASSWORD);
-        // }
+        if (!passwordEncoder.matches(req.getOldPassword(), account.getPassword())) {
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
+        }
 
-        // // 3. Check if newPassword and confirmPassword match
-        // if (!req.getNewPassword().equals(req.getReNewPassword())) {
-        //     throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);
-        // }
+        // 3. Check if newPassword and confirmPassword match
+        if (!req.getNewPassword().equals(req.getReNewPassword())) {
+            throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);
+        }
 
-        // // 4. Check if new password is different from old password
-        // if (passwordEncoder.matches(req.getNewPassword(), account.getPassword())) {
-        //     throw new AppException(ErrorCode.PASSWORD_SAME_AS_OLD);
-        // }
+        // 4. Check if new password is different from old password
+        if (passwordEncoder.matches(req.getNewPassword(), account.getPassword())) {
+            throw new AppException(ErrorCode.PASSWORD_SAME_AS_OLD);
+        }
 
         String encodedNewPassword = passwordEncoder.encode(req.getNewPassword());
         // 6. Update account(change password)
