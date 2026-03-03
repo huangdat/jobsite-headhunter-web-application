@@ -2,6 +2,7 @@ package com.rikkeisoft.backend.service;
 
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
+import com.rikkeisoft.backend.model.dto.req.account.ResetPasswordReq;
 import com.rikkeisoft.backend.model.dto.resp.AccountResp;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public interface AccountService {
     AccountResp createAccount(AccountCreateReq req);
     AccountResp updateMyAccount(AccountUpdateReq req);
     AccountResp updateStatus(String id, String status);
+    AccountResp resetPassword(ResetPasswordReq req);
 
 }

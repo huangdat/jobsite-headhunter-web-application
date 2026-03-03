@@ -36,4 +36,19 @@ public class OtpController {
                 .result(response)
                 .build();
     }
+    @PostMapping("/send-forgot-password")
+    public APIResponse<OtpSendResp> sendOtpForgotPassword(@RequestBody SendByEmailRequest req) {
+        OtpSendResp response = otpService.sendOtpForgotPassword(req);
+        return  APIResponse.<OtpSendResp>builder()
+                .result(response)
+                .build();
+    }
+    
+    @PostMapping("/verify-forgot-password")
+    public APIResponse<OtpVerifyResp> verifyOtpForgotPassword(@RequestBody OtpVerifyRequest req) {
+        OtpVerifyResp response = otpService.verifyOtpForgotPassword(req);
+        return APIResponse.<OtpVerifyResp>builder()
+                .result(response)
+                .build();
+    }
 }
