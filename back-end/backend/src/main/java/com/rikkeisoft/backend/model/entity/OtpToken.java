@@ -37,6 +37,9 @@ public class OtpToken {
     @Column(nullable = false)
     boolean used = false;
 
+    @Column(name = "attempt_count", nullable = false)
+    int attemptCount = 0;
+
     @Enumerated(EnumType.STRING)
     OtpTokenType tokenType;
 }
