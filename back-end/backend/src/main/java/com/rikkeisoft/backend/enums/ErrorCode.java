@@ -32,7 +32,8 @@ public enum ErrorCode {
     PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "Password and re-password do not match"),
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Invalid username or password"),
     INVALID_ACCOUNT_STATUS(HttpStatus.BAD_REQUEST, "Invalid account status"),
-
+    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "Old password is incorrect"),
+    PASSWORD_SAME_AS_OLD(HttpStatus.BAD_REQUEST, "The new password must not be the same as the old password."),
     // Custom error code for OTP module
     OTP_NOT_FOUND(HttpStatus.NOT_FOUND, "OTP not found"),
     OTP_EXPIRED(HttpStatus.BAD_REQUEST, "OTP has expired"),
