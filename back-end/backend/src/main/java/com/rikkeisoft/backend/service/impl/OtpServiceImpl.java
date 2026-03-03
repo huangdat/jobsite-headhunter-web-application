@@ -37,7 +37,7 @@ public class OtpServiceImpl implements OtpService {
     Duration ttl = Duration.ofMinutes(5);
     int resendCooldownSec = 45;
     AccountRepo accountRepo;
-    AccountService userService;
+    AccountService accountService;
 
     @NonFinal
     @Value("${spring.mail.username}")
@@ -95,10 +95,8 @@ public class OtpServiceImpl implements OtpService {
 
         try {
             sendEmailVerify(normEmail, code, "Verify your account with OTP", """
-                    Your verification code is: %s
-                    
-                    It expires in 5 minutes. If you didn't request this, you can ignore this email.
-                               \s""");
+        
+""");
         } catch (Exception e) {
             throw new AppException(ErrorCode.EMAIL_INVALID);
         }
