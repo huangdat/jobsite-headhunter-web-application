@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.repository;
 
+import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.model.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,6 @@ public interface AccountRepo extends JpaRepository<Account, String> {
 
     List<Account> findByRolesContaining(String role);
 
-    
+    List<Account> findByStatus(AccountStatus status);
 
 }

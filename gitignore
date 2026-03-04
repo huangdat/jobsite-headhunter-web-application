@@ -199,29 +199,16 @@ maven-metadata-local.xml
 .maven_repos/
 
 ### Vscode ###
-# Visual Studio Code editor settings and workspace files
-
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+# Visual Studio Code (only used by backend developer)
+.vscode/
 .history/
 *.vsix
 .ionide
-
 .vs/
 *.code-workspace
 .vscode-test
 .vscodeignore
-.vscode/chrome
-
 .vscode-server/
-.vscode/sftp.json
-.vscode/tags
 .devcontainer/
 
 ### React ###
