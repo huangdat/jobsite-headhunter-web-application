@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.service;
 
+import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
 import com.rikkeisoft.backend.model.dto.req.account.ResetPasswordReq;
@@ -15,5 +16,7 @@ public interface AccountService {
     AccountResp updateMyAccount(AccountUpdateReq req);
     AccountResp updateStatus(String id, String status);
     AccountResp resetPassword(ResetPasswordReq req);
+
+    String changePassword(AccountChangePasswordreq req);
 
 }
