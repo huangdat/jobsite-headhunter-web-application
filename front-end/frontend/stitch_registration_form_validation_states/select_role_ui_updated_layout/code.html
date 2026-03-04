@@ -1,0 +1,190 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Select Your Role - ReferralPortal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00e676",
+                        "background-light": "#f3f4f6",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .dark-panel-gradient {
+            background: linear-gradient(145deg, #0a0f0d 0%, #111827 100%);
+        }
+        .role-card:hover .card-icon {
+            transform: scale(1.1);
+        }
+        .role-card input:checked + .card-content {
+            border-color: #00e676;
+            background-color: rgba(0, 230, 118, 0.04);
+        }
+        .role-card input:checked + .card-content .check-badge {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+<header class="w-full max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="bg-primary p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-white text-xl block" style="">hub</span>
+</div>
+<span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white" style=""><span style="font-family: ui-sans-serif, system-ui, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; background-color: rgb(248, 250, 252);">JobSite</span></span>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-sm font-medium text-slate-500" style="">Step 1 of 3</span>
+<div class="w-24 h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="w-1/3 h-full bg-primary"></div>
+</div>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center p-4 md:p-6 lg:p-12">
+<div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl overflow-hidden min-h-[750px] border border-slate-100 dark:border-slate-800">
+<div class="relative dark-panel-gradient p-10 lg:p-16 flex flex-col justify-between overflow-hidden">
+<div class="relative z-10">
+<div class="inline-flex p-3 bg-slate-800/50 rounded-2xl mb-8">
+<span class="material-symbols-outlined text-primary" style="">rocket_launch</span>
+</div>
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6" style="">
+                    Unlock Your <br>
+<span class="text-primary italic" style="">Earning</span> <br>
+                    Potential
+                </h1>
+<p class="text-slate-400 text-lg max-w-md leading-relaxed mb-12" style="">
+                    Join our ecosystem where opportunities meet expertise. Whether you're seeking a career, referring talent, or hunting heads, we have the platform for you.
+                </p>
+<div class="bg-slate-800/40 border border-slate-700/50 rounded-3xl p-6 backdrop-blur-sm relative mb-12">
+<div class="flex items-center gap-4 mb-6">
+<div class="flex -space-x-3">
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-slate-900 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaNqSJ0RgiP_SLdo05inmIzbXZmoiOljbdbkoZSHKrOeRUhgvf1vuqTVddE_swihTS4O6Rczx4Bp3SKR7V7_3hTbd18_El7wClWVy6zKThT4ATebbmARxucYBxJ-guck9zEtAw1XjbdyWYZW2BWkrWA7InD8kHkY0Ej-s-a9U19hYpMR1dxd27gN9efnJIBZg-9skYp5adzo_9yW71CSeCaOn0Uw-ho5NqnsFI-H6bdTUMEc83mg0VEhxau9VqCh8Cah6l44ydH84" style="">
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-slate-900 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_01-k3LUWkKYPRMe0wSmfysrivR1fTPbKzWVFPsjE-5-d0TPaArcmQeUtjd_XYDO6W4ZnJoxKb4zIlvKYkmBUZeh72rPUKLfwVhxmJwU9_wOujILxLk_qzAn_na-hRbIR96DD0Of-LbYtcxl8Yjicak8JQxoHLafhoOisQGxPMADqjB_15fibx8NK2VQVCzMx5W1Re1lMLHkVvWakgAYmYDy-3zdR6zIBBxWNHvaQhz3YXw_-NAbVkOyxo8wrNMiHD4YhSUewpSU" style="">
+<img alt="User" class="w-10 h-10 rounded-full border-2 border-slate-900 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6LiJJ0S9miV9cg0e6VgSCRI5oqZfi0k-BFawEvXzh01o1db5aNkndllOEvwKGUCbM3Iz6MrheOX-5EfwUL8WyT1xxuEZQOHRNIRiSMKx-zOBUoItJPltaUaHfTp0LDJJ36-Ki3Gdo7qRkpCnKtCsDwFvaC5xwNNB5Ihl_V_hLDXLkD6G0QXwZBwENdrme0Id_FDMQkYTa7Rwbw5sqSLyu4hJO2nErkOK_AAfirMBM9UhVj9GYs4NtmbyetT5AXmt8GYQM7wP8Iqk" style="">
+<div class="w-10 h-10 rounded-full border-2 border-slate-900 bg-primary flex items-center justify-center text-[10px] font-bold text-slate-900 uppercase" style="">+12k</div>
+</div>
+<span class="text-slate-300 text-sm font-medium" style="">Over 12,000 active professionals</span>
+</div>
+<div class="rounded-2xl overflow-hidden aspect-video relative group">
+<img alt="Community interaction" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXprL1txm-jWSCycjR6HZPYZqArIFm59fgKiYQNsceclbGxybQrHmUL_05W5b4zw5aNW1b5BG4yHpeFsBkG-jHHLe5rccGL1shG8cl2WWP5-jGVmqSctpWrBjG_MZGtT0VjwR_o0SbUqYFZtweR6hUsLoT9pWFsjtL5_-cKZuW9pj07bRnYBEC52lNAL2IF2RswXt06xjf1wSz-KIvVD0es0MqT4s50Pz1qXU1IEQRXoHTfkiOpi3_UBoUOC_Fh2n4UJ3nLIxUgro" style="">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+</div>
+</div>
+</div>
+<div class="relative z-10 flex flex-col gap-4">
+<div class="flex items-center gap-3 text-slate-300">
+<span class="material-symbols-outlined text-primary text-xl" style="">verified</span>
+<span class="text-sm font-medium" style="">Curated Professional Ecosystem</span>
+</div>
+</div>
+<div class="absolute top-[-10%] right-[-10%] w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-64 h-64 bg-primary/5 blur-[100px] rounded-full"></div>
+</div>
+<div class="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+<div class="mb-10 text-center lg:text-left">
+<h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2" style="">Join our community</h2>
+<p class="text-slate-500 dark:text-slate-400 font-medium" style="">Select your primary role to customize your experience.</p>
+</div>
+<form class="space-y-4">
+<div class="grid grid-cols-1 gap-4">
+<label class="role-card cursor-pointer group relative" style="">
+<input class="sr-only peer" name="role" type="radio" value="candidate">
+<div class="card-content flex items-center p-6 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mr-6 card-icon transition-transform">
+<span class="material-symbols-outlined text-3xl text-slate-600 dark:text-slate-300" style="">person_search</span>
+</div>
+<div class="flex-grow">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors" style="">Candidate</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400" style="">Looking for my next career opportunity</p>
+</div>
+<div class="check-badge hidden w-6 h-6 bg-primary rounded-full items-center justify-center">
+<span class="material-symbols-outlined text-white text-base font-bold" style="">check</span>
+</div>
+</div>
+</label>
+<label class="role-card cursor-pointer group relative" style="">
+<input class="sr-only peer" name="role" type="radio" value="collaborator">
+<div class="card-content flex items-center p-6 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mr-6 card-icon transition-transform">
+<span class="material-symbols-outlined text-3xl text-slate-600 dark:text-slate-300" style="">groups</span>
+</div>
+<div class="flex-grow">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors" style="">Collaborator</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400" style="">Referring top talent and earning rewards</p>
+</div>
+<div class="check-badge hidden w-6 h-6 bg-primary rounded-full items-center justify-center">
+<span class="material-symbols-outlined text-white text-base font-bold" style="">check</span>
+</div>
+</div>
+</label>
+<label class="role-card cursor-pointer group relative" style="">
+<input class="sr-only peer" name="role" type="radio" value="headhunter">
+<div class="card-content flex items-center p-6 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mr-6 card-icon transition-transform">
+<span class="material-symbols-outlined text-3xl text-slate-600 dark:text-slate-300" style="">work_history</span>
+</div>
+<div class="flex-grow">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors" style="">Headhunter</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400" style="">Professional recruiter managing multiple roles</p>
+</div>
+<div class="check-badge hidden w-6 h-6 bg-primary rounded-full items-center justify-center">
+<span class="material-symbols-outlined text-white text-base font-bold" style="">check</span>
+</div>
+</div>
+</label>
+</div>
+<div class="pt-8">
+<button class="w-full bg-primary hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 font-extrabold py-5 px-6 rounded-2xl transition-all transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-3 shadow-lg shadow-primary/20" type="submit" style="">
+                        Continue
+                        <span class="material-symbols-outlined" style="">arrow_forward</span>
+</button>
+</div>
+<div class="text-center pt-4">
+<p class="text-slate-500 dark:text-slate-400 text-sm" style="">
+                        Already have an account? <a class="text-primary font-bold hover:underline" href="#" style="">Sign in</a>
+</p>
+</div>
+</form>
+</div>
+</div>
+</main>
+<footer class="w-full max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+<div class="flex items-center gap-6">
+<a class="hover:text-primary transition-colors" href="#" style="">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#" style="">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#" style="">Support</a>
+</div>
+<p class="" style="">© 2024 ReferralPortal Inc. All rights reserved.</p>
+</footer>
+<button class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:scale-110 transition-transform z-50" onclick="document.documentElement.classList.toggle('dark')" style="">
+<span class="material-symbols-outlined dark:hidden" style="">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:block" style="">light_mode</span>
+</button>
+
+</body></html>
