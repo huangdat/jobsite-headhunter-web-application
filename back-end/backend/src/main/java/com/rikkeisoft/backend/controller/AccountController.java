@@ -3,9 +3,13 @@ package com.rikkeisoft.backend.controller;
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateStatusReq;
+import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
 import com.rikkeisoft.backend.model.dto.resp.AccountResp;
 import com.rikkeisoft.backend.service.AccountService;
+
+import io.swagger.v3.oas.models.responses.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -57,11 +61,19 @@ public class AccountController {
     }
 
     @PutMapping("/status/{accountId}")
-    public APIResponse<AccountResp> updateStatus(@PathVariable String accountId, @RequestBody AccountUpdateStatusReq req) {
+    public APIResponse<AccountResp> updateStatus(@PathVariable String accountId,
+            @RequestBody AccountUpdateStatusReq req) {
         APIResponse<AccountResp> resp = new APIResponse<>();
         resp.setResult(accountService.updateStatus(accountId, req.getStatus().toString()));
         return resp;
     }
 
+    @PutMapping("/changeMyPassword")
+    public APIResponse<String> changePassword(@Valid @RequestBody AccountChangePasswordreq req) {
+        APIResponse<String> resp = new APIResponse<>();
+        resp.setResult(accountService.changePassword(req));
+
+        return resp;
+    }
 
 }
