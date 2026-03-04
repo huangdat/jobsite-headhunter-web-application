@@ -1,9 +1,11 @@
 package com.rikkeisoft.backend.controller;
 
+import com.azure.core.annotation.Post;
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateStatusReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
+import com.rikkeisoft.backend.model.dto.req.account.HeadhunterSignupReq;
 import com.rikkeisoft.backend.model.dto.resp.AccountResp;
 import com.rikkeisoft.backend.service.AccountService;
 import lombok.AccessLevel;
@@ -62,6 +64,13 @@ public class AccountController {
         resp.setResult(accountService.updateStatus(accountId, req.getStatus().toString()));
         return resp;
     }
+
+//    @PostMapping("/signup-headhunter")
+//    public APIResponse<AccountResp> signupHeadhunter(@ModelAttribute HeadhunterSignupReq req) {
+//        APIResponse<AccountResp> resp = new APIResponse<>();
+//        resp.setResult(accountService.createHeahunterAccount(req));
+//        return resp;
+//    }
 
 
 }

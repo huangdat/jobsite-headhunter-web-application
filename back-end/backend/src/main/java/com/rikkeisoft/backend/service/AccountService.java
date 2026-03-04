@@ -13,5 +13,4 @@ public interface AccountService {
     AccountResp createAccount(AccountCreateReq req);
     AccountResp updateMyAccount(AccountUpdateReq req);
     AccountResp updateStatus(String id, String status);
-
 }
