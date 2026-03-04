@@ -9,11 +9,14 @@ import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.req.auth.AuthenticationReq;
+import com.rikkeisoft.backend.model.dto.req.auth.LogoutReq;
 import com.rikkeisoft.backend.model.dto.req.auth.TokenValidateReq;
 import com.rikkeisoft.backend.model.dto.resp.auth.AuthenticationResp;
 import com.rikkeisoft.backend.model.dto.resp.auth.TokenValidateResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.repository.AccountRepo;
+import com.rikkeisoft.backend.model.entity.InvalidatedToken;
+import com.rikkeisoft.backend.repository.InvalidatedTokenRepo;
 import com.rikkeisoft.backend.service.AuthenticationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     protected String SIGNER_KEY;
 
     AccountRepo accountRepo;
+        InvalidatedTokenRepo invalidatedTokenRepo;
 
     /**
      * Authenticate a user with username and password.
@@ -97,11 +101,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             jwsObject.sign(new MACSigner(SIGNER_KEY.getBytes()));
             return jwsObject.serialize(); // Serialize the JWS object to a compact string representation
-        } catch (JOSEException e) {
-            // announce the error
-            System.err.println("Error generating JWT token: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+                } catch (JOSEException e) {
+                        throw new RuntimeException(e);
+                }
 
     }
 
@@ -115,6 +117,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public TokenValidateResp validateToken(TokenValidateReq req)
             throws JOSEException, ParseException {
         var token = req.getToken();
+                // If token was invalidated (user logged out), consider it invalid immediately
+                if (invalidatedTokenRepo.existsById(token)) {
+                        return TokenValidateResp.builder()
+                                        .valid(false)
+                                        .username(null)
+                                        .id(null)
+                                        .role(null)
+                                        .status(null)
+                                        .build();
+                }
         JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
@@ -131,4 +143,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .status(status)
                 .build();
     }
+
+        @Override
+        public void logout(LogoutReq req) throws ParseException, JOSEException {
+                var token = req.getToken();
+                SignedJWT signedJWT = SignedJWT.parse(token);
+                Date expiry = signedJWT.getJWTClaimsSet().getExpirationTime();
+
+                InvalidatedToken inv = InvalidatedToken.builder()
+                                .id(token)
+                                .expiryTime(expiry.toInstant())
+                                .invalidatedAt(Instant.now())
+                                .build();
+
+                invalidatedTokenRepo.save(inv);
+        }
 }
