@@ -68,9 +68,9 @@ public class AccountController {
         return resp;
     }
 
-    @PutMapping("/changePassword")
-    public APIResponse<AccountResp> changePassword(@Valid @RequestBody AccountChangePasswordreq req) {
-        APIResponse<AccountResp> resp = new APIResponse<>();
+    @PutMapping("/changeMyPassword")
+    public APIResponse<String> changePassword(@Valid @RequestBody AccountChangePasswordreq req) {
+        APIResponse<String> resp = new APIResponse<>();
         resp.setResult(accountService.changePassword(req));
 
         return resp;

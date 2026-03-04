@@ -165,7 +165,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountResp changePassword(AccountChangePasswordreq req) {
+    public String changePassword(AccountChangePasswordreq req) {
         // get current account
         var context = SecurityContextHolder.getContext();
         String contextName = context.getAuthentication().getName();
@@ -196,7 +196,9 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepo.save(account);
 
-        return accountMapper.toAccountResp(account);
+        accountMapper.toAccountResp(account);
+
+        return "Change password successfully";
 
     }
 

@@ -15,6 +15,6 @@ public interface AccountService {
     AccountResp updateMyAccount(AccountUpdateReq req);
     AccountResp updateStatus(String id, String status);
 
-    AccountResp changePassword(AccountChangePasswordreq req);
+    String changePassword(AccountChangePasswordreq req);
 
 }
