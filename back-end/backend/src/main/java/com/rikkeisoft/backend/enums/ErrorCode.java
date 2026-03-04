@@ -18,6 +18,7 @@ public enum ErrorCode {
     CONFLICT(HttpStatus.CONFLICT, "Conflict"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
     SERVICE_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE, "Service Unavailable"),
+    TOO_MANY_REQUESTS(HttpStatus.TOO_MANY_REQUESTS, "Too many requests. Please try again later."),
 
     INVALID_KEY(HttpStatus.BAD_REQUEST, "Invalid message key provided"),
 
@@ -39,6 +40,7 @@ public enum ErrorCode {
     OTP_NOT_FOUND(HttpStatus.NOT_FOUND, "OTP not found"),
     OTP_EXPIRED(HttpStatus.BAD_REQUEST, "OTP has expired"),
     OTP_INVALID(HttpStatus.BAD_REQUEST, "Invalid OTP"),
+    OTP_ATTEMPTS_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS, "OTP verification attempts exceeded. Please request a new code."),
     OTP_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send OTP"),
     EMAIL_INVALID(HttpStatus.BAD_REQUEST, "Invalid email")
     ;
