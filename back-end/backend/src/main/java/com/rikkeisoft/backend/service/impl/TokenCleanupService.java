@@ -25,16 +25,13 @@ public class TokenCleanupService {
     @Transactional
     public void cleanupExpiredTokens() {
         try {
-            log.info("Starting cleanup of expired invalidated tokens...");
             long beforeCount = invalidatedTokenRepo.count();
             
             invalidatedTokenRepo.deleteByExpiryTimeBefore(Instant.now());
             
             long afterCount = invalidatedTokenRepo.count();
             long deletedCount = beforeCount - afterCount;
-            
-            log.info("Cleanup completed. Deleted {} expired tokens. Remaining: {}", 
-                    deletedCount, afterCount);
+
         } catch (Exception e) {
             log.error("Error during token cleanup: {}", e.getMessage(), e);
         }

@@ -148,8 +148,6 @@ public class OtpServiceImpl implements OtpService {
         
         // Check if maximum attempts exceeded
         if (token.getAttemptCount() >= maxOtpAttempts) {
-            log.warn("OTP attempts exceeded for signup. Email: {}, Attempts: {}", 
-                    email, token.getAttemptCount());
             return OtpVerifyResp.builder()
                     .status(HttpStatus.TOO_MANY_REQUESTS)
                     .message("OTP verification attempts exceeded. Please request a new code.")
@@ -166,13 +164,8 @@ public class OtpServiceImpl implements OtpService {
             // Increment attempt count
             token.setAttemptCount(token.getAttemptCount() + 1);
             otpTokenRepo.save(token);
-            
-            log.warn("Invalid OTP code attempt for signup. Email: {}, Attempt: {}/{}", 
-                    email, token.getAttemptCount(), maxOtpAttempts);
-            
             // Check if this was the last allowed attempt
             if (token.getAttemptCount() >= maxOtpAttempts) {
-                log.error("OTP attempts limit reached for email: {}. Token blocked.", email);
                 return OtpVerifyResp.builder()
                         .status(HttpStatus.TOO_MANY_REQUESTS)
                         .message("Maximum attempts exceeded. Please request a new OTP code.")
@@ -231,9 +224,6 @@ public class OtpServiceImpl implements OtpService {
                 .count();
         
         if (recentRequestCount > 0) {
-            // Log suspicious activity
-            log.warn("Rate limit exceeded for forgot password request. Email: {}, Recent requests: {}", 
-                    normEmail, recentRequestCount);
             throw new AppException(ErrorCode.TOO_MANY_REQUESTS);
         }
         
@@ -254,7 +244,6 @@ public class OtpServiceImpl implements OtpService {
                     
                     It expires in 5 minutes. If you didn't request this, you can ignore this email.
                                \s""");
-            log.info("Forgot password OTP sent successfully to email: {}", normEmail);
         } catch (Exception e) {
             log.error("Failed to send forgot password OTP to email: {}", normEmail, e);
             throw new AppException(ErrorCode.EMAIL_INVALID);
@@ -293,8 +282,6 @@ public class OtpServiceImpl implements OtpService {
 
         // Validate token properties
         if (token.getTokenType() != OtpTokenType.FORGOT_PASSWORD) {
-            log.warn("OTP token type mismatch for forgot password. Email: {}, Expected: FORGOT_PASSWORD, Actual: {}", 
-                    email, token.getTokenType());
             return OtpVerifyResp.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .message("OTP token type mismatch.")
@@ -303,8 +290,6 @@ public class OtpServiceImpl implements OtpService {
         
         // Check if maximum attempts exceeded
         if (token.getAttemptCount() >= maxOtpAttempts) {
-            log.warn("OTP attempts exceeded for forgot password. Email: {}, Attempts: {}", 
-                    email, token.getAttemptCount());
             return OtpVerifyResp.builder()
                     .status(HttpStatus.TOO_MANY_REQUESTS)
                     .message("OTP verification attempts exceeded. Please request a new code.")
@@ -328,7 +313,6 @@ public class OtpServiceImpl implements OtpService {
             
             // Check if this was the last allowed attempt
             if (token.getAttemptCount() >= maxOtpAttempts) {
-                log.error("OTP attempts limit reached for email: {}. Token blocked.", email);
                 return OtpVerifyResp.builder()
                         .status(HttpStatus.TOO_MANY_REQUESTS)
                         .message("Maximum attempts exceeded. Please request a new OTP code.")
@@ -346,9 +330,7 @@ public class OtpServiceImpl implements OtpService {
         try {
             token.setUsed(true);
             otpTokenRepo.save(token);
-            log.info("OTP verified successfully for forgot password. Email: {}", email);
         } catch (Exception e) {
-            log.error("Failed to update OTP token status for email: {}", email, e);
             return OtpVerifyResp.builder()
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .message("Failed to update OTP token status.")
