@@ -18,6 +18,7 @@ public enum ErrorCode {
     CONFLICT(HttpStatus.CONFLICT, "Conflict"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
     SERVICE_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE, "Service Unavailable"),
+    TOO_MANY_REQUESTS(HttpStatus.TOO_MANY_REQUESTS, "Too many requests. Please try again later."),
 
     INVALID_KEY(HttpStatus.BAD_REQUEST, "Invalid message key provided"),
 
@@ -32,11 +33,14 @@ public enum ErrorCode {
     PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "Password and re-password do not match"),
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Invalid username or password"),
     INVALID_ACCOUNT_STATUS(HttpStatus.BAD_REQUEST, "Invalid account status"),
-
+    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "Old password is incorrect"),
+    PASSWORD_SAME_AS_OLD(HttpStatus.BAD_REQUEST, "The new password must not be the same as the old password."),
+    PASSWORD_INVALID(HttpStatus.BAD_REQUEST, "Invalid password! Must be 8-16 characters long, including uppercase letters, lowercase letters, and numbers."),
     // Custom error code for OTP module
     OTP_NOT_FOUND(HttpStatus.NOT_FOUND, "OTP not found"),
     OTP_EXPIRED(HttpStatus.BAD_REQUEST, "OTP has expired"),
     OTP_INVALID(HttpStatus.BAD_REQUEST, "Invalid OTP"),
+    OTP_ATTEMPTS_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS, "OTP verification attempts exceeded. Please request a new code."),
     OTP_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send OTP"),
     EMAIL_INVALID(HttpStatus.BAD_REQUEST, "Invalid email")
     ;

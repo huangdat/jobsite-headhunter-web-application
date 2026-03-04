@@ -20,4 +20,7 @@ public interface AccountRepo extends JpaRepository<Account, String> {
     boolean existsByEmail(String email);
 
     List<Account> findByRolesContaining(String role);
+
+    
+
 }

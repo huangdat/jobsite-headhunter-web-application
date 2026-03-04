@@ -1,13 +1,14 @@
 package com.rikkeisoft.backend.service.impl;
 
-
 import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.enums.AuthProvider;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.AccountMapper;
+import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
+import com.rikkeisoft.backend.model.dto.req.account.ResetPasswordReq;
 import com.rikkeisoft.backend.model.dto.resp.AccountResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.repository.AccountRepo;
@@ -16,6 +17,7 @@ import com.rikkeisoft.backend.service.UploadService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -52,7 +55,6 @@ public class AccountServiceImpl implements AccountService {
         return accountResps;
     }
 
-
     @Override
     @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER') or hasAuthority('SCOPE_COLLABORATOR')")
     public AccountResp getAccountById(String id) {
@@ -65,6 +67,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Get the information of the currently authenticated user
+     * 
      * @return AccountResp
      */
     @Override
@@ -73,7 +76,8 @@ public class AccountServiceImpl implements AccountService {
         var context = SecurityContextHolder.getContext();
         String contextName = context.getAuthentication().getName();
         // Fetch a user by username from the repository
-        Account account = accountRepo.findByUsername(contextName).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+        Account account = accountRepo.findByUsername(contextName)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
         return accountMapper.toAccountResp(account);
     }
 
@@ -124,7 +128,8 @@ public class AccountServiceImpl implements AccountService {
         String contextName = context.getAuthentication().getName();
 
         // find account contextName
-        Account account = accountRepo.findByUsername(contextName).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+        Account account = accountRepo.findByUsername(contextName)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
 
         // Upload avatar if provided
         if (req.getAvatar() != null && !req.getAvatar().isEmpty()) {
@@ -142,6 +147,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Update the status of an account PENDING, ACTIVE, SUSPENDED, DELETED
+     * 
      * @param id
      * @param status
      * @return AccountResp
@@ -161,5 +167,74 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    /**
+     * Reset password after OTP verification
+     * @param req ResetPasswordReq containing email, new password and confirm password
+     * @return AccountResp
+     */
+    @Override
+    public AccountResp resetPassword(ResetPasswordReq req) {
+        // Normalize email
+        String normEmail = req.getEmail().trim().toLowerCase();
+        
+        // Check password match
+        if (!req.getNewPassword().equals(req.getConfirmPassword())) {
+            log.warn("Password mismatch during reset for email: {}", normEmail);
+            throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);
+        }
+        
+        // Find account by email
+        Account account = accountRepo.findByEmail(normEmail)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+        
+        // Update password
+        account.setPassword(passwordEncoder.encode(req.getNewPassword()));
+        account.setUpdatedAt(LocalDateTime.now());
+        
+        // Save account
+        accountRepo.save(account);
+        
+        log.info("Password reset successfully for email: {}", normEmail);
+        
+        return accountMapper.toAccountResp(account);
+    }
+
+    @Override
+    public String changePassword(AccountChangePasswordreq req) {
+        // get current account
+        var context = SecurityContextHolder.getContext();
+        String contextName = context.getAuthentication().getName();
+
+        // 1. Find account by username
+        Account account = accountRepo.findByUsername(contextName)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+
+        // 2. Verify old password matches
+        if (!passwordEncoder.matches(req.getOldPassword(), account.getPassword())) {
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
+        }
+
+        // 3. Check if newPassword and confirmPassword match
+        if (!req.getNewPassword().equals(req.getReNewPassword())) {
+            throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);
+        }
+
+        // 4. Check if new password is different from old password
+        if (passwordEncoder.matches(req.getNewPassword(), account.getPassword())) {
+            throw new AppException(ErrorCode.PASSWORD_SAME_AS_OLD);
+        }
+
+        String encodedNewPassword = passwordEncoder.encode(req.getNewPassword());
+        // 6. Update account(change password)
+        account.setPassword(encodedNewPassword);
+        account.setUpdatedAt(LocalDateTime.now());
+
+        accountRepo.save(account);
+
+        accountMapper.toAccountResp(account);
+
+        return "Change password successfully";
+
+    }
 
 }

@@ -3,6 +3,7 @@ package com.rikkeisoft.backend.controller.auth;
 import com.nimbusds.jose.JOSEException;
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.auth.AuthenticationReq;
+import com.rikkeisoft.backend.model.dto.req.auth.LogoutReq;
 import com.rikkeisoft.backend.model.dto.req.auth.TokenValidateReq;
 import com.rikkeisoft.backend.model.dto.resp.auth.AuthenticationResp;
 import com.rikkeisoft.backend.model.dto.resp.auth.TokenValidateResp;
@@ -67,6 +68,23 @@ public class AuthenticationController {
                         .role(response.getRole())
                         .status(response.getStatus())
                         .build())
+                .build();
+    }
+
+    /**
+     * Logout user by invalidating the JWT token.
+     * @param request
+     * @return APIResponse indicating logout success
+     * @throws ParseException
+     * @throws JOSEException
+     */
+    @PostMapping("/logout")
+    public APIResponse<Void> logout(@RequestBody LogoutReq request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+
+        return APIResponse.<Void>builder()
+                .status(HttpStatus.OK)
+                .message("Logout successfully")
                 .build();
     }
 
