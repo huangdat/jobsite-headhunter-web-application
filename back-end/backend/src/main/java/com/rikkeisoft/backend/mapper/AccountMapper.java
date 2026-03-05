@@ -1,6 +1,6 @@
 package com.rikkeisoft.backend.mapper;
 
-import com.rikkeisoft.backend.model.dto.resp.AccountResp;
+import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import org.mapstruct.Mapper;
 

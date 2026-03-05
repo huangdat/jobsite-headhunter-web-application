@@ -9,7 +9,7 @@ import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
 import com.rikkeisoft.backend.model.dto.req.account.ResetPasswordReq;
-import com.rikkeisoft.backend.model.dto.resp.AccountResp;
+import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.service.AccountService;
