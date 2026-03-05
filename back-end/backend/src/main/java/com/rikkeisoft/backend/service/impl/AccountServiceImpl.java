@@ -8,7 +8,6 @@ import com.rikkeisoft.backend.mapper.AccountMapper;
 import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
-import com.rikkeisoft.backend.model.dto.req.account.ResetPasswordReq;
 import com.rikkeisoft.backend.model.dto.resp.AccountResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.repository.AccountRepo;
@@ -165,38 +164,6 @@ public class AccountServiceImpl implements AccountService {
         } catch (Exception e) {
             throw new AppException(ErrorCode.INVALID_ACCOUNT_STATUS);
         }
-    }
-
-    /**
-     * Reset password after OTP verification
-     * @param req ResetPasswordReq containing email, new password and confirm password
-     * @return AccountResp
-     */
-    @Override
-    public AccountResp resetPassword(ResetPasswordReq req) {
-        // Normalize email
-        String normEmail = req.getEmail().trim().toLowerCase();
-        
-        // Check password match
-        if (!req.getNewPassword().equals(req.getConfirmPassword())) {
-            log.warn("Password mismatch during reset for email: {}", normEmail);
-            throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);
-        }
-        
-        // Find account by email
-        Account account = accountRepo.findByEmail(normEmail)
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-        
-        // Update password
-        account.setPassword(passwordEncoder.encode(req.getNewPassword()));
-        account.setUpdatedAt(LocalDateTime.now());
-        
-        // Save account
-        accountRepo.save(account);
-        
-        log.info("Password reset successfully for email: {}", normEmail);
-        
-        return accountMapper.toAccountResp(account);
     }
 
     @Override
