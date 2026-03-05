@@ -42,7 +42,8 @@ public enum ErrorCode {
     OTP_INVALID(HttpStatus.BAD_REQUEST, "Invalid OTP"),
     OTP_ATTEMPTS_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS, "OTP verification attempts exceeded. Please request a new code."),
     OTP_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send OTP"),
-    EMAIL_INVALID(HttpStatus.BAD_REQUEST, "Invalid email")
+    EMAIL_INVALID(HttpStatus.BAD_REQUEST, "Invalid email"),
+    TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "Reset password token has expired. Please request a new OTP.")
     ;
 
     private final HttpStatus httpStatus;

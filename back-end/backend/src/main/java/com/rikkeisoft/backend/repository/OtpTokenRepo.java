@@ -13,4 +13,5 @@ public interface OtpTokenRepo extends JpaRepository<OtpToken, Long> {
     Optional<OtpToken> findTopByEmailAndUsedFalseOrderByCreatedAtDesc(String email);
     Optional<OtpToken> findTopByAccountIdAndUsedFalseOrderByCreatedAtDesc(String accountId);
     List<OtpToken> findAllByEmailAndTokenTypeOrderByCreatedAtDesc(String email, OtpTokenType tokenType);
+    Optional<OtpToken> findTopByEmailAndUsedTrueAndTokenTypeOrderByCreatedAtDesc(String email, OtpTokenType tokenType);
 }

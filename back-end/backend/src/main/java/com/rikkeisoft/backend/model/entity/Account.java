@@ -31,6 +31,10 @@ public class Account {
 
     String password;
 
+    @ManyToOne
+    @JoinColumn(name = "business_profile_id")
+    BusinessProfile businessProfile;
+
     String fullName;
 
     String phone;
