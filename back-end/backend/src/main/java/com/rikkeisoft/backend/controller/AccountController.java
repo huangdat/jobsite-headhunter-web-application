@@ -83,5 +83,12 @@ public class AccountController {
 
         return resp;
     }
+//    @PostMapping("/signup-headhunter")
+//    public APIResponse<AccountResp> signupHeadhunter(@ModelAttribute HeadhunterSignupReq req) {
+//        APIResponse<AccountResp> resp = new APIResponse<>();
+//        resp.setResult(accountService.createHeahunterAccount(req));
+//        return resp;
+//    }
+
 
 }
