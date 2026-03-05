@@ -66,6 +66,10 @@ build/
 .factorypath
 .springBeans
 
+### Vscode ###
+# Visual Studio Code editor settings and workspace files
+.vscode/*
+
 ### Intellij ###
 # IntelliJ IDEA editor files and settings
 

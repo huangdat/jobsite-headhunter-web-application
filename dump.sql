@@ -373,6 +373,31 @@ LOCK TABLES `forum_post` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `invalidated_token`
+--
+
+DROP TABLE IF EXISTS `invalidated_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `invalidated_token` (
+  `token_id` varchar(500) NOT NULL,
+  `expiry_time` datetime(6) NOT NULL,
+  `invalidated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`token_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invalidated_token`
+--
+
+LOCK TABLES `invalidated_token` WRITE;
+/*!40000 ALTER TABLE `invalidated_token` DISABLE KEYS */;
+INSERT INTO `invalidated_token` VALUES ('eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvaGVhZGh1bnQiLCJzdWIiOiJhZG1pbiIsImV4cCI6MTc3MjcwNDgzMSwiaWF0IjoxNzcyNjE4NDMxLCJzY29wZSI6IkFETUlOIn0.9Z0OlHliEZgGtOAIqKOZNmCxhB_Rp5EfVBZ1i7H-O7NoQZ8NE1jwkwIwZUF8_eIOhbmdbRqbGP_wPU7aykP6fg','2026-03-05 10:00:31.000000','2026-03-04 10:02:02.265636');
+/*!40000 ALTER TABLE `invalidated_token` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `job`
 --
 
@@ -426,10 +451,11 @@ CREATE TABLE `otp_token` (
   `used` bit(1) NOT NULL DEFAULT b'0',
   `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `expires_at` datetime(6) NOT NULL,
+  `attempt_count` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_otp_token_account` (`account_id`),
   CONSTRAINT `fk_otp_token_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,7 +464,7 @@ CREATE TABLE `otp_token` (
 
 LOCK TABLES `otp_token` WRITE;
 /*!40000 ALTER TABLE `otp_token` DISABLE KEYS */;
-INSERT INTO `otp_token` VALUES (6,NULL,'hoangdat060504@gmail.com','511488','SIGN_UP',_binary '\0','2026-03-02 06:19:52.713778','2026-03-02 06:24:52.713778'),(7,NULL,'datnhce180797@fpt.edu.vn','556948','SIGN_UP',_binary '\0','2026-03-02 06:20:55.118364','2026-03-02 06:25:55.118364'),(8,NULL,'datnhce180797@fpt.edu.vn','573850','SIGN_UP',_binary '\0','2026-03-02 06:22:45.023540','2026-03-02 06:27:45.023540'),(9,NULL,'datnhce180797@fpt.edu.vn','424510','SIGN_UP',_binary '\0','2026-03-02 06:32:52.658686','2026-03-02 06:37:52.658686'),(10,NULL,'datnhce180797@fpt.edu.vn','727758','SIGN_UP',_binary '\0','2026-03-02 06:43:03.249780','2026-03-02 06:48:03.249780'),(11,NULL,'datnhce180797@fpt.edu.vn','279824','SIGN_UP',_binary '','2026-03-02 06:56:29.535230','2026-03-02 07:01:29.535230');
+INSERT INTO `otp_token` VALUES (6,NULL,'hoangdat060504@gmail.com','511488','SIGN_UP',_binary '\0','2026-03-02 06:19:52.713778','2026-03-02 06:24:52.713778',0),(7,NULL,'datnhce180797@fpt.edu.vn','556948','SIGN_UP',_binary '\0','2026-03-02 06:20:55.118364','2026-03-02 06:25:55.118364',0),(8,NULL,'datnhce180797@fpt.edu.vn','573850','SIGN_UP',_binary '\0','2026-03-02 06:22:45.023540','2026-03-02 06:27:45.023540',0),(9,NULL,'datnhce180797@fpt.edu.vn','424510','SIGN_UP',_binary '\0','2026-03-02 06:32:52.658686','2026-03-02 06:37:52.658686',0),(10,NULL,'datnhce180797@fpt.edu.vn','727758','SIGN_UP',_binary '\0','2026-03-02 06:43:03.249780','2026-03-02 06:48:03.249780',0),(11,NULL,'datnhce180797@fpt.edu.vn','279824','SIGN_UP',_binary '','2026-03-02 06:56:29.535230','2026-03-02 07:01:29.535230',0),(12,NULL,'datnhce180797@fpt.edu.vn','849334','SIGN_UP',_binary '','2026-03-02 08:18:11.954330','2026-03-02 08:23:11.954330',0),(13,NULL,'datnhce180797@fpt.edu.vn','988410','SIGN_UP',_binary '\0','2026-03-02 08:41:30.769353','2026-03-02 08:46:30.769353',0),(14,NULL,'datnhce180797@fpt.edu.vn','913896','SIGN_UP',_binary '','2026-03-03 08:35:13.877729','2026-03-03 08:40:13.877729',0),(15,NULL,'datnhce180797@fpt.edu.vn','583858','SIGN_UP',_binary '\0','2026-03-04 09:37:17.081743','2026-03-04 09:42:17.081743',0),(16,'22222222-2222-2222-2222-222222222222','cuongct.ce190026@gmail.com','547703','FORGOT_PASSWORD',_binary '','2026-03-04 09:42:51.906586','2026-03-04 09:47:51.906586',0);
 /*!40000 ALTER TABLE `otp_token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -455,4 +481,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-02 14:24:12
+-- Dump completed on 2026-03-05 14:27:31
