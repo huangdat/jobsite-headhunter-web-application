@@ -4,18 +4,16 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 
-import java.time.Instant;
-
+/**
+ * Response DTO for OTP verification and password reset
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OtpVerifyResp {
+public class OtpVerifyAndResetPasswordResp {
     HttpStatus status;
     String message;
-    
-    // Reset token for forgot password flow (null for signup flow)
-    String resetToken;
-    Instant resetTokenExpiresAt;
+    String email;
 }
