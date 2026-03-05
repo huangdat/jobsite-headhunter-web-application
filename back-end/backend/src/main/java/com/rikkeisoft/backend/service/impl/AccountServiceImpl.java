@@ -204,4 +204,94 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    // Filter by status
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public List<AccountResp> getPendingAccounts() {
+        List<Account> accounts = accountRepo.findByStatus(AccountStatus.PENDING);
+        List<AccountResp> accountResps = new ArrayList<>();
+        for (Account account : accounts) {
+            accountResps.add(accountMapper.toAccountResp(account));
+        }
+        return accountResps;
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public List<AccountResp> getActiveAccounts() {
+        List<Account> accounts = accountRepo.findByStatus(AccountStatus.ACTIVE);
+        List<AccountResp> accountResps = new ArrayList<>();
+        for (Account account : accounts) {
+            accountResps.add(accountMapper.toAccountResp(account));
+        }
+        return accountResps;
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public List<AccountResp> getSuspendedAccounts() {
+        List<Account> accounts = accountRepo.findByStatus(AccountStatus.SUSPENDED);
+        List<AccountResp> accountResps = new ArrayList<>();
+        for (Account account : accounts) {
+            accountResps.add(accountMapper.toAccountResp(account));
+        }
+        return accountResps;
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public List<AccountResp> getDeletedAccounts() {
+        List<Account> accounts = accountRepo.findByStatus(AccountStatus.DELETED);
+        List<AccountResp> accountResps = new ArrayList<>();
+        for (Account account : accounts) {
+            accountResps.add(accountMapper.toAccountResp(account));
+        }
+        return accountResps;
+    }
+
+    // Filter by role
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public List<AccountResp> getAdminAccounts() {
+        List<Account> accounts = accountRepo.findByRolesContaining("ADMIN");
+        List<AccountResp> accountResps = new ArrayList<>();
+        for (Account account : accounts) {
+            accountResps.add(accountMapper.toAccountResp(account));
+        }
+        return accountResps;
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public List<AccountResp> getHeadhunterAccounts() {
+        List<Account> accounts = accountRepo.findByRolesContaining("HEADHUNTER");
+        List<AccountResp> accountResps = new ArrayList<>();
+        for (Account account : accounts) {
+            accountResps.add(accountMapper.toAccountResp(account));
+        }
+        return accountResps;
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
+    public List<AccountResp> getCollaboratorAccounts() {
+        List<Account> accounts = accountRepo.findByRolesContaining("COLLABORATOR");
+        List<AccountResp> accountResps = new ArrayList<>();
+        for (Account account : accounts) {
+            accountResps.add(accountMapper.toAccountResp(account));
+        }
+        return accountResps;
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER') or hasAuthority('SCOPE_COLLABORATOR')")
+    public List<AccountResp> getCandidateAccounts() {
+        List<Account> accounts = accountRepo.findByRolesContaining("CANDIDATE");
+        List<AccountResp> accountResps = new ArrayList<>();
+        for (Account account : accounts) {
+            accountResps.add(accountMapper.toAccountResp(account));
+        }
+        return accountResps;
+    }
+
 }

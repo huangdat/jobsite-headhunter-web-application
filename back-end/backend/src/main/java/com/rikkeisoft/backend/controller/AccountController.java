@@ -82,4 +82,61 @@ public class AccountController {
 //    }
 
 
+    // Filter by status
+    @GetMapping("/pending")
+    public APIResponse<List<AccountResp>> getPendingAccounts() {
+        APIResponse<List<AccountResp>> resp = new APIResponse<>();
+        resp.setResult(accountService.getPendingAccounts());
+        return resp;
+    }
+
+    @GetMapping("/active")
+    public APIResponse<List<AccountResp>> getActiveAccounts() {
+        APIResponse<List<AccountResp>> resp = new APIResponse<>();
+        resp.setResult(accountService.getActiveAccounts());
+        return resp;
+    }
+
+    @GetMapping("/suspended")
+    public APIResponse<List<AccountResp>> getSuspendedAccounts() {
+        APIResponse<List<AccountResp>> resp = new APIResponse<>();
+        resp.setResult(accountService.getSuspendedAccounts());
+        return resp;
+    }
+
+    @GetMapping("/deleted")
+    public APIResponse<List<AccountResp>> getDeletedAccounts() {
+        APIResponse<List<AccountResp>> resp = new APIResponse<>();
+        resp.setResult(accountService.getDeletedAccounts());
+        return resp;
+    }
+
+    // Filter by role
+    @GetMapping("/admin")
+    public APIResponse<List<AccountResp>> getAdminAccounts() {
+        APIResponse<List<AccountResp>> resp = new APIResponse<>();
+        resp.setResult(accountService.getAdminAccounts());
+        return resp;
+    }
+
+    @GetMapping("/headhunter")
+    public APIResponse<List<AccountResp>> getHeadhunterAccounts() {
+        APIResponse<List<AccountResp>> resp = new APIResponse<>();
+        resp.setResult(accountService.getHeadhunterAccounts());
+        return resp;
+    }
+
+    @GetMapping("/collaborator")
+    public APIResponse<List<AccountResp>> getCollaboratorAccounts() {
+        APIResponse<List<AccountResp>> resp = new APIResponse<>();
+        resp.setResult(accountService.getCollaboratorAccounts());
+        return resp;
+    }
+
+    @GetMapping("/candidate")
+    public APIResponse<List<AccountResp>> getCandidateAccounts() {
+        APIResponse<List<AccountResp>> resp = new APIResponse<>();
+        resp.setResult(accountService.getCandidateAccounts());
+        return resp;
+    }
 }
