@@ -6,7 +6,7 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: "jdbc:mysql://localhost:3306/headhunt"
+    url: "jdbc:mysql://localhost:3307/headhunt"
     username: root
     password: root
   mail:
