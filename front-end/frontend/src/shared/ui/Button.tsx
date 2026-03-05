@@ -20,7 +20,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary:
-      "w-full py-4 text-black shadow-lg shadow-green-500/25 bg-gradient-to-r from-[#00C853] to-[#39FF14] hover:opacity-90 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed",
+      "w-full py-4 text-black shadow-lg shadow-green-500/25 bg-gradient-to-r from-[#00C853] to-[#39FF14] hover:opacity-90 hover:-translate-y-0.5 disabled:opacity-50",
     secondary:
       "w-full py-4 bg-slate-900 dark:bg-white dark:text-slate-900 text-white hover:opacity-90",
     outline:
