@@ -69,7 +69,7 @@ public class AccountController {
         return resp;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/search")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public APIResponse<PagedResponse<AccountResp>> listUsers(
             @RequestParam(defaultValue = "1") int page,
