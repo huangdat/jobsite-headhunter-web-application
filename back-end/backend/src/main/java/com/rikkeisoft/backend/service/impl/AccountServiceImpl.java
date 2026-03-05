@@ -25,6 +25,18 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
+import org.springframework.web.util.HtmlUtils;
+import com.rikkeisoft.backend.model.dto.PagedResponse;
 
 @Slf4j
 @Service
@@ -202,6 +214,69 @@ public class AccountServiceImpl implements AccountService {
 
         return "Change password successfully";
 
+    }
+
+    @Override
+    public PagedResponse<AccountResp> searchAccounts(int page, int size, String keyword, String role, String status, String sort) {
+        // sanitize input to avoid XSS
+        String safeKeyword = keyword == null ? null : HtmlUtils.htmlEscape(keyword).trim();
+        // build sort
+        Sort sortObj = Sort.by(Sort.Direction.DESC, "createdAt");
+        if (sort != null && !sort.isEmpty()) {
+            String[] parts = sort.split(",");
+            String field = parts[0];
+            Sort.Direction dir = Sort.Direction.DESC;
+            if (parts.length > 1) {
+                try {
+                    dir = Sort.Direction.fromString(parts[1]);
+                } catch (Exception ignored) {
+                }
+            }
+            sortObj = Sort.by(dir, field);
+        }
+
+        int pageIndex = Math.max(1, page) - 1; // convert to 0-based
+        Pageable pageable = PageRequest.of(pageIndex, size, sortObj);
+
+        Specification<Account> spec = (root, query, cb) -> {
+            query.distinct(true);
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (safeKeyword != null && !safeKeyword.isEmpty()) {
+                String like = "%" + safeKeyword.toLowerCase() + "%";
+                Expression<String> fullNameExp = cb.lower(root.get("fullName"));
+                Expression<String> emailExp = cb.lower(root.get("email"));
+                predicates.add(cb.or(cb.like(fullNameExp, like), cb.like(emailExp, like)));
+            }
+
+            if (role != null && !role.isEmpty()) {
+                // roles is an ElementCollection
+                Join<Account, String> rolesJoin = root.join("roles");
+                predicates.add(cb.equal(cb.lower(rolesJoin), role.toLowerCase()));
+            }
+
+            if (status != null && !status.isEmpty()) {
+                try {
+                    predicates.add(cb.equal(root.get("status"), com.rikkeisoft.backend.enums.AccountStatus.valueOf(status.toUpperCase())));
+                } catch (Exception ignored) {
+                }
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        Page<Account> result = accountRepo.findAll(spec, pageable);
+
+        List<AccountResp> data = result.stream().map(accountMapper::toAccountResp).collect(Collectors.toList());
+
+        PagedResponse<AccountResp> resp = new PagedResponse<>();
+        resp.setPage(pageIndex + 1);
+        resp.setSize(size);
+        resp.setTotalElements(result.getTotalElements());
+        resp.setTotalPages(result.getTotalPages());
+        resp.setData(data);
+
+        return resp;
     }
 
 }
