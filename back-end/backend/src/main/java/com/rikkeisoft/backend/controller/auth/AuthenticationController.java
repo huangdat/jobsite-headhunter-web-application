@@ -8,6 +8,7 @@ import com.rikkeisoft.backend.model.dto.req.auth.TokenValidateReq;
 import com.rikkeisoft.backend.model.dto.resp.auth.AuthenticationResp;
 import com.rikkeisoft.backend.model.dto.resp.auth.TokenValidateResp;
 import com.rikkeisoft.backend.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -79,8 +80,14 @@ public class AuthenticationController {
      * @throws JOSEException
      */
     @PostMapping("/logout")
-    public APIResponse<Void> logout(@RequestBody LogoutReq request) throws ParseException, JOSEException {
-        authenticationService.logout(request);
+    public APIResponse<Void> logout(@RequestBody LogoutReq request, HttpServletRequest httpRequest) throws ParseException, JOSEException {
+        String authHeader = httpRequest.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Unauthorized");
+        }
+        String callerToken = authHeader.substring("Bearer ".length()).trim();
+
+        authenticationService.logout(request, callerToken);
 
         return APIResponse.<Void>builder()
                 .status(HttpStatus.OK)

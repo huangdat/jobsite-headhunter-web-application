@@ -17,7 +17,7 @@ export function AppRouter() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/select-role" element={<SelectRolePage />} />
       <Route path="/register/:role" element={<RegisterPage />} />
-      <Route path="/forgot-password/step-1" element={<ForgotPasswordPage />} />
+      <Route path="/forgot-password/" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route
         path="/reset-password/success"
