@@ -5,14 +5,14 @@ import com.rikkeisoft.backend.enums.AuthProvider;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.AccountMapper;
-import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
-import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
-import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
-import com.rikkeisoft.backend.model.dto.req.account.ResetPasswordReq;
+import com.rikkeisoft.backend.model.dto.req.account.*;
 import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.model.entity.Account;
+import com.rikkeisoft.backend.model.entity.BusinessProfile;
 import com.rikkeisoft.backend.repository.AccountRepo;
+import com.rikkeisoft.backend.repository.BusinessProfileRepo;
 import com.rikkeisoft.backend.service.AccountService;
+import com.rikkeisoft.backend.service.BusinessProfileService;
 import com.rikkeisoft.backend.service.UploadService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +48,8 @@ public class AccountServiceImpl implements AccountService {
     AccountMapper accountMapper;
     UploadService uploadService;
     PasswordEncoder passwordEncoder;
+    BusinessProfileService businessProfileService;
+    BusinessProfileRepo businessProfileRepo;
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
@@ -278,6 +280,64 @@ public class AccountServiceImpl implements AccountService {
         resp.setData(data);
 
         return resp;
+    }
+
+    @Override
+    public AccountResp createAccountHeadhunter(HeadhunterSignupReq req) {
+        // Create accountCreateReq object to reuse createAccount logic (except for businessProfile and role)
+        AccountCreateReq accountCreateReq = AccountCreateReq.builder()
+                .username(req.getUsername())
+                .password(req.getPassword())
+                .rePassword(req.getRePassword())
+                .email(req.getEmail())
+                .fullName(req.getFullName())
+                .phone(req.getPhone())
+                .avatar(req.getAvatar())
+                .gender(req.getGender())
+                .build();
+
+        // createAccount saves and returns the account (still without businessProfile / role)
+        AccountResp accountResp = createAccount(accountCreateReq);
+
+        // fetch the saved entity to mutate it
+        Account account = accountRepo.findById(accountResp.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        // assign HEADHUNTER role
+        account.getRoles().add("HEADHUNTER");
+
+        // resolve BusinessProfile
+        BusinessProfile businessProfile;
+        if (req.getBusinessProfileId() == null) {
+            // No existing profile provided — create a new one
+            // Check for duplicate company name
+            if (businessProfileRepo.existsByCompanyName(req.getCompanyName())) {
+                // Roll back the account we just created to keep data consistent
+                accountRepo.delete(account);
+                throw new AppException(ErrorCode.COMPANY_NAME_EXISTED);
+            }
+            businessProfile = BusinessProfile.builder()
+                    .companyName(req.getCompanyName())
+                    .taxCode(req.getTaxCode())
+                    .websiteUrl(req.getWebsiteUrl())
+                    .addressMain(req.getAddressMain())
+                    .companyScale(req.getCompanyScale())
+                    .build();
+            businessProfileRepo.save(businessProfile);
+        } else {
+            // Existing profile — verify it exists
+            businessProfile = businessProfileRepo.findById(req.getBusinessProfileId())
+                    .orElseThrow(() -> {
+                        accountRepo.delete(account);
+                        return new AppException(ErrorCode.BUSINESS_PROFILE_NOT_FOUND);
+                    });
+        }
+
+        // Link the profile and persist
+        account.setBusinessProfile(businessProfile);
+        accountRepo.save(account);
+
+        return accountMapper.toAccountResp(account);
     }
 
 }

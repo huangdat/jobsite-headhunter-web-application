@@ -97,7 +97,7 @@ public class AccountController {
     @PostMapping("/signup-headhunter")
     public APIResponse<AccountResp> signupHeadhunter(@ModelAttribute HeadhunterSignupReq req) {
         APIResponse<AccountResp> resp = new APIResponse<>();
-        resp.setResult(accountService
+        resp.setResult(accountService.createAccountHeadhunter(req));
         return resp;
     }
 
