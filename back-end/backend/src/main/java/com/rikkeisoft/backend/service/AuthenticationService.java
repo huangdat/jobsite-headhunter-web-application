@@ -12,5 +12,10 @@ import java.text.ParseException;
 public interface AuthenticationService {
     AuthenticationResp authenticate(AuthenticationReq req);
     TokenValidateResp validateToken(TokenValidateReq req) throws JOSEException, ParseException;
-    void logout(LogoutReq req) throws ParseException, JOSEException;
+    /**
+     * Logout a token, with authorization check based on caller token.
+     * @param req the logout request containing the token to invalidate
+     * @param callerToken the caller's access token (from Authorization header)
+     */
+    void logout(LogoutReq req, String callerToken) throws ParseException, JOSEException;
 }
