@@ -41,7 +41,7 @@ public class SecurityConfig {
 
     // Define endpoint access rules based on user roles and HTTP methods
 
-    String[] PUBLIC_POST_ENDPOINTS = {"api/upload", "api/auth/**", "api/otp/**"};
+        String[] PUBLIC_POST_ENDPOINTS = {"api/upload", "api/auth/**", "api/v1/auth/**", "api/otp/**"};
     String[] PUBLIC_GET_ENDPOINTS = {"api/auth/**"};
     String[] PUBLIC_PUT_ENDPOINTS = {};
 
@@ -63,7 +63,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
-                                "/docs"              // because springdoc.swagger-ui.path = /docs
+                                "/docs",              // because springdoc.swagger-ui.path = /docs
+                                "/google-login-test.html" // Allow access to test page
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
