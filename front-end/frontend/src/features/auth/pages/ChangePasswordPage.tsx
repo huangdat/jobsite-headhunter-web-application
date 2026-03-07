@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Input, FormField } from "@/shared/ui";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { FormField } from "@/shared/components";
 import type { ChangePasswordFormData } from "../types";
+import { changePassword } from "../services/authApi";
 
 export function ChangePasswordPage() {
   const [formData, setFormData] = useState<ChangePasswordFormData>({
@@ -18,6 +20,8 @@ export function ChangePasswordPage() {
   const [errors, setErrors] = useState<
     Partial<Record<keyof ChangePasswordFormData, string>>
   >({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange =
     (field: keyof ChangePasswordFormData) => (value: string) => {
@@ -55,11 +59,25 @@ export function ChangePasswordPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Password change attempt:", formData);
-      // Add API call here
+      setIsLoading(true);
+      setSuccessMessage("");
+
+      try {
+        await changePassword(formData);
+        setSuccessMessage("Password changed successfully!");
+        handleCancel();
+      } catch (error) {
+        const err = error as { response?: { data?: { message?: string } } };
+        setErrors({
+          currentPassword:
+            err.response?.data?.message || "Failed to change password",
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -84,7 +102,7 @@ export function ChangePasswordPage() {
       {/* Sidebar */}
       <aside className="w-80 bg-slate-900 text-white flex flex-col border-r border-white/10 shrink-0">
         <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#39FF14] rounded-lg flex items-center justify-center text-slate-900">
+          <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-slate-900">
             <span className="material-symbols-outlined font-bold">
               account_tree
             </span>
@@ -99,7 +117,7 @@ export function ChangePasswordPage() {
             href="#"
             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
           >
-            <span className="material-symbols-outlined text-[#39FF14]">
+            <span className="material-symbols-outlined text-brand-primary">
               dashboard
             </span>
             <span className="font-medium">Dashboard</span>
@@ -108,7 +126,7 @@ export function ChangePasswordPage() {
             href="#"
             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
           >
-            <span className="material-symbols-outlined text-[#39FF14]">
+            <span className="material-symbols-outlined text-brand-primary">
               work
             </span>
             <span className="font-medium">Jobs</span>
@@ -117,7 +135,7 @@ export function ChangePasswordPage() {
             href="#"
             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
           >
-            <span className="material-symbols-outlined text-[#39FF14]">
+            <span className="material-symbols-outlined text-brand-primary">
               group_add
             </span>
             <span className="font-medium">Referrals</span>
@@ -128,7 +146,7 @@ export function ChangePasswordPage() {
           </div>
           <a
             href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#39FF14]/10 text-[#39FF14] transition-colors border border-[#39FF14]/20"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary transition-colors border border-brand-primary/20"
           >
             <span className="material-symbols-outlined">settings</span>
             <span className="font-medium">Settings</span>
@@ -138,11 +156,8 @@ export function ChangePasswordPage() {
         <div className="p-4 border-t border-white/10">
           <div className="flex items-center gap-3 p-2">
             <div
-              className="w-10 h-10 rounded-full bg-[#39FF14]/20 border border-[#39FF14]/30 bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBMe3zs3aBwZhqE-fJHYkRrJVZLLk0dFh5J33B548t3ERSfrnF4HDLEwliFS2x8aq-QktvmGDPIgkzTptT47h9pQblYro119U4BuBd3EBHH02plpB8yiGeRX6QyhT_3Jo4Y1xRewp4DLAnuU_r4FUb7nBGz8D-xWF4-zNhYSYYF8bp6-V1xikUHUjqGVu3gJDDz94M39L5DWFncvVv8qZP3-yly9hl1DepvCchua3zo1-haWHC-1xeXr-19QF7uP0gCTJLx9yVabok')",
-              }}
+              className="w-10 h-10 rounded-full bg-brand-primary/20 border border-brand-primary/30 bg-cover bg-center"
+
             ></div>
             <div className="grow overflow-hidden">
               <p className="text-sm font-semibold truncate">Alex Nguyen</p>
@@ -193,6 +208,17 @@ export function ChangePasswordPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-8">
+                {successMessage && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
+                    <p className="text-green-700 text-sm font-medium flex items-center gap-2">
+                      <span className="material-symbols-outlined text-green-600">
+                        check_circle
+                      </span>
+                      {successMessage}
+                    </p>
+                  </div>
+                )}
+
                 <FormField
                   label="Current Password"
                   error={errors.currentPassword}
@@ -269,14 +295,14 @@ export function ChangePasswordPage() {
                 <div className="pt-6 flex flex-col sm:flex-row gap-4">
                   <button
                     type="submit"
-                    disabled={!isFormValid}
+                    disabled={!isFormValid || isLoading}
                     className={`flex-1 h-12 font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
-                      isFormValid
-                        ? "bg-[#39FF14] text-slate-900 hover:bg-[#2ee612]"
+                      isFormValid && !isLoading
+                        ? "bg-brand-primary text-slate-900 hover:bg-brand-hover"
                         : "bg-slate-200 text-slate-400 cursor-not-allowed"
                     }`}
                   >
-                    Update Password
+                    {isLoading ? "Updating..." : "Update Password"}
                   </button>
                   <button
                     type="button"
@@ -295,13 +321,13 @@ export function ChangePasswordPage() {
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-[#39FF14] text-xl">
+                    <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
                     <span>At least 8 characters long</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-[#39FF14] text-xl">
+                    <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
                     <span>
@@ -310,7 +336,7 @@ export function ChangePasswordPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-[#39FF14] text-xl">
+                    <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
                     <span>

@@ -1,9 +1,19 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Button, Input, FormField } from "@/shared/ui";
+import { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  FormField,
+  AuthLayout,
+  PasswordRequirements,
+} from "@/shared/components";
+import { resetPassword } from "../services/authApi";
 
 export function ResetPasswordPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const resetToken = searchParams.get("token") || "";
+
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -11,6 +21,7 @@ export function ResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   // Password requirements validation
   const requirements = {
@@ -27,59 +38,51 @@ export function ResetPasswordPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add validation logic
-    if (
-      Object.values(requirements).every(Boolean) &&
-      formData.password === formData.confirmPassword
-    ) {
-      console.log("Password reset:", formData);
+    setIsLoading(true);
+    setErrors({});
+
+    // Validation
+    if (!Object.values(requirements).every(Boolean)) {
+      setErrors({ password: "Password does not meet requirements" });
+      setIsLoading(false);
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setErrors({ confirmPassword: "Passwords do not match" });
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await resetPassword({
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        token: resetToken,
+      });
       navigate("/reset-password/success");
+    } catch (error) {
+      const err = error as { response?: { data?: { message?: string } } };
+      setErrors({
+        submit: err.response?.data?.message || "Failed to reset password",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
-      {/* Header */}
-      <header className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-[#39FF14] p-1.5 rounded-lg">
-            <span className="material-symbols-outlined text-black text-lg font-bold">
-              handshake
-            </span>
-          </div>
-          <span className="text-xl font-bold tracking-tight">JobSite</span>
-        </div>
-        <nav className="hidden md:flex items-center gap-8">
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            How it works
-          </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            Rewards
-          </Link>
-          <Link
-            to="/select-role"
-            className="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-6 py-2 rounded-full text-sm font-semibold"
-          >
-            Sign Up
-          </Link>
-        </nav>
-      </header>
-
-      {/* Main Content */}
+    <AuthLayout
+      navLinks={[
+        { to: "#", label: "Home" },
+        { to: "#", label: "How it works" },
+        { to: "#", label: "Rewards" },
+      ]}
+      ctaButton={{ to: "/select-role", label: "Sign Up" }}
+      showFooter={false}
+    >
       <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}
@@ -89,13 +92,13 @@ export function ResetPasswordPage() {
 
             <div className="relative z-10">
               <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 border border-white/10">
-                <span className="material-symbols-outlined text-[#39FF14]">
+                <span className="material-symbols-outlined text-brand-primary">
                   security
                 </span>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
                 Unlock Your <br />
-                <span className="text-[#39FF14]">Earning Potential</span>
+                <span className="text-brand-primary">Earning Potential</span>
               </h1>
               <p className="text-slate-400 text-lg leading-relaxed max-w-sm mb-12">
                 Your security is our priority. Create a strong password to
@@ -150,7 +153,7 @@ export function ResetPasswordPage() {
                 </span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-[#39FF14] text-xl">
+                <span className="material-symbols-outlined text-brand-primary text-xl">
                   verified_user
                 </span>
                 <span className="text-sm font-medium text-slate-300">
@@ -220,79 +223,26 @@ export function ResetPasswordPage() {
                   </FormField>
                 </div>
 
-                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-800">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-                    Password Requirements
-                  </h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <li className="flex items-center gap-2 text-sm text-slate-500">
-                      <span
-                        className={`material-symbols-outlined text-lg ${
-                          requirements.minLength
-                            ? "text-[#39FF14]"
-                            : "text-slate-300"
-                        }`}
-                      >
-                        {requirements.minLength
-                          ? "check_circle"
-                          : "radio_button_unchecked"}
-                      </span>
-                      At least 8 characters
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-slate-500">
-                      <span
-                        className={`material-symbols-outlined text-lg ${
-                          requirements.hasUpperCase
-                            ? "text-[#39FF14]"
-                            : "text-slate-300"
-                        }`}
-                      >
-                        {requirements.hasUpperCase
-                          ? "check_circle"
-                          : "radio_button_unchecked"}
-                      </span>
-                      One uppercase letter
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-slate-500">
-                      <span
-                        className={`material-symbols-outlined text-lg ${
-                          requirements.hasSpecialChar
-                            ? "text-[#39FF14]"
-                            : "text-slate-300"
-                        }`}
-                      >
-                        {requirements.hasSpecialChar
-                          ? "check_circle"
-                          : "radio_button_unchecked"}
-                      </span>
-                      One special character
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-slate-500">
-                      <span
-                        className={`material-symbols-outlined text-lg ${
-                          requirements.hasNumber
-                            ? "text-[#39FF14]"
-                            : "text-slate-300"
-                        }`}
-                      >
-                        {requirements.hasNumber
-                          ? "check_circle"
-                          : "radio_button_unchecked"}
-                      </span>
-                      One numeric digit
-                    </li>
-                  </ul>
-                </div>
+                <PasswordRequirements
+                  minLength={requirements.minLength}
+                  hasUpperCase={requirements.hasUpperCase}
+                  hasSpecialChar={requirements.hasSpecialChar}
+                  hasNumber={requirements.hasNumber}
+                />
 
-                <Button type="submit" icon="published_with_changes">
-                  Update Password
+                <Button
+                  type="submit"
+                  icon="published_with_changes"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Updating..." : "Update Password"}
                 </Button>
               </form>
 
               <div className="mt-10 text-center">
                 <Link
                   to="/login"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-[#39FF14] transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-brand-primary transition-colors"
                 >
                   <span className="material-symbols-outlined text-lg">
                     arrow_back
@@ -326,11 +276,8 @@ export function ResetPasswordPage() {
               Help Center
             </Link>
           </div>
-          <p className="text-xs text-slate-400">
-            © 2024 ReferralPortal Inc. All rights reserved.
-          </p>
         </footer>
       </main>
-    </div>
+    </AuthLayout>
   );
 }
