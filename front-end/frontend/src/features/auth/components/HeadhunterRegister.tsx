@@ -1,4 +1,5 @@
-import { Input, FormField } from "@/shared/ui";
+import { Input } from "@/components/ui/input";
+import { FormField } from "@/shared/components";
 import {
   MdOutlineMail,
   MdLockOutline,

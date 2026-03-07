@@ -1,4 +1,5 @@
-import { Input, FormField } from "@/shared/ui";
+import { Input } from "@/components/ui/input";
+import { FormField } from "@/shared/components";
 import {
   MdOutlineMail,
   MdLockOutline,
@@ -7,8 +8,16 @@ import {
 } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
+interface FormData {
+  fullName: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+}
+
 interface Props {
-  formData: any;
+  formData: FormData;
   errors: Record<string, string>;
   handleChange: (field: string) => (value: string) => void;
   showPassword: boolean;

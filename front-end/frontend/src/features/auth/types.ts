@@ -66,3 +66,36 @@ export interface ValidationError {
   field: string;
   message: string;
 }
+
+// Additional types for API requests and responses
+export interface ApiResponse<T> {
+  status: string;
+  message: string;
+  result: T;
+}
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface LoginResult {
+  accessToken: string;
+  authenticated: boolean;
+}
+
+export interface ValidateTokenRequest {
+  token: string;
+}
+
+export interface ValidateTokenResult {
+  valid: boolean;
+  id: string;
+  username: string;
+  role: string;
+  status: string;
+}
+
+export interface LogoutRequest {
+  token: string;
+}
