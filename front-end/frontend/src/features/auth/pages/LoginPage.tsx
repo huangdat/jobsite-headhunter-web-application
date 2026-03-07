@@ -1,59 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
-import type { LoginFormData } from "../types";
 import { AnimatedCheckbox } from "../components/AnimatedCheckbox";
+import { useLogin } from "../hooks";
 
 import { MdOutlineMail, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { HiOutlineArrowRight } from "react-icons/hi";
-import { login } from "@/features/auth/services/authApi";
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: "",
-    password: "",
-    rememberMe: false,
-  });
+  const {
+    formData,
+    errors,
+    isLoading,
+    handleSubmit,
+    handleChange,
+    loadRememberedEmail,
+  } = useLogin();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState<Partial<LoginFormData>>({});
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (data: LoginFormData) => {
-    setIsLoading(true);
-    setErrors({});
+  // Load remembered email on component mount
+  useEffect(() => {
+    loadRememberedEmail();
+  }, [loadRememberedEmail]);
 
-    try {
-      const res = await login({
-        username: data.email,
-        password: data.password,
-      });
-
-      // Save token to localStorage
-      localStorage.setItem("accessToken", res.accessToken);
-
-      // Navigate to dashboard or home
-      navigate("/");
-    } catch (error) {
-      const err = error as { response?: { data?: { message?: string } } };
-      setErrors({
-        email:
-          err.response?.data?.message ||
-          "Login failed. Please check your credentials.",
-      });
-    } finally {
-      setIsLoading(false);
+  // Check if user is already logged in
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      // User is already authenticated, redirect to home
+      navigate("/", { replace: true });
     }
-  };
-
-  const handleChange =
-    (field: keyof LoginFormData) => (value: string | boolean) => {
-      setFormData((prev) => ({ ...prev, [field]: value }));
-    };
+  }, [navigate]);
 
   return (
     <AuthLayout

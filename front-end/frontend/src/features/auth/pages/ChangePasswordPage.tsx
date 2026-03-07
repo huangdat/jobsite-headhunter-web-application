@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
 import type { ChangePasswordFormData } from "../types";
 import { changePassword } from "../services/authApi";
+import { toast } from "sonner";
 
 export function ChangePasswordPage() {
   const [formData, setFormData] = useState<ChangePasswordFormData>({
@@ -21,7 +22,6 @@ export function ChangePasswordPage() {
     Partial<Record<keyof ChangePasswordFormData, string>>
   >({});
   const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange =
     (field: keyof ChangePasswordFormData) => (value: string) => {
@@ -61,23 +61,59 @@ export function ChangePasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      setIsLoading(true);
-      setSuccessMessage("");
 
-      try {
-        await changePassword(formData);
-        setSuccessMessage("Password changed successfully!");
-        handleCancel();
-      } catch (error) {
-        const err = error as { response?: { data?: { message?: string } } };
-        setErrors({
-          currentPassword:
-            err.response?.data?.message || "Failed to change password",
-        });
-      } finally {
-        setIsLoading(false);
+    if (!validateForm()) {
+      toast.error("Please fix the errors in the form");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await changePassword(formData);
+
+      // Success notification
+      toast.success("Password changed successfully!");
+
+      // Clear form
+      handleCancel();
+    } catch (error: unknown) {
+      let errorMessage = "Failed to change password. Please try again.";
+
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        typeof error.response === "object" &&
+        error.response !== null
+      ) {
+        const response = error.response as {
+          status?: number;
+          data?: { message?: string };
+        };
+        errorMessage = response.data?.message || errorMessage;
+
+        // Check if it's current password error
+        if (
+          response.status === 401 ||
+          errorMessage.toLowerCase().includes("current password") ||
+          errorMessage.toLowerCase().includes("incorrect password")
+        ) {
+          setErrors({
+            currentPassword: errorMessage,
+          });
+        }
       }
+
+      // Error notification
+      toast.error(errorMessage);
+
+      if (!errors.currentPassword) {
+        setErrors({
+          currentPassword: errorMessage,
+        });
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -155,10 +191,7 @@ export function ChangePasswordPage() {
 
         <div className="p-4 border-t border-white/10">
           <div className="flex items-center gap-3 p-2">
-            <div
-              className="w-10 h-10 rounded-full bg-brand-primary/20 border border-brand-primary/30 bg-cover bg-center"
-
-            ></div>
+            <div className="w-10 h-10 rounded-full bg-brand-primary/20 border border-brand-primary/30 bg-cover bg-center"></div>
             <div className="grow overflow-hidden">
               <p className="text-sm font-semibold truncate">Alex Nguyen</p>
               <p className="text-xs text-white/50 truncate">
@@ -208,17 +241,6 @@ export function ChangePasswordPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-8">
-                {successMessage && (
-                  <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
-                    <p className="text-green-700 text-sm font-medium flex items-center gap-2">
-                      <span className="material-symbols-outlined text-green-600">
-                        check_circle
-                      </span>
-                      {successMessage}
-                    </p>
-                  </div>
-                )}
-
                 <FormField
                   label="Current Password"
                   error={errors.currentPassword}

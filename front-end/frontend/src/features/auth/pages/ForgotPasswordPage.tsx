@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout } from "@/shared/components";
 import type { ForgotPasswordFormData } from "../types";
 import { forgotPassword } from "../services/authApi";
+import { toast } from "sonner";
 
 import { MdOutlineMail } from "react-icons/md";
 
@@ -17,18 +18,58 @@ export function ForgotPasswordPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const validateForm = (): boolean => {
+    const newErrors: Partial<ForgotPasswordFormData> = {};
+
+    // Email validation
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate before submitting
+    if (!validateForm()) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
     setIsLoading(true);
     setErrors({});
 
     try {
       await forgotPassword(formData);
       setIsSubmitted(true);
-    } catch (error) {
-      const err = error as { response?: { data?: { message?: string } } };
+
+      // Success notification
+      toast.success("Password reset link sent! Check your email.");
+    } catch (error: unknown) {
+      let errorMessage = "Failed to send reset link. Please try again.";
+
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        typeof error.response === "object" &&
+        error.response !== null
+      ) {
+        const response = error.response as {
+          data?: { message?: string };
+        };
+        errorMessage = response.data?.message || errorMessage;
+      }
+
+      // Error notification
+      toast.error(errorMessage);
+
       setErrors({
-        email: err.response?.data?.message || "Failed to send reset link",
+        email: errorMessage,
       });
     } finally {
       setIsLoading(false);

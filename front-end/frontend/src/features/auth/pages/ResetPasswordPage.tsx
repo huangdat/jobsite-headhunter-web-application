@@ -8,6 +8,7 @@ import {
   PasswordRequirements,
 } from "@/shared/components";
 import { resetPassword } from "../services/authApi";
+import { toast } from "sonner";
 
 export function ResetPasswordPage() {
   const navigate = useNavigate();
@@ -45,13 +46,25 @@ export function ResetPasswordPage() {
 
     // Validation
     if (!Object.values(requirements).every(Boolean)) {
-      setErrors({ password: "Password does not meet requirements" });
+      const errorMsg = "Password does not meet requirements";
+      setErrors({ password: errorMsg });
+      toast.error(errorMsg);
       setIsLoading(false);
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setErrors({ confirmPassword: "Passwords do not match" });
+      const errorMsg = "Passwords do not match";
+      setErrors({ confirmPassword: errorMsg });
+      toast.error(errorMsg);
+      setIsLoading(false);
+      return;
+    }
+
+    if (!resetToken) {
+      const errorMsg = "Invalid or missing reset token";
+      setErrors({ submit: errorMsg });
+      toast.error(errorMsg);
       setIsLoading(false);
       return;
     }
@@ -62,11 +75,31 @@ export function ResetPasswordPage() {
         confirmPassword: formData.confirmPassword,
         token: resetToken,
       });
+
+      // Success notification
+      toast.success("Password reset successful! You can now login.");
+
       navigate("/reset-password/success");
-    } catch (error) {
-      const err = error as { response?: { data?: { message?: string } } };
+    } catch (error: unknown) {
+      let errorMessage = "Failed to reset password. Please try again.";
+
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        typeof error.response === "object" &&
+        error.response !== null
+      ) {
+        const response = error.response as {
+          data?: { message?: string };
+        };
+        errorMessage = response.data?.message || errorMessage;
+      }
+
+      // Error notification
+      toast.error(errorMessage);
+
       setErrors({
-        submit: err.response?.data?.message || "Failed to reset password",
+        submit: errorMessage,
       });
     } finally {
       setIsLoading(false);
