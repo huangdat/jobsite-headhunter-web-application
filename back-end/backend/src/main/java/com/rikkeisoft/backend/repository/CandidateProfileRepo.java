@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface CandidateProfileRepo extends JpaRepository<CandidateProfile, Long> {
-    Optional<CandidateProfile> findByAccountId(String accountId);
+    Optional<CandidateProfile> findByAccount_Id(String accountId);
 }

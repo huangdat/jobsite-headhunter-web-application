@@ -34,6 +34,10 @@ target/
 .idea/
 *.iml
 
+#yaml
+*.yaml
+*.yml
+
 ### Java ###
 # Java compiled files, build directories, and IDE files
 

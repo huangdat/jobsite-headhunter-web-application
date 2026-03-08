@@ -1,24 +1,14 @@
-package com.rikkeisoft.backend.model.entity;
+package com.rikkeisoft.backend.model.dto.resp.business;
 
 import com.rikkeisoft.backend.enums.VerificationStatus;
+import com.rikkeisoft.backend.model.entity.Account;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Builder;
 
-@Data
-@Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "business_profile")
-public class BusinessProfile {
+public class BusinessProfileResp {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
-    @Column(nullable = false)
+    Account account;
     String companyName;
 
     String taxCode;
@@ -31,7 +21,6 @@ public class BusinessProfile {
     String companyScale;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
     VerificationStatus verificationStatus = VerificationStatus.PENDING;
 
     @Column(columnDefinition = "TEXT")
