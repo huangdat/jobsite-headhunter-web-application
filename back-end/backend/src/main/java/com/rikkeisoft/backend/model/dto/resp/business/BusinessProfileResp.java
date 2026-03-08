@@ -1,14 +1,17 @@
 package com.rikkeisoft.backend.model.dto.resp.business;
 
 import com.rikkeisoft.backend.enums.VerificationStatus;
+import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import jakarta.persistence.*;
 import lombok.Builder;
 
+import java.util.List;
+
 public class BusinessProfileResp {
 
     Long id;
-    Account account;
+
     String companyName;
 
     String taxCode;
@@ -25,4 +28,7 @@ public class BusinessProfileResp {
 
     @Column(columnDefinition = "TEXT")
     String noteByAdmin;
+
+    // list of account associated with this business profile
+    List<AccountResp> accounts;
 }
