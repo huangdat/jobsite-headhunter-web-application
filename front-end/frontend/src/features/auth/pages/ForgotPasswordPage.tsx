@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Input, FormField } from "@/shared/ui";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { FormField, AuthLayout } from "@/shared/components";
 import type { ForgotPasswordFormData } from "../types";
+import { forgotPassword } from "../services/authApi";
+import { toast } from "sonner";
 
-import { MdOutlineMail, MdOutlineHandshake } from "react-icons/md";
+import { MdOutlineMail } from "react-icons/md";
 
 export function ForgotPasswordPage() {
   const [formData, setFormData] = useState<ForgotPasswordFormData>({
@@ -12,11 +16,64 @@ export function ForgotPasswordPage() {
 
   const [errors, setErrors] = useState<Partial<ForgotPasswordFormData>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = (): boolean => {
+    const newErrors: Partial<ForgotPasswordFormData> = {};
+
+    // Email validation
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Forgot password request:", formData);
-    setIsSubmitted(true);
+
+    // Validate before submitting
+    if (!validateForm()) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      await forgotPassword(formData);
+      setIsSubmitted(true);
+
+      // Success notification
+      toast.success("Password reset link sent! Check your email.");
+    } catch (error: unknown) {
+      let errorMessage = "Failed to send reset link. Please try again.";
+
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        typeof error.response === "object" &&
+        error.response !== null
+      ) {
+        const response = error.response as {
+          data?: { message?: string };
+        };
+        errorMessage = response.data?.message || errorMessage;
+      }
+
+      // Error notification
+      toast.error(errorMessage);
+
+      setErrors({
+        email: errorMessage,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (value: string) => {
@@ -27,40 +84,18 @@ export function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-50 dark:bg-slate-950">
-      {/* HEADER */}
-      <header className="max-w-7xl mx-auto w-full px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-[#39FF14] p-1.5 rounded-lg">
-            <MdOutlineHandshake className="text-black text-lg" />
-          </div>
-          <span className="text-xl font-bold tracking-tight">
-            Job<span className="text-lime-500">Site</span>
-          </span>
-        </div>
-
-        <nav className="hidden md:flex items-center gap-8">
-          <Link to="#" className="text-sm font-medium">
-            Home
-          </Link>
-
-          <Link
-            to="/login"
-            className="bg-slate-900 text-white px-6 py-2 rounded-full text-sm font-semibold"
-          >
-            Sign In
-          </Link>
-        </nav>
-      </header>
-
-      {/* MAIN */}
-      <main className="max-w-5xl mx-auto px-4 py-8 mt-25">
+    <AuthLayout
+      navLinks={[{ to: "#", label: "Home" }]}
+      ctaButton={{ to: "/login", label: "Sign In" }}
+      className="overflow-x-hidden"
+    >
+      <main className="max-w-5xl mx-auto px-4 py-8">
         <div className="w-full bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* LEFT PANEL */}
-          <div className="md:w-5/12 bg-linear-to-br from-[#0A1F16] to-[#050D0A] p-10 text-white">
+          <div className="md:w-5/12 bg-linear-to-br from-dark-panel-from to-dark-panel-to p-10 text-white">
             <h1 className="text-4xl font-bold mb-6">
               Forgot Your <br />
-              <span className="text-[#39FF14]">Password?</span>
+              <span className="text-brand-primary">Password?</span>
             </h1>
 
             <p className="text-slate-400 mb-10">
@@ -69,14 +104,14 @@ export function ForgotPasswordPage() {
             </p>
 
             <div className="flex items-center gap-3 mb-4">
-              <span className="material-symbols-outlined text-[#39FF14]">
+              <span className="material-symbols-outlined text-brand-primary">
                 lock_reset
               </span>
               <span>Secure Password Recovery</span>
             </div>
 
             <div className="flex items-center gap-3 mb-4">
-              <span className="material-symbols-outlined text-[#39FF14]">
+              <span className="material-symbols-outlined text-brand-primary">
                 verified_user
               </span>
               <span>Protected Account Access</span>
@@ -106,8 +141,13 @@ export function ForgotPasswordPage() {
                     </div>
                   </FormField>
 
-                  <Button type="submit" icon="send" className="cursor-pointer">
-                    Send Reset Link
+                  <Button
+                    type="submit"
+                    icon="send"
+                    disabled={isLoading}
+                    className="cursor-pointer"
+                  >
+                    {isLoading ? "Sending..." : "Send Reset Link"}
                   </Button>
                 </form>
 
@@ -124,8 +164,8 @@ export function ForgotPasswordPage() {
             ) : (
               <div className="text-center">
                 <div className="flex justify-center mb-6">
-                  <div className="w-20 h-20 bg-[#39FF14]/10 rounded-2xl flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#39FF14] text-5xl">
+                  <div className="w-20 h-20 bg-brand-primary/10 rounded-2xl flex items-center justify-center">
+                    <span className="material-symbols-outlined text-brand-primary text-5xl">
                       mark_email_read
                     </span>
                   </div>
@@ -149,7 +189,7 @@ export function ForgotPasswordPage() {
                   Didn't receive the email?{" "}
                   <button
                     onClick={() => setIsSubmitted(false)}
-                    className="text-[#39FF14] font-bold hover:underline"
+                    className="text-brand-primary font-bold hover:underline"
                   >
                     Resend
                   </button>
@@ -159,12 +199,6 @@ export function ForgotPasswordPage() {
           </div>
         </div>
       </main>
-      {/* FOOTER */}
-      <footer className="mt-8 text-center pb-8">
-        <p className="text-xs text-slate-400">
-          © 2024 JobSite. All rights reserved.
-        </p>
-      </footer>
-    </div>
+    </AuthLayout>
   );
 }
