@@ -55,12 +55,12 @@ public class AccountController {
         return resp;
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public APIResponse<AccountResp> createAccount(@ModelAttribute AccountCreateReq req) {
-        APIResponse<AccountResp> resp = new APIResponse<>();
-        resp.setResult(accountService.createAccount(req));
-        return resp;
-    }
+//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public APIResponse<AccountResp> createAccount(@ModelAttribute AccountCreateReq req) {
+//        APIResponse<AccountResp> resp = new APIResponse<>();
+//        resp.setResult(accountService.createAccount(req));
+//        return resp;
+//    }
 
     @PutMapping("/status/{accountId}")
     public APIResponse<AccountResp> updateStatus(@PathVariable String accountId,
@@ -98,6 +98,13 @@ public class AccountController {
     public APIResponse<AccountResp> signupHeadhunter(@ModelAttribute HeadhunterSignupReq req) {
         APIResponse<AccountResp> resp = new APIResponse<>();
         resp.setResult(accountService.createAccountHeadhunter(req));
+        return resp;
+    }
+
+    @PostMapping(value = "/signup-collaborator", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public APIResponse<AccountResp> signupCollaborator(@ModelAttribute CollaboratorSignupReq req) {
+        APIResponse<AccountResp> resp = new APIResponse<>();
+        resp.setResult(accountService.createAccountCollaborator(req));
         return resp;
     }
 

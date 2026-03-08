@@ -23,8 +23,5 @@ public class CollaboratorProfile {
     @JoinColumn(name = "managed_by_headhunter_id")
     Account managedByHeadhunter;
 
-    @Column(columnDefinition = "TEXT")
-    String bankInfo;
-
     Double commissionRate;
 }
