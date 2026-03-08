@@ -94,7 +94,7 @@ public class AccountController {
         return resp;
     }
 
-    @PostMapping("/signup-headhunter")
+    @PostMapping(value = "/signup-headhunter", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public APIResponse<AccountResp> signupHeadhunter(@ModelAttribute HeadhunterSignupReq req) {
         APIResponse<AccountResp> resp = new APIResponse<>();
         resp.setResult(accountService.createAccountHeadhunter(req));

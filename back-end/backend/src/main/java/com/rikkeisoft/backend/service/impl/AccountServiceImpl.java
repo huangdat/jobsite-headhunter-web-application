@@ -25,8 +25,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -124,6 +128,7 @@ public class AccountServiceImpl implements AccountService {
                 .email(req.getEmail())
                 .fullName(req.getFullName())
                 .phone(req.getPhone())
+                .gender(req.getGender())
                 .imageUrl(imageUrl)
                 .authProvider(AuthProvider.LOCAL)
                 .status(AccountStatus.PENDING)
@@ -283,6 +288,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public AccountResp createAccountHeadhunter(HeadhunterSignupReq req) {
         // Create accountCreateReq object to reuse createAccount logic (except for businessProfile and role)
         AccountCreateReq accountCreateReq = AccountCreateReq.builder()
@@ -303,8 +309,10 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepo.findById(accountResp.getId())
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
 
-        // assign HEADHUNTER role
-        account.getRoles().add("HEADHUNTER");
+        // assign HEADHUNTER role — initialize a fresh set to avoid lazy-load / null issues
+        Set<String> roles = new HashSet<>();
+        roles.add("HEADHUNTER");
+        account.setRoles(roles);
 
         // resolve BusinessProfile
         BusinessProfile businessProfile;

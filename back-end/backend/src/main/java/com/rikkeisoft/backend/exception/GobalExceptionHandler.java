@@ -2,6 +2,7 @@ package com.rikkeisoft.backend.exception;
 
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.model.dto.APIResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -11,17 +12,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
 public class GobalExceptionHandler {
-    @ExceptionHandler(value = RuntimeException.class)
-    ResponseEntity<APIResponse> handlingRuntimeException(RuntimeException e) {
-        APIResponse response = new APIResponse();
-
-        response.setStatus(ErrorCode.INTERNAL_SERVER_ERROR.getHttpStatus());
-        response.setMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage());
-
-        return ResponseEntity.badRequest().body(response);
-    }
 
     /**
      * Handles custom application exceptions.
@@ -34,6 +27,15 @@ public class GobalExceptionHandler {
         APIResponse response = new APIResponse();
         response.setStatus(errorCode.getHttpStatus());
         response.setMessage(errorCode.getMessage());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    ResponseEntity<APIResponse> handlingRuntimeException(RuntimeException e) {
+        log.error("Unhandled RuntimeException: ", e);
+        APIResponse response = new APIResponse();
+        response.setStatus(ErrorCode.INTERNAL_SERVER_ERROR.getHttpStatus());
+        response.setMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage());
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -71,24 +73,18 @@ public class GobalExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<APIResponse> handlingValidation(MethodArgumentNotValidException e) {
 
-        String enumKey = e.getFieldError().getDefaultMessage();
-        System.out.println(enumKey); // Debugging purpose
+        String enumKey = e.getFieldError() != null ? e.getFieldError().getDefaultMessage() : "INVALID_KEY";
+        log.warn("Validation error: {}", enumKey);
 
         ErrorCode errorCode = ErrorCode.INVALID_KEY;
-
         try {
             errorCode = ErrorCode.valueOf(enumKey);
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            System.out.println("Invalid enum key: " + enumKey);
-            // If the enum key is not valid, we can either log it or handle it differently
+        } catch (IllegalArgumentException ignored) {
         }
 
         APIResponse response = new APIResponse();
-
         response.setStatus(errorCode.getHttpStatus());
         response.setMessage(errorCode.getMessage());
-
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -101,10 +97,8 @@ public class GobalExceptionHandler {
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     ResponseEntity<APIResponse> handlingHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         APIResponse response = new APIResponse();
-
         response.setStatus(ErrorCode.METHOD_NOT_ALLOWED.getHttpStatus());
         response.setMessage(ErrorCode.METHOD_NOT_ALLOWED.getMessage());
-
         return ResponseEntity.status(405).body(response);
     }
 }
