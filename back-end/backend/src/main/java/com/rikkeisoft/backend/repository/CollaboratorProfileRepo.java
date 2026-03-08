@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface CollaboratorProfileRepo extends JpaRepository<CollaboratorProfile, Long> {
 
-    Optional<CollaboratorProfile> findByAccountId(String accountId);
+    Optional<CollaboratorProfile> findByAccount_Id(String accountId);
 
-    List<CollaboratorProfile> findByManagedByHeadhunterId(String headhunterId);
+    List<CollaboratorProfile> findByManagedByHeadhunter_Id(String headhunterId);
 }

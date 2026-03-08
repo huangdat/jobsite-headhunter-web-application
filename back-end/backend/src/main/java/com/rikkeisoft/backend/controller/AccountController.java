@@ -5,7 +5,8 @@ import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateStatusReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
-import com.rikkeisoft.backend.model.dto.resp.AccountResp;
+import com.rikkeisoft.backend.model.dto.req.account.*;
+import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.service.AccountService;
 import com.rikkeisoft.backend.model.dto.PagedResponse;
 
@@ -92,12 +93,13 @@ public class AccountController {
 
         return resp;
     }
-//    @PostMapping("/signup-headhunter")
-//    public APIResponse<AccountResp> signupHeadhunter(@ModelAttribute HeadhunterSignupReq req) {
-//        APIResponse<AccountResp> resp = new APIResponse<>();
-//        resp.setResult(accountService.createHeahunterAccount(req));
-//        return resp;
-//    }
+
+    @PostMapping(value = "/signup-headhunter", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public APIResponse<AccountResp> signupHeadhunter(@ModelAttribute HeadhunterSignupReq req) {
+        APIResponse<AccountResp> resp = new APIResponse<>();
+        resp.setResult(accountService.createAccountHeadhunter(req));
+        return resp;
+    }
 
 
 }

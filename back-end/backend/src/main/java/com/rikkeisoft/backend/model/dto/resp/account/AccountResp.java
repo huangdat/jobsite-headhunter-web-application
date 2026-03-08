@@ -1,4 +1,4 @@
-package com.rikkeisoft.backend.model.dto.resp;
+package com.rikkeisoft.backend.model.dto.resp.account;
 
 import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.enums.AuthProvider;
