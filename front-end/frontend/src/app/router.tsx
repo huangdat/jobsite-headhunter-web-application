@@ -4,6 +4,7 @@ import {
   LoginPage,
   SelectRolePage,
   RegisterPage,
+  OTPVerificationPage,
   ForgotPasswordPage,
   ResetPasswordPage,
   ResetPasswordSuccessPage,
@@ -17,6 +18,7 @@ export function AppRouter() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/select-role" element={<SelectRolePage />} />
       <Route path="/register/:role" element={<RegisterPage />} />
+      <Route path="/verify-otp" element={<OTPVerificationPage />} />
       <Route path="/forgot-password/" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route
