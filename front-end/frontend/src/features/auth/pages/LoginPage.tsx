@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
 import { AnimatedCheckbox } from "../components/AnimatedCheckbox";
 import { useLogin } from "../hooks";
+import { toast } from "sonner";
 
-import { MdOutlineMail, MdLockOutline } from "react-icons/md";
+import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { HiOutlineArrowRight } from "react-icons/hi";
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     formData,
     errors,
@@ -23,7 +25,25 @@ export function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  // Load remembered email on component mount
+  // Handle state from registration redirect
+  useEffect(() => {
+    const state = location.state as { email?: string; message?: string } | null;
+    
+    if (state?.email) {
+      // Pre-fill username/email from registration (field name is 'email' but can contain username)
+      handleChange("email")(state.email);
+    }
+    
+    if (state?.message) {
+      // Show success message from registration
+      toast.success(state.message);
+      
+      // Clear state to prevent showing again on refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state, handleChange]);
+
+  // Load remembered login (username or email) on component mount
   useEffect(() => {
     loadRememberedEmail();
   }, [loadRememberedEmail]);
@@ -70,15 +90,18 @@ export function LoginPage() {
             }}
             className="space-y-6"
           >
-            {/* EMAIL */}
-            <FormField label="Work Email" error={errors.email}>
+            {/* USERNAME OR EMAIL */}
+            <FormField label="Username or Email" error={errors.email}>
               <Input
-                icon={<MdOutlineMail />}
-                type="email"
-                placeholder="name@company.com"
+                icon={<MdAccountCircle />}
+                type="text"
+                placeholder="john_doe123 or email@company.com"
                 value={formData.email}
                 onChange={(e) => handleChange("email")(e.target.value)}
               />
+              <p className="text-xs text-slate-500 mt-1">
+                Enter your username or email address
+              </p>
             </FormField>
 
             {/* PASSWORD */}
