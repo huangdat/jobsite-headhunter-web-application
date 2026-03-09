@@ -12,6 +12,7 @@ import com.rikkeisoft.backend.model.entity.BusinessProfile;
 import com.rikkeisoft.backend.model.entity.CollaboratorProfile;
 import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.repository.BusinessProfileRepo;
+import com.rikkeisoft.backend.repository.CandidateProfileRepo;
 import com.rikkeisoft.backend.repository.CollaboratorProfileRepo;
 import com.rikkeisoft.backend.service.AccountService;
 import com.rikkeisoft.backend.service.BusinessProfileService;
@@ -57,6 +58,7 @@ public class AccountServiceImpl implements AccountService {
     BusinessProfileService businessProfileService;
     BusinessProfileRepo businessProfileRepo;
     CollaboratorProfileRepo collaboratorProfileRepo;
+    CandidateProfileRepo candidateProfileRepo;
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
@@ -390,6 +392,52 @@ public class AccountServiceImpl implements AccountService {
                 .managedByHeadhunter(null) // can be set later by collaborator's choice
                 .build();
         collaboratorProfileRepo.save(collaboratorProfile);
+        accountRepo.save(account);
+
+        return accountMapper.toAccountResp(account);
+    }
+
+    @Override
+    @Transactional
+    public AccountResp createAccountCandidate(CandidateSignupReq req) {
+        // Build AccountCreateReq to reuse createAccount logic
+        AccountCreateReq accountCreateReq = AccountCreateReq.builder()
+                .username(req.getUsername())
+                .password(req.getPassword())
+                .rePassword(req.getRePassword())
+                .email(req.getEmail())
+                .fullName(req.getFullName())
+                .phone(req.getPhone())
+                .avatar(req.getAvatar())
+                .gender(req.getGender())
+                .build();
+
+        // createAccount saves and returns the account (still without candidateProfile / role)
+        AccountResp accountResp = createAccount(accountCreateReq);
+
+        // Fetch the saved entity to mutate it
+        Account account = accountRepo.findById(accountResp.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        // Assign CANDIDATE role
+        Set<String> roles = new HashSet<>();
+        roles.add("CANDIDATE");
+        account.setRoles(roles);
+
+        // Create and link the CandidateProfile
+        com.rikkeisoft.backend.model.entity.CandidateProfile candidateProfile =
+                com.rikkeisoft.backend.model.entity.CandidateProfile.builder()
+                        .account(account)
+                        .currentTitle(req.getCurrentTitle())
+                        .yearsOfExperience(req.getYearsOfExperience())
+                        .expectedSalaryMin(req.getExpectedSalaryMin())
+                        .expectedSalaryMax(req.getExpectedSalaryMax())
+                        .bio(req.getBio())
+                        .city(req.getCity())
+                        .openForWork(req.getOpenForWork() != null ? req.getOpenForWork() : false)
+                        .createdAt(LocalDateTime.now())
+                        .build();
+        candidateProfileRepo.save(candidateProfile);
         accountRepo.save(account);
 
         return accountMapper.toAccountResp(account);
