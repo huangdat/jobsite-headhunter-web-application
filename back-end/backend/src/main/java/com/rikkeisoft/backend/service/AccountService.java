@@ -23,4 +23,6 @@ public interface AccountService {
     AccountResp createAccountHeadhunter(HeadhunterSignupReq req);
 
     AccountResp createAccountCollaborator(CollaboratorSignupReq req);
+
+    AccountResp createAccountCandidate(CandidateSignupReq req);
 }

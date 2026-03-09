@@ -35,7 +35,7 @@ public class CandidateProfile {
     String city;
 
     @Builder.Default
-    Boolean openForWork = true;
+    Boolean openForWork = false;
 
     LocalDateTime createdAt;
 }
