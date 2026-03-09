@@ -27,6 +27,7 @@ CREATE TABLE `account` (
   `username` varchar(100) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `business_profile_id` bigint DEFAULT NULL,
   `full_name` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `image_url` text,
@@ -38,7 +39,9 @@ CREATE TABLE `account` (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  KEY `account_business_profile_id_fk` (`business_profile_id`),
+  CONSTRAINT `account_business_profile_id_fk` FOREIGN KEY (`business_profile_id`) REFERENCES `business_profile` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,7 +51,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('22222222-2222-2222-2222-222222222222','cuonghr','cuongct.ce190026@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2','Châu Tấn Cường','0901000002',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('33333333-3333-3333-3333-333333333333','haohr','haona.ce190361','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2','Nguyễn Anh Hào','0901000003',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('44444444-4444-4444-4444-444444444444','phucctv','phucdc.ce190770','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2','Đinh Công Phúc','0901000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('55555555-5555-5555-5555-555555555555','loictv','loilt.ce190481@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2','Lê Thành Lợi','0901000005',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('66666666-6666-6666-6666-666666666666','sangctv','votansang1711@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2','Võ Tấn Sang','0901000006',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('77777777-7777-7777-7777-777777777777','ducdev','nguyentrungduc.forwork@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2','Nguyễn Trung Đức','0901000007',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('88888888-8888-8888-8888-888888888888','diendev','dien@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2','Dien','07929733143','https://headhunterstorage.blob.core.windows.net/uploads/images_0f80428d-3630-4f29-8fd9-7f967761b3fe.jpg','MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-27 17:17:30'),('e403e186-80a0-4ed1-9b55-f3340efec998','admin','datnh.work@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2','Admin','0123456789','src/main/resources/static/img/admin-avatar.webp','OTHER','LOCAL','','ACTIVE','2026-02-26 15:26:59','2026-02-26 15:26:59');
+INSERT INTO `account` VALUES ('22222222-2222-2222-2222-222222222222','cuonghr','cuongct.ce190026@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',1,'Châu Tấn Cường','0901000002',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('33333333-3333-3333-3333-333333333333','haohr','haona.ce190361','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',2,'Nguyễn Anh Hào','0901000003',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('44444444-4444-4444-4444-444444444444','phucctv','phucdc.ce190770','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Đinh Công Phúc','0901000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('55555555-5555-5555-5555-555555555555','loictv','loilt.ce190481@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Lê Thành Lợi','0901000005',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('66666666-6666-6666-6666-666666666666','sangctv','votansang1711@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Võ Tấn Sang','0901000006',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('77777777-7777-7777-7777-777777777777','ducdev','nguyentrungduc.forwork@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Nguyễn Trung Đức','0901000007',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('8156bb1b-e259-4999-8139-14064898c621','deptrai2','datnhce1807977@fpt.edu.vn','$2a$10$YxwzGTzKyRnJOI8zrgIhx.tcV1o29HVd9AJYWpVtxOLl.wuSbSlqi',1,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/superman-matday_a1b034d6-0154-4f24-ae04-a928b1d5a34e.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 15:47:17','2026-03-08 15:47:17'),('88888888-8888-8888-8888-888888888888','diendev','dien@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Dien','07929733143','https://headhunterstorage.blob.core.windows.net/uploads/images_0f80428d-3630-4f29-8fd9-7f967761b3fe.jpg','MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-27 17:17:30'),('8de8b1b6-54ef-4555-857f-fa99a411794a','deptrai','datnhce180797@fpt.edu.vn','$2a$10$rzJOPBWGnK.rZDiOqChUZebjU.XQp99XJtXcq9RPFIskpiYhoisSy',3,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/superman-matday_a967eaf9-1660-4f47-b369-1a9d59fddebc.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 15:26:31','2026-03-08 15:26:31'),('97aacef4-bf45-412e-bcc5-042d0657bd09','donaldtrump','makeamericagreatagain@gmail.com','$2a$10$DXc3C8TnQ1eGKi/1y9KBJOVX5.u/0coLpBwciUwPjRJzVQr64onjW',NULL,'Donald John Trump','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/trump_a55fe560-8545-4712-8f71-0839e618d318.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 23:46:28','2026-03-08 23:46:28'),('e403e186-80a0-4ed1-9b55-f3340efec998','admin','datnh.work@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Admin','0123456789','src/main/resources/static/img/admin-avatar.webp','OTHER','LOCAL','','ACTIVE','2026-02-26 15:26:59','2026-02-26 15:26:59');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +77,7 @@ CREATE TABLE `account_role` (
 
 LOCK TABLES `account_role` WRITE;
 /*!40000 ALTER TABLE `account_role` DISABLE KEYS */;
-INSERT INTO `account_role` VALUES ('e403e186-80a0-4ed1-9b55-f3340efec998','ADMIN'),('77777777-7777-7777-7777-777777777777','CANDIDATE'),('88888888-8888-8888-8888-888888888888','CANDIDATE'),('44444444-4444-4444-4444-444444444444','COLLABORATOR'),('55555555-5555-5555-5555-555555555555','COLLABORATOR'),('66666666-6666-6666-6666-666666666666','COLLABORATOR'),('22222222-2222-2222-2222-222222222222','HEADHUNTER'),('33333333-3333-3333-3333-333333333333','HEADHUNTER');
+INSERT INTO `account_role` VALUES ('e403e186-80a0-4ed1-9b55-f3340efec998','ADMIN'),('77777777-7777-7777-7777-777777777777','CANDIDATE'),('88888888-8888-8888-8888-888888888888','CANDIDATE'),('44444444-4444-4444-4444-444444444444','COLLABORATOR'),('55555555-5555-5555-5555-555555555555','COLLABORATOR'),('66666666-6666-6666-6666-666666666666','COLLABORATOR'),('97aacef4-bf45-412e-bcc5-042d0657bd09','COLLABORATOR'),('22222222-2222-2222-2222-222222222222','HEADHUNTER'),('33333333-3333-3333-3333-333333333333','HEADHUNTER'),('8156bb1b-e259-4999-8139-14064898c621','HEADHUNTER'),('8de8b1b6-54ef-4555-857f-fa99a411794a','HEADHUNTER');
 /*!40000 ALTER TABLE `account_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +125,6 @@ DROP TABLE IF EXISTS `business_profile`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `business_profile` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `account_id` char(36) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `tax_code` varchar(255) DEFAULT NULL,
   `website_url` varchar(255) DEFAULT NULL,
@@ -130,10 +132,8 @@ CREATE TABLE `business_profile` (
   `company_scale` varchar(255) DEFAULT NULL,
   `verification_status` enum('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
   `note_by_admin` text,
-  PRIMARY KEY (`id`),
-  KEY `fk_business_account` (`account_id`),
-  CONSTRAINT `fk_business_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,7 +142,7 @@ CREATE TABLE `business_profile` (
 
 LOCK TABLES `business_profile` WRITE;
 /*!40000 ALTER TABLE `business_profile` DISABLE KEYS */;
-INSERT INTO `business_profile` VALUES (1,'22222222-2222-2222-2222-222222222222','TechVision JSC','0312345678','https://techvision.vn','Quận 1, TP.HCM','100-300','APPROVED',NULL),(2,'33333333-3333-3333-3333-333333333333','FinStar Group','0318765432','https://finstar.vn','Quận 3, TP.HCM','300-500','APPROVED',NULL);
+INSERT INTO `business_profile` VALUES (1,'TechVision JSC','0312345678','https://techvision.vn','Quận 1, TP.HCM','SMALL','APPROVED',NULL),(2,'FinStar Group','0318765432','https://finstar.vn','Quận 3, TP.HCM','LARGE','APPROVED',NULL),(3,'dep trai company','deptrai','deptrai.com','dep trai district','LARGE','PENDING',NULL);
 /*!40000 ALTER TABLE `business_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,14 +220,13 @@ CREATE TABLE `collaborator_profile` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `account_id` char(36) NOT NULL,
   `managed_by_headhunter_id` char(36) DEFAULT NULL,
-  `bank_info` text,
   `commission_rate` double DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_collab_account` (`account_id`),
   KEY `fk_collab_manager` (`managed_by_headhunter_id`),
   CONSTRAINT `fk_collab_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_collab_manager` FOREIGN KEY (`managed_by_headhunter_id`) REFERENCES `account` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +235,7 @@ CREATE TABLE `collaborator_profile` (
 
 LOCK TABLES `collaborator_profile` WRITE;
 /*!40000 ALTER TABLE `collaborator_profile` DISABLE KEYS */;
-INSERT INTO `collaborator_profile` VALUES (1,'44444444-4444-4444-4444-444444444444','22222222-2222-2222-2222-222222222222','Vietcombank - 0123456789 - Dinh Cong Phuc',15),(2,'55555555-5555-5555-5555-555555555555','33333333-3333-3333-3333-333333333333','ACB - 9876543210 - Le Thanh Loi',15);
+INSERT INTO `collaborator_profile` VALUES (1,'44444444-4444-4444-4444-444444444444','22222222-2222-2222-2222-222222222222',15),(2,'55555555-5555-5555-5555-555555555555','33333333-3333-3333-3333-333333333333',15),(4,'97aacef4-bf45-412e-bcc5-042d0657bd09',NULL,15.5);
 /*!40000 ALTER TABLE `collaborator_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -455,7 +454,7 @@ CREATE TABLE `otp_token` (
   PRIMARY KEY (`id`),
   KEY `fk_otp_token_account` (`account_id`),
   CONSTRAINT `fk_otp_token_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -464,7 +463,7 @@ CREATE TABLE `otp_token` (
 
 LOCK TABLES `otp_token` WRITE;
 /*!40000 ALTER TABLE `otp_token` DISABLE KEYS */;
-INSERT INTO `otp_token` VALUES (6,NULL,'hoangdat060504@gmail.com','511488','SIGN_UP',_binary '\0','2026-03-02 06:19:52.713778','2026-03-02 06:24:52.713778',0),(7,NULL,'datnhce180797@fpt.edu.vn','556948','SIGN_UP',_binary '\0','2026-03-02 06:20:55.118364','2026-03-02 06:25:55.118364',0),(8,NULL,'datnhce180797@fpt.edu.vn','573850','SIGN_UP',_binary '\0','2026-03-02 06:22:45.023540','2026-03-02 06:27:45.023540',0),(9,NULL,'datnhce180797@fpt.edu.vn','424510','SIGN_UP',_binary '\0','2026-03-02 06:32:52.658686','2026-03-02 06:37:52.658686',0),(10,NULL,'datnhce180797@fpt.edu.vn','727758','SIGN_UP',_binary '\0','2026-03-02 06:43:03.249780','2026-03-02 06:48:03.249780',0),(11,NULL,'datnhce180797@fpt.edu.vn','279824','SIGN_UP',_binary '','2026-03-02 06:56:29.535230','2026-03-02 07:01:29.535230',0),(12,NULL,'datnhce180797@fpt.edu.vn','849334','SIGN_UP',_binary '','2026-03-02 08:18:11.954330','2026-03-02 08:23:11.954330',0),(13,NULL,'datnhce180797@fpt.edu.vn','988410','SIGN_UP',_binary '\0','2026-03-02 08:41:30.769353','2026-03-02 08:46:30.769353',0),(14,NULL,'datnhce180797@fpt.edu.vn','913896','SIGN_UP',_binary '','2026-03-03 08:35:13.877729','2026-03-03 08:40:13.877729',0),(15,NULL,'datnhce180797@fpt.edu.vn','583858','SIGN_UP',_binary '\0','2026-03-04 09:37:17.081743','2026-03-04 09:42:17.081743',0),(16,'22222222-2222-2222-2222-222222222222','cuongct.ce190026@gmail.com','547703','FORGOT_PASSWORD',_binary '','2026-03-04 09:42:51.906586','2026-03-04 09:47:51.906586',0);
+INSERT INTO `otp_token` VALUES (6,NULL,'hoangdat060504@gmail.com','511488','SIGN_UP',_binary '\0','2026-03-02 06:19:52.713778','2026-03-02 06:24:52.713778',0),(7,NULL,'datnhce180797@fpt.edu.vn','556948','SIGN_UP',_binary '\0','2026-03-02 06:20:55.118364','2026-03-02 06:25:55.118364',0),(8,NULL,'datnhce180797@fpt.edu.vn','573850','SIGN_UP',_binary '\0','2026-03-02 06:22:45.023540','2026-03-02 06:27:45.023540',0),(9,NULL,'datnhce180797@fpt.edu.vn','424510','SIGN_UP',_binary '\0','2026-03-02 06:32:52.658686','2026-03-02 06:37:52.658686',0),(10,NULL,'datnhce180797@fpt.edu.vn','727758','SIGN_UP',_binary '\0','2026-03-02 06:43:03.249780','2026-03-02 06:48:03.249780',0),(11,NULL,'datnhce180797@fpt.edu.vn','279824','SIGN_UP',_binary '','2026-03-02 06:56:29.535230','2026-03-02 07:01:29.535230',0),(12,NULL,'datnhce180797@fpt.edu.vn','849334','SIGN_UP',_binary '','2026-03-02 08:18:11.954330','2026-03-02 08:23:11.954330',0),(13,NULL,'datnhce180797@fpt.edu.vn','988410','SIGN_UP',_binary '\0','2026-03-02 08:41:30.769353','2026-03-02 08:46:30.769353',0),(14,NULL,'datnhce180797@fpt.edu.vn','913896','SIGN_UP',_binary '','2026-03-03 08:35:13.877729','2026-03-03 08:40:13.877729',0),(15,NULL,'datnhce180797@fpt.edu.vn','583858','SIGN_UP',_binary '\0','2026-03-04 09:37:17.081743','2026-03-04 09:42:17.081743',0),(16,'22222222-2222-2222-2222-222222222222','cuongct.ce190026@gmail.com','547703','FORGOT_PASSWORD',_binary '','2026-03-04 09:42:51.906586','2026-03-04 09:47:51.906586',0),(17,NULL,'datnhce180797@fpt.edu.vn','250629','SIGN_UP',_binary '\0','2026-03-05 07:37:26.030146','2026-03-05 07:42:26.030146',0);
 /*!40000 ALTER TABLE `otp_token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -481,4 +480,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-05 14:27:31
+-- Dump completed on 2026-03-08 23:47:38

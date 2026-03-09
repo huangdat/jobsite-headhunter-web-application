@@ -31,6 +31,10 @@ public class Account {
 
     String password;
 
+    @ManyToOne
+    @JoinColumn(name = "business_profile_id")
+    BusinessProfile businessProfile;
+
     String fullName;
 
     String phone;
@@ -58,7 +62,7 @@ public class Account {
     @CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id")
     )
     @Column(name = "role")
+    @Builder.Default
     Set<String> roles = new HashSet<>();
-
 
 }

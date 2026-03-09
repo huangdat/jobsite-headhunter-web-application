@@ -43,6 +43,5 @@ public class CollaboratorSignupReq {
     /**
      * INFORMATION FOR COLLABORATOR_PROFILE CREATION
      */
-    String bankInfo;
     Double commissionRate;
 }

@@ -8,6 +8,7 @@ import com.rikkeisoft.backend.model.dto.req.auth.TokenValidateReq;
 import com.rikkeisoft.backend.model.dto.resp.auth.AuthenticationResp;
 import com.rikkeisoft.backend.model.dto.resp.auth.TokenValidateResp;
 import com.rikkeisoft.backend.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -73,19 +74,22 @@ public class AuthenticationController {
                                         .build();
                 }
 
-                // Token valid: trả full thông tin
-                return APIResponse.<TokenValidateResp>builder()
-                                .status(HttpStatus.OK)
-                                .message("Token valid")
-                                .result(TokenValidateResp.builder()
-                                                .valid(response.isValid())
-                                                .username(response.getUsername())
-                                                .id(response.getId())
-                                                .role(response.getRole())
-                                                .status(response.getStatus())
-                                                .build())
-                                .build();
+    /**
+     * Logout user by invalidating the JWT token.
+     * @param request
+     * @return APIResponse indicating logout success
+     * @throws ParseException
+     * @throws JOSEException
+     */
+    @PostMapping("/logout")
+    public APIResponse<Void> logout(@RequestBody LogoutReq request, HttpServletRequest httpRequest) throws ParseException, JOSEException {
+        String authHeader = httpRequest.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Unauthorized");
         }
+        String callerToken = authHeader.substring("Bearer ".length()).trim();
+
+        authenticationService.logout(request, callerToken);
 
         /**
          * Logout user by invalidating the JWT token.

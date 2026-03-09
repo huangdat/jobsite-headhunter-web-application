@@ -1,47 +1,17 @@
 import { Link } from "react-router-dom";
+import { AuthLayout } from "@/shared/components";
 
 export function ResetPasswordSuccessPage() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
-      {/* Header */}
-      <header className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-[#39FF14] p-1.5 rounded-lg">
-            <span className="material-symbols-outlined text-black text-lg font-bold">
-              handshake
-            </span>
-          </div>
-          <span className="text-xl font-bold tracking-tight">JobSite</span>
-        </div>
-        <nav className="hidden md:flex items-center gap-8">
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            How it works
-          </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            Rewards
-          </Link>
-          <Link
-            to="/select-role"
-            className="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-6 py-2 rounded-full text-sm font-semibold"
-          >
-            Sign Up
-          </Link>
-        </nav>
-      </header>
-
-      {/* Main Content */}
+    <AuthLayout
+      navLinks={[
+        { to: "#", label: "Home" },
+        { to: "#", label: "How it works" },
+        { to: "#", label: "Rewards" },
+      ]}
+      ctaButton={{ to: "/select-role", label: "Sign Up" }}
+      showFooter={false}
+    >
       <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}
@@ -51,13 +21,13 @@ export function ResetPasswordSuccessPage() {
 
             <div className="relative z-10">
               <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 border border-white/10">
-                <span className="material-symbols-outlined text-[#39FF14]">
+                <span className="material-symbols-outlined text-brand-primary">
                   trending_up
                 </span>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
                 Unlock Your <br />
-                <span className="text-[#39FF14]">Earning Potential</span>
+                <span className="text-brand-primary">Earning Potential</span>
               </h1>
               <p className="text-slate-400 text-lg leading-relaxed max-w-sm mb-12">
                 Join our exclusive network of professional headhunters. Refer
@@ -113,7 +83,7 @@ export function ResetPasswordSuccessPage() {
                 </span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-[#39FF14] text-xl">
+                <span className="material-symbols-outlined text-brand-primary text-xl">
                   verified_user
                 </span>
                 <span className="text-sm font-medium text-slate-300">
@@ -128,7 +98,7 @@ export function ResetPasswordSuccessPage() {
             <div className="max-w-md mx-auto text-center">
               <div className="mb-8 flex justify-center">
                 <div className="w-24 h-24 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center">
-                  <span className="material-symbols-outlined text-7xl text-[#39FF14] success-icon-glow">
+                  <span className="material-symbols-outlined text-7xl text-brand-primary success-icon-glow">
                     check_circle
                   </span>
                 </div>
@@ -149,7 +119,7 @@ export function ResetPasswordSuccessPage() {
                 Need help?{" "}
                 <Link
                   to="#"
-                  className="text-[#39FF14] font-bold hover:underline"
+                  className="text-brand-primary font-bold hover:underline"
                 >
                   Contact Support
                 </Link>
@@ -180,11 +150,8 @@ export function ResetPasswordSuccessPage() {
               Help Center
             </Link>
           </div>
-          <p className="text-xs text-slate-400">
-            © 2024 ReferralPortal Inc. All rights reserved.
-          </p>
         </footer>
       </main>
-    </div>
+    </AuthLayout>
   );
 }

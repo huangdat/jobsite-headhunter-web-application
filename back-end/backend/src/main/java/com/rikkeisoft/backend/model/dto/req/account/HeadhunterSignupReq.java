@@ -46,6 +46,7 @@ public class HeadhunterSignupReq {
     /**
      * INFORMATION FOR BUSINESS_PROFILE CREATION
      */
+    Long businessProfileId;
     String companyName;
     String taxCode;
     String websiteUrl;
