@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SocialLoginReq {
+public class GoogleTokenReq {
     @NotBlank(message = "ID Token is required")
     String idToken;
 }

@@ -31,7 +31,12 @@ jwt:
   signerKey: RikkeisoftHCMcity9998hIrNT3QZjFzSdzZ3YvFWhQyoV4HnOrMbcsrIKMgHMlV
 
 google:
-  client-id: "hidden"
+  client-id: ""
+  client-secret: ""
+
+linkedin:
+  client-id: ""
+  client-secret: ""
 
 springdoc:
   api-docs:

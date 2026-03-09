@@ -19,10 +19,14 @@ import com.rikkeisoft.backend.model.entity.InvalidatedToken;
 import com.rikkeisoft.backend.repository.InvalidatedTokenRepo;
 import com.rikkeisoft.backend.service.AuthenticationService;
 import com.rikkeisoft.backend.service.GoogleTokenService;
-import com.rikkeisoft.backend.model.dto.req.auth.SocialLoginReq;
+import com.rikkeisoft.backend.model.dto.req.auth.GoogleTokenReq;
 import com.rikkeisoft.backend.model.dto.req.auth.SocialRegisterReq;
 import com.rikkeisoft.backend.model.dto.resp.auth.SocialAuthResp;
 import com.rikkeisoft.backend.enums.AuthProvider;
+import com.rikkeisoft.backend.model.dto.req.auth.LinkedInTokenReq;
+import com.rikkeisoft.backend.model.dto.resp.auth.LinkedInTokenResp;
+import com.rikkeisoft.backend.model.dto.resp.auth.LinkedInUserInfoResp;
+import com.rikkeisoft.backend.service.LinkedInTokenService;
 import com.rikkeisoft.backend.repository.CandidateProfileRepo;
 import com.rikkeisoft.backend.repository.BusinessProfileRepo;
 import com.rikkeisoft.backend.repository.CollaboratorProfileRepo;
@@ -61,12 +65,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     AccountRepo accountRepo;
     InvalidatedTokenRepo invalidatedTokenRepo;
     GoogleTokenService googleTokenService;
+    LinkedInTokenService linkedInTokenService;
     CandidateProfileRepo candidateProfileRepo;
     BusinessProfileRepo businessProfileRepo;
     CollaboratorProfileRepo collaboratorProfileRepo;
 
     /**
      * Authenticate a user with username and password.
+     * 
      * @param req
      * @return AuthenticationResp containing authentication status and JWT token.
      */
@@ -78,7 +84,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // Check if the provided password matches the stored password
         boolean authenticated = passwordEncoder.matches(req.getPassword(), user.getPassword());
 
-        // Consider authentication result to generate a JWT token or handle further logic
+        // Consider authentication result to generate a JWT token or handle further
+        // logic
         if (!authenticated) {
             throw new AppException(ErrorCode.UNAUTHORIZED);
         }
@@ -96,6 +103,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     /**
      * Generate a JWT token for the authenticated user.
+     * 
      * @param username
      * @param isRefreshToken
      * @return JWT token as a string.
@@ -112,13 +120,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         if (isRefreshToken) {
             claimsBuilder.expirationTime(new Date(
-                    Instant.now().plus(7, ChronoUnit.DAYS).toEpochMilli()
-            )).claim("scope", "REFRESH_TOKEN");
+                    Instant.now().plus(7, ChronoUnit.DAYS).toEpochMilli())).claim("scope", "REFRESH_TOKEN");
         } else {
-            Set<String> roles = accountRepo.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND)).getRoles();
+            Set<String> roles = accountRepo.findByUsername(username)
+                    .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND)).getRoles();
             claimsBuilder.expirationTime(new Date(
-                    Instant.now().plus(24, ChronoUnit.HOURS).toEpochMilli()
-            )).claim("scope", String.join(" ", roles));
+                    Instant.now().plus(24, ChronoUnit.HOURS).toEpochMilli())).claim("scope", String.join(" ", roles));
         }
 
         JWTClaimsSet claimsSet = claimsBuilder.build();
@@ -132,14 +139,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             jwsObject.sign(new MACSigner(SIGNER_KEY.getBytes()));
             return jwsObject.serialize(); // Serialize the JWS object to a compact string representation
-                } catch (JOSEException e) {
-                        throw new RuntimeException(e);
-                }
+        } catch (JOSEException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     /**
      * Introspect a JWT token to verify its validity and extract user information.
+     * 
      * @param req
      * @return IntrospectResp containing token validity and user details.
      * @throws JOSEException
@@ -148,16 +156,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public TokenValidateResp validateToken(TokenValidateReq req)
             throws JOSEException, ParseException {
         var token = req.getToken();
-                // If token was invalidated (user logged out), consider it invalid immediately
-                if (invalidatedTokenRepo.existsById(token)) {
-                        return TokenValidateResp.builder()
-                                        .valid(false)
-                                        .username(null)
-                                        .id(null)
-                                        .role(null)
-                                        .status(null)
-                                        .build();
-                }
+        // If token was invalidated (user logged out), consider it invalid immediately
+        if (invalidatedTokenRepo.existsById(token)) {
+            return TokenValidateResp.builder()
+                    .valid(false)
+                    .username(null)
+                    .id(null)
+                    .role(null)
+                    .status(null)
+                    .build();
+        }
         JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
@@ -175,26 +183,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
     }
 
-        @Override
-        public void logout(LogoutReq req) throws ParseException, JOSEException {
-                var token = req.getToken();
-                SignedJWT signedJWT = SignedJWT.parse(token);
-                Date expiry = signedJWT.getJWTClaimsSet().getExpirationTime();
+    @Override
+    public void logout(LogoutReq req) throws ParseException, JOSEException {
+        var token = req.getToken();
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        Date expiry = signedJWT.getJWTClaimsSet().getExpirationTime();
 
-                InvalidatedToken inv = InvalidatedToken.builder()
-                                .id(token)
-                                .expiryTime(expiry.toInstant())
-                                .invalidatedAt(Instant.now())
-                                .build();
+        InvalidatedToken inv = InvalidatedToken.builder()
+                .id(token)
+                .expiryTime(expiry.toInstant())
+                .invalidatedAt(Instant.now())
+                .build();
 
-                invalidatedTokenRepo.save(inv);
-        }
+        invalidatedTokenRepo.save(inv);
+    }
 
     @Override
     @Transactional
-    public Object loginSocial(SocialLoginReq req) {
+    public Object googleLogin(GoogleTokenReq req) {
         var googlePayload = googleTokenService.verifyToken(req.getIdToken());
         String email = googlePayload.getEmail();
+        if (email == null || email.isEmpty()) {
+            throw new AppException(ErrorCode.EMAIL_REQUIRED);
+        }
         String providerId = googlePayload.getSubject();
         String name = (String) googlePayload.get("name");
         String picture = (String) googlePayload.get("picture");
@@ -203,7 +214,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
-            // Update provider info if missing or different (though usually same email means same person)
+            // Update provider info if missing or different (though usually same email means
+            // same person)
             boolean changed = false;
             if (account.getAuthProvider() == null) {
                 account.setAuthProvider(AuthProvider.GOOGLE);
@@ -214,8 +226,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 changed = true;
             }
             if (picture != null && account.getImageUrl() == null) {
-                 account.setImageUrl(picture);
-                 changed = true;
+                account.setImageUrl(picture);
+                changed = true;
             }
 
             if (changed) {
@@ -233,6 +245,61 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return SocialAuthResp.builder()
                     .email(email)
                     .provider(AuthProvider.GOOGLE)
+                    .providerId(providerId)
+                    .fullName(name)
+                    .imageUrl(picture)
+                    .build();
+        }
+    }
+
+    @Override
+    @Transactional
+    public Object linkedinLogin(LinkedInTokenReq req) {
+        LinkedInTokenResp tokenResp = linkedInTokenService.getAccessToken(req);
+        LinkedInUserInfoResp userInfo = linkedInTokenService.getUserInfo(tokenResp.getAccessToken());
+
+        String email = userInfo.getEmail();
+        if (email == null || email.isEmpty()) {
+            throw new AppException(ErrorCode.EMAIL_REQUIRED);
+        }
+        String providerId = userInfo.getSub();
+        String name = userInfo.getName();
+        String picture = userInfo.getPicture();
+
+        var accountOptional = accountRepo.findByEmail(email);
+
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            boolean changed = false;
+
+            if (account.getAuthProvider() == null) {
+                account.setAuthProvider(AuthProvider.LINKEDIN);
+                changed = true;
+            }
+            if (account.getProviderId() == null) {
+                account.setProviderId(providerId);
+                changed = true;
+            }
+            if (picture != null && account.getImageUrl() == null) {
+                account.setImageUrl(picture);
+                changed = true;
+            }
+
+            if (changed) {
+                accountRepo.save(account);
+            }
+
+            String token = generateToken(account.getUsername(), false);
+            String refreshToken = generateToken(account.getUsername(), true);
+            return AuthenticationResp.builder()
+                    .accessToken(token)
+                    .refreshToken(refreshToken)
+                    .authenticated(true)
+                    .build();
+        } else {
+            return SocialAuthResp.builder()
+                    .email(email)
+                    .provider(AuthProvider.LINKEDIN)
                     .providerId(providerId)
                     .fullName(name)
                     .imageUrl(picture)

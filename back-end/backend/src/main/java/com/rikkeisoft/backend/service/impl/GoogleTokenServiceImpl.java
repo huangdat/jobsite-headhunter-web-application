@@ -31,15 +31,15 @@ public class GoogleTokenServiceImpl implements GoogleTokenService {
         GoogleIdToken idToken = null;
         try {
             idToken = verifier.verify(idTokenString);
-        } catch (GeneralSecurityException | IOException e) {
-             log.error("Error verifying Google token", e);
-             throw new AppException(ErrorCode.INTERNAL_SERVER_ERROR);
+        } catch (GeneralSecurityException | IOException | IllegalArgumentException e) {
+            log.error("Error verifying Google token", e);
+            throw new AppException(ErrorCode.AUTH_FAILED);
         }
 
         if (idToken != null) {
             return idToken.getPayload();
         } else {
-            throw new AppException(ErrorCode.UNAUTHORIZED);
+            throw new AppException(ErrorCode.AUTH_FAILED);
         }
     }
 }
