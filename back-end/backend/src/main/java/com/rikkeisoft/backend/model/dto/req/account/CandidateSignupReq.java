@@ -1,12 +1,16 @@
 package com.rikkeisoft.backend.model.dto.req.account;
 
 import com.rikkeisoft.backend.enums.Gender;
+import com.rikkeisoft.backend.model.entity.Account;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -34,4 +38,15 @@ public class CandidateSignupReq {
     MultipartFile avatar;
     @Pattern(regexp = "MALE|FEMALE|OTHER", message = "GENDER_INVALID")
     Gender gender;
+
+    /**
+     * INFORMATION FOR CANDIDATE_PROFILE CREATION
+     */
+    String currentTitle;
+    Float yearsOfExperience;
+    Double expectedSalaryMin;
+    Double expectedSalaryMax;
+    String bio;
+    String city;
+    Boolean openForWork;
 }
