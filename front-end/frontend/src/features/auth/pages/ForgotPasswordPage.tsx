@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout } from "@/shared/components";
 import type { ForgotPasswordFormData } from "../types";
-import { forgotPassword } from "../services/authApi";
+import { sendOtpForgotPassword } from "../services/authApi";
 import { toast } from "sonner";
 
 import { MdOutlineMail } from "react-icons/md";
 
 export function ForgotPasswordPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<ForgotPasswordFormData>({
     email: "",
   });
 
   const [errors, setErrors] = useState<Partial<ForgotPasswordFormData>>({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = (): boolean => {
@@ -45,13 +45,23 @@ export function ForgotPasswordPage() {
     setErrors({});
 
     try {
-      await forgotPassword(formData);
-      setIsSubmitted(true);
+      const response = await sendOtpForgotPassword({
+        email: formData.email,
+        tokenType: "FORGOT_PASSWORD",
+      });
 
-      // Success notification
-      toast.success("Password reset link sent! Check your email.");
+      toast.success("OTP has been sent to your email!");
+
+      // Navigate to reset password page with OTP data
+      navigate("/reset-password", {
+        state: {
+          email: response.email,
+          accountId: response.accountId,
+          expiresAt: response.expiresAt,
+        },
+      });
     } catch (error: unknown) {
-      let errorMessage = "Failed to send reset link. Please try again.";
+      let errorMessage = "Failed to send OTP. Please try again.";
 
       if (
         error instanceof Error &&
@@ -120,82 +130,45 @@ export function ForgotPasswordPage() {
 
           {/* RIGHT PANEL */}
           <div className="md:w-7/12 p-10">
-            {!isSubmitted ? (
-              <>
-                <h2 className="text-3xl font-bold mb-2">Reset Your Password</h2>
+            <h2 className="text-3xl font-bold mb-2">Reset Your Password</h2>
 
-                <p className="text-slate-500 mb-8">
-                  Enter the email associated with your account.
-                </p>
+            <p className="text-slate-500 mb-8">
+              Enter the email associated with your account and we'll send you an
+              OTP code.
+            </p>
 
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <FormField label="Email Address" error={errors.email}>
-                    <div className="mb-4">
-                      <Input
-                        icon={<MdOutlineMail />}
-                        type="email"
-                        placeholder="name@company.com"
-                        value={formData.email}
-                        onChange={(e) => handleChange(e.target.value)}
-                      />
-                    </div>
-                  </FormField>
-
-                  <Button
-                    type="submit"
-                    icon="send"
-                    disabled={isLoading}
-                    className="cursor-pointer"
-                  >
-                    {isLoading ? "Sending..." : "Send Reset Link"}
-                  </Button>
-                </form>
-
-                <p className="text-center text-sm text-slate-500 mt-8">
-                  Remember your password?{" "}
-                  <Link
-                    to="/login"
-                    className="text-lime-500 font-bold hover:underline"
-                  >
-                    Sign in here
-                  </Link>
-                </p>
-              </>
-            ) : (
-              <div className="text-center">
-                <div className="flex justify-center mb-6">
-                  <div className="w-20 h-20 bg-brand-primary/10 rounded-2xl flex items-center justify-center">
-                    <span className="material-symbols-outlined text-brand-primary text-5xl">
-                      mark_email_read
-                    </span>
-                  </div>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <FormField label="Email Address" error={errors.email}>
+                <div className="mb-4">
+                  <Input
+                    icon={<MdOutlineMail />}
+                    type="email"
+                    placeholder="name@company.com"
+                    value={formData.email}
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
                 </div>
+              </FormField>
 
-                <h2 className="text-3xl font-bold mb-4">Check Your Email</h2>
+              <Button
+                type="submit"
+                icon="send"
+                disabled={isLoading}
+                className="cursor-pointer"
+              >
+                {isLoading ? "Sending..." : "Send OTP"}
+              </Button>
+            </form>
 
-                <p className="text-slate-500 mb-8">
-                  We have sent a password reset link to your email.
-                </p>
-
-                <Link
-                  to="/login"
-                  className="gradient-btn w-full py-3 text-black font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25"
-                >
-                  <span className="material-symbols-outlined">arrow_back</span>
-                  Back to Login
-                </Link>
-
-                <p className="text-sm text-slate-500 mt-6">
-                  Didn't receive the email?{" "}
-                  <button
-                    onClick={() => setIsSubmitted(false)}
-                    className="text-brand-primary font-bold hover:underline"
-                  >
-                    Resend
-                  </button>
-                </p>
-              </div>
-            )}
+            <p className="text-center text-sm text-slate-500 mt-8">
+              Remember your password?{" "}
+              <Link
+                to="/login"
+                className="text-lime-500 font-bold hover:underline"
+              >
+                Sign in here
+              </Link>
+            </p>
           </div>
         </div>
       </main>

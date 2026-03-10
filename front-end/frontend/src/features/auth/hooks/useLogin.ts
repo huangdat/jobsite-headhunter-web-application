@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { login } from "../services/authApi";
 import type { LoginFormData } from "../types";
 
-const REMEMBERED_EMAIL_KEY = "rememberedEmail";
+const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -19,18 +19,24 @@ export const useLogin = () => {
   const validateForm = (data: LoginFormData): boolean => {
     const newErrors: Partial<LoginFormData> = {};
 
-    // Email validation
+    // Username or Email validation
     if (!data.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      newErrors.email = "Please enter a valid email address";
+      newErrors.email = "Username or email is required";
+    } else {
+      const input = data.email.trim();
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
+      const isUsername = /^[a-zA-Z][a-zA-Z0-9_]{7,31}$/.test(input);
+      
+      if (!isEmail && !isUsername) {
+        newErrors.email = "Please enter a valid username or email address";
+      }
     }
 
     // Password validation
     if (!data.password) {
       newErrors.password = "Password is required";
-    } else if (data.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+    } else if (data.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
     }
 
     setErrors(newErrors);
@@ -47,8 +53,9 @@ export const useLogin = () => {
     setErrors({});
 
     try {
+      // Send username/email as 'username' field (backend expects username)
       const response = await login({
-        username: data.email,
+        username: data.email, // This field contains username or email
         password: data.password,
       });
 
@@ -56,11 +63,11 @@ export const useLogin = () => {
       if (response?.accessToken) {
         localStorage.setItem("accessToken", response.accessToken);
 
-        // Handle remember me
+        // Handle remember me - store username or email
         if (data.rememberMe) {
-          localStorage.setItem(REMEMBERED_EMAIL_KEY, data.email);
+          localStorage.setItem(REMEMBERED_LOGIN_KEY, data.email);
         } else {
-          localStorage.removeItem(REMEMBERED_EMAIL_KEY);
+          localStorage.removeItem(REMEMBERED_LOGIN_KEY);
         }
 
         // Success Notification
@@ -91,9 +98,11 @@ export const useLogin = () => {
 
         if (
           messageLower.includes("email") ||
+          messageLower.includes("username") ||
           messageLower.includes("not found") ||
           messageLower.includes("does not exist") ||
           messageLower.includes("user not found") ||
+          messageLower.includes("account not found") ||
           response.status === 404
         ) {
           errorField = "email";
@@ -130,18 +139,18 @@ export const useLogin = () => {
     (field: keyof LoginFormData) => (value: string | boolean) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
-      // Clear remembered email immediately when unchecking remember me
+      // Clear remembered login immediately when unchecking remember me
       if (field === "rememberMe" && value === false) {
-        localStorage.removeItem(REMEMBERED_EMAIL_KEY);
+        localStorage.removeItem(REMEMBERED_LOGIN_KEY);
       }
     };
 
   const loadRememberedEmail = () => {
-    const rememberedEmail = localStorage.getItem(REMEMBERED_EMAIL_KEY);
-    if (rememberedEmail) {
+    const rememberedLogin = localStorage.getItem(REMEMBERED_LOGIN_KEY);
+    if (rememberedLogin) {
       setFormData((prev) => ({
         ...prev,
-        email: rememberedEmail,
+        email: rememberedLogin, // Field name is 'email' but contains username or email
         rememberMe: true,
       }));
     }
