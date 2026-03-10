@@ -25,7 +25,9 @@ interface FormData {
 interface Props {
   formData: FormData;
   errors: Record<string, string>;
-  handleChange: (field: string) => (value: string | boolean | File | null) => void;
+  handleChange: (
+    field: string,
+  ) => (value: string | boolean | File | null) => void;
   showPassword: boolean;
   showConfirmPassword: boolean;
   setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;

@@ -10,11 +10,12 @@ import {
   ResetPasswordSuccessPage,
   ChangePasswordPage,
 } from "@/features/auth/pages";
+import { HomePage } from "@/features/home/pages/HomePage";
 
 export function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<Navigate to="/home" replace />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/select-role" element={<SelectRolePage />} />
       <Route path="/register/:role" element={<RegisterPage />} />
@@ -26,6 +27,7 @@ export function AppRouter() {
         element={<ResetPasswordSuccessPage />}
       />
       <Route path="/change-password" element={<ChangePasswordPage />} />
+      <Route path="/home" element={<HomePage />} />
     </Routes>
   );
 }
