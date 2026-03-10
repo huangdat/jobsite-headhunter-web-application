@@ -10,6 +10,11 @@ import type {
   ForgotPasswordFormData,
   ResetPasswordFormData,
   ChangePasswordFormData,
+  AccountResp,
+  SendOtpRequest,
+  OtpSendResp,
+  VerifyOtpRequest,
+  OtpVerifyResp,
 } from "../types";
 
 export const login = async (data: LoginRequest) => {
@@ -34,9 +39,73 @@ export const logout = async (data: LogoutRequest) => {
 };
 
 export const register = async (data: RegisterFormData) => {
-  const res = await apiClient.post<ApiResponse<LoginResult>>(
-    "/api/auth/register",
-    data,
+  // Create FormData instead of sending JSON
+  const formData = new FormData();
+  
+  // Common fields for all roles
+  formData.append('username', data.username);
+  formData.append('email', data.email);
+  formData.append('password', data.password);
+  formData.append('rePassword', data.confirmPassword); // Backend expects 'rePassword'
+  formData.append('fullName', data.fullName);
+  formData.append('phone', data.phone);
+  
+  // Optional common fields
+  if (data.gender) {
+    formData.append('gender', data.gender);
+  }
+  
+  if (data.avatar) {
+    formData.append('avatar', data.avatar);
+  }
+  
+  // Role-specific fields and endpoint
+  let endpoint = '/api/account/signup-candidate'; // default
+  
+  if (data.role === 'headhunter') {
+    endpoint = '/api/account/signup-headhunter';
+    formData.append('companyName', data.companyName);
+    formData.append('taxCode', data.taxCode);
+    
+    // Optional headhunter fields
+    if (data.websiteUrl) formData.append('websiteUrl', data.websiteUrl);
+    if (data.addressMain) formData.append('addressMain', data.addressMain);
+    if (data.companyScale) formData.append('companyScale', data.companyScale);
+  } else if (data.role === 'collaborator') {
+    endpoint = '/api/account/signup-collaborator';
+    
+    // Optional collaborator fields
+    if (data.commissionRate !== undefined) {
+      formData.append('commissionRate', data.commissionRate.toString());
+    }
+  } else if (data.role === 'candidate') {
+    // Optional candidate fields
+    if (data.currentTitle) formData.append('currentTitle', data.currentTitle);
+    if (data.yearsOfExperience !== undefined) {
+      formData.append('yearsOfExperience', data.yearsOfExperience.toString());
+    }
+    if (data.expectedSalaryMin !== undefined) {
+      formData.append('expectedSalaryMin', data.expectedSalaryMin.toString());
+    }
+    if (data.expectedSalaryMax !== undefined) {
+      formData.append('expectedSalaryMax', data.expectedSalaryMax.toString());
+    }
+    if (data.bio) formData.append('bio', data.bio);
+    if (data.city) formData.append('city', data.city);
+    if (data.openForWork !== undefined) {
+      formData.append('openForWork', data.openForWork.toString());
+    }
+  }
+  
+  // Send to correct endpoint with FormData
+  const res = await apiClient.post<ApiResponse<AccountResp>>(
+    endpoint,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
   );
 
   return res.data.result;
@@ -68,3 +137,41 @@ export const changePassword = async (data: ChangePasswordFormData) => {
 
   return res.data.result;
 };
+
+// OTP Functions
+export const sendOtpSignup = async (data: SendOtpRequest) => {
+  const res = await apiClient.post<ApiResponse<OtpSendResp>>(
+    "/api/otp/send-signup",
+    data,
+  );
+
+  return res.data.result;
+};
+
+export const verifyOtpSignup = async (data: VerifyOtpRequest) => {
+  const res = await apiClient.post<ApiResponse<OtpVerifyResp>>(
+    "/api/otp/verify-signup",
+    data,
+  );
+
+  return res.data.result;
+};
+
+export const sendOtpForgotPassword = async (data: SendOtpRequest) => {
+  const res = await apiClient.post<ApiResponse<OtpSendResp>>(
+    "/api/otp/send-forgot-password",
+    data,
+  );
+
+  return res.data.result;
+};
+
+export const verifyOtpForgotPassword = async (data: VerifyOtpRequest) => {
+  const res = await apiClient.post<ApiResponse<OtpVerifyResp>>(
+    "/api/otp/verify-forgot-password",
+    data,
+  );
+
+  return res.data.result;
+};
+
