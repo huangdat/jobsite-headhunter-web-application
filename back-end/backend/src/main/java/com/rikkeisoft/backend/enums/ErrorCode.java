@@ -47,7 +47,11 @@ public enum ErrorCode {
 
     // Custom error codes for BusinessProfile module
     BUSINESS_PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Business profile not found"),
-    COMPANY_NAME_EXISTED(HttpStatus.CONFLICT, "Company name already exists")
+    COMPANY_NAME_EXISTED(HttpStatus.CONFLICT, "Company name already exists"),
+
+    // Custom error codes for MST (Tax code) lookup
+    MST_NOT_FOUND(HttpStatus.NOT_FOUND, "Tax code not found or does not exist"),
+    MST_LOOKUP_FAILED(HttpStatus.SERVICE_UNAVAILABLE, "Failed to lookup tax code information. Please try again later.")
     ;
 
     private final HttpStatus httpStatus;

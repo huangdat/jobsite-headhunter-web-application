@@ -9,4 +9,6 @@ public interface BusinessProfileRepo extends JpaRepository<BusinessProfile, Long
 
     boolean existsByCompanyName(String companyName);
 
+    java.util.Optional<BusinessProfile> findByTaxCode(String taxCode);
+
 }
