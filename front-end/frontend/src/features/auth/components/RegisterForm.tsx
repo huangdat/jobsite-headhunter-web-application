@@ -76,6 +76,14 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
+  // Password requirements validation
+  const passwordRequirements = {
+    minLength: formData.password.length >= 8,
+    hasUpperCase: /[A-Z]/.test(formData.password),
+    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(formData.password),
+    hasNumber: /\d/.test(formData.password),
+  };
+
   const steps = [
     { number: 1, title: "Account", description: "Login credentials" },
     { number: 2, title: "Personal", description: "Your information" },
@@ -118,16 +126,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       // Password validation
       if (!formData.password) {
         newErrors.password = "Password is required";
-      } else if (formData.password.length < 8) {
-        newErrors.password = "Password must be at least 8 characters";
-      } else if (!/[A-Z]/.test(formData.password)) {
-        newErrors.password =
-          "Password must contain at least one uppercase letter";
-      } else if (!/[a-z]/.test(formData.password)) {
-        newErrors.password =
-          "Password must contain at least one lowercase letter";
-      } else if (!/[0-9]/.test(formData.password)) {
-        newErrors.password = "Password must contain at least one number";
+      } else if (!Object.values(passwordRequirements).every(Boolean)) {
+        newErrors.password = "Password does not meet requirements";
       }
 
       // Confirm password validation
@@ -396,6 +396,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 showConfirmPassword={showConfirmPassword}
                 setShowPassword={setShowPassword}
                 setShowConfirmPassword={setShowConfirmPassword}
+                passwordRequirements={passwordRequirements}
               />
             )}
 
