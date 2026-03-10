@@ -28,16 +28,16 @@ export function LoginPage() {
   // Handle state from registration redirect
   useEffect(() => {
     const state = location.state as { email?: string; message?: string } | null;
-    
+
     if (state?.email) {
       // Pre-fill username/email from registration (field name is 'email' but can contain username)
       handleChange("email")(state.email);
     }
-    
+
     if (state?.message) {
       // Show success message from registration
       toast.success(state.message);
-      
+
       // Clear state to prevent showing again on refresh
       window.history.replaceState({}, document.title);
     }
@@ -58,11 +58,8 @@ export function LoginPage() {
   }, [navigate]);
 
   return (
-    <AuthLayout
-      navLinks={[{ to: "#", label: "Home" }]}
-      ctaButton={{ to: "/select-role", label: "Sign Up" }}
-    >
-      <div className="w-full max-w-5xl min-h-[calc(600px)] bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
+    <AuthLayout ctaButton={{ to: "/select-role", label: "Sign Up" }}>
+      <div className="w-full max-w-5xl min-h-[600px] bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
@@ -143,6 +140,8 @@ export function LoginPage() {
 
             {/* SIGN IN */}
             <Button
+              variant="primary"
+              size="xl"
               type="submit"
               disabled={isLoading}
               className="w-full flex justify-center gap-2 cursor-pointer"
@@ -163,6 +162,15 @@ export function LoginPage() {
               onGoogleClick={() => console.log("Google login")}
               onLinkedInClick={() => console.log("LinkedIn login")}
             />
+            {/* REGISTER LINK */}
+            <div className="text-center mt-6 text-sm">
+              <span className="text-slate-500">
+                Don't have an account yet?{" "}
+              </span>
+              <Link to="/select-role" className="text-lime-500 hover:underline">
+                Sign up
+              </Link>
+            </div>
           </form>
         </div>
       </div>
