@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { FormField } from "@/shared/components";
+import { FormField, PasswordRequirements } from "@/shared/components";
 import { MdOutlineMail, MdLockOutline, MdAccountCircle } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
@@ -16,6 +16,12 @@ interface AccountStepProps {
   showConfirmPassword: boolean;
   setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
   setShowConfirmPassword: React.Dispatch<React.SetStateAction<boolean>>;
+  passwordRequirements: {
+    minLength: boolean;
+    hasUpperCase: boolean;
+    hasSpecialChar: boolean;
+    hasNumber: boolean;
+  };
 }
 
 export function AccountStep({
@@ -26,6 +32,7 @@ export function AccountStep({
   showConfirmPassword,
   setShowPassword,
   setShowConfirmPassword,
+  passwordRequirements,
 }: AccountStepProps) {
   return (
     <>
@@ -73,9 +80,6 @@ export function AccountStep({
               {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
             </button>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
-            8+ characters, uppercase, lowercase, number
-          </p>
         </FormField>
 
         <FormField label="Confirm Password" error={errors.confirmPassword}>
@@ -103,6 +107,13 @@ export function AccountStep({
           </div>
         </FormField>
       </div>
+
+      <PasswordRequirements
+        minLength={passwordRequirements.minLength}
+        hasUpperCase={passwordRequirements.hasUpperCase}
+        hasSpecialChar={passwordRequirements.hasSpecialChar}
+        hasNumber={passwordRequirements.hasNumber}
+      />
     </>
   );
 }
