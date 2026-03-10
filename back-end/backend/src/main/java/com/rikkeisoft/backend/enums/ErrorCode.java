@@ -47,7 +47,8 @@ public enum ErrorCode {
 
     // Custom error codes for BusinessProfile module
     BUSINESS_PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Business profile not found"),
-    COMPANY_NAME_EXISTED(HttpStatus.CONFLICT, "Company name already exists")
+    COMPANY_NAME_EXISTED(HttpStatus.CONFLICT, "Company name already exists"),
+    NO_BUSINESS_PROFILES_STORED(HttpStatus.NOT_FOUND, "No business profiles stored")
     ;
 
     private final HttpStatus httpStatus;
