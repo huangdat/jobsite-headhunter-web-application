@@ -358,10 +358,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   };
 
   return (
-    <AuthLayout
-      navLinks={[{ to: "#", label: "Home" }]}
-      ctaButton={{ to: "/login", label: "Sign In" }}
-    >
+    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
       <div className="w-full max-w-5xl min-h-125 bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
@@ -377,7 +374,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="p-6 overflow-y-auto max-h-175">
+        <div className="p-6">
           <h2 className="text-3xl font-bold">{config.title}</h2>
 
           <p className="text-gray-500 mb-3">{config.subtitle}</p>
@@ -445,7 +442,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   type="button"
                   onClick={handlePrevStep}
                   variant="outline"
-                  className="flex-1 flex justify-center gap-2"
+                  size="xl"
+                  className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl"
                 >
                   <HiOutlineArrowLeft />
                   Previous
@@ -454,6 +452,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
 
               {currentStep < steps.length ? (
                 <Button
+                  variant="primary"
+                  size="xl"
                   type="button"
                   onClick={handleNextStep}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
@@ -463,6 +463,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 </Button>
               ) : (
                 <Button
+                  variant="primary"
+                  size="xl"
                   type="submit"
                   disabled={isLoading}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
