@@ -51,7 +51,16 @@ public enum ErrorCode {
 
     // Custom error codes for MST (Tax code) lookup
     MST_NOT_FOUND(HttpStatus.NOT_FOUND, "Tax code not found or does not exist"),
-    MST_LOOKUP_FAILED(HttpStatus.SERVICE_UNAVAILABLE, "Failed to lookup tax code information. Please try again later.")
+    MST_LOOKUP_FAILED(HttpStatus.SERVICE_UNAVAILABLE, "Failed to lookup tax code information. Please try again later."),
+ 
+    // Custom error codes for Collaborator Commission
+    COMMISSION_RATE_INVALID(HttpStatus.BAD_REQUEST, "Commission rate must be between 0 and 100"),
+    COMMISSION_RATE_NULL(HttpStatus.BAD_REQUEST, "Commission rate cannot be null"),
+    COMMISSION_RATE_MIN(HttpStatus.BAD_REQUEST, "Commission rate must be at least 0"),
+    COMMISSION_RATE_MAX(HttpStatus.BAD_REQUEST, "Commission rate cannot exceed 100"),
+
+    ///
+
     ;
 
     private final HttpStatus httpStatus;
