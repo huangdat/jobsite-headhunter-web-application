@@ -65,4 +65,7 @@ public class Account {
     @Builder.Default
     Set<String> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "account")
+    Set<AccountSkill> accountSkills;
+
 }

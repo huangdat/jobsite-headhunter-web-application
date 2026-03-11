@@ -56,7 +56,12 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         </header>
       )}
 
-      <main className={cn("flex-1 flex items-center justify-center px-6", className)}>
+      <main
+        className={cn(
+          "flex-1 flex items-center justify-center px-6",
+          className,
+        )}
+      >
         {children}
       </main>
 

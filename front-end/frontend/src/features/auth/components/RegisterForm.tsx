@@ -190,7 +190,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   };
 
   const handleChange =
-    (field: string) => (value: string | boolean | File | null | number) => {
+    (field: string) =>
+    (value: string | boolean | File | null | number | undefined) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
       // Clear error when user starts typing
@@ -206,7 +207,15 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form before submitting
+    if (currentStep < steps.length) {
+      if (validateStep(currentStep)) {
+        setCurrentStep((prev) => prev + 1);
+      } else {
+        toast.error("Please fix the errors before continuing");
+      }
+      return;
+    }
+
     if (!validateForm()) {
       toast.error("Please fix the errors in the form");
       return;
@@ -302,7 +311,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       // Send OTP to email
       const otpResponse = await sendOtpSignup({
         email: formData.email,
-        tokenType: "SIGNUP",
+        tokenType: "SIGN_UP",
       });
 
       toast.success("OTP has been sent to your email!");
@@ -358,10 +367,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   };
 
   return (
-    <AuthLayout
-      navLinks={[{ to: "#", label: "Home" }]}
-      ctaButton={{ to: "/login", label: "Sign In" }}
-    >
+    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
       <div className="w-full max-w-5xl min-h-125 bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
@@ -377,7 +383,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="p-6 overflow-y-auto max-h-175">
+        <div className="p-6">
           <h2 className="text-3xl font-bold">{config.title}</h2>
 
           <p className="text-gray-500 mb-3">{config.subtitle}</p>
@@ -445,7 +451,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   type="button"
                   onClick={handlePrevStep}
                   variant="outline"
-                  className="flex-1 flex justify-center gap-2"
+                  size="xl"
+                  className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl"
                 >
                   <HiOutlineArrowLeft />
                   Previous
@@ -454,8 +461,9 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
 
               {currentStep < steps.length ? (
                 <Button
-                  type="button"
-                  onClick={handleNextStep}
+                  variant="primary"
+                  size="xl"
+                  type="submit"
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
                 >
                   Next
@@ -463,6 +471,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 </Button>
               ) : (
                 <Button
+                  variant="primary"
+                  size="xl"
                   type="submit"
                   disabled={isLoading}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"

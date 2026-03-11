@@ -149,7 +149,7 @@ export interface AccountResp {
 }
 
 // OTP Types
-export type OtpTokenType = "SIGNUP" | "FORGOT_PASSWORD";
+export type OtpTokenType = "SIGN_UP" | "FORGOT_PASSWORD";
 
 export interface SendOtpRequest {
   email: string;

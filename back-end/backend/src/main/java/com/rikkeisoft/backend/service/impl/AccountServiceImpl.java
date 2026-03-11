@@ -7,6 +7,7 @@ import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.AccountMapper;
 import com.rikkeisoft.backend.model.dto.req.account.*;
 import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
+import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.BusinessProfile;
 import com.rikkeisoft.backend.model.entity.CollaboratorProfile;
@@ -319,21 +320,29 @@ public class AccountServiceImpl implements AccountService {
         roles.add("HEADHUNTER");
         account.setRoles(roles);
 
+        // get the business infor from the tax code provided by the headhunter
+        MSTLookupResp mstInfo = businessProfileService.lookupMST(req.getTaxCode());
+        if (mstInfo == null) {
+            // Roll back the account has just created to keep data consistent
+            accountRepo.delete(account);
+            throw new AppException(ErrorCode.INVALID_TAX_CODE);
+        }
+
         // resolve BusinessProfile
         BusinessProfile businessProfile;
         if (req.getBusinessProfileId() == null) {
             // No existing profile provided — create a new one
             // Check for duplicate company name
-            if (businessProfileRepo.existsByCompanyName(req.getCompanyName())) {
+            if (businessProfileRepo.existsByCompanyName(mstInfo.getCompanyName())) {
                 // Roll back the account we just created to keep data consistent
                 accountRepo.delete(account);
                 throw new AppException(ErrorCode.COMPANY_NAME_EXISTED);
             }
             businessProfile = BusinessProfile.builder()
-                    .companyName(req.getCompanyName())
+                    .companyName(mstInfo.getCompanyName())
                     .taxCode(req.getTaxCode())
                     .websiteUrl(req.getWebsiteUrl())
-                    .addressMain(req.getAddressMain())
+                    .addressMain(mstInfo.getHeadquarterAddress())
                     .companyScale(req.getCompanyScale())
                     .build();
             businessProfileRepo.save(businessProfile);

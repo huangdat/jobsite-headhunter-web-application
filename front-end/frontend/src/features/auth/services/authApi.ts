@@ -18,7 +18,10 @@ import type {
 } from "../types";
 
 export const login = async (data: LoginRequest) => {
-  const res = await apiClient.post<ApiResponse<LoginResult>>("/api/auth/login", data);
+  const res = await apiClient.post<ApiResponse<LoginResult>>(
+    "/api/auth/login",
+    data,
+  );
 
   return res.data.result;
 };
@@ -33,7 +36,10 @@ export const validateToken = async (data: ValidateTokenRequest) => {
 };
 
 export const logout = async (data: LogoutRequest) => {
-  const res = await apiClient.post<ApiResponse<string>>("/api/auth/logout", data);
+  const res = await apiClient.post<ApiResponse<string>>(
+    "/api/auth/logout",
+    data,
+  );
 
   return res.data.result;
 };
@@ -41,71 +47,71 @@ export const logout = async (data: LogoutRequest) => {
 export const register = async (data: RegisterFormData) => {
   // Create FormData instead of sending JSON
   const formData = new FormData();
-  
+
   // Common fields for all roles
-  formData.append('username', data.username);
-  formData.append('email', data.email);
-  formData.append('password', data.password);
-  formData.append('rePassword', data.confirmPassword); // Backend expects 'rePassword'
-  formData.append('fullName', data.fullName);
-  formData.append('phone', data.phone);
-  
+  formData.append("username", data.username);
+  formData.append("email", data.email);
+  formData.append("password", data.password);
+  formData.append("rePassword", data.confirmPassword); // Backend expects 'rePassword'
+  formData.append("fullName", data.fullName);
+  formData.append("phone", data.phone);
+
   // Optional common fields
   if (data.gender) {
-    formData.append('gender', data.gender);
+    formData.append("gender", data.gender);
   }
-  
+
   if (data.avatar) {
-    formData.append('avatar', data.avatar);
+    formData.append("avatar", data.avatar);
   }
-  
+
   // Role-specific fields and endpoint
-  let endpoint = '/api/account/signup-candidate'; // default
-  
-  if (data.role === 'headhunter') {
-    endpoint = '/api/account/signup-headhunter';
-    formData.append('companyName', data.companyName);
-    formData.append('taxCode', data.taxCode);
-    
+  let endpoint = "/api/account/signup-candidate"; // default
+
+  if (data.role === "headhunter") {
+    endpoint = "/api/account/signup-headhunter";
+    formData.append("companyName", data.companyName);
+    formData.append("taxCode", data.taxCode);
+
     // Optional headhunter fields
-    if (data.websiteUrl) formData.append('websiteUrl', data.websiteUrl);
-    if (data.addressMain) formData.append('addressMain', data.addressMain);
-    if (data.companyScale) formData.append('companyScale', data.companyScale);
-  } else if (data.role === 'collaborator') {
-    endpoint = '/api/account/signup-collaborator';
-    
+    if (data.websiteUrl) formData.append("websiteUrl", data.websiteUrl);
+    if (data.addressMain) formData.append("addressMain", data.addressMain);
+    if (data.companyScale) formData.append("companyScale", data.companyScale);
+  } else if (data.role === "collaborator") {
+    endpoint = "/api/account/signup-collaborator";
+
     // Optional collaborator fields
     if (data.commissionRate !== undefined) {
-      formData.append('commissionRate', data.commissionRate.toString());
+      formData.append("commissionRate", data.commissionRate.toString());
     }
-  } else if (data.role === 'candidate') {
+  } else if (data.role === "candidate") {
     // Optional candidate fields
-    if (data.currentTitle) formData.append('currentTitle', data.currentTitle);
+    if (data.currentTitle) formData.append("currentTitle", data.currentTitle);
     if (data.yearsOfExperience !== undefined) {
-      formData.append('yearsOfExperience', data.yearsOfExperience.toString());
+      formData.append("yearsOfExperience", data.yearsOfExperience.toString());
     }
     if (data.expectedSalaryMin !== undefined) {
-      formData.append('expectedSalaryMin', data.expectedSalaryMin.toString());
+      formData.append("expectedSalaryMin", data.expectedSalaryMin.toString());
     }
     if (data.expectedSalaryMax !== undefined) {
-      formData.append('expectedSalaryMax', data.expectedSalaryMax.toString());
+      formData.append("expectedSalaryMax", data.expectedSalaryMax.toString());
     }
-    if (data.bio) formData.append('bio', data.bio);
-    if (data.city) formData.append('city', data.city);
+    if (data.bio) formData.append("bio", data.bio);
+    if (data.city) formData.append("city", data.city);
     if (data.openForWork !== undefined) {
-      formData.append('openForWork', data.openForWork.toString());
+      formData.append("openForWork", data.openForWork.toString());
     }
   }
-  
+
   // Send to correct endpoint with FormData
   const res = await apiClient.post<ApiResponse<AccountResp>>(
     endpoint,
     formData,
     {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
-    }
+    },
   );
 
   return res.data.result;
@@ -120,7 +126,9 @@ export const forgotPassword = async (data: ForgotPasswordFormData) => {
   return res.data.result;
 };
 
-export const resetPassword = async (data: ResetPasswordFormData & { token: string }) => {
+export const resetPassword = async (
+  data: ResetPasswordFormData & { token: string },
+) => {
   const res = await apiClient.post<ApiResponse<string>>(
     "/api/auth/reset-password",
     data,
@@ -174,4 +182,3 @@ export const verifyOtpForgotPassword = async (data: VerifyOtpRequest) => {
 
   return res.data.result;
 };
-

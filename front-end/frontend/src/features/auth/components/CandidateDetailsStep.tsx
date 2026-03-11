@@ -19,7 +19,9 @@ interface CandidateDetailsStepProps {
     openForWork?: boolean;
   };
   errors?: Record<string, string>;
-  handleChange: (field: string) => (value: string | boolean | number) => void;
+  handleChange: (
+    field: string,
+  ) => (value: string | boolean | number | undefined) => void;
 }
 
 export function CandidateDetailsStep({
@@ -50,7 +52,7 @@ export function CandidateDetailsStep({
             value={formData.yearsOfExperience?.toString() || ""}
             onChange={(e) =>
               handleChange("yearsOfExperience")(
-                e.target.value ? parseInt(e.target.value) : 0
+                e.target.value ? parseInt(e.target.value) : undefined,
               )
             }
           />
@@ -75,7 +77,7 @@ export function CandidateDetailsStep({
             value={formData.expectedSalaryMin?.toString() || ""}
             onChange={(e) =>
               handleChange("expectedSalaryMin")(
-                e.target.value ? parseInt(e.target.value) : 0
+                e.target.value ? parseInt(e.target.value) : 0,
               )
             }
           />
@@ -89,7 +91,7 @@ export function CandidateDetailsStep({
             value={formData.expectedSalaryMax?.toString() || ""}
             onChange={(e) =>
               handleChange("expectedSalaryMax")(
-                e.target.value ? parseInt(e.target.value) : 0
+                e.target.value ? parseInt(e.target.value) : 0,
               )
             }
           />
@@ -109,7 +111,7 @@ export function CandidateDetailsStep({
         <label className="flex items-center gap-3 cursor-pointer">
           <input
             type="checkbox"
-            checked={formData.openForWork || false}
+            checked={formData.openForWork ?? false}
             onChange={(e) => handleChange("openForWork")(e.target.checked)}
             className="w-5 h-5 text-brand-primary focus:ring-brand-primary border-slate-300 rounded"
           />
