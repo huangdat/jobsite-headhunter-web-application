@@ -16,7 +16,12 @@ interface LocationState {
 export function OTPVerificationPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state as LocationState;
+  const state = location.state as LocationState | undefined;
+
+  if (!state) {
+    navigate("/select-role", { replace: true });
+    return null;
+  }
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,11 +31,10 @@ export function OTPVerificationPage() {
 
   // Redirect if no state
   useEffect(() => {
-    if (!state?.accountId || !state?.email) {
-      toast.error("Invalid access. Please register again.");
-      navigate("/auth/register");
+    if (!location.state) {
+      navigate("/select-role", { replace: true });
     }
-  }, [state, navigate]);
+  }, []);
 
   // Countdown timer
   useEffect(() => {
@@ -102,7 +106,7 @@ export function OTPVerificationPage() {
         accountId: state.accountId,
         email: state.email,
         code: otpCode,
-        tokenType: "SIGNUP",
+        tokenType: "SIGN_UP",
       });
 
       toast.success("Email verified! Creating your account...");
@@ -174,7 +178,7 @@ export function OTPVerificationPage() {
     try {
       await sendOtpSignup({
         email: state.email,
-        tokenType: "SIGNUP",
+        tokenType: "SIGN_UP",
         accountId: state.accountId,
       });
 
@@ -194,13 +198,10 @@ export function OTPVerificationPage() {
     }
   };
 
-  if (!state?.email) return null;
+  if (!state) return null;
 
   return (
-    <AuthLayout
-      navLinks={[{ to: "#", label: "Home" }]}
-      ctaButton={{ to: "/login", label: "Sign In" }}
-    >
+    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
       <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
