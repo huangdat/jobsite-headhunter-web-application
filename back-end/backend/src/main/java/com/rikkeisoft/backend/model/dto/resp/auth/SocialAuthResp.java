@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.model.dto.resp.auth;
 
+import com.rikkeisoft.backend.enums.AuthProvider;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,8 +9,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResp {
-    String accessToken;
-    String refreshToken; // Added refreshToken field
-    boolean authenticated;
+public class SocialAuthResp {
+    String email;
+    AuthProvider provider;
+    String providerId;
+    String fullName;
+    String imageUrl;
 }
