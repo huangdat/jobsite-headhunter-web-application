@@ -1,6 +1,21 @@
 import { validateToken, logout } from "../services/authApi";
 
 /**
+ * IMPORTANT NAMING CONVENTION:
+ *
+ * Throughout the auth feature, the field name 'email' in LoginFormData and form state
+ * is used to store BOTH username and email for consistency with form handling.
+ *
+ * - In UI: Users can input either username OR email
+ * - In FormData: Stored in 'email' field (historical naming)
+ * - When sending to API: Always sent as 'username' field (backend requirement)
+ *
+ * Example:
+ * - User types: "john_doe123" → stored in formData.email
+ * - API call: { username: "john_doe123", password: "..." }
+ */
+
+/**
  * Check if user is authenticated by validating token
  * Use this when app loads or on protected routes
  */
