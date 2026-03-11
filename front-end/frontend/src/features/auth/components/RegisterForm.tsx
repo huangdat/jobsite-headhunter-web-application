@@ -190,7 +190,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   };
 
   const handleChange =
-    (field: string) => (value: string | boolean | File | null | number) => {
+    (field: string) =>
+    (value: string | boolean | File | null | number | undefined) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
       // Clear error when user starts typing
@@ -206,7 +207,15 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form before submitting
+    if (currentStep < steps.length) {
+      if (validateStep(currentStep)) {
+        setCurrentStep((prev) => prev + 1);
+      } else {
+        toast.error("Please fix the errors before continuing");
+      }
+      return;
+    }
+
     if (!validateForm()) {
       toast.error("Please fix the errors in the form");
       return;
@@ -302,7 +311,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       // Send OTP to email
       const otpResponse = await sendOtpSignup({
         email: formData.email,
-        tokenType: "SIGNUP",
+        tokenType: "SIGN_UP",
       });
 
       toast.success("OTP has been sent to your email!");
@@ -454,8 +463,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 <Button
                   variant="primary"
                   size="xl"
-                  type="button"
-                  onClick={handleNextStep}
+                  type="submit"
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
                 >
                   Next
