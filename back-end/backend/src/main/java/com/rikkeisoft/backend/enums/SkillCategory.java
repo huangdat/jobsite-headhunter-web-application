@@ -14,7 +14,6 @@ public enum SkillCategory {
 
     private final String displayName;
 
-
     SkillCategory(String displayName) {
         this.displayName = displayName;
     }
