@@ -16,12 +16,13 @@ import com.rikkeisoft.backend.repository.CollaboratorProfileRepo;
 import com.rikkeisoft.backend.service.CollaboratorProfileService;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
-
+@AllArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class CollaboratorProfileServiceImpl implements CollaboratorProfileService {
 
@@ -29,15 +30,8 @@ public class CollaboratorProfileServiceImpl implements CollaboratorProfileServic
     CollaboratorProfileMapper collaboratorProfileMapper;
     AccountRepo accountRepo;
 
-    public CollaboratorProfileServiceImpl(CollaboratorProfileRepo collaboratorProfileRepo,
-            CollaboratorProfileMapper collaboratorProfileMapper, AccountRepo accountRepo) {
-        this.collaboratorProfileRepo = collaboratorProfileRepo;
-        this.collaboratorProfileMapper = collaboratorProfileMapper;
-        this.accountRepo = accountRepo;
-    }
 
     @Override
-
     public CollaboratorProfileResp updateCommissionRate(String accountId, Double commissionRate) {
         CollaboratorProfile collaboratorProfile = collaboratorProfileRepo.findByAccount_Id(accountId)
                 .orElseThrow(() -> new AppException(
