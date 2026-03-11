@@ -2,12 +2,16 @@ package com.rikkeisoft.backend.model.dto.resp.business;
 
 import com.rikkeisoft.backend.enums.VerificationStatus;
 import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
-import com.rikkeisoft.backend.model.entity.Account;
-import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BusinessProfileResp {
 
     Long id;
@@ -18,15 +22,12 @@ public class BusinessProfileResp {
 
     String websiteUrl;
 
-    @Column(columnDefinition = "TEXT")
     String addressMain;
 
     String companyScale;
 
-    @Enumerated(EnumType.STRING)
-    VerificationStatus verificationStatus = VerificationStatus.PENDING;
+    VerificationStatus verificationStatus;
 
-    @Column(columnDefinition = "TEXT")
     String noteByAdmin;
 
     // list of account associated with this business profile

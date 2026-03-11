@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
@@ -51,4 +52,7 @@ public class Job {
     String city;
 
     LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "job")
+    Set<JobSkill> jobSkills;
 }
