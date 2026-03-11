@@ -5,21 +5,29 @@ import {
   MdLockOutline,
   MdPerson,
   MdPhone,
+  MdAccountCircle,
+  MdWc,
+  MdCameraAlt,
 } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 interface FormData {
+  username: string;
   fullName: string;
   email: string;
   phone: string;
   password: string;
   confirmPassword: string;
+  gender?: string;
+  avatar?: File | null;
 }
 
 interface Props {
   formData: FormData;
   errors: Record<string, string>;
-  handleChange: (field: string) => (value: string) => void;
+  handleChange: (
+    field: string,
+  ) => (value: string | boolean | File | null) => void;
   showPassword: boolean;
   showConfirmPassword: boolean;
   setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,6 +45,15 @@ export function CandidateRegister({
 }: Props) {
   return (
     <>
+      <FormField label="Username" error={errors.username}>
+        <Input
+          icon={<MdAccountCircle />}
+          placeholder="john_doe123"
+          value={formData.username}
+          onChange={(e) => handleChange("username")(e.target.value)}
+        />
+      </FormField>
+
       <FormField label="Full Name" error={errors.fullName}>
         <Input
           icon={<MdPerson />}
@@ -63,6 +80,42 @@ export function CandidateRegister({
           onChange={(e) => handleChange("phone")(e.target.value)}
         />
       </FormField>
+
+      {/* GENDER + AVATAR */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField label="Gender (Optional)">
+          <div className="relative">
+            <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+            <select
+              value={formData.gender || ""}
+              onChange={(e) => handleChange("gender")(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Select gender"
+            >
+              <option value="">Select Gender</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+        </FormField>
+
+        <FormField label="Profile Picture (Optional)">
+          <div className="relative">
+            <MdCameraAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                handleChange("avatar")(file || null);
+              }}
+              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              aria-label="Upload profile picture"
+            />
+          </div>
+        </FormField>
+      </div>
 
       {/* PASSWORD + CONFIRM PASSWORD */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

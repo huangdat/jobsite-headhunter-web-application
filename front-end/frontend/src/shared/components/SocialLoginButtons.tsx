@@ -22,7 +22,7 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
           type="button"
           variant="outline"
           onClick={onGoogleClick}
-          className="flex items-center justify-center gap-2"
+          className="cursor-pointer flex items-center justify-center gap-2"
         >
           <FcGoogle size={20} />
           Google
@@ -33,7 +33,7 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
           type="button"
           variant="outline"
           onClick={onLinkedInClick}
-          className="flex items-center justify-center gap-2"
+          className="cursor-pointer flex items-center justify-center gap-2"
         >
           <FaLinkedin className="text-linkedin" size={20} />
           LinkedIn

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -7,15 +7,17 @@ import {
   AuthLayout,
   PasswordRequirements,
 } from "@/shared/components";
-import { resetPassword } from "../services/authApi";
+import { verifyOtpForgotPassword, resetPassword } from "../services/authApi";
 import { toast } from "sonner";
+import type { OtpSendResp } from "../types";
 
 export function ResetPasswordPage() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const resetToken = searchParams.get("token") || "";
+  const location = useLocation();
+  const otpData = location.state as OtpSendResp | null;
 
   const [formData, setFormData] = useState({
+    otp: "",
     password: "",
     confirmPassword: "",
   });
@@ -23,6 +25,14 @@ export function ResetPasswordPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+
+  // Redirect to forgot password if no OTP data
+  useEffect(() => {
+    if (!otpData) {
+      toast.error("Invalid reset link. Please request a new password reset.");
+      navigate("/forgot-password");
+    }
+  }, [otpData, navigate]);
 
   // Password requirements validation
   const requirements = {
@@ -41,10 +51,21 @@ export function ResetPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!otpData) return;
+
     setIsLoading(true);
     setErrors({});
 
     // Validation
+    if (!formData.otp || formData.otp.length !== 6) {
+      const errorMsg = "Please enter a valid 6-digit OTP code";
+      setErrors({ otp: errorMsg });
+      toast.error(errorMsg);
+      setIsLoading(false);
+      return;
+    }
+
     if (!Object.values(requirements).every(Boolean)) {
       const errorMsg = "Password does not meet requirements";
       setErrors({ password: errorMsg });
@@ -61,25 +82,30 @@ export function ResetPasswordPage() {
       return;
     }
 
-    if (!resetToken) {
-      const errorMsg = "Invalid or missing reset token";
-      setErrors({ submit: errorMsg });
-      toast.error(errorMsg);
-      setIsLoading(false);
-      return;
-    }
-
     try {
+      // Step 1: Verify OTP and get reset token
+      const verifyResponse = await verifyOtpForgotPassword({
+        accountId: otpData.accountId,
+        email: otpData.email,
+        code: formData.otp,
+        tokenType: "FORGOT_PASSWORD",
+      });
+
+      if (!verifyResponse.resetToken) {
+        throw new Error("Failed to verify OTP. No reset token received.");
+      }
+
+      // Step 2: Reset password using the reset token
       await resetPassword({
         password: formData.password,
         confirmPassword: formData.confirmPassword,
-        token: resetToken,
+        token: verifyResponse.resetToken,
       });
 
       // Success notification
       toast.success("Password reset successful! You can now login.");
 
-      navigate("/reset-password/success");
+      navigate("/login");
     } catch (error: unknown) {
       let errorMessage = "Failed to reset password. Please try again.";
 
@@ -200,11 +226,33 @@ export function ResetPasswordPage() {
           <div className="md:w-7/12 p-8 md:p-14 bg-white dark:bg-slate-900">
             <div className="max-w-2xl mx-auto">
               <h2 className="text-3xl font-bold mb-2">Set New Password</h2>
+              <p className="text-slate-500 dark:text-slate-400 mb-2">
+                Enter the OTP code sent to{" "}
+                <span className="font-semibold text-brand-primary">
+                  {otpData?.email}
+                </span>
+              </p>
               <p className="text-slate-500 dark:text-slate-400 mb-10">
-                Create a new, strong password for your account.
+                Then create a new, strong password for your account.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-8">
+                <FormField label="OTP Code" error={errors.otp}>
+                  <Input
+                    icon="pin"
+                    type="text"
+                    placeholder="Enter 6-digit code"
+                    value={formData.otp}
+                    onChange={(e) =>
+                      handleChange("otp")(
+                        e.target.value.replace(/\D/g, "").slice(0, 6),
+                      )
+                    }
+                    error={!!errors.otp}
+                    maxLength={6}
+                  />
+                </FormField>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField label="New Password" error={errors.password}>
                     <Input
