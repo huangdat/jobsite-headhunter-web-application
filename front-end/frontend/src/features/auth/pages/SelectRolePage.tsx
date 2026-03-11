@@ -47,10 +47,7 @@ export function SelectRolePage() {
   };
 
   return (
-    <AuthLayout
-      navLinks={[{ to: "#", label: "Home" }]}
-      ctaButton={{ to: "/select-role", label: "Sign Up" }}
-    >
+    <AuthLayout ctaButton={{ to: "/select-role", label: "Sign Up" }}>
       <div className="w-full max-w-5xl min-h-[calc(600px)] bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
@@ -106,6 +103,8 @@ export function SelectRolePage() {
 
             {/* BUTTON */}
             <Button
+              variant="primary"
+              size="xl"
               type="submit"
               disabled={!selectedRole}
               className={`w-full flex justify-center gap-2 mt-6 

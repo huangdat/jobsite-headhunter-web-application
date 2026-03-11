@@ -44,9 +44,6 @@ export function AccountStep({
           onChange={(e) => handleChange("username")(e.target.value)}
           error={!!errors.username}
         />
-        <p className="text-xs text-slate-500 mt-1">
-          8-32 characters, start with a letter, alphanumeric + underscore
-        </p>
       </FormField>
 
       <FormField label="Email" error={errors.email}>
@@ -62,49 +59,47 @@ export function AccountStep({
       {/* PASSWORD + CONFIRM PASSWORD */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField label="Password" error={errors.password}>
-          <div className="relative">
-            <Input
-              icon={<MdLockOutline />}
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter password"
-              value={formData.password}
-              onChange={(e) => handleChange("password")(e.target.value)}
-              error={!!errors.password}
-            />
-
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500"
-            >
-              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-            </button>
-          </div>
+          <Input
+            icon={<MdLockOutline />}
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter password"
+            value={formData.password}
+            onChange={(e) => handleChange("password")(e.target.value)}
+            error={!!errors.password}
+            rightIcon={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="cursor-pointer text-slate-500"
+              >
+                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+              </button>
+            }
+          />
         </FormField>
 
         <FormField label="Confirm Password" error={errors.confirmPassword}>
-          <div className="relative">
-            <Input
-              icon={<MdLockOutline />}
-              type={showConfirmPassword ? "text" : "password"}
-              placeholder="Confirm password"
-              value={formData.confirmPassword}
-              onChange={(e) => handleChange("confirmPassword")(e.target.value)}
-              error={!!errors.confirmPassword}
-            />
-
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500"
-            >
-              {showConfirmPassword ? (
-                <AiOutlineEyeInvisible />
-              ) : (
-                <AiOutlineEye />
-              )}
-            </button>
-          </div>
+          <Input
+            icon={<MdLockOutline />}
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirm password"
+            value={formData.confirmPassword}
+            onChange={(e) => handleChange("confirmPassword")(e.target.value)}
+            error={!!errors.confirmPassword}
+            rightIcon={
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="cursor-pointer text-slate-500"
+              >
+                {showConfirmPassword ? (
+                  <AiOutlineEyeInvisible />
+                ) : (
+                  <AiOutlineEye />
+                )}
+              </button>
+            }
+          />
         </FormField>
       </div>
 
