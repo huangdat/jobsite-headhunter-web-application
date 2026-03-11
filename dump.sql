@@ -51,7 +51,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('22222222-2222-2222-2222-222222222222','cuonghr','cuongct.ce190026@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',1,'Châu Tấn Cường','0901000002',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-03-10 16:15:23'),('33333333-3333-3333-3333-333333333333','haohr','haona.ce190361','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',2,'Nguyễn Anh Hào','0901000003',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('44444444-4444-4444-4444-444444444444','phucctv','phucdc.ce190770','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Đinh Công Phúc','0901000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('55555555-5555-5555-5555-555555555555','loictv','loilt.ce190481@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Lê Thành Lợi','0901000005',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('66666666-6666-6666-6666-666666666666','sangctv','votansang1711@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Võ Tấn Sang','0901000006',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('77777777-7777-7777-7777-777777777777','ducdev','nguyentrungduc.forwork@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Nguyễn Trung Đức','0901000007',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('8156bb1b-e259-4999-8139-14064898c621','deptrai2','datnhce1807977@fpt.edu.vn','$2a$10$YxwzGTzKyRnJOI8zrgIhx.tcV1o29HVd9AJYWpVtxOLl.wuSbSlqi',1,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/superman-matday_a1b034d6-0154-4f24-ae04-a928b1d5a34e.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 15:47:17','2026-03-08 15:47:17'),('88888888-8888-8888-8888-888888888888','diendev','dien@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Dien','07929733143','https://headhunterstorage.blob.core.windows.net/uploads/images_0f80428d-3630-4f29-8fd9-7f967761b3fe.jpg','MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-27 17:17:30'),('8de8b1b6-54ef-4555-857f-fa99a411794a','deptrai','datnhce180797@fpt.edu.vn','$2a$10$rzJOPBWGnK.rZDiOqChUZebjU.XQp99XJtXcq9RPFIskpiYhoisSy',3,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/superman-matday_a967eaf9-1660-4f47-b369-1a9d59fddebc.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 15:26:31','2026-03-08 15:26:31'),('97aacef4-bf45-412e-bcc5-042d0657bd09','donaldtrump','makeamericagreatagain@gmail.com','$2a$10$DXc3C8TnQ1eGKi/1y9KBJOVX5.u/0coLpBwciUwPjRJzVQr64onjW',NULL,'Donald John Trump','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/trump_a55fe560-8545-4712-8f71-0839e618d318.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 23:46:28','2026-03-08 23:46:28'),('e403e186-80a0-4ed1-9b55-f3340efec998','admin','datnh.work@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Admin','0123456789','src/main/resources/static/img/admin-avatar.webp','OTHER','LOCAL','','ACTIVE','2026-02-26 15:26:59','2026-02-26 15:26:59');
+INSERT INTO `account` VALUES ('22222222-2222-2222-2222-222222222222','cuonghr','cuongct.ce190026@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',1,'Châu Tấn Cường','0901000002',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-03-10 16:15:23'),('33333333-3333-3333-3333-333333333333','haohr','haona.ce190361','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',2,'Nguyễn Anh Hào','0901000003',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('44444444-4444-4444-4444-444444444444','phucctv','phucdc.ce190770','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Đinh Công Phúc','0901000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('55555555-5555-5555-5555-555555555555','loictv','loilt.ce190481@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Lê Thành Lợi','0901000005',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('66666666-6666-6666-6666-666666666666','sangctv','votansang1711@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Võ Tấn Sang','0901000006',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('77777777-7777-7777-7777-777777777777','ducdev','nguyentrungduc.forwork@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Nguyễn Trung Đức','0901000007',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('8156bb1b-e259-4999-8139-14064898c621','deptrai2','datnhce1807977@fpt.edu.vn','$2a$10$YxwzGTzKyRnJOI8zrgIhx.tcV1o29HVd9AJYWpVtxOLl.wuSbSlqi',1,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/superman-matday_a1b034d6-0154-4f24-ae04-a928b1d5a34e.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 15:47:17','2026-03-08 15:47:17'),('88888888-8888-8888-8888-888888888888','diendev','dien@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Dien','07929733143','https://headhunterstorage.blob.core.windows.net/uploads/images_0f80428d-3630-4f29-8fd9-7f967761b3fe.jpg','MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-27 17:17:30'),('97aacef4-bf45-412e-bcc5-042d0657bd09','donaldtrump','makeamericagreatagain@gmail.com','$2a$10$DXc3C8TnQ1eGKi/1y9KBJOVX5.u/0coLpBwciUwPjRJzVQr64onjW',NULL,'Donald John Trump','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/trump_a55fe560-8545-4712-8f71-0839e618d318.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 23:46:28','2026-03-08 23:46:28'),('e403e186-80a0-4ed1-9b55-f3340efec998','admin','datnh.work@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'admin dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/rikkeisoft_3005e18c-7efc-4573-9d85-77c6ba761b65.jpg','MALE','LOCAL','','ACTIVE','2026-02-26 15:26:59','2026-03-11 14:57:44'),('eace310a-e0fb-48bb-8ff0-d34fda01d920','nhanvienrikkeisoft','datnhce1807977123@fpt.edu.vn','$2a$10$m65bnRTt30021rl7NOFNyuIo1Nia52Ynq0Q4n8m2xyMVxlfHWfi9W',4,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/rikkeisoft_70647cf5-0d09-44b6-bfca-16403e00eecf.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-11 14:53:12','2026-03-11 14:53:12');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77,7 +77,7 @@ CREATE TABLE `account_role` (
 
 LOCK TABLES `account_role` WRITE;
 /*!40000 ALTER TABLE `account_role` DISABLE KEYS */;
-INSERT INTO `account_role` VALUES ('e403e186-80a0-4ed1-9b55-f3340efec998','ADMIN'),('77777777-7777-7777-7777-777777777777','CANDIDATE'),('88888888-8888-8888-8888-888888888888','CANDIDATE'),('44444444-4444-4444-4444-444444444444','COLLABORATOR'),('55555555-5555-5555-5555-555555555555','COLLABORATOR'),('66666666-6666-6666-6666-666666666666','COLLABORATOR'),('97aacef4-bf45-412e-bcc5-042d0657bd09','COLLABORATOR'),('22222222-2222-2222-2222-222222222222','HEADHUNTER'),('33333333-3333-3333-3333-333333333333','HEADHUNTER'),('8156bb1b-e259-4999-8139-14064898c621','HEADHUNTER'),('8de8b1b6-54ef-4555-857f-fa99a411794a','HEADHUNTER');
+INSERT INTO `account_role` VALUES ('e403e186-80a0-4ed1-9b55-f3340efec998','ADMIN'),('77777777-7777-7777-7777-777777777777','CANDIDATE'),('88888888-8888-8888-8888-888888888888','CANDIDATE'),('44444444-4444-4444-4444-444444444444','COLLABORATOR'),('55555555-5555-5555-5555-555555555555','COLLABORATOR'),('66666666-6666-6666-6666-666666666666','COLLABORATOR'),('97aacef4-bf45-412e-bcc5-042d0657bd09','COLLABORATOR'),('22222222-2222-2222-2222-222222222222','HEADHUNTER'),('33333333-3333-3333-3333-333333333333','HEADHUNTER'),('8156bb1b-e259-4999-8139-14064898c621','HEADHUNTER'),('eace310a-e0fb-48bb-8ff0-d34fda01d920','HEADHUNTER');
 /*!40000 ALTER TABLE `account_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +159,7 @@ CREATE TABLE `business_profile` (
   `verification_status` enum('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
   `note_by_admin` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +168,7 @@ CREATE TABLE `business_profile` (
 
 LOCK TABLES `business_profile` WRITE;
 /*!40000 ALTER TABLE `business_profile` DISABLE KEYS */;
-INSERT INTO `business_profile` VALUES (1,'TechVision JSC','0312345678','https://techvision.vn','Quận 1, TP.HCM','SMALL','APPROVED',NULL),(2,'FinStar Group','0318765432','https://finstar.vn','Quận 3, TP.HCM','LARGE','APPROVED',NULL),(3,'dep trai company','deptrai','deptrai.com','dep trai district','LARGE','PENDING',NULL);
+INSERT INTO `business_profile` VALUES (1,'TechVision JSC','0312345678','https://techvision.vn','Quận 1, TP.HCM','SMALL','APPROVED',NULL),(2,'FinStar Group','0318765432','https://finstar.vn','Quận 3, TP.HCM','LARGE','APPROVED',NULL),(3,'dep trai company','deptrai','deptrai.com','dep trai district','LARGE','PENDING',NULL),(4,'CÔNG TY CỔ PHẦN RIKKEISOFT','0105837740','https://rikkeisoft.com/','Tầng 21 tòa nhà Handico, Đường Phạm Hùng, Phường Từ Liêm, TP Hà Nội','LARGE','PENDING',NULL);
 /*!40000 ALTER TABLE `business_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -442,8 +442,13 @@ CREATE TABLE `job` (
   `description` text,
   `deadline` date DEFAULT NULL,
   `status` enum('DRAFT','OPEN','CLOSED') DEFAULT 'DRAFT',
-  `city` varchar(255) DEFAULT NULL,
+  `address_detail` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
+  `rank_level` enum('INTERN','FRESHER','JUNIOR','MIDDLE','SENIOR','LEADER','MANAGER') NOT NULL,
+  `experience` double DEFAULT NULL,
+  `negotiable` tinyint NOT NULL,
+  `imageUrl` text,
   PRIMARY KEY (`id`),
   KEY `fk_job_headhunter` (`headhunter_account_id`),
   CONSTRAINT `fk_job_headhunter` FOREIGN KEY (`headhunter_account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
@@ -456,7 +461,7 @@ CREATE TABLE `job` (
 
 LOCK TABLES `job` WRITE;
 /*!40000 ALTER TABLE `job` DISABLE KEYS */;
-INSERT INTO `job` VALUES (1,'TV-001','22222222-2222-2222-2222-222222222222','Senior Backend Developer',2,'ONSITE',1200,2000,'USD','Spring Boot, MySQL','2026-12-31','OPEN','Ho Chi Minh','2026-02-11 05:25:21'),(2,'FS-001','33333333-3333-3333-3333-333333333333','ReactJS Developer',1,'HYBRID',1000,1800,'USD','ReactJS + TypeScript','2026-11-30','OPEN','Ho Chi Minh','2026-02-11 05:25:21');
+INSERT INTO `job` VALUES (1,'TV-001','22222222-2222-2222-2222-222222222222','Senior Backend Developer',2,'ONSITE',1200,2000,'USD','Spring Boot, MySQL','2026-12-31','OPEN','Ho Chi Minh',NULL,'2026-02-11 05:25:21','INTERN',NULL,0,NULL),(2,'FS-001','33333333-3333-3333-3333-333333333333','ReactJS Developer',1,'HYBRID',1000,1800,'USD','ReactJS + TypeScript','2026-11-30','OPEN','Ho Chi Minh',NULL,'2026-02-11 05:25:21','INTERN',NULL,0,NULL);
 /*!40000 ALTER TABLE `job` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -528,7 +533,7 @@ DROP TABLE IF EXISTS `skill`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `skill` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `category` enum('PROGRAMMING_LANGUAGES','FRONTEND_DEVELOPMENT','BACKEND_DEVELOPMENT','DATABASES','DEVOPS_AND_CLOUD','TESTING','VERSION_CONTROL','SOFTWARE_ARCHITECTURE_AND_CONCEPTS','DATA_AND_AI','OTHERS') NOT NULL DEFAULT 'OTHERS',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
@@ -560,4 +565,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-11 14:02:00
+-- Dump completed on 2026-03-11 16:19:31
