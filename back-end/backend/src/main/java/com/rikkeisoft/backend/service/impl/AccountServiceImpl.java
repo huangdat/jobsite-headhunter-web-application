@@ -5,14 +5,18 @@ import com.rikkeisoft.backend.enums.AuthProvider;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.AccountMapper;
-import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
-import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
-import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
-import com.rikkeisoft.backend.model.dto.req.account.ResetPasswordReq;
-import com.rikkeisoft.backend.model.dto.resp.AccountResp;
+import com.rikkeisoft.backend.model.dto.req.account.*;
+import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
+import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.entity.Account;
+import com.rikkeisoft.backend.model.entity.BusinessProfile;
+import com.rikkeisoft.backend.model.entity.CollaboratorProfile;
 import com.rikkeisoft.backend.repository.AccountRepo;
+import com.rikkeisoft.backend.repository.BusinessProfileRepo;
+import com.rikkeisoft.backend.repository.CandidateProfileRepo;
+import com.rikkeisoft.backend.repository.CollaboratorProfileRepo;
 import com.rikkeisoft.backend.service.AccountService;
+import com.rikkeisoft.backend.service.BusinessProfileService;
 import com.rikkeisoft.backend.service.UploadService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +29,23 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
+import org.springframework.web.util.HtmlUtils;
+import com.rikkeisoft.backend.model.dto.PagedResponse;
 
 @Slf4j
 @Service
@@ -36,6 +56,10 @@ public class AccountServiceImpl implements AccountService {
     AccountMapper accountMapper;
     UploadService uploadService;
     PasswordEncoder passwordEncoder;
+    BusinessProfileService businessProfileService;
+    BusinessProfileRepo businessProfileRepo;
+    CollaboratorProfileRepo collaboratorProfileRepo;
+    CandidateProfileRepo candidateProfileRepo;
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
@@ -110,6 +134,7 @@ public class AccountServiceImpl implements AccountService {
                 .email(req.getEmail())
                 .fullName(req.getFullName())
                 .phone(req.getPhone())
+                .gender(req.getGender())
                 .imageUrl(imageUrl)
                 .authProvider(AuthProvider.LOCAL)
                 .status(AccountStatus.PENDING)
@@ -167,38 +192,6 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    /**
-     * Reset password after OTP verification
-     * @param req ResetPasswordReq containing email, new password and confirm password
-     * @return AccountResp
-     */
-    @Override
-    public AccountResp resetPassword(ResetPasswordReq req) {
-        // Normalize email
-        String normEmail = req.getEmail().trim().toLowerCase();
-        
-        // Check password match
-        if (!req.getNewPassword().equals(req.getConfirmPassword())) {
-            log.warn("Password mismatch during reset for email: {}", normEmail);
-            throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);
-        }
-        
-        // Find account by email
-        Account account = accountRepo.findByEmail(normEmail)
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-        
-        // Update password
-        account.setPassword(passwordEncoder.encode(req.getNewPassword()));
-        account.setUpdatedAt(LocalDateTime.now());
-        
-        // Save account
-        accountRepo.save(account);
-        
-        log.info("Password reset successfully for email: {}", normEmail);
-        
-        return accountMapper.toAccountResp(account);
-    }
-
     @Override
     public String changePassword(AccountChangePasswordreq req) {
         // get current account
@@ -235,6 +228,228 @@ public class AccountServiceImpl implements AccountService {
 
         return "Change password successfully";
 
+    }
+
+    @Override
+    public PagedResponse<AccountResp> searchAccounts(int page, int size, String keyword, String role, String status, String sort) {
+        // sanitize input to avoid XSS
+        String safeKeyword = keyword == null ? null : HtmlUtils.htmlEscape(keyword).trim();
+        // build sort
+        Sort sortObj = Sort.by(Sort.Direction.DESC, "createdAt");
+        if (sort != null && !sort.isEmpty()) {
+            String[] parts = sort.split(",");
+            String field = parts[0];
+            Sort.Direction dir = Sort.Direction.DESC;
+            if (parts.length > 1) {
+                try {
+                    dir = Sort.Direction.fromString(parts[1]);
+                } catch (Exception ignored) {
+                }
+            }
+            sortObj = Sort.by(dir, field);
+        }
+
+        int pageIndex = Math.max(1, page) - 1; // convert to 0-based
+        Pageable pageable = PageRequest.of(pageIndex, size, sortObj);
+
+        Specification<Account> spec = (root, query, cb) -> {
+            query.distinct(true);
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (safeKeyword != null && !safeKeyword.isEmpty()) {
+                String like = "%" + safeKeyword.toLowerCase() + "%";
+                Expression<String> fullNameExp = cb.lower(root.get("fullName"));
+                Expression<String> emailExp = cb.lower(root.get("email"));
+                predicates.add(cb.or(cb.like(fullNameExp, like), cb.like(emailExp, like)));
+            }
+
+            if (role != null && !role.isEmpty()) {
+                // roles is an ElementCollection
+                Join<Account, String> rolesJoin = root.join("roles");
+                predicates.add(cb.equal(cb.lower(rolesJoin), role.toLowerCase()));
+            }
+
+            if (status != null && !status.isEmpty()) {
+                try {
+                    predicates.add(cb.equal(root.get("status"), com.rikkeisoft.backend.enums.AccountStatus.valueOf(status.toUpperCase())));
+                } catch (Exception ignored) {
+                }
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        Page<Account> result = accountRepo.findAll(spec, pageable);
+
+        List<AccountResp> data = result.stream().map(accountMapper::toAccountResp).collect(Collectors.toList());
+
+        PagedResponse<AccountResp> resp = new PagedResponse<>();
+        resp.setPage(pageIndex + 1);
+        resp.setSize(size);
+        resp.setTotalElements(result.getTotalElements());
+        resp.setTotalPages(result.getTotalPages());
+        resp.setData(data);
+
+        return resp;
+    }
+
+    @Override
+    @Transactional
+    public AccountResp createAccountHeadhunter(HeadhunterSignupReq req) {
+        // Create accountCreateReq object to reuse createAccount logic (except for businessProfile and role)
+        AccountCreateReq accountCreateReq = AccountCreateReq.builder()
+                .username(req.getUsername())
+                .password(req.getPassword())
+                .rePassword(req.getRePassword())
+                .email(req.getEmail())
+                .fullName(req.getFullName())
+                .phone(req.getPhone())
+                .avatar(req.getAvatar())
+                .gender(req.getGender())
+                .build();
+
+        // createAccount saves and returns the account (still without businessProfile / role)
+        AccountResp accountResp = createAccount(accountCreateReq);
+
+        // fetch the saved entity to mutate it
+        Account account = accountRepo.findById(accountResp.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        // assign HEADHUNTER role — initialize a fresh set to avoid lazy-load / null issues
+        Set<String> roles = new HashSet<>();
+        roles.add("HEADHUNTER");
+        account.setRoles(roles);
+
+        // get the business infor from the tax code provided by the headhunter
+        MSTLookupResp mstInfo = businessProfileService.lookupMST(req.getTaxCode());
+        if (mstInfo == null) {
+            // Roll back the account has just created to keep data consistent
+            accountRepo.delete(account);
+            throw new AppException(ErrorCode.INVALID_TAX_CODE);
+        }
+
+        // resolve BusinessProfile
+        BusinessProfile businessProfile;
+        if (req.getBusinessProfileId() == null) {
+            // No existing profile provided — create a new one
+            // Check for duplicate company name
+            if (businessProfileRepo.existsByCompanyName(mstInfo.getCompanyName())) {
+                // Roll back the account we just created to keep data consistent
+                accountRepo.delete(account);
+                throw new AppException(ErrorCode.COMPANY_NAME_EXISTED);
+            }
+            businessProfile = BusinessProfile.builder()
+                    .companyName(mstInfo.getCompanyName())
+                    .taxCode(req.getTaxCode())
+                    .websiteUrl(req.getWebsiteUrl())
+                    .addressMain(mstInfo.getHeadquarterAddress())
+                    .companyScale(req.getCompanyScale())
+                    .build();
+            businessProfileRepo.save(businessProfile);
+        } else {
+            // Existing profile — verify it exists
+            businessProfile = businessProfileRepo.findById(req.getBusinessProfileId())
+                    .orElseThrow(() -> {
+                        accountRepo.delete(account);
+                        return new AppException(ErrorCode.BUSINESS_PROFILE_NOT_FOUND);
+                    });
+        }
+
+        // Link the profile and persist
+        account.setBusinessProfile(businessProfile);
+        accountRepo.save(account);
+
+        return accountMapper.toAccountResp(account);
+    }
+
+    /**
+     * Create a collaborator account (signup). The collaborator will be linked to the headhunter's business profile, and has COLLABORATOR role.
+     * @param req
+     * @return
+     */
+    @Override
+    @Transactional
+    public AccountResp createAccountCollaborator(CollaboratorSignupReq req) {
+        // Create accountCreateReq object to reuse createAccount logic (except for businessProfile and role)
+        AccountCreateReq accountCreateReq = AccountCreateReq.builder()
+                .username(req.getUsername())
+                .password(req.getPassword())
+                .rePassword(req.getRePassword())
+                .email(req.getEmail())
+                .fullName(req.getFullName())
+                .phone(req.getPhone())
+                .avatar(req.getAvatar())
+                .gender(req.getGender())
+                .build();
+
+        // createAccount saves and returns the account (still without businessProfile / role)
+        AccountResp accountResp = createAccount(accountCreateReq);
+
+        // fetch the saved entity to mutate it
+        Account account = accountRepo.findById(accountResp.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        // assign HEADHUNTER role — initialize a fresh set to avoid lazy-load / null issues
+        Set<String> roles = new HashSet<>();
+        roles.add("COLLABORATOR");
+        account.setRoles(roles);
+
+        // Link to collaborator profile (which will be linked to headhunter's business profile later when collaborator chooses their headhunter)
+        CollaboratorProfile collaboratorProfile = CollaboratorProfile.builder()
+                .commissionRate(req.getCommissionRate())
+                .account(account)
+                .managedByHeadhunter(null) // can be set later by collaborator's choice
+                .build();
+        collaboratorProfileRepo.save(collaboratorProfile);
+        accountRepo.save(account);
+
+        return accountMapper.toAccountResp(account);
+    }
+
+    @Override
+    @Transactional
+    public AccountResp createAccountCandidate(CandidateSignupReq req) {
+        // Build AccountCreateReq to reuse createAccount logic
+        AccountCreateReq accountCreateReq = AccountCreateReq.builder()
+                .username(req.getUsername())
+                .password(req.getPassword())
+                .rePassword(req.getRePassword())
+                .email(req.getEmail())
+                .fullName(req.getFullName())
+                .phone(req.getPhone())
+                .avatar(req.getAvatar())
+                .gender(req.getGender())
+                .build();
+
+        // createAccount saves and returns the account (still without candidateProfile / role)
+        AccountResp accountResp = createAccount(accountCreateReq);
+
+        // Fetch the saved entity to mutate it
+        Account account = accountRepo.findById(accountResp.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        // Assign CANDIDATE role
+        Set<String> roles = new HashSet<>();
+        roles.add("CANDIDATE");
+        account.setRoles(roles);
+
+        // Create and link the CandidateProfile
+        com.rikkeisoft.backend.model.entity.CandidateProfile candidateProfile =
+                com.rikkeisoft.backend.model.entity.CandidateProfile.builder()
+                        .account(account)
+                        .currentTitle(req.getCurrentTitle())
+                        .yearsOfExperience(req.getYearsOfExperience())
+                        .expectedSalaryMin(req.getExpectedSalaryMin())
+                        .expectedSalaryMax(req.getExpectedSalaryMax())
+                        .bio(req.getBio())
+                        .city(req.getCity())
+                        .openForWork(req.getOpenForWork() != null ? req.getOpenForWork() : false)
+                        .createdAt(LocalDateTime.now())
+                        .build();
+        candidateProfileRepo.save(candidateProfile);
+        accountRepo.save(account);
+
+        return accountMapper.toAccountResp(account);
     }
 
 }

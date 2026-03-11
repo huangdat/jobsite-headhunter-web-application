@@ -5,12 +5,14 @@ import com.rikkeisoft.backend.enums.OtpTokenType;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.req.otp.SendByEmailRequest;
 import com.rikkeisoft.backend.model.dto.req.otp.OtpVerifyRequest;
+import com.rikkeisoft.backend.model.dto.req.otp.OtpVerifyAndResetPasswordReq;
 import com.rikkeisoft.backend.model.dto.resp.otp.OtpSendResp;
 import com.rikkeisoft.backend.model.dto.resp.otp.OtpVerifyResp;
+import com.rikkeisoft.backend.model.dto.resp.otp.OtpVerifyAndResetPasswordResp;
+import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.OtpToken;
 import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.repository.OtpTokenRepo;
-import com.rikkeisoft.backend.service.AccountService;
 import com.rikkeisoft.backend.service.OtpService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +23,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor // Generates a constructor with required arguments for final fields.
@@ -35,13 +39,13 @@ import java.time.Instant;
 public class OtpServiceImpl implements OtpService {
     JavaMailSender mailSender;
     OtpTokenRepo otpTokenRepo;
+    PasswordEncoder passwordEncoder;
     SecureRandom random = new SecureRandom();
     Duration ttl = Duration.ofMinutes(5);
     int resendCooldownSec = 45;
     int forgotPasswordCooldownSec = 60;
     int maxOtpAttempts = 5;
     AccountRepo accountRepo;
-    AccountService accountService;
 
     @NonFinal
     @Value("${spring.mail.username}")
@@ -257,31 +261,42 @@ public class OtpServiceImpl implements OtpService {
                 .build();
     }
 
+    /**
+     * Verify OTP and reset password in one step
+     * This combines OTP verification and password reset to simplify the flow
+     * 
+     * @param req OtpVerifyAndResetPasswordReq containing email, OTP code, and new password
+     * @return OtpVerifyAndResetPasswordResp
+     */
     @Override
     @Transactional
-    public OtpVerifyResp verifyOtpForgotPassword(OtpVerifyRequest req) {
+    public OtpVerifyAndResetPasswordResp verifyOtpAndResetPassword(OtpVerifyAndResetPasswordReq req) {
         String email = req.getEmail().trim().toLowerCase();
         String code = req.getCode();
         
         // Verify account exists
-        accountRepo.findByEmail(email)
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+        Account account = accountRepo.findByEmail(email)
+                .orElseThrow(() -> {
+                    log.warn("Account not found for OTP verification. Email: {}", email);
+                    throw new AppException(ErrorCode.NOT_FOUND);
+                });
 
         // Fetch the token based on email
-        OtpToken token = otpTokenRepo.findTopByEmailAndUsedFalseOrderByCreatedAtDesc(email).orElse(null);
+        OtpToken token = otpTokenRepo.findTopByEmailAndUsedFalseOrderByCreatedAtDesc(email)
+                .orElse(null);
 
         // Check if token exists
         if (token == null) {
-            log.warn("No OTP token found for forgot password verification. Email: {}", email);
-            return OtpVerifyResp.builder()
+            log.warn("No OTP token found for password reset. Email: {}", email);
+            return OtpVerifyAndResetPasswordResp.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .message("No OTP token found for the provided email.")
                     .build();
         }
 
-        // Validate token properties
+        // Validate token type
         if (token.getTokenType() != OtpTokenType.FORGOT_PASSWORD) {
-            return OtpVerifyResp.builder()
+            return OtpVerifyAndResetPasswordResp.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .message("OTP token type mismatch.")
                     .build();
@@ -289,57 +304,86 @@ public class OtpServiceImpl implements OtpService {
         
         // Check if maximum attempts exceeded
         if (token.getAttemptCount() >= maxOtpAttempts) {
-            return OtpVerifyResp.builder()
+            return OtpVerifyAndResetPasswordResp.builder()
                     .status(HttpStatus.TOO_MANY_REQUESTS)
                     .message("OTP verification attempts exceeded. Please request a new code.")
                     .build();
         }
         
+        // Check if token expired
         if (Instant.now().isAfter(token.getExpiresAt())) {
-            log.warn("Expired OTP token for forgot password. Email: {}", email);
-            return OtpVerifyResp.builder()
+            log.warn("Expired OTP token. Email: {}", email);
+            return OtpVerifyAndResetPasswordResp.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .message("OTP token has expired.")
                     .build();
         }
+        
+        // Verify OTP code
         if (!token.getCode().equals(code)) {
             // Increment attempt count
             token.setAttemptCount(token.getAttemptCount() + 1);
             otpTokenRepo.save(token);
             
-            log.warn("Invalid OTP code attempt for forgot password. Email: {}, Attempt: {}/{}", 
+            log.warn("Invalid OTP code. Email: {}, Attempt: {}/{}", 
                     email, token.getAttemptCount(), maxOtpAttempts);
             
             // Check if this was the last allowed attempt
             if (token.getAttemptCount() >= maxOtpAttempts) {
-                return OtpVerifyResp.builder()
+                return OtpVerifyAndResetPasswordResp.builder()
                         .status(HttpStatus.TOO_MANY_REQUESTS)
                         .message("Maximum attempts exceeded. Please request a new OTP code.")
                         .build();
             }
             
-            return OtpVerifyResp.builder()
+            return OtpVerifyAndResetPasswordResp.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .message(String.format("Invalid OTP code. %d attempt(s) remaining.", 
                             maxOtpAttempts - token.getAttemptCount()))
                     .build();
         }
 
-        // Mark token as used and save
+        // Validate password match
+        if (!req.getNewPassword().equals(req.getConfirmPassword())) {
+            log.warn("Password mismatch during reset. Email: {}", email);
+            return OtpVerifyAndResetPasswordResp.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message("Password and confirm password do not match.")
+                    .build();
+        }
+
+        // Mark OTP token as used
         try {
             token.setUsed(true);
             otpTokenRepo.save(token);
         } catch (Exception e) {
-            return OtpVerifyResp.builder()
+            log.error("Failed to mark OTP token as used. Email: {}", email, e);
+            return OtpVerifyAndResetPasswordResp.builder()
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .message("Failed to update OTP token status.")
                     .build();
         }
 
+        // Update password
+        try {
+            account.setPassword(passwordEncoder.encode(req.getNewPassword()));
+            account.setUpdatedAt(LocalDateTime.now());
+            accountRepo.save(account);
+            
+            log.info("Password reset successfully via OTP. Email: {}", email);
+        } catch (Exception e) {
+            log.error("Failed to reset password. Email: {}", email, e);
+            return OtpVerifyAndResetPasswordResp.builder()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .message("Failed to reset password.")
+                    .build();
+        }
+
         // Return success response
-        return OtpVerifyResp.builder()
+        return OtpVerifyAndResetPasswordResp.builder()
                 .status(HttpStatus.OK)
-                .message("OTP verified successfully. You can now reset your password.")
+                .message("Password reset successfully.")
+                .email(email)
                 .build();
     }
 

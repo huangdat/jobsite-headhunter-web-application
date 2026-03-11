@@ -5,16 +5,17 @@ import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateStatusReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountChangePasswordreq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountCreateReq;
-import com.rikkeisoft.backend.model.dto.req.account.ResetPasswordReq;
-import com.rikkeisoft.backend.model.dto.resp.AccountResp;
+import com.rikkeisoft.backend.model.dto.req.account.*;
+import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.service.AccountService;
+import com.rikkeisoft.backend.model.dto.PagedResponse;
 
-import io.swagger.v3.oas.models.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,12 +55,12 @@ public class AccountController {
         return resp;
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public APIResponse<AccountResp> createAccount(@ModelAttribute AccountCreateReq req) {
-        APIResponse<AccountResp> resp = new APIResponse<>();
-        resp.setResult(accountService.createAccount(req));
-        return resp;
-    }
+//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public APIResponse<AccountResp> createAccount(@ModelAttribute AccountCreateReq req) {
+//        APIResponse<AccountResp> resp = new APIResponse<>();
+//        resp.setResult(accountService.createAccount(req));
+//        return resp;
+//    }
 
     @PutMapping("/status/{accountId}")
     public APIResponse<AccountResp> updateStatus(@PathVariable String accountId,
@@ -69,10 +70,19 @@ public class AccountController {
         return resp;
     }
 
-    @PostMapping("/reset-password")
-    public APIResponse<AccountResp> resetPassword(@RequestBody ResetPasswordReq req) {
-        APIResponse<AccountResp> resp = new APIResponse<>();
-        resp.setResult(accountService.resetPassword(req));
+    @GetMapping("/search")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public APIResponse<PagedResponse<AccountResp>> listUsers(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String sort
+    ) {
+        APIResponse<PagedResponse<AccountResp>> resp = new APIResponse<>();
+        PagedResponse<AccountResp> result = accountService.searchAccounts(page, size, keyword, role, status, sort);
+        resp.setResult(result);
         return resp;
     }
 
@@ -81,6 +91,27 @@ public class AccountController {
         APIResponse<String> resp = new APIResponse<>();
         resp.setResult(accountService.changePassword(req));
 
+        return resp;
+    }
+
+    @PostMapping(value = "/signup-headhunter", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public APIResponse<AccountResp> signupHeadhunter(@ModelAttribute HeadhunterSignupReq req) {
+        APIResponse<AccountResp> resp = new APIResponse<>();
+        resp.setResult(accountService.createAccountHeadhunter(req));
+        return resp;
+    }
+
+    @PostMapping(value = "/signup-collaborator", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public APIResponse<AccountResp> signupCollaborator(@ModelAttribute CollaboratorSignupReq req) {
+        APIResponse<AccountResp> resp = new APIResponse<>();
+        resp.setResult(accountService.createAccountCollaborator(req));
+        return resp;
+    }
+
+    @PostMapping(value = "/signup-candidate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public APIResponse<AccountResp> signupCandidate(@ModelAttribute CandidateSignupReq req) {
+        APIResponse<AccountResp> resp = new APIResponse<>();
+        resp.setResult(accountService.createAccountCandidate(req));
         return resp;
     }
 

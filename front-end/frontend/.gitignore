@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 homepage-structure.md
+my_local_backup.sql
+*.sql
+*.yaml
+docs/**
+.env

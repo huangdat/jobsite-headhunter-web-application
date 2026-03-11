@@ -18,10 +18,6 @@ public class BusinessProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToOne
-    @JoinColumn(name = "account_id", nullable = false, unique = true)
-    Account account;
-
     @Column(nullable = false)
     String companyName;
 

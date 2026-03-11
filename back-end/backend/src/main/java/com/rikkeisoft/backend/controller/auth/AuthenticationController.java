@@ -8,6 +8,7 @@ import com.rikkeisoft.backend.model.dto.req.auth.TokenValidateReq;
 import com.rikkeisoft.backend.model.dto.resp.auth.AuthenticationResp;
 import com.rikkeisoft.backend.model.dto.resp.auth.TokenValidateResp;
 import com.rikkeisoft.backend.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,8 +29,10 @@ public class AuthenticationController {
 
     /**
      * Authenticate a user with username and password.
+     *
      * @param request
-     * @return APIResponse with AuthenticationResponse containing authentication status and JWT token.
+     * @return APIResponse with AuthenticationResponse containing authentication
+     * status and JWT token.
      */
     @PostMapping("/login")
     public APIResponse<AuthenticationResp> authenticate(@RequestBody AuthenticationReq request) {
@@ -38,7 +41,8 @@ public class AuthenticationController {
 
         return APIResponse.<AuthenticationResp>builder()
                 .status(response.isAuthenticated() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE)
-                .message(response.isAuthenticated() ? "Authentication successful" : "Authentication failed")
+                .message(response.isAuthenticated() ? "Authentication successful"
+                        : "Authentication failed")
                 .result(AuthenticationResp.builder()
                         .authenticated(response.isAuthenticated())
                         .accessToken(response.getAccessToken())
@@ -48,15 +52,27 @@ public class AuthenticationController {
 
     /**
      * Introspect a JWT token to check its validity.
+     *
      * @param request
-     * @return APIResponse with IntrospectResponse indicating whether the token is valid.
+     * @return APIResponse with IntrospectResponse indicating whether the token is
+     * valid.
      * @throws ParseException
      * @throws JOSEException
      */
     @PostMapping("/token-validate")
-    public APIResponse<TokenValidateResp> introspect(@RequestBody TokenValidateReq request) throws ParseException, JOSEException {
+    public APIResponse<TokenValidateResp> introspect(@RequestBody TokenValidateReq request)
+            throws ParseException, JOSEException {
 
         TokenValidateResp response = authenticationService.validateToken(request);
+
+        if (!response.isValid()) {
+            // Token invalid: chỉ trả status và message, không trả result
+            return APIResponse.<TokenValidateResp>builder()
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .message("Token invalid")
+                    .result(null)
+                    .build();
+        }
 
         return APIResponse.<TokenValidateResp>builder()
                 .status(response.isValid() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED)
@@ -71,16 +87,16 @@ public class AuthenticationController {
                 .build();
     }
 
-    /**
-     * Logout user by invalidating the JWT token.
-     * @param request
-     * @return APIResponse indicating logout success
-     * @throws ParseException
-     * @throws JOSEException
-     */
+
     @PostMapping("/logout")
-    public APIResponse<Void> logout(@RequestBody LogoutReq request) throws ParseException, JOSEException {
-        authenticationService.logout(request);
+    public APIResponse<Void> logout(@RequestBody LogoutReq request, HttpServletRequest httpRequest) throws ParseException, JOSEException {
+        String authHeader = httpRequest.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Unauthorized");
+        }
+        String callerToken = authHeader.substring("Bearer ".length()).trim();
+
+        authenticationService.logout(request, callerToken);
 
         return APIResponse.<Void>builder()
                 .status(HttpStatus.OK)

@@ -1,6 +1,5 @@
 package com.rikkeisoft.backend.config;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -40,8 +39,8 @@ public class SecurityConfig {
 
     // Define endpoint access rules based on user roles and HTTP methods
 
-    String[] PUBLIC_POST_ENDPOINTS = { "api/upload", "api/auth/**", "api/v1/auth/**", "api/otp/**" };
-    String[] PUBLIC_GET_ENDPOINTS = { "api/auth/**", "api/v1/auth/**" };
+    String[] PUBLIC_POST_ENDPOINTS = {"api/upload", "api/auth/**", "api/otp/**", "api/account/signup-headhunter", "api/account/signup-collaborator", "api/account/signup-candidate"};
+    String[] PUBLIC_GET_ENDPOINTS = {"api/auth/**"};
     String[] PUBLIC_PUT_ENDPOINTS = {};
 
     /**

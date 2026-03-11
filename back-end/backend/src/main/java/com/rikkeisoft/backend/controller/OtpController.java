@@ -3,8 +3,10 @@ package com.rikkeisoft.backend.controller;
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.otp.SendByEmailRequest;
 import com.rikkeisoft.backend.model.dto.req.otp.OtpVerifyRequest;
+import com.rikkeisoft.backend.model.dto.req.otp.OtpVerifyAndResetPasswordReq;
 import com.rikkeisoft.backend.model.dto.resp.otp.OtpSendResp;
 import com.rikkeisoft.backend.model.dto.resp.otp.OtpVerifyResp;
+import com.rikkeisoft.backend.model.dto.resp.otp.OtpVerifyAndResetPasswordResp;
 import com.rikkeisoft.backend.service.OtpService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,7 @@ public class OtpController {
                 .result(response)
                 .build();
     }
+
     @PostMapping("/send-forgot-password")
     public APIResponse<OtpSendResp> sendOtpForgotPassword(@RequestBody SendByEmailRequest req) {
         OtpSendResp response = otpService.sendOtpForgotPassword(req);
@@ -44,10 +47,14 @@ public class OtpController {
                 .build();
     }
     
-    @PostMapping("/verify-forgot-password")
-    public APIResponse<OtpVerifyResp> verifyOtpForgotPassword(@RequestBody OtpVerifyRequest req) {
-        OtpVerifyResp response = otpService.verifyOtpForgotPassword(req);
-        return APIResponse.<OtpVerifyResp>builder()
+    /**
+     * Verify OTP and reset password in one step
+     * Combines OTP verification and password reset for simplified flow
+     */
+    @PostMapping("/verify-and-reset-password")
+    public APIResponse<OtpVerifyAndResetPasswordResp> verifyOtpAndResetPassword(@RequestBody OtpVerifyAndResetPasswordReq req) {
+        OtpVerifyAndResetPasswordResp response = otpService.verifyOtpAndResetPassword(req);
+        return APIResponse.<OtpVerifyAndResetPasswordResp>builder()
                 .result(response)
                 .build();
     }

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import { Input, FormField } from "@/shared/ui";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { FormField } from "@/shared/components";
 import type { ChangePasswordFormData } from "../types";
+import { changePassword } from "../services/authApi";
+import { toast } from "sonner";
 
 export function ChangePasswordPage() {
   const [formData, setFormData] = useState<ChangePasswordFormData>({
@@ -18,6 +21,7 @@ export function ChangePasswordPage() {
   const [errors, setErrors] = useState<
     Partial<Record<keyof ChangePasswordFormData, string>>
   >({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange =
     (field: keyof ChangePasswordFormData) => (value: string) => {
@@ -55,11 +59,61 @@ export function ChangePasswordPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log("Password change attempt:", formData);
-      // Add API call here
+
+    if (!validateForm()) {
+      toast.error("Please fix the errors in the form");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await changePassword(formData);
+
+      // Success notification
+      toast.success("Password changed successfully!");
+
+      // Clear form
+      handleCancel();
+    } catch (error: unknown) {
+      let errorMessage = "Failed to change password. Please try again.";
+
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        typeof error.response === "object" &&
+        error.response !== null
+      ) {
+        const response = error.response as {
+          status?: number;
+          data?: { message?: string };
+        };
+        errorMessage = response.data?.message || errorMessage;
+
+        // Check if it's current password error
+        if (
+          response.status === 401 ||
+          errorMessage.toLowerCase().includes("current password") ||
+          errorMessage.toLowerCase().includes("incorrect password")
+        ) {
+          setErrors({
+            currentPassword: errorMessage,
+          });
+        }
+      }
+
+      // Error notification
+      toast.error(errorMessage);
+
+      if (!errors.currentPassword) {
+        setErrors({
+          currentPassword: errorMessage,
+        });
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -84,7 +138,7 @@ export function ChangePasswordPage() {
       {/* Sidebar */}
       <aside className="w-80 bg-slate-900 text-white flex flex-col border-r border-white/10 shrink-0">
         <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#39FF14] rounded-lg flex items-center justify-center text-slate-900">
+          <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-slate-900">
             <span className="material-symbols-outlined font-bold">
               account_tree
             </span>
@@ -99,7 +153,7 @@ export function ChangePasswordPage() {
             href="#"
             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
           >
-            <span className="material-symbols-outlined text-[#39FF14]">
+            <span className="material-symbols-outlined text-brand-primary">
               dashboard
             </span>
             <span className="font-medium">Dashboard</span>
@@ -108,7 +162,7 @@ export function ChangePasswordPage() {
             href="#"
             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
           >
-            <span className="material-symbols-outlined text-[#39FF14]">
+            <span className="material-symbols-outlined text-brand-primary">
               work
             </span>
             <span className="font-medium">Jobs</span>
@@ -117,7 +171,7 @@ export function ChangePasswordPage() {
             href="#"
             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
           >
-            <span className="material-symbols-outlined text-[#39FF14]">
+            <span className="material-symbols-outlined text-brand-primary">
               group_add
             </span>
             <span className="font-medium">Referrals</span>
@@ -128,7 +182,7 @@ export function ChangePasswordPage() {
           </div>
           <a
             href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#39FF14]/10 text-[#39FF14] transition-colors border border-[#39FF14]/20"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary transition-colors border border-brand-primary/20"
           >
             <span className="material-symbols-outlined">settings</span>
             <span className="font-medium">Settings</span>
@@ -137,13 +191,7 @@ export function ChangePasswordPage() {
 
         <div className="p-4 border-t border-white/10">
           <div className="flex items-center gap-3 p-2">
-            <div
-              className="w-10 h-10 rounded-full bg-[#39FF14]/20 border border-[#39FF14]/30 bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBMe3zs3aBwZhqE-fJHYkRrJVZLLk0dFh5J33B548t3ERSfrnF4HDLEwliFS2x8aq-QktvmGDPIgkzTptT47h9pQblYro119U4BuBd3EBHH02plpB8yiGeRX6QyhT_3Jo4Y1xRewp4DLAnuU_r4FUb7nBGz8D-xWF4-zNhYSYYF8bp6-V1xikUHUjqGVu3gJDDz94M39L5DWFncvVv8qZP3-yly9hl1DepvCchua3zo1-haWHC-1xeXr-19QF7uP0gCTJLx9yVabok')",
-              }}
-            ></div>
+            <div className="w-10 h-10 rounded-full bg-brand-primary/20 border border-brand-primary/30 bg-cover bg-center"></div>
             <div className="grow overflow-hidden">
               <p className="text-sm font-semibold truncate">Alex Nguyen</p>
               <p className="text-xs text-white/50 truncate">
@@ -269,14 +317,14 @@ export function ChangePasswordPage() {
                 <div className="pt-6 flex flex-col sm:flex-row gap-4">
                   <button
                     type="submit"
-                    disabled={!isFormValid}
+                    disabled={!isFormValid || isLoading}
                     className={`flex-1 h-12 font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
-                      isFormValid
-                        ? "bg-[#39FF14] text-slate-900 hover:bg-[#2ee612]"
+                      isFormValid && !isLoading
+                        ? "bg-brand-primary text-slate-900 hover:bg-brand-hover"
                         : "bg-slate-200 text-slate-400 cursor-not-allowed"
                     }`}
                   >
-                    Update Password
+                    {isLoading ? "Updating..." : "Update Password"}
                   </button>
                   <button
                     type="button"
@@ -295,13 +343,13 @@ export function ChangePasswordPage() {
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-[#39FF14] text-xl">
+                    <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
                     <span>At least 8 characters long</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-[#39FF14] text-xl">
+                    <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
                     <span>
@@ -310,7 +358,7 @@ export function ChangePasswordPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-[#39FF14] text-xl">
+                    <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
                     <span>

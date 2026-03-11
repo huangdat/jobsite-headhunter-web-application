@@ -183,11 +183,35 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
     }
 
-    @Override
-    public void logout(LogoutReq req) throws ParseException, JOSEException {
-        var token = req.getToken();
-        SignedJWT signedJWT = SignedJWT.parse(token);
-        Date expiry = signedJWT.getJWTClaimsSet().getExpirationTime();
+        @Override
+        public void logout(LogoutReq req, String callerToken) throws ParseException, JOSEException {
+                // authorize caller: only the token owner or admins can invalidate a token
+                if (callerToken == null || callerToken.isBlank()) {
+                        throw new AppException(ErrorCode.UNAUTHORIZED);
+                }
+
+                TokenValidateReq callerValidateReq = TokenValidateReq.builder().token(callerToken).build();
+                TokenValidateResp callerInfo = validateToken(callerValidateReq);
+                if (callerInfo == null || !callerInfo.isValid()) {
+                        throw new AppException(ErrorCode.UNAUTHORIZED);
+                }
+
+                SignedJWT targetJwt = SignedJWT.parse(req.getToken());
+                String targetUsername = targetJwt.getJWTClaimsSet().getSubject();
+
+                boolean isAdmin = false;
+                String callerRoles = callerInfo.getRole();
+                if (callerRoles != null && callerRoles.contains("SCOPE_ADMIN")) {
+                        isAdmin = true;
+                }
+
+                if (!isAdmin && !callerInfo.getUsername().equals(targetUsername)) {
+                        throw new AppException(ErrorCode.FORBIDDEN);
+                }
+
+                var token = req.getToken();
+                SignedJWT signedJWT = SignedJWT.parse(token);
+                Date expiry = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         InvalidatedToken inv = InvalidatedToken.builder()
                 .id(token)

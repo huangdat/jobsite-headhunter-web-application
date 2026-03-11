@@ -1,0 +1,52 @@
+import React from "react";
+
+interface PasswordRequirement {
+  met: boolean;
+  label: string;
+}
+
+interface PasswordRequirementsProps {
+  minLength: boolean;
+  hasUpperCase: boolean;
+  hasSpecialChar: boolean;
+  hasNumber: boolean;
+}
+
+export const PasswordRequirements: React.FC<PasswordRequirementsProps> = ({
+  minLength,
+  hasUpperCase,
+  hasSpecialChar,
+  hasNumber,
+}) => {
+  const requirements: PasswordRequirement[] = [
+    { met: minLength, label: "At least 8 characters" },
+    { met: hasUpperCase, label: "One uppercase letter" },
+    { met: hasSpecialChar, label: "One special character" },
+    { met: hasNumber, label: "One numeric digit" },
+  ];
+
+  return (
+    <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-800">
+      <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+        Password Requirements
+      </h4>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {requirements.map((requirement, index) => (
+          <li
+            key={index}
+            className="flex items-center gap-2 text-sm text-slate-500"
+          >
+            <span
+              className={`material-symbols-outlined text-lg ${
+                requirement.met ? "text-brand-primary" : "text-slate-300"
+              }`}
+            >
+              {requirement.met ? "check_circle" : "radio_button_unchecked"}
+            </span>
+            {requirement.label}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};

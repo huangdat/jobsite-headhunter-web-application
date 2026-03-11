@@ -47,7 +47,28 @@ public enum ErrorCode {
     OTP_ATTEMPTS_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS,
             "OTP verification attempts exceeded. Please request a new code."),
     OTP_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send OTP"),
-    EMAIL_INVALID(HttpStatus.BAD_REQUEST, "Invalid email");
+    EMAIL_INVALID(HttpStatus.BAD_REQUEST, "Invalid email"),
+    TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "Reset password token has expired. Please request a new OTP."),
+
+    // Custom error codes for BusinessProfile module
+    BUSINESS_PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Business profile not found"),
+    COMPANY_NAME_EXISTED(HttpStatus.CONFLICT, "Company already exists"),
+
+    // Custom error codes for MST (Tax code) lookup
+    MST_NOT_FOUND(HttpStatus.NOT_FOUND, "Tax code not found or does not exist"),
+    MST_LOOKUP_FAILED(HttpStatus.SERVICE_UNAVAILABLE, "Failed to lookup tax code information. Please try again later."),
+ 
+    // Custom error codes for Collaborator Commission
+    COMMISSION_RATE_INVALID(HttpStatus.BAD_REQUEST, "Commission rate must be between 0 and 100"),
+    COMMISSION_RATE_NULL(HttpStatus.BAD_REQUEST, "Commission rate cannot be null"),
+    COMMISSION_RATE_MIN(HttpStatus.BAD_REQUEST, "Commission rate must be at least 0"),
+    COMMISSION_RATE_MAX(HttpStatus.BAD_REQUEST, "Commission rate cannot exceed 100"),
+
+    // Custom error codes for business profile retrieval
+    NO_BUSINESS_PROFILES_STORED(HttpStatus.NOT_FOUND, "No business profiles stored"),
+    INVALID_TAX_CODE(HttpStatus.BAD_REQUEST, "Invalid tax code format. Please provide a valid tax code.");
+
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;

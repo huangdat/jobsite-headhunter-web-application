@@ -12,9 +12,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ResetPasswordReq {
-    @Email(message = "EMAIL_INVALID")
-    @NotBlank(message = "EMAIL_REQUIRED")
-    String email;
+    @NotBlank(message = "RESET_TOKEN_REQUIRED")
+    String resetToken;
     
     @NotBlank(message = "PASSWORD_REQUIRED")
     @Size(min = 6, message = "PASSWORD_TOO_SHORT")

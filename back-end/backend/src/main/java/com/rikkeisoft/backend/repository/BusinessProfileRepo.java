@@ -9,5 +9,8 @@ import java.util.Optional;
 @Repository
 public interface BusinessProfileRepo extends JpaRepository<BusinessProfile, Long> {
 
-    Optional<BusinessProfile> findByAccountId(String accountId);
+    boolean existsByCompanyName(String companyName);
+
+    Optional<BusinessProfile> findByTaxCode(String taxCode);
+
 }

@@ -1,7 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Input, FormField } from "@/shared/ui";
-import type { UserRole } from "../types";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { AuthLayout } from "@/shared/components";
+import type { UserRole, RegisterFormData } from "../types";
+import { sendOtpSignup } from "../services/authApi";
+import { toast } from "sonner";
+
+import { StepIndicator } from "./StepIndicator";
+import { AccountStep } from "./AccountStep";
+import { PersonalStep } from "./PersonalStep";
+import { CandidateDetailsStep } from "./CandidateDetailsStep";
+import { HeadhunterDetailsStep } from "./HeadhunterDetailsStep";
+import { CollaboratorDetailsStep } from "./CollaboratorDetailsStep";
+
+import { HiOutlineArrowRight, HiOutlineArrowLeft } from "react-icons/hi";
 
 interface RegisterFormProps {
   role?: string;
@@ -10,41 +22,29 @@ interface RegisterFormProps {
 const getRoleConfig = (role: UserRole) => {
   const configs = {
     candidate: {
-      icon: "person_search",
       title: "Create Candidate Account",
-      subtitle: "Take the next step in your career journey.",
-      benefits: [
-        { icon: "verified_user", text: "Direct Access to Decision Makers" },
-        { icon: "workspace_premium", text: "Premium Career Opportunities" },
-      ],
+      subtitle: "Start your career journey with top companies.",
     },
     collaborator: {
-      icon: "trending_up",
       title: "Create Collaborator Account",
-      subtitle: "Start your journey as a strategic referral partner today.",
-      benefits: [
-        { icon: "stars", text: "High-Commission Rewards" },
-        { icon: "verified_user", text: "Exclusive Talent Network" },
-      ],
+      subtitle: "Refer top talent and earn commission.",
     },
     headhunter: {
-      icon: "trending_up",
       title: "Create Headhunter Account",
-      subtitle: "Start your journey as a strategic referral partner today.",
-      benefits: [
-        { icon: "stars", text: "Platinum Tier Rewards" },
-        { icon: "verified_user", text: "Verified Professional Network" },
-      ],
+      subtitle: "Join our professional recruitment network.",
     },
   };
+
   return configs[role];
 };
 
 export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const userRole = role as UserRole;
   const config = getRoleConfig(userRole);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    username: "",
     fullName: "",
     email: "",
     phone: "",
@@ -52,399 +52,449 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     taxCode: "",
     password: "",
     confirmPassword: "",
-    agreeToTerms: false,
+    gender: "" as "MALE" | "FEMALE" | "OTHER" | "",
+    avatar: undefined as File | undefined,
+    // Headhunter optional fields
+    websiteUrl: "",
+    addressMain: "",
+    companyScale: "",
+    // Collaborator optional fields
+    commissionRate: undefined as number | undefined,
+    // Candidate optional fields
+    currentTitle: "",
+    yearsOfExperience: undefined as number | undefined,
+    expectedSalaryMin: undefined as number | undefined,
+    expectedSalaryMax: undefined as number | undefined,
+    bio: "",
+    city: "",
+    openForWork: false,
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
 
-  const handleChange = (field: string) => (value: string | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: "" }));
+  // Password requirements validation
+  const passwordRequirements = {
+    minLength: formData.password.length >= 8,
+    hasUpperCase: /[A-Z]/.test(formData.password),
+    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(formData.password),
+    hasNumber: /\d/.test(formData.password),
+  };
+
+  const steps = [
+    { number: 1, title: "Account", description: "Login credentials" },
+    { number: 2, title: "Personal", description: "Your information" },
+    { number: 3, title: "Details", description: "Additional info" },
+  ];
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
+
+  const validateStep = (step: number): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    // Step 1: Account Information
+    if (step === 1) {
+      // Username validation
+      if (!formData.username.trim()) {
+        newErrors.username = "Username is required";
+      } else if (
+        formData.username.length < 8 ||
+        formData.username.length > 32
+      ) {
+        newErrors.username = "Username must be between 8 and 32 characters";
+      } else if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(formData.username)) {
+        newErrors.username =
+          "Username must start with a letter and contain only letters, numbers, and underscores";
+      }
+
+      // Email validation
+      if (!formData.email.trim()) {
+        newErrors.email = "Email is required";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
+
+      // Password validation
+      if (!formData.password) {
+        newErrors.password = "Password is required";
+      } else if (!Object.values(passwordRequirements).every(Boolean)) {
+        newErrors.password = "Password does not meet requirements";
+      }
+
+      // Confirm password validation
+      if (!formData.confirmPassword) {
+        newErrors.confirmPassword = "Please confirm your password";
+      } else if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = "Passwords do not match";
+      }
+    }
+
+    // Step 2: Personal Information
+    if (step === 2) {
+      // Full name validation
+      if (!formData.fullName.trim()) {
+        newErrors.fullName = "Full name is required";
+      } else if (formData.fullName.trim().length < 2) {
+        newErrors.fullName = "Full name must be at least 2 characters";
+      }
+
+      // Phone validation
+      if (!formData.phone.trim()) {
+        newErrors.phone = "Phone number is required";
+      } else if (!/^[0-9]{10,15}$/.test(formData.phone.replace(/[\s-]/g, ""))) {
+        newErrors.phone = "Please enter a valid phone number (10-15 digits)";
+      }
+    }
+
+    // Step 3: Role-specific Information
+    if (step === 3) {
+      // Headhunter specific validation
+      if (userRole === "headhunter") {
+        if (!formData.companyName.trim()) {
+          newErrors.companyName = "Company name is required";
+        }
+        if (!formData.taxCode.trim()) {
+          newErrors.taxCode = "Tax code is required";
+        }
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateForm = (): boolean => {
+    // Validate all steps
+    return validateStep(1) && validateStep(2) && validateStep(3);
+  };
+
+  const handleNextStep = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep((prev) => Math.min(prev + 1, steps.length));
+    } else {
+      toast.error("Please fix the errors before continuing");
     }
   };
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handlePrevStep = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleChange =
+    (field: string) =>
+    (value: string | boolean | File | null | number | undefined) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+
+      // Clear error when user starts typing
+      if (errors[field]) {
+        setErrors((prev) => {
+          const updated = { ...prev };
+          delete updated[field];
+          return updated;
+        });
+      }
+    };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add validation logic
-    console.log("Registration attempt:", { ...formData, role: userRole });
+
+    if (currentStep < steps.length) {
+      if (validateStep(currentStep)) {
+        setCurrentStep((prev) => prev + 1);
+      } else {
+        toast.error("Please fix the errors before continuing");
+      }
+      return;
+    }
+
+    if (!validateForm()) {
+      toast.error("Please fix the errors in the form");
+      return;
+    }
+
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      // Build type-safe register data based on role
+      let registerData: RegisterFormData;
+
+      if (userRole === "headhunter") {
+        registerData = {
+          role: "headhunter" as const,
+          username: formData.username,
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+          gender: formData.gender || undefined,
+          avatar: formData.avatar,
+          agreeToTerms: true,
+          companyName: formData.companyName,
+          taxCode: formData.taxCode,
+          // Optional fields
+          websiteUrl: formData.websiteUrl || undefined,
+          addressMain: formData.addressMain || undefined,
+          companyScale: formData.companyScale || undefined,
+        };
+      } else if (userRole === "collaborator") {
+        registerData = {
+          role: "collaborator" as const,
+          username: formData.username,
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+          gender: formData.gender || undefined,
+          avatar: formData.avatar,
+          agreeToTerms: true,
+          // Optional fields
+          commissionRate: formData.commissionRate,
+        };
+      } else {
+        registerData = {
+          role: "candidate" as const,
+          username: formData.username,
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+          gender: formData.gender || undefined,
+          avatar: formData.avatar,
+          agreeToTerms: true,
+          // Optional fields
+          currentTitle: formData.currentTitle || undefined,
+          yearsOfExperience: formData.yearsOfExperience,
+          expectedSalaryMin: formData.expectedSalaryMin,
+          expectedSalaryMax: formData.expectedSalaryMax,
+          bio: formData.bio || undefined,
+          city: formData.city || undefined,
+          openForWork: formData.openForWork,
+        };
+      }
+
+      // Save registration data to sessionStorage (for use after OTP verification)
+      // Note: Avatar file cannot be serialized, need special handling
+      const dataToStore = {
+        ...registerData,
+        avatar: undefined, // Will handle avatar separately
+      };
+      sessionStorage.setItem(
+        "pendingRegistration",
+        JSON.stringify(dataToStore),
+      );
+
+      // If avatar exists, convert to base64 for storage
+      if (formData.avatar) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          sessionStorage.setItem(
+            "pendingRegistrationAvatar",
+            reader.result as string,
+          );
+        };
+        reader.readAsDataURL(formData.avatar);
+      }
+
+      // Send OTP to email
+      const otpResponse = await sendOtpSignup({
+        email: formData.email,
+        tokenType: "SIGN_UP",
+      });
+
+      toast.success("OTP has been sent to your email!");
+
+      // Redirect to OTP verification page
+      navigate("/verify-otp", {
+        state: {
+          accountId: otpResponse.accountId,
+          email: otpResponse.email,
+          expiresAt: otpResponse.expiresAt,
+        },
+      });
+    } catch (error: unknown) {
+      // Extract error details from response
+      let errorMessage = "Failed to send OTP. Please try again.";
+      let errorField: string | null = null;
+
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        typeof error.response === "object" &&
+        error.response !== null
+      ) {
+        const response = error.response as {
+          status?: number;
+          data?: { message?: string };
+        };
+
+        errorMessage = response.data?.message || errorMessage;
+
+        // Categorize error based on message
+        const messageLower = errorMessage.toLowerCase();
+
+        if (messageLower.includes("email")) {
+          errorField = "email";
+        }
+      }
+
+      // Error notification
+      toast.error(errorMessage);
+
+      // Set form error for the appropriate field
+      if (errorField) {
+        setErrors({ [errorField]: errorMessage });
+      } else {
+        setErrors({ submit: errorMessage });
+      }
+
+      console.error("OTP send error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-50 dark:bg-slate-950">
-      {/* Header */}
-      <header className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-[#39FF14] p-1.5 rounded-lg">
-            <span className="material-symbols-outlined text-black text-lg font-bold">
-              handshake
-            </span>
-          </div>
-          <span className="text-xl font-bold tracking-tight">JobSite</span>
+    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
+      <div className="w-full max-w-5xl min-h-125 bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
+        {/* LEFT PANEL */}
+        <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
+          <h1 className="text-5xl font-bold leading-tight">
+            Join Our <br />
+            <span className="text-lime-400">Professional</span> <br />
+            Network
+          </h1>
+
+          <p className="text-gray-300 mt-1">
+            Create your account and start earning opportunities today.
+          </p>
         </div>
-        <nav className="hidden md:flex items-center gap-8">
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            How it works
-          </Link>
-          <Link
-            to="#"
-            className="text-sm font-medium hover:text-[#39FF14] transition-colors"
-          >
-            Rewards
-          </Link>
-          <Link
-            to="/login"
-            className="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-6 py-2 rounded-full text-sm font-semibold"
-          >
-            Sign In
-          </Link>
-        </nav>
-      </header>
 
-      {/* Main Content */}
-      <main className="w-full max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="w-full bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
-          {/* Left Panel */}
-          <div className="md:w-5/12 bg-linear-to-br from-[#0A1F16] to-[#050D0A] p-6 sm:p-8 lg:p-10 flex flex-col justify-between text-white relative overflow-hidden">
-            {/* Decorative background pattern */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none radial-dot-pattern"></div>
+        {/* RIGHT PANEL */}
+        <div className="p-6">
+          <h2 className="text-3xl font-bold">{config.title}</h2>
 
-            <div className="relative z-10">
-              <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 border border-white/10">
-                <span className="material-symbols-outlined text-[#39FF14]">
-                  {config.icon}
-                </span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-                Unlock Your <br />
-                <span className="text-[#39FF14]">Earning Potential</span>
-              </h1>
-              <p className="text-slate-400 text-lg leading-relaxed max-w-sm mb-12">
-                {userRole === "candidate"
-                  ? "Connect with top companies and get rewarded for your skills. Join our elite network of professional candidates today."
-                  : "Join our exclusive network of professional partners. Refer top talent and earn competitive rewards for every successful placement."}
-              </p>
+          <p className="text-gray-500 mb-3">{config.subtitle}</p>
 
-              {/* Social Proof Card */}
-              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="flex -space-x-3">
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuABqlsvx6yZKfSnftA9Q2pU5FhkX-HgGSa6Y6gVX5288goI_6QfB28E5atvv4bVqoAoQmoZojZljsD9E-HnURxRo7pS0LpBO_yFrwErsmK6onRJe-E3tSnQYYk81Ni3ja9E8nek5sfQMgLqPvdWAM382R9VaDGxq7Bx6xsPQ3GRaMk0sokF5beAUhEIN1u6sFA4h9qryLo0tTIBI3MvSBU9A22TQW0WE35Fi5HkNMmEah7DOW0P2gGwknoSVbh8DH1D-jyJvLCWp4Y"
-                      alt="Active user"
-                      className="w-10 h-10 rounded-full border-2 border-slate-800"
-                    />
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrGFYjfvCx9VTzgFbISWHa4x-dovk2yi6zo-HX_XPSiqq9dZ-8zjK0hqJdzg3mkd_8XVKnNgjSg1M5grdNyd45T3m7nKo6OzXhBQ2nJ0sGgf34CThoRvsdbcFjVg7cScFUXE9MvPlOc_X4tFaumfcJ8jsaSEc0aa1Cq8StK3_ly0HR0sL7L2iXr88de_9EZmpbG_52aKSghBVFGVqWYYvrfbz7-_qS4NBlZFa60-efifFVfNfUMWkue1ZP0EhOX6iMG1Zfct2ViEA"
-                      alt="Active user"
-                      className="w-10 h-10 rounded-full border-2 border-slate-800"
-                    />
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9v813yZs4c_n_9ftsSu_SxqHicYHC-Wp8xd361akoojexbr4IWjAwGvEYL6JOyICXevf_xRMAAEGMa6mw47JM8WLUGgDD0_qZrbfSOAGTVneGA4ZBMojk4ZpwmZv-3tjQubCKfflANEsaIpThvkJ7EydfLSWW3eoz6LN5WLEuKp6llJkfM67PyAZ6QVTpyR3Zh-6e9UlDs3mbYkGKecaUKG5L67aBg11_HqgDfI40siFxxO9lM4tpW0ESKE4vy5myXbonTnEGnAU"
-                      alt="Active user"
-                      className="w-10 h-10 rounded-full border-2 border-slate-800"
-                    />
-                    <div className="w-10 h-10 rounded-full border-2 border-slate-800 bg-slate-700 flex items-center justify-center text-xs font-bold">
-                      +5k
-                    </div>
-                  </div>
-                  <span className="text-sm font-medium text-slate-300">
-                    Join 5,000+{" "}
-                    {userRole === "candidate"
-                      ? "Candidates"
-                      : userRole === "headhunter"
-                        ? "Headhunters"
-                        : "Collaborators"}
-                  </span>
-                </div>
-                <div className="relative rounded-xl overflow-hidden aspect-video">
-                  <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz_qmyk466XBK6tnSpzCfNeX1MGRUor1hkZ5YNJtfB-1DtZNr0-2QSWKDHAsWjXLJ8LCLxc0wJiRaVYSgio1IIExn-eCkTLqxgTm1Ked8Zke4BEL-RMq_i0rtCYLBWriZd0JbJ7zks9e_NJzm_fqATytYOs-mUm2joMW5jC0D7Ee064Q0npbzhvtPuGfQMBqigNYsFgQhSDZgLvPvNv37J9FtQIKOdCfvvs2fFHbH8nZxu0nhdVLAAdUHU4a-wx0ybAs69JAR06lk"
-                    alt="Team collaboration"
-                    className="w-full h-full object-cover grayscale brightness-75"
+          {/* Step Indicator */}
+          <StepIndicator steps={steps} currentStep={currentStep} />
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Step 1: Account Information */}
+            {currentStep === 1 && (
+              <AccountStep
+                formData={formData}
+                errors={errors}
+                handleChange={handleChange}
+                showPassword={showPassword}
+                showConfirmPassword={showConfirmPassword}
+                setShowPassword={setShowPassword}
+                setShowConfirmPassword={setShowConfirmPassword}
+                passwordRequirements={passwordRequirements}
+              />
+            )}
+
+            {/* Step 2: Personal Information */}
+            {currentStep === 2 && (
+              <PersonalStep
+                formData={formData}
+                errors={errors}
+                handleChange={handleChange}
+              />
+            )}
+
+            {/* Step 3: Role-Specific Details */}
+            {currentStep === 3 && (
+              <>
+                {userRole === "candidate" && (
+                  <CandidateDetailsStep
+                    formData={formData}
+                    errors={errors}
+                    handleChange={handleChange}
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative z-10 mt-12 flex flex-col gap-4">
-              {config.benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <span
-                    className={`material-symbols-outlined text-xl ${
-                      benefit.icon === "stars"
-                        ? "text-yellow-500"
-                        : "text-[#39FF14]"
-                    }`}
-                  >
-                    {benefit.icon}
-                  </span>
-                  <span className="text-sm font-medium text-slate-300">
-                    {benefit.text}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Panel - Form */}
-          <div className="md:w-7/12 p-6 sm:p-8 lg:p-10 bg-white dark:bg-slate-900">
-            <div className="max-w-md mx-auto">
-              <h2 className="text-3xl font-bold mb-2">{config.title}</h2>
-              <p className="text-slate-500 dark:text-slate-400 mb-8">
-                {config.subtitle}
-              </p>
-
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <FormField label="Full Name" error={errors.fullName}>
-                  <Input
-                    icon="person"
-                    type="text"
-                    placeholder={
-                      userRole === "candidate" ? "Jane Cooper" : "Johnathan Doe"
-                    }
-                    value={formData.fullName}
-                    onChange={(e) => handleChange("fullName")(e.target.value)}
-                    error={!!errors.fullName}
-                  />
-                </FormField>
-
-                <FormField label="Work Email" error={errors.email}>
-                  <Input
-                    icon="email"
-                    type="email"
-                    placeholder={
-                      userRole === "candidate"
-                        ? "jane@company.com"
-                        : "john@company.com"
-                    }
-                    value={formData.email}
-                    onChange={(e) => handleChange("email")(e.target.value)}
-                    error={!!errors.email}
-                  />
-                </FormField>
-
-                {userRole === "headhunter" && (
-                  <FormField label="Company Name" error={errors.companyName}>
-                    <Input
-                      icon="business"
-                      type="text"
-                      placeholder="Enterprise Inc."
-                      value={formData.companyName}
-                      onChange={(e) =>
-                        handleChange("companyName")(e.target.value)
-                      }
-                      error={!!errors.companyName}
-                    />
-                  </FormField>
                 )}
 
-                <div
-                  className={
-                    userRole === "headhunter"
-                      ? "grid grid-cols-1 md:grid-cols-2 gap-5"
-                      : ""
-                  }
-                >
-                  <FormField label="Phone Number" error={errors.phone}>
-                    <Input
-                      icon="call"
-                      type="tel"
-                      placeholder="+1 (555) 000-0000"
-                      value={formData.phone}
-                      onChange={(e) => handleChange("phone")(e.target.value)}
-                      error={!!errors.phone}
-                    />
-                  </FormField>
-
-                  {userRole === "headhunter" && (
-                    <FormField label="Tax Code (MST)" error={errors.taxCode}>
-                      <Input
-                        icon="tag"
-                        type="text"
-                        placeholder="0123456789"
-                        value={formData.taxCode}
-                        onChange={(e) =>
-                          handleChange("taxCode")(e.target.value)
-                        }
-                        error={!!errors.taxCode}
-                      />
-                    </FormField>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <FormField label="Password" error={errors.password}>
-                    <Input
-                      icon="lock"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="••••••••••••"
-                      value={formData.password}
-                      onChange={(e) => handleChange("password")(e.target.value)}
-                      error={!!errors.password}
-                      rightIcon={
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="material-symbols-outlined text-slate-400 text-lg hover:text-slate-600"
-                        >
-                          {showPassword ? "visibility" : "visibility_off"}
-                        </button>
-                      }
-                    />
-                  </FormField>
-
-                  <FormField
-                    label="Confirm Password"
-                    error={errors.confirmPassword}
-                  >
-                    <Input
-                      icon="lock_reset"
-                      type={showConfirmPassword ? "text" : "password"}
-                      placeholder="••••••••••••"
-                      value={formData.confirmPassword}
-                      onChange={(e) =>
-                        handleChange("confirmPassword")(e.target.value)
-                      }
-                      error={!!errors.confirmPassword}
-                      rightIcon={
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setShowConfirmPassword(!showConfirmPassword)
-                          }
-                          className="material-symbols-outlined text-slate-400 text-lg hover:text-slate-600"
-                        >
-                          {showConfirmPassword
-                            ? "visibility"
-                            : "visibility_off"}
-                        </button>
-                      }
-                    />
-                  </FormField>
-                </div>
-
-                <div className="flex items-start gap-3 py-2">
-                  <div className="mt-0.5">
-                    <input
-                      id="terms"
-                      type="checkbox"
-                      className="w-4 h-4 rounded text-[#39FF14] focus:ring-[#39FF14]/20 border-slate-300 dark:bg-slate-800 dark:border-slate-700"
-                      checked={formData.agreeToTerms}
-                      onChange={(e) =>
-                        handleChange("agreeToTerms")(e.target.checked)
-                      }
-                    />
-                  </div>
-                  <label
-                    htmlFor="terms"
-                    className="text-xs text-slate-500 dark:text-slate-400 leading-normal"
-                  >
-                    I agree to the{" "}
-                    <Link
-                      to="#"
-                      className="text-slate-900 dark:text-slate-200 font-bold hover:underline"
-                    >
-                      Terms of Service
-                    </Link>{" "}
-                    and{" "}
-                    <Link
-                      to="#"
-                      className="text-slate-900 dark:text-slate-200 font-bold hover:underline"
-                    >
-                      Privacy Policy
-                    </Link>
-                    .
-                  </label>
-                </div>
-
-                <Button type="submit" icon="person_add">
-                  Register Account
-                </Button>
-              </form>
-
-              <div className="relative my-8">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white dark:bg-slate-900 px-4 text-slate-500">
-                    Or sign in with
-                  </span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <Button variant="social">
-                  <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhjLuaY45yLfcaVt7AdF5EzYffLkOi9xrX6Kp4riUC_gX6ulnmQHY1ulFMvidyMYKB4VBYWTIZ4ZHwPDIhxD9ILREPjMyEfHALHP3j9i6SZErcia74LMwcORE6H495G6BCSyZ0y8j79Wa5nkZuHoWwzGIF7jKjFnEMv5vAyZwCbk6qcBhpcLlhYcdFY4aeAgeLOGFylz_0wFhc52JqMBSq0IlBlqrtuf0rpcELHUD1G-KgdSxqpNOo8Kf5ZuiCkh1Ns2hvhQqJzqI"
-                    alt="Google"
-                    className="w-5 h-5"
+                {userRole === "headhunter" && (
+                  <HeadhunterDetailsStep
+                    formData={formData}
+                    errors={errors}
+                    handleChange={handleChange}
                   />
-                  <span>Google</span>
-                </Button>
-                <Button variant="social">
-                  <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfQ_M6946U_kbMwus3sL8tlI71mLm9x8Jo4zvVgO_lhmQBduNHcnYulqDpFXJRRclI5Ds78ibSTXtV1_gVbaFVmz6Lann3JxXzVSHmnLe8-ZZRemblWcw2pr0uiK41OCznRbQBCTpMgQZsFReJl2e9o-MoqoA_dTTx0N3YmP_pCw50gweia385qIHDtMcTCn_B7aDMG92oyxxLR_2OQaWukoAuDkBHqk1hvYba350izouDMnjZTwvSSxF5_gBzYezPjK3TtZwwlqY"
-                    alt="LinkedIn"
-                    className="w-5 h-5"
-                  />
-                  <span>LinkedIn</span>
-                </Button>
-              </div>
+                )}
 
-              <p className="text-center text-sm text-slate-500">
-                Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="text-[#39FF14] font-bold hover:underline"
+                {userRole === "collaborator" && (
+                  <CollaboratorDetailsStep
+                    formData={formData}
+                    errors={errors}
+                    handleChange={handleChange}
+                  />
+                )}
+              </>
+            )}
+
+            {/* Navigation Buttons */}
+            <div className="flex gap-3">
+              {currentStep > 1 && (
+                <Button
+                  type="button"
+                  onClick={handlePrevStep}
+                  variant="outline"
+                  size="xl"
+                  className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl"
                 >
-                  Sign in here
-                </Link>
-              </p>
+                  <HiOutlineArrowLeft />
+                  Previous
+                </Button>
+              )}
+
+              {currentStep < steps.length ? (
+                <Button
+                  variant="primary"
+                  size="xl"
+                  type="submit"
+                  className="flex-1 flex justify-center gap-2 cursor-pointer"
+                >
+                  Next
+                  <HiOutlineArrowRight />
+                </Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  size="xl"
+                  type="submit"
+                  disabled={isLoading}
+                  className="flex-1 flex justify-center gap-2 cursor-pointer"
+                >
+                  {isLoading ? "Creating Account..." : "Create Account"}
+                  <HiOutlineArrowRight />
+                </Button>
+              )}
             </div>
-          </div>
-        </div>
+          </form>
 
-        {/* Footer */}
-        <footer className="mt-12 text-center pb-8">
-          <div className="flex flex-wrap justify-center gap-6 mb-4">
+          <p className="text-center text-sm text-gray-500 mt-3">
+            Already have an account?{" "}
             <Link
-              to="#"
-              className="text-sm text-slate-400 hover:text-slate-600 transition-colors"
+              to="/login"
+              className="text-lime-500 font-semibold hover:underline"
             >
-              Privacy Policy
+              Sign in
             </Link>
-            <Link
-              to="#"
-              className="text-sm text-slate-400 hover:text-slate-600 transition-colors"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              to="#"
-              className="text-sm text-slate-400 hover:text-slate-600 transition-colors"
-            >
-              Help Center
-            </Link>
-          </div>
-          <p className="text-xs text-slate-400">
-            © 2024 ReferralPortal Inc. All rights reserved.
           </p>
-        </footer>
-      </main>
-    </div>
+        </div>
+      </div>
+    </AuthLayout>
   );
 }
