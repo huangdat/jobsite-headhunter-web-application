@@ -59,7 +59,9 @@ public enum ErrorCode {
     COMMISSION_RATE_MIN(HttpStatus.BAD_REQUEST, "Commission rate must be at least 0"),
     COMMISSION_RATE_MAX(HttpStatus.BAD_REQUEST, "Commission rate cannot exceed 100"),
 
-    ///
+    // Custom error codes for business profile retrieval
+    NO_BUSINESS_PROFILES_STORED(HttpStatus.NOT_FOUND, "No business profiles stored"),
+    INVALID_TAX_CODE(HttpStatus.BAD_REQUEST, "Invalid tax code format. Please provide a valid tax code.");
 
     ;
 
