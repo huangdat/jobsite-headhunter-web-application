@@ -20,7 +20,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/auth")
 public class SocialAuthController {
     AuthenticationService authenticationService;
     Environment environment;

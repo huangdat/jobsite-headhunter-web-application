@@ -1,18 +1,24 @@
 package com.rikkeisoft.backend.controller.auth;
 
 import com.nimbusds.jose.JOSEException;
+import com.rikkeisoft.backend.enums.AccountStatus;
+import com.rikkeisoft.backend.enums.ErrorCode;
+import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.auth.AuthenticationReq;
 import com.rikkeisoft.backend.model.dto.req.auth.LogoutReq;
 import com.rikkeisoft.backend.model.dto.req.auth.TokenValidateReq;
 import com.rikkeisoft.backend.model.dto.resp.auth.AuthenticationResp;
 import com.rikkeisoft.backend.model.dto.resp.auth.TokenValidateResp;
+import com.rikkeisoft.backend.model.entity.Account;
+import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +32,7 @@ import java.text.ParseException;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
     AuthenticationService authenticationService;
+    AccountRepo accountRepo;
 
     /**
      * Authenticate a user with username and password.
@@ -35,19 +42,36 @@ public class AuthenticationController {
      * status and JWT token.
      */
     @PostMapping("/login")
-    public APIResponse<AuthenticationResp> authenticate(@RequestBody AuthenticationReq request) {
+    public ResponseEntity<APIResponse<AuthenticationResp>> authenticate(@RequestBody AuthenticationReq request) {
 
         AuthenticationResp response = authenticationService.authenticate(request);
 
-        return APIResponse.<AuthenticationResp>builder()
+        // check if status of account is AccountStatus.ACTIVE, if not return 503
+        Account account = accountRepo.findByUsername(request.getUsername())
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+        if (account.getStatus() != AccountStatus.ACTIVE) {
+            APIResponse<AuthenticationResp> api = APIResponse.<AuthenticationResp>builder()
+                    .status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .message("Account is not active")
+                    .result(AuthenticationResp.builder()
+                            .authenticated(false)
+                            .accessToken(null)
+                            .build())
+                    .build();
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(api);
+        }
+
+        APIResponse<AuthenticationResp> api = APIResponse.<AuthenticationResp>builder()
                 .status(response.isAuthenticated() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE)
-                .message(response.isAuthenticated() ? "Authentication successful"
-                        : "Authentication failed")
+                .message(response.isAuthenticated() ? "Authentication successful" : "Authentication failed")
                 .result(AuthenticationResp.builder()
                         .authenticated(response.isAuthenticated())
                         .accessToken(response.getAccessToken())
                         .build())
                 .build();
+
+        HttpStatus httpStatus = response.isAuthenticated() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE;
+        return ResponseEntity.status(httpStatus).body(api);
     }
 
     /**
@@ -60,7 +84,7 @@ public class AuthenticationController {
      * @throws JOSEException
      */
     @PostMapping("/token-validate")
-    public APIResponse<TokenValidateResp> introspect(@RequestBody TokenValidateReq request)
+    public APIResponse<TokenValidateResp> tokenValidate(@RequestBody TokenValidateReq request)
             throws ParseException, JOSEException {
 
         TokenValidateResp response = authenticationService.validateToken(request);
