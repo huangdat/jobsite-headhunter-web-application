@@ -5,7 +5,10 @@ import com.rikkeisoft.backend.enums.AuthProvider;
 import com.rikkeisoft.backend.enums.Gender;
 import com.rikkeisoft.backend.enums.Role;
 import com.rikkeisoft.backend.model.entity.Account;
+import com.rikkeisoft.backend.model.entity.ForumPost;
 import com.rikkeisoft.backend.repository.AccountRepo;
+import com.rikkeisoft.backend.repository.ForumPostRepo;
+import com.rikkeisoft.backend.repository.JobRepo;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -62,6 +65,30 @@ public class AppStartConfig {
                 accountRepo.save(admin);
 
                 System.out.println("Admin account created!");
+            }
+        };
+    }
+
+    @Bean
+    @Order(2)
+    ApplicationRunner forumPostInitRunner(AccountRepo accountRepo, JobRepo jobRepo, ForumPostRepo forumPostRepo) {
+        return args -> {
+            if (forumPostRepo.count() == 0 && jobRepo.count() > 0) {
+                var author = accountRepo.findById("22222222-2222-2222-2222-222222222222");
+                var job = jobRepo.findById(1L);
+
+                if (author.isPresent() && job.isPresent()) {
+                    ForumPost post = ForumPost.builder()
+                            .author(author.get())
+                            .job(job.get())
+                            .title("Tuyển Senior Backend Developer")
+                            .content("Cần tuyển gấp 2 Backend Developer có kinh nghiệm Spring Boot, MySQL.")
+                            .createdAt(LocalDateTime.now())
+                            .build();
+                    forumPostRepo.save(post);
+
+                    log.info("Seed forum post created (id={})", post.getId());
+                }
             }
         };
     }

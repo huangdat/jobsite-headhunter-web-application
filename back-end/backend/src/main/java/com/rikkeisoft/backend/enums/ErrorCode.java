@@ -66,7 +66,11 @@ public enum ErrorCode {
 
     // Custom error codes for business profile retrieval
     NO_BUSINESS_PROFILES_STORED(HttpStatus.NOT_FOUND, "No business profiles stored"),
-    INVALID_TAX_CODE(HttpStatus.BAD_REQUEST, "Invalid tax code format. Please provide a valid tax code.");
+    INVALID_TAX_CODE(HttpStatus.BAD_REQUEST, "Invalid tax code format. Please provide a valid tax code."),
+
+    // Custom error codes for ForumPost module
+    FORUM_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "Forum post not found"),
+    INVALID_POST_STATUS(HttpStatus.BAD_REQUEST, "Invalid post status. Allowed values: VISIBLE, HIDDEN");
 
     ;
 
