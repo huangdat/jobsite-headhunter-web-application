@@ -368,11 +368,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             candidateProfileRepo.save(profile);
         } else if (req.getRole() == Role.HEADHUNTER) {
             BusinessProfile profile = BusinessProfile.builder()
-                    .account(account)
                     .companyName("Company of " + account.getFullName()) // Placeholder
                     .verificationStatus(VerificationStatus.PENDING)
                     .build();
             businessProfileRepo.save(profile);
+            account.setBusinessProfile(profile);
+            accountRepo.save(account);
         } else if (req.getRole() == Role.COLLABORATOR) {
             CollaboratorProfile profile = CollaboratorProfile.builder()
                     .account(account)
