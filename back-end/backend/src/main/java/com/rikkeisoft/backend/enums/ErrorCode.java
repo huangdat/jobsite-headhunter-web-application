@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public enum ErrorCode {
     // Standard HTTP error codes
-    OK(HttpStatus.OK, "OK"),
+    OK( HttpStatus.OK, "OK"),
     CREATED(HttpStatus.CREATED, "Created"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "Bad Request"),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "Unauthorized error"),
@@ -22,9 +22,6 @@ public enum ErrorCode {
 
     INVALID_KEY(HttpStatus.BAD_REQUEST, "Invalid message key provided"),
 
-    EMAIL_REQUIRED(HttpStatus.BAD_REQUEST, "Email are required to register account"),
-    AUTH_FAILED(HttpStatus.UNAUTHORIZED, "Authentication failed"),
-
     // Custom error codes for File Upload
     FILE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred during file upload"),
 
@@ -38,14 +35,12 @@ public enum ErrorCode {
     INVALID_ACCOUNT_STATUS(HttpStatus.BAD_REQUEST, "Invalid account status"),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "Old password is incorrect"),
     PASSWORD_SAME_AS_OLD(HttpStatus.BAD_REQUEST, "The new password must not be the same as the old password."),
-    PASSWORD_INVALID(HttpStatus.BAD_REQUEST,
-            "Invalid password! Must be 8-16 characters long, including uppercase letters, lowercase letters, and numbers."),
+    PASSWORD_INVALID(HttpStatus.BAD_REQUEST, "Invalid password! Must be 8-16 characters long, including uppercase letters, lowercase letters, and numbers."),
     // Custom error code for OTP module
     OTP_NOT_FOUND(HttpStatus.NOT_FOUND, "OTP not found"),
     OTP_EXPIRED(HttpStatus.BAD_REQUEST, "OTP has expired"),
     OTP_INVALID(HttpStatus.BAD_REQUEST, "Invalid OTP"),
-    OTP_ATTEMPTS_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS,
-            "OTP verification attempts exceeded. Please request a new code."),
+    OTP_ATTEMPTS_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS, "OTP verification attempts exceeded. Please request a new code."),
     OTP_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send OTP"),
     EMAIL_INVALID(HttpStatus.BAD_REQUEST, "Invalid email"),
     TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "Reset password token has expired. Please request a new OTP."),
@@ -78,10 +73,10 @@ public enum ErrorCode {
         this.message = message;
     }
 
+
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
-
     public String getMessage() {
         return message;
     }

@@ -8,7 +8,7 @@ spring:
   datasource:
     url: "jdbc:mysql://localhost:3306/headhunt"
     username: root
-    password: root
+    password: 123
   mail:
     host: smtp.gmail.com
     port: 587
@@ -37,14 +37,6 @@ server:
 jwt:
   signerKey: RikkeisoftHCMcity9998hIrNT3QZjFzSdzZ3YvFWhQyoV4HnOrMbcsrIKMgHMlV
 
-google:
-  client-id: ""
-  client-secret: ""
-
-linkedin:
-  client-id: ""
-  client-secret: ""
-
 springdoc:
   api-docs:
     path: /v3/api-docs # OpenAPI JSON path (default)
@@ -71,4 +63,3 @@ azure:
   storage:
     connection-string: "DefaultEndpointsProtocol=https;AccountName=headhunterstorage;AccountKey=J5wBrVeufVXHdxnrBWSIKSE8Q8SnJ4onHA+NZW58mXJWUvn/4TcljiAGeQQh2EE9qjZUWUql36GF+AStVmQeJA==;EndpointSuffix=core.windows.net"
     container-name: "uploads"
-

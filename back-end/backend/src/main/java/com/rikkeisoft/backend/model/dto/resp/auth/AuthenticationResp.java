@@ -10,6 +10,5 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationResp {
     String accessToken;
-    String refreshToken; // Added refreshToken field
     boolean authenticated;
 }
