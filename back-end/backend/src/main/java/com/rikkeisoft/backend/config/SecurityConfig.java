@@ -18,6 +18,9 @@ import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.rikkeisoft.backend.config.TokenInvalidationFilter;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -38,9 +41,10 @@ public class SecurityConfig {
     protected String SIGNER_KEY;
 
     // Define endpoint access rules based on user roles and HTTP methods
+    TokenInvalidationFilter tokenInvalidationFilter;
 
-    String[] PUBLIC_POST_ENDPOINTS = {"api/upload", "api/auth/**", "api/otp/**", "api/account/signup-headhunter", "api/account/signup-collaborator", "api/account/signup-candidate"};
-    String[] PUBLIC_GET_ENDPOINTS = {"api/auth/**"};
+    String[] PUBLIC_POST_ENDPOINTS = {"/api/upload", "/api/auth/**", "/api/otp/**", "/api/account/signup-headhunter", "/api/account/signup-collaborator", "/api/account/signup-candidate"};
+    String[] PUBLIC_GET_ENDPOINTS = {"/api/auth/**"};
     String[] PUBLIC_PUT_ENDPOINTS = {};
 
     /**
@@ -71,6 +75,9 @@ public class SecurityConfig {
 
         // Configure ability to use form login and basic authentication
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
+
+        // Reject requests which present an invalidated token (logged out tokens)
+        httpSecurity.addFilterBefore(tokenInvalidationFilter, UsernamePasswordAuthenticationFilter.class);
 
         // Disable CSRF protection for simplicity in this example.
         httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
