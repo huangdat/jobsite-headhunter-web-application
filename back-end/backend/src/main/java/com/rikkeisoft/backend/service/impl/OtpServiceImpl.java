@@ -102,11 +102,9 @@ public class OtpServiceImpl implements OtpService {
         otpTokenRepo.save(t);
 
         try {
-            sendEmailVerify(normEmail, code, "Verify your account with OTP","""
-        Your verification code is: %s
-
-        It expires in 5 minutes. If you didn't request this, you can ignore this email.
-                    """);
+            sendEmailVerify(normEmail, code, "Verify your account with OTP", """
+        
+""");
         } catch (Exception e) {
             throw new AppException(ErrorCode.EMAIL_INVALID);
         }
