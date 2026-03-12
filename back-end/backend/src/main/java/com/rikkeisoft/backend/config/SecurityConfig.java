@@ -22,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
+
 /**
  * Security configuration for the application.
  * This class configures security settings, including JWT authentication.
@@ -54,23 +55,24 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors(Customizer.withDefaults());
 
-        // Define authorization rules for different endpoints and HTTP methods based on
-        // user roles and scopes in JWT
-        httpSecurity.authorizeHttpRequests(request -> request
-                .requestMatchers(
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/docs", // because springdoc.swagger-ui.path = /docs
-                        "/oauth2-login-test.html" // Allow access to test page
-                ).permitAll()
-                .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
-                .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
-                .requestMatchers(HttpMethod.PUT, PUBLIC_PUT_ENDPOINTS).permitAll()
-                .anyRequest().authenticated());
+        // Define authorization rules for different endpoints and HTTP methods based on user roles and scopes in JWT
+        httpSecurity.authorizeHttpRequests(request ->
+                request
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/docs"              // because springdoc.swagger-ui.path = /docs
+                        ).permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.PUT, PUBLIC_PUT_ENDPOINTS).permitAll()
+                        .anyRequest().authenticated());
 
         // Configure ability to use form login and basic authentication
-        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
+        httpSecurity.oauth2ResourceServer(oauth2 ->
+                oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()))
+        );
 
         // Disable CSRF protection for simplicity in this example.
         httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
@@ -97,3 +99,5 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(10);
     }
 }
+
+
