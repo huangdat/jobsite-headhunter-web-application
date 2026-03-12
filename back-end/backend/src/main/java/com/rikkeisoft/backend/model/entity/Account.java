@@ -52,7 +52,7 @@ public class Account {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    AccountStatus status = AccountStatus.ACTIVE;
+    AccountStatus status = AccountStatus.PENDING;
 
     LocalDateTime createdAt;
 

@@ -95,6 +95,7 @@ export function ForgotPasswordPage() {
 
   return (
     <AuthLayout
+      navLinks={[{ to: "#", label: "Home" }]}
       ctaButton={{ to: "/login", label: "Sign In" }}
       className="overflow-x-hidden"
     >
