@@ -24,10 +24,6 @@ public class ForumPost {
     Account author;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    ForumCategory category;
-
-    @ManyToOne
     @JoinColumn(name = "job_id", nullable = false)
     Job job;
 
