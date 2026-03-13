@@ -70,30 +70,6 @@ public class AppStartConfig {
     }
 
     @Bean
-    @Order(2)
-    ApplicationRunner forumPostInitRunner(AccountRepo accountRepo, JobRepo jobRepo, ForumPostRepo forumPostRepo) {
-        return args -> {
-            if (forumPostRepo.count() == 0 && jobRepo.count() > 0) {
-                var author = accountRepo.findById("22222222-2222-2222-2222-222222222222");
-                var job = jobRepo.findById(1L);
-
-                if (author.isPresent() && job.isPresent()) {
-                    ForumPost post = ForumPost.builder()
-                            .author(author.get())
-                            .job(job.get())
-                            .title("Tuyển Senior Backend Developer")
-                            .content("Cần tuyển gấp 2 Backend Developer có kinh nghiệm Spring Boot, MySQL.")
-                            .createdAt(LocalDateTime.now())
-                            .build();
-                    forumPostRepo.save(post);
-
-                    log.info("Seed forum post created (id={})", post.getId());
-                }
-            }
-        };
-    }
-
-    @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
