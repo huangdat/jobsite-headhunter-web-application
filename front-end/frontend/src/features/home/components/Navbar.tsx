@@ -1,30 +1,18 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineHandshake } from "react-icons/md";
+import { useAuth } from "@/features/auth/context/useAuth";
 
 export function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userInitial, setUserInitial] = useState("U");
   const navigate = useNavigate();
+  const { isAuthenticated, signOut, user } = useAuth();
+  const userInitial = useMemo(
+    () => user?.username?.charAt(0).toUpperCase() || "U",
+    [user?.username],
+  );
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-    if (token) {
-      setIsLoggedIn(true);
-      if (user?.name) {
-        setUserInitial(user.name.charAt(0).toUpperCase());
-      }
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    await signOut();
     navigate("/home");
   };
 
@@ -70,7 +58,7 @@ export function Navbar() {
 
         {/* RIGHT SIDE */}
         <div className="flex items-center gap-4">
-          {!isLoggedIn ? (
+          {!isAuthenticated ? (
             <>
               <Link
                 to="/login"

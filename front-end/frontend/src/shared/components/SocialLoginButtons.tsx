@@ -6,12 +6,18 @@ import { Button } from "@/components/ui/button";
 interface SocialLoginButtonsProps {
   onGoogleClick?: () => void;
   onLinkedInClick?: () => void;
+  googleDisabled?: boolean;
+  linkedInDisabled?: boolean;
+  loadingProvider?: "google" | "linkedin" | null;
   className?: string;
 }
 
 export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
   onGoogleClick,
   onLinkedInClick,
+  googleDisabled = false,
+  linkedInDisabled = false,
+  loadingProvider = null,
   className,
 }) => {
   return (
@@ -22,10 +28,11 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
           type="button"
           variant="outline"
           onClick={onGoogleClick}
+          disabled={googleDisabled || loadingProvider !== null}
           className="cursor-pointer flex items-center justify-center gap-2"
         >
           <FcGoogle size={20} />
-          Google
+          {loadingProvider === "google" ? "Connecting..." : "Google"}
         </Button>
 
         {/* LinkedIn */}
@@ -33,10 +40,11 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
           type="button"
           variant="outline"
           onClick={onLinkedInClick}
+          disabled={linkedInDisabled || loadingProvider !== null}
           className="cursor-pointer flex items-center justify-center gap-2"
         >
           <FaLinkedin className="text-linkedin" size={20} />
-          LinkedIn
+          {loadingProvider === "linkedin" ? "Connecting..." : "LinkedIn"}
         </Button>
       </div>
     </div>

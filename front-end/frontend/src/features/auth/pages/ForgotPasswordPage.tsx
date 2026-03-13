@@ -6,6 +6,7 @@ import { FormField, AuthLayout } from "@/shared/components";
 import type { ForgotPasswordFormData } from "../types";
 import { sendOtpForgotPassword } from "../services/authApi";
 import { toast } from "sonner";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 import { MdOutlineMail } from "react-icons/md";
 
@@ -61,21 +62,11 @@ export function ForgotPasswordPage() {
         },
       });
     } catch (error: unknown) {
-      let errorMessage = "Failed to send OTP. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Failed to send OTP. Please try again.",
+      );
 
-      if (
-        error instanceof Error &&
-        "response" in error &&
-        typeof error.response === "object" &&
-        error.response !== null
-      ) {
-        const response = error.response as {
-          data?: { message?: string };
-        };
-        errorMessage = response.data?.message || errorMessage;
-      }
-
-      // Error notification
       toast.error(errorMessage);
 
       setErrors({
@@ -155,7 +146,7 @@ export function ForgotPasswordPage() {
                 disabled={isLoading}
                 className="cursor-pointer"
               >
-                {isLoading ? "Sending..." : "Send OTP"}
+                {isLoading ? "Sending OTP..." : "Send OTP"}
               </Button>
             </form>
 

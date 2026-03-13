@@ -4,6 +4,7 @@ import { FormField } from "@/shared/components";
 import type { ChangePasswordFormData } from "../types";
 import { changePassword } from "../services/authApi";
 import { toast } from "sonner";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 export function ChangePasswordPage() {
   const [formData, setFormData] = useState<ChangePasswordFormData>({
@@ -44,8 +45,22 @@ export function ChangePasswordPage() {
 
     if (!formData.newPassword) {
       newErrors.newPassword = "New password is required";
-    } else if (formData.newPassword.length < 8) {
-      newErrors.newPassword = "Password must be at least 8 characters";
+    } else if (
+      formData.newPassword.length < 8 ||
+      formData.newPassword.length > 16
+    ) {
+      newErrors.newPassword = "Password must be between 8 and 16 characters";
+    } else if (!/[A-Z]/.test(formData.newPassword)) {
+      newErrors.newPassword =
+        "Password must contain at least one uppercase letter";
+    } else if (!/[a-z]/.test(formData.newPassword)) {
+      newErrors.newPassword =
+        "Password must contain at least one lowercase letter";
+    } else if (!/\d/.test(formData.newPassword)) {
+      newErrors.newPassword = "Password must contain at least one number";
+    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.newPassword)) {
+      newErrors.newPassword =
+        "Password can only contain letters, numbers, and underscores";
     } else if (formData.newPassword === formData.currentPassword) {
       newErrors.newPassword =
         "New password must be different from current password";
@@ -78,7 +93,10 @@ export function ChangePasswordPage() {
       // Clear form
       handleCancel();
     } catch (error: unknown) {
-      let errorMessage = "Failed to change password. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Failed to change password. Please try again.",
+      );
 
       if (
         error instanceof Error &&
@@ -90,16 +108,16 @@ export function ChangePasswordPage() {
           status?: number;
           data?: { message?: string };
         };
-        errorMessage = response.data?.message || errorMessage;
+        const responseMessage = response.data?.message || errorMessage;
 
         // Check if it's current password error
         if (
           response.status === 401 ||
-          errorMessage.toLowerCase().includes("current password") ||
-          errorMessage.toLowerCase().includes("incorrect password")
+          responseMessage.toLowerCase().includes("current password") ||
+          responseMessage.toLowerCase().includes("incorrect password")
         ) {
           setErrors({
-            currentPassword: errorMessage,
+            currentPassword: responseMessage,
           });
         }
       }
@@ -329,6 +347,7 @@ export function ChangePasswordPage() {
                   <button
                     type="button"
                     onClick={handleCancel}
+                    disabled={isLoading}
                     className="flex-1 h-12 bg-transparent text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition-all border border-slate-200"
                   >
                     Cancel
@@ -346,7 +365,7 @@ export function ChangePasswordPage() {
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>At least 8 characters long</span>
+                    <span>8 to 16 characters</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
@@ -362,8 +381,8 @@ export function ChangePasswordPage() {
                       check_circle
                     </span>
                     <span>
-                      Include at least one number or special character (@, #, $,
-                      etc.)
+                      Include at least one number, and only letters, numbers,
+                      underscores are allowed
                     </span>
                   </li>
                 </ul>

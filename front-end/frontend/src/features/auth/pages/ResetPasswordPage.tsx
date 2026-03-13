@@ -7,9 +7,10 @@ import {
   AuthLayout,
   PasswordRequirements,
 } from "@/shared/components";
-import { verifyOtpForgotPassword, resetPassword } from "../services/authApi";
+import { verifyAndResetPassword } from "../services/authApi";
 import { toast } from "sonner";
 import type { OtpSendResp } from "../types";
+import { extractApiErrorMessage } from "../utils/apiError";
 import { MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsShieldLock } from "react-icons/bs";
@@ -39,9 +40,9 @@ export function ResetPasswordPage() {
 
   // Password requirements validation
   const requirements = {
-    minLength: formData.password.length >= 8,
+    minLength: formData.password.length >= 8 && formData.password.length <= 16,
     hasUpperCase: /[A-Z]/.test(formData.password),
-    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(formData.password),
+    hasLowerCase: /[a-z]/.test(formData.password),
     hasNumber: /\d/.test(formData.password),
   };
 
@@ -81,11 +82,11 @@ export function ResetPasswordPage() {
       newErrors.confirmPassword = "Passwords do not match";
     }
 
-    // Nếu có lỗi
+    // If there are validation errors
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
 
-      // 🔥 chỉ gọi 1 toast
+      // Show only one toast notification
       toast.error("Please fix the highlighted fields");
 
       setIsLoading(false);
@@ -93,45 +94,28 @@ export function ResetPasswordPage() {
     }
 
     try {
-      // Step 1: Verify OTP and get reset token
-      const verifyResponse = await verifyOtpForgotPassword({
-        accountId: otpData.accountId,
+      const response = await verifyAndResetPassword({
         email: otpData.email,
         code: formData.otp,
         tokenType: "FORGOT_PASSWORD",
-      });
-
-      if (!verifyResponse.resetToken) {
-        throw new Error("Failed to verify OTP. No reset token received.");
-      }
-
-      // Step 2: Reset password using the reset token
-      await resetPassword({
-        password: formData.password,
+        newPassword: formData.password,
         confirmPassword: formData.confirmPassword,
-        token: verifyResponse.resetToken,
       });
+
+      if (response.status && response.status !== "OK") {
+        throw new Error(response.message);
+      }
 
       // Success notification
       toast.success("Password reset successful! You can now login.");
 
       navigate("/login");
     } catch (error: unknown) {
-      let errorMessage = "Failed to reset password. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Failed to reset password. Please try again.",
+      );
 
-      if (
-        error instanceof Error &&
-        "response" in error &&
-        typeof error.response === "object" &&
-        error.response !== null
-      ) {
-        const response = error.response as {
-          data?: { message?: string };
-        };
-        errorMessage = response.data?.message || errorMessage;
-      }
-
-      // Error notification
       toast.error(errorMessage);
 
       setErrors({
@@ -250,7 +234,7 @@ export function ResetPasswordPage() {
                 <PasswordRequirements
                   minLength={requirements.minLength}
                   hasUpperCase={requirements.hasUpperCase}
-                  hasSpecialChar={requirements.hasSpecialChar}
+                  hasLowerCase={requirements.hasLowerCase}
                   hasNumber={requirements.hasNumber}
                 />
 
@@ -264,6 +248,12 @@ export function ResetPasswordPage() {
                   {isLoading ? "Updating..." : "Update Password"}
                 </Button>
               </form>
+
+              {errors.submit && (
+                <p className="mt-3 text-sm text-red-500 text-center">
+                  {errors.submit}
+                </p>
+              )}
 
               <div className="mt-4 text-center">
                 <Link
