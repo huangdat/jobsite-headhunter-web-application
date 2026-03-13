@@ -26,10 +26,6 @@ public class ForumComment {
     @JoinColumn(name = "account_id", nullable = false)
     Account account;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_comment_id")
-    ForumComment parentComment;
-
     @Column(nullable = false, columnDefinition = "TEXT")
     String content;
 

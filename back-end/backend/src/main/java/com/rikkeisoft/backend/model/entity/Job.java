@@ -49,8 +49,6 @@ public class Job {
     @Builder.Default
     JobStatus status = JobStatus.DRAFT;
 
-    String city;
-
     LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "job")
