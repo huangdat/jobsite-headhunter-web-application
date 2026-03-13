@@ -8,20 +8,20 @@ interface PasswordRequirement {
 interface PasswordRequirementsProps {
   minLength: boolean;
   hasUpperCase: boolean;
-  hasSpecialChar: boolean;
+  hasLowerCase: boolean;
   hasNumber: boolean;
 }
 
 export const PasswordRequirements: React.FC<PasswordRequirementsProps> = ({
   minLength,
   hasUpperCase,
-  hasSpecialChar,
+  hasLowerCase,
   hasNumber,
 }) => {
   const requirements: PasswordRequirement[] = [
-    { met: minLength, label: "At least 8 characters" },
+    { met: minLength, label: "8–16 characters" },
     { met: hasUpperCase, label: "One uppercase letter" },
-    { met: hasSpecialChar, label: "One special character" },
+    { met: hasLowerCase, label: "One lowercase letter" },
     { met: hasNumber, label: "One numeric digit" },
   ];
 

@@ -22,6 +22,8 @@ export function PersonalStep({
     <>
       <FormField label="Full Name" error={errors.fullName}>
         <Input
+          name="fullName"
+          autoComplete="name"
           icon={<MdPerson />}
           placeholder="Jane Cooper"
           value={formData.fullName}
@@ -32,6 +34,8 @@ export function PersonalStep({
 
       <FormField label="Phone Number" error={errors.phone}>
         <Input
+          name="phone"
+          autoComplete="tel"
           icon={<MdPhone />}
           placeholder="+84 123 456 789"
           value={formData.phone}
@@ -46,6 +50,7 @@ export function PersonalStep({
           <div className="relative">
             <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <select
+              name="gender"
               value={formData.gender || ""}
               onChange={(e) => handleChange("gender")(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -63,6 +68,7 @@ export function PersonalStep({
           <div className="relative">
             <MdCameraAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10 pointer-events-none" />
             <input
+              name="avatar"
               type="file"
               accept="image/*"
               onChange={(e) => {

@@ -19,7 +19,7 @@ interface AccountStepProps {
   passwordRequirements: {
     minLength: boolean;
     hasUpperCase: boolean;
-    hasSpecialChar: boolean;
+    hasLowerCase: boolean;
     hasNumber: boolean;
   };
 }
@@ -38,6 +38,8 @@ export function AccountStep({
     <>
       <FormField label="Username" error={errors.username}>
         <Input
+          name="username"
+          autoComplete="username"
           icon={<MdAccountCircle />}
           placeholder="john_doe123"
           value={formData.username}
@@ -48,6 +50,8 @@ export function AccountStep({
 
       <FormField label="Email" error={errors.email}>
         <Input
+          name="email"
+          autoComplete="email"
           icon={<MdOutlineMail />}
           placeholder="jane@email.com"
           value={formData.email}
@@ -60,6 +64,8 @@ export function AccountStep({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField label="Password" error={errors.password}>
           <Input
+            name="password"
+            autoComplete="new-password"
             icon={<MdLockOutline />}
             type={showPassword ? "text" : "password"}
             placeholder="Enter password"
@@ -80,6 +86,8 @@ export function AccountStep({
 
         <FormField label="Confirm Password" error={errors.confirmPassword}>
           <Input
+            name="confirmPassword"
+            autoComplete="new-password"
             icon={<MdLockOutline />}
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm password"
@@ -106,7 +114,7 @@ export function AccountStep({
       <PasswordRequirements
         minLength={passwordRequirements.minLength}
         hasUpperCase={passwordRequirements.hasUpperCase}
-        hasSpecialChar={passwordRequirements.hasSpecialChar}
+        hasLowerCase={passwordRequirements.hasLowerCase}
         hasNumber={passwordRequirements.hasNumber}
       />
     </>

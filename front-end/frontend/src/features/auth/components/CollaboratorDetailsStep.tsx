@@ -22,6 +22,8 @@ export function CollaboratorDetailsStep({
 
       <FormField label="Commission Rate (%, Optional)">
         <Input
+          name="commissionRate"
+          autoComplete="off"
           icon={<MdPercent />}
           type="number"
           placeholder="e.g., 10"
