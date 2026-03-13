@@ -82,11 +82,11 @@ export function ResetPasswordPage() {
       newErrors.confirmPassword = "Passwords do not match";
     }
 
-    // Nếu có lỗi
+    // If there are validation errors
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
 
-      // 🔥 chỉ gọi 1 toast
+      // Show only one toast notification
       toast.error("Please fix the highlighted fields");
 
       setIsLoading(false);
