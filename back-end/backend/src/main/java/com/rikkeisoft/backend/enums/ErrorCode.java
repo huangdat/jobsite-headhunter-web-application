@@ -73,8 +73,47 @@ public enum ErrorCode {
     JOB_EXPIRED(HttpStatus.BAD_REQUEST, "Cannot toggle job status - job has expired"),
     INVALID_DEADLINE(HttpStatus.BAD_REQUEST, "New deadline must be after today"),
     NEW_DEADLINE_REQUIRED(HttpStatus.BAD_REQUEST, "New deadline is required to reopen job"),
-    JOB_INVALID_STATUS_TRANSITION(HttpStatus.BAD_REQUEST, "Cannot toggle job in DRAFT status");
+    JOB_INVALID_STATUS_TRANSITION(HttpStatus.BAD_REQUEST, "Cannot toggle job in DRAFT status"),
 
+    // Custom error codes for Job Post related component
+    JOB_TITLE_EMPTY(HttpStatus.BAD_REQUEST, "Title cannot be empty"),
+    JOB_DESCRIPTION_EMPTY(HttpStatus.BAD_REQUEST, "Description cannot be empty"),
+    JOB_RANK_REQUIRED(HttpStatus.BAD_REQUEST, "Rank level is required"),
+    JOB_WORKING_TYPE_REQUIRED(HttpStatus.BAD_REQUEST, "Working type is required"),
+    JOB_QUANTITY_REQUIRED(HttpStatus.BAD_REQUEST, "Quantity is required"),
+    JOB_QUANTITY_MIN(HttpStatus.BAD_REQUEST, "Quantity must be greater than 0"),
+    JOB_DEADLINE_REQUIRED(HttpStatus.BAD_REQUEST, "Deadline is required"),
+    JOB_DEADLINE_FUTURE(HttpStatus.BAD_REQUEST, "Deadline must be today or later"),
+    JOB_SKILLS_EMPTY(HttpStatus.BAD_REQUEST, "At least one skill must be selected"),
+    JOB_RESPONSIBILITIES_EMPTY(HttpStatus.BAD_REQUEST, "Responsibilities cannot be empty"),
+    JOB_RESPONSIBILITIES_SIZE(HttpStatus.BAD_REQUEST, "Responsibilities must be at least 50 characters"),
+    JOB_REQUIREMENTS_EMPTY(HttpStatus.BAD_REQUEST, "Requirements cannot be empty"),
+    JOB_REQUIREMENTS_SIZE(HttpStatus.BAD_REQUEST, "Requirements must be at least 50 characters"),
+    JOB_SALARY_POSITIVE(HttpStatus.BAD_REQUEST, "Salary must be positive"),
+    JOB_SALARY_MIN_REQUIRED(HttpStatus.BAD_REQUEST, "Minimum salary is required"),
+    JOB_SALARY_MAX_REQUIRED(HttpStatus.BAD_REQUEST, "Maximum salary is required"),
+    JOB_EXPERIENCE_REQUIRED(HttpStatus.BAD_REQUEST, "Experience level is required"),
+    JOB_EXPERIENCE_POSITIVE(HttpStatus.BAD_REQUEST, "Experience must be 0 or positive"),
+    JOB_CURRENCY_REQUIRED(HttpStatus.BAD_REQUEST, "Please specify paid currency"),
+    JOB_CURRENCY_INVALID(HttpStatus.BAD_REQUEST, "Invalid currency"),
+    JOB_LOCATION_REQUIRED(HttpStatus.BAD_REQUEST, "Location is required"),
+    JOB_ADDRESS_DETAIL_REQUIRED(HttpStatus.BAD_REQUEST, "Detailed address is required"),
+    JOB_BENEFITS_EMPTY(HttpStatus.BAD_REQUEST, "Benefits cannot be empty"),
+    JOB_WORKING_TIME_EMPTY(HttpStatus.BAD_REQUEST, "Working time cannot be empty"),
+    // Type/Enum mismatch friendly messages (used by GlobalExceptionHandler)
+    JOB_WORKING_TYPE_INVALID(HttpStatus.BAD_REQUEST, "Invalid working type. Accepted: ONSITE, REMOTE, HYBRID"),
+    JOB_RANK_LEVEL_INVALID(HttpStatus.BAD_REQUEST,"Invalid rank level. Accepted: INTERN, FRESHER, JUNIOR, MIDDLE, SENIOR, LEADER, MANAGER"),
+    JOB_STATUS_INVALID(HttpStatus.BAD_REQUEST, "Invalid job status. Accepted: DRAFT, OPEN, CLOSED"),
+    JOB_EXPERIENCE_INVALID(HttpStatus.BAD_REQUEST, "Invalid experience year"),
+    JOB_DEADLINE_INVALID(HttpStatus.BAD_REQUEST, "Invalid deadline date. Expected format: yyyy-MM-dd"),
+    JOB_SALARY_MIN_INVALID(HttpStatus.BAD_REQUEST, "Invalid minimum salary"),
+    JOB_SALARY_MAX_INVALID(HttpStatus.BAD_REQUEST, "Invalid maximum salary"),
+    JOB_NEGOTIABLE_INVALID(HttpStatus.BAD_REQUEST, "Invalid value for negotiable. Expected: true or false"),
+    JOB_QUANTITY_INVALID(HttpStatus.BAD_REQUEST, "Invalid quantity"),
+    JOB_SKILL_IDS_INVALID(HttpStatus.BAD_REQUEST, "Invalid skill IDs"),
+
+    // Generic file extension validation (used by @ValidFileExtension)
+    FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "Invalid file type. Please upload a file with an allowed extension"),
     ;
 
     private final HttpStatus httpStatus;
