@@ -13,19 +13,25 @@ dist-ssr
 *.local
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+.vscode/
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Project specific
 homepage-structure.md
 my_local_backup.sql
 *.sql
-*.yaml
-docs/**
+# Change *.yaml to specific ones if you want to track application.yaml
+# *.yaml 
+
+# Local temporary files
 .env
 npm/
+lint-output.tmp
+*.tmp
+docs/**

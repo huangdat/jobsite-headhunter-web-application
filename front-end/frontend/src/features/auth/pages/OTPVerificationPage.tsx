@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import { sendOtpSignup, verifyOtpSignup, register } from "../services/authApi";
 import { toast } from "sonner";
 import { MdOutlineMail, MdTimer } from "react-icons/md";
@@ -15,6 +16,7 @@ interface LocationState {
 }
 
 export function OTPVerificationPage() {
+  const { t } = useAppTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState | undefined;
@@ -81,7 +83,7 @@ export function OTPVerificationPage() {
     const pastedData = e.clipboardData.getData("text").trim();
 
     if (!/^\d{6}$/.test(pastedData)) {
-      toast.error("Please paste a valid 6-digit OTP");
+      toast.error(t("auth.validation.invalidOtp"));
       return;
     }
 
@@ -94,7 +96,7 @@ export function OTPVerificationPage() {
     const otpCode = otp.join("");
 
     if (otpCode.length !== 6) {
-      toast.error("Please enter all 6 digits");
+      toast.error(t("auth.validation.enterAllDigits"));
       return;
     }
 
@@ -113,7 +115,7 @@ export function OTPVerificationPage() {
         throw new Error(otpResponse.message || "OTP verification failed.");
       }
 
-      toast.success("Email verified! Creating your account...");
+      toast.success(t("auth.messages.emailVerified"));
 
       // Step 2: Get registration data from sessionStorage
       const registrationDataStr = sessionStorage.getItem("pendingRegistration");
@@ -143,7 +145,7 @@ export function OTPVerificationPage() {
       sessionStorage.removeItem("pendingRegistrationAvatar");
 
       // Step 6: Success notification and redirect
-      toast.success("Account created successfully!");
+      toast.success(t("auth.messages.accountCreatedSuccess"));
 
       setTimeout(() => {
         navigate("/login", {
@@ -185,7 +187,7 @@ export function OTPVerificationPage() {
         accountId: state.accountId,
       });
 
-      toast.success("OTP has been resent to your email");
+      toast.success(t("auth.messages.otpResent"));
       setTimeLeft(300); // Reset timer to 5 minutes
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();

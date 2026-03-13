@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import { AnimatedCheckbox } from "../components/AnimatedCheckbox";
 import { useLogin } from "../hooks";
 import {
@@ -25,7 +26,7 @@ const SOCIAL_PROVIDER_KEY = "socialOAuthProvider";
 type SocialProvider = "google" | "linkedin";
 
 const isLoginResult = (
-  value: LoginResult | SocialAuthResponse,
+  value: LoginResult | SocialAuthResponse
 ): value is LoginResult => {
   return (
     typeof value === "object" &&
@@ -49,6 +50,7 @@ const clearOAuthCallbackParams = () => {
 };
 
 export function LoginPage() {
+  const { t } = useAppTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, isInitializing, signIn } = useAuth();
@@ -63,7 +65,7 @@ export function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loadingProvider, setLoadingProvider] = useState<SocialProvider | null>(
-    null,
+    null
   );
   const [socialConfig, setSocialConfig] = useState({
     googleClientId: "",
@@ -75,27 +77,23 @@ export function LoginPage() {
 
   const handleSocialLoginSuccess = useCallback(
     async (result: LoginResult | SocialAuthResponse) => {
-      if (
-        isLoginResult(result) &&
-        result.authenticated &&
-        result.accessToken
-      ) {
+      if (isLoginResult(result) && result.authenticated && result.accessToken) {
         await signIn(result.accessToken);
-        toast.success("Signed in successfully.");
+        toast.success(t("auth.messages.signedInSuccess"));
         navigate("/home", { replace: true });
         return;
       }
 
-      toast.info("Social account found. Please complete registration.");
+      toast.info(t("auth.messages.socialAccountFound"));
       navigate("/select-role");
     },
-    [navigate, signIn],
+    [navigate, signIn]
   );
 
   const handleGoogleClick = () => {
     if (!googleEnabled) {
       toast.error(
-        "Google sign-in is currently unavailable. Please contact support.",
+        "Google sign-in is currently unavailable. Please contact support."
       );
       return;
     }
@@ -119,14 +117,14 @@ export function LoginPage() {
 
     setLoadingProvider("google");
     window.location.assign(
-      `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`,
+      `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`
     );
   };
 
   const handleLinkedInClick = () => {
     if (!linkedInEnabled) {
       toast.error(
-        "LinkedIn sign-in is currently unavailable. Please contact support.",
+        "LinkedIn sign-in is currently unavailable. Please contact support."
       );
       return;
     }
@@ -147,7 +145,7 @@ export function LoginPage() {
 
     setLoadingProvider("linkedin");
     window.location.assign(
-      `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`,
+      `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`
     );
   };
 
@@ -185,7 +183,7 @@ export function LoginPage() {
       const hashParams = new URLSearchParams(
         window.location.hash.startsWith("#")
           ? window.location.hash.slice(1)
-          : window.location.hash,
+          : window.location.hash
       );
 
       const provider = sessionStorage.getItem(SOCIAL_PROVIDER_KEY);
@@ -203,7 +201,7 @@ export function LoginPage() {
       }
 
       if (linkedInError || googleError) {
-        toast.error("Social sign-in was cancelled or failed. Please try again.");
+        toast.error(t("auth.messages.socialSignInCancelled"));
         clearOAuthCallbackParams();
         sessionStorage.removeItem(SOCIAL_PROVIDER_KEY);
         sessionStorage.removeItem(SOCIAL_STATE_KEY);
@@ -211,7 +209,7 @@ export function LoginPage() {
       }
 
       if (!expectedState) {
-        toast.error("Invalid social sign-in state. Please try again.");
+        toast.error(t("auth.messages.invalidSocialState"));
         clearOAuthCallbackParams();
         sessionStorage.removeItem(SOCIAL_PROVIDER_KEY);
         return;
@@ -243,7 +241,7 @@ export function LoginPage() {
       } catch (error) {
         const message = extractApiErrorMessage(
           error,
-          "Unable to sign in with social account. Please try again.",
+          "Unable to sign in with social account. Please try again."
         );
         toast.error(message);
       } finally {
@@ -323,7 +321,7 @@ export function LoginPage() {
                 autoComplete="username"
                 icon={<MdAccountCircle />}
                 type="text"
-                placeholder="john_doe123 or email@company.com"
+                placeholder={t("auth.placeholders.usernameOrEmail")}
                 value={formData.email}
                 onChange={(e) => handleChange("email")(e.target.value)}
               />
@@ -339,7 +337,7 @@ export function LoginPage() {
                 autoComplete="current-password"
                 icon={<MdLockOutline />}
                 type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
+                placeholder={t("auth.placeholders.password")}
                 value={formData.password}
                 onChange={(e) => handleChange("password")(e.target.value)}
                 rightIcon={
