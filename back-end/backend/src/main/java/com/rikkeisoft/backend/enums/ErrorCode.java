@@ -73,8 +73,11 @@ public enum ErrorCode {
     JOB_EXPIRED(HttpStatus.BAD_REQUEST, "Cannot toggle job status - job has expired"),
     INVALID_DEADLINE(HttpStatus.BAD_REQUEST, "New deadline must be after today"),
     NEW_DEADLINE_REQUIRED(HttpStatus.BAD_REQUEST, "New deadline is required to reopen job"),
-    JOB_INVALID_STATUS_TRANSITION(HttpStatus.BAD_REQUEST, "Cannot toggle job in DRAFT status");
+    JOB_INVALID_STATUS_TRANSITION(HttpStatus.BAD_REQUEST, "Cannot toggle job in DRAFT status"),
+    FORUM_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "Forum post not found"),
+    INVALID_POST_STATUS(HttpStatus.BAD_REQUEST, "Invalid post status. Allowed values: VISIBLE, HIDDEN");
 
+    ;
     ;
 
     private final HttpStatus httpStatus;

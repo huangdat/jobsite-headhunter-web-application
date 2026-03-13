@@ -38,4 +38,5 @@ public class ForumPost {
     PostStatus status = PostStatus.VISIBLE;
 
     LocalDateTime createdAt;
+
 }
