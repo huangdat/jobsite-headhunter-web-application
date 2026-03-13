@@ -3,13 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import type { ForgotPasswordFormData } from "../types";
 import { sendOtpForgotPassword } from "../services/authApi";
 import { toast } from "sonner";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 import { MdOutlineMail } from "react-icons/md";
 
 export function ForgotPasswordPage() {
+  const { t } = useAppTranslation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<ForgotPasswordFormData>({
     email: "",
@@ -37,7 +40,7 @@ export function ForgotPasswordPage() {
 
     // Validate before submitting
     if (!validateForm()) {
-      toast.error("Please enter a valid email address");
+      toast.error(t("auth.messages.invalidEmail"));
       return;
     }
 
@@ -50,7 +53,7 @@ export function ForgotPasswordPage() {
         tokenType: "FORGOT_PASSWORD",
       });
 
-      toast.success("OTP has been sent to your email!");
+      toast.success(t("auth.messages.otpSent"));
 
       // Navigate to reset password page with OTP data
       navigate("/reset-password", {
@@ -61,21 +64,11 @@ export function ForgotPasswordPage() {
         },
       });
     } catch (error: unknown) {
-      let errorMessage = "Failed to send OTP. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Failed to send OTP. Please try again.",
+      );
 
-      if (
-        error instanceof Error &&
-        "response" in error &&
-        typeof error.response === "object" &&
-        error.response !== null
-      ) {
-        const response = error.response as {
-          data?: { message?: string };
-        };
-        errorMessage = response.data?.message || errorMessage;
-      }
-
-      // Error notification
       toast.error(errorMessage);
 
       setErrors({
@@ -95,7 +88,6 @@ export function ForgotPasswordPage() {
 
   return (
     <AuthLayout
-      navLinks={[{ to: "#", label: "Home" }]}
       ctaButton={{ to: "/login", label: "Sign In" }}
       className="overflow-x-hidden"
     >
@@ -143,7 +135,7 @@ export function ForgotPasswordPage() {
                   <Input
                     icon={<MdOutlineMail />}
                     type="email"
-                    placeholder="name@company.com"
+                    placeholder={t("auth.placeholders.resetEmail")}
                     value={formData.email}
                     onChange={(e) => handleChange(e.target.value)}
                   />
@@ -156,7 +148,7 @@ export function ForgotPasswordPage() {
                 disabled={isLoading}
                 className="cursor-pointer"
               >
-                {isLoading ? "Sending..." : "Send OTP"}
+                {isLoading ? "Sending OTP..." : "Send OTP"}
               </Button>
             </form>
 

@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import { sendOtpSignup, verifyOtpSignup, register } from "../services/authApi";
 import { toast } from "sonner";
 import { MdOutlineMail, MdTimer } from "react-icons/md";
 import type { RegisterFormData } from "../types";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 interface LocationState {
   accountId: string;
@@ -14,15 +16,12 @@ interface LocationState {
 }
 
 export function OTPVerificationPage() {
+  const { t } = useAppTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState | undefined;
 
-  if (!state) {
-    navigate("/select-role", { replace: true });
-    return null;
-  }
-
+  // All hooks must be declared before any conditional return (Rules of Hooks)
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
@@ -31,10 +30,10 @@ export function OTPVerificationPage() {
 
   // Redirect if no state
   useEffect(() => {
-    if (!location.state) {
+    if (!state) {
       navigate("/select-role", { replace: true });
     }
-  }, []);
+  }, [state, navigate]);
 
   // Countdown timer
   useEffect(() => {
@@ -46,6 +45,9 @@ export function OTPVerificationPage() {
 
     return () => clearInterval(timer);
   }, [timeLeft]);
+
+  // Guard: render nothing while redirect is in-flight (must come after all hooks)
+  if (!state) return null;
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -81,7 +83,7 @@ export function OTPVerificationPage() {
     const pastedData = e.clipboardData.getData("text").trim();
 
     if (!/^\d{6}$/.test(pastedData)) {
-      toast.error("Please paste a valid 6-digit OTP");
+      toast.error(t("auth.validation.invalidOtp"));
       return;
     }
 
@@ -94,7 +96,7 @@ export function OTPVerificationPage() {
     const otpCode = otp.join("");
 
     if (otpCode.length !== 6) {
-      toast.error("Please enter all 6 digits");
+      toast.error(t("auth.validation.enterAllDigits"));
       return;
     }
 
@@ -102,14 +104,18 @@ export function OTPVerificationPage() {
 
     try {
       // Step 1: Verify OTP
-      await verifyOtpSignup({
+      const otpResponse = await verifyOtpSignup({
         accountId: state.accountId,
         email: state.email,
         code: otpCode,
         tokenType: "SIGN_UP",
       });
 
-      toast.success("Email verified! Creating your account...");
+      if (otpResponse.status && otpResponse.status !== "OK") {
+        throw new Error(otpResponse.message || "OTP verification failed.");
+      }
+
+      toast.success(t("auth.messages.emailVerified"));
 
       // Step 2: Get registration data from sessionStorage
       const registrationDataStr = sessionStorage.getItem("pendingRegistration");
@@ -139,7 +145,7 @@ export function OTPVerificationPage() {
       sessionStorage.removeItem("pendingRegistrationAvatar");
 
       // Step 6: Success notification and redirect
-      toast.success("Account created successfully!");
+      toast.success(t("auth.messages.accountCreatedSuccess"));
 
       setTimeout(() => {
         navigate("/login", {
@@ -151,11 +157,10 @@ export function OTPVerificationPage() {
         });
       }, 1500);
     } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error && "response" in error
-          ? (error as { response?: { data?: { message?: string } } }).response
-              ?.data?.message || (error as Error).message
-          : "Registration failed. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Registration failed. Please try again.",
+      );
       toast.error(errorMessage);
 
       // If registration data is missing, redirect back to register
@@ -182,16 +187,12 @@ export function OTPVerificationPage() {
         accountId: state.accountId,
       });
 
-      toast.success("OTP has been resent to your email");
+      toast.success(t("auth.messages.otpResent"));
       setTimeLeft(300); // Reset timer to 5 minutes
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();
     } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error && "response" in error
-          ? (error as { response?: { data?: { message?: string } } }).response
-              ?.data?.message || "Failed to resend OTP"
-          : "Failed to resend OTP";
+      const errorMessage = extractApiErrorMessage(error, "Failed to resend OTP");
       toast.error(errorMessage);
     } finally {
       setIsResending(false);
@@ -273,7 +274,7 @@ export function OTPVerificationPage() {
             </p>
             <button
               onClick={handleResend}
-              disabled={isResending || timeLeft > 240} // Can resend after 1 minute
+              disabled={isLoading || isResending || timeLeft > 240} // Can resend after 1 minute
               className="text-sm text-emerald-600 hover:text-emerald-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
               {isResending ? "Sending..." : "Resend Code"}
@@ -289,6 +290,7 @@ export function OTPVerificationPage() {
           <div className="text-center pt-4 border-t">
             <button
               onClick={() => navigate("/select-role")}
+              disabled={isLoading || isResending}
               className="text-sm text-slate-600 hover:text-slate-800"
             >
               ← Back to Registration

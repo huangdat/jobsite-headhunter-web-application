@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormField, PasswordRequirements } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import { MdOutlineMail, MdLockOutline, MdAccountCircle } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
@@ -19,7 +20,7 @@ interface AccountStepProps {
   passwordRequirements: {
     minLength: boolean;
     hasUpperCase: boolean;
-    hasSpecialChar: boolean;
+    hasLowerCase: boolean;
     hasNumber: boolean;
   };
 }
@@ -34,12 +35,15 @@ export function AccountStep({
   setShowConfirmPassword,
   passwordRequirements,
 }: AccountStepProps) {
+  const { t } = useAppTranslation();
   return (
     <>
       <FormField label="Username" error={errors.username}>
         <Input
+          name="username"
+          autoComplete="username"
           icon={<MdAccountCircle />}
-          placeholder="john_doe123"
+          placeholder={t("auth.placeholders.username")}
           value={formData.username}
           onChange={(e) => handleChange("username")(e.target.value)}
           error={!!errors.username}
@@ -48,8 +52,10 @@ export function AccountStep({
 
       <FormField label="Email" error={errors.email}>
         <Input
+          name="email"
+          autoComplete="email"
           icon={<MdOutlineMail />}
-          placeholder="jane@email.com"
+          placeholder={t("auth.placeholders.email")}
           value={formData.email}
           onChange={(e) => handleChange("email")(e.target.value)}
           error={!!errors.email}
@@ -60,9 +66,11 @@ export function AccountStep({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField label="Password" error={errors.password}>
           <Input
+            name="password"
+            autoComplete="new-password"
             icon={<MdLockOutline />}
             type={showPassword ? "text" : "password"}
-            placeholder="Enter password"
+            placeholder={t("auth.placeholders.password")}
             value={formData.password}
             onChange={(e) => handleChange("password")(e.target.value)}
             error={!!errors.password}
@@ -80,9 +88,11 @@ export function AccountStep({
 
         <FormField label="Confirm Password" error={errors.confirmPassword}>
           <Input
+            name="confirmPassword"
+            autoComplete="new-password"
             icon={<MdLockOutline />}
             type={showConfirmPassword ? "text" : "password"}
-            placeholder="Confirm password"
+            placeholder={t("auth.placeholders.confirmPassword")}
             value={formData.confirmPassword}
             onChange={(e) => handleChange("confirmPassword")(e.target.value)}
             error={!!errors.confirmPassword}
@@ -106,7 +116,7 @@ export function AccountStep({
       <PasswordRequirements
         minLength={passwordRequirements.minLength}
         hasUpperCase={passwordRequirements.hasUpperCase}
-        hasSpecialChar={passwordRequirements.hasSpecialChar}
+        hasLowerCase={passwordRequirements.hasLowerCase}
         hasNumber={passwordRequirements.hasNumber}
       />
     </>

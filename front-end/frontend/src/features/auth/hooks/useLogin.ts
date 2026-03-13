@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { login } from "../services/authApi";
 import type { LoginFormData } from "../types";
+import { useAuth } from "../context/useAuth";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
 
 export const useLogin = () => {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -26,7 +29,7 @@ export const useLogin = () => {
       const input = data.email.trim();
       const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
       const isUsername = /^[a-zA-Z][a-zA-Z0-9_]{7,31}$/.test(input);
-      
+
       if (!isEmail && !isUsername) {
         newErrors.email = "Please enter a valid username or email address";
       }
@@ -59,9 +62,8 @@ export const useLogin = () => {
         password: data.password,
       });
 
-      // Store token to localStorage
-      if (response?.accessToken) {
-        localStorage.setItem("accessToken", response.accessToken);
+      if (response?.authenticated && response.accessToken) {
+        await signIn(response.accessToken);
 
         // Handle remember me - store username or email
         if (data.rememberMe) {
@@ -73,11 +75,16 @@ export const useLogin = () => {
         // Success Notification
         toast.success("Welcome Back! Login Successful.");
 
-        navigate("/");
+        navigate("/home");
+        return;
       }
+
+      throw new Error("Authentication failed.");
     } catch (error: unknown) {
-      // Extract error details from response
-      let errorMessage = "Login failed. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Unable to sign in right now. Please try again.",
+      );
       let errorField: "email" | "password" | "general" = "general";
 
       if (
@@ -91,10 +98,10 @@ export const useLogin = () => {
           data?: { message?: string };
         };
 
-        errorMessage = response.data?.message || errorMessage;
+        const responseMessage = response.data?.message || errorMessage;
 
         // Categorize error based on message or status code
-        const messageLower = errorMessage.toLowerCase();
+        const messageLower = responseMessage.toLowerCase();
 
         if (
           messageLower.includes("email") ||
@@ -117,7 +124,6 @@ export const useLogin = () => {
         }
       }
 
-      // Error Notification
       toast.error(errorMessage);
 
       // Set form error for the appropriate field
@@ -138,6 +144,10 @@ export const useLogin = () => {
   const handleChange =
     (field: keyof LoginFormData) => (value: string | boolean) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
+
+      if (field !== "rememberMe" && errors[field]) {
+        setErrors((prev) => ({ ...prev, [field]: undefined }));
+      }
 
       // Clear remembered login immediately when unchecking remember me
       if (field === "rememberMe" && value === false) {

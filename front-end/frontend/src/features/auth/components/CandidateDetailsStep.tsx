@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FormField } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import {
   MdWorkOutline,
   MdLocationCity,
@@ -20,7 +21,7 @@ interface CandidateDetailsStepProps {
   };
   errors?: Record<string, string>;
   handleChange: (
-    field: string,
+    field: string
   ) => (value: string | boolean | number | undefined) => void;
 }
 
@@ -28,6 +29,7 @@ export function CandidateDetailsStep({
   formData,
   handleChange,
 }: CandidateDetailsStepProps) {
+  const { t } = useAppTranslation();
   return (
     <div className="space-y-6">
       <p className="text-sm text-slate-600">
@@ -36,8 +38,10 @@ export function CandidateDetailsStep({
 
       <FormField label="Current Job Title (Optional)">
         <Input
+          name="currentTitle"
+          autoComplete="organization-title"
           icon={<MdWorkOutline />}
-          placeholder="e.g., Senior Software Engineer"
+          placeholder={t("auth.placeholders.jobTitle")}
           value={formData.currentTitle || ""}
           onChange={(e) => handleChange("currentTitle")(e.target.value)}
         />
@@ -46,13 +50,15 @@ export function CandidateDetailsStep({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField label="Years of Experience (Optional)">
           <Input
+            name="yearsOfExperience"
+            autoComplete="off"
             icon={<MdWorkOutline />}
             type="number"
-            placeholder="e.g., 5"
+            placeholder={t("auth.placeholders.experience")}
             value={formData.yearsOfExperience?.toString() || ""}
             onChange={(e) =>
               handleChange("yearsOfExperience")(
-                e.target.value ? parseInt(e.target.value) : undefined,
+                e.target.value ? parseInt(e.target.value) : undefined
               )
             }
           />
@@ -60,8 +66,10 @@ export function CandidateDetailsStep({
 
         <FormField label="City (Optional)">
           <Input
+            name="city"
+            autoComplete="address-level2"
             icon={<MdLocationCity />}
-            placeholder="e.g., Ho Chi Minh City"
+            placeholder={t("auth.placeholders.location")}
             value={formData.city || ""}
             onChange={(e) => handleChange("city")(e.target.value)}
           />
@@ -71,13 +79,15 @@ export function CandidateDetailsStep({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField label="Expected Salary Min (USD, Optional)">
           <Input
+            name="expectedSalaryMin"
+            autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
-            placeholder="e.g., 50000"
+            placeholder={t("auth.placeholders.salaryMin")}
             value={formData.expectedSalaryMin?.toString() || ""}
             onChange={(e) =>
               handleChange("expectedSalaryMin")(
-                e.target.value ? parseInt(e.target.value) : 0,
+                e.target.value ? parseInt(e.target.value) : 0
               )
             }
           />
@@ -85,13 +95,15 @@ export function CandidateDetailsStep({
 
         <FormField label="Expected Salary Max (USD, Optional)">
           <Input
+            name="expectedSalaryMax"
+            autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
-            placeholder="e.g., 80000"
+            placeholder={t("auth.placeholders.salaryMax")}
             value={formData.expectedSalaryMax?.toString() || ""}
             onChange={(e) =>
               handleChange("expectedSalaryMax")(
-                e.target.value ? parseInt(e.target.value) : 0,
+                e.target.value ? parseInt(e.target.value) : 0
               )
             }
           />
@@ -100,7 +112,9 @@ export function CandidateDetailsStep({
 
       <FormField label="Bio (Optional)">
         <Textarea
-          placeholder="Tell us about yourself, your skills, and experience..."
+          name="bio"
+          autoComplete="off"
+          placeholder={t("auth.placeholders.bio")}
           value={formData.bio || ""}
           onChange={(e) => handleChange("bio")(e.target.value)}
           rows={4}
@@ -110,6 +124,7 @@ export function CandidateDetailsStep({
       <FormField label="Job Search Status">
         <label className="flex items-center gap-3 cursor-pointer">
           <input
+            name="openForWork"
             type="checkbox"
             checked={formData.openForWork ?? false}
             onChange={(e) => handleChange("openForWork")(e.target.checked)}

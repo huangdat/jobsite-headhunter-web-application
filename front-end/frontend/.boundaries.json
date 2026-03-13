@@ -1,0 +1,28 @@
+{
+  "extends": ["eslint-plugin-boundaries/configs/recommended"],
+  "options": {
+    "modules": [
+      {
+        "name": "shared",
+        "pattern": "src/shared/*",
+        "importRestriction": ["parent", "index"]
+      },
+      {
+        "name": "features",
+        "pattern": "src/features/*/*",
+        "importRestriction": ["sibling", "parent"]
+      },
+      {
+        "name": "app",
+        "pattern": "src/app/*",
+        "importRestriction": ["parent", "index"]
+      },
+      {
+        "name": "components",
+        "pattern": "src/components/*",
+        "importRestriction": ["parent", "index"]
+      }
+    ],
+    "allowUncrossable": true
+  }
+}

@@ -18,7 +18,7 @@ export function TopCompanies() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10">
           {companies.map((c, i) => (
             <div key={i} className="group cursor-pointer">
-              <div className="w-24 h-24 bg-gradient-to-br from-lime-400 to-lime-600 rounded-full mb-4" />
+              <div className="w-24 h-24 bg-linear-to-br from-lime-400 to-lime-600 rounded-full mb-4" />
 
               <p className="font-medium">{c}</p>
 

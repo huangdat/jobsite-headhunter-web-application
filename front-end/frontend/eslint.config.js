@@ -3,9 +3,11 @@ import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
+import boundaries from "eslint-plugin-boundaries";
+import customRules from "./eslint-rules/index.js";
 
 export default tseslint.config(
-  { ignores: ["dist"] },
+  { ignores: ["dist", "eslint-rules"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -25,6 +27,8 @@ export default tseslint.config(
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
+      boundaries,
+      custom: { rules: customRules },
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -32,7 +36,16 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
-      "@typescript-eslint/no-unused-vars": "warn", // Change "error" to "warn"
+      "@typescript-eslint/no-unused-vars": "warn",
+      "boundaries/no-unknown": ["warn", { defaultTags: ["scope:*", "type:*"] }],
+      "boundaries/no-cross-boundary": "warn",
+      "boundaries/entry-point": "warn",
+      "boundaries/external": "warn",
+      // Custom rules for preventing hardcoded content
+      "custom/no-hardcoded-strings": "warn",
+      "custom/no-api-urls": "warn",
+      "custom/no-hardcoded-html-attributes": "warn",
+      "custom/no-hardcoded-toast-messages": "warn",
     },
   },
 );

@@ -1,9 +1,12 @@
 
 package com.rikkeisoft.backend.model.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Builder
@@ -15,9 +18,11 @@ public class ForumComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     ForumPost post;
+
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     Account account;
@@ -26,5 +31,6 @@ public class ForumComment {
     ForumComment parentComment;
     @Column(nullable = false, columnDefinition = "TEXT")
     String content;
+
     LocalDateTime createdAt;
 }

@@ -68,10 +68,16 @@ public enum ErrorCode {
     NO_BUSINESS_PROFILES_STORED(HttpStatus.NOT_FOUND, "No business profiles stored"),
     INVALID_TAX_CODE(HttpStatus.BAD_REQUEST, "Invalid tax code format. Please provide a valid tax code."),
 
-    // Custom error codes for ForumPost module
+    // Custom error codes for Job module
+    JOB_NOT_FOUND(HttpStatus.NOT_FOUND, "Job not found"),
+    JOB_EXPIRED(HttpStatus.BAD_REQUEST, "Cannot toggle job status - job has expired"),
+    INVALID_DEADLINE(HttpStatus.BAD_REQUEST, "New deadline must be after today"),
+    NEW_DEADLINE_REQUIRED(HttpStatus.BAD_REQUEST, "New deadline is required to reopen job"),
+    JOB_INVALID_STATUS_TRANSITION(HttpStatus.BAD_REQUEST, "Cannot toggle job in DRAFT status"),
     FORUM_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "Forum post not found"),
     INVALID_POST_STATUS(HttpStatus.BAD_REQUEST, "Invalid post status. Allowed values: VISIBLE, HIDDEN");
 
+    ;
     ;
 
     private final HttpStatus httpStatus;

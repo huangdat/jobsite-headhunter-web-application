@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import { MdPerson, MdPhone, MdWc, MdCameraAlt } from "react-icons/md";
 
 interface PersonalStepProps {
@@ -18,12 +19,15 @@ export function PersonalStep({
   errors,
   handleChange,
 }: PersonalStepProps) {
+  const { t } = useAppTranslation();
   return (
     <>
       <FormField label="Full Name" error={errors.fullName}>
         <Input
+          name="fullName"
+          autoComplete="name"
           icon={<MdPerson />}
-          placeholder="Jane Cooper"
+          placeholder={t("auth.placeholders.name")}
           value={formData.fullName}
           onChange={(e) => handleChange("fullName")(e.target.value)}
           error={!!errors.fullName}
@@ -32,8 +36,10 @@ export function PersonalStep({
 
       <FormField label="Phone Number" error={errors.phone}>
         <Input
+          name="phone"
+          autoComplete="tel"
           icon={<MdPhone />}
-          placeholder="+84 123 456 789"
+          placeholder={t("auth.placeholders.phone")}
           value={formData.phone}
           onChange={(e) => handleChange("phone")(e.target.value)}
           error={!!errors.phone}
@@ -46,10 +52,11 @@ export function PersonalStep({
           <div className="relative">
             <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <select
+              name="gender"
               value={formData.gender || ""}
               onChange={(e) => handleChange("gender")(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Select gender"
+              aria-label={t("auth.aria.selectGender")}
             >
               <option value="">Select Gender</option>
               <option value="MALE">Male</option>
@@ -63,6 +70,7 @@ export function PersonalStep({
           <div className="relative">
             <MdCameraAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10 pointer-events-none" />
             <input
+              name="avatar"
               type="file"
               accept="image/*"
               onChange={(e) => {
@@ -70,7 +78,7 @@ export function PersonalStep({
                 handleChange("avatar")(file || null);
               }}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              aria-label="Upload profile picture"
+              aria-label={t("auth.aria.uploadProfilePicture")}
             />
           </div>
         </FormField>

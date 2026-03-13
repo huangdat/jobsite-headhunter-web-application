@@ -22,7 +22,7 @@ public class ForumPost {
     @ManyToOne
     @JoinColumn(name = "author_account_id", nullable = false)
     Account author;
-    
+
     @ManyToOne
     @JoinColumn(name = "job_id", nullable = false)
     Job job;
