@@ -4,16 +4,13 @@ import {
   MdBusiness,
   MdReceipt,
   MdLanguage,
-  MdLocationOn,
   MdGroups,
 } from "react-icons/md";
 
 interface HeadhunterDetailsStepProps {
   formData: {
-    companyName: string;
     taxCode: string;
     websiteUrl?: string;
-    addressMain?: string;
     companyScale?: string;
   };
   errors: Record<string, string>;
@@ -31,18 +28,18 @@ export function HeadhunterDetailsStep({
         Company information and recruitment details
       </p>
 
-      <FormField label="Company Name" error={errors.companyName}>
-        <Input
-          icon={<MdBusiness />}
-          placeholder="ABC Recruitment Ltd."
-          value={formData.companyName}
-          onChange={(e) => handleChange("companyName")(e.target.value)}
-          error={!!errors.companyName}
-        />
-      </FormField>
+      <div className="flex items-start gap-2 rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-700">
+        <MdBusiness className="mt-0.5 shrink-0 text-base" />
+        <span>
+          Your <strong>company name</strong> and <strong>registered address</strong> will be
+          looked up automatically from your tax code via the MST registry.
+        </span>
+      </div>
 
       <FormField label="Tax Code" error={errors.taxCode}>
         <Input
+          name="taxCode"
+          autoComplete="off"
           icon={<MdReceipt />}
           placeholder="0123456789"
           value={formData.taxCode}
@@ -53,6 +50,8 @@ export function HeadhunterDetailsStep({
 
       <FormField label="Company Website (Optional)">
         <Input
+          name="websiteUrl"
+          autoComplete="url"
           icon={<MdLanguage />}
           placeholder="https://www.company.com"
           value={formData.websiteUrl || ""}
@@ -60,19 +59,11 @@ export function HeadhunterDetailsStep({
         />
       </FormField>
 
-      <FormField label="Main Office Address (Optional)">
-        <Input
-          icon={<MdLocationOn />}
-          placeholder="123 Business Street, District 1, HCMC"
-          value={formData.addressMain || ""}
-          onChange={(e) => handleChange("addressMain")(e.target.value)}
-        />
-      </FormField>
-
       <FormField label="Company Scale (Optional)">
         <div className="relative">
           <MdGroups className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
           <select
+            name="companyScale"
             value={formData.companyScale || ""}
             onChange={(e) => handleChange("companyScale")(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -1,5 +1,8 @@
 import { validateToken, logout } from "../services/authApi";
 
+const ACCESS_TOKEN_KEY = "accessToken";
+const AUTH_USER_KEY = "authUser";
+
 /**
  * IMPORTANT NAMING CONVENTION:
  *
@@ -21,7 +24,7 @@ import { validateToken, logout } from "../services/authApi";
  */
 export const checkAuth = async () => {
   try {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 
     if (!token) {
       return null;
@@ -39,11 +42,11 @@ export const checkAuth = async () => {
     }
 
     // Token is invalid, clear storage
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
     return null;
   } catch (error) {
     console.error("Auth check failed:", error);
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
     return null;
   }
 };
@@ -54,7 +57,7 @@ export const checkAuth = async () => {
  */
 export const handleLogout = async () => {
   try {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 
     if (token) {
       await logout({ token });
@@ -63,8 +66,8 @@ export const handleLogout = async () => {
     console.error("Logout failed:", error);
   } finally {
     // Always clear local storage even if API fails
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("userInfo");
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(AUTH_USER_KEY);
   }
 };
 
@@ -72,7 +75,7 @@ export const handleLogout = async () => {
  * Get current user's token
  */
 export const getToken = () => {
-  return localStorage.getItem("accessToken");
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
 };
 
 /**
@@ -80,7 +83,7 @@ export const getToken = () => {
  */
 export const hasRole = async (requiredRole: string): Promise<boolean> => {
   try {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 
     if (!token) {
       return false;

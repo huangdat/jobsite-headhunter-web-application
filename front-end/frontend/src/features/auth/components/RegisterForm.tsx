@@ -5,6 +5,8 @@ import { AuthLayout } from "@/shared/components";
 import type { UserRole, RegisterFormData } from "../types";
 import { sendOtpSignup } from "../services/authApi";
 import { toast } from "sonner";
+import { useAuth } from "../context/useAuth";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 import { StepIndicator } from "./StepIndicator";
 import { AccountStep } from "./AccountStep";
@@ -42,13 +44,13 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const userRole = role as UserRole;
   const config = getRoleConfig(userRole);
   const navigate = useNavigate();
+  const { isAuthenticated, isInitializing } = useAuth();
 
   const [formData, setFormData] = useState({
     username: "",
     fullName: "",
     email: "",
     phone: "",
-    companyName: "",
     taxCode: "",
     password: "",
     confirmPassword: "",
@@ -56,7 +58,6 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     avatar: undefined as File | undefined,
     // Headhunter optional fields
     websiteUrl: "",
-    addressMain: "",
     companyScale: "",
     // Collaborator optional fields
     commissionRate: undefined as number | undefined,
@@ -76,11 +77,11 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
-  // Password requirements validation
+  // Password requirements validation — must match backend regex: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9_]+$, 8-16 chars
   const passwordRequirements = {
-    minLength: formData.password.length >= 8,
+    minLength: formData.password.length >= 8 && formData.password.length <= 16,
     hasUpperCase: /[A-Z]/.test(formData.password),
-    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(formData.password),
+    hasLowerCase: /[a-z]/.test(formData.password),
     hasNumber: /\d/.test(formData.password),
   };
 
@@ -90,15 +91,34 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     { number: 3, title: "Details", description: "Additional info" },
   ];
 
-  // Check if user is already logged in
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      navigate("/", { replace: true });
+    if (!isInitializing && isAuthenticated) {
+      navigate("/home", { replace: true });
     }
-  }, [navigate]);
+  }, [isAuthenticated, isInitializing, navigate]);
 
   const validateStep = (step: number): boolean => {
+    const newErrors = getStepErrors(step);
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateForm = (): boolean => {
+    // Validate all steps and accumulate errors
+    const allErrors: Record<string, string> = {};
+
+    // Collect errors from all steps
+    const step1Errors = getStepErrors(1);
+    const step2Errors = getStepErrors(2);
+    const step3Errors = getStepErrors(3);
+
+    Object.assign(allErrors, step1Errors, step2Errors, step3Errors);
+    setErrors(allErrors);
+
+    return Object.keys(allErrors).length === 0;
+  };
+
+  const getStepErrors = (step: number): Record<string, string> => {
     const newErrors: Record<string, string> = {};
 
     // Step 1: Account Information
@@ -145,36 +165,33 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         newErrors.fullName = "Full name is required";
       } else if (formData.fullName.trim().length < 2) {
         newErrors.fullName = "Full name must be at least 2 characters";
+      } else if (!/^[a-zA-Z ]+$/.test(formData.fullName.trim())) {
+        newErrors.fullName = "Full name can only contain letters and spaces";
       }
 
-      // Phone validation
+      // Phone validation — must match Vietnamese format (e.g. 0912345678)
       if (!formData.phone.trim()) {
         newErrors.phone = "Phone number is required";
-      } else if (!/^[0-9]{10,15}$/.test(formData.phone.replace(/[\s-]/g, ""))) {
-        newErrors.phone = "Please enter a valid phone number (10-15 digits)";
+      } else if (
+        !/^0[3-9]\d{8,9}$/.test(formData.phone.replace(/[\s-]/g, ""))
+      ) {
+        newErrors.phone =
+          "Please enter a valid Vietnamese phone number (e.g., 0912345678)";
       }
     }
 
     // Step 3: Role-specific Information
     if (step === 3) {
-      // Headhunter specific validation
+      // Headhunter specific validation — only taxCode is required;
+      // company name & address are auto-fetched by the backend from the tax code
       if (userRole === "headhunter") {
-        if (!formData.companyName.trim()) {
-          newErrors.companyName = "Company name is required";
-        }
         if (!formData.taxCode.trim()) {
           newErrors.taxCode = "Tax code is required";
         }
       }
     }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const validateForm = (): boolean => {
-    // Validate all steps
-    return validateStep(1) && validateStep(2) && validateStep(3);
+    return newErrors;
   };
 
   const handleNextStep = () => {
@@ -195,10 +212,11 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
       // Clear error when user starts typing
-      if (errors[field]) {
+      if (errors[field] || errors.submit) {
         setErrors((prev) => {
           const updated = { ...prev };
           delete updated[field];
+          delete updated.submit;
           return updated;
         });
       }
@@ -217,7 +235,23 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     }
 
     if (!validateForm()) {
-      toast.error("Please fix the errors in the form");
+      // Find which step has errors
+      const step1Errors = getStepErrors(1);
+      const step2Errors = getStepErrors(2);
+      const step3Errors = getStepErrors(3);
+
+      if (Object.keys(step1Errors).length > 0) {
+        toast.error("Please fix errors in Step 1 (Account)");
+        setCurrentStep(1);
+      } else if (Object.keys(step2Errors).length > 0) {
+        toast.error("Please fix errors in Step 2 (Personal)");
+        setCurrentStep(2);
+      } else if (Object.keys(step3Errors).length > 0) {
+        toast.error("Please fix errors in Step 3 (Details)");
+        setCurrentStep(3);
+      } else {
+        toast.error("Please fix the errors in the form");
+      }
       return;
     }
 
@@ -240,11 +274,9 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
           gender: formData.gender || undefined,
           avatar: formData.avatar,
           agreeToTerms: true,
-          companyName: formData.companyName,
           taxCode: formData.taxCode,
-          // Optional fields
+          // Optional fields (companyName & addressMain come from backend MST tax-code lookup)
           websiteUrl: formData.websiteUrl || undefined,
-          addressMain: formData.addressMain || undefined,
           companyScale: formData.companyScale || undefined,
         };
       } else if (userRole === "collaborator") {
@@ -309,10 +341,16 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       }
 
       // Send OTP to email
-      const otpResponse = await sendOtpSignup({
-        email: formData.email,
-        tokenType: "SIGN_UP",
-      });
+      // Wrap the API call with a timeout
+      const otpResponse = await Promise.race([
+        sendOtpSignup({ email: formData.email, tokenType: "SIGN_UP" }),
+        new Promise<never>((_, reject) =>
+          setTimeout(
+            () => reject(new Error("Request timed out after 15s")),
+            15000,
+          ),
+        ),
+      ]);
 
       toast.success("OTP has been sent to your email!");
 
@@ -326,7 +364,10 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       });
     } catch (error: unknown) {
       // Extract error details from response
-      let errorMessage = "Failed to send OTP. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Failed to send OTP. Please try again.",
+      );
       let errorField: string | null = null;
 
       if (
@@ -340,10 +381,10 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
           data?: { message?: string };
         };
 
-        errorMessage = response.data?.message || errorMessage;
+        const responseMessage = response.data?.message || errorMessage;
 
         // Categorize error based on message
-        const messageLower = errorMessage.toLowerCase();
+        const messageLower = responseMessage.toLowerCase();
 
         if (messageLower.includes("email")) {
           errorField = "email";
@@ -450,6 +491,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 <Button
                   type="button"
                   onClick={handlePrevStep}
+                  disabled={isLoading}
                   variant="outline"
                   size="xl"
                   className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl"
@@ -463,7 +505,9 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 <Button
                   variant="primary"
                   size="xl"
-                  type="submit"
+                  type="button"
+                  onClick={handleNextStep}
+                  disabled={isLoading}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
                 >
                   Next
@@ -477,11 +521,15 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   disabled={isLoading}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
                 >
-                  {isLoading ? "Creating Account..." : "Create Account"}
+                  {isLoading ? "Sending OTP..." : "Create Account"}
                   <HiOutlineArrowRight />
                 </Button>
               )}
             </div>
+
+            {errors.submit && (
+              <p className="text-sm text-red-500 text-center">{errors.submit}</p>
+            )}
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-3">

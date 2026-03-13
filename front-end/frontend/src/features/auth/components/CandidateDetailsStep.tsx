@@ -36,6 +36,8 @@ export function CandidateDetailsStep({
 
       <FormField label="Current Job Title (Optional)">
         <Input
+          name="currentTitle"
+          autoComplete="organization-title"
           icon={<MdWorkOutline />}
           placeholder="e.g., Senior Software Engineer"
           value={formData.currentTitle || ""}
@@ -46,6 +48,8 @@ export function CandidateDetailsStep({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField label="Years of Experience (Optional)">
           <Input
+            name="yearsOfExperience"
+            autoComplete="off"
             icon={<MdWorkOutline />}
             type="number"
             placeholder="e.g., 5"
@@ -60,6 +64,8 @@ export function CandidateDetailsStep({
 
         <FormField label="City (Optional)">
           <Input
+            name="city"
+            autoComplete="address-level2"
             icon={<MdLocationCity />}
             placeholder="e.g., Ho Chi Minh City"
             value={formData.city || ""}
@@ -71,6 +77,8 @@ export function CandidateDetailsStep({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField label="Expected Salary Min (USD, Optional)">
           <Input
+            name="expectedSalaryMin"
+            autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
             placeholder="e.g., 50000"
@@ -85,6 +93,8 @@ export function CandidateDetailsStep({
 
         <FormField label="Expected Salary Max (USD, Optional)">
           <Input
+            name="expectedSalaryMax"
+            autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
             placeholder="e.g., 80000"
@@ -100,6 +110,8 @@ export function CandidateDetailsStep({
 
       <FormField label="Bio (Optional)">
         <Textarea
+          name="bio"
+          autoComplete="off"
           placeholder="Tell us about yourself, your skills, and experience..."
           value={formData.bio || ""}
           onChange={(e) => handleChange("bio")(e.target.value)}
@@ -110,6 +122,7 @@ export function CandidateDetailsStep({
       <FormField label="Job Search Status">
         <label className="flex items-center gap-3 cursor-pointer">
           <input
+            name="openForWork"
             type="checkbox"
             checked={formData.openForWork ?? false}
             onChange={(e) => handleChange("openForWork")(e.target.checked)}

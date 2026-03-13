@@ -28,3 +28,4 @@ my_local_backup.sql
 *.yaml
 docs/**
 .env
+npm/
