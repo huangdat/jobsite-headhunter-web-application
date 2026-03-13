@@ -22,11 +22,7 @@ public class ForumPost {
     @ManyToOne
     @JoinColumn(name = "author_account_id", nullable = false)
     Account author;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    ForumCategory category;
-
+    
     @ManyToOne
     @JoinColumn(name = "job_id", nullable = false)
     Job job;
@@ -42,4 +38,5 @@ public class ForumPost {
     PostStatus status = PostStatus.VISIBLE;
 
     LocalDateTime createdAt;
+
 }

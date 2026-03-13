@@ -15,7 +15,6 @@ public class ForumPostResp {
     Long id;
     String authorId;
     String authorUsername;
-    Long categoryId;
     Long jobId;
     String title;
     String content;
