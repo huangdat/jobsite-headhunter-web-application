@@ -137,7 +137,7 @@ public class AccountServiceImpl implements AccountService {
                 .gender(req.getGender())
                 .imageUrl(imageUrl)
                 .authProvider(AuthProvider.LOCAL)
-                .status(AccountStatus.PENDING)
+                .status(AccountStatus.ACTIVE)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
