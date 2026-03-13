@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,19 +73,24 @@ export function LoginPage() {
   const googleEnabled = socialConfig.googleClientId.trim().length > 0;
   const linkedInEnabled = socialConfig.linkedinClientId.trim().length > 0;
 
-  const handleSocialLoginSuccess = async (
-    result: LoginResult | SocialAuthResponse,
-  ) => {
-    if (isLoginResult(result) && result.authenticated && result.accessToken) {
-      await signIn(result.accessToken);
-      toast.success("Signed in successfully.");
-      navigate("/home", { replace: true });
-      return;
-    }
+  const handleSocialLoginSuccess = useCallback(
+    async (result: LoginResult | SocialAuthResponse) => {
+      if (
+        isLoginResult(result) &&
+        result.authenticated &&
+        result.accessToken
+      ) {
+        await signIn(result.accessToken);
+        toast.success("Signed in successfully.");
+        navigate("/home", { replace: true });
+        return;
+      }
 
-    toast.info("Social account found. Please complete registration.");
-    navigate("/select-role");
-  };
+      toast.info("Social account found. Please complete registration.");
+      navigate("/select-role");
+    },
+    [navigate, signIn],
+  );
 
   const handleGoogleClick = () => {
     if (!googleEnabled) {
@@ -250,7 +255,7 @@ export function LoginPage() {
     };
 
     void runOAuthCallback();
-  }, [navigate, signIn]);
+  }, [handleSocialLoginSuccess]);
 
   // Handle state from registration redirect
   useEffect(() => {
