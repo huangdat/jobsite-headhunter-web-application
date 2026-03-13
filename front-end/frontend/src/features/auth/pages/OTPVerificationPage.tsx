@@ -18,11 +18,7 @@ export function OTPVerificationPage() {
   const location = useLocation();
   const state = location.state as LocationState | undefined;
 
-  if (!state) {
-    navigate("/select-role", { replace: true });
-    return null;
-  }
-
+  // All hooks must be declared before any conditional return (Rules of Hooks)
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
@@ -31,10 +27,10 @@ export function OTPVerificationPage() {
 
   // Redirect if no state
   useEffect(() => {
-    if (!location.state) {
+    if (!state) {
       navigate("/select-role", { replace: true });
     }
-  }, []);
+  }, [state, navigate]);
 
   // Countdown timer
   useEffect(() => {
@@ -46,6 +42,9 @@ export function OTPVerificationPage() {
 
     return () => clearInterval(timer);
   }, [timeLeft]);
+
+  // Guard: render nothing while redirect is in-flight (must come after all hooks)
+  if (!state) return null;
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -102,12 +101,16 @@ export function OTPVerificationPage() {
 
     try {
       // Step 1: Verify OTP
-      await verifyOtpSignup({
+      const otpResponse = await verifyOtpSignup({
         accountId: state.accountId,
         email: state.email,
         code: otpCode,
         tokenType: "SIGN_UP",
       });
+
+      if (otpResponse.status && otpResponse.status !== "OK") {
+        throw new Error(otpResponse.message || "OTP verification failed.");
+      }
 
       toast.success("Email verified! Creating your account...");
 

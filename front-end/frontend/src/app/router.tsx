@@ -11,22 +11,77 @@ import {
   ChangePasswordPage,
 } from "@/features/auth/pages";
 import { HomePage } from "@/features/home/pages/HomePage";
+import { GuestOnlyRoute } from "@/features/auth/components/GuestOnlyRoute";
+import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 
 export function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" replace />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/select-role" element={<SelectRolePage />} />
-      <Route path="/register/:role" element={<RegisterPage />} />
-      <Route path="/verify-otp" element={<OTPVerificationPage />} />
-      <Route path="/forgot-password/" element={<ForgotPasswordPage />} />
-      <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route
+        path="/login"
+        element={
+          <GuestOnlyRoute>
+            <LoginPage />
+          </GuestOnlyRoute>
+        }
+      />
+      <Route
+        path="/select-role"
+        element={
+          <GuestOnlyRoute>
+            <SelectRolePage />
+          </GuestOnlyRoute>
+        }
+      />
+      <Route
+        path="/register/:role"
+        element={
+          <GuestOnlyRoute>
+            <RegisterPage />
+          </GuestOnlyRoute>
+        }
+      />
+      <Route
+        path="/verify-otp"
+        element={
+          <GuestOnlyRoute>
+            <OTPVerificationPage />
+          </GuestOnlyRoute>
+        }
+      />
+      <Route
+        path="/forgot-password/"
+        element={
+          <GuestOnlyRoute>
+            <ForgotPasswordPage />
+          </GuestOnlyRoute>
+        }
+      />
+      <Route
+        path="/reset-password"
+        element={
+          <GuestOnlyRoute>
+            <ResetPasswordPage />
+          </GuestOnlyRoute>
+        }
+      />
       <Route
         path="/reset-password/success"
-        element={<ResetPasswordSuccessPage />}
+        element={
+          <GuestOnlyRoute>
+            <ResetPasswordSuccessPage />
+          </GuestOnlyRoute>
+        }
       />
-      <Route path="/change-password" element={<ChangePasswordPage />} />
+      <Route
+        path="/change-password"
+        element={
+          <ProtectedRoute>
+            <ChangePasswordPage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/home" element={<HomePage />} />
     </Routes>
   );

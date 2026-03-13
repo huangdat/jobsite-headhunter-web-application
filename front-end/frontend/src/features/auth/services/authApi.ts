@@ -7,14 +7,18 @@ import type {
   ValidateTokenResult,
   LogoutRequest,
   RegisterFormData,
-  ForgotPasswordFormData,
-  ResetPasswordFormData,
   ChangePasswordFormData,
   AccountResp,
   SendOtpRequest,
   OtpSendResp,
   VerifyOtpRequest,
   OtpVerifyResp,
+  VerifyOtpAndResetPasswordRequest,
+  OtpVerifyAndResetPasswordResp,
+  GoogleTokenRequest,
+  LinkedInTokenRequest,
+  SocialAuthResponse,
+  SocialRegisterRequest,
 } from "../types";
 
 export const login = async (data: LoginRequest) => {
@@ -36,10 +40,7 @@ export const validateToken = async (data: ValidateTokenRequest) => {
 };
 
 export const logout = async (data: LogoutRequest) => {
-  const res = await apiClient.post<ApiResponse<string>>(
-    "/api/auth/logout",
-    data,
-  );
+  const res = await apiClient.post<ApiResponse<void>>("/api/auth/logout", data);
 
   return res.data.result;
 };
@@ -70,12 +71,10 @@ export const register = async (data: RegisterFormData) => {
 
   if (data.role === "headhunter") {
     endpoint = "/api/account/signup-headhunter";
-    formData.append("companyName", data.companyName);
     formData.append("taxCode", data.taxCode);
-
+    // companyName and addressMain are NOT sent — backend derives them from the taxCode MST lookup
     // Optional headhunter fields
     if (data.websiteUrl) formData.append("websiteUrl", data.websiteUrl);
-    if (data.addressMain) formData.append("addressMain", data.addressMain);
     if (data.companyScale) formData.append("companyScale", data.companyScale);
   } else if (data.role === "collaborator") {
     endpoint = "/api/account/signup-collaborator";
@@ -117,30 +116,16 @@ export const register = async (data: RegisterFormData) => {
   return res.data.result;
 };
 
-export const forgotPassword = async (data: ForgotPasswordFormData) => {
-  const res = await apiClient.post<ApiResponse<string>>(
-    "/api/auth/forgot-password",
-    data,
-  );
-
-  return res.data.result;
-};
-
-export const resetPassword = async (
-  data: ResetPasswordFormData & { token: string },
-) => {
-  const res = await apiClient.post<ApiResponse<string>>(
-    "/api/auth/reset-password",
-    data,
-  );
-
-  return res.data.result;
-};
-
 export const changePassword = async (data: ChangePasswordFormData) => {
-  const res = await apiClient.post<ApiResponse<string>>(
-    "/api/auth/change-password",
-    data,
+  const payload = {
+    oldPassword: data.currentPassword,
+    newPassword: data.newPassword,
+    reNewPassword: data.confirmPassword,
+  };
+
+  const res = await apiClient.put<ApiResponse<string>>(
+    "/api/account/changeMyPassword",
+    payload,
   );
 
   return res.data.result;
@@ -174,11 +159,42 @@ export const sendOtpForgotPassword = async (data: SendOtpRequest) => {
   return res.data.result;
 };
 
-export const verifyOtpForgotPassword = async (data: VerifyOtpRequest) => {
-  const res = await apiClient.post<ApiResponse<OtpVerifyResp>>(
-    "/api/otp/verify-forgot-password",
+export const verifyAndResetPassword = async (
+  data: VerifyOtpAndResetPasswordRequest,
+) => {
+  const res = await apiClient.post<ApiResponse<OtpVerifyAndResetPasswordResp>>(
+    "/api/otp/verify-and-reset-password",
     data,
   );
 
+  return res.data.result;
+};
+// API for social login (Google, LinkedIn)
+export const getSocialConfig = async () => {
+  const res = await apiClient.get<ApiResponse<Record<string, string>>>(
+    "/api/auth/social-config",
+  );
+  return res.data.result;
+};
+
+export const googleLogin = async (data: GoogleTokenRequest) => {
+  const res = await apiClient.post<
+    ApiResponse<LoginResult | SocialAuthResponse>
+  >("/api/auth/google/login", data);
+  return res.data.result;
+};
+
+export const linkedinLogin = async (data: LinkedInTokenRequest) => {
+  const res = await apiClient.post<
+    ApiResponse<LoginResult | SocialAuthResponse>
+  >("/api/auth/linkedin/oauth", data);
+  return res.data.result;
+};
+
+export const registerSocial = async (data: SocialRegisterRequest) => {
+  const res = await apiClient.post<ApiResponse<LoginResult>>(
+    "/api/auth/register-social",
+    data,
+  );
   return res.data.result;
 };

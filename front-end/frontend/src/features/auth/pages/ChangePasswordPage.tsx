@@ -44,8 +44,22 @@ export function ChangePasswordPage() {
 
     if (!formData.newPassword) {
       newErrors.newPassword = "New password is required";
-    } else if (formData.newPassword.length < 8) {
-      newErrors.newPassword = "Password must be at least 8 characters";
+    } else if (
+      formData.newPassword.length < 8 ||
+      formData.newPassword.length > 16
+    ) {
+      newErrors.newPassword = "Password must be between 8 and 16 characters";
+    } else if (!/[A-Z]/.test(formData.newPassword)) {
+      newErrors.newPassword =
+        "Password must contain at least one uppercase letter";
+    } else if (!/[a-z]/.test(formData.newPassword)) {
+      newErrors.newPassword =
+        "Password must contain at least one lowercase letter";
+    } else if (!/\d/.test(formData.newPassword)) {
+      newErrors.newPassword = "Password must contain at least one number";
+    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.newPassword)) {
+      newErrors.newPassword =
+        "Password can only contain letters, numbers, and underscores";
     } else if (formData.newPassword === formData.currentPassword) {
       newErrors.newPassword =
         "New password must be different from current password";

@@ -6,6 +6,7 @@ import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
 import { AnimatedCheckbox } from "../components/AnimatedCheckbox";
 import { useLogin } from "../hooks";
 import { toast } from "sonner";
+import { useAuth } from "../context/useAuth";
 
 import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -14,6 +15,7 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 export function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isAuthenticated, isInitializing } = useAuth();
   const {
     formData,
     errors,
@@ -48,18 +50,15 @@ export function LoginPage() {
     loadRememberedEmail();
   }, [loadRememberedEmail]);
 
-  // Check if user is already logged in
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      // User is already authenticated, redirect to home
-      navigate("/", { replace: true });
+    if (!isInitializing && isAuthenticated) {
+      navigate("/home", { replace: true });
     }
-  }, [navigate]);
+  }, [isAuthenticated, isInitializing, navigate]);
 
   return (
     <AuthLayout ctaButton={{ to: "/select-role", label: "Sign Up" }}>
-      <div className="w-full max-w-5xl min-h-[600px] bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
+      <div className="w-full max-w-5xl min-h-150 bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
@@ -90,6 +89,8 @@ export function LoginPage() {
             {/* USERNAME OR EMAIL */}
             <FormField label="Username or Email" error={errors.email}>
               <Input
+                name="username"
+                autoComplete="username"
                 icon={<MdAccountCircle />}
                 type="text"
                 placeholder="john_doe123 or email@company.com"
@@ -104,6 +105,8 @@ export function LoginPage() {
             {/* PASSWORD */}
             <FormField label="Password" error={errors.password}>
               <Input
+                name="password"
+                autoComplete="current-password"
                 icon={<MdLockOutline />}
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
@@ -159,8 +162,16 @@ export function LoginPage() {
 
             {/* SOCIAL LOGIN */}
             <SocialLoginButtons
-              onGoogleClick={() => console.log("Google login")}
-              onLinkedInClick={() => console.log("LinkedIn login")}
+              onGoogleClick={() =>
+                toast.info(
+                  "Google login cần client OAuth phía frontend. Hiện tôi đã căn đúng contract API, nhưng flow UI OAuth chưa được cấu hình trong project.",
+                )
+              }
+              onLinkedInClick={() =>
+                toast.info(
+                  "LinkedIn login cần callback OAuth và redirect URI phía frontend. Hiện backend endpoint đã được map đúng, nhưng flow UI OAuth chưa có trong project.",
+                )
+              }
             />
             {/* REGISTER LINK */}
             <div className="text-center mt-6 text-sm">
