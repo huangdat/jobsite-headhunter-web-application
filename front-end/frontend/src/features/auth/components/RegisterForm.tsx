@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import type { UserRole, RegisterFormData } from "../types";
 import { sendOtpSignup } from "../services/authApi";
 import { toast } from "sonner";
@@ -41,6 +42,7 @@ const getRoleConfig = (role: UserRole) => {
 };
 
 export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
+  const { t } = useAppTranslation();
   const userRole = role as UserRole;
   const config = getRoleConfig(userRole);
   const navigate = useNavigate();
@@ -198,7 +200,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length));
     } else {
-      toast.error("Please fix the errors before continuing");
+      toast.error(t("auth.validation.fixErrors"));
     }
   };
 
@@ -222,38 +224,42 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       }
     };
 
+  const handleFormKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (currentStep < steps.length) {
+        handleNextStep();
+      }
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (currentStep < steps.length) {
-      if (validateStep(currentStep)) {
-        setCurrentStep((prev) => prev + 1);
-      } else {
-        toast.error("Please fix the errors before continuing");
-      }
-      return;
+  // Guard: only allow actual submission on the last step
+  if (currentStep !== steps.length) {
+    return;
+  }
+
+  if (!validateForm()) {
+    const step1Errors = getStepErrors(1);
+    const step2Errors = getStepErrors(2);
+    const step3Errors = getStepErrors(3);
+
+    if (Object.keys(step1Errors).length > 0) {
+      toast.error(t("auth.validation.fixErrorsStep1"));
+      setCurrentStep(1);
+    } else if (Object.keys(step2Errors).length > 0) {
+      toast.error(t("auth.validation.fixErrorsStep2"));
+      setCurrentStep(2);
+    } else if (Object.keys(step3Errors).length > 0) {
+      toast.error(t("auth.validation.fixErrorsStep3"));
+      setCurrentStep(3);
+    } else {
+      toast.error(t("auth.validation.fixErrorsForm"));
     }
-
-    if (!validateForm()) {
-      // Find which step has errors
-      const step1Errors = getStepErrors(1);
-      const step2Errors = getStepErrors(2);
-      const step3Errors = getStepErrors(3);
-
-      if (Object.keys(step1Errors).length > 0) {
-        toast.error("Please fix errors in Step 1 (Account)");
-        setCurrentStep(1);
-      } else if (Object.keys(step2Errors).length > 0) {
-        toast.error("Please fix errors in Step 2 (Personal)");
-        setCurrentStep(2);
-      } else if (Object.keys(step3Errors).length > 0) {
-        toast.error("Please fix errors in Step 3 (Details)");
-        setCurrentStep(3);
-      } else {
-        toast.error("Please fix the errors in the form");
-      }
-      return;
-    }
+    return;
+  }
 
     setIsLoading(true);
     setErrors({});
@@ -325,7 +331,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       };
       sessionStorage.setItem(
         "pendingRegistration",
-        JSON.stringify(dataToStore),
+        JSON.stringify(dataToStore)
       );
 
       // If avatar exists, convert to base64 for storage
@@ -334,7 +340,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         reader.onloadend = () => {
           sessionStorage.setItem(
             "pendingRegistrationAvatar",
-            reader.result as string,
+            reader.result as string
           );
         };
         reader.readAsDataURL(formData.avatar);
@@ -347,12 +353,12 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         new Promise<never>((_, reject) =>
           setTimeout(
             () => reject(new Error("Request timed out after 15s")),
-            15000,
-          ),
+            15000
+          )
         ),
       ]);
 
-      toast.success("OTP has been sent to your email!");
+      toast.success(t("auth.messages.otpSent"));
 
       // Redirect to OTP verification page
       navigate("/verify-otp", {
@@ -366,7 +372,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       // Extract error details from response
       const errorMessage = extractApiErrorMessage(
         error,
-        "Failed to send OTP. Please try again.",
+        "Failed to send OTP. Please try again."
       );
       let errorField: string | null = null;
 
@@ -432,7 +438,11 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
           {/* Step Indicator */}
           <StepIndicator steps={steps} currentStep={currentStep} />
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form
+            onSubmit={handleSubmit}
+            onKeyDown={handleFormKeyDown}
+            className="space-y-6"
+          >
             {/* Step 1: Account Information */}
             {currentStep === 1 && (
               <AccountStep
@@ -528,7 +538,9 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
             </div>
 
             {errors.submit && (
-              <p className="text-sm text-red-500 text-center">{errors.submit}</p>
+              <p className="text-sm text-red-500 text-center">
+                {errors.submit}
+              </p>
             )}
           </form>
 

@@ -3,10 +3,12 @@ import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
 import type { ChangePasswordFormData } from "../types";
 import { changePassword } from "../services/authApi";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { toast } from "sonner";
 import { extractApiErrorMessage } from "../utils/apiError";
 
 export function ChangePasswordPage() {
+  const { t } = useAppTranslation();
   const [formData, setFormData] = useState<ChangePasswordFormData>({
     currentPassword: "",
     newPassword: "",
@@ -40,34 +42,30 @@ export function ChangePasswordPage() {
     const newErrors: Partial<Record<keyof ChangePasswordFormData, string>> = {};
 
     if (!formData.currentPassword) {
-      newErrors.currentPassword = "Current password is required";
+      newErrors.currentPassword = t("auth.validation.currentPasswordRequired");
     }
 
     if (!formData.newPassword) {
-      newErrors.newPassword = "New password is required";
+      newErrors.newPassword = t("auth.validation.newPasswordRequired");
     } else if (
       formData.newPassword.length < 8 ||
       formData.newPassword.length > 16
     ) {
-      newErrors.newPassword = "Password must be between 8 and 16 characters";
+      newErrors.newPassword = t("auth.validation.passwordBetween8and16");
     } else if (!/[A-Z]/.test(formData.newPassword)) {
-      newErrors.newPassword =
-        "Password must contain at least one uppercase letter";
+      newErrors.newPassword = t("auth.validation.passwordUppercase");
     } else if (!/[a-z]/.test(formData.newPassword)) {
-      newErrors.newPassword =
-        "Password must contain at least one lowercase letter";
+      newErrors.newPassword = t("auth.validation.passwordLowercase");
     } else if (!/\d/.test(formData.newPassword)) {
-      newErrors.newPassword = "Password must contain at least one number";
+      newErrors.newPassword = t("auth.validation.passwordNumber");
     } else if (!/^[a-zA-Z0-9_]+$/.test(formData.newPassword)) {
-      newErrors.newPassword =
-        "Password can only contain letters, numbers, and underscores";
+      newErrors.newPassword = t("auth.validation.passwordSpecialChars");
     } else if (formData.newPassword === formData.currentPassword) {
-      newErrors.newPassword =
-        "New password must be different from current password";
+      newErrors.newPassword = t("auth.validation.newPasswordMustBeDifferent");
     }
 
     if (formData.newPassword !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+      newErrors.confirmPassword = t("auth.validation.passwordsDoNotMatch");
     }
 
     setErrors(newErrors);
@@ -78,7 +76,7 @@ export function ChangePasswordPage() {
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error("Please fix the errors in the form");
+      toast.error(t("auth.validation.fixErrorsForm"));
       return;
     }
 
@@ -88,14 +86,14 @@ export function ChangePasswordPage() {
       await changePassword(formData);
 
       // Success notification
-      toast.success("Password changed successfully!");
+      toast.success(t("auth.messages.passwordChangedSuccess"));
 
       // Clear form
       handleCancel();
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Failed to change password. Please try again.",
+        t("auth.messages.failedToChangePassword")
       );
 
       if (
@@ -248,11 +246,10 @@ export function ChangePasswordPage() {
           <div className="w-full">
             <div className="mb-10">
               <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
-                Change Password
+                {t("auth.pages.changePassword.title")}
               </h1>
               <p className="text-slate-500 max-w-3xl">
-                Update your password to keep your referral account secure. Use
-                at least 8 characters with a mix of letters and numbers.
+                {t("auth.pages.changePassword.subtitle")}
               </p>
             </div>
 
@@ -260,12 +257,12 @@ export function ChangePasswordPage() {
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-8">
                 <FormField
-                  label="Current Password"
+                  label={t("auth.pages.changePassword.currentPasswordLabel")}
                   error={errors.currentPassword}
                 >
                   <Input
                     type={showPasswords.current ? "text" : "password"}
-                    placeholder="Enter current password"
+                    placeholder={t("auth.placeholders.currentPassword")}
                     value={formData.currentPassword}
                     onChange={(e) =>
                       handleChange("currentPassword")(e.target.value)
@@ -285,10 +282,13 @@ export function ChangePasswordPage() {
                   />
                 </FormField>
 
-                <FormField label="New Password" error={errors.newPassword}>
+                <FormField
+                  label={t("auth.pages.changePassword.newPasswordLabel")}
+                  error={errors.newPassword}
+                >
                   <Input
                     type={showPasswords.new ? "text" : "password"}
-                    placeholder="Min. 8 characters"
+                    placeholder={t("auth.placeholders.newPassword")}
                     value={formData.newPassword}
                     onChange={(e) =>
                       handleChange("newPassword")(e.target.value)
@@ -307,12 +307,12 @@ export function ChangePasswordPage() {
                 </FormField>
 
                 <FormField
-                  label="Confirm New Password"
+                  label={t("auth.pages.changePassword.confirmPasswordLabel")}
                   error={errors.confirmPassword}
                 >
                   <Input
                     type={showPasswords.confirm ? "text" : "password"}
-                    placeholder="Repeat new password"
+                    placeholder={t("auth.placeholders.confirmPassword")}
                     value={formData.confirmPassword}
                     onChange={(e) =>
                       handleChange("confirmPassword")(e.target.value)
@@ -342,7 +342,9 @@ export function ChangePasswordPage() {
                         : "bg-slate-200 text-slate-400 cursor-not-allowed"
                     }`}
                   >
-                    {isLoading ? "Updating..." : "Update Password"}
+                    {isLoading
+                      ? t("common.loading")
+                      : t("auth.pages.changePassword.submitButton")}
                   </button>
                   <button
                     type="button"
@@ -350,7 +352,7 @@ export function ChangePasswordPage() {
                     disabled={isLoading}
                     className="flex-1 h-12 bg-transparent text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition-all border border-slate-200"
                   >
-                    Cancel
+                    {t("auth.pages.changePassword.cancelButton")}
                   </button>
                 </div>
               </form>
@@ -358,32 +360,26 @@ export function ChangePasswordPage() {
               {/* Password Requirements */}
               <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 h-fit max-w-md">
                 <h3 className="text-sm font-bold text-slate-800 mb-6 uppercase tracking-wider">
-                  Password Requirements
+                  {t("auth.pages.changePassword.passwordRequirementsTitle")}
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>8 to 16 characters</span>
+                    <span>{t("auth.pages.changePassword.requirement1")}</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>
-                      Must include at least one uppercase and one lowercase
-                      letter
-                    </span>
+                    <span>{t("auth.pages.changePassword.requirement2")}</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>
-                      Include at least one number, and only letters, numbers,
-                      underscores are allowed
-                    </span>
+                    <span>{t("auth.pages.changePassword.requirement3")}</span>
                   </li>
                 </ul>
               </div>
