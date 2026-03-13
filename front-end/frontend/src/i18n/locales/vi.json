@@ -1,0 +1,129 @@
+{
+  "common": {
+    "welcome": "Chào mừng",
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa"
+  },
+  "auth": {
+    "login": "Đăng Nhập",
+    "register": "Đăng Ký",
+    "logout": "Đăng Xuất",
+    "email": "Email",
+    "password": "Mật Khẩu",
+    "forgotPassword": "Quên Mật Khẩu?",
+    "noAccount": "Chưa có tài khoản?",
+    "haveAccount": "Đã có tài khoản?",
+    "messages": {
+      "signedInSuccess": "Đã đăng nhập thành công.",
+      "socialAccountFound": "Tài khoản xã hội được tìm thấy. Vui lòng hoàn thành đăng ký.",
+      "socialSignInCancelled": "Đăng nhập xã hội bị hủy hoặc thất bại. Vui lòng thử lại.",
+      "invalidSocialState": "Trạng thái đăng nhập xã hội không hợp lệ. Vui lòng thử lại.",
+      "otpSent": "OTP đã được gửi đến email của bạn!",
+      "otpResent": "OTP đã được gửi lại đến email của bạn",
+      "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
+      "invalidResetLink": "Liên kết đặt lại không hợp lệ. Vui lòng yêu cầu đặt lại mật khẩu mới.",
+      "passwordResetSuccess": "Đặt lại mật khẩu thành công! Bây giờ bạn có thể đăng nhập.",
+      "passwordChangedSuccess": "Mật khẩu đã được thay đổi thành công!",
+      "accountCreatedSuccess": "Tài khoản đã được tạo thành công!",
+      "emailVerified": "Email được xác minh! Đang tạo tài khoản của bạn...",
+      "failedToResetPassword": "Không thể đặt lại mật khẩu. Vui lòng thử lại.",
+      "failedToChangePassword": "Không thể thay đổi mật khẩu. Vui lòng thử lại."
+    },
+    "validation": {
+      "fixErrors": "Vui lòng sửa các lỗi trước khi tiếp tục",
+      "fixErrorsStep1": "Vui lòng sửa các lỗi ở Bước 1 (Tài khoản)",
+      "fixErrorsStep2": "Vui lòng sửa các lỗi ở Bước 2 (Cá nhân)",
+      "fixErrorsStep3": "Vui lòng sửa các lỗi ở Bước 3 (Chi tiết)",
+      "fixErrorsForm": "Vui lòng sửa các lỗi trong biểu mẫu",
+      "fixHighlightedFields": "Vui lòng sửa các trường được đánh dấu",
+      "invalidOtp": "Vui lòng dán mã OTP 6 chữ số hợp lệ",
+      "enterAllDigits": "Vui lòng nhập tất cả 6 chữ số",
+      "otpCodeRequired": "Vui lòng nhập mã OTP 6 chữ số hợp lệ",
+      "passwordRequired": "Yêu cầu mật khẩu",
+      "passwordNotMeetRequirements": "Mật khẩu không đáp ứng các yêu cầu",
+      "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu của bạn",
+      "passwordsDoNotMatch": "Mật khẩu không khớp",
+      "currentPasswordRequired": "Yêu cầu mật khẩu hiện tại",
+      "newPasswordRequired": "Yêu cầu mật khẩu mới",
+      "passwordBetween8and16": "Mật khẩu phải dài từ 8 đến 16 ký tự",
+      "passwordUppercase": "Mật khẩu phải chứa ít nhất một chữ hoa",
+      "passwordLowercase": "Mật khẩu phải chứa ít nhất một chữ thường",
+      "passwordNumber": "Mật khẩu phải chứa ít nhất một số",
+      "passwordSpecialChars": "Mật khẩu chỉ có thể chứa chữ cái, số và dấu gạch dưới",
+      "newPasswordMustBeDifferent": "Mật khẩu mới phải khác với mật khẩu hiện tại"
+    },
+    "placeholders": {
+      "usernameOrEmail": "john_doe123 hoặc email@company.com",
+      "password": "••••••••",
+      "currentPassword": "Nhập mật khẩu hiện tại",
+      "newPassword": "Tối thiểu 8 ký tự",
+      "confirmPassword": "Nhập lại mật khẩu mới",
+      "username": "john_doe123",
+      "email": "jane@email.com",
+      "phoneExample": "+84 123 456 789",
+      "phone": "+84 123 456 789",
+      "name": "Jane Cooper",
+      "companyName": "Google Inc.",
+      "jobTitle": "VD: Kỹ sư Phần mềm Cấp cao",
+      "experience": "VD: 5",
+      "location": "VD: Thành phố Hồ Chí Minh",
+      "salaryMin": "VD: 50000",
+      "salaryMax": "VD: 80000",
+      "bio": "Hãy cho chúng tôi biết về bạn, kỹ năng và kinh nghiệm của bạn...",
+      "taxId": "0123456789",
+      "companyWebsite": "https://www.company.com",
+      "companyScale": "VD: 10",
+      "otpCode": "Nhập mã 6 chữ số",
+      "resetEmail": "name@company.com"
+    },
+    "aria": {
+      "selectGender": "Chọn giới tính",
+      "uploadProfilePicture": "Tải lên ảnh hồ sơ",
+      "uploadAvatar": "Tải lên ảnh hồ sơ",
+      "selectCompanyScale": "Chọn quy mô công ty"
+    },
+    "pages": {
+      "resetPassword": {
+        "title": "Bảo vệ tài khoản của bạn.",
+        "subtitle": "Nhập OTP được gửi đến email của bạn và tạo mật khẩu mạnh mới để giữ tài khoản của bạn an toàn.",
+        "formTitle": "Đặt mật khẩu mới",
+        "instruction": "Nhập mã OTP được gửi đến",
+        "instruction2": "Sau đó, tạo mật khẩu mạnh mới cho tài khoản của bạn.",
+        "otpLabel": "Mã OTP",
+        "confirmPasswordLabel": "Xác nhận mật khẩu",
+        "submitButton": "Cập nhật mật khẩu",
+        "backButton": "Quay lại đăng nhập"
+      },
+      "changePassword": {
+        "title": "Thay đổi mật khẩu",
+        "subtitle": "Cập nhật mật khẩu của bạn để giữ tài khoản an toàn",
+        "instruction": "Nhập mật khẩu hiện tại của bạn và chọn mật khẩu mới",
+        "currentPasswordLabel": "Mật khẩu hiện tại",
+        "newPasswordLabel": "Mật khẩu mới",
+        "confirmPasswordLabel": "Xác nhận mật khẩu mới",
+        "submitButton": "Cập nhật mật khẩu",
+        "cancelButton": "Hủy",
+        "passwordRequirementsTitle": "Yêu cầu mật khẩu",
+        "requirement1": "Từ 8 đến 16 ký tự",
+        "requirement2": "Phải bao gồm ít nhất một chữ hoa và một chữ thường",
+        "requirement3": "Bao gồm ít nhất một số, và chỉ cho phép chữ cái, số, dấu gạch dưới"
+      }
+    }
+  },
+  "home": {
+    "searchKeywords": "Từ khóa, vị trí công việc, công ty...",
+    "searchLocation": "Vị trí hoặc 'Làm việc từ xa'...",
+    "messages": {}
+  },
+  "navigation": {
+    "home": "Trang Chủ",
+    "profile": "Hồ Sơ",
+    "settings": "Cài Đặt",
+    "logout": "Đăng Xuất"
+  }
+}

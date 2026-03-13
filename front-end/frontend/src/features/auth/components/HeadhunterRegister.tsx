@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import {
   MdOutlineMail,
   MdLockOutline,
@@ -28,7 +29,9 @@ interface FormData {
 interface Props {
   formData: FormData;
   errors: Record<string, string>;
-  handleChange: (field: string) => (value: string | boolean | File | null) => void;
+  handleChange: (
+    field: string
+  ) => (value: string | boolean | File | null) => void;
   showPassword: boolean;
   showConfirmPassword: boolean;
   setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,12 +47,13 @@ export function HeadhunterRegister({
   setShowPassword,
   setShowConfirmPassword,
 }: Props) {
+  const { t } = useAppTranslation();
   return (
     <>
       <FormField label="Username" error={errors.username}>
         <Input
           icon={<MdAccountCircle />}
-          placeholder="john_smith123"
+          placeholder={t("auth.placeholders.username")}
           value={formData.username}
           onChange={(e) => handleChange("username")(e.target.value)}
         />
@@ -58,7 +62,7 @@ export function HeadhunterRegister({
       <FormField label="Full Name" error={errors.fullName}>
         <Input
           icon={<MdPerson />}
-          placeholder="John Smith"
+          placeholder={t("auth.placeholders.name")}
           value={formData.fullName}
           onChange={(e) => handleChange("fullName")(e.target.value)}
         />
@@ -67,7 +71,7 @@ export function HeadhunterRegister({
       <FormField label="Work Email" error={errors.email}>
         <Input
           icon={<MdOutlineMail />}
-          placeholder="john@company.com"
+          placeholder={t("auth.placeholders.email")}
           value={formData.email}
           onChange={(e) => handleChange("email")(e.target.value)}
         />
@@ -76,7 +80,7 @@ export function HeadhunterRegister({
       <FormField label="Company Name" error={errors.companyName}>
         <Input
           icon={<MdBusiness />}
-          placeholder="Google Inc."
+          placeholder={t("auth.placeholders.companyName")}
           value={formData.companyName}
           onChange={(e) => handleChange("companyName")(e.target.value)}
         />
@@ -86,7 +90,7 @@ export function HeadhunterRegister({
         <FormField label="Phone Number" error={errors.phone}>
           <Input
             icon={<MdPhone />}
-            placeholder="+84 123 456 789"
+            placeholder={t("auth.placeholders.phone")}
             value={formData.phone}
             onChange={(e) => handleChange("phone")(e.target.value)}
           />
@@ -95,7 +99,7 @@ export function HeadhunterRegister({
         <FormField label="Tax Code (MST)" error={errors.taxCode}>
           <Input
             icon={<MdBusiness />}
-            placeholder="0123456789"
+            placeholder={t("auth.placeholders.taxId")}
             value={formData.taxCode}
             onChange={(e) => handleChange("taxCode")(e.target.value)}
           />
@@ -106,12 +110,15 @@ export function HeadhunterRegister({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-0">
         <FormField label="Gender (Optional)">
           <div className="relative">
-            <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 z-10" size={18} />
+            <MdWc
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 z-10"
+              size={18}
+            />
             <select
               value={formData.gender || ""}
               onChange={(e) => handleChange("gender")(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm"
-              aria-label="Select gender"
+              aria-label={t("auth.aria.selectGender")}
             >
               <option value="">Select gender</option>
               <option value="MALE">Male</option>
@@ -123,13 +130,18 @@ export function HeadhunterRegister({
 
         <FormField label="Avatar (Optional)">
           <div className="relative">
-            <MdCameraAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 z-10" size={18} />
+            <MdCameraAlt
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 z-10"
+              size={18}
+            />
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => handleChange("avatar")(e.target.files?.[0] || null)}
+              onChange={(e) =>
+                handleChange("avatar")(e.target.files?.[0] || null)
+              }
               className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
-              aria-label="Upload avatar image"
+              aria-label={t("auth.aria.uploadAvatar")}
             />
           </div>
         </FormField>
@@ -142,7 +154,7 @@ export function HeadhunterRegister({
             <Input
               icon={<MdLockOutline />}
               type={showPassword ? "text" : "password"}
-              placeholder="Enter password"
+              placeholder={t("auth.placeholders.password")}
               value={formData.password}
               onChange={(e) => handleChange("password")(e.target.value)}
             />
@@ -162,7 +174,7 @@ export function HeadhunterRegister({
             <Input
               icon={<MdLockOutline />}
               type={showConfirmPassword ? "text" : "password"}
-              placeholder="Confirm password"
+              placeholder={t("auth.placeholders.confirmPassword")}
               value={formData.confirmPassword}
               onChange={(e) => handleChange("confirmPassword")(e.target.value)}
             />
