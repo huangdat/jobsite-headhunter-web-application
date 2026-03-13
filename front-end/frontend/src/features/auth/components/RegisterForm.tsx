@@ -6,6 +6,7 @@ import type { UserRole, RegisterFormData } from "../types";
 import { sendOtpSignup } from "../services/authApi";
 import { toast } from "sonner";
 import { useAuth } from "../context/useAuth";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 import { StepIndicator } from "./StepIndicator";
 import { AccountStep } from "./AccountStep";
@@ -211,10 +212,11 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
       // Clear error when user starts typing
-      if (errors[field]) {
+      if (errors[field] || errors.submit) {
         setErrors((prev) => {
           const updated = { ...prev };
           delete updated[field];
+          delete updated.submit;
           return updated;
         });
       }
@@ -362,7 +364,10 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       });
     } catch (error: unknown) {
       // Extract error details from response
-      let errorMessage = "Failed to send OTP. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Failed to send OTP. Please try again.",
+      );
       let errorField: string | null = null;
 
       if (
@@ -376,10 +381,10 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
           data?: { message?: string };
         };
 
-        errorMessage = response.data?.message || errorMessage;
+        const responseMessage = response.data?.message || errorMessage;
 
         // Categorize error based on message
-        const messageLower = errorMessage.toLowerCase();
+        const messageLower = responseMessage.toLowerCase();
 
         if (messageLower.includes("email")) {
           errorField = "email";
@@ -486,6 +491,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 <Button
                   type="button"
                   onClick={handlePrevStep}
+                  disabled={isLoading}
                   variant="outline"
                   size="xl"
                   className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl"
@@ -501,6 +507,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   size="xl"
                   type="button"
                   onClick={handleNextStep}
+                  disabled={isLoading}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
                 >
                   Next
@@ -514,11 +521,15 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   disabled={isLoading}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
                 >
-                  {isLoading ? "Creating Account..." : "Create Account"}
+                  {isLoading ? "Sending OTP..." : "Create Account"}
                   <HiOutlineArrowRight />
                 </Button>
               )}
             </div>
+
+            {errors.submit && (
+              <p className="text-sm text-red-500 text-center">{errors.submit}</p>
+            )}
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-3">

@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { login } from "../services/authApi";
 import type { LoginFormData } from "../types";
 import { useAuth } from "../context/useAuth";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
 
@@ -80,8 +81,10 @@ export const useLogin = () => {
 
       throw new Error("Authentication failed.");
     } catch (error: unknown) {
-      // Extract error details from response
-      let errorMessage = "Login failed. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Unable to sign in right now. Please try again.",
+      );
       let errorField: "email" | "password" | "general" = "general";
 
       if (
@@ -95,10 +98,10 @@ export const useLogin = () => {
           data?: { message?: string };
         };
 
-        errorMessage = response.data?.message || errorMessage;
+        const responseMessage = response.data?.message || errorMessage;
 
         // Categorize error based on message or status code
-        const messageLower = errorMessage.toLowerCase();
+        const messageLower = responseMessage.toLowerCase();
 
         if (
           messageLower.includes("email") ||
@@ -121,7 +124,6 @@ export const useLogin = () => {
         }
       }
 
-      // Error Notification
       toast.error(errorMessage);
 
       // Set form error for the appropriate field
@@ -142,6 +144,10 @@ export const useLogin = () => {
   const handleChange =
     (field: keyof LoginFormData) => (value: string | boolean) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
+
+      if (field !== "rememberMe" && errors[field]) {
+        setErrors((prev) => ({ ...prev, [field]: undefined }));
+      }
 
       // Clear remembered login immediately when unchecking remember me
       if (field === "rememberMe" && value === false) {

@@ -10,6 +10,7 @@ import {
 import { verifyAndResetPassword } from "../services/authApi";
 import { toast } from "sonner";
 import type { OtpSendResp } from "../types";
+import { extractApiErrorMessage } from "../utils/apiError";
 import { MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsShieldLock } from "react-icons/bs";
@@ -110,21 +111,11 @@ export function ResetPasswordPage() {
 
       navigate("/login");
     } catch (error: unknown) {
-      let errorMessage = "Failed to reset password. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Failed to reset password. Please try again.",
+      );
 
-      if (
-        error instanceof Error &&
-        "response" in error &&
-        typeof error.response === "object" &&
-        error.response !== null
-      ) {
-        const response = error.response as {
-          data?: { message?: string };
-        };
-        errorMessage = response.data?.message || errorMessage;
-      }
-
-      // Error notification
       toast.error(errorMessage);
 
       setErrors({
@@ -257,6 +248,12 @@ export function ResetPasswordPage() {
                   {isLoading ? "Updating..." : "Update Password"}
                 </Button>
               </form>
+
+              {errors.submit && (
+                <p className="mt-3 text-sm text-red-500 text-center">
+                  {errors.submit}
+                </p>
+              )}
 
               <div className="mt-4 text-center">
                 <Link

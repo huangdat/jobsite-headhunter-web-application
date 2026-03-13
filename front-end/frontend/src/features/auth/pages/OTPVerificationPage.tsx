@@ -6,6 +6,7 @@ import { sendOtpSignup, verifyOtpSignup, register } from "../services/authApi";
 import { toast } from "sonner";
 import { MdOutlineMail, MdTimer } from "react-icons/md";
 import type { RegisterFormData } from "../types";
+import { extractApiErrorMessage } from "../utils/apiError";
 
 interface LocationState {
   accountId: string;
@@ -154,11 +155,10 @@ export function OTPVerificationPage() {
         });
       }, 1500);
     } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error && "response" in error
-          ? (error as { response?: { data?: { message?: string } } }).response
-              ?.data?.message || (error as Error).message
-          : "Registration failed. Please try again.";
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Registration failed. Please try again.",
+      );
       toast.error(errorMessage);
 
       // If registration data is missing, redirect back to register
@@ -190,11 +190,7 @@ export function OTPVerificationPage() {
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();
     } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error && "response" in error
-          ? (error as { response?: { data?: { message?: string } } }).response
-              ?.data?.message || "Failed to resend OTP"
-          : "Failed to resend OTP";
+      const errorMessage = extractApiErrorMessage(error, "Failed to resend OTP");
       toast.error(errorMessage);
     } finally {
       setIsResending(false);
@@ -276,7 +272,7 @@ export function OTPVerificationPage() {
             </p>
             <button
               onClick={handleResend}
-              disabled={isResending || timeLeft > 240} // Can resend after 1 minute
+              disabled={isLoading || isResending || timeLeft > 240} // Can resend after 1 minute
               className="text-sm text-emerald-600 hover:text-emerald-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
               {isResending ? "Sending..." : "Resend Code"}
@@ -292,6 +288,7 @@ export function OTPVerificationPage() {
           <div className="text-center pt-4 border-t">
             <button
               onClick={() => navigate("/select-role")}
+              disabled={isLoading || isResending}
               className="text-sm text-slate-600 hover:text-slate-800"
             >
               ← Back to Registration
