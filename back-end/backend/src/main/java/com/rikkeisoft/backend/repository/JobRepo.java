@@ -10,11 +10,13 @@ import java.util.List;
 @Repository
 public interface JobRepo extends JpaRepository<Job, Long> {
 
-    List<Job> findByHeadhunterId(String headhunterId);
+//
+//    List<Job> findByHeadhunterId(String headhunterId);
+//
+//    List<Job> findByStatus(JobStatus status);
+//
+//    List<Job> findByCity(String city);
+//
+//    List<Job> findByStatusAndCity(JobStatus status, String city);
 
-    List<Job> findByStatus(JobStatus status);
-
-    List<Job> findByLocation(String location);
-
-    List<Job> findByStatusAndLocation(JobStatus status, String location);
 }
