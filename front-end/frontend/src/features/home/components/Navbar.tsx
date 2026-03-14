@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineHandshake } from "react-icons/md";
 import { useAuth } from "@/features/auth/context/useAuth";
@@ -8,13 +8,28 @@ export function Navbar() {
   const { isAuthenticated, signOut, user } = useAuth();
   const userInitial = useMemo(
     () => user?.username?.charAt(0).toUpperCase() || "U",
-    [user?.username],
+    [user?.username]
   );
 
   const handleLogout = async () => {
     await signOut();
     navigate("/home");
   };
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border">
@@ -66,14 +81,12 @@ export function Navbar() {
               >
                 Login
               </Link>
-
               <Link
                 to="/select-role"
                 className="bg-brand-primary text-black px-6 py-2 rounded-full text-sm font-semibold hover:bg-brand-hover transition"
               >
                 Sign Up
               </Link>
-
               <Link
                 to="/register/headhunter"
                 className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition"
@@ -82,26 +95,102 @@ export function Navbar() {
               </Link>
             </>
           ) : (
-            <div className="relative group">
-              <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-black font-semibold cursor-pointer">
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setDropdownOpen((prev) => !prev)}
+                className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-black font-semibold cursor-pointer hover:opacity-85 transition"
+              >
                 {userInitial}
-              </div>
+              </button>
 
-              {/* Dropdown */}
-              <div className="absolute right-0 mt-2 w-40 bg-white border border-border rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition pointer-events-none group-hover:pointer-events-auto">
-                <button
-                  onClick={() => navigate("/profile")}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                >
-                  Profile
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 text-red-500"
-                >
-                  Logout
-                </button>
-              </div>
+              {dropdownOpen && (
+                <div className="absolute right-0 top-[calc(100%+8px)] w-56 bg-white border border-border rounded-xl overflow-hidden z-50">
+                  {/* Header */}
+                  <div className="px-4 py-3 bg-slate-50 border-b border-border flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-black font-semibold text-sm flex-shrink-0">
+                      {userInitial}
+                    </div>
+                    <div className="overflow-hidden">
+                      <p className="text-sm font-medium text-slate-900 truncate">
+                        {user?.username}
+                      </p>
+                      <span
+                        className={`inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium
+                ${user?.role === "candidate" ? "bg-sky-100 text-sky-700" : ""}
+                ${user?.role === "headhunter" ? "bg-purple-100 text-purple-700" : ""}
+                ${user?.role === "collaborator" ? "bg-green-100 text-green-700" : ""}
+              `}
+                      >
+                        {user?.role
+                          ? user.role.charAt(0).toUpperCase() +
+                            user.role.slice(1)
+                          : ""}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Menu */}
+                  <div className="py-1 border-b border-border">
+                    <button
+                      onClick={() => {
+                        navigate("/profile");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      My Profile
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate("/applications");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      My Applications
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate("/saved-jobs");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      Saved Jobs
+                    </button>
+                  </div>
+
+                  <div className="py-1 border-b border-border">
+                    <button
+                      onClick={() => {
+                        navigate("/settings");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      Account Settings
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate("/notifications");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      Notifications
+                    </button>
+                  </div>
+
+                  <div className="py-1">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
