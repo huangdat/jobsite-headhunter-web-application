@@ -66,6 +66,7 @@ public class Account {
     Set<String> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "account")
-    Set<AccountSkill> accountSkills;
+    @Builder.Default
+    Set<AccountSkill> accountSkills = new HashSet<>();
 
 }

@@ -11,4 +11,6 @@ public interface BusinessProfileService {
     MSTLookupResp lookupMST(String taxCode);
 
     List<BusinessProfileResp> getAllBusinessProfiles();
+
+    BusinessProfileResp getBusinessProfileById(Long businessProfileId);
 }

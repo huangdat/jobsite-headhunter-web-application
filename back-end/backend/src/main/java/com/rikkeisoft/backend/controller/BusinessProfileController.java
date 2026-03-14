@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +25,13 @@ public class BusinessProfileController {
     public APIResponse<List<BusinessProfileResp>> getAllBusinessProfiles() {
         APIResponse<List<BusinessProfileResp>> resp = new APIResponse<>();
         resp.setResult(businessProfileService.getAllBusinessProfiles());
+        return resp;
+    }
+
+    @GetMapping("/{businessProfileId}")
+    public APIResponse<BusinessProfileResp> getBusinessProfileById(@PathVariable Long businessProfileId) {
+        APIResponse<BusinessProfileResp> resp = new APIResponse<>();
+        resp.setResult(businessProfileService.getBusinessProfileById(businessProfileId));
         return resp;
     }
 }
