@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,6 +71,8 @@ export function LoginPage() {
     googleClientId: "",
     linkedinClientId: "",
   });
+
+  const hasHandledState = useRef(false);
 
   const googleEnabled = socialConfig.googleClientId.trim().length > 0;
   const linkedInEnabled = socialConfig.linkedinClientId.trim().length > 0;
@@ -255,23 +257,24 @@ export function LoginPage() {
     void runOAuthCallback();
   }, [handleSocialLoginSuccess]);
 
-  // Handle state from registration redirect
   useEffect(() => {
-    const state = location.state as { email?: string; message?: string } | null;
+    if (hasHandledState.current) return;
 
-    if (state?.email) {
-      // Pre-fill username/email from registration (field name is 'email' but can contain username)
+    const state = location.state as { email?: string; message?: string } | null;
+    if (!state) return;
+
+    hasHandledState.current = true;
+
+    if (state.email) {
       handleChange("email")(state.email);
     }
 
-    if (state?.message) {
-      // Show success message from registration
+    if (state.message) {
       toast.success(state.message);
-
-      // Clear state to prevent showing again on refresh
-      window.history.replaceState({}, document.title);
     }
-  }, [location.state, handleChange]);
+
+    navigate(location.pathname, { replace: true, state: null });
+  }, [location.state, handleChange, navigate, location.pathname]);
 
   // Load remembered login (username or email) on component mount
   useEffect(() => {
@@ -315,19 +318,17 @@ export function LoginPage() {
             className="space-y-6"
           >
             {/* USERNAME OR EMAIL */}
-            <FormField label="Username or Email" error={errors.email}>
+            <FormField label="Username" error={errors.email}>
               <Input
                 name="username"
                 autoComplete="username"
                 icon={<MdAccountCircle />}
                 type="text"
-                placeholder={t("auth.placeholders.usernameOrEmail")}
+                placeholder="john_doe123"
                 value={formData.email}
                 onChange={(e) => handleChange("email")(e.target.value)}
               />
-              <p className="text-xs text-slate-500 mt-1">
-                Enter your username or email address
-              </p>
+              <p className="text-xs text-slate-500 mt-1">Enter your username</p>
             </FormField>
 
             {/* PASSWORD */}
