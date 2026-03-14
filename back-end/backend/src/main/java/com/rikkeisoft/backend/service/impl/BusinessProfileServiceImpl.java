@@ -38,7 +38,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     AccountMapper accountMapper;
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_COLLABORATOR')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_HEADHUNTER')")
     public List<BusinessProfileResp> getAllBusinessProfiles() {
         if (businessProfileRepo.count() == 0) {
             throw new AppException(ErrorCode.NO_BUSINESS_PROFILES_STORED);
@@ -59,6 +59,22 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         });
 
         return businessProfileResps;
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_HEADHUNTER')")
+    public BusinessProfileResp getBusinessProfileById(Long businessProfileId) {
+        BusinessProfile businessProfile = businessProfileRepo.findById(businessProfileId)
+                .orElseThrow(() -> new AppException(ErrorCode.BUSINESS_PROFILE_NOT_FOUND));
+
+        BusinessProfileResp businessProfileResp = businessProfileMapper.toBusinessProfileResp(businessProfile);
+
+        List<AccountResp> accountResps = accountRepo.findByBusinessProfileId(businessProfileId).stream()
+                .map(accountMapper::toAccountResp)
+                .toList();
+        businessProfileResp.setAccounts(accountResps);
+
+        return businessProfileResp;
     }
 
     RestTemplate restTemplate;
