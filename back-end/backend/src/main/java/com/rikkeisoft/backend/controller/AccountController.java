@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.controller;
 
+import com.azure.core.annotation.Get;
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateReq;
 import com.rikkeisoft.backend.model.dto.req.account.AccountUpdateStatusReq;
@@ -114,5 +115,16 @@ public class AccountController {
         resp.setResult(accountService.createAccountCandidate(req));
         return resp;
     }
+
+    @Get("/check-email-username-exist")
+    public APIResponse<Boolean> checkEmailUsernameExist(
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String username) {
+        APIResponse<Boolean> resp = new APIResponse<>();
+        boolean exists = accountService.checkEmailUsernameExist(email, username);
+        resp.setResult(exists);
+        return resp;
+    }
+
 
 }

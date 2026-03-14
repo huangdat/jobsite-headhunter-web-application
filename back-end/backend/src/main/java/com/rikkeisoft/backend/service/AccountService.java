@@ -25,4 +25,6 @@ public interface AccountService {
     AccountResp createAccountCollaborator(CollaboratorSignupReq req);
 
     AccountResp createAccountCandidate(CandidateSignupReq req);
+
+    boolean checkEmailUsernameExist(String email, String username);
 }
