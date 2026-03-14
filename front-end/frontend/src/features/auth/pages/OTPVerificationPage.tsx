@@ -71,7 +71,7 @@ export function OTPVerificationPage() {
 
   const handleKeyDown = (
     index: number,
-    e: React.KeyboardEvent<HTMLInputElement>,
+    e: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -124,7 +124,7 @@ export function OTPVerificationPage() {
       }
 
       const registrationData = JSON.parse(
-        registrationDataStr,
+        registrationDataStr
       ) as RegisterFormData;
 
       // Step 3: Restore avatar if exists
@@ -144,9 +144,6 @@ export function OTPVerificationPage() {
       sessionStorage.removeItem("pendingRegistration");
       sessionStorage.removeItem("pendingRegistrationAvatar");
 
-      // Step 6: Success notification and redirect
-      toast.success(t("auth.messages.accountCreatedSuccess"));
-
       setTimeout(() => {
         navigate("/login", {
           state: {
@@ -159,7 +156,7 @@ export function OTPVerificationPage() {
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Registration failed. Please try again.",
+        "Registration failed. Please try again."
       );
       toast.error(errorMessage);
 
@@ -192,12 +189,21 @@ export function OTPVerificationPage() {
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();
     } catch (error: unknown) {
-      const errorMessage = extractApiErrorMessage(error, "Failed to resend OTP");
+      const errorMessage = extractApiErrorMessage(
+        error,
+        "Failed to resend OTP"
+      );
       toast.error(errorMessage);
     } finally {
       setIsResending(false);
     }
   };
+
+  useEffect(() => {
+    if (otp.join("").length === 6 && !isLoading) {
+      handleVerify();
+    }
+  }, [otp]);
 
   if (!state) return null;
 
@@ -261,10 +267,16 @@ export function OTPVerificationPage() {
           {/* Verify Button */}
           <Button
             onClick={handleVerify}
-            disabled={isLoading || otp.join("").length !== 6}
+            disabled={
+              isLoading ||
+              otp.join("").length !== 6 ||
+              otp.join("").length === 6
+            }
             className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Verifying..." : "Verify Email"}
+            {isLoading || otp.join("").length === 6
+              ? "Verifying..."
+              : "Verify Email"}
           </Button>
 
           {/* Resend OTP */}
