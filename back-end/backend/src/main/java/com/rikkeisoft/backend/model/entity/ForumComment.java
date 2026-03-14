@@ -1,3 +1,4 @@
+
 package com.rikkeisoft.backend.model.entity;
 
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "forum_post")
+@Table(name = "forum_comment")
 public class ForumComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,9 @@ public class ForumComment {
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     Account account;
-
+    @ManyToOne
+    @JoinColumn(name = "parent_comment_id")
+    ForumComment parentComment;
     @Column(nullable = false, columnDefinition = "TEXT")
     String content;
 

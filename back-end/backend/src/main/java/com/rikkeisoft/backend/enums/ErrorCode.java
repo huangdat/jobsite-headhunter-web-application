@@ -74,6 +74,8 @@ public enum ErrorCode {
     INVALID_DEADLINE(HttpStatus.BAD_REQUEST, "New deadline must be after today"),
     NEW_DEADLINE_REQUIRED(HttpStatus.BAD_REQUEST, "New deadline is required to reopen job"),
     JOB_INVALID_STATUS_TRANSITION(HttpStatus.BAD_REQUEST, "Cannot toggle job in DRAFT status"),
+    FORUM_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "Forum post not found"),
+    INVALID_POST_STATUS(HttpStatus.BAD_REQUEST, "Invalid post status. Allowed values: VISIBLE, HIDDEN"),
 
     // Custom error codes for Job Post related component
     JOB_TITLE_EMPTY(HttpStatus.BAD_REQUEST, "Title cannot be empty"),
@@ -113,7 +115,7 @@ public enum ErrorCode {
     JOB_SKILL_IDS_INVALID(HttpStatus.BAD_REQUEST, "Invalid skill IDs"),
 
     // Generic file extension validation (used by @ValidFileExtension)
-    FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "Invalid file type. Please upload a file with an allowed extension"),
+    FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "Invalid file type. Please upload a file with an allowed extension")
     ;
 
     private final HttpStatus httpStatus;
