@@ -452,4 +452,20 @@ public class AccountServiceImpl implements AccountService {
         return accountMapper.toAccountResp(account);
     }
 
+    @Override
+    public boolean checkEmailUsernameExist(String email, String username) {
+        boolean emailExists = false;
+        boolean usernameExists = false;
+
+        if (email != null && !email.isEmpty()) {
+            emailExists = accountRepo.existsByEmail(email);
+        }
+
+        if (username != null && !username.isEmpty()) {
+            usernameExists = accountRepo.existsByUsername(username);
+        }
+
+        return emailExists || usernameExists;
+    }
+
 }
