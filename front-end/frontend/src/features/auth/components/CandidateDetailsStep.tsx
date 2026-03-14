@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FormField } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import {
   MdWorkOutline,
   MdLocationCity,
@@ -20,7 +21,7 @@ interface CandidateDetailsStepProps {
   };
   errors?: Record<string, string>;
   handleChange: (
-    field: string,
+    field: string
   ) => (value: string | boolean | number | undefined) => void;
 }
 
@@ -28,6 +29,7 @@ export function CandidateDetailsStep({
   formData,
   handleChange,
 }: CandidateDetailsStepProps) {
+  const { t } = useAppTranslation();
   return (
     <div className="space-y-6">
       <p className="text-sm text-slate-600">
@@ -39,7 +41,7 @@ export function CandidateDetailsStep({
           name="currentTitle"
           autoComplete="organization-title"
           icon={<MdWorkOutline />}
-          placeholder="e.g., Senior Software Engineer"
+          placeholder={t("auth.placeholders.jobTitle")}
           value={formData.currentTitle || ""}
           onChange={(e) => handleChange("currentTitle")(e.target.value)}
         />
@@ -52,11 +54,11 @@ export function CandidateDetailsStep({
             autoComplete="off"
             icon={<MdWorkOutline />}
             type="number"
-            placeholder="e.g., 5"
+            placeholder={t("auth.placeholders.experience")}
             value={formData.yearsOfExperience?.toString() || ""}
             onChange={(e) =>
               handleChange("yearsOfExperience")(
-                e.target.value ? parseInt(e.target.value) : undefined,
+                e.target.value ? parseInt(e.target.value) : undefined
               )
             }
           />
@@ -67,7 +69,7 @@ export function CandidateDetailsStep({
             name="city"
             autoComplete="address-level2"
             icon={<MdLocationCity />}
-            placeholder="e.g., Ho Chi Minh City"
+            placeholder={t("auth.placeholders.location")}
             value={formData.city || ""}
             onChange={(e) => handleChange("city")(e.target.value)}
           />
@@ -81,11 +83,11 @@ export function CandidateDetailsStep({
             autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
-            placeholder="e.g., 50000"
+            placeholder={t("auth.placeholders.salaryMin")}
             value={formData.expectedSalaryMin?.toString() || ""}
             onChange={(e) =>
               handleChange("expectedSalaryMin")(
-                e.target.value ? parseInt(e.target.value) : 0,
+                e.target.value ? parseInt(e.target.value) : 0
               )
             }
           />
@@ -97,11 +99,11 @@ export function CandidateDetailsStep({
             autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
-            placeholder="e.g., 80000"
+            placeholder={t("auth.placeholders.salaryMax")}
             value={formData.expectedSalaryMax?.toString() || ""}
             onChange={(e) =>
               handleChange("expectedSalaryMax")(
-                e.target.value ? parseInt(e.target.value) : 0,
+                e.target.value ? parseInt(e.target.value) : 0
               )
             }
           />
@@ -112,7 +114,7 @@ export function CandidateDetailsStep({
         <Textarea
           name="bio"
           autoComplete="off"
-          placeholder="Tell us about yourself, your skills, and experience..."
+          placeholder={t("auth.placeholders.bio")}
           value={formData.bio || ""}
           onChange={(e) => handleChange("bio")(e.target.value)}
           rows={4}

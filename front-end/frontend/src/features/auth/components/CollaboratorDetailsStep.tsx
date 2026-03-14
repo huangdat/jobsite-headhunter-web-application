@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import { MdPercent } from "react-icons/md";
 
 interface CollaboratorDetailsStepProps {
@@ -14,6 +15,7 @@ export function CollaboratorDetailsStep({
   formData,
   handleChange,
 }: CollaboratorDetailsStepProps) {
+  const { t } = useAppTranslation();
   return (
     <div className="space-y-6">
       <p className="text-sm text-slate-600">
@@ -26,7 +28,7 @@ export function CollaboratorDetailsStep({
           autoComplete="off"
           icon={<MdPercent />}
           type="number"
-          placeholder="e.g., 10"
+          placeholder={t("auth.placeholders.experience")}
           value={formData.commissionRate?.toString() || ""}
           onChange={(e) =>
             handleChange("commissionRate")(

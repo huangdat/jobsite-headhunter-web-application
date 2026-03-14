@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
+import { useAppTranslation } from "@/shared/hooks";
 import {
   MdBusiness,
   MdReceipt,
@@ -22,6 +23,7 @@ export function HeadhunterDetailsStep({
   errors,
   handleChange,
 }: HeadhunterDetailsStepProps) {
+  const { t } = useAppTranslation();
   return (
     <div className="space-y-6">
       <p className="text-sm text-slate-600">
@@ -41,7 +43,7 @@ export function HeadhunterDetailsStep({
           name="taxCode"
           autoComplete="off"
           icon={<MdReceipt />}
-          placeholder="0123456789"
+          placeholder={t("auth.placeholders.taxId")}
           value={formData.taxCode}
           onChange={(e) => handleChange("taxCode")(e.target.value)}
           error={!!errors.taxCode}
@@ -53,7 +55,7 @@ export function HeadhunterDetailsStep({
           name="websiteUrl"
           autoComplete="url"
           icon={<MdLanguage />}
-          placeholder="https://www.company.com"
+          placeholder={t("auth.placeholders.companyWebsite")}
           value={formData.websiteUrl || ""}
           onChange={(e) => handleChange("websiteUrl")(e.target.value)}
         />
@@ -67,7 +69,7 @@ export function HeadhunterDetailsStep({
             value={formData.companyScale || ""}
             onChange={(e) => handleChange("companyScale")(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            aria-label="Select company scale"
+            aria-label={t("auth.aria.selectCompanyScale")}
           >
             <option value="">Select Company Scale</option>
             <option value="1-10">1-10 employees</option>

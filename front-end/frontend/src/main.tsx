@@ -5,6 +5,7 @@ import { AppRouter } from "@/app/router";
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/features/auth/context/AuthContext";
+import "./i18n/config"; // Initialize i18next
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
