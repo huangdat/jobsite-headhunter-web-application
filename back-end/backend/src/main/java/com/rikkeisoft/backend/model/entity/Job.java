@@ -1,9 +1,13 @@
 package com.rikkeisoft.backend.model.entity;
+import com.rikkeisoft.backend.enums.Currency;
 import com.rikkeisoft.backend.enums.JobStatus;
+import com.rikkeisoft.backend.enums.RankLevel;
 import com.rikkeisoft.backend.enums.WorkingType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +25,7 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "job_code")
     String jobCode;
 
     @ManyToOne
@@ -30,27 +35,47 @@ public class Job {
     @Column(nullable = false)
     String title;
 
-    Integer quantity;
-
-    @Enumerated(EnumType.STRING)
-    WorkingType workingType;
-
-    Double salaryMin;
-    Double salaryMax;
-
-    String currency;
-
     @Column(columnDefinition = "TEXT")
     String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rank_level")
+    RankLevel rankLevel;
+
+    @Enumerated(EnumType.STRING) //OFFLINE, REMOTE, HYBRID
+    @Column(name = "working_type")
+    WorkingType workingType;
+
+    String location; //Ho Chi Minh city, Can Tho city
+
+    @Column(name = "address_detail")
+    String addressDetail; // detailed address
+
+    Double experience;
+
+    @Column(name = "salary_min")
+    Double salaryMin;
+
+    @Column(name = "salary_max")
+    Double salaryMax;
+
+    boolean negotiable;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    Currency currency = Currency.USD;
+
+    Integer quantity;
 
     LocalDate deadline;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    JobStatus status = JobStatus.DRAFT;
+    JobStatus status = JobStatus.OPEN;
 
+    @Column(name = "created_at")
     LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "job")
-    Set<JobSkill> jobSkills;
+    @Column(name = "imageUrl")
+    String imageUrl;
 }
