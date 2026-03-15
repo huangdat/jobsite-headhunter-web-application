@@ -315,8 +315,11 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepo.findById(accountResp.getId())
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
 
-        // assign HEADHUNTER role — initialize a fresh set to avoid lazy-load / null issues
+        // assign HEADHUNTER role — be null-safe (roles can be null on a fresh account)
         Set<String> roles = new HashSet<>();
+        if (account.getRoles() != null) {
+            roles.addAll(account.getRoles());
+        }
         roles.add("HEADHUNTER");
         account.setRoles(roles);
 
