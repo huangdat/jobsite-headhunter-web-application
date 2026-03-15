@@ -3,9 +3,9 @@ import { SearchBar } from "./SearchBar";
 
 export function HeroSection() {
   return (
-    <section className="relative py-50 bg-gradient-to-br from-slate-900 to-lime-100 overflow-hidden">
+    <section className="relative py-50 bg-linear-to-br from-slate-900 to-lime-100 overflow-hidden">
       {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-lime-100 -z-20" />
+      <div className="absolute inset-0 bg-linear-to-br from-slate-900 to-lime-100 -z-20" />
 
       {/* Particle */}
       <ParticleBackground />
