@@ -118,42 +118,6 @@
   "home": {
     "searchKeywords": "Từ khóa, vị trí công việc, công ty...",
     "searchLocation": "Vị trí hoặc 'Làm việc từ xa'...",
-    "navigation": {
-      "recommended": "Được Đề Nghị",
-      "topCompanies": "Công Ty Hàng Đầu",
-      "featuredJobs": "Công Việc Nổi Bật",
-      "login": "Đăng Nhập",
-      "signUp": "Đăng Ký",
-      "postJob": "Đăng Tuyển",
-      "profile": "HỒ SƠ",
-      "changePassword": "THAY ĐỔI MẬT KHẨU",
-      "settings": "Cài Đặt",
-      "logout": "Đăng Xuất"
-    },
-    "hero": {
-      "title": "Tìm Cơ Hội",
-      "highlight": "Tiếp Theo của Bạn",
-      "description": "Khám phá hơn 50.000+ công việc được chọn lọc từ các công ty hàng đầu và đưa sự nghiệp của bạn lên một tầm cao mới."
-    },
-    "searchBar": {
-      "search": "TÌM KIẾM"
-    },
-    "featuredJobs": {
-      "title": "Công Việc Nổi Bật",
-      "viewMore": "XEM THÊM CÔNG VIỆC →"
-    },
-    "recommendedJobs": {
-      "title": "Được Đề Nghị cho Bạn",
-      "description": "Dựa trên hồ sơ và kỹ năng của bạn"
-    },
-    "topCompanies": {
-      "title": "Công Ty Hàng Đầu",
-      "openJobs": "12 Vị Trí Tuyển Dụng",
-      "viewCompany": "Xem Công Ty →"
-    },
-    "footer": {
-      "copyright": "© {year} JobSite. Tất cả quyền được bảo lưu."
-    },
     "messages": {}
   },
   "navigation": {

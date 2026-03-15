@@ -1,7 +1,4 @@
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-
 export function SearchBar() {
-  const { t } = useAppTranslation();
   return (
     <div
       className="bg-white rounded-2xl shadow-md p-4 
@@ -12,12 +9,12 @@ export function SearchBar() {
     >
       <input
         className="flex-1 px-4 py-3 outline-none text-sm border rounded-lg md:border-none"
-        placeholder={t("home.searchKeywords")}
+        placeholder="Keywords, job title, company..."
       />
 
       <input
         className="flex-1 px-4 py-3 outline-none text-sm border rounded-lg md:border-none"
-        placeholder={t("home.searchLocation")}
+        placeholder="Location or 'Remote'..."
       />
 
       <button
@@ -25,7 +22,7 @@ export function SearchBar() {
                          px-8 py-3 rounded-xl font-semibold 
                          w-full md:w-auto"
       >
-        {t("home.searchBar.search")}
+        SEARCH
       </button>
     </div>
   );

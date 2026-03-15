@@ -1,5 +1,4 @@
 import type { Job } from "../types";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 const jobs: Job[] = [
   {
@@ -37,14 +36,13 @@ const jobs: Job[] = [
 ];
 
 export function RecommendedJobs() {
-  const { t } = useAppTranslation();
   return (
     <section id="recommended" className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold">{t("home.recommendedJobs.title")}</h2>
+          <h2 className="text-2xl font-bold">Recommended for you</h2>
           <p className="text-gray-500 text-sm">
-            {t("home.recommendedJobs.description")}
+            Based on your profile and skills
           </p>
         </div>
         <span className="text-gray-400 text-sm">chevron_right</span>
