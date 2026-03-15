@@ -14,40 +14,38 @@ import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.AccountSkill;
 import com.rikkeisoft.backend.model.entity.Job;
 import com.rikkeisoft.backend.model.entity.JobSkill;
+import com.rikkeisoft.backend.model.entity.Skill;
 import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.repository.AccountSkillRepo;
 import com.rikkeisoft.backend.repository.JobRepo;
 import com.rikkeisoft.backend.repository.JobSkillRepo;
+import com.rikkeisoft.backend.repository.SkillRepo;
+import com.rikkeisoft.backend.enums.JobStatus;
+import com.rikkeisoft.backend.enums.RecommendationMode;
 import com.rikkeisoft.backend.service.JobManageService;
-
 import com.rikkeisoft.backend.service.UploadService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import java.security.SecureRandom;
-
-import com.rikkeisoft.backend.enums.JobStatus;
-import com.rikkeisoft.backend.enums.RecommendationMode;
-
-import java.time.LocalDate;
 
 @Slf4j
 @Service
@@ -58,10 +56,12 @@ public class JobManageServiceImpl implements JobManageService {
     JobPostMapper jobPostMapper;
     AccountRepo accountRepo;
     UploadService uploadService;
+    JobSkillRepo jobSkillRepo;
+    SkillRepo skillRepo;
     private final JobMapper jobMapper;
 
     AccountSkillRepo accountSkillRepo;
-    JobSkillRepo jobSkillRepo;
+    // JobSkillRepo jobSkillRepo;
 
     static String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     static SecureRandom RANDOM = new SecureRandom();
@@ -86,6 +86,10 @@ public class JobManageServiceImpl implements JobManageService {
                 .headhunter(account)
                 .title(jobPostReq.getTitle())
                 .description(jobPostReq.getDescription())
+                .responsibilities(jobPostReq.getResponsibilities())
+                .requirements(jobPostReq.getRequirements())
+                .benefits(jobPostReq.getBenefits())
+                .workingTime(jobPostReq.getWorkingTime())
                 .rankLevel(jobPostReq.getRankLevel())
                 .workingType(jobPostReq.getWorkingType())
                 .location(jobPostReq.getLocation())
@@ -101,8 +105,23 @@ public class JobManageServiceImpl implements JobManageService {
                 .createdAt(LocalDateTime.now())
                 .imageUrl(postImage == null ? "" : uploadService.uploadFile(postImage))
                 .build();
-        jobRepo.save(job);
-        return jobPostMapper.toJobPostResponse(job);
+        Job savedJob = jobRepo.save(job);
+
+        List<Long> requestedSkillIds = jobPostReq.getSkillIds();
+        if (requestedSkillIds != null && !requestedSkillIds.isEmpty()) {
+            Set<Long> uniqueSkillIds = new LinkedHashSet<>(requestedSkillIds);
+            List<JobSkill> jobSkills = new ArrayList<>();
+            for (Long skillId : uniqueSkillIds) {
+                Skill skill = skillRepo.findById(skillId)
+                        .orElseThrow(() -> new AppException(ErrorCode.JOB_SKILL_IDS_INVALID));
+                jobSkills.add(JobSkill.builder()
+                        .job(savedJob)
+                        .skill(skill)
+                        .build());
+            }
+            jobSkillRepo.saveAll(jobSkills);
+        }
+        return jobPostMapper.toJobPostResponse(savedJob);
     }
 
     private String generateRandomJobCode() {
@@ -172,6 +191,7 @@ public class JobManageServiceImpl implements JobManageService {
 
     }
 
+    // recommendation job by skill
     @Override
     @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')")
     public RecommendationResp getRecommendedJobs(String username) {

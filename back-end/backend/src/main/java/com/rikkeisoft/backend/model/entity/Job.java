@@ -37,6 +37,18 @@ public class Job {
 
     @Column(columnDefinition = "TEXT")
     String description;
+        
+        @Column(columnDefinition = "TEXT")
+    String responsibilities;
+
+    @Column(columnDefinition = "TEXT")
+    String requirements;
+
+    @Column(columnDefinition = "TEXT")
+    String benefits;
+
+    @Column(name = "working_time")
+    String workingTime;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rank_level")
