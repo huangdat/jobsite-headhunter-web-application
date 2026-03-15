@@ -1,4 +1,4 @@
-import { Header } from "../components/Header";
+import { Navbar } from "../components/Navbar";
 import { HeroSection } from "../components/HeroSection";
 import { RecommendedJobs } from "../components/RecommendedJobs";
 import { TopCompanies } from "../components/TopCompanies";
@@ -8,7 +8,7 @@ import { Footer } from "../components/Footer";
 export function HomePage() {
   return (
     <>
-      <Header />
+      <Navbar />
       <HeroSection />
       <RecommendedJobs />
       <TopCompanies />
