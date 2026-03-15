@@ -116,7 +116,7 @@ public class AccountController {
         return resp;
     }
 
-    @Get("/check-email-username-exist")
+    @PostMapping("/check-email-username-exist")
     public APIResponse<Boolean> checkEmailUsernameExist(
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String username) {
