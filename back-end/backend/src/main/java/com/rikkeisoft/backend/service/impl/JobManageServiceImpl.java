@@ -10,8 +10,12 @@ import com.rikkeisoft.backend.model.dto.resp.job.JobPostResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.Job;
+import com.rikkeisoft.backend.model.entity.JobSkill;
+import com.rikkeisoft.backend.model.entity.Skill;
 import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.repository.JobRepo;
+import com.rikkeisoft.backend.repository.JobSkillRepo;
+import com.rikkeisoft.backend.repository.SkillRepo;
 import com.rikkeisoft.backend.service.JobManageService;
 import com.rikkeisoft.backend.service.UploadService;
 import lombok.AccessLevel;
@@ -25,9 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.security.SecureRandom;
-
-
-
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import com.rikkeisoft.backend.enums.JobStatus;
 import java.time.LocalDate;
 
@@ -40,6 +45,8 @@ public class JobManageServiceImpl implements JobManageService {
     JobPostMapper jobPostMapper;
     AccountRepo accountRepo;
     UploadService uploadService;
+    JobSkillRepo jobSkillRepo;
+    SkillRepo skillRepo;
     private final JobMapper jobMapper;
 
     static String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -58,6 +65,10 @@ public class JobManageServiceImpl implements JobManageService {
                 .headhunter(account)
                 .title(jobPostReq.getTitle())
                 .description(jobPostReq.getDescription())
+                .responsibilities(jobPostReq.getResponsibilities())
+                .requirements(jobPostReq.getRequirements())
+                .benefits(jobPostReq.getBenefits())
+                .workingTime(jobPostReq.getWorkingTime())
                 .rankLevel(jobPostReq.getRankLevel())
                 .workingType(jobPostReq.getWorkingType())
                 .location(jobPostReq.getLocation())
@@ -73,8 +84,23 @@ public class JobManageServiceImpl implements JobManageService {
                 .createdAt(LocalDateTime.now())
                 .imageUrl(postImage == null ? "" : uploadService.uploadFile(postImage))
                 .build();
-        jobRepo.save(job);
-        return jobPostMapper.toJobPostResponse(job);
+        Job savedJob = jobRepo.save(job);
+
+        List<Long> requestedSkillIds = jobPostReq.getSkillIds();
+        if (requestedSkillIds != null && !requestedSkillIds.isEmpty()) {
+            Set<Long> uniqueSkillIds = new LinkedHashSet<>(requestedSkillIds);
+            List<JobSkill> jobSkills = new ArrayList<>();
+            for (Long skillId : uniqueSkillIds) {
+                Skill skill = skillRepo.findById(skillId)
+                        .orElseThrow(() -> new AppException(ErrorCode.JOB_SKILL_IDS_INVALID));
+                jobSkills.add(JobSkill.builder()
+                        .job(savedJob)
+                        .skill(skill)
+                        .build());
+            }
+            jobSkillRepo.saveAll(jobSkills);
+        }
+        return jobPostMapper.toJobPostResponse(savedJob);
     }
 
     private String generateRandomJobCode() {
