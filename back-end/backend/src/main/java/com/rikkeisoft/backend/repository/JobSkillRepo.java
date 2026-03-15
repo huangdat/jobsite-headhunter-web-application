@@ -15,4 +15,6 @@ public interface JobSkillRepo extends JpaRepository<JobSkill, Long> {
 
     boolean existsByJobIdAndSkillId(Long jobId, Long skillId);
 
+    List<JobSkill> findByJobIdIn(List<Long> jobIds);
+
 }

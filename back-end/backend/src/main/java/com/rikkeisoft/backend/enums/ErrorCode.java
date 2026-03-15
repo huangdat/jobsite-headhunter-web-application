@@ -57,7 +57,7 @@ public enum ErrorCode {
     // Custom error codes for MST (Tax code) lookup
     MST_NOT_FOUND(HttpStatus.NOT_FOUND, "Tax code not found or does not exist"),
     MST_LOOKUP_FAILED(HttpStatus.SERVICE_UNAVAILABLE, "Failed to lookup tax code information. Please try again later."),
- 
+
     // Custom error codes for Collaborator Commission
     COMMISSION_RATE_INVALID(HttpStatus.BAD_REQUEST, "Commission rate must be between 0 and 100"),
     COMMISSION_RATE_NULL(HttpStatus.BAD_REQUEST, "Commission rate cannot be null"),
@@ -104,7 +104,8 @@ public enum ErrorCode {
     JOB_WORKING_TIME_EMPTY(HttpStatus.BAD_REQUEST, "Working time cannot be empty"),
     // Type/Enum mismatch friendly messages (used by GlobalExceptionHandler)
     JOB_WORKING_TYPE_INVALID(HttpStatus.BAD_REQUEST, "Invalid working type. Accepted: ONSITE, REMOTE, HYBRID"),
-    JOB_RANK_LEVEL_INVALID(HttpStatus.BAD_REQUEST,"Invalid rank level. Accepted: INTERN, FRESHER, JUNIOR, MIDDLE, SENIOR, LEADER, MANAGER"),
+    JOB_RANK_LEVEL_INVALID(HttpStatus.BAD_REQUEST,
+            "Invalid rank level. Accepted: INTERN, FRESHER, JUNIOR, MIDDLE, SENIOR, LEADER, MANAGER"),
     JOB_STATUS_INVALID(HttpStatus.BAD_REQUEST, "Invalid job status. Accepted: DRAFT, OPEN, CLOSED"),
     JOB_EXPERIENCE_INVALID(HttpStatus.BAD_REQUEST, "Invalid experience year"),
     JOB_DEADLINE_INVALID(HttpStatus.BAD_REQUEST, "Invalid deadline date. Expected format: yyyy-MM-dd"),
@@ -113,10 +114,9 @@ public enum ErrorCode {
     JOB_NEGOTIABLE_INVALID(HttpStatus.BAD_REQUEST, "Invalid value for negotiable. Expected: true or false"),
     JOB_QUANTITY_INVALID(HttpStatus.BAD_REQUEST, "Invalid quantity"),
     JOB_SKILL_IDS_INVALID(HttpStatus.BAD_REQUEST, "Invalid skill IDs"),
-
+   
     // Generic file extension validation (used by @ValidFileExtension)
-    FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "Invalid file type. Please upload a file with an allowed extension")
-    ;
+    FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "Invalid file type. Please upload a file with an allowed extension");
 
     private final HttpStatus httpStatus;
     private final String message;
