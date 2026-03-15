@@ -31,101 +31,103 @@ import java.text.ParseException;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequestMapping("/api/auth")
 public class AuthenticationController {
-    AuthenticationService authenticationService;
-    AccountRepo accountRepo;
+        AuthenticationService authenticationService;
+        AccountRepo accountRepo;
 
-    /**
-     * Authenticate a user with username and password.
-     *
-     * @param request
-     * @return APIResponse with AuthenticationResponse containing authentication
-     * status and JWT token.
-     */
-    @PostMapping("/login")
-    public ResponseEntity<APIResponse<AuthenticationResp>> authenticate(@RequestBody AuthenticationReq request) {
+        /**
+         * Authenticate a user with username and password.
+         *
+         * @param request
+         * @return APIResponse with AuthenticationResponse containing authentication
+         *         status and JWT token.
+         */
+        @PostMapping("/login")
+        public ResponseEntity<APIResponse<AuthenticationResp>> authenticate(@RequestBody AuthenticationReq request) {
 
-        AuthenticationResp response = authenticationService.authenticate(request);
+                AuthenticationResp response = authenticationService.authenticate(request);
 
-        // check if status of account is AccountStatus.ACTIVE, if not return 503
-        Account account = accountRepo.findByUsername(request.getUsername())
-                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
-        if (account.getStatus() != AccountStatus.ACTIVE) {
-            APIResponse<AuthenticationResp> api = APIResponse.<AuthenticationResp>builder()
-                    .status(HttpStatus.SERVICE_UNAVAILABLE)
-                    .message("Account is not active")
-                    .result(AuthenticationResp.builder()
-                            .authenticated(false)
-                            .accessToken(null)
-                            .build())
-                    .build();
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(api);
+                // check if status of account is AccountStatus.ACTIVE, if not return 503
+                Account account = accountRepo.findByUsername(request.getUsername())
+                                .orElseGet(() -> accountRepo.findByEmail(request.getUsername())
+                                                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND)));
+                if (account.getStatus() != AccountStatus.ACTIVE) {
+                        APIResponse<AuthenticationResp> api = APIResponse.<AuthenticationResp>builder()
+                                        .status(HttpStatus.SERVICE_UNAVAILABLE)
+                                        .message("Account is not active")
+                                        .result(AuthenticationResp.builder()
+                                                        .authenticated(false)
+                                                        .accessToken(null)
+                                                        .build())
+                                        .build();
+                        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(api);
+                }
+
+                APIResponse<AuthenticationResp> api = APIResponse.<AuthenticationResp>builder()
+                                .status(response.isAuthenticated() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE)
+                                .message(response.isAuthenticated() ? "Authentication successful"
+                                                : "Authentication failed")
+                                .result(AuthenticationResp.builder()
+                                                .authenticated(response.isAuthenticated())
+                                                .accessToken(response.getAccessToken())
+                                                .build())
+                                .build();
+
+                HttpStatus httpStatus = response.isAuthenticated() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE;
+                return ResponseEntity.status(httpStatus).body(api);
         }
 
-        APIResponse<AuthenticationResp> api = APIResponse.<AuthenticationResp>builder()
-                .status(response.isAuthenticated() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE)
-                .message(response.isAuthenticated() ? "Authentication successful" : "Authentication failed")
-                .result(AuthenticationResp.builder()
-                        .authenticated(response.isAuthenticated())
-                        .accessToken(response.getAccessToken())
-                        .build())
-                .build();
+        /**
+         * Introspect a JWT token to check its validity.
+         *
+         * @param request
+         * @return APIResponse with IntrospectResponse indicating whether the token is
+         *         valid.
+         * @throws ParseException
+         * @throws JOSEException
+         */
+        @PostMapping("/token-validate")
+        public APIResponse<TokenValidateResp> tokenValidate(@RequestBody TokenValidateReq request)
+                        throws ParseException, JOSEException {
 
-        HttpStatus httpStatus = response.isAuthenticated() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE;
-        return ResponseEntity.status(httpStatus).body(api);
-    }
+                TokenValidateResp response = authenticationService.validateToken(request);
 
-    /**
-     * Introspect a JWT token to check its validity.
-     *
-     * @param request
-     * @return APIResponse with IntrospectResponse indicating whether the token is
-     * valid.
-     * @throws ParseException
-     * @throws JOSEException
-     */
-    @PostMapping("/token-validate")
-    public APIResponse<TokenValidateResp> tokenValidate(@RequestBody TokenValidateReq request)
-            throws ParseException, JOSEException {
+                if (!response.isValid()) {
+                        // Token invalid: chỉ trả status và message, không trả result
+                        return APIResponse.<TokenValidateResp>builder()
+                                        .status(HttpStatus.UNAUTHORIZED)
+                                        .message("Token invalid")
+                                        .result(null)
+                                        .build();
+                }
 
-        TokenValidateResp response = authenticationService.validateToken(request);
-
-        if (!response.isValid()) {
-            // Token invalid: chỉ trả status và message, không trả result
-            return APIResponse.<TokenValidateResp>builder()
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .message("Token invalid")
-                    .result(null)
-                    .build();
+                return APIResponse.<TokenValidateResp>builder()
+                                .status(response.isValid() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED)
+                                .message(response.isValid() ? "Token valid" : "Token invalid")
+                                .result(TokenValidateResp.builder()
+                                                .valid(response.isValid())
+                                                .username(response.getUsername())
+                                                .id(response.getId())
+                                                .role(response.getRole())
+                                                .status(response.getStatus())
+                                                .build())
+                                .build();
         }
 
-        return APIResponse.<TokenValidateResp>builder()
-                .status(response.isValid() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED)
-                .message(response.isValid() ? "Token valid" : "Token invalid")
-                .result(TokenValidateResp.builder()
-                        .valid(response.isValid())
-                        .username(response.getUsername())
-                        .id(response.getId())
-                        .role(response.getRole())
-                        .status(response.getStatus())
-                        .build())
-                .build();
-    }
+        @PostMapping("/logout")
+        public APIResponse<Void> logout(@RequestBody LogoutReq request, HttpServletRequest httpRequest)
+                        throws ParseException, JOSEException {
+                String authHeader = httpRequest.getHeader("Authorization");
+                if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                        throw new RuntimeException("Unauthorized");
+                }
+                String callerToken = authHeader.substring("Bearer ".length()).trim();
 
+                authenticationService.logout(request, callerToken);
 
-    @PostMapping("/logout")
-    public APIResponse<Void> logout(@RequestBody LogoutReq request, HttpServletRequest httpRequest) throws ParseException, JOSEException {
-        String authHeader = httpRequest.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new RuntimeException("Unauthorized");
+                return APIResponse.<Void>builder()
+                                .status(HttpStatus.OK)
+                                .message("Logout successfully")
+                                .build();
         }
-        String callerToken = authHeader.substring("Bearer ".length()).trim();
-
-        authenticationService.logout(request, callerToken);
-
-        return APIResponse.<Void>builder()
-                .status(HttpStatus.OK)
-                .message("Logout successfully")
-                .build();
-    }
 
 }
