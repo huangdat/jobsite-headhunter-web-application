@@ -6,9 +6,9 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: "jdbc:mysql://localhost:3306/headhunt"
+    url: "jdbc:mysql://localhost:3307/headhunt"
     username: root
-    password: root
+    password: Quietness149131!
   mail:
     host: smtp.gmail.com
     port: 587
@@ -30,7 +30,7 @@ spring:
     from: noreply@headhunt.app
 
 server:
-  port: 8080
+  port: 8081
   servlet:
     context-path: /headhunt
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface JobRepo extends JpaRepository<Job, Long> {
+
 //
 //    List<Job> findByHeadhunterId(String headhunterId);
 //
@@ -17,4 +18,5 @@ public interface JobRepo extends JpaRepository<Job, Long> {
 //    List<Job> findByCity(String city);
 //
 //    List<Job> findByStatusAndCity(JobStatus status, String city);
+
 }
