@@ -13,4 +13,6 @@ public interface BusinessProfileService {
     List<BusinessProfileResp> getAllBusinessProfiles();
 
     BusinessProfileResp getBusinessProfileById(Long businessProfileId);
+
+    List<BusinessProfileResp> getTop10BestBusinessProfiles();
 }
