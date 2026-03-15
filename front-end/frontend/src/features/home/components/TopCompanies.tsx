@@ -1,4 +1,7 @@
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+
 export function TopCompanies() {
+  const { t } = useAppTranslation();
   const companies = [
     "Company Alpha",
     "Beta Systems",
@@ -13,7 +16,7 @@ export function TopCompanies() {
   return (
     <section id="top-companies" className="bg-muted py-20">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-2xl font-bold mb-12">Top Companies</h2>
+        <h2 className="text-2xl font-bold mb-12">{t("home.topCompanies.title")}</h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10">
           {companies.map((c, i) => (
@@ -22,10 +25,10 @@ export function TopCompanies() {
 
               <p className="font-medium">{c}</p>
 
-              <p className="text-xs text-muted-foreground">12 Open Jobs</p>
+              <p className="text-xs text-muted-foreground">{t("home.topCompanies.openJobs")}</p>
 
               <p className="text-lime-900 text-xs mt-2 transition group-hover:translate-x-1">
-                View Company →
+                {t("home.topCompanies.viewCompany")}
               </p>
             </div>
           ))}
