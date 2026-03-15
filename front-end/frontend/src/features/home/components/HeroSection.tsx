@@ -1,13 +1,11 @@
 import { ParticleBackground } from "./ParticleBackground";
 import { SearchBar } from "./SearchBar";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 export function HeroSection() {
-  const { t } = useAppTranslation();
   return (
-    <section className="relative py-50 bg-linear-to-br from-slate-900 to-lime-100 overflow-hidden">
+    <section className="relative py-50 bg-gradient-to-br from-slate-900 to-lime-100 overflow-hidden">
       {/* Gradient background */}
-      <div className="absolute inset-0 bg-linear-to-br from-slate-900 to-lime-100 -z-20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-lime-100 -z-20" />
 
       {/* Particle */}
       <ParticleBackground />
@@ -15,11 +13,12 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <h1 className="text-5xl font-bold leading-tight text-slate-900">
-          {t("home.hero.title")} <span className="text-lime-500">{t("home.hero.highlight")}</span>
+          Find Your Next <span className="text-lime-500">Opportunity</span>
         </h1>
 
         <p className="mt-6 text-lg text-slate-900 max-w-2xl mx-auto">
-          {t("home.hero.description")}
+          Explore 50,000+ hand-picked jobs from top-tier companies and take your
+          career to the next level.
         </p>
 
         <SearchBar />

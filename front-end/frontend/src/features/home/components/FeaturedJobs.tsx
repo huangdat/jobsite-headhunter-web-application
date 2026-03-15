@@ -1,10 +1,7 @@
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-
 export function FeaturedJobs() {
-  const { t } = useAppTranslation();
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
-      <h2 className="text-2xl font-bold mb-10">{t("home.featuredJobs.title")}</h2>
+      <h2 className="text-2xl font-bold mb-10">Featured Jobs</h2>
 
       <div className="grid md:grid-cols-3 gap-6">
         {Array.from({ length: 6 }).map((_, i) => (
@@ -34,7 +31,7 @@ export function FeaturedJobs() {
 
       <div className="text-center mt-12">
         <button className="border px-6 py-3 rounded-xl hover:bg-gray-100 transition cursor-pointer">
-          {t("home.featuredJobs.viewMore")}
+          VIEW MORE JOBS →
         </button>
       </div>
     </section>
