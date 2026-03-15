@@ -44,12 +44,12 @@ public class SecurityConfig {
     TokenInvalidationFilter tokenInvalidationFilter;
 
     String[] PUBLIC_POST_ENDPOINTS = {"/api/upload", "/api/auth/**", "/api/otp/**", "/api/account/signup-headhunter", "/api/account/signup-collaborator", "/api/account/signup-candidate"};
-    String[] PUBLIC_GET_ENDPOINTS = {"/api/auth/**"};
+    String[] PUBLIC_GET_ENDPOINTS = {"/api/auth/**", "/api/business-profile/10-best"};
     String[] PUBLIC_PUT_ENDPOINTS = {};
 
     /**
      * Configures the security filter chain for the application.
-     *
+     *z
      * @param httpSecurity the HttpSecurity object to configure security settings.
      * @return SecurityFilterChain object that defines the security rules.
      * @throws Exception
