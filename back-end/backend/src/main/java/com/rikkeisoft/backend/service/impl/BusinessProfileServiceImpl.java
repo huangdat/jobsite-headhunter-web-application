@@ -77,6 +77,11 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         return businessProfileResp;
     }
 
+    @Override
+    public List<BusinessProfileResp> getTop10BestBusinessProfiles() {
+        return null;
+    }
+
     RestTemplate restTemplate;
 
     static final String VIETQR_BUSINESS_URL = "https://api.vietqr.io/v2/business/{taxCode}";

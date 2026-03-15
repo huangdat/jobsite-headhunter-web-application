@@ -118,6 +118,42 @@
   "home": {
     "searchKeywords": "Keywords, job title, company...",
     "searchLocation": "Location or 'Remote'...",
+    "navigation": {
+      "recommended": "Recommended",
+      "topCompanies": "Top Companies",
+      "featuredJobs": "Featured Jobs",
+      "login": "Login",
+      "signUp": "Sign Up",
+      "postJob": "Post a Job",
+      "profile": "PROFILE",
+      "changePassword": "CHANGE PASSWORD",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "hero": {
+      "title": "Find Your Next",
+      "highlight": "Opportunity",
+      "description": "Explore 50,000+ hand-picked jobs from top-tier companies and take your career to the next level."
+    },
+    "searchBar": {
+      "search": "SEARCH"
+    },
+    "featuredJobs": {
+      "title": "Featured Jobs",
+      "viewMore": "VIEW MORE JOBS →"
+    },
+    "recommendedJobs": {
+      "title": "Recommended for you",
+      "description": "Based on your profile and skills"
+    },
+    "topCompanies": {
+      "title": "Top Companies",
+      "openJobs": "12 Open Jobs",
+      "viewCompany": "View Company →"
+    },
+    "footer": {
+      "copyright": "© {year} JobSite. All rights reserved."
+    },
     "messages": {}
   },
   "navigation": {

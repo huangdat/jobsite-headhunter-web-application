@@ -34,4 +34,11 @@ public class BusinessProfileController {
         resp.setResult(businessProfileService.getBusinessProfileById(businessProfileId));
         return resp;
     }
+
+    @GetMapping("/10-best")
+    public APIResponse<List<BusinessProfileResp>> getTop10BestBusinessProfiles() {
+        APIResponse<List<BusinessProfileResp>> resp = new APIResponse<>();
+        resp.setResult(businessProfileService.getTop10BestBusinessProfiles());
+        return resp;
+    }
 }
