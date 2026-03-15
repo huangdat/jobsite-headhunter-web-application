@@ -7,6 +7,7 @@ import type { UserRole, RegisterFormData } from "../types";
 import { sendOtpSignup } from "../services/authApi";
 import { toast } from "sonner";
 import { useAuth } from "../context/useAuth";
+import { useDuplicateCheck } from "../hooks/useDuplicateCheck";
 import { extractApiErrorMessage } from "../utils/apiError";
 
 import { StepIndicator } from "./StepIndicator";
@@ -47,6 +48,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const config = getRoleConfig(userRole);
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing } = useAuth();
+  const { emailCheck, usernameCheck, checkEmail, checkUsername } =
+    useDuplicateCheck();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -100,6 +103,12 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   }, [isAuthenticated, isInitializing, navigate]);
 
   const validateStep = (step: number): boolean => {
+    // For step 1, also check for duplicate errors
+    if (step === 1 && (emailCheck?.isDuplicate || usernameCheck?.isDuplicate)) {
+      toast.error("Please fix duplicate email or username");
+      return false;
+    }
+
     const newErrors = getStepErrors(step);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -454,6 +463,10 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 setShowPassword={setShowPassword}
                 setShowConfirmPassword={setShowConfirmPassword}
                 passwordRequirements={passwordRequirements}
+                emailCheck={emailCheck}
+                usernameCheck={usernameCheck}
+                onEmailChange={checkEmail}
+                onUsernameChange={checkUsername}
               />
             )}
 

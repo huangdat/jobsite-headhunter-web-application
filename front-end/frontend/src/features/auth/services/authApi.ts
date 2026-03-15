@@ -198,3 +198,19 @@ export const registerSocial = async (data: SocialRegisterRequest) => {
   );
   return res.data.result;
 };
+
+// Check if email or username already exists
+export const checkEmailUsernameExist = async (
+  email?: string,
+  username?: string,
+): Promise<boolean> => {
+  const params = new URLSearchParams();
+  if (email) params.append("email", email);
+  if (username) params.append("username", username);
+
+  const res = await apiClient.get<ApiResponse<boolean>>(
+    `/api/account/check-email-username-exist?${params.toString()}`,
+  );
+
+  return res.data.result;
+};
