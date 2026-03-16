@@ -68,10 +68,10 @@ public class JobManageServiceImpl implements JobManageService {
 
     static int LATEST_POOL_SIZE = 20;
 
-    static String MSG_SUCCESS = "Đề xuất việc làm thành công";
-    static String MSG_NO_CANDIDATE_SKILLS = "Vui lòng cập nhật kỹ năng của bạn để nhận được đề xuất tốt hơn";
-    static String MSG_NO_MATCHED_JOBS = "Không có công việc nào hoàn toàn phù hợp với kỹ năng của bạn";
-    static String MSG_NO_OPEN_JOBS = "Hệ thống hiện không có bài đăng tuyển dụng nào";
+    static String MSG_SUCCESS = "The job application was successful.";
+    static String MSG_NO_CANDIDATE_SKILLS = "Please update your skills to receive better recommendations.";
+    static String MSG_NO_MATCHED_JOBS = "No job is a perfect fit for your skills.";
+    static String MSG_NO_OPEN_JOBS = "The system currently has no job postings.";
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
