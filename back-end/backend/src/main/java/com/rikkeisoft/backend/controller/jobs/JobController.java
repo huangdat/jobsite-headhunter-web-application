@@ -6,6 +6,7 @@ import com.rikkeisoft.backend.model.dto.req.job.JobToggleStatusReq;
 import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobPostResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
+import com.rikkeisoft.backend.model.dto.resp.job.RecommendationResp;
 import com.rikkeisoft.backend.model.dto.resp.job.SavedJobResp;
 import com.rikkeisoft.backend.service.JobManageService;
 import com.rikkeisoft.backend.service.JobQueryService;
@@ -14,10 +15,18 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
@@ -88,6 +97,29 @@ public class JobController {
         return APIResponse.<JobResp>builder()
                 .status(HttpStatus.OK)
                 .message("Job status updated successfully")
+                .result(result)
+                .build();
+    }
+
+    @GetMapping("/recommended")
+    public APIResponse<RecommendationResp> getRecommendedJobs(@AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getSubject();
+        RecommendationResp result = jobManageService.getRecommendedJobs(username);
+
+        return APIResponse.<RecommendationResp>builder()
+                .status(HttpStatus.OK)
+                .message(result.getMessage())
+                .result(result)
+                .build();
+    }
+
+    @GetMapping("/random-latest")
+    public APIResponse<RecommendationResp> getRandomLatestJobs() {
+        RecommendationResp result = jobManageService.getRandomLatestJobs();
+
+        return APIResponse.<RecommendationResp>builder()
+                .status(HttpStatus.OK)
+                .message(result.getMessage())
                 .result(result)
                 .build();
     }
