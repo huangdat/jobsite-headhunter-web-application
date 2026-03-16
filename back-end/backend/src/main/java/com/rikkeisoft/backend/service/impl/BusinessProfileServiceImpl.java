@@ -1,10 +1,11 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.azure.core.annotation.Post;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.dto.resp.business.VietQRBusinessResp;
-import com.rikkeisoft.backend.repository.BusinessProfileRepo;
+import com.rikkeisoft.backend.repository.*;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.AccountMapper;
@@ -12,13 +13,13 @@ import com.rikkeisoft.backend.mapper.BusinessProfileMapper;
 import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.model.dto.resp.business.BusinessProfileResp;
 import com.rikkeisoft.backend.model.entity.BusinessProfile;
-import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.repository.BusinessProfileRepo;
 import com.rikkeisoft.backend.service.BusinessProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -36,6 +37,8 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     BusinessProfileMapper businessProfileMapper;
     AccountRepo accountRepo;
     AccountMapper accountMapper;
+    ForumPostRepo forumPostRepo;
+    ApplicationRepo applicationRepo;
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_HEADHUNTER')")
@@ -77,9 +80,23 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         return businessProfileResp;
     }
 
+    /**
+     * List top 10 best business profiles based on the number of forum posts
+     */
     @Override
     public List<BusinessProfileResp> getTop10BestBusinessProfiles() {
-        return null;
+        List<BusinessProfile> topBusinessProfiles = businessProfileRepo.findTopByHeadhunterPostCount(PageRequest.of(0, 10));
+
+        return topBusinessProfiles.stream()
+                .map(profile -> {
+                    BusinessProfileResp resp = businessProfileMapper.toBusinessProfileResp(profile);
+                    List<AccountResp> accountResps = accountRepo.findByBusinessProfileId(profile.getId()).stream()
+                            .map(accountMapper::toAccountResp)
+                            .toList();
+                    resp.setAccounts(accountResps);
+                    return resp;
+                })
+                .toList();
     }
 
     RestTemplate restTemplate;
