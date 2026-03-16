@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Slf4j
 @ControllerAdvice
-public class GobalExceptionHandler {
+public class GlobalExceptionHandler {
 
     /**
      * Handles custom application exceptions.
