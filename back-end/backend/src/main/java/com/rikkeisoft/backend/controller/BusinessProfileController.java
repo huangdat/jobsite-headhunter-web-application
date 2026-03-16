@@ -1,16 +1,15 @@
 package com.rikkeisoft.backend.controller;
 
 import com.azure.core.annotation.Get;
+import com.azure.core.annotation.Put;
 import com.rikkeisoft.backend.model.dto.APIResponse;
+import com.rikkeisoft.backend.model.dto.req.business.BusinessProfileUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.business.BusinessProfileResp;
 import com.rikkeisoft.backend.service.BusinessProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +38,13 @@ public class BusinessProfileController {
     public APIResponse<List<BusinessProfileResp>> getTop10BestBusinessProfiles() {
         APIResponse<List<BusinessProfileResp>> resp = new APIResponse<>();
         resp.setResult(businessProfileService.getTop10BestBusinessProfiles());
+        return resp;
+    }
+
+    @PutMapping("/{businessProfileId}")
+    public APIResponse<BusinessProfileResp> updateBusinessProfile(@PathVariable Long businessProfileId, @RequestBody BusinessProfileUpdateReq req) {
+        APIResponse<BusinessProfileResp> resp = new APIResponse<>();
+        resp.setResult(businessProfileService.updateBusinessProfile(businessProfileId, req));
         return resp;
     }
 }
