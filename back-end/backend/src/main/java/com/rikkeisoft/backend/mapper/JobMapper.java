@@ -10,5 +10,6 @@ import com.rikkeisoft.backend.model.entity.Job;
 public interface JobMapper {
     @Mapping(source = "headhunter.id", target = "headhunterId")
     @Mapping(source = "headhunter.fullName", target = "headhunterName")
+    @Mapping(source = "location", target = "city")
     JobResp toJobResp(Job job);
 }

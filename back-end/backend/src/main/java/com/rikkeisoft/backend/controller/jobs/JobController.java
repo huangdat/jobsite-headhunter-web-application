@@ -1,6 +1,7 @@
 package com.rikkeisoft.backend.controller.jobs;
 
 import com.rikkeisoft.backend.model.dto.APIResponse;
+import com.rikkeisoft.backend.model.dto.PagedResponse;
 import com.rikkeisoft.backend.model.dto.req.job.JobPostReq;
 import com.rikkeisoft.backend.model.dto.req.job.JobToggleStatusReq;
 import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
@@ -34,6 +35,49 @@ public class JobController {
         JobDetailResp result = jobQueryService.getJobDetail(jobId);
         APIResponse<JobDetailResp> response = new APIResponse<>();
         response.setResult(result);
+        return response;
+    }
+
+    @GetMapping
+    public APIResponse<PagedResponse<JobResp>> searchJobs(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) Double salaryMin,
+            @RequestParam(required = false) Double salaryMax,
+            @RequestParam(required = false) String workingType,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String industryName,
+            @RequestParam(required = false) String rankLevel,
+            @RequestParam(required = false, defaultValue = "false") boolean mine,
+            @RequestParam(required = false) String authorId,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        APIResponse<PagedResponse<JobResp>> response = new APIResponse<>();
+        PagedResponse<JobResp> result = jobQueryService.searchJobs(
+                page,
+                size,
+                keyword,
+                location,
+                salaryMin,
+                salaryMax,
+                workingType,
+                status,
+                industryName,
+                rankLevel,
+                mine,
+                authorId,
+                jwt != null ? jwt.getSubject() : null);
+        response.setResult(result);
+        return response;
+    }
+
+    @GetMapping("/best")
+    public APIResponse<List<JobResp>> getBestJobs(
+            @RequestParam(defaultValue = "6") int size) {
+        APIResponse<List<JobResp>> response = new APIResponse<>();
+        response.setResult(jobQueryService.getBestJobs(size));
         return response;
     }
 
