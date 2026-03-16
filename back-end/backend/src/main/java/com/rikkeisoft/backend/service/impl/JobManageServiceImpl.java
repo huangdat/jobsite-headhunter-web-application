@@ -3,11 +3,10 @@ package com.rikkeisoft.backend.service.impl;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.JobMapper;
-import com.rikkeisoft.backend.mapper.JobPostMapper;
-import com.rikkeisoft.backend.model.dto.req.job.JobPostReq;
+import com.rikkeisoft.backend.model.dto.req.job.JobReq;
 import com.rikkeisoft.backend.model.dto.req.job.JobRecommendationItemReq;
 import com.rikkeisoft.backend.model.dto.req.job.JobToggleStatusReq;
-import com.rikkeisoft.backend.model.dto.resp.job.JobPostResp;
+import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
 import com.rikkeisoft.backend.model.dto.resp.job.RecommendationResp;
 import com.rikkeisoft.backend.model.entity.Account;
@@ -24,6 +23,7 @@ import com.rikkeisoft.backend.enums.JobStatus;
 import com.rikkeisoft.backend.enums.RecommendationMode;
 import com.rikkeisoft.backend.service.JobManageService;
 import com.rikkeisoft.backend.service.UploadService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -53,12 +53,11 @@ import java.util.stream.Collectors;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class JobManageServiceImpl implements JobManageService {
     JobRepo jobRepo;
-    JobPostMapper jobPostMapper;
     AccountRepo accountRepo;
     UploadService uploadService;
     JobSkillRepo jobSkillRepo;
     SkillRepo skillRepo;
-    private final JobMapper jobMapper;
+    JobMapper jobMapper;
 
     AccountSkillRepo accountSkillRepo;
     // JobSkillRepo jobSkillRepo;
@@ -75,53 +74,109 @@ public class JobManageServiceImpl implements JobManageService {
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
-    public JobPostResp createJobPost(JobPostReq jobPostReq) {
+    public JobDetailResp createJobPost(JobReq jobReq) {
         var context = SecurityContextHolder.getContext();
         String contextName = context.getAuthentication().getName();
         Account account = accountRepo.findByUsername(contextName)
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-        MultipartFile postImage = jobPostReq.getPostImage();
+                .orElseThrow(() -> new AppException(ErrorCode.UNAUTHORIZED));
+        MultipartFile postImage = jobReq.getPostImage();
         Job job = Job.builder()
                 .jobCode(generateRandomJobCode())
                 .headhunter(account)
-                .title(jobPostReq.getTitle())
-                .description(jobPostReq.getDescription())
-                .responsibilities(jobPostReq.getResponsibilities())
-                .requirements(jobPostReq.getRequirements())
-                .benefits(jobPostReq.getBenefits())
-                .workingTime(jobPostReq.getWorkingTime())
-                .rankLevel(jobPostReq.getRankLevel())
-                .workingType(jobPostReq.getWorkingType())
-                .location(jobPostReq.getLocation())
-                .addressDetail(jobPostReq.getAddressDetail())
-                .experience(jobPostReq.getExperience())
-                .salaryMin(jobPostReq.getSalaryMin())
-                .salaryMax(jobPostReq.getSalaryMax())
-                .negotiable(jobPostReq.isNegotiable())
-                .currency(jobPostReq.getCurrency())
-                .quantity(jobPostReq.getQuantity())
-                .deadline(jobPostReq.getDeadline())
-                .status(jobPostReq.getStatus())
+                .title(jobReq.getTitle())
+                .description(jobReq.getDescription())
+                .responsibilities(jobReq.getResponsibilities())
+                .requirements(jobReq.getRequirements())
+                .benefits(jobReq.getBenefits())
+                .workingTime(jobReq.getWorkingTime())
+                .rankLevel(jobReq.getRankLevel())
+                .workingType(jobReq.getWorkingType())
+                .location(jobReq.getLocation())
+                .addressDetail(jobReq.getAddressDetail())
+                .experience(jobReq.getExperience())
+                .salaryMin(jobReq.getSalaryMin())
+                .salaryMax(jobReq.getSalaryMax())
+                .negotiable(Boolean.TRUE.equals(jobReq.getNegotiable()))
+                .currency(jobReq.getCurrency())
+                .quantity(jobReq.getQuantity())
+                .deadline(jobReq.getDeadline())
+                .status(jobReq.getStatus())
                 .createdAt(LocalDateTime.now())
                 .imageUrl(postImage == null ? "" : uploadService.uploadFile(postImage))
                 .build();
         Job savedJob = jobRepo.save(job);
 
-        List<Long> requestedSkillIds = jobPostReq.getSkillIds();
+        List<JobSkill> updatedJobSkillsList = new ArrayList<>();
+        List<Long> requestedSkillIds = jobReq.getSkillIds();
         if (requestedSkillIds != null && !requestedSkillIds.isEmpty()) {
             Set<Long> uniqueSkillIds = new LinkedHashSet<>(requestedSkillIds);
-            List<JobSkill> jobSkills = new ArrayList<>();
             for (Long skillId : uniqueSkillIds) {
                 Skill skill = skillRepo.findById(skillId)
                         .orElseThrow(() -> new AppException(ErrorCode.JOB_SKILL_IDS_INVALID));
-                jobSkills.add(JobSkill.builder()
+                updatedJobSkillsList.add(JobSkill.builder()
                         .job(savedJob)
                         .skill(skill)
                         .build());
             }
-            jobSkillRepo.saveAll(jobSkills);
+            jobSkillRepo.saveAll(updatedJobSkillsList);
         }
-        return jobPostMapper.toJobPostResponse(savedJob);
+
+        JobDetailResp jobDetailResp = jobMapper.toJobDetailResp(savedJob);
+        jobDetailResp.setSkills(updatedJobSkillsList.stream()
+                .map(jobMapper::toJobSkillResp)
+                .collect(Collectors.toList()));
+        return jobDetailResp;
+    }
+
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
+    @Transactional
+    public JobDetailResp updateJobPost(Long jobId, JobReq jobReq){
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        Account account = accountRepo.findByUsername(authentication.getName())
+                .orElseThrow(() -> new AppException(ErrorCode.UNAUTHORIZED));
+
+        Job job = jobRepo.findById(jobId).orElseThrow(() -> new AppException(ErrorCode.JOB_NOT_FOUND));
+
+        boolean isHeadhunter = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("SCOPE_HEADHUNTER"));
+
+        if(isHeadhunter && !account.getId().equals(job.getHeadhunter().getId())){
+            throw new AppException(ErrorCode.FORBIDDEN);
+        }
+
+        // update job post
+        jobMapper.updateJobFromRequest(jobReq, job);
+
+        // Update Job Skills if provided
+        List<JobSkill> updatedJobSkills = new ArrayList<>();
+        List<Long> requestedSkillIds = jobReq.getSkillIds();
+
+        if (requestedSkillIds != null) {
+            // Delete existing skills
+            jobSkillRepo.deleteByJobId(jobId);
+
+            if (!requestedSkillIds.isEmpty()) {
+                Set<Long> uniqueSkillIds = new LinkedHashSet<>(requestedSkillIds);
+                for (Long skillId : uniqueSkillIds) {
+                    Skill skill = skillRepo.findById(skillId)
+                            .orElseThrow(() -> new AppException(ErrorCode.JOB_SKILL_IDS_INVALID));
+                    updatedJobSkills.add(JobSkill.builder()
+                            .job(job)
+                            .skill(skill)
+                            .build());
+                }
+                jobSkillRepo.saveAll(updatedJobSkills);
+            }
+        } else {
+            // If skillIds is null (not provided in request), retain existing skills
+            updatedJobSkills = jobSkillRepo.findByJobId(jobId);
+        }
+
+        JobDetailResp resp = jobMapper.toJobDetailResp(job);
+        resp.setSkills(updatedJobSkills.stream()
+                .map(jobMapper::toJobSkillResp)
+                .collect(Collectors.toList()));
+        return resp;
     }
 
     private String generateRandomJobCode() {
