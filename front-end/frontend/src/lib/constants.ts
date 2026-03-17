@@ -41,6 +41,21 @@ export const API_ENDPOINTS = {
     CHANGE_PASSWORD: "/account/changeMyPassword",
   },
 
+  // Jobs
+  JOBS: {
+    GET_RECOMMENDED: "/api/jobs/recommended",
+    GET_RANDOM_LATEST: "/api/jobs/random-latest",
+    GET_BY_ID: "/api/jobs/{id}",
+    GET_SAVED: "/api/jobs/saved",
+  },
+
+  // Business Profiles
+  BUSINESS_PROFILE: {
+    GET_TOP_10: "/api/business-profile/10-best",
+    GET_ALL: "/api/business-profile",
+    GET_BY_ID: "/api/business-profile/{id}",
+  },
+
   // Add more endpoints as needed
 };
 

@@ -24,7 +24,7 @@ import type {
 export const login = async (data: LoginRequest) => {
   const res = await apiClient.post<ApiResponse<LoginResult>>(
     "/api/auth/login",
-    data,
+    data
   );
 
   return res.data.result;
@@ -33,7 +33,7 @@ export const login = async (data: LoginRequest) => {
 export const validateToken = async (data: ValidateTokenRequest) => {
   const res = await apiClient.post<ApiResponse<ValidateTokenResult>>(
     "/api/auth/token-validate",
-    data,
+    data
   );
 
   return res.data.result;
@@ -110,7 +110,7 @@ export const register = async (data: RegisterFormData) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    },
+    }
   );
 
   return res.data.result;
@@ -125,7 +125,7 @@ export const changePassword = async (data: ChangePasswordFormData) => {
 
   const res = await apiClient.put<ApiResponse<string>>(
     "/api/account/changeMyPassword",
-    payload,
+    payload
   );
 
   return res.data.result;
@@ -135,7 +135,7 @@ export const changePassword = async (data: ChangePasswordFormData) => {
 export const sendOtpSignup = async (data: SendOtpRequest) => {
   const res = await apiClient.post<ApiResponse<OtpSendResp>>(
     "/api/otp/send-signup",
-    data,
+    data
   );
 
   return res.data.result;
@@ -144,7 +144,7 @@ export const sendOtpSignup = async (data: SendOtpRequest) => {
 export const verifyOtpSignup = async (data: VerifyOtpRequest) => {
   const res = await apiClient.post<ApiResponse<OtpVerifyResp>>(
     "/api/otp/verify-signup",
-    data,
+    data
   );
 
   return res.data.result;
@@ -153,18 +153,18 @@ export const verifyOtpSignup = async (data: VerifyOtpRequest) => {
 export const sendOtpForgotPassword = async (data: SendOtpRequest) => {
   const res = await apiClient.post<ApiResponse<OtpSendResp>>(
     "/api/otp/send-forgot-password",
-    data,
+    data
   );
 
   return res.data.result;
 };
 
 export const verifyAndResetPassword = async (
-  data: VerifyOtpAndResetPasswordRequest,
+  data: VerifyOtpAndResetPasswordRequest
 ) => {
   const res = await apiClient.post<ApiResponse<OtpVerifyAndResetPasswordResp>>(
     "/api/otp/verify-and-reset-password",
-    data,
+    data
   );
 
   return res.data.result;
@@ -172,7 +172,7 @@ export const verifyAndResetPassword = async (
 // API for social login (Google, LinkedIn)
 export const getSocialConfig = async () => {
   const res = await apiClient.get<ApiResponse<Record<string, string>>>(
-    "/api/auth/social-config",
+    "/api/auth/social-config"
   );
   return res.data.result;
 };
@@ -194,7 +194,24 @@ export const linkedinLogin = async (data: LinkedInTokenRequest) => {
 export const registerSocial = async (data: SocialRegisterRequest) => {
   const res = await apiClient.post<ApiResponse<LoginResult>>(
     "/api/auth/register-social",
-    data,
+    data
   );
+  return res.data.result;
+};
+
+// Check if email or username already exists
+export const checkEmailUsernameExist = async (
+  email?: string,
+  username?: string
+): Promise<boolean> => {
+  const params = new URLSearchParams();
+  if (email) params.append("email", email);
+  if (username) params.append("username", username);
+
+  // Replace post method instead of get to match backend api design
+  const res = await apiClient.post<ApiResponse<boolean>>(
+    `/api/account/check-email-username-exist?${params.toString()}`
+  );
+
   return res.data.result;
 };
