@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JobReq {
+public class JobPostReq {
     @NotBlank(message = "JOB_TITLE_EMPTY")
     String title;
 
@@ -51,7 +51,7 @@ public class JobReq {
     Double salaryMax;
 
     // Default is false
-    Boolean negotiable;
+    boolean negotiable;
 
     @NotNull(message = "JOB_CURRENCY_REQUIRED")
     Currency currency;
