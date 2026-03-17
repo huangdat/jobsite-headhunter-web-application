@@ -38,7 +38,7 @@ public class Job {
     @Column(columnDefinition = "TEXT")
     String description;
         
-    @Column(columnDefinition = "TEXT")
+        @Column(columnDefinition = "TEXT")
     String responsibilities;
 
     @Column(columnDefinition = "TEXT")
@@ -54,7 +54,7 @@ public class Job {
     @Column(name = "rank_level")
     RankLevel rankLevel;
 
-    @Enumerated(EnumType.STRING) //ONSITE, REMOTE, HYBRID
+    @Enumerated(EnumType.STRING) //OFFLINE, REMOTE, HYBRID
     @Column(name = "working_type")
     WorkingType workingType;
 
