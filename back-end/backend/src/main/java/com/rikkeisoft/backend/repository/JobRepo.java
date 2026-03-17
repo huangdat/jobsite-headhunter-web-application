@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.repository;
 
+import com.rikkeisoft.backend.enums.JobStatus;
 import com.rikkeisoft.backend.model.entity.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
