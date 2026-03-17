@@ -1,1 +1,1 @@
-export { useUserList, type UseUserListReturn } from './useUserList';
+export { useUsers, type UseUserListReturn } from "./useUsers";
