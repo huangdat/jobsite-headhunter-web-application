@@ -2,6 +2,7 @@ package com.rikkeisoft.backend.controller.jobs;
 
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.job.JobReq;
+import com.rikkeisoft.backend.model.dto.PagedResponse;
 import com.rikkeisoft.backend.model.dto.req.job.JobToggleStatusReq;
 import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
@@ -38,9 +39,58 @@ public class JobController {
         return response;
     }
 
+<<<<<<< back-end/backend/src/main/java/com/rikkeisoft/backend/controller/jobs/JobController.java
     @PatchMapping("/{id}")
     public APIResponse<JobDetailResp> updateJobDetail(@PathVariable("id") Long jobId, @ModelAttribute JobReq jobReq){
         JobDetailResp result = jobManageService.updateJobPost(jobId, jobReq);
+=======
+    @GetMapping
+    public APIResponse<PagedResponse<JobResp>> searchJobs(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) Double salaryMin,
+            @RequestParam(required = false) Double salaryMax,
+            @RequestParam(required = false) String workingType,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String industryName,
+            @RequestParam(required = false) String rankLevel,
+            @RequestParam(required = false, defaultValue = "false") boolean mine,
+            @RequestParam(required = false) String authorId,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        APIResponse<PagedResponse<JobResp>> response = new APIResponse<>();
+        PagedResponse<JobResp> result = jobQueryService.searchJobs(
+                page,
+                size,
+                keyword,
+                location,
+                salaryMin,
+                salaryMax,
+                workingType,
+                status,
+                industryName,
+                rankLevel,
+                mine,
+                authorId,
+                jwt != null ? jwt.getSubject() : null);
+        response.setResult(result);
+        return response;
+    }
+
+    @GetMapping("/best")
+    public APIResponse<List<JobResp>> getBestJobs(
+            @RequestParam(defaultValue = "6") int size) {
+        APIResponse<List<JobResp>> response = new APIResponse<>();
+        response.setResult(jobQueryService.getBestJobs(size));
+        return response;
+    }
+
+    @PostMapping
+    public APIResponse<JobPostResp> postJob(@ModelAttribute @Valid JobPostReq jobPostReq) {
+        JobPostResp result = jobManageService.createJobPost(jobPostReq);
+>>>>>>> back-end/backend/src/main/java/com/rikkeisoft/backend/controller/jobs/JobController.java
 
         APIResponse<JobDetailResp> response = new APIResponse<>();
         response.setStatus(HttpStatus.OK);
