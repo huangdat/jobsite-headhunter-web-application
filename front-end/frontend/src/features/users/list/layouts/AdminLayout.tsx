@@ -14,7 +14,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <span className="material-symbols-outlined">shield_person</span>
           </div>
           <h1 className="font-bold text-xl tracking-tight text-white">
-            Admin<span className="text-green-500">Core</span>
+            Job<span className="text-green-500">Site</span>
           </h1>
         </div>
 
