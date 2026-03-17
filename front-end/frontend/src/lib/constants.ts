@@ -6,7 +6,7 @@
 
 // API Base URLs
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api",
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
   TIMEOUT: 15000,
   RETRY_COUNT: 3,
   RETRY_DELAY: 1000,
@@ -39,6 +39,21 @@ export const API_ENDPOINTS = {
     GET_PROFILE: "/account/profile",
     UPDATE_PROFILE: "/account/profile",
     CHANGE_PASSWORD: "/account/changeMyPassword",
+  },
+
+  // Jobs
+  JOBS: {
+    GET_RECOMMENDED: "/api/jobs/recommended",
+    GET_RANDOM_LATEST: "/api/jobs/random-latest",
+    GET_BY_ID: "/api/jobs/{id}",
+    GET_SAVED: "/api/jobs/saved",
+  },
+
+  // Business Profiles
+  BUSINESS_PROFILE: {
+    GET_TOP_10: "/api/business-profile/10-best",
+    GET_ALL: "/api/business-profile",
+    GET_BY_ID: "/api/business-profile/{id}",
   },
 
   // Add more endpoints as needed

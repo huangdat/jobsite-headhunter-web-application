@@ -1,11 +1,11 @@
 package com.rikkeisoft.backend.controller.jobs;
 
 import com.rikkeisoft.backend.model.dto.APIResponse;
-import com.rikkeisoft.backend.model.dto.req.job.JobPostReq;
+import com.rikkeisoft.backend.model.dto.req.job.JobReq;
 import com.rikkeisoft.backend.model.dto.req.job.JobToggleStatusReq;
 import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
-import com.rikkeisoft.backend.model.dto.resp.job.JobPostResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
+import com.rikkeisoft.backend.model.dto.resp.job.RecommendationResp;
 import com.rikkeisoft.backend.model.dto.resp.job.SavedJobResp;
 import com.rikkeisoft.backend.service.JobManageService;
 import com.rikkeisoft.backend.service.JobQueryService;
@@ -14,10 +14,11 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -37,11 +38,23 @@ public class JobController {
         return response;
     }
 
-    @PostMapping
-    public APIResponse<JobPostResp> postJob(@ModelAttribute @Valid JobPostReq jobPostReq) {
-        JobPostResp result = jobManageService.createJobPost(jobPostReq);
+    @PatchMapping("/{id}")
+    public APIResponse<JobDetailResp> updateJobDetail(@PathVariable("id") Long jobId, @ModelAttribute JobReq jobReq){
+        JobDetailResp result = jobManageService.updateJobPost(jobId, jobReq);
 
-        APIResponse<JobPostResp> response = new APIResponse<>();
+        APIResponse<JobDetailResp> response = new APIResponse<>();
+        response.setStatus(HttpStatus.OK);
+        response.setMessage("Job updated successfully");
+        response.setResult(result);
+
+        return response;
+    }
+
+    @PostMapping
+    public APIResponse<JobDetailResp> postJob(@ModelAttribute @Valid JobReq jobReq) {
+        JobDetailResp result = jobManageService.createJobPost(jobReq);
+
+        APIResponse<JobDetailResp> response = new APIResponse<>();
         response.setStatus(HttpStatus.CREATED);
         response.setMessage("Job created successfully");
         response.setResult(result);
@@ -88,6 +101,29 @@ public class JobController {
         return APIResponse.<JobResp>builder()
                 .status(HttpStatus.OK)
                 .message("Job status updated successfully")
+                .result(result)
+                .build();
+    }
+
+    @GetMapping("/recommended")
+    public APIResponse<RecommendationResp> getRecommendedJobs(@AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getSubject();
+        RecommendationResp result = jobManageService.getRecommendedJobs(username);
+
+        return APIResponse.<RecommendationResp>builder()
+                .status(HttpStatus.OK)
+                .message(result.getMessage())
+                .result(result)
+                .build();
+    }
+
+    @GetMapping("/random-latest")
+    public APIResponse<RecommendationResp> getRandomLatestJobs() {
+        RecommendationResp result = jobManageService.getRandomLatestJobs();
+
+        return APIResponse.<RecommendationResp>builder()
+                .status(HttpStatus.OK)
+                .message(result.getMessage())
                 .result(result)
                 .build();
     }
