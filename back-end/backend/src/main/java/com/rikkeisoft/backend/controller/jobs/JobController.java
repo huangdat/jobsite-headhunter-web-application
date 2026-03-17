@@ -1,11 +1,10 @@
 package com.rikkeisoft.backend.controller.jobs;
 
 import com.rikkeisoft.backend.model.dto.APIResponse;
+import com.rikkeisoft.backend.model.dto.req.job.JobReq;
 import com.rikkeisoft.backend.model.dto.PagedResponse;
-import com.rikkeisoft.backend.model.dto.req.job.JobPostReq;
 import com.rikkeisoft.backend.model.dto.req.job.JobToggleStatusReq;
 import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
-import com.rikkeisoft.backend.model.dto.resp.job.JobPostResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
 import com.rikkeisoft.backend.model.dto.resp.job.RecommendationResp;
 import com.rikkeisoft.backend.model.dto.resp.job.SavedJobResp;
@@ -19,15 +18,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -47,6 +39,11 @@ public class JobController {
         return response;
     }
 
+<<<<<<< back-end/backend/src/main/java/com/rikkeisoft/backend/controller/jobs/JobController.java
+    @PatchMapping("/{id}")
+    public APIResponse<JobDetailResp> updateJobDetail(@PathVariable("id") Long jobId, @ModelAttribute JobReq jobReq){
+        JobDetailResp result = jobManageService.updateJobPost(jobId, jobReq);
+=======
     @GetMapping
     public APIResponse<PagedResponse<JobResp>> searchJobs(
             @RequestParam(defaultValue = "1") int page,
@@ -93,8 +90,21 @@ public class JobController {
     @PostMapping
     public APIResponse<JobPostResp> postJob(@ModelAttribute @Valid JobPostReq jobPostReq) {
         JobPostResp result = jobManageService.createJobPost(jobPostReq);
+>>>>>>> back-end/backend/src/main/java/com/rikkeisoft/backend/controller/jobs/JobController.java
 
-        APIResponse<JobPostResp> response = new APIResponse<>();
+        APIResponse<JobDetailResp> response = new APIResponse<>();
+        response.setStatus(HttpStatus.OK);
+        response.setMessage("Job updated successfully");
+        response.setResult(result);
+
+        return response;
+    }
+
+    @PostMapping
+    public APIResponse<JobDetailResp> postJob(@ModelAttribute @Valid JobReq jobReq) {
+        JobDetailResp result = jobManageService.createJobPost(jobReq);
+
+        APIResponse<JobDetailResp> response = new APIResponse<>();
         response.setStatus(HttpStatus.CREATED);
         response.setMessage("Job created successfully");
         response.setResult(result);
