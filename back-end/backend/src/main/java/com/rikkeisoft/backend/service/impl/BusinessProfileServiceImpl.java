@@ -3,7 +3,6 @@ package com.rikkeisoft.backend.service.impl;
 import com.azure.core.annotation.Post;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
-import com.rikkeisoft.backend.model.dto.req.business.BusinessProfileUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.dto.resp.business.VietQRBusinessResp;
 import com.rikkeisoft.backend.repository.*;
@@ -22,7 +21,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -99,71 +97,6 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
                     return resp;
                 })
                 .toList();
-    }
-
-    /**
-     * Only ADMIN and HEADHUNTER (who owns the business profile) can update the business profile
-     * @param businessProfileId
-     * @param req
-     * @return
-     */
-    @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
-    public BusinessProfileResp updateBusinessProfile(Long businessProfileId, BusinessProfileUpdateReq req) {
-        BusinessProfile businessProfile = businessProfileRepo.findById(businessProfileId)
-                .orElseThrow(() -> new AppException(ErrorCode.BUSINESS_PROFILE_NOT_FOUND));
-
-        // Get current username from JWT authentication
-        String currentUsername = SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getName();
-
-        var currentAccount = accountRepo.findByUsername(currentUsername)
-                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
-
-        boolean isAdmin = currentAccount.getRoles() != null
-                && currentAccount.getRoles().stream().anyMatch(role -> "ADMIN".equals(role));
-
-        boolean isOwnerHeadhunter = currentAccount.getRoles() != null
-                && currentAccount.getRoles().stream().anyMatch(role -> "HEADHUNTER".equals(role))
-                && currentAccount.getBusinessProfile().getId().equals(businessProfileId);
-
-        // Only ADMIN or owner HEADHUNTER can update
-        if (!isAdmin && !isOwnerHeadhunter) {
-            throw new AppException(ErrorCode.UNAUTHORIZED);
-        }
-
-        // Use lookupMST to validate tax code if it's being updated
-        if (req.getTaxCode() != null) {
-            MSTLookupResp mstInfo = lookupMST(req.getTaxCode().trim());
-            businessProfile.setCompanyName(mstInfo.getCompanyName());
-            businessProfile.setAddressMain(mstInfo.getHeadquarterAddress());
-        }
-
-        // Update fields (partial update)
-        if (req.getTaxCode() != null) {
-            businessProfile.setTaxCode(req.getTaxCode().trim());
-        }
-        if (req.getWebsiteUrl() != null) {
-            businessProfile.setWebsiteUrl(req.getWebsiteUrl().trim());
-        }
-        if (req.getCompanyScale() != null) {
-            businessProfile.setCompanyScale(req.getCompanyScale().trim());
-        }
-        if (req.getNoteByAdmin() != null) {
-            businessProfile.setNoteByAdmin(req.getNoteByAdmin().trim());
-        }
-
-        BusinessProfile saved = businessProfileRepo.save(businessProfile);
-
-        BusinessProfileResp resp = businessProfileMapper.toBusinessProfileResp(saved);
-        List<AccountResp> accountResps = accountRepo.findByBusinessProfileId(saved.getId()).stream()
-                .map(accountMapper::toAccountResp)
-                .toList();
-        resp.setAccounts(accountResps);
-
-        return resp;
     }
 
     RestTemplate restTemplate;
