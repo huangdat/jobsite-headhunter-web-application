@@ -23,13 +23,49 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
     totalPages,
     totalItems,
     itemsPerPage,
+    sortBy,
     filters,
     setSearchValue,
     setCurrentPage,
     setItemsPerPage,
     setFilters,
+    setSortBy,
     clearFilters,
   } = useUsers();
+
+  const handleSort = (field: string, shiftKey?: boolean) => {
+    let newSort = [...sortBy];
+
+    if (shiftKey) {
+      // Multi-sort (Shift+Click)
+      const existingSort = newSort.findIndex((s) => s.field === field);
+      if (existingSort >= 0) {
+        // Toggle direction if already sorting by this field
+        newSort[existingSort].direction =
+          newSort[existingSort].direction === "asc" ? "desc" : "asc";
+      } else {
+        // Add new sort criteria
+        newSort.push({ field, direction: "asc" });
+      }
+    } else {
+      // Single sort (regular click)
+      const existingSort = newSort.find((s) => s.field === field);
+      if (existingSort) {
+        // Toggle direction if already sorting by this field
+        newSort = [
+          {
+            field,
+            direction: existingSort.direction === "asc" ? "desc" : "asc",
+          },
+        ];
+      } else {
+        // Reset and sort by this field
+        newSort = [{ field, direction: "asc" }];
+      }
+    }
+
+    setSortBy(newSort);
+  };
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -95,6 +131,9 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
           <>
             <UserListTable
               users={users}
+              isLoading = {loading}
+              sortBy={sortBy}
+              onSort={handleSort}
               onViewDetails={(userId) => {
                 console.log("📋 View user details:", userId);
               }}
