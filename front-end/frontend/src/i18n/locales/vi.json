@@ -18,6 +18,14 @@
     "forgotPassword": "Quên Mật Khẩu?",
     "noAccount": "Chưa có tài khoản?",
     "haveAccount": "Đã có tài khoản?",
+    "buttons": {
+      "next": "Tiếp Theo",
+      "previous": "Quay Lại",
+      "createAccount": "Tạo Tài Khoản",
+      "sendingOtp": "Đang gửi OTP...",
+      "signIn": "Đăng Nhập",
+      "submit": "Gửi"
+    },
     "messages": {
       "signedInSuccess": "Đã đăng nhập thành công.",
       "socialAccountFound": "Tài khoản xã hội được tìm thấy. Vui lòng hoàn thành đăng ký.",
@@ -32,7 +40,32 @@
       "accountCreatedSuccess": "Tài khoản đã được tạo thành công!",
       "emailVerified": "Email được xác minh! Đang tạo tài khoản của bạn...",
       "failedToResetPassword": "Không thể đặt lại mật khẩu. Vui lòng thử lại.",
-      "failedToChangePassword": "Không thể thay đổi mật khẩu. Vui lòng thử lại."
+      "failedToChangePassword": "Không thể thay đổi mật khẩu. Vui lòng thử lại.",
+      "failedToSendOtp": "Không thể gửi OTP. Vui lòng thử lại."
+    },
+    "steps": {
+      "account": {
+        "title": "Tài khoản",
+        "desc": "Thông tin đăng nhập"
+      },
+      "personal": {
+        "title": "Cá nhân",
+        "desc": "Thông tin cá nhân"
+      },
+      "details": {
+        "title": "Chi tiết",
+        "desc": "Chi tiết bổ sung"
+      }
+    },
+    "form": {
+      "register": {
+        "joinNetwork": "Tham gia Mạng",
+        "professional": "Chuyên Nghiệp",
+        "signIn": "Đăng Nhập",
+        "nextStep": "Tiếp Theo",
+        "previousStep": "Quay Lại",
+        "completeRegistration": "Hoàn Tất Đăng Ký"
+      }
     },
     "validation": {
       "fixErrors": "Vui lòng sửa các lỗi trước khi tiếp tục",
@@ -55,7 +88,38 @@
       "passwordLowercase": "Mật khẩu phải chứa ít nhất một chữ thường",
       "passwordNumber": "Mật khẩu phải chứa ít nhất một số",
       "passwordSpecialChars": "Mật khẩu chỉ có thể chứa chữ cái, số và dấu gạch dưới",
-      "newPasswordMustBeDifferent": "Mật khẩu mới phải khác với mật khẩu hiện tại"
+      "newPasswordMustBeDifferent": "Mật khẩu mới phải khác với mật khẩu hiện tại",
+      "emailExists": "Email này đã được đăng ký",
+      "usernameExists": "Tên đăng nhập này đã được sử dụng",
+      "emailCheckFailed": "Không thể kiểm tra email, vui lòng thử lại",
+      "usernameCheckFailed": "Không thể kiểm tra tên đăng nhập, vui lòng thử lại",
+      "waitForValidation": "Vui lòng đợi cho đến khi hoàn thành kiểm tra...",
+      "fields": {
+        "usernameRequired": "Tên đăng nhập là bắt buộc",
+        "usernameBetween": "Tên đăng nhập phải từ 8 đến 32 ký tự",
+        "usernameStartsWithLetter": "Tên đăng nhập phải bắt đầu bằng chữ cái",
+        "usernameAlphanumeric": "Tên đăng nhập chỉ có thể chứa chữ cái, số và dấu gạch dưới",
+        "emailRequired": "Email là bắt buộc",
+        "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ",
+        "emailExists": "Email này đã được đăng ký",
+        "fullNameRequired": "Họ và Tên là bắt buộc",
+        "fullNameMinLength": "Họ và Tên phải có ít nhất 2 ký tự",
+        "fullNameLettersOnly": "Họ và Tên chỉ có thể chứa chữ cái và khoảng trắng",
+        "phoneRequired": "Số điện thoại là bắt buộc",
+        "phoneInvalid": "Vui lòng nhập số điện thoại Việt Nam hợp lệ (ví dụ: 0912345678)",
+        "genderInvalid": "Giới tính không hợp lệ",
+        "avatarFileSizeExceeded": "Kích thước file phải nhỏ hơn 5MB",
+        "avatarFileTypeInvalid": "File phải là ảnh (JPG, PNG, GIF, WebP)",
+        "taxCodeRequired": "Mã số thuế là bắt buộc",
+        "taxCodeInvalid": "Mã số thuế phải có 10 hoặc 13 chữ số",
+        "websiteUrlInvalid": "URL website phải hợp lệ",
+        "commissionRateInvalid": "Tỷ lệ hoa hồng phải từ 0 đến 100",
+        "yearsOfExperienceInvalid": "Năm kinh nghiệm không thể âm",
+        "yearsOfExperienceMax": "Năm kinh nghiệm không được vượt quá 60",
+        "salaryInvalid": "Lương phải là một số",
+        "salaryNegative": "Lương không thể âm",
+        "agreeTermsRequired": "Bạn phải đồng ý với Điều khoản & Điều kiện"
+      }
     },
     "placeholders": {
       "usernameOrEmail": "john_doe123 hoặc email@company.com",
@@ -87,7 +151,183 @@
       "uploadAvatar": "Tải lên ảnh hồ sơ",
       "selectCompanyScale": "Chọn quy mô công ty"
     },
+    "labels": {
+      "username": "Tên Đăng Nhập",
+      "email": "Email",
+      "password": "Mật Khẩu",
+      "confirmPassword": "Xác Nhận Mật Khẩu",
+      "fullName": "Họ và Tên",
+      "phoneNumber": "Số Điện Thoại",
+      "gender": "Giới Tính (Tuỳ Chọn)",
+      "profilePicture": "Ảnh Hồ Sơ (Tuỳ Chọn)",
+      "currentJobTitle": "Chức Vụ Hiện Tại (Tuỳ Chọn)",
+      "yearsOfExperience": "Năm Kinh Nghiệm (Tuỳ Chọn)",
+      "city": "Thành Phố (Tuỳ Chọn)",
+      "expectedSalaryMin": "Lương Kỳ Vọng Tối Thiểu (USD, Tuỳ Chọn)",
+      "expectedSalaryMax": "Lương Kỳ Vọng Tối Đa (USD, Tuỳ Chọn)",
+      "bio": "Giới Thiệu (Tuỳ Chọn)",
+      "jobSearchStatus": "Tình Trạng Tìm Kiếm Việc",
+      "taxCode": "Mã Số Thuế",
+      "companyWebsite": "Website Công Ty (Tuỳ Chọn)",
+      "companyScale": "Quy Mô Công Ty (Tuỳ Chọn)",
+      "commissionRate": "Tỷ Lệ Hoa Hồng (%, Tuỳ Chọn)"
+    },
+    "descriptions": {
+      "candidateDetails": "Các trường tuỳ chọn để giúp nhà tuyển dụng tìm thấy bạn nhanh hơn",
+      "headhunterDetails": "Thông tin công ty và chi tiết tuyển dụng",
+      "collaboratorDetails": "Thông tin tuỳ chọn cho cộng tác",
+      "taxCodeInfo": "Tên công ty và địa chỉ đăng ký của bạn sẽ được tìm kiếm tự động từ mã số thuế thông qua sổ đăng ký MST",
+      "collaboratorInfo": "Là một cộng tác viên, bạn giúp kết nối ứng viên tài năng với các cơ hội tuyệt vời. Bắt đầu kiếm hoa hồng bằng cách giới thiệu những chuyên gia có yêu cầu!",
+      "commissionRateTip": "Tỷ lệ hoa hồng ưa thích của bạn cho những giới thiệu thành công"
+    },
+    "selectOptions": {
+      "selectGender": "Chọn Giới Tính",
+      "genders": {
+        "male": "Nam",
+        "female": "Nữ",
+        "other": "Khác"
+      },
+      "selectCompanyScale": "Chọn Quy Mô Công Ty",
+      "companyScaleOptions": [
+        {
+          "value": "1-10",
+          "label": "1-10 nhân viên"
+        },
+        {
+          "value": "11-50",
+          "label": "11-50 nhân viên"
+        },
+        {
+          "value": "51-200",
+          "label": "51-200 nhân viên"
+        },
+        {
+          "value": "201-500",
+          "label": "201-500 nhân viên"
+        },
+        {
+          "value": "500+",
+          "label": "500+ nhân viên"
+        }
+      ]
+    },
+    "checkboxLabels": {
+      "openForWork": "Tôi đang mở cơ hội mới"
+    },
     "pages": {
+      "selectRole": {
+        "title": "Chọn Vai Trò",
+        "subtitle": "Chọn cách bạn muốn tham gia nền tảng của chúng tôi",
+        "pageTitle": "Tham Gia JobSite",
+        "pageSubtitle": "Chọn vai trò của bạn để bắt đầu tạo tài khoản",
+        "continue": "Tiếp Tục",
+        "alreadyHaveAccount": "Đã có tài khoản?",
+        "roles": {
+          "candidate": "Ứng Viên",
+          "candidateDesc": "Tìm cơ hội sự nghiệp tiếp theo của tôi",
+          "collaborator": "Cộng Tác Viên",
+          "collaboratorDesc": "Giới thiệu nhân tài hàng đầu và kiếm phần thưởng",
+          "headhunter": "Nhà Tuyển Dụng",
+          "headhunterDesc": "Nhà tuyển dụng chuyên nghiệp quản lý nhiều vị trí"
+        }
+      },
+      "register": {
+        "candidate": {
+          "title": "Đăng Ký Ứng Viên",
+          "subtitle": "Tạo tài khoản để tìm công việc hoàn hảo cho bạn"
+        },
+        "collaborator": {
+          "title": "Đăng Ký Cộng Tác Viên",
+          "subtitle": "Tạo tài khoản để hỗ trợ tuyển dụng"
+        },
+        "headhunter": {
+          "title": "Đăng Ký Nhà Tuyển Dụng",
+          "subtitle": "Tạo tài khoản để đăng tin tuyển dụng"
+        },
+        "steps": {
+          "account": "Tài khoản",
+          "personal": "Cá nhân",
+          "details": "Chi tiết"
+        },
+        "buttons": {
+          "next": "Tiếp Theo",
+          "previous": "Quay Lại",
+          "submit": "Hoàn Tất Đăng Ký",
+          "createAccount": "Tạo Tài Khoản"
+        },
+        "accountStep": {
+          "title": "Tài khoản của bạn",
+          "username": "Tên đăng nhập",
+          "email": "Email",
+          "password": "Mật khẩu",
+          "confirmPassword": "Xác nhận mật khẩu",
+          "showPassword": "Hiển thị mật khẩu",
+          "passwordRequirements": "Yêu cầu mật khẩu",
+          "requirement8to16": "Từ 8 đến 16 ký tự",
+          "requirementUppercase": "Phải có chữ hoa",
+          "requirementLowercase": "Phải có chữ thường",
+          "requirementNumber": "Phải có số",
+          "requirementAlphanumeric": "Chỉ chữ cái, số và dấu gạch dưới",
+          "passwordMatches": "Mật khẩu trùng khớp"
+        },
+        "personalStep": {
+          "title": "Thông tin cá nhân",
+          "fullName": "Họ và Tên",
+          "phone": "Số điện thoại",
+          "gender": "Giới tính",
+          "avatar": "Ảnh hồ sơ",
+          "selectGender": "Chọn giới tính",
+          "male": "Nam",
+          "female": "Nữ",
+          "other": "Khác",
+          "uploadAvatar": "Tải lên ảnh hồ sơ"
+        },
+        "agreeTerms": "Tôi đồng ý với Điều khoản & Điều kiện"
+      },
+      "candidateStep": {
+        "title": "Chi tiết ứng viên",
+        "currentTitle": "Chức vụ hiện tại",
+        "yearsOfExperience": "Năm kinh nghiệm",
+        "expectedSalaryMin": "Lương kỳ vọng tối thiểu",
+        "expectedSalaryMax": "Lương kỳ vọng tối đa",
+        "city": "Thành phố",
+        "bio": "Giới thiệu",
+        "openForWork": "Đang tìm kiếm công việc"
+      },
+      "collaboratorStep": {
+        "title": "Chi tiết cộng tác viên",
+        "commissionRate": "Tỷ lệ hoa hồng (%)"
+      },
+      "headhunterStep": {
+        "title": "Chi tiết nhà tuyển dụng",
+        "taxCode": "Mã số thuế",
+        "websiteUrl": "Website công ty",
+        "companyScale": "Quy mô công ty"
+      },
+      "login": {
+        "title": "Đăng Nhập",
+        "welcomeBack": "Chào Mừng Bạn Quay Lại",
+        "subtitle": "Nhập thông tin đăng nhập của bạn để truy cập tài khoản",
+        "username": "Tên Đăng Nhập",
+        "password": "Mật Khẩu",
+        "rememberMe": "Ghi Nhớ Tôi",
+        "signInButton": "Đăng Nhập",
+        "signingIn": "Đang Đăng Nhập...",
+        "orContinueWith": "hoặc tiếp tục với",
+        "enterUsername": "Nhập tên đăng nhập của bạn",
+        "joinNetwork": "Tham gia mạng lưới giới thiệu chuyên nghiệp của JobSite và kết nối những tài năng tuyệt vời với các công ty hàng đầu.",
+        "forgotPasswordLink": "Quên mật khẩu?",
+        "noAccount": "Chưa có tài khoản?"
+      },
+      "forgotPassword": {
+        "title": "Quên Mật Khẩu?",
+        "subtitle": "Không sao. Nhập email của bạn và chúng tôi sẽ gửi cho bạn liên kết đặt lại mật khẩu.",
+        "resetYourPassword": "Đặt Lại Mật Khẩu Của Bạn",
+        "instruction": "Nhập email liên kết với tài khoản của bạn và chúng tôi sẽ gửi cho bạn mã OTP.",
+        "emailLabel": "Địa Chỉ Email",
+        "securePasswordRecovery": "Khôi Phục Mật Khẩu An Toàn",
+        "protectedAccountAccess": "Truy Cập Tài Khoản Được Bảo Vệ"
+      },
       "resetPassword": {
         "title": "Bảo vệ tài khoản của bạn.",
         "subtitle": "Nhập OTP được gửi đến email của bạn và tạo mật khẩu mạnh mới để giữ tài khoản của bạn an toàn.",
