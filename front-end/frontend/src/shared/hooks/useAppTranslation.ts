@@ -6,7 +6,7 @@ import { useMemo } from "react";
  * Usage: const { t, i18n } = useAppTranslation();
  */
 export const useAppTranslation = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("translation");
 
   const changeLanguage = (lng: string) => {
     void i18n.changeLanguage(lng);
