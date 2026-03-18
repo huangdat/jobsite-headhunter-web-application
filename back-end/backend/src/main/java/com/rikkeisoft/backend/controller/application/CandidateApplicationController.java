@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.*;
 public class CandidateApplicationController {
     ApplicationService applicationService;
 
-//    // POST /applications - Apply for a job
-//    @PostMapping("/applications")
-//    public APIResponse<ApplicationDetailResp> applyForJob(@ModelAttribute ApplicationCreateReq req) {
-//        return APIResponse.<ApplicationDetailResp>builder()
-//                .result(applicationService.applyForJob(req, /** userid placeholder **/))
-//                .build();
-//    }
-//
-//    // GET /candidates/me/applications - View applied jobs
-//    @GetMapping("/candidates/me/applications")
-//    public APIResponse<Page<ApplicationResp>> getMyApplications(Pageable pageable) {
-//        return APIResponse.<Page<ApplicationResp>>builder()
-//                .result(applicationService.getMyApplications(/** userid placeholder **/, pageable))
-//                .build();
-//    }
+    // POST /applications - Apply for a job
+    @PostMapping("/applications")
+    public APIResponse<ApplicationDetailResp> applyForJob(@ModelAttribute ApplicationCreateReq req) {
+        return APIResponse.<ApplicationDetailResp>builder()
+                .result(applicationService.applyForJob(req))
+                .build();
+    }
+
+    // GET /candidates/me/applications - View applied jobs
+    @GetMapping("/candidates/me/applications")
+    public APIResponse<Page<ApplicationResp>> getMyApplications(Pageable pageable) {
+        return APIResponse.<Page<ApplicationResp>>builder()
+                .result(applicationService.getMyApplications(pageable))
+                .build();
+    }
 }
