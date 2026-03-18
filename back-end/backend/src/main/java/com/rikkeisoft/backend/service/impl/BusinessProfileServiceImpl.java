@@ -41,7 +41,6 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     ApplicationRepo applicationRepo;
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_HEADHUNTER')")
     public List<BusinessProfileResp> getAllBusinessProfiles() {
         if (businessProfileRepo.count() == 0) {
             throw new AppException(ErrorCode.NO_BUSINESS_PROFILES_STORED);
