@@ -5,6 +5,7 @@ import com.rikkeisoft.backend.model.dto.resp.application.ApplicationDetailResp;
 import com.rikkeisoft.backend.model.dto.resp.application.ApplicationResp;
 import com.rikkeisoft.backend.model.entity.Application;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * MapStruct mapper for converting between Application entities and DTOs.
@@ -12,6 +13,10 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ApplicationMapper {
     Application toEntity(ApplicationCreateReq req);
+
+    @Mapping(target = "jobTitle", source = "job.title")
     ApplicationResp toResponse(Application entity);
+
+    @Mapping(target = "jobTitle", source = "job.title")
     ApplicationDetailResp toDetailResponse(Application entity);
 }
