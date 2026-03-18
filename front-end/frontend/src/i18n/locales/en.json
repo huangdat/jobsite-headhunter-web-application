@@ -18,6 +18,14 @@
     "forgotPassword": "Forgot Password?",
     "noAccount": "Don't have an account?",
     "haveAccount": "Already have an account?",
+    "buttons": {
+      "next": "Next",
+      "previous": "Previous",
+      "createAccount": "Create Account",
+      "sendingOtp": "Sending OTP...",
+      "signIn": "Sign In",
+      "submit": "Submit"
+    },
     "messages": {
       "signedInSuccess": "Signed in successfully.",
       "socialAccountFound": "Social account found. Please complete registration.",
@@ -32,7 +40,32 @@
       "accountCreatedSuccess": "Account created successfully!",
       "emailVerified": "Email verified! Creating your account...",
       "failedToResetPassword": "Failed to reset password. Please try again.",
-      "failedToChangePassword": "Failed to change password. Please try again."
+      "failedToChangePassword": "Failed to change password. Please try again.",
+      "failedToSendOtp": "Failed to send OTP. Please try again."
+    },
+    "steps": {
+      "account": {
+        "title": "Account",
+        "desc": "Login Information"
+      },
+      "personal": {
+        "title": "Personal",
+        "desc": "Personal Information"
+      },
+      "details": {
+        "title": "Details",
+        "desc": "Additional Details"
+      }
+    },
+    "form": {
+      "register": {
+        "joinNetwork": "Join Our",
+        "professional": "Professional",
+        "signIn": "Sign In",
+        "nextStep": "Next",
+        "previousStep": "Previous",
+        "completeRegistration": "Complete Registration"
+      }
     },
     "validation": {
       "fixErrors": "Please fix the errors before continuing",
@@ -55,7 +88,38 @@
       "passwordLowercase": "Password must contain at least one lowercase letter",
       "passwordNumber": "Password must contain at least one number",
       "passwordSpecialChars": "Password can only contain letters, numbers, and underscores",
-      "newPasswordMustBeDifferent": "New password must be different from current password"
+      "newPasswordMustBeDifferent": "New password must be different from current password",
+      "emailExists": "This email is already registered",
+      "usernameExists": "This username is already taken",
+      "emailCheckFailed": "Could not verify email, please try again",
+      "usernameCheckFailed": "Could not verify username, please try again",
+      "waitForValidation": "Please wait for validation to complete...",
+      "fields": {
+        "usernameRequired": "Username is required",
+        "usernameBetween": "Username must be between 8 and 32 characters",
+        "usernameStartsWithLetter": "Username must start with a letter",
+        "usernameAlphanumeric": "Username can only contain letters, numbers, and underscores",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email address",
+        "emailExists": "This email is already registered",
+        "fullNameRequired": "Full name is required",
+        "fullNameMinLength": "Full name must be at least 2 characters",
+        "fullNameLettersOnly": "Full name can only contain letters and spaces",
+        "phoneRequired": "Phone number is required",
+        "phoneInvalid": "Please enter a valid Vietnamese phone number (e.g., 0912345678)",
+        "genderInvalid": "Invalid gender",
+        "avatarFileSizeExceeded": "File size must be less than 5MB",
+        "avatarFileTypeInvalid": "File must be an image (JPG, PNG, GIF, WebP)",
+        "taxCodeRequired": "Tax code is required",
+        "taxCodeInvalid": "Tax code must be 10 or 13 digits",
+        "websiteUrlInvalid": "Website URL must be valid",
+        "commissionRateInvalid": "Commission rate must be between 0 and 100",
+        "yearsOfExperienceInvalid": "Years of experience cannot be negative",
+        "yearsOfExperienceMax": "Years of experience cannot exceed 60",
+        "salaryInvalid": "Salary must be a number",
+        "salaryNegative": "Salary cannot be negative",
+        "agreeTermsRequired": "You must agree to the Terms & Conditions"
+      }
     },
     "placeholders": {
       "usernameOrEmail": "john_doe123 or email@company.com",
@@ -87,7 +151,184 @@
       "uploadAvatar": "Upload avatar image",
       "selectCompanyScale": "Select company scale"
     },
+    "labels": {
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "fullName": "Full Name",
+      "phoneNumber": "Phone Number",
+      "gender": "Gender (Optional)",
+      "profilePicture": "Profile Picture (Optional)",
+      "currentJobTitle": "Current Job Title (Optional)",
+      "yearsOfExperience": "Years of Experience (Optional)",
+      "city": "City (Optional)",
+      "expectedSalaryMin": "Expected Salary Min (USD, Optional)",
+      "expectedSalaryMax": "Expected Salary Max (USD, Optional)",
+      "bio": "Bio (Optional)",
+      "jobSearchStatus": "Job Search Status",
+      "taxCode": "Tax Code",
+      "companyWebsite": "Company Website (Optional)",
+      "companyScale": "Company Scale (Optional)",
+      "commissionRate": "Commission Rate (%, Optional)"
+    },
+    "descriptions": {
+      "candidateDetails": "Optional fields to help recruiters find you faster",
+      "headhunterDetails": "Company information and recruitment details",
+      "collaboratorDetails": "Optional information for collaboration",
+      "taxCodeInfo": "Your company name and registered address will be looked up automatically from your tax code via the MST registry",
+      "collaboratorInfo": "As a collaborator, you help connect talented candidates with great opportunities. Start earning commissions by referring qualified professionals!",
+      "commissionRateTip": "Your preferred commission rate for successful referrals"
+    },
+    "selectOptions": {
+      "selectGender": "Select Gender",
+      "genders": {
+        "male": "Male",
+        "female": "Female",
+        "other": "Other"
+      },
+      "selectCompanyScale": "Select Company Scale",
+      "companyScaleOptions": [
+        {
+          "value": "1-10",
+          "label": "1-10 employees"
+        },
+        {
+          "value": "11-50",
+          "label": "11-50 employees"
+        },
+        {
+          "value": "51-200",
+          "label": "51-200 employees"
+        },
+        {
+          "value": "201-500",
+          "label": "201-500 employees"
+        },
+        {
+          "value": "500+",
+          "label": "500+ employees"
+        }
+      ]
+    },
+    "checkboxLabels": {
+      "openForWork": "I'm open to new opportunities"
+    },
     "pages": {
+      "selectRole": {
+        "title": "Choose Your Role",
+        "titleHighlight": "Role",
+        "subtitle": "Select how you want to participate in our platform",
+        "pageTitle": "Join JobSite",
+        "pageSubtitle": "Select your role to start creating your account",
+        "continue": "Continue",
+        "alreadyHaveAccount": "Already have an account?",
+        "roles": {
+          "candidate": "Candidate",
+          "candidateDesc": "Looking for my next career opportunity",
+          "collaborator": "Collaborator",
+          "collaboratorDesc": "Referring top talent and earning rewards",
+          "headhunter": "Headhunter",
+          "headhunterDesc": "Professional recruiter managing multiple roles"
+        }
+      },
+      "register": {
+        "candidate": {
+          "title": "Sign Up as Candidate",
+          "subtitle": "Create an account to find the perfect job for you"
+        },
+        "collaborator": {
+          "title": "Sign Up as Collaborator",
+          "subtitle": "Create an account to help with recruitment"
+        },
+        "headhunter": {
+          "title": "Sign Up as Headhunter",
+          "subtitle": "Create an account to post job openings"
+        },
+        "steps": {
+          "account": "Account",
+          "personal": "Personal",
+          "details": "Details"
+        },
+        "buttons": {
+          "next": "Next",
+          "previous": "Previous",
+          "submit": "Complete Registration",
+          "createAccount": "Create Account"
+        },
+        "accountStep": {
+          "title": "Your Account",
+          "username": "Username",
+          "email": "Email Address",
+          "password": "Password",
+          "confirmPassword": "Confirm Password",
+          "showPassword": "Show Password",
+          "passwordRequirements": "Password Requirements",
+          "requirement8to16": "8 to 16 characters",
+          "requirementUppercase": "Must have uppercase",
+          "requirementLowercase": "Must have lowercase",
+          "requirementNumber": "Must have number",
+          "requirementAlphanumeric": "Letters, numbers and underscores only",
+          "passwordMatches": "Passwords match"
+        },
+        "personalStep": {
+          "title": "Personal Information",
+          "fullName": "Full Name",
+          "phone": "Phone Number",
+          "gender": "Gender",
+          "avatar": "Profile Picture",
+          "selectGender": "Select gender",
+          "male": "Male",
+          "female": "Female",
+          "other": "Other",
+          "uploadAvatar": "Upload profile picture"
+        },
+        "agreeTerms": "I agree to the Terms & Conditions"
+      },
+      "candidateStep": {
+        "title": "Candidate Details",
+        "currentTitle": "Current Job Title",
+        "yearsOfExperience": "Years of Experience",
+        "expectedSalaryMin": "Expected Minimum Salary",
+        "expectedSalaryMax": "Expected Maximum Salary",
+        "city": "City",
+        "bio": "Bio",
+        "openForWork": "Open for Work"
+      },
+      "collaboratorStep": {
+        "title": "Collaborator Details",
+        "commissionRate": "Commission Rate (%)"
+      },
+      "headhunterStep": {
+        "title": "Headhunter Details",
+        "taxCode": "Tax Code",
+        "websiteUrl": "Company Website",
+        "companyScale": "Company Scale"
+      },
+      "login": {
+        "title": "Sign In",
+        "welcomeBack": "Welcome Back",
+        "subtitle": "Enter your login credentials to access your account",
+        "username": "Username",
+        "password": "Password",
+        "rememberMe": "Remember me",
+        "signInButton": "Sign In",
+        "signingIn": "Signing in...",
+        "orContinueWith": "or continue with",
+        "enterUsername": "Enter your username",
+        "joinNetwork": "Join JobSite's professional referral network and connect great talent with top companies.",
+        "forgotPasswordLink": "Forgot password?",
+        "noAccount": "Don't have an account?"
+      },
+      "forgotPassword": {
+        "title": "Forgot Password?",
+        "subtitle": "No worries. Enter your email and we will send you a password reset link.",
+        "resetYourPassword": "Reset Your Password",
+        "instruction": "Enter the email associated with your account and we'll send you an OTP code.",
+        "emailLabel": "Email Address",
+        "securePasswordRecovery": "Secure Password Recovery",
+        "protectedAccountAccess": "Protected Account Access"
+      },
       "resetPassword": {
         "title": "Secure Your Account.",
         "subtitle": "Enter the OTP sent to your email and create a new strong password to keep your account safe.",
