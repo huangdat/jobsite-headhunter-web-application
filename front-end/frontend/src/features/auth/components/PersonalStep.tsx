@@ -1,82 +1,65 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
 import { useAppTranslation } from "@/shared/hooks";
+import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdPerson, MdPhone, MdWc, MdCameraAlt } from "react-icons/md";
+import type { RegisterFormData } from "../types";
 
 interface PersonalStepProps {
-  formData: {
-    fullName: string;
-    phone: string;
-    gender?: string;
-    avatar?: File | null;
-  };
-  errors: Record<string, string>;
-  handleChange: (field: string) => (value: string | File | null) => void;
+  form: UseAppFormReturn<RegisterFormData>;
 }
 
-export function PersonalStep({
-  formData,
-  errors,
-  handleChange,
-}: PersonalStepProps) {
+export function PersonalStep({ form }: PersonalStepProps) {
   const { t } = useAppTranslation();
+  const { register } = form;
+
   return (
     <>
-      <FormField label="Full Name" error={errors.fullName}>
+      <FormField label={t("auth.labels.fullName")} error={form.getError("fullName")}>
         <Input
-          name="fullName"
+          {...register("fullName")}
           autoComplete="name"
           icon={<MdPerson />}
           placeholder={t("auth.placeholders.name")}
-          value={formData.fullName}
-          onChange={(e) => handleChange("fullName")(e.target.value)}
-          error={!!errors.fullName}
+          error={!!form.getError("fullName")}
         />
       </FormField>
 
-      <FormField label="Phone Number" error={errors.phone}>
+      <FormField label={t("auth.labels.phoneNumber")} error={form.getError("phone")}>
         <Input
-          name="phone"
+          {...register("phone")}
           autoComplete="tel"
           icon={<MdPhone />}
           placeholder={t("auth.placeholders.phone")}
-          value={formData.phone}
-          onChange={(e) => handleChange("phone")(e.target.value)}
-          error={!!errors.phone}
+          error={!!form.getError("phone")}
         />
       </FormField>
 
       {/* GENDER + AVATAR */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label="Gender (Optional)">
+        <FormField label={t("auth.labels.gender")}>
           <div className="relative">
             <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <select
-              name="gender"
-              value={formData.gender || ""}
-              onChange={(e) => handleChange("gender")(e.target.value)}
+              {...register("gender")}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label={t("auth.aria.selectGender")}
             >
-              <option value="">Select Gender</option>
-              <option value="MALE">Male</option>
-              <option value="FEMALE">Female</option>
-              <option value="OTHER">Other</option>
+              <option value="">{t("auth.selectOptions.selectGender")}</option>
+              <option value="MALE">{t("auth.selectOptions.genders.male")}</option>
+              <option value="FEMALE">{t("auth.selectOptions.genders.female")}</option>
+              <option value="OTHER">{t("auth.selectOptions.genders.other")}</option>
             </select>
           </div>
         </FormField>
 
-        <FormField label="Profile Picture (Optional)">
+        <FormField label={t("auth.labels.profilePicture")}>
           <div className="relative">
             <MdCameraAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10 pointer-events-none" />
             <input
-              name="avatar"
+              {...register("avatar")}
               type="file"
               accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                handleChange("avatar")(file || null);
-              }}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
               aria-label={t("auth.aria.uploadProfilePicture")}
             />
