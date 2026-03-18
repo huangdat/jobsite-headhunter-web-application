@@ -11,6 +11,8 @@ import {
   ChangePasswordPage,
 } from "@/features/auth/pages";
 import { HomePage } from "@/features/home/pages/HomePage";
+import { UserListPage } from "@/features/users/list";
+import { AdminLayout } from "@/features/users/list/layouts/AdminLayout";
 import { GuestOnlyRoute } from "@/features/auth/components/GuestOnlyRoute";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 
@@ -83,6 +85,16 @@ export function AppRouter() {
         }
       />
       <Route path="/home" element={<HomePage />} />
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <UserListPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
