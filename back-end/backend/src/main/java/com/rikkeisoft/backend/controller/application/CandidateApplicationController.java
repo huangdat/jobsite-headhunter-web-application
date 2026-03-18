@@ -27,7 +27,7 @@ public class CandidateApplicationController {
     @PostMapping("/applications")
     public APIResponse<ApplicationDetailResp> applyForJob(@ModelAttribute ApplicationCreateReq req) {
         return APIResponse.<ApplicationDetailResp>builder()
-                .result(applicationService.applyForJob(req, /** userid placeholder **/))
+                .result(applicationService.applyForJob(req))
                 .build();
     }
 
@@ -35,7 +35,7 @@ public class CandidateApplicationController {
     @GetMapping("/candidates/me/applications")
     public APIResponse<Page<ApplicationResp>> getMyApplications(Pageable pageable) {
         return APIResponse.<Page<ApplicationResp>>builder()
-                .result(applicationService.getMyApplications(/** userid placeholder **/, pageable))
+                .result(applicationService.getMyApplications(pageable))
                 .build();
     }
 }
