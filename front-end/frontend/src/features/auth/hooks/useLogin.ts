@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { login } from "../services/authApi";
 import type { LoginFormData } from "../types";
 import { useAuth } from "../context/useAuth";
+import { useAppTranslation } from "@/shared/hooks";
 import { extractApiErrorMessage } from "../utils/apiError";
 
 const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
@@ -11,6 +12,7 @@ const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
 export const useLogin = () => {
   const navigate = useNavigate();
   const { signIn } = useAuth();
+  const { t } = useAppTranslation();
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -73,7 +75,7 @@ export const useLogin = () => {
         }
 
         // Success Notification
-        toast.success("Welcome Back! Login Successful.");
+        toast.success(t("auth.messages.signedInSuccess"));
 
         navigate("/home");
         return;

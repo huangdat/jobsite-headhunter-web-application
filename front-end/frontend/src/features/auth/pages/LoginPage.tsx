@@ -305,10 +305,10 @@ export function LoginPage() {
 
         {/* RIGHT PANEL */}
         <div className="p-10">
-          <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
+          <h2 className="text-3xl font-bold mb-2">{t("auth.pages.login.welcomeBack")}</h2>
 
           <p className="text-gray-500 mb-8">
-            Enter your credentials to access your account.
+            {t("auth.pages.login.subtitle")}
           </p>
           <form
             onSubmit={(e) => {
@@ -318,21 +318,21 @@ export function LoginPage() {
             className="space-y-6"
           >
             {/* USERNAME OR EMAIL */}
-            <FormField label="Username" error={errors.email}>
+            <FormField label={t("auth.labels.username")} error={errors.email}>
               <Input
                 name="username"
                 autoComplete="username"
                 icon={<MdAccountCircle />}
                 type="text"
-                placeholder="john_doe123"
+                placeholder={t("auth.placeholders.username")}
                 value={formData.email}
                 onChange={(e) => handleChange("email")(e.target.value)}
               />
-              <p className="text-xs text-slate-500 mt-1">Enter your username</p>
+              <p className="text-xs text-slate-500 mt-1">{t("auth.pages.login.enterUsername")}</p>
             </FormField>
 
             {/* PASSWORD */}
-            <FormField label="Password" error={errors.password}>
+            <FormField label={t("auth.labels.password")} error={errors.password}>
               <Input
                 name="password"
                 autoComplete="current-password"
@@ -362,11 +362,11 @@ export function LoginPage() {
               <AnimatedCheckbox
                 checked={formData.rememberMe ?? false}
                 onChange={(value: boolean) => handleChange("rememberMe")(value)}
-                label="Remember me"
+                label={t("auth.pages.login.rememberMe")}
               />
 
               <Link to="/forgot-password" className="text-lime-500">
-                Forgot password?
+                {t("auth.pages.login.forgotPasswordLink")}
               </Link>
             </div>
 
@@ -379,13 +379,13 @@ export function LoginPage() {
               className="w-full flex justify-center gap-2 cursor-pointer"
             >
               <HiOutlineArrowRight />
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? t("auth.pages.login.signingIn") : t("auth.buttons.signIn")}
             </Button>
 
             {/* DIVIDER */}
             <div className="flex items-center gap-4 my-6">
               <div className="flex-1 h-px bg-slate-200"></div>
-              <span className="text-sm text-gray-400">or continue with</span>
+              <span className="text-sm text-gray-400">{t("auth.pages.login.orContinueWith")}</span>
               <div className="flex-1 h-px bg-slate-200"></div>
             </div>
 
@@ -400,10 +400,10 @@ export function LoginPage() {
             {/* REGISTER LINK */}
             <div className="text-center mt-6 text-sm">
               <span className="text-slate-500">
-                Don't have an account yet?{" "}
+                {t("auth.pages.login.noAccount")}{" "}
               </span>
               <Link to="/select-role" className="text-lime-500 hover:underline">
-                Sign up
+                {t("auth.register")}
               </Link>
             </div>
           </form>
