@@ -51,7 +51,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('22222222-2222-2222-2222-222222222222','cuongct123','cuongct.ce190026@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Châu Tấn Cường','0901000002',NULL,'FEMALE','LOCAL',NULL,'SUSPENDED','2026-02-11 05:25:21','2026-03-10 16:15:23'),('33333333-3333-3333-3333-333333333333','haona123','haona.ce190361','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Nguyễn Anh Hào','0901000003',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('44444444-4444-4444-4444-444444444444','phucdc123','phucdc.ce190770','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Đinh Công Phúc','0901000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('55555555-5555-5555-5555-555555555555','loilt123','loilt.ce190481@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Lê Thành Lợi','0901000005',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('66666666-6666-6666-6666-666666666666','votansang123','votansang1711@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Võ Tấn Sang','0901000006',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('77777777-7777-7777-7777-777777777777','nguyentrungduc123','nguyentrungduc.forwork@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Nguyễn Trung Đức','0901000007',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('8156bb1b-e259-4999-8139-14064898c621','datnh123','datnhce1807977@fpt.edu.vn','$2a$10$YxwzGTzKyRnJOI8zrgIhx.tcV1o29HVd9AJYWpVtxOLl.wuSbSlqi',NULL,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/superman-matday_a1b034d6-0154-4f24-ae04-a928b1d5a34e.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 15:47:17','2026-03-08 15:47:17'),('88712906-203f-11f1-95b5-0242ac110002','fpthr','hr@fpt.com','$2a$10$hash',NULL,'Tran Minh Anh','0902000001',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('8871f567-203f-11f1-95b5-0242ac110002','vnghr','hr@vng.com','$2a$10$hash',19,'Nguyen Thanh Nam','0902000002',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('8871f892-203f-11f1-95b5-0242ac110002','vinamilkhr','hr@vinamilk.com','$2a$10$hash',20,'Le Thu Ha','0902000003',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('8871fd07-203f-11f1-95b5-0242ac110002','vingrouphr','hr@vingroup.net','$2a$10$hash',21,'Pham Duc Long','0902000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('8871fe18-203f-11f1-95b5-0242ac110002','masanhr','hr@masan.com','$2a$10$hash',22,'Nguyen Thanh Tung','0902000005',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('88888888-8888-8888-8888-888888888888','dien123','dien@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Dien','07929733143','https://headhunterstorage.blob.core.windows.net/uploads/images_0f80428d-3630-4f29-8fd9-7f967761b3fe.jpg','MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-27 17:17:30'),('97aacef4-bf45-412e-bcc5-042d0657bd09','donaldtrump','makeamericagreatagain@gmail.com','$2a$10$DXc3C8TnQ1eGKi/1y9KBJOVX5.u/0coLpBwciUwPjRJzVQr64onjW',NULL,'Donald John Trump','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/trump_a55fe560-8545-4712-8f71-0839e618d318.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 23:46:28','2026-03-08 23:46:28'),('99100000-203f-11f1-95b5-0242ac110002','fsoft_hr','hr@fsoft.com','$2a$10$hash',23,'Nguyen Minh Duc','0903000001',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('99100001-203f-11f1-95b5-0242ac110002','tiki_hr','hr@tiki.vn','$2a$10$hash',24,'Tran Thu Ha','0903000002',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('99100002-203f-11f1-95b5-0242ac110002','vng_hr2','jobs@vng.com','$2a$10$hash',19,'Le Hoang Nam','0903000003',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('99100003-203f-11f1-95b5-0242ac110002','vnpt_hr2','career@vnpt.vn','$2a$10$hash',25,'Pham Duc Anh','0903000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('99100004-203f-11f1-95b5-0242ac110002','viettel_hr2','career@viettel.vn','$2a$10$hash',26,'Do Thi Lan','0903000005',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('e403e186-80a0-4ed1-9b55-f3340efec998','admin','datnh.work@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'admin dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/rikkeisoft_3005e18c-7efc-4573-9d85-77c6ba761b65.jpg','MALE','LOCAL','','ACTIVE','2026-02-26 15:26:59','2026-03-11 14:57:44'),('eace310a-e0fb-48bb-8ff0-d34fda01d920','nhanvienrikkeisoft','datnhce1807977123@fpt.edu.vn','$2a$10$m65bnRTt30021rl7NOFNyuIo1Nia52Ynq0Q4n8m2xyMVxlfHWfi9W',4,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/rikkeisoft_70647cf5-0d09-44b6-bfca-16403e00eecf.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-11 14:53:12','2026-03-11 14:53:12');
+INSERT INTO `account` VALUES ('22222222-2222-2222-2222-222222222222','cuongct123','cuongct.ce190026@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Châu Tấn Cường','0901000002',NULL,'FEMALE','LOCAL',NULL,'SUSPENDED','2026-02-11 05:25:21','2026-03-10 16:15:23'),('33333333-3333-3333-3333-333333333333','haona123','haona.ce190361','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Nguyễn Anh Hào','0901000003',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('44444444-4444-4444-4444-444444444444','phucdc123','phucdc.ce190770','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Đinh Công Phúc','0901000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('55555555-5555-5555-5555-555555555555','loilt123','loilt.ce190481@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Lê Thành Lợi','0901000005',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('66666666-6666-6666-6666-666666666666','votansang123','votansang1711@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Võ Tấn Sang','0901000006',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('77777777-7777-7777-7777-777777777777','nguyentrungduc123','nguyentrungduc.forwork@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Nguyễn Trung Đức','0901000007',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-11 05:25:21'),('8156bb1b-e259-4999-8139-14064898c621','datnh123','datnhce1807977@fpt.edu.vn','$2a$10$YxwzGTzKyRnJOI8zrgIhx.tcV1o29HVd9AJYWpVtxOLl.wuSbSlqi',NULL,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/superman-matday_a1b034d6-0154-4f24-ae04-a928b1d5a34e.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 15:47:17','2026-03-08 15:47:17'),('88712906-203f-11f1-95b5-0242ac110002','fpthr','hr@fpt.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Tran Minh Anh','0902000001',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('8871f567-203f-11f1-95b5-0242ac110002','vnghr','hr@vng.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',19,'Nguyen Thanh Nam','0902000002',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('8871f892-203f-11f1-95b5-0242ac110002','vinamilkhr','hr@vinamilk.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',20,'Le Thu Ha','0902000003',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('8871fd07-203f-11f1-95b5-0242ac110002','vingrouphr','hr@vingroup.net','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',21,'Pham Duc Long','0902000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('8871fe18-203f-11f1-95b5-0242ac110002','masanhr','hr@masan.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',22,'Nguyen Thanh Tung','0902000005',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 07:21:06','2026-03-15 07:21:06'),('88888888-8888-8888-8888-888888888888','dien123','dien@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'Dien','07929733143','https://headhunterstorage.blob.core.windows.net/uploads/images_0f80428d-3630-4f29-8fd9-7f967761b3fe.jpg','MALE','LOCAL',NULL,'ACTIVE','2026-02-11 05:25:21','2026-02-27 17:17:30'),('97aacef4-bf45-412e-bcc5-042d0657bd09','donaldtrump','makeamericagreatagain@gmail.com','$2a$10$DXc3C8TnQ1eGKi/1y9KBJOVX5.u/0coLpBwciUwPjRJzVQr64onjW',NULL,'Donald John Trump','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/trump_a55fe560-8545-4712-8f71-0839e618d318.jpg','MALE','LOCAL',NULL,'PENDING','2026-03-08 23:46:28','2026-03-08 23:46:28'),('99100000-203f-11f1-95b5-0242ac110002','fsoft_hr','hr@fsoft.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',23,'Nguyen Minh Duc','0903000001',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('99100001-203f-11f1-95b5-0242ac110002','tiki_hr','hr@tiki.vn','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',24,'Tran Thu Ha','0903000002',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('99100002-203f-11f1-95b5-0242ac110002','vng_hr2','jobs@vng.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',19,'Le Hoang Nam','0903000003',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('99100003-203f-11f1-95b5-0242ac110002','vnpt_hr2','career@vnpt.vn','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',25,'Pham Duc Anh','0903000004',NULL,'MALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('99100004-203f-11f1-95b5-0242ac110002','viettel_hr2','career@viettel.vn','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',26,'Do Thi Lan','0903000005',NULL,'FEMALE','LOCAL',NULL,'ACTIVE','2026-03-15 17:16:12','2026-03-15 17:16:12'),('e403e186-80a0-4ed1-9b55-f3340efec998','admin','datnh.work@gmail.com','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',NULL,'admin dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/rikkeisoft_3005e18c-7efc-4573-9d85-77c6ba761b65.jpg','MALE','LOCAL','','ACTIVE','2026-02-26 15:26:59','2026-03-11 14:57:44'),('eace310a-e0fb-48bb-8ff0-d34fda01d920','nhanvienrikkeisoft','datnhce1807977123@fpt.edu.vn','$2a$10$eArw4uM2QObahGKrI2.egOGFOi8Duvv9qbaatF4iL8BuLVNjHfAD2',4,'dep trai','0704716414','https://headhunterstorage.blob.core.windows.net/uploads/rikkeisoft_70647cf5-0d09-44b6-bfca-16403e00eecf.jpg','MALE','LOCAL',NULL,'ACTIVE','2026-03-11 14:53:12','2026-03-11 14:53:12');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,6 +125,11 @@ CREATE TABLE `application` (
   `cv_snapshot_url` text,
   `status` enum('SUBMITTED','HEADHUNTER_ACCEPTED','REJECTED','HIRED','CANCELLED') DEFAULT 'SUBMITTED',
   `applied_at` datetime DEFAULT NULL,
+  `cover_letter` text,
+  `email` varchar(255) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `salary_expectation` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_app_job` (`job_id`),
   KEY `fk_app_candidate` (`candidate_account_id`),
@@ -141,7 +146,7 @@ CREATE TABLE `application` (
 
 LOCK TABLES `application` WRITE;
 /*!40000 ALTER TABLE `application` DISABLE KEYS */;
-INSERT INTO `application` VALUES (1,1,'66666666-6666-6666-6666-666666666666',NULL,'/snapshot/sang_tv001.pdf','HEADHUNTER_ACCEPTED','2026-02-11 05:25:22'),(2,2,'77777777-7777-7777-7777-777777777777','55555555-5555-5555-5555-555555555555','/snapshot/duc_fs001.pdf','HIRED','2026-02-11 05:25:22'),(3,1,'66666666-6666-6666-6666-666666666666','55555555-5555-5555-5555-555555555555','/snapshot/java1.pdf','SUBMITTED','2026-03-15 07:21:53'),(4,2,'77777777-7777-7777-7777-777777777777','44444444-4444-4444-4444-444444444444','/snapshot/react1.pdf','SUBMITTED','2026-03-15 07:21:53'),(5,3,'88888888-8888-8888-8888-888888888888','55555555-5555-5555-5555-555555555555','/snapshot/data1.pdf','SUBMITTED','2026-03-15 07:21:53');
+INSERT INTO `application` VALUES (1,1,'66666666-6666-6666-6666-666666666666',NULL,'/snapshot/sang_tv001.pdf','HEADHUNTER_ACCEPTED','2026-02-11 05:25:22',NULL,'','','',NULL),(2,2,'77777777-7777-7777-7777-777777777777','55555555-5555-5555-5555-555555555555','/snapshot/duc_fs001.pdf','HIRED','2026-02-11 05:25:22',NULL,'','','',NULL),(3,1,'66666666-6666-6666-6666-666666666666','55555555-5555-5555-5555-555555555555','/snapshot/java1.pdf','SUBMITTED','2026-03-15 07:21:53',NULL,'','','',NULL),(4,2,'77777777-7777-7777-7777-777777777777','44444444-4444-4444-4444-444444444444','/snapshot/react1.pdf','SUBMITTED','2026-03-15 07:21:53',NULL,'','','',NULL),(5,3,'88888888-8888-8888-8888-888888888888','55555555-5555-5555-5555-555555555555','/snapshot/data1.pdf','SUBMITTED','2026-03-15 07:21:53',NULL,'','','',NULL);
 /*!40000 ALTER TABLE `application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +176,7 @@ CREATE TABLE `business_profile` (
 
 LOCK TABLES `business_profile` WRITE;
 /*!40000 ALTER TABLE `business_profile` DISABLE KEYS */;
-INSERT INTO `business_profile` VALUES (1,'TechVision JSC','0312345678','https://techvision.vn','Quận 1, TP.HCM','SMALL','APPROVED',NULL),(2,'FinStar Group','0318765432','https://finstar.vn','Quận 3, TP.HCM','LARGE','APPROVED',NULL),(3,'dep trai company','deptrai','deptrai.com','dep trai district','LARGE','APPROVED',NULL),(4,'CÔNG TY CỔ PHẦN RIKKEISOFT','0105837740','https://rikkeisoft.com/','Tầng 21 tòa nhà Handico, Đường Phạm Hùng, Phường Từ Liêm, TP Hà Nội','LARGE','APPROVED',NULL),(8,' Tập đoàn Công nghiệp – Viễn thông Quân đội (Viettel)   ',' 0100109106 ','https://viettel.com.vn',' Số 1 Trần Hữu Dực, Nam Từ Liêm, Hà Nội ','LARGE','APPROVED',NULL),(9,' Tổng Công ty Cổ phần Bưu chính Viettel (Viettel Post)  ',' 0104093672 ','https://viettelpost.com.vn',' Số 1 Giang Văn Minh, Ba Đình, Hà Nội   ','LARGE','APPROVED',NULL),(10,' Tổng Công ty Cổ phần Công trình Viettel                ',' 0104753865 ',' https://viettelconstruction.com.vn',' Số 6 Phạm Văn Bạch, Cầu Giấy, Hà Nội   ','LARGE','APPROVED',NULL),(11,' Tập đoàn Dầu khí Việt Nam (PetroVietnam)               ',' 0100681592 ','https://pvn.vn',' 18 Láng Hạ, Ba Đình, Hà Nội            ','LARGE','APPROVED',NULL),(12,' Tổng Công ty Khí Việt Nam – CTCP (PV GAS)              ',' 3500102710 ','https://pvgas.com.vn',' 673 Nguyễn Hữu Thọ, Nhà Bè, TP.HCM     ','LARGE','APPROVED',NULL),(13,' Tổng Công ty Dầu Việt Nam – CTCP (PVOIL)               ',' 0305795054 ','https://pvoil.com.vn',' Tòa nhà PVOIL, Quận 1, TP.HCM          ','LARGE','APPROVED',NULL),(14,' Tổng Công ty Phân bón và Hóa chất Dầu khí              ',' 0303165480 ','https://pvfcco.com.vn',' 43 Mạc Đĩnh Chi, Quận 1, TP.HCM        ','LARGE','APPROVED',NULL),(15,' Tổng Công ty Cổ phần Dịch vụ Kỹ thuật Dầu khí Việt Nam ',' 0100150577 ','https://ptsc.com.vn',' 1-5 Lê Duẩn, Quận 1, TP.HCM            ','LARGE','APPROVED',NULL),(16,' Tổng Công ty Cổ phần Vận tải Dầu khí                   ',' 0302743192 ','https://pvtrans.com',' 236 Nguyễn Công Trứ, Quận 1, TP.HCM    ','LARGE','APPROVED',NULL),(17,' Tổng Công ty Điện lực Dầu khí Việt Nam (PV Power)      ',' 0102276173 ','https://pvpower.vn',' 22 Ngô Quyền, Hoàn Kiếm, Hà Nội        ','LARGE','APPROVED',NULL),(18,'FPT Corporation','0101248141','https://fpt.com','Cau Giay, Ha Noi','LARGE','APPROVED',NULL),(19,'VNG Corporation','0303490096','https://vng.com.vn','District 7, Ho Chi Minh','LARGE','APPROVED',NULL),(20,'Vinamilk','0300588569','https://vinamilk.com.vn','District 7, Ho Chi Minh','LARGE','APPROVED',NULL),(21,'Vingroup JSC','0101245486','https://vingroup.net','Hai Ba Trung, Ha Noi','LARGE','APPROVED',NULL),(22,'Masan Group','0303576603','https://masangroup.com','District 1, Ho Chi Minh','LARGE','APPROVED',NULL),(23,'Mobile World Investment','0306731335','https://thegioididong.com','District 9, Ho Chi Minh','LARGE','APPROVED',NULL),(24,'Techcombank','0100230800','https://techcombank.com','Dong Da, Ha Noi','LARGE','APPROVED',NULL),(25,'Vietcombank','0100112437','https://vietcombank.com.vn','Hoan Kiem, Ha Noi','LARGE','APPROVED',NULL),(26,'PNJ Jewelry','0300521758','https://pnj.com.vn','Phu Nhuan, Ho Chi Minh','MEDIUM','APPROVED',NULL),(27,'THACO','4000101693','https://thaco.com.vn','Chu Lai, Quang Nam','LARGE','APPROVED',NULL);
+INSERT INTO `business_profile` VALUES (1,'TechVision JSC','0312345678','https://techvision.vn','Quận 1, TP.HCM','SMALL','APPROVED',NULL),(2,'FinStar Group','0318765432','https://finstar.vn','Quận 3, TP.HCM','LARGE','APPROVED',NULL),(3,'CÔNG TY CỔ PHẦN SẢN XUẤT VÀ KINH DOANH VINFAST','0107894416','https://vinfastauto.com/','Khu Kinh tế Đình Vũ - Cát Hải, đảo Cát Hải, Đặc khu Cát Hải, TP Hải Phòng','LARGE','APPROVED','dep trai'),(4,'CÔNG TY CỔ PHẦN RIKKEISOFT','0105837740','https://rikkeisoft.com/','Tầng 21 tòa nhà Handico, Đường Phạm Hùng, Phường Từ Liêm, TP Hà Nội','LARGE','APPROVED',NULL),(8,' Tập đoàn Công nghiệp – Viễn thông Quân đội (Viettel)   ',' 0100109106 ','https://viettel.com.vn',' Số 1 Trần Hữu Dực, Nam Từ Liêm, Hà Nội ','LARGE','APPROVED',NULL),(9,' Tổng Công ty Cổ phần Bưu chính Viettel (Viettel Post)  ',' 0104093672 ','https://viettelpost.com.vn',' Số 1 Giang Văn Minh, Ba Đình, Hà Nội   ','LARGE','APPROVED',NULL),(10,' Tổng Công ty Cổ phần Công trình Viettel                ',' 0104753865 ',' https://viettelconstruction.com.vn',' Số 6 Phạm Văn Bạch, Cầu Giấy, Hà Nội   ','LARGE','APPROVED',NULL),(11,' Tập đoàn Dầu khí Việt Nam (PetroVietnam)               ',' 0100681592 ','https://pvn.vn',' 18 Láng Hạ, Ba Đình, Hà Nội            ','LARGE','APPROVED',NULL),(12,' Tổng Công ty Khí Việt Nam – CTCP (PV GAS)              ',' 3500102710 ','https://pvgas.com.vn',' 673 Nguyễn Hữu Thọ, Nhà Bè, TP.HCM     ','LARGE','APPROVED',NULL),(13,' Tổng Công ty Dầu Việt Nam – CTCP (PVOIL)               ',' 0305795054 ','https://pvoil.com.vn',' Tòa nhà PVOIL, Quận 1, TP.HCM          ','LARGE','APPROVED',NULL),(14,' Tổng Công ty Phân bón và Hóa chất Dầu khí              ',' 0303165480 ','https://pvfcco.com.vn',' 43 Mạc Đĩnh Chi, Quận 1, TP.HCM        ','LARGE','APPROVED',NULL),(15,' Tổng Công ty Cổ phần Dịch vụ Kỹ thuật Dầu khí Việt Nam ',' 0100150577 ','https://ptsc.com.vn',' 1-5 Lê Duẩn, Quận 1, TP.HCM            ','LARGE','APPROVED',NULL),(16,' Tổng Công ty Cổ phần Vận tải Dầu khí                   ',' 0302743192 ','https://pvtrans.com',' 236 Nguyễn Công Trứ, Quận 1, TP.HCM    ','LARGE','APPROVED',NULL),(17,' Tổng Công ty Điện lực Dầu khí Việt Nam (PV Power)      ',' 0102276173 ','https://pvpower.vn',' 22 Ngô Quyền, Hoàn Kiếm, Hà Nội        ','LARGE','APPROVED',NULL),(18,'FPT Corporation','0101248141','https://fpt.com','Cau Giay, Ha Noi','LARGE','APPROVED',NULL),(19,'VNG Corporation','0303490096','https://vng.com.vn','District 7, Ho Chi Minh','LARGE','APPROVED',NULL),(20,'Vinamilk','0300588569','https://vinamilk.com.vn','District 7, Ho Chi Minh','LARGE','APPROVED',NULL),(21,'Vingroup JSC','0101245486','https://vingroup.net','Hai Ba Trung, Ha Noi','LARGE','APPROVED',NULL),(22,'Masan Group','0303576603','https://masangroup.com','District 1, Ho Chi Minh','LARGE','APPROVED',NULL),(23,'Mobile World Investment','0306731335','https://thegioididong.com','District 9, Ho Chi Minh','LARGE','APPROVED',NULL),(24,'Techcombank','0100230800','https://techcombank.com','Dong Da, Ha Noi','LARGE','APPROVED',NULL),(25,'Vietcombank','0100112437','https://vietcombank.com.vn','Hoan Kiem, Ha Noi','LARGE','APPROVED',NULL),(26,'PNJ Jewelry','0300521758','https://pnj.com.vn','Phu Nhuan, Ho Chi Minh','MEDIUM','APPROVED',NULL),(27,'THACO','4000101693','https://thaco.com.vn','Chu Lai, Quang Nam','LARGE','APPROVED',NULL);
 /*!40000 ALTER TABLE `business_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,13 +190,13 @@ DROP TABLE IF EXISTS `candidate_cv`;
 CREATE TABLE `candidate_cv` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `candidate_account_id` char(36) NOT NULL,
-  `cv_url` text NOT NULL,
+  `cv_url` text,
   `is_visible` tinyint(1) DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_cv_candidate` (`candidate_account_id`),
   CONSTRAINT `fk_cv_candidate` FOREIGN KEY (`candidate_account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +205,7 @@ CREATE TABLE `candidate_cv` (
 
 LOCK TABLES `candidate_cv` WRITE;
 /*!40000 ALTER TABLE `candidate_cv` DISABLE KEYS */;
-INSERT INTO `candidate_cv` VALUES (1,'22222222-2222-2222-2222-222222222222','/cv/sang_cv.pdf',1,'2026-02-11 05:25:21'),(2,'33333333-3333-3333-3333-333333333333','/cv/sang_cv.pdf',1,'2026-02-11 05:25:21'),(3,'44444444-4444-4444-4444-444444444444','/cv/sang_cv.pdf',1,'2026-02-11 05:25:21'),(4,'55555555-5555-5555-5555-555555555555','/cv/sang_cv.pdf',1,'2026-02-11 05:25:21'),(5,'66666666-6666-6666-6666-666666666666','/cv/sang_cv.pdf',1,'2026-02-11 05:25:21'),(6,'77777777-7777-7777-7777-777777777777','/cv/sang_cv.pdf',1,'2026-02-11 05:25:21'),(7,'88888888-8888-8888-8888-888888888888','/cv/sang_cv.pdf',11,'2026-02-11 05:25:21');
+INSERT INTO `candidate_cv` VALUES (8,'22222222-2222-2222-2222-222222222222',NULL,1,'2026-02-11 05:25:21'),(9,'33333333-3333-3333-3333-333333333333',NULL,1,'2026-02-11 05:25:21'),(10,'44444444-4444-4444-4444-444444444444',NULL,1,'2026-02-11 05:25:21'),(11,'55555555-5555-5555-5555-555555555555',NULL,1,'2026-02-11 05:25:21'),(12,'66666666-6666-6666-6666-666666666666',NULL,1,'2026-02-11 05:25:21'),(13,'77777777-7777-7777-7777-777777777777',NULL,1,'2026-02-11 05:25:21'),(14,'88888888-8888-8888-8888-888888888888',NULL,1,'2026-02-11 05:25:21');
 /*!40000 ALTER TABLE `candidate_cv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,6 +374,40 @@ INSERT INTO `forum_post` VALUES (1,'22222222-2222-2222-2222-222222222222',1,'Loo
 UNLOCK TABLES;
 
 --
+-- Table structure for table `interview`
+--
+
+DROP TABLE IF EXISTS `interview`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `interview` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `duration_minutes` int DEFAULT NULL,
+  `interview_code` varchar(255) DEFAULT NULL,
+  `interview_type` enum('OFFLINE','ONLINE') DEFAULT NULL,
+  `location` text,
+  `meeting_link` text,
+  `notes` longtext,
+  `scheduled_at` datetime(6) NOT NULL,
+  `status` enum('CANCELLED','DONE','SCHEDULED') DEFAULT NULL,
+  `application_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UKajs1b725uc3smihjivmycc7s0` (`interview_code`),
+  KEY `FKdyrt85lva791fmh1qnhf0ee0f` (`application_id`),
+  CONSTRAINT `FKdyrt85lva791fmh1qnhf0ee0f` FOREIGN KEY (`application_id`) REFERENCES `application` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `interview`
+--
+
+LOCK TABLES `interview` WRITE;
+/*!40000 ALTER TABLE `interview` DISABLE KEYS */;
+/*!40000 ALTER TABLE `interview` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `invalidated_token`
 --
 
@@ -489,7 +528,7 @@ CREATE TABLE `otp_token` (
   PRIMARY KEY (`id`),
   KEY `fk_otp_token_account` (`account_id`),
   CONSTRAINT `fk_otp_token_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -498,8 +537,37 @@ CREATE TABLE `otp_token` (
 
 LOCK TABLES `otp_token` WRITE;
 /*!40000 ALTER TABLE `otp_token` DISABLE KEYS */;
-INSERT INTO `otp_token` VALUES (6,NULL,'hoangdat060504@gmail.com','511488','SIGN_UP',_binary '\0','2026-03-02 06:19:52.713778','2026-03-02 06:24:52.713778',0),(7,NULL,'datnhce180797@fpt.edu.vn','556948','SIGN_UP',_binary '\0','2026-03-02 06:20:55.118364','2026-03-02 06:25:55.118364',0),(8,NULL,'datnhce180797@fpt.edu.vn','573850','SIGN_UP',_binary '\0','2026-03-02 06:22:45.023540','2026-03-02 06:27:45.023540',0),(9,NULL,'datnhce180797@fpt.edu.vn','424510','SIGN_UP',_binary '\0','2026-03-02 06:32:52.658686','2026-03-02 06:37:52.658686',0),(10,NULL,'datnhce180797@fpt.edu.vn','727758','SIGN_UP',_binary '\0','2026-03-02 06:43:03.249780','2026-03-02 06:48:03.249780',0),(11,NULL,'datnhce180797@fpt.edu.vn','279824','SIGN_UP',_binary '','2026-03-02 06:56:29.535230','2026-03-02 07:01:29.535230',0),(12,NULL,'datnhce180797@fpt.edu.vn','849334','SIGN_UP',_binary '','2026-03-02 08:18:11.954330','2026-03-02 08:23:11.954330',0),(13,NULL,'datnhce180797@fpt.edu.vn','988410','SIGN_UP',_binary '\0','2026-03-02 08:41:30.769353','2026-03-02 08:46:30.769353',0),(14,NULL,'datnhce180797@fpt.edu.vn','913896','SIGN_UP',_binary '','2026-03-03 08:35:13.877729','2026-03-03 08:40:13.877729',0),(15,NULL,'datnhce180797@fpt.edu.vn','583858','SIGN_UP',_binary '\0','2026-03-04 09:37:17.081743','2026-03-04 09:42:17.081743',0),(16,'22222222-2222-2222-2222-222222222222','cuongct.ce190026@gmail.com','547703','FORGOT_PASSWORD',_binary '','2026-03-04 09:42:51.906586','2026-03-04 09:47:51.906586',0),(17,NULL,'datnhce180797@fpt.edu.vn','250629','SIGN_UP',_binary '\0','2026-03-05 07:37:26.030146','2026-03-05 07:42:26.030146',0);
+INSERT INTO `otp_token` VALUES (6,NULL,'hoangdat060504@gmail.com','511488','SIGN_UP',_binary '\0','2026-03-02 06:19:52.713778','2026-03-02 06:24:52.713778',0),(7,NULL,'datnhce180797@fpt.edu.vn','556948','SIGN_UP',_binary '\0','2026-03-02 06:20:55.118364','2026-03-02 06:25:55.118364',0),(8,NULL,'datnhce180797@fpt.edu.vn','573850','SIGN_UP',_binary '\0','2026-03-02 06:22:45.023540','2026-03-02 06:27:45.023540',0),(9,NULL,'datnhce180797@fpt.edu.vn','424510','SIGN_UP',_binary '\0','2026-03-02 06:32:52.658686','2026-03-02 06:37:52.658686',0),(10,NULL,'datnhce180797@fpt.edu.vn','727758','SIGN_UP',_binary '\0','2026-03-02 06:43:03.249780','2026-03-02 06:48:03.249780',0),(11,NULL,'datnhce180797@fpt.edu.vn','279824','SIGN_UP',_binary '','2026-03-02 06:56:29.535230','2026-03-02 07:01:29.535230',0),(12,NULL,'datnhce180797@fpt.edu.vn','849334','SIGN_UP',_binary '','2026-03-02 08:18:11.954330','2026-03-02 08:23:11.954330',0),(13,NULL,'datnhce180797@fpt.edu.vn','988410','SIGN_UP',_binary '\0','2026-03-02 08:41:30.769353','2026-03-02 08:46:30.769353',0),(14,NULL,'datnhce180797@fpt.edu.vn','913896','SIGN_UP',_binary '','2026-03-03 08:35:13.877729','2026-03-03 08:40:13.877729',0),(15,NULL,'datnhce180797@fpt.edu.vn','583858','SIGN_UP',_binary '\0','2026-03-04 09:37:17.081743','2026-03-04 09:42:17.081743',0),(16,'22222222-2222-2222-2222-222222222222','cuongct.ce190026@gmail.com','547703','FORGOT_PASSWORD',_binary '','2026-03-04 09:42:51.906586','2026-03-04 09:47:51.906586',0),(17,NULL,'datnhce180797@fpt.edu.vn','250629','SIGN_UP',_binary '\0','2026-03-05 07:37:26.030146','2026-03-05 07:42:26.030146',0),(18,NULL,'datnh.work@gmail.com','079747','SIGN_UP',_binary '\0','2026-03-17 06:36:13.574936','2026-03-17 06:41:13.574936',0);
 /*!40000 ALTER TABLE `otp_token` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `saved_job`
+--
+
+DROP TABLE IF EXISTS `saved_job`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `saved_job` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(6) DEFAULT NULL,
+  `candidate_account_id` varchar(255) NOT NULL,
+  `job_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK47017m0vs5ar3qgqojgnu1qpg` (`candidate_account_id`,`job_id`),
+  KEY `FKrq45qmvh9ecwfp3ww753thk3t` (`job_id`),
+  CONSTRAINT `FKepg0p1ft6vr5ha4iqdh7s1ffl` FOREIGN KEY (`candidate_account_id`) REFERENCES `account` (`id`),
+  CONSTRAINT `FKrq45qmvh9ecwfp3ww753thk3t` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `saved_job`
+--
+
+LOCK TABLES `saved_job` WRITE;
+/*!40000 ALTER TABLE `saved_job` DISABLE KEYS */;
+/*!40000 ALTER TABLE `saved_job` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -543,4 +611,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-16  0:42:00
+-- Dump completed on 2026-03-18 17:28:29

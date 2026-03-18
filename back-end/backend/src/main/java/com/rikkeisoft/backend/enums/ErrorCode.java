@@ -114,9 +114,36 @@ public enum ErrorCode {
     JOB_NEGOTIABLE_INVALID(HttpStatus.BAD_REQUEST, "Invalid value for negotiable. Expected: true or false"),
     JOB_QUANTITY_INVALID(HttpStatus.BAD_REQUEST, "Invalid quantity"),
     JOB_SKILL_IDS_INVALID(HttpStatus.BAD_REQUEST, "Invalid skill IDs"),
-   
+
+    // Custom error codes for Application module
+    APPLICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "Application not found"),
+    APPLICATION_ALREADY_EXISTS(HttpStatus.CONFLICT, "You have already applied for this job"),
+    JOB_NOT_OPEN(HttpStatus.BAD_REQUEST, "This job is not currently open for applications"),
+    APPLICATION_FULL_NAME_REQUIRED(HttpStatus.BAD_REQUEST, "Full name is required"),
+    APPLICATION_EMAIL_REQUIRED(HttpStatus.BAD_REQUEST, "Email is required"),
+    APPLICATION_PHONE_REQUIRED(HttpStatus.BAD_REQUEST, "Phone number is required"),
+    APPLICATION_JOB_ID_REQUIRED(HttpStatus.BAD_REQUEST, "Job ID is required"),
+    APPLICATION_STATUS_REQUIRED(HttpStatus.BAD_REQUEST, "Application status is required"),
+
     // Generic file extension validation (used by @ValidFileExtension)
-    FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "Invalid file type. Please upload a file with an allowed extension");
+    FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "Invalid file type. Please upload a file with an allowed extension"),
+
+    // Custom error codes for Interview module
+    INTERVIEW_APPLICATION_REQUIRED(HttpStatus.BAD_REQUEST, "Application ID is required"),
+    INTERVIEW_TYPE_REQUIRED(HttpStatus.BAD_REQUEST, "Interview type is required"),
+    INTERVIEW_TIME_REQUIRED(HttpStatus.BAD_REQUEST, "Interview time is required"),
+    INTERVIEW_TIME_FUTURE(HttpStatus.BAD_REQUEST, "Interview time must be in the future"),
+    INTERVIEW_LINK_REQUIRED(HttpStatus.BAD_REQUEST, "Meeting link is required for ONLINE interviews"),
+    INTERVIEW_LOCATION_REQUIRED(HttpStatus.BAD_REQUEST, "Location is required for OFFLINE interviews"),
+
+    // Custom error codes for candidate CV module
+    CV_NOT_FOUND(HttpStatus.NOT_FOUND, "Candidate CV not found"),
+    CV_ALREADY_EXISTS(HttpStatus.CONFLICT, "Candidate CV already exists"),
+    CV_URL_REQUIRED(HttpStatus.BAD_REQUEST, "CV URL is required"),
+    CV_URL_INVALID(HttpStatus.BAD_REQUEST, "Invalid CV URL format"),
+    CV_VISIBILITY_REQUIRED(HttpStatus.BAD_REQUEST, "CV visibility status is required"),
+    NO_CVS_STORED(HttpStatus.NOT_FOUND, "No candidate CVs stored")
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;
