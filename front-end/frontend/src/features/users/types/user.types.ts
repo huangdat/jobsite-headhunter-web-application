@@ -1,4 +1,28 @@
-export type User = {
+export interface LoginHistory {
   id: number;
-  name: string;
-};
+  loginAt: string;
+  ip: string;
+  device: string;
+  location: string;
+  status: "SUCCESS" | "FAILED";
+}
+
+export type UserRole = "ADMIN" | "RECRUITER" | "CANDIDATE";
+
+export type UserStatus = "ACTIVE" | "LOCKED";
+
+export interface UserDetail {
+  id: string;
+  fullName: string;
+  email: string;
+  phone?: string;
+  company?: string | null;
+  bio?: string;
+
+  username: string;
+  role: UserRole;
+  status: UserStatus;
+  createdAt: string;
+
+  loginHistory: LoginHistory[];
+}

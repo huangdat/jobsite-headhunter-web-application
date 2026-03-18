@@ -15,6 +15,7 @@ import { UserListPage } from "@/features/users/list";
 import { AdminLayout } from "@/features/users/list/layouts/AdminLayout";
 import { GuestOnlyRoute } from "@/features/auth/components/GuestOnlyRoute";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
+import { UserDetailPage } from "@/features/users/detail";
 
 export function AppRouter() {
   return (
@@ -91,6 +92,16 @@ export function AppRouter() {
           <ProtectedRoute>
             <AdminLayout>
               <UserListPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users/:userId"
+        element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <UserDetailPage />
             </AdminLayout>
           </ProtectedRoute>
         }
