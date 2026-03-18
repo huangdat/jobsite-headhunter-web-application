@@ -134,7 +134,16 @@ public enum ErrorCode {
     INTERVIEW_TIME_REQUIRED(HttpStatus.BAD_REQUEST, "Interview time is required"),
     INTERVIEW_TIME_FUTURE(HttpStatus.BAD_REQUEST, "Interview time must be in the future"),
     INTERVIEW_LINK_REQUIRED(HttpStatus.BAD_REQUEST, "Meeting link is required for ONLINE interviews"),
-    INTERVIEW_LOCATION_REQUIRED(HttpStatus.BAD_REQUEST, "Location is required for OFFLINE interviews");
+    INTERVIEW_LOCATION_REQUIRED(HttpStatus.BAD_REQUEST, "Location is required for OFFLINE interviews"),
+
+    // Custom error codes for candidate CV module
+    CV_NOT_FOUND(HttpStatus.NOT_FOUND, "Candidate CV not found"),
+    CV_ALREADY_EXISTS(HttpStatus.CONFLICT, "Candidate CV already exists"),
+    CV_URL_REQUIRED(HttpStatus.BAD_REQUEST, "CV URL is required"),
+    CV_URL_INVALID(HttpStatus.BAD_REQUEST, "Invalid CV URL format"),
+    CV_VISIBILITY_REQUIRED(HttpStatus.BAD_REQUEST, "CV visibility status is required"),
+    NO_CVS_STORED(HttpStatus.NOT_FOUND, "No candidate CVs stored")
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;
