@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
+import { useAuthTranslation } from "@/shared/hooks";
 import type { UserRole } from "../types";
 
 import { MdPersonSearch, MdGroups, MdWorkHistory } from "react-icons/md";
@@ -10,34 +11,35 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 interface RoleOption {
   value: UserRole;
   icon: React.ReactNode;
-  title: string;
-  description: string;
+  titleKey: string;
+  descKey: string;
 }
 
-const roleOptions: RoleOption[] = [
-  {
-    value: "candidate",
-    icon: <MdPersonSearch />,
-    title: "Candidate",
-    description: "Looking for my next career opportunity",
-  },
-  {
-    value: "collaborator",
-    icon: <MdGroups />,
-    title: "Collaborator",
-    description: "Referring top talent and earning rewards",
-  },
-  {
-    value: "headhunter",
-    icon: <MdWorkHistory />,
-    title: "Headhunter",
-    description: "Professional recruiter managing multiple roles",
-  },
-];
-
 export function SelectRolePage() {
+  const { t } = useAuthTranslation();
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
   const navigate = useNavigate();
+
+  const roleOptions: RoleOption[] = [
+    {
+      value: "candidate",
+      icon: <MdPersonSearch />,
+      titleKey: "pages.selectRole.roles.candidate",
+      descKey: "pages.selectRole.roles.candidateDesc",
+    },
+    {
+      value: "collaborator",
+      icon: <MdGroups />,
+      titleKey: "pages.selectRole.roles.collaborator",
+      descKey: "pages.selectRole.roles.collaboratorDesc",
+    },
+    {
+      value: "headhunter",
+      icon: <MdWorkHistory />,
+      titleKey: "pages.selectRole.roles.headhunter",
+      descKey: "pages.selectRole.roles.headhunterDesc",
+    },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,26 +49,28 @@ export function SelectRolePage() {
   };
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <div className="w-full max-w-5xl min-h-[calc(600px)] bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
-            Choose Your <br />
-            <span className="text-lime-400">Role</span>
+            {t("pages.selectRole.title")} <br />
+            <span className="text-lime-400">
+              {t("pages.selectRole.titleHighlight")}
+            </span>
           </h1>
 
-          <p className="text-gray-300 mt-6">
-            Select how you want to participate in our platform.
-          </p>
+          <p className="text-gray-300 mt-6">{t("pages.selectRole.subtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10 flex flex-col justify-center">
-          <h2 className="text-3xl font-bold mb-2">Join JobSite</h2>
+          <h2 className="text-3xl font-bold mb-2">
+            {t("pages.selectRole.pageTitle")}
+          </h2>
 
           <p className="text-gray-500 mb-8">
-            Select your role to start creating your account.
+            {t("pages.selectRole.pageSubtitle")}
           </p>
 
           <form
@@ -101,8 +105,10 @@ export function SelectRolePage() {
                 <div className="text-2xl text-slate-700">{option.icon}</div>
 
                 <div>
-                  <h3 className="font-semibold text-lg">{option.title}</h3>
-                  <p className="text-sm text-slate-500">{option.description}</p>
+                  <h3 className="font-semibold text-lg">
+                    {t(option.titleKey)}
+                  </h3>
+                  <p className="text-sm text-slate-500">{t(option.descKey)}</p>
                 </div>
               </label>
             ))}
@@ -115,14 +121,14 @@ export function SelectRolePage() {
               className={`w-full flex justify-center gap-2 mt-6 
       ${selectedRole ? "cursor-pointer" : "opacity-60"}`}
             >
-              Continue
+              {t("pages.selectRole.continue")}
               <HiOutlineArrowRight />
             </Button>
 
             <p className="text-center text-sm text-slate-500 mt-4">
-              Already have an account?{" "}
+              {t("pages.selectRole.alreadyHaveAccount")}{" "}
               <Link to="/login" className="text-lime-500 font-medium">
-                Sign In
+                {t("buttons.signIn")}
               </Link>
             </p>
           </form>

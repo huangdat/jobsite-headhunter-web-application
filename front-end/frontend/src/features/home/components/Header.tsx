@@ -2,11 +2,11 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineHandshake } from "react-icons/md";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useHomeTranslation } from "@/shared/hooks";
 import { Navbar } from "./Navbar";
 
 export function Header() {
-  const { t } = useAppTranslation();
+  const { t } = useHomeTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, signOut, user } = useAuth();
   const userInitial = useMemo(
@@ -61,19 +61,19 @@ export function Header() {
                 to="/login"
                 className="text-sm font-medium hover:text-lime-800 transition"
               >
-                {t("home.navigation.login")}
+                {t("navigation.login")}
               </Link>
               <Link
                 to="/select-role"
                 className="bg-brand-primary text-black px-6 py-2 rounded-full text-sm font-semibold hover:bg-brand-hover transition"
               >
-                {t("home.navigation.signUp")}
+                {t("navigation.signUp")}
               </Link>
               <Link
                 to="/register/headhunter"
                 className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition"
               >
-                {t("home.navigation.postJob")}
+                {t("navigation.postJob")}
               </Link>
             </>
           ) : (
@@ -120,7 +120,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {t("home.navigation.profile")}
+                      {t("navigation.profile")}
                     </button>
                     <button
                       onClick={() => {
@@ -129,7 +129,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      My Applications
+                      {t("navigation.applications")}
                     </button>
                     <button
                       onClick={() => {
@@ -138,7 +138,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      Saved Jobs
+                      {t("navigation.savedJobs")}
                     </button>
                   </div>
 
@@ -150,7 +150,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {t("home.navigation.settings")}
+                      {t("navigation.settings")}
                     </button>
                     <button
                       onClick={() => {
@@ -159,7 +159,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      Notifications
+                      {t("navigation.notifications")}
                     </button>
                   </div>
 
@@ -168,7 +168,7 @@ export function Header() {
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {t("home.navigation.logout")}
+                      {t("navigation.logout")}
                     </button>
                   </div>
                 </div>

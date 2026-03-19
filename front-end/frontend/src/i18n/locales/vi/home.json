@@ -1,0 +1,59 @@
+{
+  "searchKeywords": "Từ khóa, vị trí công việc, công ty...",
+  "searchLocation": "Vị trí hoặc 'Làm việc từ xa'...",
+  "navigation": {
+    "recommended": "Được Đề Nghị",
+    "topCompanies": "Công Ty Hàng Đầu",
+    "featuredJobs": "Công Việc Nổi Bật",
+    "applications": "Ứng Tuyển",
+    "login": "Đăng Nhập",
+    "signUp": "Đăng Ký",
+    "postJob": "Đăng Tuyển",
+    "profile": "HỒ SƠ",
+    "changePassword": "THAY ĐỔI MẬT KHẨU",
+    "settings": "Cài Đặt",
+    "logout": "Đăng Xuất",
+    "savedJobs": "Công Việc Đã Lưu",
+    "notifications": "Thông Báo"
+  },
+  "hero": {
+    "title": "Tìm Cơ Hội",
+    "highlight": "Tiếp Theo của Bạn",
+    "description": "Khám phá hơn 50.000+ công việc được chọn lọc từ các công ty hàng đầu và đưa sự nghiệp của bạn lên một tầm cao mới."
+  },
+  "searchBar": {
+    "search": "TÌM KIẾM"
+  },
+  "featuredJobs": {
+    "title": "Công Việc Nổi Bật",
+    "viewMore": "XEM THÊM CÔNG VIỆC →"
+  },
+  "recommendedJobs": {
+    "title": "Được Đề Nghị cho Bạn",
+    "description": "Dựa trên hồ sơ và kỹ năng của bạn"
+  },
+  "topCompanies": {
+    "title": "Công Ty Hàng Đầu",
+    "openJobs": "12 Vị Trí Tuyển Dụng",
+    "viewCompany": "Xem Công Ty →"
+  },
+  "footer": {
+    "copyright": "© {year} JobSite. Tất cả quyền được bảo lưu."
+  },
+  "messages": {
+    "loadingJobs": "Đang tải công việc...",
+    "loadingCompanies": "Đang tải công ty...",
+    "errorLoadJobs": "Không thể tải công việc",
+    "errorLoadCompanies": "Không thể tải công ty",
+    "noFeaturedJobs": "Không tìm thấy công việc nổi bật",
+    "noRecommendedJobs": "Không tìm thấy công việc được đề xuất",
+    "noCompanies": "Không tìm thấy công ty nào"
+  },
+  "jobTypes": {
+    "fullTime": "TOÀN THỜI GIAN",
+    "remote": "LÀNG VIỆC TỪ XÃ"
+  },
+  "badges": {
+    "new": "MỚI"
+  }
+}

@@ -14,7 +14,8 @@ import org.mapstruct.Mapping;
 public interface ApplicationMapper {
     Application toEntity(ApplicationCreateReq req);
 
-    @Mapping(target = "jobTitle", source = "job.title")
+    @Mapping(target = "jobId", source = "job.id")
+    @Mapping(target = "candidateId", source = "candidate.id")
     ApplicationResp toResponse(Application entity);
 
     @Mapping(target = "jobTitle", source = "job.title")

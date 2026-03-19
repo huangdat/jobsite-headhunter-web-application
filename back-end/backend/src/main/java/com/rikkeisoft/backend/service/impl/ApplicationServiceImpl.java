@@ -9,6 +9,8 @@ import com.rikkeisoft.backend.model.dto.resp.application.ApplicationDetailResp;
 import com.rikkeisoft.backend.model.dto.resp.application.ApplicationResp;
 import com.rikkeisoft.backend.model.entity.Application;
 import com.rikkeisoft.backend.repository.ApplicationRepo;
+import com.rikkeisoft.backend.model.entity.Account;
+import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.service.ApplicationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -31,16 +34,20 @@ import org.springframework.stereotype.Service;
  * Includes applying for jobs, fetching pipelines, and updating statuses.
  */
 public class ApplicationServiceImpl implements ApplicationService {
+    AccountRepo accountRepo;
 
     ApplicationRepo applicationRepo;
     ApplicationMapper applicationMapper;
 
     @Override
-    public ApplicationDetailResp applyForJob(ApplicationCreateReq req, String candidateId) {
+    public ApplicationDetailResp applyForJob(ApplicationCreateReq req) {
+        // get Candidate id to put into ApplicationDetailResp
+
         return null;
     }
 
     @Override
+
     @PreAuthorize("hasAnyAuthority( 'SCOPE_CANDIDATE')")
     public Page<ApplicationResp> getMyApplications(String candidateId, Pageable pageable) {
         // STEP 1: Validate candidateId
@@ -48,8 +55,8 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new AppException(ErrorCode.UNAUTHORIZED);
         }
 
-        // STEP 3: Query từ repository (đã sort mới nhất)
-        Page<Application> applicationPage = applicationRepo.findAllByCandidateId(
+      
+        Page<Application> applicationPage = applicationRepo.findAllByCandidate_Id(
                 candidateId,
                 pageable);
 
@@ -66,25 +73,25 @@ public class ApplicationServiceImpl implements ApplicationService {
             return resp;
         });
 
-        // STEP 5: Log & Return
-        log.info("Found {} applications for candidate {}",
-                result.getTotalElements(), candidateId);
-
         return result;
-    }
 
+    }
     @Override
     public Page<ApplicationResp> getJobPipeline(Long jobId, Pageable pageable) {
+        // get Candidate id to put into ApplicationDetailResp
         return null;
     }
 
     @Override
-    public ApplicationDetailResp getApplicationDetail(Long id) {
+    public ApplicationDetailResp getApplicationDetail(Long applicationId) {
+        // get Candidate id to put into ApplicationDetailResp
         return null;
     }
 
     @Override
-    public ApplicationDetailResp updateStatus(Long id, ApplicationStatusUpdateReq req) {
+    public ApplicationDetailResp updateStatus(Long applicationId, ApplicationStatusUpdateReq req) {
+        // get Candidate id to put into ApplicationDetailResp
         return null;
     }
+
 }

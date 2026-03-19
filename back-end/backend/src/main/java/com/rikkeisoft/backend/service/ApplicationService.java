@@ -13,13 +13,13 @@ import org.springframework.data.domain.Pageable;
  */
 public interface ApplicationService {
     // Candidate features
-    ApplicationDetailResp applyForJob(ApplicationCreateReq req, String candidateId);
+    ApplicationDetailResp applyForJob(ApplicationCreateReq req);
     Page<ApplicationResp> getMyApplications(String candidateId, Pageable pageable);
 
     // Headhunter features
     Page<ApplicationResp> getJobPipeline(Long jobId, Pageable pageable);
-    ApplicationDetailResp getApplicationDetail(Long id);
+    ApplicationDetailResp getApplicationDetail(Long applicationId);
 
     // Status update (Includes logic for hiding profile and triggering commission if PASSED)
-    ApplicationDetailResp updateStatus(Long id, ApplicationStatusUpdateReq req);
+    ApplicationDetailResp updateStatus(Long applicationId, ApplicationStatusUpdateReq req);
 }

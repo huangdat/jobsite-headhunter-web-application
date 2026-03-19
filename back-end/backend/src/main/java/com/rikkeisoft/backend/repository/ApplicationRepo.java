@@ -22,7 +22,7 @@ public interface ApplicationRepo extends JpaRepository<Application, Long> {
     Page<Application> findAllByJobId(Long jobId, Pageable pageable);
 
     // For Candidates to view their application history
-    Page<Application> findAllByCandidateId(String accountId, Pageable pageable);
+    Page<Application> findAllByCandidate_Id(String accountId, Pageable pageable);
 
     // Anti-spam check: Verify if the user already applied to this job
     boolean existsByJobIdAndCandidateId(Long jobId, String accountId);
