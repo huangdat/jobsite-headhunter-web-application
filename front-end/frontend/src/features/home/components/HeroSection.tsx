@@ -1,9 +1,9 @@
 import { ParticleBackground } from "./ParticleBackground";
 import { SearchBar } from "./SearchBar";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useHomeTranslation } from "@/shared/hooks";
 
 export function HeroSection() {
-  const { t } = useAppTranslation();
+  const { t } = useHomeTranslation();
   return (
     <section className="relative py-50 bg-linear-to-br from-slate-900 to-lime-100 overflow-hidden">
       {/* Gradient background */}
@@ -15,11 +15,12 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <h1 className="text-5xl font-bold leading-tight text-slate-900">
-          {t("home.hero.title")} <span className="text-lime-500">{t("home.hero.highlight")}</span>
+          {t("hero.title")}{" "}
+          <span className="text-lime-500">{t("hero.highlight")}</span>
         </h1>
 
         <p className="mt-6 text-lg text-slate-900 max-w-2xl mx-auto">
-          {t("home.hero.description")}
+          {t("hero.description")}
         </p>
 
         <SearchBar />
