@@ -94,9 +94,7 @@ export function LoginPage() {
 
   const handleGoogleClick = () => {
     if (!googleEnabled) {
-      toast.error(
-        t("messages.googleSignInUnavailable")
-      );
+      toast.error(t("messages.googleSignInUnavailable"));
       return;
     }
 
@@ -125,9 +123,7 @@ export function LoginPage() {
 
   const handleLinkedInClick = () => {
     if (!linkedInEnabled) {
-      toast.error(
-        t("messages.linkedinSignInUnavailable")
-      );
+      toast.error(t("messages.linkedinSignInUnavailable"));
       return;
     }
 
@@ -288,28 +284,27 @@ export function LoginPage() {
   }, [isAuthenticated, isInitializing, navigate]);
 
   return (
-    <AuthLayout ctaButton={{ to: "/select-role", label: "Sign Up" }}>
+    <AuthLayout
+      ctaButton={{ to: "/select-role", label: t("pages.signup") }}
+    >
       <div className="w-full max-w-5xl min-h-150 bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
-            Find Talent. <br />
-            Earn Rewards.
+            {t("pages.login.heroTitlePart1")} <br />
+            {t("pages.login.heroTitlePart2")}
           </h1>
 
-          <p className="text-gray-300 mt-6">
-            Join JobSite’s professional referral network and connect great
-            talent with top companies.
-          </p>
+          <p className="text-gray-300 mt-6">{t("pages.login.heroSubtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10">
-          <h2 className="text-3xl font-bold mb-2">{t("pages.login.welcomeBack")}</h2>
+          <h2 className="text-3xl font-bold mb-2">
+            {t("pages.login.welcomeBack")}
+          </h2>
 
-          <p className="text-gray-500 mb-8">
-            {t("pages.login.subtitle")}
-          </p>
+          <p className="text-gray-500 mb-8">{t("pages.login.subtitle")}</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -328,7 +323,9 @@ export function LoginPage() {
                 value={formData.email}
                 onChange={(e) => handleChange("email")(e.target.value)}
               />
-              <p className="text-xs text-slate-500 mt-1">{t("pages.login.enterUsername")}</p>
+              <p className="text-xs text-slate-500 mt-1">
+                {t("pages.login.enterUsername")}
+              </p>
             </FormField>
 
             {/* PASSWORD */}
@@ -385,7 +382,9 @@ export function LoginPage() {
             {/* DIVIDER */}
             <div className="flex items-center gap-4 my-6">
               <div className="flex-1 h-px bg-slate-200"></div>
-              <span className="text-sm text-gray-400">{t("pages.login.orContinueWith")}</span>
+              <span className="text-sm text-gray-400">
+                {t("pages.login.orContinueWith")}
+              </span>
               <div className="flex-1 h-px bg-slate-200"></div>
             </div>
 

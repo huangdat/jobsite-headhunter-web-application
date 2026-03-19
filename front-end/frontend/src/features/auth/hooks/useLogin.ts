@@ -26,22 +26,22 @@ export const useLogin = () => {
 
     // Username or Email validation
     if (!data.email.trim()) {
-      newErrors.email = "Username or email is required";
+      newErrors.email = t("validation.usernameEmailRequired");
     } else {
       const input = data.email.trim();
       const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
       const isUsername = /^[a-zA-Z][a-zA-Z0-9_]{7,31}$/.test(input);
 
       if (!isEmail && !isUsername) {
-        newErrors.email = "Please enter a valid username";
+        newErrors.email = t("validation.invalidUsername");
       }
     }
 
     // Password validation
     if (!data.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = t("validation.passwordRequired");
     } else if (data.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+      newErrors.password = t("validation.passwordMinLength");
     }
 
     setErrors(newErrors);
