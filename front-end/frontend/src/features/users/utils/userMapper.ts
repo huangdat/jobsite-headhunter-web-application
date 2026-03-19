@@ -37,9 +37,8 @@ export const userMapper = {
       username: user.username,
       avatar: user.avatar,
       role: user.role,
-      status: user.status === "ACTIVE" ? "Active" : "Inactive",
+      status: user.status,
       company: user.company || "",
-      isLocked: user.status === "LOCKED",
     };
   },
 
@@ -96,7 +95,9 @@ export const userMapper = {
   /**
    * Map UserDetail login history to LoginSession array
    */
-  toLoginSessions: (loginHistory: UserDetail["loginHistory"]): LoginSession[] => {
+  toLoginSessions: (
+    loginHistory: UserDetail["loginHistory"]
+  ): LoginSession[] => {
     return loginHistory.map((log) => ({
       dateTime: new Date(log.loginAt).toLocaleDateString("en-US", {
         year: "numeric",

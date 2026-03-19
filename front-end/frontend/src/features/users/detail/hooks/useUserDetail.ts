@@ -1,8 +1,10 @@
 import type { UserDetail } from "../../types/user.types";
 import { useEffect, useState } from "react";
 import { usersApi } from "../../services/usersApi";
+import { useUsersTranslation } from "@/shared/hooks";
 
 export const useUserDetail = (userId: string) => {
+  const { t } = useUsersTranslation();
   const [data, setData] = useState<UserDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +18,9 @@ export const useUserDetail = (userId: string) => {
         setData(userData);
       } catch (err) {
         const errorMessage =
-          err instanceof Error ? err.message : "Failed to fetch user details";
+          err instanceof Error
+            ? err.message
+            : t("detail.failedToFetchUserDetails");
         setError(errorMessage);
         console.error("Error fetching user detail:", err);
       } finally {

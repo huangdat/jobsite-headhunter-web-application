@@ -2,6 +2,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import type { UserTableRow } from "../components/UserListTable";
 import { usersApi } from "../../services/usersApi";
 import { userMapper } from "../../utils/userMapper";
+import { DEBOUNCE_DELAY } from "../../constants";
+import { useUsersTranslation } from "@/shared/hooks";
 
 export interface UseUserListReturn {
   users: UserTableRow[];
@@ -28,6 +30,7 @@ export interface UseUserListReturn {
 }
 
 export const useUsers = (pageSize: number = 10): UseUserListReturn => {
+  const { t } = useUsersTranslation();
   const [users, setUsers] = useState<UserTableRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,6 +38,8 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(pageSize);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const [sortBy, setSortBy] = useState<
     { field: string; direction: "asc" | "desc" }[]
   >([]);
@@ -45,28 +50,6 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
   }>({});
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Fetch users from API on mount
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        const data = await usersApi.getUsers();
-        const mappedUsers = userMapper.toTableRows(data);
-        setUsers(mappedUsers);
-        setError(null);
-      } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "Failed to fetch users";
-        setError(errorMessage);
-        console.error("Error fetching users:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
   // Debounce search (300ms)
   useEffect(() => {
     if (searchTimeoutRef.current) {
@@ -75,7 +58,7 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
     searchTimeoutRef.current = setTimeout(() => {
       setDebouncedSearch(searchValue);
       setCurrentPage(1); // Reset to page 1 on search
-    }, 300);
+    }, DEBOUNCE_DELAY.SEARCH);
 
     return () => {
       if (searchTimeoutRef.current) {
@@ -84,43 +67,53 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
     };
   }, [searchValue]);
 
-  // Filter, search, and sort logic
-  const filteredUsers = users
-    .filter((user) => {
-      const searchLower = debouncedSearch.toLowerCase();
-      const matchesSearch =
-        !debouncedSearch ||
-        [user.name, user.email, user.username].some((field) =>
-          field.toLowerCase().includes(searchLower)
-        );
+  // Server-side fetch function (reusable)
+  const fetchUsers = useCallback(async () => {
+    try {
+      setLoading(true);
 
-      const matchesRole = !filters.role || user.role === filters.role;
-      const matchesStatus = !filters.status || user.status === filters.status;
-      const matchesCompany =
-        !filters.company || user.company === filters.company;
+      // Build sort string from sortBy array
+      // Format: "field1,asc;field2,desc"
+      const sortString =
+        sortBy.length > 0
+          ? sortBy.map((s) => `${s.field},${s.direction}`).join(";")
+          : undefined;
 
-      return matchesSearch && matchesRole && matchesStatus && matchesCompany;
-    })
-    .sort((a, b) => {
-      // Apply multiple sort criteria
-      for (const sort of sortBy) {
-        const aVal = (a as any)[sort.field];
-        const bVal = (b as any)[sort.field];
+      // Call searchUsers with server-side params
+      const res = await usersApi.searchUsers({
+        page: currentPage,
+        size: itemsPerPage,
+        keyword: debouncedSearch || undefined,
+        role: filters.role || undefined,
+        status: filters.status || undefined,
+        sort: sortString,
+      });
 
-        if (aVal < bVal) return sort.direction === "asc" ? -1 : 1;
-        if (aVal > bVal) return sort.direction === "asc" ? 1 : -1;
-      }
-      return 0;
-    });
+      // Map response items to table rows
+      const mappedUsers = userMapper.toTableRows(res.items);
 
-  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
-  const totalItems = filteredUsers.length;
+      // Update state with server response
+      setUsers(mappedUsers);
+      setTotalPages(res.totalPages);
+      setTotalItems(res.total);
+      setError(null);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : t("common.failedToFetchUsers");
+      setError(errorMessage);
+      console.error("Error fetching users:", err);
+      setUsers([]);
+      setTotalPages(1);
+      setTotalItems(0);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentPage, itemsPerPage, debouncedSearch, filters, sortBy]);
 
-  // Get paginated items
-  const paginatedUsers = filteredUsers.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  // Fetch whenever dependencies change (server-side)
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const clearFilters = useCallback(() => {
     setSearchValue("");
@@ -128,25 +121,13 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
     setCurrentPage(1);
   }, []);
 
+  // Refetch with current filters
   const refetch = useCallback(async () => {
-    try {
-      setLoading(true);
-      const data = await usersApi.getUsers();
-      const mappedUsers = userMapper.toTableRows(data);
-      setUsers(mappedUsers);
-      setError(null);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to fetch users";
-      setError(errorMessage);
-      console.error("Error refetching users:", err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    await fetchUsers();
+  }, [fetchUsers]);
 
   return {
-    users: paginatedUsers,
+    users,
     loading,
     error,
     searchValue,
