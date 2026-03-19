@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import type { UserTableRow } from "../components/UserListTable";
+import { usersApi } from "../../services/usersApi";
+import { userMapper } from "../../utils/userMapper";
 
 export interface UseUserListReturn {
   users: UserTableRow[];
@@ -25,64 +27,8 @@ export interface UseUserListReturn {
   refetch: () => Promise<void>;
 }
 
-// Mock data for development
-const MOCK_USERS: UserTableRow[] = [
-  {
-    id: "1",
-    name: "Sarah Jenkins",
-    username: "sarah.jenkins",
-    email: "sarah.j@techflow.com",
-    avatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBVA08Kig8d0fYgZtyZyRIS7irUYiNhNBMxDa9hoZmIhsYn3hVzi4dObD5-AZ1H607i3nbKRgrTr4pwEacOTQhqPIYwnc4KiuSr4W3TOi8f0NCzeXSp4CgOqr_Yyum1N8XVu3HYsWJlhu_08TjVLsTR2XGkg18aRUNljfSOAoQSvVqtMZOSqykmBi-LNymzHanECMWhiwoaanK60-_OdAhTjVuGllvivOmO85kS81C7Okgp5VIoCrKeP758YKXS77WYzQAwYrySz1k",
-    role: "Manager",
-    status: "Active",
-    company: "TechFlow Inc.",
-  },
-  {
-    id: "2",
-    name: "Marcus Thorne",
-    username: "marcus.thorne",
-    email: "m.thorne@lunar-creative.io",
-    avatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAtXHH60Dpa0bCm5wao5re86rHNGP1onq_4orRsSy4V5MNBlKb_b-eVPpTlKCDTa6uMIXWifUwwBgBN8PMkfnKgOL5XUYjFWdsD_PuohvAXVz_Kz9stziL894A1Eu1CF_GI5gkVf36fzeRXDvD0ArVnhgf7eNZG9vMso_rihVvhFAR-ECoGGL1Y8qu-WHVBI1Eh07jssqPYXo7YUhzFV0Dsw73uhu5QJSd38Df-h0NkeXDQWtqsctNk23dm1RWrIbHZHx4vjYUBlX8",
-    role: "Admin",
-    status: "Active",
-    company: "Lunar Creative",
-  },
-  {
-    id: "3",
-    name: "Elena Rodriguez",
-    username: "elena.rodriguez",
-    email: "e.rodriguez@nexus.com",
-    avatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB4hXbjIzcuMKiMAtqdbJIiQhsolnt3ewfHaxgZHV7vBoqGdjyfrY9CYLizUa5TuridlM6PGG4J00Tq3jLMprXLJ5c5nb74nK1S__u4n5ewfWJQDaW_pJatUqqK-qXM7YPiZR30PmW-hslEMN-mozyE1IiS2aVNC5Yinh8kReaSXH5rlqcMfzpf0zXR4LkdAG3IA-gIPcIaf1fswJN-A5KFbx2I0J7PhrT2T4vEceYNdkvCwo9cYisqQqcdQhOp--oHW8oFqqctZCE",
-    role: "Viewer",
-    status: "Inactive",
-    company: "Nexus Solutions",
-    isLocked: true,
-  },
-  {
-    id: "4",
-    name: "David Chen",
-    username: "david.chen",
-    email: "d.chen@nexus.com",
-    role: "Editor",
-    status: "Active",
-    company: "Nexus Solutions",
-  },
-  {
-    id: "5",
-    name: "Alice Wong",
-    username: "alice.wong",
-    email: "a.wong@techflow.com",
-    role: "Admin",
-    status: "Active",
-    company: "TechFlow Inc.",
-  },
-];
-
 export const useUsers = (pageSize: number = 10): UseUserListReturn => {
-  const [users] = useState<UserTableRow[]>(MOCK_USERS);
+  const [users, setUsers] = useState<UserTableRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchValue, setSearchValue] = useState("");
@@ -99,10 +45,26 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
   }>({});
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Simulate initial data fetch
+  // Fetch users from API on mount
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const data = await usersApi.getUsers();
+        const mappedUsers = userMapper.toTableRows(data);
+        setUsers(mappedUsers);
+        setError(null);
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to fetch users";
+        setError(errorMessage);
+        console.error("Error fetching users:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
   // Debounce search (300ms)
@@ -167,13 +129,18 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
   }, []);
 
   const refetch = useCallback(async () => {
-    setLoading(true);
     try {
-      // In a real app, this would call an API
-      // await fetchUsers();
-      setLoading(false);
+      setLoading(true);
+      const data = await usersApi.getUsers();
+      const mappedUsers = userMapper.toTableRows(data);
+      setUsers(mappedUsers);
+      setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to fetch users";
+      setError(errorMessage);
+      console.error("Error refetching users:", err);
+    } finally {
       setLoading(false);
     }
   }, []);

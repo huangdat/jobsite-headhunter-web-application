@@ -12,7 +12,9 @@
     "profile": "HỒ SƠ",
     "changePassword": "THAY ĐỔI MẬT KHẨU",
     "settings": "Cài Đặt",
-    "logout": "Đăng Xuất"
+    "logout": "Đăng Xuất",
+    "savedJobs": "Công Việc Đã Lưu",
+    "notifications": "Thông Báo"
   },
   "hero": {
     "title": "Tìm Cơ Hội",
