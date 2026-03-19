@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Logo } from "./Logo";
 import { cn } from "@/lib/utils";
 
@@ -28,8 +29,13 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
   showHeader = true,
   showFooter = true,
   navLinks = [],
-  ctaButton = { to: "/select-role", label: "Sign Up" },
+  ctaButton: ctaButtonProp,
 }) => {
+  const { t } = useTranslation("auth");
+  const ctaButton = ctaButtonProp || {
+    to: "/select-role",
+    label: t("pages.signup"),
+  };
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {showHeader && (
@@ -59,7 +65,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       <main
         className={cn(
           "flex-1 flex items-center justify-center px-6",
-          className,
+          className
         )}
       >
         {children}
@@ -68,7 +74,8 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       {showFooter && (
         <footer className="mt-12 text-center pb-8">
           <p className="text-xs text-slate-400">
-            © {new Date().getFullYear()} JobSite. All rights reserved.
+            © {new Date().getFullYear()} {t("common.appName")}.{" "}
+            {t("common.allRightsReserved")}
           </p>
         </footer>
       )}

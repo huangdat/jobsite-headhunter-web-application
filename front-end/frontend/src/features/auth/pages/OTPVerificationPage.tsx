@@ -208,7 +208,7 @@ export function OTPVerificationPage() {
   if (!state) return null;
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("auth.pages.login") }}>
       <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
