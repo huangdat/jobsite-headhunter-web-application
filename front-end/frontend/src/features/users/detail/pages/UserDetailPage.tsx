@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { useUserDetail } from "../hooks/useUserDetail";
+import { userMapper } from "../../utils/userMapper";
 import UserHeader from "../components/UserHeader";
 import BasicInfoCard from "../components/BasicInfoCard";
 import AccountInfoCard from "../components/AccountInfoCard";
@@ -36,86 +38,33 @@ const UserDetailPage: React.FC = () => {
   const { t } = useUsersTranslation();
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
+  const {
+    data: userDetailData,
+    loading,
+    error: apiError,
+  } = useUserDetail(userId || "");
   const [user, setUser] = useState<User | null>(null);
   const [loginHistory, setLoginHistory] = useState<LoginSession[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
 
+  // Map API data to component state
   useEffect(() => {
-    const fetchUserDetail = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // Simulate API call delay
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        // Mock data
-        const mockUser: User = {
-          id: userId || "812345",
-          fullName: "John Doe",
-          email: "john.doe@example.com",
-          phone: "+1 234 567 890",
-          role: "User",
-          username: "jdoe_admin",
-          status: "ACTIVE",
-          joinedDate: "January 12, 2023",
-          lastLogin: "October 24, 2023 09:15",
-          company: "JobSite Corp",
-          biography:
-            "Experienced system administrator managing cloud infrastructure and enterprise user directories for the past 8 years.",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
-        };
-
-        const mockLoginHistory: LoginSession[] = [
-          {
-            dateTime: "Oct 24, 2023 09:15",
-            ipAddress: "192.168.1.45",
-            deviceBrowser: "Chrome (macOS)",
-            location: "San Francisco, US",
-            status: "Successful",
-          },
-          {
-            dateTime: "Oct 23, 2023 18:42",
-            ipAddress: "192.168.1.45",
-            deviceBrowser: "Safari (iOS)",
-            location: "San Francisco, US",
-            status: "Successful",
-          },
-          {
-            dateTime: "Oct 21, 2023 11:20",
-            ipAddress: "119.45.21.9",
-            deviceBrowser: "Firefox (Windows)",
-            location: "New York, US",
-            status: "Failed Attempt",
-          },
-        ];
-
-        setUser(mockUser);
-        setLoginHistory(mockLoginHistory);
-      } catch (err) {
-        const errorMsg =
-          err instanceof Error
-            ? err.message
-            : t("detail.errorLoadingData") || "Failed to load user details";
-        setError(errorMsg);
-        showToast(
-          "error",
-          t("detail.errorLoadingData") || "Error loading user information"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (userId) {
-      fetchUserDetail();
+    if (userDetailData) {
+      const mappedUser = userMapper.toDetailModel(userDetailData);
+      setUser(mappedUser);
+      const mappedLoginHistory = userMapper.toLoginSessions(
+        userDetailData.loginHistory
+      );
+      setLoginHistory(mappedLoginHistory);
+      setError(null);
+    } else if (apiError) {
+      setError(apiError);
     }
-  }, [userId]);
+  }, [userDetailData, apiError]);
 
   const showToast = (type: "success" | "error", message: string) => {
     setToast({ type, message });
