@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
 import type { ForgotPasswordFormData } from "../types";
 import { sendOtpForgotPassword } from "../services/authApi";
 import { toast } from "sonner";
@@ -12,7 +12,7 @@ import { extractApiErrorMessage } from "../utils/apiError";
 import { MdOutlineMail } from "react-icons/md";
 
 export function ForgotPasswordPage() {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<ForgotPasswordFormData>({
     email: "",
@@ -40,7 +40,7 @@ export function ForgotPasswordPage() {
 
     // Validate before submitting
     if (!validateForm()) {
-      toast.error(t("auth.messages.invalidEmail"));
+      toast.error(t("messages.invalidEmail"));
       return;
     }
 
@@ -53,7 +53,7 @@ export function ForgotPasswordPage() {
         tokenType: "FORGOT_PASSWORD",
       });
 
-      toast.success(t("auth.messages.otpSent"));
+      toast.success(t("messages.otpSent"));
 
       // Navigate to reset password page with OTP data
       navigate("/reset-password", {
@@ -135,7 +135,7 @@ export function ForgotPasswordPage() {
                   <Input
                     icon={<MdOutlineMail />}
                     type="email"
-                    placeholder={t("auth.placeholders.resetEmail")}
+                    placeholder={t("placeholders.resetEmail")}
                     value={formData.email}
                     onChange={(e) => handleChange(e.target.value)}
                   />

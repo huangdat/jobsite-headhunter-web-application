@@ -37,4 +37,6 @@ lint-output.tmp
 docs/**
 
 # Refernces of AI designs
-**/assets/users/list/stitch_remix_of_ui_epics/
+**/assets/users/
+
+../../.vscode/

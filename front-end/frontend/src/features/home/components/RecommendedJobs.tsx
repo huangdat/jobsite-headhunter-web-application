@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import type { Job } from "../types";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useHomeTranslation } from "@/shared/hooks";
 import { getRecommendedJobs } from "@/shared/utils/jobService";
+import { MATCH_BADGE_COLORS, HOME_ICONS } from "../constants";
 
 export function RecommendedJobs() {
-  const { t } = useAppTranslation();
+  const { t } = useHomeTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +18,7 @@ export function RecommendedJobs() {
         setJobs(data.jobs || []);
       } catch (err) {
         console.error("Failed to fetch recommended jobs:", err);
-        setError("Failed to load jobs");
+        setError(t("messages.errorLoadJobs"));
       } finally {
         setLoading(false);
       }
@@ -29,19 +30,19 @@ export function RecommendedJobs() {
     <section id="recommended" className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold">
-            {t("home.recommendedJobs.title")}
-          </h2>
+          <h2 className="text-2xl font-bold">{t("recommendedJobs.title")}</h2>
           <p className="text-gray-500 text-sm">
-            {t("home.recommendedJobs.description")}
+            {t("recommendedJobs.description")}
           </p>
         </div>
-        <span className="text-gray-400 text-sm">chevron_right</span>
+        <span className="text-gray-400 text-sm">
+          {HOME_ICONS.CHEVRON_RIGHT}
+        </span>
       </div>
 
       {loading && (
         <div className="text-center py-12">
-          <p className="text-gray-500">Loading jobs...</p>
+          <p className="text-gray-500">{t("messages.loadingJobs")}</p>
         </div>
       )}
 
@@ -53,7 +54,7 @@ export function RecommendedJobs() {
 
       {!loading && !error && jobs.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">No recommended jobs found</p>
+          <p className="text-gray-500">{t("messages.noRecommendedJobs")}</p>
         </div>
       )}
 
@@ -65,8 +66,10 @@ export function RecommendedJobs() {
               className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition"
             >
               <div className="flex justify-end">
-                <span className="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">
-                  {job.match || "NEW"}
+                <span
+                  className={`${MATCH_BADGE_COLORS.bg} ${MATCH_BADGE_COLORS.text} text-xs px-2 py-1 rounded-full`}
+                >
+                  {job.match || t("badges.new")}
                 </span>
               </div>
 

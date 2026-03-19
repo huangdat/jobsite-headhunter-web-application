@@ -1,18 +1,24 @@
-import React from 'react';
+import React from "react";
+import { useUsersTranslation } from "@/shared/hooks";
+import { UserListLoading } from "./UserListLoading";
 
 export interface UserTableRow {
   id: string;
   name: string;
   email: string;
+  username: string;
   avatar?: string;
   role: string;
-  status: 'Active' | 'Inactive';
+  status: "Active" | "Inactive";
   company: string;
   isLocked?: boolean;
 }
 
 interface UserListTableProps {
   users: UserTableRow[];
+  isLoading?: boolean;
+  sortBy?: { field: string; direction: "asc" | "desc" }[];
+  onSort?: (field: string, shiftKey?: boolean) => void;
   onViewDetails?: (userId: string) => void;
   onLockUser?: (userId: string) => void;
   onDeleteUser?: (userId: string) => void;
@@ -20,10 +26,29 @@ interface UserListTableProps {
 
 export const UserListTable: React.FC<UserListTableProps> = ({
   users,
+  isLoading = false,
+  sortBy = [],
+  onSort,
   onViewDetails,
   onLockUser,
   onDeleteUser,
 }) => {
+  const { t } = useUsersTranslation();
+
+  if (isLoading) {
+    return <UserListLoading />;
+  }
+
+  const getSortIcon = (field: string) => {
+    const sort = sortBy.find((s) => s.field === field);
+    if (!sort) return "unfold_more";
+    return sort.direction === "asc" ? "arrow_upward" : "arrow_downward";
+  };
+
+  const handleHeaderClick = (field: string, e: React.MouseEvent) => {
+    onSort?.(field, e.shiftKey);
+  };
+
   const handleLockClick = (userId: string, isLocked: boolean) => {
     if (isLocked) {
       // Unlock logic
@@ -38,27 +63,51 @@ export const UserListTable: React.FC<UserListTableProps> = ({
         <thead>
           <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
             <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 w-[30%]">
-              <div className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
-                USER <span className="material-symbols-outlined text-sm">unfold_more</span>
+              <div
+                className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors"
+                onClick={(e) => handleHeaderClick("name", e)}
+              >
+                {t("columns.user")}{" "}
+                <span className="material-symbols-outlined text-sm">
+                  {getSortIcon("name")}
+                </span>
               </div>
             </th>
             <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 w-[15%]">
-              <div className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
-                ROLE <span className="material-symbols-outlined text-sm">unfold_more</span>
+              <div
+                className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors"
+                onClick={(e) => handleHeaderClick("role", e)}
+              >
+                {t("columns.role")}{" "}
+                <span className="material-symbols-outlined text-sm">
+                  {getSortIcon("role")}
+                </span>
               </div>
             </th>
             <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 w-[15%]">
-              <div className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
-                STATUS <span className="material-symbols-outlined text-sm">unfold_more</span>
+              <div
+                className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors"
+                onClick={(e) => handleHeaderClick("status", e)}
+              >
+                {t("columns.status")}{" "}
+                <span className="material-symbols-outlined text-sm">
+                  {getSortIcon("status")}
+                </span>
               </div>
             </th>
             <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 w-[25%]">
-              <div className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
-                COMPANY <span className="material-symbols-outlined text-sm">unfold_more</span>
+              <div
+                className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors"
+                onClick={(e) => handleHeaderClick("company", e)}
+              >
+                {t("columns.company")}{" "}
+                <span className="material-symbols-outlined text-sm">
+                  {getSortIcon("company")}
+                </span>
               </div>
             </th>
             <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 text-right w-[15%]">
-              Actions
+              {t("columns.actions")}
             </th>
           </tr>
         </thead>
@@ -68,13 +117,11 @@ export const UserListTable: React.FC<UserListTableProps> = ({
               key={user.id}
               className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group"
             >
-              <td className={`px-6 py-4 ${user.isLocked ? 'opacity-60' : ''}`}>
+              <td className={`px-6 py-4 ${user.isLocked ? "opacity-60" : ""}`}>
                 <div className="flex items-center gap-3">
                   <div
                     className={`size-10 rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-primary/20 transition-all ${
-                      user.isLocked
-                        ? 'bg-slate-200 grayscale'
-                        : 'bg-primary/10'
+                      user.isLocked ? "bg-slate-200 grayscale" : "bg-primary/10"
                     }`}
                   >
                     {user.avatar ? (
@@ -103,18 +150,14 @@ export const UserListTable: React.FC<UserListTableProps> = ({
               <td className="px-6 py-4">
                 <div
                   className={`flex items-center gap-1.5 text-xs font-bold ${
-                    user.status === 'Active'
-                      ? 'text-primary'
-                      : 'text-slate-400'
+                    user.status === "Active" ? "text-primary" : "text-slate-400"
                   }`}
                 >
                   <span
                     className={`size-1.5 rounded-full ${
-                      user.status === 'Active'
-                        ? 'bg-primary'
-                        : 'bg-slate-400'
+                      user.status === "Active" ? "bg-primary" : "bg-slate-400"
                     }`}
-                  ></span>
+                  />
                   {user.status}
                 </div>
               </td>
@@ -126,29 +169,39 @@ export const UserListTable: React.FC<UserListTableProps> = ({
                   <button
                     onClick={() => onViewDetails?.(user.id)}
                     className="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
-                    title="View Details"
-                  >
-                    <span className="material-symbols-outlined text-lg">visibility</span>
-                  </button>
-                  <button
-                    onClick={() => handleLockClick(user.id, user.isLocked || false)}
-                    className={`p-1.5 rounded-lg transition-all ${
-                      user.isLocked
-                        ? 'text-amber-500 bg-amber-50'
-                        : 'text-slate-400 hover:text-amber-500 hover:bg-amber-50'
-                    }`}
-                    title={user.isLocked ? 'Unlock Account' : 'Lock Account'}
+                    title={t("actions.viewDetails")}
                   >
                     <span className="material-symbols-outlined text-lg">
-                      {user.isLocked ? 'lock_open' : 'lock'}
+                      visibility
+                    </span>
+                  </button>
+                  <button
+                    onClick={() =>
+                      handleLockClick(user.id, user.isLocked || false)
+                    }
+                    className={`p-1.5 rounded-lg transition-all ${
+                      user.isLocked
+                        ? "text-amber-500 bg-amber-50"
+                        : "text-slate-400 hover:text-amber-500 hover:bg-amber-50"
+                    }`}
+                    title={
+                      user.isLocked
+                        ? t("actions.unlockAccount")
+                        : t("actions.lockAccount")
+                    }
+                  >
+                    <span className="material-symbols-outlined text-lg">
+                      {user.isLocked ? "lock_open" : "lock"}
                     </span>
                   </button>
                   <button
                     onClick={() => onDeleteUser?.(user.id)}
                     className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
-                    title="Delete User"
+                    title={t("actions.deleteUser")}
                   >
-                    <span className="material-symbols-outlined text-lg">delete</span>
+                    <span className="material-symbols-outlined text-lg">
+                      delete
+                    </span>
                   </button>
                 </div>
               </td>

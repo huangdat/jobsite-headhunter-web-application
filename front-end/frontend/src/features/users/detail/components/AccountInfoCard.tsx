@@ -1,5 +1,6 @@
 import React from "react";
 import { Lock } from "lucide-react";
+import { useUsersTranslation } from "@/shared/hooks";
 
 interface AccountInfoCardProps {
   user: {
@@ -12,17 +13,22 @@ interface AccountInfoCardProps {
 }
 
 const AccountInfoCard: React.FC<AccountInfoCardProps> = ({ user }) => {
+  const { t } = useUsersTranslation();
   const statusConfig = {
-    ACTIVE: { bg: "bg-green-100", text: "text-green-800", label: "Active" },
+    ACTIVE: {
+      bg: "bg-green-100",
+      text: "text-green-800",
+      label: t("statuses.active"),
+    },
     INACTIVE: {
       bg: "bg-gray-100",
       text: "text-gray-800",
-      label: "Inactive",
+      label: t("statuses.inactive"),
     },
     SUSPENDED: {
       bg: "bg-red-100",
       text: "text-red-800",
-      label: "Suspended",
+      label: t("statuses.suspended"),
     },
   };
 
@@ -38,19 +44,21 @@ const AccountInfoCard: React.FC<AccountInfoCardProps> = ({ user }) => {
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-lg font-semibold flex items-center gap-2 mb-6">
         <Lock className="w-5 h-5 text-blue-500" />
-        Account Information
+        {t("detail.accountInformation")}
       </h2>
 
       <div className="space-y-0">
         <div className="flex justify-between items-center py-3 px-0 border-b border-gray-200">
           <label className="text-sm font-medium text-gray-600">
-            Username
+            {t("detail.username")}
           </label>
           <span className="text-gray-900 font-medium">{user.username}</span>
         </div>
 
         <div className="flex justify-between items-center py-3 px-0 border-b border-gray-200">
-          <label className="text-sm font-medium text-gray-600">Role</label>
+          <label className="text-sm font-medium text-gray-600">
+            {t("detail.role")}
+          </label>
           <span
             className={`px-3 py-1 rounded-full text-xs font-semibold ${roleConfig[user.role]}`}
           >
@@ -60,7 +68,7 @@ const AccountInfoCard: React.FC<AccountInfoCardProps> = ({ user }) => {
 
         <div className="flex justify-between items-center py-3 px-0 border-b border-gray-200">
           <label className="text-sm font-medium text-gray-600">
-            Status
+            {t("detail.status")}
           </label>
           <span
             className={`px-3 py-1 rounded-full text-xs font-semibold ${status.bg} ${status.text}`}
@@ -70,13 +78,15 @@ const AccountInfoCard: React.FC<AccountInfoCardProps> = ({ user }) => {
         </div>
 
         <div className="flex justify-between items-center py-3 px-0 border-b border-gray-200">
-          <label className="text-sm font-medium text-gray-600">Created Date</label>
+          <label className="text-sm font-medium text-gray-600">
+            {t("detail.createdDate")}
+          </label>
           <span className="text-gray-900 font-medium">{user.joinedDate}</span>
         </div>
 
         <div className="flex justify-between items-center py-3 px-0">
           <label className="text-sm font-medium text-gray-600">
-            Last Login
+            {t("detail.lastLogin")}
           </label>
           <span className="text-gray-900 font-medium">{user.lastLogin}</span>
         </div>

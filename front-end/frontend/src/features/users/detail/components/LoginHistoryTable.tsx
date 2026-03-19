@@ -1,6 +1,7 @@
 // LoginHistoryTable.tsx
 import React from "react";
 import { CheckCircle, AlertCircle } from "lucide-react";
+import { useUsersTranslation } from "@/shared/hooks";
 
 interface LoginSession {
   dateTime: string;
@@ -15,10 +16,11 @@ interface LoginHistoryTableProps {
 }
 
 const LoginHistoryTable: React.FC<LoginHistoryTableProps> = ({ sessions }) => {
+  const { t } = useUsersTranslation();
   if (sessions.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-gray-500">No login history available</p>
+        <p className="text-gray-500">{t("detail.noLoginHistory")}</p>
       </div>
     );
   }
@@ -29,19 +31,19 @@ const LoginHistoryTable: React.FC<LoginHistoryTableProps> = ({ sessions }) => {
         <thead>
           <tr className="border-b border-gray-200 bg-gray-50">
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wide">
-              Date & Time
+              {t("detail.dateTime")}
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wide">
-              IP Address
+              {t("detail.ipAddress")}
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wide">
-              Device / Browser
+              {t("detail.deviceBrowser")}
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wide">
-              Location
+              {t("detail.location")}
             </th>
             <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wide">
-              Status
+              {t("detail.status")}
             </th>
           </tr>
         </thead>
@@ -70,13 +72,13 @@ const LoginHistoryTable: React.FC<LoginHistoryTableProps> = ({ sessions }) => {
                     <>
                       <CheckCircle className="w-4 h-4 text-green-500" />
                       <span className="text-green-700 font-medium">
-                        Success
+                        {t("loginStatus.success")}
                       </span>
                     </>
                   ) : (
                     <>
                       <AlertCircle className="w-4 h-4 text-red-500" />
-                      <span className="text-red-700 font-medium">Failed</span>
+                      <span className="text-red-700 font-medium">{t("loginStatus.failedAttempt")}</span>
                     </>
                   )}
                 </div>

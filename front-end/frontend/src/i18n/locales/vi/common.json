@@ -1,0 +1,18 @@
+{
+  "welcome": "Chào mừng",
+  "loading": "Đang tải...",
+  "error": "Lỗi",
+  "success": "Thành công",
+  "cancel": "Hủy",
+  "save": "Lưu",
+  "delete": "Xóa",
+  "edit": "Chỉnh sửa",
+  "currentUserName": "Alex Nguyen",
+  "common": {
+    "adminUserTitle": "Quản trị viên",
+    "appVersion": "Phiên bản 2.4.0"
+  },
+  "messages": {
+    "signedInSuccess": "Đã đăng nhập thành công."
+  }
+}

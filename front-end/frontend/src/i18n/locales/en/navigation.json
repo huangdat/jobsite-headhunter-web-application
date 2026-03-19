@@ -1,0 +1,12 @@
+{
+  "home": "Home",
+  "profile": "Profile",
+  "settings": "Settings",
+  "logout": "Logout",
+  "dashboard": "Dashboard",
+  "jobs": "Jobs",
+  "referrals": "Referrals",
+  "savedJobs": "Saved Jobs",
+  "logs": "Logs",
+  "users": "Users"
+}

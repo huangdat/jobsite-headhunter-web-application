@@ -1,0 +1,137 @@
+{
+  "aria": {
+    "goBack": "Quay lại trang trước",
+    "editProfile": "Chỉnh sửa hồ sơ người dùng",
+    "fullName": "Họ và tên đầy đủ",
+    "email": "Địa chỉ email",
+    "phone": "Số điện thoại",
+    "company": "Công ty hoặc tổ chức",
+    "biography": "Tiểu sử người dùng"
+  },
+  "list": {
+    "pageTitle": "Quản lý Người dùng",
+    "documentation": "Tài liệu",
+    "addUserButton": "Thêm Người dùng Mới",
+    "filterButton": "Bộ lọc",
+    "groupByLabel": "Nhóm theo:",
+    "groupByNone": "Không",
+    "groupByRole": "Vai trò",
+    "groupByStatus": "Trạng thái",
+    "groupByCompany": "Công ty",
+    "noResults": "Không tìm thấy bản ghi",
+    "searchPlaceholder": "Tìm kiếm theo tên, email hoặc tên đăng nhập...",
+    "clearAllFilters": "Xóa tất cả bộ lọc",
+    "rowsPerPage": "Dòng mỗi trang:",
+    "paginationInfo": "Hiển thị {{startItem}}-{{endItem}} của {{totalItems}} người dùng"
+  },
+  "filters": {
+    "filterUsers": "Lọc Người dùng",
+    "filterRole": "Vai trò",
+    "filterAllRoles": "Tất cả Vai trò",
+    "filterStatus": "Trạng thái",
+    "filterAllStatus": "Tất cả Trạng thái",
+    "filterCompany": "Công ty",
+    "filterAllCompanies": "Tất cả Công ty",
+    "applyFilter": "Áp dụng Bộ lọc",
+    "resetFilter": "Đặt lại"
+  },
+  "status": {
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động"
+  },
+  "columns": {
+    "user": "NGƯỜI DÙNG",
+    "role": "VAI TRÒ",
+    "status": "TRẠNG THÁI",
+    "company": "CÔNG TY",
+    "actions": "HÀNH ĐỘNG"
+  },
+  "actions": {
+    "viewDetails": "Xem Chi tiết",
+    "lockAccount": "Khóa Tài khoản",
+    "unlockAccount": "Mở khóa Tài khoản",
+    "deleteUser": "Xóa Người dùng"
+  },
+  "detail": {
+    "userDetails": "Chi tiết Người dùng",
+    "personalInfo": "Thông tin Cá nhân",
+    "accountInfo": "Thông tin Tài khoản",
+    "activityLog": "Nhật ký Hoạt động",
+    "backToList": "Quay lại Danh sách",
+    "editUser": "Chỉnh sửa Người dùng",
+    "saveChanges": "Lưu Thay đổi",
+    "basicInformation": "Thông tin Cơ bản",
+    "fullName": "Họ và Tên",
+    "email": "Email",
+    "phoneNumber": "Số Điện thoại",
+    "company": "Công ty / Tổ chức",
+    "biography": "Tiểu sử",
+    "accountInformation": "Thông tin Tài khoản",
+    "username": "Tên đăng nhập",
+    "role": "Vai trò",
+    "status": "Trạng thái",
+    "createdDate": "Ngày Tạo",
+    "lastLogin": "Đăng nhập Lần cuối",
+    "joinedDate": "Ngày Tham gia",
+    "id": "ID",
+    "editProfile": "Chỉnh sửa Hồ sơ",
+    "exportData": "Xuất Dữ liệu",
+    "loginHistory": "Lịch sử Đăng nhập",
+    "dateAndTime": "Ngày & Giờ",
+    "dateTime": "Ngày & Giờ",
+    "ipAddress": "Địa chỉ IP",
+    "deviceBrowser": "Thiết bị / Trình duyệt",
+    "location": "Vị trí",
+    "noLoginHistory": "Không có lịch sử đăng nhập",
+    "dangerZone": "Vùng Nguy hiểm",
+    "dangerZoneDesc": "Các hành động dưới đây sẽ trực tiếp ảnh hưởng đến quyền truy cập và dữ liệu hệ thống của người dùng.",
+    "lockAccount": "Khóa Tài khoản",
+    "lockAccountDesc": "Tạm thời chặn quyền truy cập. Người dùng có thể mở khóa khi cần.",
+    "softDelete": "Xóa Mềm",
+    "softDeleteDesc": "Đánh dấu để xóa. Dữ liệu được giữ trong 30 ngày để phục hồi.",
+    "hardDelete": "Xóa Cứng",
+    "hardDeleteDesc": "Xóa vĩnh viễn người dùng và tất cả dữ liệu liên quan. Không thể hoàn tác.",
+    "cannotPerformOnAdmin": "Không thể thực hiện trên Admin khác",
+    "errorLoadingData": "Lỗi Tải Dữ liệu"
+  },
+  "statuses": {
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động",
+    "suspended": "Bị Tạm dừng"
+  },
+  "loginStatus": {
+    "successful": "Thành công",
+    "success": "Thành công",
+    "failed": "Nỗ lực Thất bại",
+    "failedAttempt": "Thất bại"
+  },
+  "roles": {
+    "administrator": "Quản trị viên",
+    "manager": "Quản lý",
+    "user": "Người dùng",
+    "admin": "Admin",
+    "editor": "Biên tập viên",
+    "viewer": "Người xem"
+  },
+  "confirmations": {
+    "lockAccount": "Bạn có chắc chắn muốn khóa tài khoản này không?",
+    "softDelete": "Bạn có chắc chắn muốn xóa tài khoản này không? Dữ liệu sẽ được giữ trong 30 ngày.",
+    "hardDelete": "⚠️ BẠN CÓ CHẮC KHÔNG? Hành động này không thể hoàn tác! Tất cả dữ liệu sẽ bị xóa vĩnh viễn."
+  },
+  "messages": {
+    "lockSuccess": "Tài khoản đã bị khóa",
+    "lockError": "Không thể khóa tài khoản",
+    "softDeleteSuccess": "Tài khoản đã bị xóa (có thể phục hồi trong 30 ngày)",
+    "softDeleteError": "Không thể xóa tài khoản",
+    "hardDeleteSuccess": "Tài khoản đã bị xóa vĩnh viễn",
+    "hardDeleteError": "Không thể xóa tài khoản"
+  },
+  "sections": {
+    "loginHistory": "🛡️ Lịch sử Đăng nhập",
+    "viewAllSessions": "Xem tất cả phiên"
+  },
+  "warnings": {
+    "adminWarning": "Người dùng này là Admin",
+    "adminWarningDesc": "Các hành động nhạy cảm đã bị vô hiệu hóa để bảo vệ tài khoản Quản trị viên."
+  }
+}
