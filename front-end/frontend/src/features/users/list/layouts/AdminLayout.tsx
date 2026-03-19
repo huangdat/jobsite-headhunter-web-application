@@ -39,6 +39,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <span className="font-medium text-sm">{t("navigation.users")}</span>
           </a>
           <a
+            href="/users/classification"
+            className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-xl transition-colors"
+          >
+            <span className="material-symbols-outlined">category</span>
+            <span className="font-medium text-sm">
+              {t("navigation.classification")}
+            </span>
+          </a>
+          <a
             href="#"
             className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-xl transition-colors"
           >

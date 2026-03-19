@@ -282,5 +282,70 @@
     "errorNotFound": "User not found",
     "errorUnauthorized": "You are not authorized to perform this action",
     "errorNetwork": "Network error. Please try again"
+  },
+  "classification": {
+    "pageTitle": "User Classification",
+    "description": "Overview of system user distribution by organizational role",
+    "groupBy": "Group Results By",
+    "totalUsers": "Total Users",
+    "activeRate": "Active Rate",
+    "classificationName": "Classification Name",
+    "count": "Count",
+    "distribution": "Distribution",
+    "status": "Status",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All",
+    "userDistributionTrend": "User Distribution Trend",
+    "systemHealth": "Average System Health",
+    "summary": "Summary",
+    "totalGroups": "Total Groups",
+    "activeUsers": "Active Users",
+    "inactiveUsers": "Inactive Users",
+    "groupByRole": "Group by Role",
+    "groupByStatus": "Group by Status",
+    "groupByCompany": "Group by Company",
+    "groupByCreatedMonth": "Group by Created Month",
+    "roleDescription": "Group users by their organizational role",
+    "statusDescription": "Group users by their account status",
+    "companyDescription": "Group users by their company affiliation",
+    "createdMonthDescription": "Group users by their registration month",
+    "roles": {
+      "admin": "Admin",
+      "headhunter": "Headhunter",
+      "collaborator": "Collaborator",
+      "candidate": "Candidate"
+    },
+    "roleSubtitles": {
+      "admin": "System Administrators",
+      "headhunter": "Recruitment Specialists",
+      "collaborator": "Business Partners",
+      "candidate": "Job Seekers"
+    },
+    "statuses": {
+      "active": "Active",
+      "locked": "Locked",
+      "suspended": "Suspended",
+      "pending": "Pending"
+    },
+    "statusSubtitles": {
+      "active": "Verified and accessible accounts",
+      "locked": "Disabled accounts",
+      "suspended": "Temporarily suspended accounts",
+      "pending": "Waiting for email verification"
+    },
+    "companyEmployees": "employees and representatives",
+    "usersRegisteredIn": "Users registered in",
+    "unknown": "Unknown",
+    "active": "Active",
+    "inactive": "Inactive",
+    "error": {
+      "permissionDenied": "Permission Denied",
+      "permissionDeniedDescription": "You do not have permission to access the classification feature. Only administrators can view user classifications.",
+      "unauthorized": "Unauthorized",
+      "unauthorizedDescription": "Your session has expired. Please login again to continue.",
+      "loadFailed": "Failed to Load Users",
+      "loadFailedDescription": "Unable to load user data. Please try again later."
+    }
   }
 }
+

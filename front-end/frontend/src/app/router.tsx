@@ -12,6 +12,7 @@ import {
 } from "@/features/auth/pages";
 import { HomePage } from "@/features/home/pages/HomePage";
 import { UserListPage } from "@/features/users/list";
+import { UserClassificationPage } from "@/features/users/classification";
 import { AdminLayout } from "@/features/users/list/layouts/AdminLayout";
 import { GuestOnlyRoute } from "@/features/auth/components/GuestOnlyRoute";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
@@ -92,6 +93,16 @@ export function AppRouter() {
           <ProtectedRoute>
             <AdminLayout>
               <UserListPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users/classification"
+        element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <UserClassificationPage />
             </AdminLayout>
           </ProtectedRoute>
         }

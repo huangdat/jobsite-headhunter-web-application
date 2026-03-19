@@ -280,5 +280,70 @@
     "errorNotFound": "Không tìm thấy người dùng",
     "errorUnauthorized": "Bạn không có quyền thực hiện hành động này",
     "errorNetwork": "Lỗi mạng. Vui lòng thử lại"
+  },
+  "classification": {
+    "pageTitle": "Phân loại Người dùng",
+    "description": "Tổng quan phân bố người dùng hệ thống theo vai trò tổ chức",
+    "groupBy": "Phân loại theo",
+    "totalUsers": "Tổng Người dùng",
+    "activeRate": "Tỷ lệ Hoạt động",
+    "classificationName": "Tên Phân loại",
+    "count": "Số lượng",
+    "distribution": "Phân bố",
+    "status": "Trạng thái",
+    "expandAll": "Mở rộng Tất cả",
+    "collapseAll": "Thu gọn Tất cả",
+    "userDistributionTrend": "Xu hướng Phân bố Người dùng",
+    "systemHealth": "Sức khỏe Hệ thống Trung bình",
+    "summary": "Tóm tắt",
+    "totalGroups": "Tổng Nhóm",
+    "activeUsers": "Người dùng Hoạt động",
+    "inactiveUsers": "Người dùng Không hoạt động",
+    "groupByRole": "Phân loại theo Vai trò",
+    "groupByStatus": "Phân loại theo Trạng thái",
+    "groupByCompany": "Phân loại theo Công ty",
+    "groupByCreatedMonth": "Phân loại theo Tháng tạo",
+    "roleDescription": "Phân nhóm người dùng theo vai trò tổ chức",
+    "statusDescription": "Phân nhóm người dùng theo trạng thái tài khoản",
+    "companyDescription": "Phân nhóm người dùng theo công ty",
+    "createdMonthDescription": "Phân nhóm người dùng theo tháng đăng ký",
+    "roles": {
+      "admin": "Admin",
+      "headhunter": "Headhunter",
+      "collaborator": "Collaborator",
+      "candidate": "Ứng viên"
+    },
+    "roleSubtitles": {
+      "admin": "Quản trị viên Hệ thống",
+      "headhunter": "Chuyên gia Tuyển dụng",
+      "collaborator": "Đối tác Kinh doanh",
+      "candidate": "Người Tìm việc"
+    },
+    "statuses": {
+      "active": "Hoạt động",
+      "locked": "Khóa",
+      "suspended": "Tạm dừng",
+      "pending": "Đang chờ"
+    },
+    "statusSubtitles": {
+      "active": "Tài khoản được xác minh và có thể truy cập",
+      "locked": "Tài khoản bị vô hiệu hóa",
+      "suspended": "Tài khoản bị tạm dừng tạm thời",
+      "pending": "Chờ xác minh email"
+    },
+    "companyEmployees": "nhân viên và đại diện",
+    "usersRegisteredIn": "Người dùng đã đăng ký vào",
+    "unknown": "Không xác định",
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động",
+    "error": {
+      "permissionDenied": "Quyền Truy Cập Bị Từ Chối",
+      "permissionDeniedDescription": "Bạn không có quyền truy cập vào tính năng phân loại. Chỉ quản trị viên mới có thể xem phân loại người dùng.",
+      "unauthorized": "Chưa Được Xác Thực",
+      "unauthorizedDescription": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục.",
+      "loadFailed": "Không Thể Tải Người Dùng",
+      "loadFailedDescription": "Không thể tải dữ liệu người dùng. Vui lòng thử lại sau."
+    }
   }
 }
+

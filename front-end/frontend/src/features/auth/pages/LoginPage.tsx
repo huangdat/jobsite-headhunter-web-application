@@ -323,9 +323,6 @@ export function LoginPage() {
                 value={formData.email}
                 onChange={(e) => handleChange("email")(e.target.value)}
               />
-              <p className="text-xs text-slate-500 mt-1">
-                {t("pages.login.enterUsername")}
-              </p>
             </FormField>
 
             {/* PASSWORD */}
