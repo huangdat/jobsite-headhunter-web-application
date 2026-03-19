@@ -3,12 +3,13 @@ import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
 import type { ChangePasswordFormData } from "../types";
 import { changePassword } from "../services/authApi";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { toast } from "sonner";
 import { extractApiErrorMessage } from "../utils/apiError";
 
 export function ChangePasswordPage() {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
+  const { t: tApp } = useAppTranslation();
   const [formData, setFormData] = useState<ChangePasswordFormData>({
     currentPassword: "",
     newPassword: "",
@@ -42,30 +43,30 @@ export function ChangePasswordPage() {
     const newErrors: Partial<Record<keyof ChangePasswordFormData, string>> = {};
 
     if (!formData.currentPassword) {
-      newErrors.currentPassword = t("auth.validation.currentPasswordRequired");
+      newErrors.currentPassword = t("validation.currentPasswordRequired");
     }
 
     if (!formData.newPassword) {
-      newErrors.newPassword = t("auth.validation.newPasswordRequired");
+      newErrors.newPassword = t("validation.newPasswordRequired");
     } else if (
       formData.newPassword.length < 8 ||
       formData.newPassword.length > 16
     ) {
-      newErrors.newPassword = t("auth.validation.passwordBetween8and16");
+      newErrors.newPassword = t("validation.passwordBetween8and16");
     } else if (!/[A-Z]/.test(formData.newPassword)) {
-      newErrors.newPassword = t("auth.validation.passwordUppercase");
+      newErrors.newPassword = t("validation.passwordUppercase");
     } else if (!/[a-z]/.test(formData.newPassword)) {
-      newErrors.newPassword = t("auth.validation.passwordLowercase");
+      newErrors.newPassword = t("validation.passwordLowercase");
     } else if (!/\d/.test(formData.newPassword)) {
-      newErrors.newPassword = t("auth.validation.passwordNumber");
+      newErrors.newPassword = t("validation.passwordNumber");
     } else if (!/^[a-zA-Z0-9_]+$/.test(formData.newPassword)) {
-      newErrors.newPassword = t("auth.validation.passwordSpecialChars");
+      newErrors.newPassword = t("validation.passwordSpecialChars");
     } else if (formData.newPassword === formData.currentPassword) {
-      newErrors.newPassword = t("auth.validation.newPasswordMustBeDifferent");
+      newErrors.newPassword = t("validation.newPasswordMustBeDifferent");
     }
 
     if (formData.newPassword !== formData.confirmPassword) {
-      newErrors.confirmPassword = t("auth.validation.passwordsDoNotMatch");
+      newErrors.confirmPassword = t("validation.passwordsDoNotMatch");
     }
 
     setErrors(newErrors);
@@ -76,7 +77,7 @@ export function ChangePasswordPage() {
     e.preventDefault();
 
     if (!validateForm()) {
-      toast.error(t("auth.validation.fixErrorsForm"));
+      toast.error(t("validation.fixErrorsForm"));
       return;
     }
 
@@ -86,14 +87,14 @@ export function ChangePasswordPage() {
       await changePassword(formData);
 
       // Success notification
-      toast.success(t("auth.messages.passwordChangedSuccess"));
+      toast.success(t("messages.passwordChangedSuccess"));
 
       // Clear form
       handleCancel();
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        t("auth.messages.failedToChangePassword")
+        t("messages.failedToChangePassword")
       );
 
       if (
@@ -172,7 +173,7 @@ export function ChangePasswordPage() {
             <span className="material-symbols-outlined text-brand-primary">
               dashboard
             </span>
-            <span className="font-medium">Dashboard</span>
+            <span className="font-medium">{tApp("navigation.dashboard")}</span>
           </a>
           <a
             href="#"
@@ -181,7 +182,7 @@ export function ChangePasswordPage() {
             <span className="material-symbols-outlined text-brand-primary">
               work
             </span>
-            <span className="font-medium">Jobs</span>
+            <span className="font-medium">{tApp("navigation.jobs")}</span>
           </a>
           <a
             href="#"
@@ -190,7 +191,7 @@ export function ChangePasswordPage() {
             <span className="material-symbols-outlined text-brand-primary">
               group_add
             </span>
-            <span className="font-medium">Referrals</span>
+            <span className="font-medium">{tApp("navigation.referrals")}</span>
           </a>
 
           <div className="pt-4 pb-2 px-4 text-xs font-semibold text-white/40 uppercase tracking-wider">
@@ -201,7 +202,7 @@ export function ChangePasswordPage() {
             className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary transition-colors border border-brand-primary/20"
           >
             <span className="material-symbols-outlined">settings</span>
-            <span className="font-medium">Settings</span>
+            <span className="font-medium">{tApp("navigation.settings")}</span>
           </a>
         </nav>
 
@@ -209,7 +210,9 @@ export function ChangePasswordPage() {
           <div className="flex items-center gap-3 p-2">
             <div className="w-10 h-10 rounded-full bg-brand-primary/20 border border-brand-primary/30 bg-cover bg-center"></div>
             <div className="grow overflow-hidden">
-              <p className="text-sm font-semibold truncate">Alex Nguyen</p>
+              <p className="text-sm font-semibold truncate">
+                {tApp("common.currentUserName")}
+              </p>
               <p className="text-xs text-white/50 truncate">
                 alex.n@referral.io
               </p>
@@ -223,7 +226,7 @@ export function ChangePasswordPage() {
         {/* Header */}
         <header className="h-16 border-b border-slate-100 flex items-center justify-between px-8 bg-white sticky top-0 z-10">
           <div className="flex items-center gap-2 text-slate-500 text-sm">
-            <span>Settings</span>
+            <span>{tApp("navigation.settings")}</span>
             <span className="material-symbols-outlined text-xs">
               chevron_right
             </span>
@@ -246,10 +249,10 @@ export function ChangePasswordPage() {
           <div className="w-full">
             <div className="mb-10">
               <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
-                {t("auth.pages.changePassword.title")}
+                {t("pages.changePassword.title")}
               </h1>
               <p className="text-slate-500 max-w-3xl">
-                {t("auth.pages.changePassword.subtitle")}
+                {t("pages.changePassword.subtitle")}
               </p>
             </div>
 
@@ -257,12 +260,12 @@ export function ChangePasswordPage() {
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-8">
                 <FormField
-                  label={t("auth.pages.changePassword.currentPasswordLabel")}
+                  label={t("pages.changePassword.currentPasswordLabel")}
                   error={errors.currentPassword}
                 >
                   <Input
                     type={showPasswords.current ? "text" : "password"}
-                    placeholder={t("auth.placeholders.currentPassword")}
+                    placeholder={t("placeholders.currentPassword")}
                     value={formData.currentPassword}
                     onChange={(e) =>
                       handleChange("currentPassword")(e.target.value)
@@ -283,12 +286,12 @@ export function ChangePasswordPage() {
                 </FormField>
 
                 <FormField
-                  label={t("auth.pages.changePassword.newPasswordLabel")}
+                  label={t("pages.changePassword.newPasswordLabel")}
                   error={errors.newPassword}
                 >
                   <Input
                     type={showPasswords.new ? "text" : "password"}
-                    placeholder={t("auth.placeholders.newPassword")}
+                    placeholder={t("placeholders.newPassword")}
                     value={formData.newPassword}
                     onChange={(e) =>
                       handleChange("newPassword")(e.target.value)
@@ -307,12 +310,12 @@ export function ChangePasswordPage() {
                 </FormField>
 
                 <FormField
-                  label={t("auth.pages.changePassword.confirmPasswordLabel")}
+                  label={t("pages.changePassword.confirmPasswordLabel")}
                   error={errors.confirmPassword}
                 >
                   <Input
                     type={showPasswords.confirm ? "text" : "password"}
-                    placeholder={t("auth.placeholders.confirmPassword")}
+                    placeholder={t("placeholders.confirmPassword")}
                     value={formData.confirmPassword}
                     onChange={(e) =>
                       handleChange("confirmPassword")(e.target.value)
@@ -344,7 +347,7 @@ export function ChangePasswordPage() {
                   >
                     {isLoading
                       ? t("common.loading")
-                      : t("auth.pages.changePassword.submitButton")}
+                      : t("pages.changePassword.submitButton")}
                   </button>
                   <button
                     type="button"
@@ -352,7 +355,7 @@ export function ChangePasswordPage() {
                     disabled={isLoading}
                     className="flex-1 h-12 bg-transparent text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition-all border border-slate-200"
                   >
-                    {t("auth.pages.changePassword.cancelButton")}
+                    {t("pages.changePassword.cancelButton")}
                   </button>
                 </div>
               </form>
@@ -360,26 +363,26 @@ export function ChangePasswordPage() {
               {/* Password Requirements */}
               <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 h-fit max-w-md">
                 <h3 className="text-sm font-bold text-slate-800 mb-6 uppercase tracking-wider">
-                  {t("auth.pages.changePassword.passwordRequirementsTitle")}
+                  {t("pages.changePassword.passwordRequirementsTitle")}
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("auth.pages.changePassword.requirement1")}</span>
+                    <span>{t("pages.changePassword.requirement1")}</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("auth.pages.changePassword.requirement2")}</span>
+                    <span>{t("pages.changePassword.requirement2")}</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("auth.pages.changePassword.requirement3")}</span>
+                    <span>{t("pages.changePassword.requirement3")}</span>
                   </li>
                 </ul>
               </div>

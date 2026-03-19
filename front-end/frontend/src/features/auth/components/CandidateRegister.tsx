@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
 import {
   MdOutlineMail,
   MdLockOutline,
@@ -44,7 +44,7 @@ export function CandidateRegister({
   setShowPassword,
   setShowConfirmPassword,
 }: Props) {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   return (
     <>
       <FormField label="Username" error={errors.username}>

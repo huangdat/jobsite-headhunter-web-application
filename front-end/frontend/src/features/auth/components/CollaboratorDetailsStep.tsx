@@ -1,51 +1,39 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
+import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdPercent } from "react-icons/md";
+import type { RegisterFormData } from "../types";
 
 interface CollaboratorDetailsStepProps {
-  formData: {
-    commissionRate?: number;
-  };
-  errors?: Record<string, string>;
-  handleChange: (field: string) => (value: number) => void;
+  form: UseAppFormReturn<RegisterFormData>;
 }
 
-export function CollaboratorDetailsStep({
-  formData,
-  handleChange,
-}: CollaboratorDetailsStepProps) {
-  const { t } = useAppTranslation();
+export function CollaboratorDetailsStep({ form }: CollaboratorDetailsStepProps) {
+  const { t } = useAuthTranslation();
+  const { register } = form;
   return (
     <div className="space-y-6">
       <p className="text-sm text-slate-600">
-        Optional information for collaboration
+        {t("descriptions.collaboratorDetails")}
       </p>
 
-      <FormField label="Commission Rate (%, Optional)">
+      <FormField label={t("labels.commissionRate")}>
         <Input
-          name="commissionRate"
+          {...register("commissionRate", { valueAsNumber: true })}
           autoComplete="off"
           icon={<MdPercent />}
           type="number"
-          placeholder={t("auth.placeholders.experience")}
-          value={formData.commissionRate?.toString() || ""}
-          onChange={(e) =>
-            handleChange("commissionRate")(
-              e.target.value ? parseFloat(e.target.value) : 0,
-            )
-          }
+          placeholder={t("placeholders.commissionRate")}
         />
         <p className="text-xs text-slate-500 mt-1">
-          Your preferred commission rate for successful referrals
+          {t("descriptions.commissionRateTip")}
         </p>
       </FormField>
 
       <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
         <p className="text-sm text-slate-600">
-          As a collaborator, you help connect talented candidates with great
-          opportunities. Start earning commissions by referring qualified
-          professionals!
+          {t("descriptions.collaboratorInfo")}
         </p>
       </div>
     </div>

@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
+import { useAppTranslation } from "@/shared/hooks";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
 export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
+  const { t } = useAppTranslation();
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -25,28 +27,32 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-xl transition-colors"
           >
             <span className="material-symbols-outlined">dashboard</span>
-            <span className="font-medium text-sm">Dashboard</span>
+            <span className="font-medium text-sm">
+              {t("navigation.dashboard")}
+            </span>
           </a>
           <a
             href="/users"
             className="flex items-center gap-3 px-4 py-3 bg-green-500 text-white rounded-xl"
           >
             <span className="material-symbols-outlined">group</span>
-            <span className="font-medium text-sm">Users</span>
+            <span className="font-medium text-sm">{t("navigation.users")}</span>
           </a>
           <a
             href="#"
             className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-xl transition-colors"
           >
             <span className="material-symbols-outlined">assignment</span>
-            <span className="font-medium text-sm">Logs</span>
+            <span className="font-medium text-sm">{t("navigation.logs")}</span>
           </a>
           <a
             href="#"
             className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-xl transition-colors"
           >
             <span className="material-symbols-outlined">settings</span>
-            <span className="font-medium text-sm">Settings</span>
+            <span className="font-medium text-sm">
+              {t("navigation.settings")}
+            </span>
           </a>
         </nav>
 
@@ -57,15 +63,19 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               AD
             </div>
             <div className="overflow-hidden">
-              <p className="text-xs font-bold truncate text-white">Admin User</p>
-              <p className="text-[10px] text-slate-400">v2.4.0 Release</p>
+              <p className="text-xs font-bold truncate text-white">
+                {t("common.adminUserTitle")}
+              </p>
+              <p className="text-[10px] text-slate-400">
+                {t("common.appVersion")}
+              </p>
             </div>
           </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      {children}
+      <div className="flex-1 overflow-y-auto">{children}</div>
     </div>
   );
 };
