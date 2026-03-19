@@ -1,0 +1,97 @@
+{
+  "list": {
+    "pageTitle": "Job Management",
+    "documentation": "Documentation",
+    "addJobButton": "Post New Job",
+    "filterButton": "Filter",
+    "groupByLabel": "Group by:",
+    "groupByNone": "None",
+    "groupByStatus": "Status",
+    "groupByCategory": "Category",
+    "noResults": "No jobs found",
+    "searchPlaceholder": "Search by title, company or location...",
+    "clearAllFilters": "Clear all filters",
+    "rowsPerPage": "Rows per page:",
+    "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} jobs"
+  },
+  "filters": {
+    "filterJobs": "Filter Jobs",
+    "filterStatus": "Status",
+    "filterAllStatus": "All Status",
+    "filterCategory": "Category",
+    "filterAllCategories": "All Categories",
+    "filterLocation": "Location",
+    "filterAllLocations": "All Locations",
+    "applyFilter": "Apply Filter",
+    "resetFilter": "Reset"
+  },
+  "status": {
+    "published": "Published",
+    "draft": "Draft",
+    "closed": "Closed"
+  },
+  "columns": {
+    "title": "TITLE",
+    "company": "COMPANY",
+    "status": "STATUS",
+    "applicants": "APPLICANTS",
+    "actions": "ACTIONS"
+  },
+  "actions": {
+    "viewDetails": "View Details",
+    "editJob": "Edit Job",
+    "publishJob": "Publish Job",
+    "closeJob": "Close Job",
+    "deleteJob": "Delete Job"
+  },
+  "detail": {
+    "jobDetails": "Job Details",
+    "jobTitle": "Job Title",
+    "company": "Company",
+    "location": "Location",
+    "jobType": "Job Type",
+    "salaryRange": "Salary Range",
+    "experience": "Experience Level",
+    "jobDescription": "Job Description",
+    "requirements": "Requirements",
+    "benefits": "Benefits",
+    "postedDate": "Posted Date",
+    "deadline": "Application Deadline",
+    "status": "Status",
+    "applicants": "Applicants",
+    "views": "Views",
+    "applications": "Applications",
+    "backToList": "Back to List",
+    "editJob": "Edit Job",
+    "saveChanges": "Save Changes",
+    "closeJob": "Close Job",
+    "repostJob": "Repost Job",
+    "deleteJob": "Delete Job",
+    "shareJob": "Share Job",
+    "viewApplicants": "View Applicants"
+  },
+  "types": {
+    "fullTime": "Full-Time",
+    "partTime": "Part-Time",
+    "contract": "Contract",
+    "temporary": "Temporary",
+    "remote": "Remote",
+    "freelance": "Freelance"
+  },
+  "experience": {
+    "entry": "Entry Level",
+    "mid": "Mid Level",
+    "senior": "Senior Level",
+    "lead": "Lead/Manager"
+  },
+  "messages": {
+    "noJobsFound": "No jobs found",
+    "jobPostedSuccess": "Job posted successfully",
+    "jobUpdatedSuccess": "Job updated successfully",
+    "jobDeletedSuccess": "Job deleted successfully",
+    "jobClosedSuccess": "Job closed successfully",
+    "errorPosting": "Failed to post job",
+    "errorUpdating": "Failed to update job",
+    "errorDeleting": "Failed to delete job"
+  }
+}

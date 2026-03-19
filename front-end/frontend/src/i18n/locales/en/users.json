@@ -1,0 +1,138 @@
+{
+  "aria": {
+    "goBack": "Go back to previous page",
+    "editProfile": "Edit user profile",
+    "fullName": "Full name",
+    "email": "Email address",
+    "phone": "Phone number",
+    "company": "Company or organization",
+    "biography": "User biography"
+  },
+  "list": {
+    "pageTitle": "User Management",
+    "documentation": "Documentation",
+    "addUserButton": "Add New User",
+    "filterButton": "Filter",
+    "groupByLabel": "Group by:",
+    "groupByNone": "None",
+    "groupByRole": "Role",
+    "groupByStatus": "Status",
+    "groupByCompany": "Company",
+    "noResults": "No records found",
+    "searchPlaceholder": "Search by name, email or username...",
+    "clearAllFilters": "Clear all filters",
+    "rowsPerPage": "Rows per page:",
+    "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} users"
+  },
+  "filters": {
+    "filterUsers": "Filter Users",
+    "filterRole": "Role",
+    "filterAllRoles": "All Roles",
+    "filterStatus": "Status",
+    "filterAllStatus": "All Status",
+    "filterCompany": "Company",
+    "filterAllCompanies": "All Companies",
+    "applyFilter": "Apply Filter",
+    "resetFilter": "Reset"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "columns": {
+    "user": "USER",
+    "role": "ROLE",
+    "status": "STATUS",
+    "company": "COMPANY",
+    "actions": "ACTIONS"
+  },
+  "actions": {
+    "viewDetails": "View Details",
+    "lockAccount": "Lock Account",
+    "unlockAccount": "Unlock Account",
+    "deleteUser": "Delete User"
+  },
+  "detail": {
+    "userDetails": "User Details",
+    "personalInfo": "Personal Information",
+    "accountInfo": "Account Information",
+    "activityLog": "Activity Log",
+    "backToList": "Back to List",
+    "editUser": "Edit User",
+    "saveChanges": "Save Changes",
+    "basicInformation": "Basic Information",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "company": "Company / Organization",
+    "biography": "Biography",
+    "accountInformation": "Account Information",
+    "username": "Username",
+    "role": "Role",
+    "status": "Status",
+    "createdDate": "Created Date",
+    "lastLogin": "Last Login",
+    "joinedDate": "Joined",
+    "id": "ID",
+    "editProfile": "Edit Profile",
+    "exportData": "Export Data",
+    "loginHistory": "Login History",
+    "dateAndTime": "Date & Time",
+    "dateTime": "Date & Time",
+    "ipAddress": "IP Address",
+    "deviceBrowser": "Device / Browser",
+    "location": "Location",
+    "noLoginHistory": "No login history available",
+    "dangerZone": "Danger Zone",
+    "dangerZoneDesc": "The actions below will directly affect user access and system data.",
+    "lockAccount": "Lock Account",
+    "lockAccountDesc": "Temporarily block access. User can unlock when needed.",
+    "softDelete": "Soft Delete",
+    "softDeleteDesc": "Mark for deletion. Data is kept for 30 days for recovery.",
+    "hardDelete": "Hard Delete",
+    "hardDeleteDesc": "Permanently remove user and all associated data. This cannot be undone.",
+    "cannotPerformOnAdmin": "Cannot perform on other Admin",
+    "errorLoadingData": "Error Loading Data"
+  },
+  "statuses": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "suspended": "Suspended"
+  },
+  "loginStatus": {
+    "successful": "Successful",
+    "success": "Success",
+    "failed": "Failed Attempt",
+    "failedAttempt": "Failed",
+    "failedLabel": "Failed"
+  },
+  "roles": {
+    "administrator": "Administrator",
+    "manager": "Manager",
+    "user": "User",
+    "admin": "Admin",
+    "editor": "Editor",
+    "viewer": "Viewer"
+  },
+  "confirmations": {
+    "lockAccount": "Are you sure you want to lock this account?",
+    "softDelete": "Are you sure you want to soft delete this account? Data will be kept for 30 days.",
+    "hardDelete": "⚠️ ARE YOU SURE? This action cannot be undone! All data will be permanently deleted."
+  },
+  "messages": {
+    "lockSuccess": "Account has been locked",
+    "lockError": "Unable to lock account",
+    "softDeleteSuccess": "Account has been deleted (can be recovered within 30 days)",
+    "softDeleteError": "Unable to delete account",
+    "hardDeleteSuccess": "Account has been permanently deleted",
+    "hardDeleteError": "Unable to delete account"
+  },
+  "sections": {
+    "loginHistory": "🛡️ Login History",
+    "viewAllSessions": "View all sessions"
+  },
+  "warnings": {
+    "adminWarning": "This user is an Admin",
+    "adminWarningDesc": "Sensitive actions have been disabled to protect the Administrator account."
+  }
+}
