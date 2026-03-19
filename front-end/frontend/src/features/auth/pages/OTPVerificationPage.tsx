@@ -305,7 +305,7 @@ export function OTPVerificationPage() {
               disabled={isLoading || isResending}
               className="text-sm text-slate-600 hover:text-slate-800"
             >
-              ← Back to Registration
+              {t("auth.buttons.backToRegistration")}
             </button>
           </div>
         </div>

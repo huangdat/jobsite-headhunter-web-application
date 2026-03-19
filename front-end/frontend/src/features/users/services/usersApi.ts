@@ -131,12 +131,15 @@ export const usersApi = {
   /**
    * Soft delete user (lock account, keep data for 30 days)
    * @param userId - User ID to soft delete
+   * @param reason - Reason for soft deletion (required by backend)
    */
   softDeleteUser: async (
-    userId: string
+    userId: string,
+    reason: string
   ): Promise<{ success: boolean; message: string }> => {
     const res = await apiClient.post<any>(
-      API_ENDPOINTS.USERS.SOFT_DELETE(userId)
+      API_ENDPOINTS.USERS.SOFT_DELETE(userId),
+      { reason }
     );
     return res.data.result;
   },

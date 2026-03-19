@@ -16,29 +16,34 @@ export const API_CONFIG = {
 export const API_ENDPOINTS = {
   // Auth
   AUTH: {
-    LOGIN: "/auth/login",
-    REGISTER: "/auth/register",
-    LOGOUT: "/auth/logout",
-    VALIDATE_TOKEN: "/auth/token-validate",
-    REFRESH_TOKEN: "/auth/refresh-token",
+    LOGIN: "/api/auth/login",
+    REGISTER: "/api/auth/register",
+    LOGOUT: "/api/auth/logout",
+    VALIDATE_TOKEN: "/api/auth/token-validate",
+    REFRESH_TOKEN: "/api/auth/refresh-token",
+    SOCIAL_CONFIG: "/api/auth/social-config",
+    GOOGLE_LOGIN: "/api/auth/google/login",
+    LINKEDIN_LOGIN: "/api/auth/linkedin/oauth",
+    REGISTER_SOCIAL: "/api/auth/register-social",
+    CHECK_EMAIL_USERNAME: "/api/account/check-email-username-exist",
   },
   
   // OTP
   OTP: {
-    SEND_SIGNUP: "/otp/send-signup",
-    VERIFY_SIGNUP: "/otp/verify-signup",
-    SEND_RESET: "/otp/send-reset",
-    VERIFY_RESET: "/otp/verify-reset",
+    SEND_SIGNUP: "/api/otp/send-signup",
+    VERIFY_SIGNUP: "/api/otp/verify-signup",
+    SEND_FORGOT_PASSWORD: "/api/otp/send-forgot-password",
+    VERIFY_AND_RESET: "/api/otp/verify-and-reset-password",
   },
 
   // Account
   ACCOUNT: {
-    SIGNUP_CANDIDATE: "/account/signup-candidate",
-    SIGNUP_HEADHUNTER: "/account/signup-headhunter",
-    SIGNUP_COLLABORATOR: "/account/signup-collaborator",
-    GET_PROFILE: "/account/profile",
-    UPDATE_PROFILE: "/account/profile",
-    CHANGE_PASSWORD: "/account/changeMyPassword",
+    SIGNUP_CANDIDATE: "/api/account/signup-candidate",
+    SIGNUP_HEADHUNTER: "/api/account/signup-headhunter",
+    SIGNUP_COLLABORATOR: "/api/account/signup-collaborator",
+    GET_PROFILE: "/api/account/profile",
+    UPDATE_PROFILE: "/api/account/profile",
+    CHANGE_PASSWORD: "/api/account/changeMyPassword",
   },
 
   // Jobs

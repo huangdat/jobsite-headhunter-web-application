@@ -10,7 +10,8 @@
   "currentUserName": "Alex Nguyen",
   "common": {
     "adminUserTitle": "Quản trị viên",
-    "appVersion": "Phiên bản 2.4.0"
+    "appVersion": "Phiên bản 2.4.0",
+    "permanentDelete": "Xóa vĩnh viễn"
   },
   "messages": {
     "signedInSuccess": "Đã đăng nhập thành công."

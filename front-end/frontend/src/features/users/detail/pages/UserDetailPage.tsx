@@ -97,7 +97,7 @@ const UserDetailPage: React.FC = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleDeleteConfirm = async (deleteType: "soft" | "hard") => {
+  const handleDeleteConfirm = async (deleteType: "soft" | "hard", reason?: string) => {
     if (!userId || !user) {
       showToast("error", t("delete.errorGeneral"));
       return;
@@ -105,9 +105,13 @@ const UserDetailPage: React.FC = () => {
 
     try {
       if (deleteType === "soft") {
-        await softDelete({ userId, userName: user.fullName });
+        if (!reason) {
+          showToast("error", t("delete.errorReasonRequired"));
+          return;
+        }
+        await softDelete({ userId, reason });
       } else {
-        await hardDelete({ userId, userName: user.fullName });
+        await hardDelete({ userId });
       }
 
       // Show success message
