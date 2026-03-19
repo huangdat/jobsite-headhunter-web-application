@@ -1,7 +1,5 @@
 package com.rikkeisoft.backend.model.dto.resp.cv;
 
-import com.rikkeisoft.backend.model.entity.Account;
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,8 +12,22 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CandidateCvResp {
     Long id;
-    Account candidate;
+    CandidateResp candidate;
     String cvUrl;
     Boolean isVisible = true;
     LocalDateTime createdAt;
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class CandidateResp {
+        String id;
+        String username;
+        String email;
+        String fullName;
+        String phone;
+        String imageUrl;
+    }
 }
