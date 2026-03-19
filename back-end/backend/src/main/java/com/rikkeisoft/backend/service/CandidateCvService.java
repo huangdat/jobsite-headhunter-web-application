@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CandidateCvService {
     List<CandidateCvResp> getAllCandidateCvs();
-    CandidateCvResp getCvById(String id);
+    CandidateCvResp getCvById(Long id);
     CandidateCvResp getCvByCandidateId(String candidateId);
     CandidateCvResp getMyCv();
     CandidateCvResp updateMyCv(CandidateCvUpdateReq req);

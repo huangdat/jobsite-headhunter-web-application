@@ -12,6 +12,7 @@ import com.rikkeisoft.backend.model.entity.CandidateCv;
 import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.repository.CandidateCvRepo;
 import com.rikkeisoft.backend.service.CandidateCvService;
+import com.rikkeisoft.backend.service.UploadService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -30,6 +31,7 @@ public class CandidateCvServiceImpl implements CandidateCvService {
     CandidateCvRepo candidateCvRepo;
     AccountRepo accountRepo;
     CandidateCvMapper candidateCvMapper;
+    UploadService uploadService;
 
     /**
      * This method retrieves all candidate CVs from the database
@@ -48,13 +50,19 @@ public class CandidateCvServiceImpl implements CandidateCvService {
     }
 
     @Override
-    public CandidateCvResp getCvById(String id) {
-        return null;
+    @PreAuthorize("hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
+    public CandidateCvResp getCvById(Long id) {
+        var candidateCv = candidateCvRepo.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
+        return candidateCvMapper.toCandidateCvResp(candidateCv);
     }
 
     @Override
+    @PreAuthorize("hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
     public CandidateCvResp getCvByCandidateId(String candidateId) {
-        return null;
+        var candidateCv = candidateCvRepo.findByCandidate_Id(candidateId)
+                .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
+        return candidateCvMapper.toCandidateCvResp(candidateCv);
     }
 
     @Override
@@ -75,12 +83,48 @@ public class CandidateCvServiceImpl implements CandidateCvService {
 
 
     @Override
+    @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')") // Only users with the CANDIDATE scope can access this method
     public CandidateCvResp updateMyCv(CandidateCvUpdateReq req) {
-        return null;
+        // Get the username of the currently authenticated user
+        var context = SecurityContextHolder.getContext();
+        String contextName = context.getAuthentication().getName();
+        // Find the account associated with the username
+        var account = accountRepo.findByUsername(contextName)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+        // Find the candidate CV associated with the account
+        var candidateCv = candidateCvRepo.findByCandidate_Id(account.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
+
+        // Update the candidate CV with the new information from the request
+        if (req.getCvFile() != null) {
+            // Upload the new CV file and get the URL
+            String cvUrl = uploadService.uploadFile(req.getCvFile());
+            candidateCv.setCvUrl(cvUrl);
+        }
+        // Save the updated candidate CV back to the repository
+        var updatedCandidateCv = candidateCvRepo.save(candidateCv);
+        // Use centralized mapper to avoid exposing/serializing entity graph directly
+        return candidateCvMapper.toCandidateCvResp(updatedCandidateCv);
     }
 
     @Override
+    @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')") // Only users with the CANDIDATE scope can access this method
     public CandidateCvResp updateMyCvVisibility(boolean visibility) {
-        return null;
+        // Get the username of the currently authenticated user
+        var context = SecurityContextHolder.getContext();
+        String contextName = context.getAuthentication().getName();
+        // Find the account associated with the username
+        var account = accountRepo.findByUsername(contextName)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+        // Find the candidate CV associated with the account
+        var candidateCv = candidateCvRepo.findByCandidate_Id(account.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
+
+        // Update the visibility of the candidate CV
+        candidateCv.setIsVisible(visibility);
+        // Save the updated candidate CV back to the repository
+        var updatedCandidateCv = candidateCvRepo.save(candidateCv);
+        // Use centralized mapper to avoid exposing/serializing entity graph directly
+        return candidateCvMapper.toCandidateCvResp(updatedCandidateCv);
     }
 }

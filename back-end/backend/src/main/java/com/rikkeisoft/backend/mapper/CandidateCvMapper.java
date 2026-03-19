@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.mapper;
 
+import com.rikkeisoft.backend.model.dto.req.cv.CandidateCvUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.cv.CandidateCvResp;
 import com.rikkeisoft.backend.model.entity.CandidateCv;
 import org.mapstruct.Mapper;

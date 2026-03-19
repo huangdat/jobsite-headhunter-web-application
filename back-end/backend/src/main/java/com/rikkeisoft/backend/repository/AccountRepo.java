@@ -23,6 +23,5 @@ public interface AccountRepo extends JpaRepository<Account, String>, JpaSpecific
 
     List<Account> findByRolesContaining(String role);
 
-
     List<Account> findByBusinessProfileId(Long id);
 }
