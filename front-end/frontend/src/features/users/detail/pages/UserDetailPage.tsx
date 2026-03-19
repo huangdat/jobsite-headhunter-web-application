@@ -4,12 +4,15 @@ import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useUserDetail } from "../hooks/useUserDetail";
 import { userMapper } from "../../utils/userMapper";
-import UserHeader from "../components/UserHeader";
-import BasicInfoCard from "../components/BasicInfoCard";
-import AccountInfoCard from "../components/AccountInfoCard";
-import LoginHistoryTable from "../components/LoginHistoryTable";
-import DangerZoneCard from "../components/DangerZoneCard";
-import LoadingSkeletons from "../components/LoadingSkeletons";
+import {
+  UserHeader,
+  BasicInfoCard,
+  AccountInfoCard,
+  LoginHistoryTable,
+  DangerZoneCard,
+  LoadingSkeletons,
+  DeleteConfirmationModal,
+} from "../components";
 
 interface User {
   id: string;
@@ -50,6 +53,12 @@ const UserDetailPage: React.FC = () => {
     type: "success" | "error";
     message: string;
   } | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const relatedDataCount = {
+    applications: 0,
+    jobs: 0,
+    total: 0,
+  };
 
   // Map API data to component state
   useEffect(() => {
@@ -72,36 +81,51 @@ const UserDetailPage: React.FC = () => {
   };
 
   const handleLockAccount = async () => {
-    if (window.confirm(t("confirmations.lockAccount"))) {
-      try {
-        console.log("Locking account:", userId);
-        showToast("success", t("messages.lockSuccess"));
-      } catch (err) {
-        showToast("error", t("messages.lockError"));
-      }
-    }
+    // Lock account will be implemented in feature-users-delete-api branch
+    console.log("Lock account: To be implemented via API");
+    showToast("error", "Feature coming soon");
   };
 
   const handleSoftDelete = async () => {
-    if (window.confirm(t("confirmations.softDelete"))) {
-      try {
-        console.log("Soft deleting account:", userId);
-        showToast("success", t("messages.softDeleteSuccess"));
-      } catch (err) {
-        showToast("error", t("messages.softDeleteError"));
-      }
-    }
+    setIsDeleteModalOpen(true);
   };
 
   const handleHardDelete = async () => {
-    if (window.confirm(t("confirmations.hardDelete"))) {
-      try {
-        console.log("Hard deleting account:", userId);
-        showToast("success", t("messages.hardDeleteSuccess"));
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async (deleteType: "soft" | "hard") => {
+    try {
+      // Simulate API call - will be replaced with actual API in feature-users-delete-api branch
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // Log audit (AC4)
+      const auditLog = {
+        adminId: localStorage.getItem("userId"),
+        timestamp: new Date().toISOString(),
+        targetUserId: userId,
+        deleteType,
+        userName: user?.fullName,
+      };
+      console.log("Audit Log:", auditLog);
+
+      // Show success message
+      showToast(
+        "success",
+        deleteType === "soft"
+          ? t("messages.softDeleteSuccess")
+          : t("messages.hardDeleteSuccess")
+      );
+
+      // Redirect after deletion
+      if (deleteType === "hard") {
         setTimeout(() => navigate("/users"), 2000);
-      } catch (err) {
-        showToast("error", t("messages.hardDeleteError"));
+      } else {
+        setTimeout(() => navigate("/users"), 1500);
       }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      throw new Error(errorMessage);
     }
   };
 
@@ -279,6 +303,16 @@ const UserDetailPage: React.FC = () => {
             isOtherAdmin={isViewingOtherAdmin}
           />
         )}
+
+        {/* Delete Confirmation Modal */}
+        <DeleteConfirmationModal
+          isOpen={isDeleteModalOpen}
+          userName={user?.fullName || ""}
+          userId={userId || ""}
+          relatedDataCount={relatedDataCount}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={handleDeleteConfirm}
+        />
       </div>
     </div>
   );
