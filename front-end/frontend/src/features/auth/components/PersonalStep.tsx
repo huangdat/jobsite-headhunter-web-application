@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdPerson, MdPhone, MdWc, MdCameraAlt } from "react-icons/md";
 import type { RegisterFormData } from "../types";
@@ -10,50 +10,49 @@ interface PersonalStepProps {
 }
 
 export function PersonalStep({ form }: PersonalStepProps) {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const { register } = form;
-
   return (
     <>
-      <FormField label={t("auth.labels.fullName")} error={form.getError("fullName")}>
+      <FormField label={t("labels.fullName")} error={form.getError("fullName")}>
         <Input
           {...register("fullName")}
           autoComplete="name"
           icon={<MdPerson />}
-          placeholder={t("auth.placeholders.name")}
+          placeholder={t("placeholders.name")}
           error={!!form.getError("fullName")}
         />
       </FormField>
 
-      <FormField label={t("auth.labels.phoneNumber")} error={form.getError("phone")}>
+      <FormField label={t("labels.phoneNumber")} error={form.getError("phone")}>
         <Input
           {...register("phone")}
           autoComplete="tel"
           icon={<MdPhone />}
-          placeholder={t("auth.placeholders.phone")}
+          placeholder={t("placeholders.phone")}
           error={!!form.getError("phone")}
         />
       </FormField>
 
       {/* GENDER + AVATAR */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label={t("auth.labels.gender")}>
+        <FormField label={t("labels.gender")}>
           <div className="relative">
             <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <select
               {...register("gender")}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label={t("auth.aria.selectGender")}
+              aria-label={t("aria.selectGender")}
             >
-              <option value="">{t("auth.selectOptions.selectGender")}</option>
-              <option value="MALE">{t("auth.selectOptions.genders.male")}</option>
-              <option value="FEMALE">{t("auth.selectOptions.genders.female")}</option>
-              <option value="OTHER">{t("auth.selectOptions.genders.other")}</option>
+              <option value="">{t("selectOptions.selectGender")}</option>
+              <option value="MALE">{t("selectOptions.genders.male")}</option>
+              <option value="FEMALE">{t("selectOptions.genders.female")}</option>
+              <option value="OTHER">{t("selectOptions.genders.other")}</option>
             </select>
           </div>
         </FormField>
 
-        <FormField label={t("auth.labels.profilePicture")}>
+        <FormField label={t("labels.profilePicture")}>
           <div className="relative">
             <MdCameraAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10 pointer-events-none" />
             <input
@@ -61,7 +60,7 @@ export function PersonalStep({ form }: PersonalStepProps) {
               type="file"
               accept="image/*"
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              aria-label={t("auth.aria.uploadProfilePicture")}
+              aria-label={t("aria.uploadProfilePicture")}
             />
           </div>
         </FormField>

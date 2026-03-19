@@ -75,7 +75,7 @@ export const useLogin = () => {
         }
 
         // Success Notification
-        toast.success(t("auth.messages.signedInSuccess"));
+        toast.success(t("messages.signedInSuccess"));
 
         navigate("/home");
         return;

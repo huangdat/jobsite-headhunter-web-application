@@ -26,52 +26,52 @@ export function createSchemaWithI18n(t: (key: string) => string) {
   const baseSchema = yup.object({
     username: yup
       .string()
-      .required(t("auth.validation.fields.usernameRequired"))
-      .min(8, t("auth.validation.fields.usernameBetween"))
-      .max(32, t("auth.validation.fields.usernameBetween"))
+      .required(t("validation.fields.usernameRequired"))
+      .min(8, t("validation.fields.usernameBetween"))
+      .max(32, t("validation.fields.usernameBetween"))
       .matches(/^[a-zA-Z][a-zA-Z0-9_]*$/, 
-        t("auth.validation.fields.usernameAlphanumeric")
+        t("validation.fields.usernameAlphanumeric")
       )
       .transform(sanitizeInput),
 
     email: yup
       .string()
-      .required(t("auth.validation.fields.emailRequired"))
-      .email(t("auth.validation.fields.emailInvalid"))
+      .required(t("validation.fields.emailRequired"))
+      .email(t("validation.fields.emailInvalid"))
       .transform(sanitizeInput),
 
     password: yup
       .string()
-      .required(t("auth.validation.fields.passwordRequired"))
-      .min(8, t("auth.validation.fields.passwordBetween8and16"))
-      .max(16, t("auth.validation.fields.passwordBetween8and16"))
-      .matches(/[A-Z]/, t("auth.validation.fields.passwordUppercase"))
-      .matches(/[a-z]/, t("auth.validation.fields.passwordLowercase"))
-      .matches(/\d/, t("auth.validation.fields.passwordNumber")),
+      .required(t("validation.fields.passwordRequired"))
+      .min(8, t("validation.fields.passwordBetween8and16"))
+      .max(16, t("validation.fields.passwordBetween8and16"))
+      .matches(/[A-Z]/, t("validation.fields.passwordUppercase"))
+      .matches(/[a-z]/, t("validation.fields.passwordLowercase"))
+      .matches(/\d/, t("validation.fields.passwordNumber")),
 
     confirmPassword: yup
       .string()
-      .required(t("auth.validation.fields.confirmPasswordRequired"))
-      .oneOf([yup.ref("password")], t("auth.validation.fields.passwordsDoNotMatch")),
+      .required(t("validation.fields.confirmPasswordRequired"))
+      .oneOf([yup.ref("password")], t("validation.fields.passwordsDoNotMatch")),
 
     fullName: yup
       .string()
-      .required(t("auth.validation.fields.fullNameRequired"))
-      .min(2, t("auth.validation.fields.fullNameMinLength"))
-      .matches(/^[a-zA-Z ]+$/, t("auth.validation.fields.fullNameLettersOnly"))
+      .required(t("validation.fields.fullNameRequired"))
+      .min(2, t("validation.fields.fullNameMinLength"))
+      .matches(/^[a-zA-Z ]+$/, t("validation.fields.fullNameLettersOnly"))
       .transform(sanitizeInput),
 
     phone: yup
       .string()
-      .required(t("auth.validation.fields.phoneRequired"))
+      .required(t("validation.fields.phoneRequired"))
       .matches(/^0[3-9]\d{8,9}$/, 
-        t("auth.validation.fields.phoneInvalid")
+        t("validation.fields.phoneInvalid")
       )
       .transform((value: string) => value.replace(/[\s-]/g, "")),
 
     gender: yup
       .string()
-      .oneOf(["MALE", "FEMALE", "OTHER"], t("auth.validation.fields.genderInvalid"))
+      .oneOf(["MALE", "FEMALE", "OTHER"], t("validation.fields.genderInvalid"))
       .nullable()
       .optional(),
 
@@ -79,22 +79,22 @@ export function createSchemaWithI18n(t: (key: string) => string) {
       .mixed<File>()
       .nullable()
       .optional()
-      .test("fileSize", t("auth.validation.fields.avatarFileSizeExceeded"), (file: any) => {
+      .test("fileSize", t("validation.fields.avatarFileSizeExceeded"), (file: any) => {
         if (!file) return true;
         return file.size <= 5 * 1024 * 1024; // 5MB
       })
-      .test("fileType", t("auth.validation.fields.avatarFileTypeInvalid"), (file: any) => {
+      .test("fileType", t("validation.fields.avatarFileTypeInvalid"), (file: any) => {
         if (!file) return true;
         return /^image\/(jpg|jpeg|png|gif|webp)$/.test(file.type);
       }),
 
     role: yup.string().oneOf(["candidate", "collaborator", "headhunter"], 
-      t("auth.validation.fields.genderInvalid")
+      t("validation.fields.roleInvalid")
     ),
 
     agreeToTerms: yup
       .boolean()
-      .oneOf([true], t("auth.validation.fields.agreeTermsRequired")),
+      .oneOf([true], t("validation.fields.agreeTermsRequired")),
   });
 
   /**
@@ -110,7 +110,7 @@ export function createSchemaWithI18n(t: (key: string) => string) {
     bio: yup
       .string()
       .nullable()
-      .max(500, "Bio must be less than 500 characters")
+      .max(500, t("validation.fields.bioMax"))
       .transform((value: any) => value || undefined)
       .transform(sanitizeInput),
 
@@ -123,21 +123,21 @@ export function createSchemaWithI18n(t: (key: string) => string) {
     yearsOfExperience: yup
       .number()
       .nullable()
-      .typeError(t("auth.validation.fields.yearsOfExperienceInvalid"))
-      .min(0, t("auth.validation.fields.yearsOfExperienceInvalid"))
-      .max(60, t("auth.validation.fields.yearsOfExperienceMax")),
+      .typeError(t("validation.fields.yearsOfExperienceInvalid"))
+      .min(0, t("validation.fields.yearsOfExperienceInvalid"))
+      .max(60, t("validation.fields.yearsOfExperienceMax")),
 
     expectedSalaryMin: yup
       .number()
       .nullable()
-      .typeError(t("auth.validation.fields.salaryInvalid"))
-      .min(0, t("auth.validation.fields.salaryNegative")),
+      .typeError(t("validation.fields.salaryInvalid"))
+      .min(0, t("validation.fields.salaryNegative")),
 
     expectedSalaryMax: yup
       .number()
       .nullable()
-      .typeError(t("auth.validation.fields.salaryInvalid"))
-      .min(0, t("auth.validation.fields.salaryNegative")),
+      .typeError(t("validation.fields.salaryInvalid"))
+      .min(0, t("validation.fields.salaryNegative")),
 
     openForWork: yup.boolean(),
   });
@@ -149,9 +149,9 @@ export function createSchemaWithI18n(t: (key: string) => string) {
     commissionRate: yup
       .number()
       .nullable()
-      .typeError(t("auth.validation.fields.commissionRateInvalid"))
-      .min(0, t("auth.validation.fields.commissionRateInvalid"))
-      .max(100, t("auth.validation.fields.commissionRateInvalid")),
+      .typeError(t("validation.fields.commissionRateInvalid"))
+      .min(0, t("validation.fields.commissionRateInvalid"))
+      .max(100, t("validation.fields.commissionRateInvalid")),
   });
 
   /**
@@ -160,16 +160,16 @@ export function createSchemaWithI18n(t: (key: string) => string) {
   const headhunterSchema = baseSchema.shape({
     taxCode: yup
       .string()
-      .required(t("auth.validation.fields.taxCodeRequired"))
+      .required(t("validation.fields.taxCodeRequired"))
       .matches(/^\d{10}$|^\d{13}$/, 
-        t("auth.validation.fields.taxCodeInvalid")
+        t("validation.fields.taxCodeInvalid")
       )
       .transform(sanitizeInput),
 
     websiteUrl: yup
       .string()
       .nullable()
-      .url(t("auth.validation.fields.websiteUrlInvalid"))
+      .url(t("validation.fields.websiteUrlInvalid"))
       .transform((value: any) => value || undefined)
       .transform(sanitizeInput),
 
@@ -204,35 +204,35 @@ export function getRegisterSchema(role: UserRole) {
   const t = (key: string) => {
     // Mapping of keys to English messages for backward compatibility
     const messages: Record<string, string> = {
-      "auth.validation.fields.usernameRequired": "Username is required",
-      "auth.validation.fields.usernameBetween": "Username must be between 8 and 32 characters",
-      "auth.validation.fields.usernameAlphanumeric": "Username must start with a letter and contain only letters, numbers, and underscores",
-      "auth.validation.fields.emailRequired": "Email is required",
-      "auth.validation.fields.emailInvalid": "Please enter a valid email address",
-      "auth.validation.fields.passwordRequired": "Password is required",
-      "auth.validation.fields.passwordBetween8and16": "Password must be between 8 and 16 characters",
-      "auth.validation.fields.passwordUppercase": "Password must contain at least one uppercase letter",
-      "auth.validation.fields.passwordLowercase": "Password must contain at least one lowercase letter",
-      "auth.validation.fields.passwordNumber": "Password must contain at least one number",
-      "auth.validation.fields.confirmPasswordRequired": "Please confirm your password",
-      "auth.validation.fields.passwordsDoNotMatch": "Passwords do not match",
-      "auth.validation.fields.fullNameRequired": "Full name is required",
-      "auth.validation.fields.fullNameMinLength": "Full name must be at least 2 characters",
-      "auth.validation.fields.fullNameLettersOnly": "Full name can only contain letters and spaces",
-      "auth.validation.fields.phoneRequired": "Phone number is required",
-      "auth.validation.fields.phoneInvalid": "Please enter a valid Vietnamese phone number (e.g., 0912345678)",
-      "auth.validation.fields.genderInvalid": "Invalid gender",
-      "auth.validation.fields.avatarFileSizeExceeded": "File size must be less than 5MB",
-      "auth.validation.fields.avatarFileTypeInvalid": "File must be an image (JPG, PNG, GIF, WebP)",
-      "auth.validation.fields.yearsOfExperienceInvalid": "Years of experience cannot be negative",
-      "auth.validation.fields.yearsOfExperienceMax": "Years of experience cannot exceed 60",
-      "auth.validation.fields.salaryInvalid": "Salary must be a number",
-      "auth.validation.fields.salaryNegative": "Salary cannot be negative",
-      "auth.validation.fields.taxCodeRequired": "Tax code is required",
-      "auth.validation.fields.taxCodeInvalid": "Tax code must be 10 or 13 digits",
-      "auth.validation.fields.websiteUrlInvalid": "Website URL must be valid",
-      "auth.validation.fields.commissionRateInvalid": "Commission rate must be between 0 and 100",
-      "auth.validation.fields.agreeTermsRequired": "You must agree to the terms and conditions",
+      "validation.fields.usernameRequired": "Username is required",
+      "validation.fields.usernameBetween": "Username must be between 8 and 32 characters",
+      "validation.fields.usernameAlphanumeric": "Username must start with a letter and contain only letters, numbers, and underscores",
+      "validation.fields.emailRequired": "Email is required",
+      "validation.fields.emailInvalid": "Please enter a valid email address",
+      "validation.fields.passwordRequired": "Password is required",
+      "validation.fields.passwordBetween8and16": "Password must be between 8 and 16 characters",
+      "validation.fields.passwordUppercase": "Password must contain at least one uppercase letter",
+      "validation.fields.passwordLowercase": "Password must contain at least one lowercase letter",
+      "validation.fields.passwordNumber": "Password must contain at least one number",
+      "validation.fields.confirmPasswordRequired": "Please confirm your password",
+      "validation.fields.passwordsDoNotMatch": "Passwords do not match",
+      "validation.fields.fullNameRequired": "Full name is required",
+      "validation.fields.fullNameMinLength": "Full name must be at least 2 characters",
+      "validation.fields.fullNameLettersOnly": "Full name can only contain letters and spaces",
+      "validation.fields.phoneRequired": "Phone number is required",
+      "validation.fields.phoneInvalid": "Please enter a valid Vietnamese phone number (e.g., 0912345678)",
+      "validation.fields.genderInvalid": "Invalid gender",
+      "validation.fields.avatarFileSizeExceeded": "File size must be less than 5MB",
+      "validation.fields.avatarFileTypeInvalid": "File must be an image (JPG, PNG, GIF, WebP)",
+      "validation.fields.yearsOfExperienceInvalid": "Years of experience cannot be negative",
+      "validation.fields.yearsOfExperienceMax": "Years of experience cannot exceed 60",
+      "validation.fields.salaryInvalid": "Salary must be a number",
+      "validation.fields.salaryNegative": "Salary cannot be negative",
+      "validation.fields.taxCodeRequired": "Tax code is required",
+      "validation.fields.taxCodeInvalid": "Tax code must be 10 or 13 digits",
+      "validation.fields.websiteUrlInvalid": "Website URL must be valid",
+      "validation.fields.commissionRateInvalid": "Commission rate must be between 0 and 100",
+      "validation.fields.agreeTermsRequired": "You must agree to the terms and conditions",
     };
     return messages[key] || key;
   };

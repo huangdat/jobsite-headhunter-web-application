@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import type { UserRole, RegisterFormData } from "../types";
 import { sendOtpSignup, checkEmailUsernameExist } from "../services/authApi";
@@ -32,23 +32,29 @@ const isValidRole = (role: string): role is UserRole => {
 const getRoleConfig = (role: UserRole) => {
   const configs = {
     candidate: {
-      title: (t: ReturnType<typeof useAppTranslation>["t"]) => t("auth.pages.register.candidate.title"),
-      subtitle: (t: ReturnType<typeof useAppTranslation>["t"]) => t("auth.pages.register.candidate.subtitle"),
+      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.candidate.title"),
+      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.candidate.subtitle"),
     },
     collaborator: {
-      title: (t: ReturnType<typeof useAppTranslation>["t"]) => t("auth.pages.register.collaborator.title"),
-      subtitle: (t: ReturnType<typeof useAppTranslation>["t"]) => t("auth.pages.register.collaborator.subtitle"),
+      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.collaborator.title"),
+      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.collaborator.subtitle"),
     },
     headhunter: {
-      title: (t: ReturnType<typeof useAppTranslation>["t"]) => t("auth.pages.register.headhunter.title"),
-      subtitle: (t: ReturnType<typeof useAppTranslation>["t"]) => t("auth.pages.register.headhunter.subtitle"),
+      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.headhunter.title"),
+      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.headhunter.subtitle"),
     },
   };
   return configs[role];
 };
 
 export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing } = useAuth();
 
@@ -92,7 +98,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     defaultValues,
   });
 
-  const { handleSubmit, watch, trigger, setError } = form;
+  const { watch, trigger, setError } = form;
   const watchEmail = watch("email");
   const watchUsername = watch("username");
 
@@ -121,13 +127,13 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         if (exists) {
           setError("email", {
             type: "custom",
-            message: t("auth.validation.emailExists"),
+            message: t("validation.emailExists"),
           });
         }
       } catch (error) {
         setError("email", {
           type: "custom",
-          message: t("auth.validation.emailCheckFailed"),
+          message: t("validation.emailCheckFailed"),
         });
       } finally {
         setIsCheckingDuplicate(false);
@@ -154,13 +160,13 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         if (exists) {
           setError("username", {
             type: "custom",
-            message: t("auth.validation.usernameExists"),
+            message: t("validation.usernameExists"),
           });
         }
       } catch (error) {
         setError("username", {
           type: "custom",
-          message: t("auth.validation.usernameCheckFailed"),
+          message: t("validation.usernameCheckFailed"),
         });
       } finally {
         setIsCheckingDuplicate(false);
@@ -171,22 +177,34 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   }, [watchUsername, setError, t]);
 
   const steps = [
-    { number: 1, title: t("auth.steps.account.title"), description: t("auth.steps.account.desc") },
-    { number: 2, title: t("auth.steps.personal.title"), description: t("auth.steps.personal.desc") },
-    { number: 3, title: t("auth.steps.details.title"), description: t("auth.steps.details.desc") },
+    {
+      number: 1,
+      title: t("steps.account.title"),
+      description: t("steps.account.desc"),
+    },
+    {
+      number: 2,
+      title: t("steps.personal.title"),
+      description: t("steps.personal.desc"),
+    },
+    {
+      number: 3,
+      title: t("steps.details.title"),
+      description: t("steps.details.desc"),
+    },
   ];
 
   const validateCurrentStep = async (): Promise<boolean> => {
-    const fieldsToValidate = 
-      currentStep === 1 
+    const fieldsToValidate =
+      currentStep === 1
         ? ["username", "email", "password", "confirmPassword"]
         : currentStep === 2
-        ? ["fullName", "phone"]
-        : userRole === "candidate"
-        ? ["currentTitle"]
-        : userRole === "headhunter"
-        ? ["taxCode"]
-        : ["commissionRate"];
+          ? ["fullName", "phone"]
+          : userRole === "candidate"
+            ? ["currentTitle"]
+            : userRole === "headhunter"
+              ? ["taxCode"]
+              : ["commissionRate"];
 
     const result = await trigger(fieldsToValidate as any);
     return result;
@@ -196,7 +214,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     if (await validateCurrentStep()) {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length));
     } else {
-      toast.error(t("auth.validation.fixErrors"));
+      toast.error(t("validation.fixErrors"));
     }
   };
 
@@ -212,14 +230,17 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     }
 
     if (isCheckingDuplicate) {
-      toast.error(t("auth.validation.waitForValidation"));
+      toast.error(t("validation.waitForValidation"));
       return;
     }
 
     try {
       // Save registration data to sessionStorage
       const dataToStore = { ...data, avatar: undefined };
-      sessionStorage.setItem("pendingRegistration", JSON.stringify(dataToStore));
+      sessionStorage.setItem(
+        "pendingRegistration",
+        JSON.stringify(dataToStore)
+      );
 
       if (data.avatar) {
         const reader = new FileReader();
@@ -243,7 +264,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         ),
       ]);
 
-      toast.success(t("auth.messages.otpSent"));
+      toast.success(t("messages.otpSent"));
 
       navigate("/verify-otp", {
         state: {
@@ -255,7 +276,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        t("auth.messages.failedToSendOtp")
+        t("messages.failedToSendOtp")
       );
       toast.error(errorMessage);
     }
@@ -264,17 +285,22 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const isSubmitting = form.formState.isSubmitting;
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: t("auth.form.register.signIn") }}>
+    <AuthLayout
+      ctaButton={{ to: "/login", label: t("form.register.signIn") }}
+    >
       <div className="w-full max-w-5xl min-h-125 bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
-            {t("auth.form.register.joinNetwork")} <br />
-            <span className="text-lime-400">{t("auth.form.register.professional")}</span> <br />
+            {t("form.register.joinNetwork")} <br />
+            <span className="text-lime-400">
+              {t("form.register.professional")}
+            </span>{" "}
+            <br />
             Network
           </h1>
           <p className="text-gray-300 mt-1">
-            {t("auth.pages.register.subtitle")}
+            {t("pages.register.subtitle")}
           </p>
         </div>
 
@@ -285,7 +311,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
 
           <StepIndicator steps={steps} currentStep={currentStep} />
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Step 1: Account Information */}
             {currentStep === 1 && (
               <AccountStep
@@ -303,8 +329,12 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
             {/* Step 3: Role-Specific Details */}
             {currentStep === 3 && (
               <>
-                {userRole === "candidate" && <CandidateDetailsStep form={form} />}
-                {userRole === "headhunter" && <HeadhunterDetailsStep form={form} />}
+                {userRole === "candidate" && (
+                  <CandidateDetailsStep form={form} />
+                )}
+                {userRole === "headhunter" && (
+                  <HeadhunterDetailsStep form={form} />
+                )}
                 {userRole === "collaborator" && (
                   <CollaboratorDetailsStep form={form} />
                 )}
@@ -323,7 +353,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl"
                 >
                   <HiOutlineArrowLeft />
-                  {t("auth.buttons.previous")}
+                  {t("buttons.previous")}
                 </Button>
               )}
 
@@ -336,7 +366,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   disabled={isSubmitting}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
                 >
-                  {t("auth.buttons.next")}
+                  {t("buttons.next")}
                   <HiOutlineArrowRight />
                 </Button>
               ) : (
@@ -347,7 +377,9 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   disabled={isSubmitting || isCheckingDuplicate}
                   className="flex-1 flex justify-center gap-2 cursor-pointer"
                 >
-                  {isSubmitting ? t("auth.buttons.sendingOtp") : t("auth.buttons.createAccount")}
+                  {isSubmitting
+                    ? t("buttons.sendingOtp")
+                    : t("buttons.createAccount")}
                   <HiOutlineArrowRight />
                 </Button>
               )}
@@ -355,12 +387,12 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-3">
-            {t("auth.pages.register.haveAccount")}{" "}
+            {t("pages.register.haveAccount")}{" "}
             <Link
               to="/login"
               className="text-lime-500 font-semibold hover:underline"
             >
-              {t("auth.pages.register.signIn")}
+              {t("pages.register.signIn")}
             </Link>
           </p>
         </div>

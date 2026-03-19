@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { FormField, PasswordRequirements } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdOutlineMail, MdLockOutline, MdAccountCircle } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -22,11 +22,11 @@ export function AccountStep({
   setShowPassword,
   setShowConfirmPassword,
 }: AccountStepProps) {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const { register, watch } = form;
 
   const password = watch("password");
-  
+
   // Compute password requirements based on watched password value
   const passwordRequirements = useMemo(
     () => ({
@@ -40,28 +40,22 @@ export function AccountStep({
 
   return (
     <>
-      <FormField
-        label={t("auth.labels.username")}
-        error={form.getError("username")}
-      >
+      <FormField label={t("labels.username")} error={form.getError("username")}>
         <Input
           {...register("username")}
           autoComplete="username"
           icon={<MdAccountCircle />}
-          placeholder={t("auth.placeholders.username")}
+          placeholder={t("placeholders.username")}
           error={!!form.getError("username")}
         />
       </FormField>
 
-      <FormField
-        label={t("auth.labels.email")}
-        error={form.getError("email")}
-      >
+      <FormField label={t("labels.email")} error={form.getError("email")}>
         <Input
           {...register("email")}
           autoComplete="email"
           icon={<MdOutlineMail />}
-          placeholder={t("auth.placeholders.email")}
+          placeholder={t("placeholders.email")}
           error={!!form.getError("email")}
         />
       </FormField>
@@ -69,7 +63,7 @@ export function AccountStep({
       {/* PASSWORD + CONFIRM PASSWORD */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField
-          label={t("auth.labels.password")}
+          label={t("labels.password")}
           error={form.getError("password")}
         >
           <Input
@@ -77,7 +71,7 @@ export function AccountStep({
             autoComplete="new-password"
             icon={<MdLockOutline />}
             type={showPassword ? "text" : "password"}
-            placeholder={t("auth.placeholders.password")}
+            placeholder={t("placeholders.password")}
             error={!!form.getError("password")}
             rightIcon={
               <button
@@ -92,7 +86,7 @@ export function AccountStep({
         </FormField>
 
         <FormField
-          label={t("auth.labels.confirmPassword")}
+          label={t("labels.confirmPassword")}
           error={form.getError("confirmPassword")}
         >
           <Input
@@ -100,7 +94,7 @@ export function AccountStep({
             autoComplete="new-password"
             icon={<MdLockOutline />}
             type={showConfirmPassword ? "text" : "password"}
-            placeholder={t("auth.placeholders.confirmPassword")}
+            placeholder={t("placeholders.confirmPassword")}
             error={!!form.getError("confirmPassword")}
             rightIcon={
               <button

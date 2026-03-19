@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FormField } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import {
   MdWorkOutline,
@@ -16,77 +16,76 @@ interface CandidateDetailsStepProps {
 }
 
 export function CandidateDetailsStep({ form }: CandidateDetailsStepProps) {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const { register } = form;
-
   return (
     <div className="space-y-6">
       <p className="text-sm text-slate-600">
-        {t("auth.descriptions.candidateDetails")}
+        {t("descriptions.candidateDetails")}
       </p>
 
-      <FormField label={t("auth.labels.currentJobTitle")}>
+      <FormField label={t("labels.currentJobTitle")}>
         <Input
           {...register("currentTitle")}
           autoComplete="organization-title"
           icon={<MdWorkOutline />}
-          placeholder={t("auth.placeholders.jobTitle")}
+          placeholder={t("placeholders.jobTitle")}
         />
       </FormField>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label={t("auth.labels.yearsOfExperience")}>
+        <FormField label={t("labels.yearsOfExperience")}>
           <Input
             {...register("yearsOfExperience", { valueAsNumber: true })}
             autoComplete="off"
             icon={<MdWorkOutline />}
             type="number"
-            placeholder={t("auth.placeholders.experience")}
+            placeholder={t("placeholders.experience")}
           />
         </FormField>
 
-        <FormField label={t("auth.labels.city")}>
+        <FormField label={t("labels.city")}>
           <Input
             {...register("city")}
             autoComplete="address-level2"
             icon={<MdLocationCity />}
-            placeholder={t("auth.placeholders.location")}
+            placeholder={t("placeholders.location")}
           />
         </FormField>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label={t("auth.labels.expectedSalaryMin")}>
+        <FormField label={t("labels.expectedSalaryMin")}>
           <Input
             {...register("expectedSalaryMin", { valueAsNumber: true })}
             autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
-            placeholder={t("auth.placeholders.salaryMin")}
+            placeholder={t("placeholders.salaryMin")}
           />
         </FormField>
 
-        <FormField label={t("auth.labels.expectedSalaryMax")}>
+        <FormField label={t("labels.expectedSalaryMax")}>
           <Input
             {...register("expectedSalaryMax", { valueAsNumber: true })}
             autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
-            placeholder={t("auth.placeholders.salaryMax")}
+            placeholder={t("placeholders.salaryMax")}
           />
         </FormField>
       </div>
 
-      <FormField label={t("auth.labels.bio")}>
+      <FormField label={t("labels.bio")}>
         <Textarea
           {...register("bio")}
           autoComplete="off"
-          placeholder={t("auth.placeholders.bio")}
+          placeholder={t("placeholders.bio")}
           rows={4}
         />
       </FormField>
 
-      <FormField label={t("auth.labels.jobSearchStatus")}>
+      <FormField label={t("labels.jobSearchStatus")}>
         <label className="flex items-center gap-3 cursor-pointer">
           <input
             {...register("openForWork")}
@@ -95,7 +94,7 @@ export function CandidateDetailsStep({ form }: CandidateDetailsStepProps) {
           />
           <span className="flex items-center gap-2 text-slate-700">
             <MdCheckBox className="text-brand-primary" />
-            {t("auth.checkboxLabels.openForWork")}
+            {t("checkboxLabels.openForWork")}
           </span>
         </label>
       </FormField>
