@@ -1,5 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
+import type { UserStatus } from "../../types/user.types";
 import { UserListLoading } from "./UserListLoading";
 
 export interface UserTableRow {
@@ -9,9 +10,8 @@ export interface UserTableRow {
   username: string;
   avatar?: string;
   role: string;
-  status: "Active" | "Inactive";
+  status: UserStatus;
   company: string;
-  isLocked?: boolean;
 }
 
 interface UserListTableProps {
@@ -21,6 +21,7 @@ interface UserListTableProps {
   onSort?: (field: string, shiftKey?: boolean) => void;
   onViewDetails?: (userId: string) => void;
   onLockUser?: (userId: string) => void;
+  onUnlockUser?: (userId: string) => void;
   onDeleteUser?: (userId: string) => void;
 }
 
@@ -31,6 +32,7 @@ export const UserListTable: React.FC<UserListTableProps> = ({
   onSort,
   onViewDetails,
   onLockUser,
+  onUnlockUser,
   onDeleteUser,
 }) => {
   const { t } = useUsersTranslation();
@@ -49,9 +51,9 @@ export const UserListTable: React.FC<UserListTableProps> = ({
     onSort?.(field, e.shiftKey);
   };
 
-  const handleLockClick = (userId: string, isLocked: boolean) => {
-    if (isLocked) {
-      // Unlock logic
+  const handleLockClick = (userId: string, status: UserStatus) => {
+    if (status === "LOCKED") {
+      onUnlockUser?.(userId);
     } else {
       onLockUser?.(userId);
     }
@@ -117,11 +119,15 @@ export const UserListTable: React.FC<UserListTableProps> = ({
               key={user.id}
               className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group"
             >
-              <td className={`px-6 py-4 ${user.isLocked ? "opacity-60" : ""}`}>
+              <td
+                className={`px-6 py-4 ${user.status === "LOCKED" ? "opacity-60" : ""}`}
+              >
                 <div className="flex items-center gap-3">
                   <div
                     className={`size-10 rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-primary/20 transition-all ${
-                      user.isLocked ? "bg-slate-200 grayscale" : "bg-primary/10"
+                      user.status === "LOCKED"
+                        ? "bg-slate-200 grayscale"
+                        : "bg-primary/10"
                     }`}
                   >
                     {user.avatar ? (
@@ -150,15 +156,15 @@ export const UserListTable: React.FC<UserListTableProps> = ({
               <td className="px-6 py-4">
                 <div
                   className={`flex items-center gap-1.5 text-xs font-bold ${
-                    user.status === "Active" ? "text-primary" : "text-slate-400"
+                    user.status === "ACTIVE" ? "text-primary" : "text-slate-400"
                   }`}
                 >
                   <span
                     className={`size-1.5 rounded-full ${
-                      user.status === "Active" ? "bg-primary" : "bg-slate-400"
+                      user.status === "ACTIVE" ? "bg-primary" : "bg-slate-400"
                     }`}
                   />
-                  {user.status}
+                  {user.status === "ACTIVE" ? "Active" : "Locked"}
                 </div>
               </td>
               <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
@@ -176,22 +182,20 @@ export const UserListTable: React.FC<UserListTableProps> = ({
                     </span>
                   </button>
                   <button
-                    onClick={() =>
-                      handleLockClick(user.id, user.isLocked || false)
-                    }
+                    onClick={() => handleLockClick(user.id, user.status)}
                     className={`p-1.5 rounded-lg transition-all ${
-                      user.isLocked
+                      user.status === "LOCKED"
                         ? "text-amber-500 bg-amber-50"
                         : "text-slate-400 hover:text-amber-500 hover:bg-amber-50"
                     }`}
                     title={
-                      user.isLocked
+                      user.status === "LOCKED"
                         ? t("actions.unlockAccount")
                         : t("actions.lockAccount")
                     }
                   >
                     <span className="material-symbols-outlined text-lg">
-                      {user.isLocked ? "lock_open" : "lock"}
+                      {user.status === "LOCKED" ? "lock_open" : "lock"}
                     </span>
                   </button>
                   <button

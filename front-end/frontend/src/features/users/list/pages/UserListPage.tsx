@@ -111,7 +111,8 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
         onSearchChange={setSearchValue}
         onFilterClick={() => setShowFilters(!showFilters)}
         onGroupByChange={(value) => {
-          console.log("Group by:", value);
+          // TODO: Implement group by feature
+          console.debug("Group by:", value);
         }}
         onAddUserClick={onAddNewUser}
         activeFilters={activeFilters}
@@ -177,6 +178,9 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
               }}
               onLockUser={(userId) => {
                 console.log("🔒 Lock user action:", userId);
+              }}
+              onUnlockUser={(userId) => {
+                console.log("🔓 Unlock user action:", userId);
               }}
               onDeleteUser={(userId) => {
                 console.log("🗑️ Delete user action:", userId);

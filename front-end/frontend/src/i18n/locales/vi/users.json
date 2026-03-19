@@ -51,8 +51,11 @@
     "lockAccount": "Khóa Tài khoản",
     "unlockAccount": "Mở khóa Tài khoản",
     "deleteUser": "Xóa Người dùng"
-  },
-  "detail": {
+  },  "common": {
+    "failedToFetchUsers": "Không thể tải danh sách người dùng",
+    "failedToFetchUserDetails": "Không thể tải chi tiết người dùng",
+    "featureComingSoon": "Tính năng sắp ra mắt"
+  },  "detail": {
     "userDetails": "Chi tiết Người dùng",
     "personalInfo": "Thông tin Cá nhân",
     "accountInfo": "Thông tin Tài khoản",
@@ -178,6 +181,13 @@
     "tryAgain": "Thử lại",
     "softDelete": "Xóa Mềm",
     "hardDelete": "Xóa Cứng",
-    "useSoftDelete": "Sử dụng Xóa Mềm thay thế"
+    "useSoftDelete": "Sử dụng Xóa Mềm",
+    "errorSoftDelete": "Không thể xóa mềm người dùng",
+    "errorHardDelete": "Không thể xóa cứng người dùng",
+    "errorConflict": "Người dùng có dữ liệu liên kết. Vui lòng dùng Xóa Mềm",
+    "errorGeneral": "Lỗi xảy ra trong quá trình xóa",
+    "errorNotFound": "Không tìm thấy người dùng",
+    "errorUnauthorized": "Bạn không có quyền thực hiện hành động này",
+    "errorNetwork": "Lỗi mạng. Vui lòng thử lại"
   }
 }

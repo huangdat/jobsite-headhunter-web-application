@@ -4,6 +4,8 @@ import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useUserDetail } from "../hooks/useUserDetail";
 import { userMapper } from "../../utils/userMapper";
+import { useDeleteUser } from "../../actions/delete/hooks";
+import { ROUTES, REDIRECT_DELAY, TOAST_DURATION } from "../../constants";
 import {
   UserHeader,
   BasicInfoCard,
@@ -46,6 +48,7 @@ const UserDetailPage: React.FC = () => {
     loading,
     error: apiError,
   } = useUserDetail(userId || "");
+  const { softDelete, hardDelete } = useDeleteUser();
   const [user, setUser] = useState<User | null>(null);
   const [loginHistory, setLoginHistory] = useState<LoginSession[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -77,13 +80,13 @@ const UserDetailPage: React.FC = () => {
 
   const showToast = (type: "success" | "error", message: string) => {
     setToast({ type, message });
-    setTimeout(() => setToast(null), 3000);
+    setTimeout(() => setToast(null), TOAST_DURATION.MEDIUM);
   };
 
   const handleLockAccount = async () => {
-    // Lock account will be implemented in feature-users-delete-api branch
+    // Lock account will be implemented in feature-users-lock-unlock branch
     console.log("Lock account: To be implemented via API");
-    showToast("error", "Feature coming soon");
+    showToast("error", t("common.featureComingSoon"));
   };
 
   const handleSoftDelete = async () => {
@@ -95,37 +98,34 @@ const UserDetailPage: React.FC = () => {
   };
 
   const handleDeleteConfirm = async (deleteType: "soft" | "hard") => {
-    try {
-      // Simulate API call - will be replaced with actual API in feature-users-delete-api branch
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+    if (!userId || !user) {
+      showToast("error", t("delete.errorGeneral"));
+      return;
+    }
 
-      // Log audit (AC4)
-      const auditLog = {
-        adminId: localStorage.getItem("userId"),
-        timestamp: new Date().toISOString(),
-        targetUserId: userId,
-        deleteType,
-        userName: user?.fullName,
-      };
-      console.log("Audit Log:", auditLog);
+    try {
+      if (deleteType === "soft") {
+        await softDelete({ userId, userName: user.fullName });
+      } else {
+        await hardDelete({ userId, userName: user.fullName });
+      }
 
       // Show success message
       showToast(
         "success",
         deleteType === "soft"
-          ? t("messages.softDeleteSuccess")
-          : t("messages.hardDeleteSuccess")
+          ? t("delete.successSoftDelete")
+          : t("delete.successHardDelete")
       );
 
       // Redirect after deletion
-      if (deleteType === "hard") {
-        setTimeout(() => navigate("/users"), 2000);
-      } else {
-        setTimeout(() => navigate("/users"), 1500);
-      }
+      setTimeout(() => navigate(ROUTES.USERS_LIST), REDIRECT_DELAY.MEDIUM);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown error";
-      throw new Error(errorMessage);
+      const errorMessage =
+        err instanceof Error ? err.message : t("delete.errorGeneral");
+
+      // Error messages already handled by hook
+      showToast("error", errorMessage);
     }
   };
 

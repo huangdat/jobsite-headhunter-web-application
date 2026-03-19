@@ -52,6 +52,11 @@
     "unlockAccount": "Unlock Account",
     "deleteUser": "Delete User"
   },
+  "common": {
+    "failedToFetchUsers": "Failed to fetch users",
+    "failedToFetchUserDetails": "Failed to fetch user details",
+    "featureComingSoon": "Feature coming soon"
+  },
   "detail": {
     "userDetails": "User Details",
     "personalInfo": "Personal Information",
@@ -92,7 +97,8 @@
     "hardDelete": "Hard Delete",
     "hardDeleteDesc": "Permanently remove user and all associated data. This cannot be undone.",
     "cannotPerformOnAdmin": "Cannot perform on other Admin",
-    "errorLoadingData": "Error Loading Data"
+    "errorLoadingData": "Error Loading Data",
+    "failedToFetchUserDetails": "Failed to fetch user details"
   },
   "statuses": {
     "active": "Active",
@@ -179,6 +185,13 @@
     "tryAgain": "Try Again",
     "softDelete": "Soft Delete",
     "hardDelete": "Hard Delete",
-    "useSoftDelete": "Use Soft Delete Instead"
+    "useSoftDelete": "Use Soft Delete Instead",
+    "errorSoftDelete": "Failed to soft delete user",
+    "errorHardDelete": "Failed to hard delete user",
+    "errorConflict": "User has related data. Please use Soft Delete instead",
+    "errorGeneral": "An error occurred during deletion",
+    "errorNotFound": "User not found",
+    "errorUnauthorized": "You are not authorized to perform this action",
+    "errorNetwork": "Network error. Please try again"
   }
 }
