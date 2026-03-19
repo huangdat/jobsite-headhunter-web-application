@@ -9,6 +9,7 @@ import com.rikkeisoft.backend.model.dto.resp.application.ApplicationResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.service.ApplicationService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +35,14 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class CandidateApplicationController {
         ApplicationService applicationService;
-        AccountRepo accountRepo;
-        // POST /applications - Apply for a job
 
-        @PostMapping("/applications")
-        public APIResponse<ApplicationDetailResp> applyForJob(@ModelAttribute ApplicationCreateReq req) {
+        // POST /applications - Apply for a job
+        @PostMapping("/jobs/{jobId}/applications")
+        public APIResponse<ApplicationDetailResp> applyForJob(@PathVariable Long jobId,
+                        @ModelAttribute @Valid ApplicationCreateReq req) {
                 return APIResponse.<ApplicationDetailResp>builder()
-                                .result(applicationService.applyForJob(req))
+                                .status(HttpStatus.OK)
+                                .result(applicationService.applyForJob(jobId, req))
                                 .build();
         }
 
@@ -49,24 +52,11 @@ public class CandidateApplicationController {
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "10") int size) {
 
-              
-                JwtAuthenticationToken auth = (JwtAuthenticationToken) SecurityContextHolder.getContext()
-                                .getAuthentication();
-                String username = auth.getToken().getSubject();
-
-               
-
-               
-                Account account = accountRepo.findByUsername(username)
-                                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
-
-                String candidateId = account.getId(); 
-
                 // STEP 3: Tạo Pageable và query
                 Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "appliedAt");
 
                 return APIResponse.<Page<ApplicationResp>>builder()
-                                .result(applicationService.getMyApplications(candidateId, pageable))
+                                .result(applicationService.getMyApplications(pageable))
                                 .build();
         }
 }

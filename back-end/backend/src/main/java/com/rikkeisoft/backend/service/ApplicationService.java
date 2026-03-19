@@ -13,8 +13,8 @@ import org.springframework.data.domain.Pageable;
  */
 public interface ApplicationService {
     // Candidate features
-    ApplicationDetailResp applyForJob(ApplicationCreateReq req);
-    Page<ApplicationResp> getMyApplications(String candidateId, Pageable pageable);
+    ApplicationDetailResp applyForJob(Long jobId, ApplicationCreateReq req);
+    Page<ApplicationResp> getMyApplications(Pageable pageable);
 
     // Headhunter features
     Page<ApplicationResp> getJobPipeline(Long jobId, Pageable pageable);

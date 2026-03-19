@@ -2,6 +2,18 @@ import { apiClient } from "@/shared/utils/axios";
 import type { UserDetail } from "../types/user.types";
 import { API_ENDPOINTS } from "../constants";
 
+/**
+ * Backend response format (different from frontend interface)
+ * @internal - This adapter handles backend response transformation
+ */
+interface BackendPagedResponse<T> {
+  data: T[];
+  totalElements: number;
+  page: number;
+  size: number;
+  totalPages: number;
+}
+
 export interface PagedResponse<T> {
   items: T[];
   total: number;
@@ -9,6 +21,69 @@ export interface PagedResponse<T> {
   size: number;
   totalPages: number;
 }
+
+/**
+ * Adapter: Transform backend AccountStatus enum to frontend UserStatus
+ * @internal
+ *
+ * Mapping:
+ * - Backend "ACTIVE" → Frontend "ACTIVE"
+ * - Backend "SUSPENDED" → Frontend "LOCKED" (account is disabled/locked)
+ * - Backend "PENDING" → Frontend "ACTIVE" (not yet verified but usable)
+ * - Backend "DELETED" → Should not appear in search results
+ */
+const mapBackendStatus = (backendStatus: string): "ACTIVE" | "LOCKED" => {
+  const statusMap: Record<string, "ACTIVE" | "LOCKED"> = {
+    ACTIVE: "ACTIVE",
+    PENDING: "ACTIVE", // Treat pending as active for display
+    SUSPENDED: "LOCKED", // Backend suspended = frontend locked
+    DELETED: "LOCKED", // Fallback for edge cases
+  };
+  return statusMap[backendStatus] || "ACTIVE";
+};
+
+/**
+ * Adapter: Transform backend UserDetail to frontend UserDetail
+ * @internal
+ *
+ * Handles:
+ * - Status enum conversion (AccountStatus → UserStatus)
+ * - Role array handling (backend returns Set<String>, frontend needs single role)
+ */
+const adaptUserDetail = (backendUser: any): UserDetail => {
+  return {
+    ...backendUser,
+    // Convert backend AccountStatus enum to frontend UserStatus
+    status: mapBackendStatus(backendUser.status),
+    // If backend returns multiple roles (Set<String>), take first one
+    // This assumes business logic: users can have multiple roles but we display primary
+    role:
+      Array.isArray(backendUser.roles) && backendUser.roles.length > 0
+        ? backendUser.roles[0]
+        : backendUser.role || "CANDIDATE",
+  };
+};
+
+/**
+ * Adapter: Transform backend response to frontend format
+ * @internal
+ *
+ * Backend returns: { data, totalElements, page, size, totalPages }
+ * Frontend expects: { items, total, page, size, totalPages }
+ *
+ * Also adapts individual user objects within the response.
+ */
+const adaptPagedResponse = (
+  backendResp: BackendPagedResponse<any>
+): PagedResponse<UserDetail> => {
+  return {
+    items: backendResp.data.map(adaptUserDetail),
+    total: backendResp.totalElements,
+    page: backendResp.page,
+    size: backendResp.size,
+    totalPages: backendResp.totalPages,
+  };
+};
 
 export const usersApi = {
   /**
@@ -48,7 +123,9 @@ export const usersApi = {
     const res = await apiClient.get<any>(API_ENDPOINTS.USERS.SEARCH, {
       params,
     });
-    return res.data.result;
+    // Backend returns { data, totalElements, ... }
+    // Frontend expects { items, total, ... }
+    return adaptPagedResponse(res.data.result);
   },
 
   /**
@@ -74,6 +151,49 @@ export const usersApi = {
   ): Promise<{ success: boolean; message: string }> => {
     const res = await apiClient.delete<any>(
       API_ENDPOINTS.USERS.HARD_DELETE(userId)
+    );
+    return res.data.result;
+  },
+
+  /**
+   * Lock user account
+   * AC1: Lock successfully - Change status to INACTIVE, invalidate refresh token, audit log, send email
+   * @param userId - User ID to lock
+   * @param data - Lock data with reason, auto-unlock date, email and logout settings
+   */
+  lockUser: async (
+    userId: string,
+    data: {
+      reason: string;
+      autoUnlockDate?: string;
+      sendEmail: boolean;
+      logoutCurrentSession: boolean;
+    }
+  ): Promise<{ success: boolean; message: string }> => {
+    const res = await apiClient.post<any>(
+      API_ENDPOINTS.USERS.LOCK(userId),
+      data
+    );
+    return res.data.result;
+  },
+
+  /**
+   * Unlock user account
+   * AC2: Unlock successfully - Change status to ACTIVE, send email, force password change
+   * @param userId - User ID to unlock
+   * @param data - Unlock data with reason and email/password change settings
+   */
+  unlockUser: async (
+    userId: string,
+    data: {
+      reason: string;
+      sendEmail: boolean;
+      requirePasswordChange: boolean;
+    }
+  ): Promise<{ success: boolean; message: string }> => {
+    const res = await apiClient.post<any>(
+      API_ENDPOINTS.USERS.UNLOCK(userId),
+      data
     );
     return res.data.result;
   },

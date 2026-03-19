@@ -66,6 +66,33 @@ public class AppStartConfig {
 
                 System.out.println("Admin account created!");
             }
+
+            // Create a candidate account if it has not existed
+            if (accountRepo.findByUsername("candidate").isEmpty()) {
+
+                HashSet roles = new HashSet();
+                roles.add("CANDIDATE");
+
+                Account candidate = Account.builder()
+                        .username("candidate")
+                        .email("candidate.work@gmail.com")
+                        .password(passwordEncoder.encode("candidate123"))
+                        .fullName("Candidate")
+                        .phone("0123456789")
+                        .imageUrl("src/main/resources/static/img/admin-avatar.webp")
+                        .gender(Gender.OTHER)
+                        .roles(roles)
+                        .authProvider(AuthProvider.LOCAL)
+                        .providerId("")
+                        .status(AccountStatus.ACTIVE)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .build();
+
+                accountRepo.save(candidate);
+
+                System.out.println("Candidate account created!");
+            }
         };
     }
 

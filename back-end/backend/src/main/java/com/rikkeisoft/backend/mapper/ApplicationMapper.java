@@ -10,14 +10,23 @@ import org.mapstruct.Mapping;
 /**
  * MapStruct mapper for converting between Application entities and DTOs.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {InterviewMapper.class})
 public interface ApplicationMapper {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "job", ignore = true)
+    @Mapping(target = "candidate", ignore = true)
+    @Mapping(target = "collaborator", ignore = true)
+    @Mapping(target = "cvSnapshotUrl", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "appliedAt", ignore = true)
     Application toEntity(ApplicationCreateReq req);
 
-    @Mapping(target = "jobId", source = "job.id")
-    @Mapping(target = "candidateId", source = "candidate.id")
+    @Mapping(source = "job.id", target = "jobId")
+    @Mapping(source = "candidate.id", target = "candidateId")
     ApplicationResp toResponse(Application entity);
 
-    @Mapping(target = "jobTitle", source = "job.title")
+    @Mapping(source = "job.id", target = "jobId")
+    @Mapping(source = "candidate.id", target = "candidateId")
+    @Mapping(source = "job.title", target = "jobTitle")
     ApplicationDetailResp toDetailResponse(Application entity);
 }
