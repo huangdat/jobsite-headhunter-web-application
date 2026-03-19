@@ -52,12 +52,8 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
   const [sendEmail, setSendEmail] = useState(true);
   const [requirePasswordChange, setRequirePasswordChange] = useState(true);
 
-  const canProceed = reason.trim() !== "";
-
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!canProceed) return;
-
     setStep("confirmation");
   };
 
@@ -125,24 +121,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
             </div>
 
             <form onSubmit={handleFormSubmit} className="space-y-6">
-              {/* Unlock Reason - Required */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  {t("unlock.reasonLabel")} <span className="text-red-600">*</span>
-                </label>
-                <textarea
-                  value={reason}
-                  onChange={(e) => setReason(e.target.value)}
-                  required
-                  placeholder={t("unlock.reasonPlaceholder")}
-                  aria-label={t("unlock.reasonLabel")}
-                  rows={4}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
-                />
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-                  {t("unlock.reasonHint")}
-                </p>
-              </div>
+              {/* Note: Unlock does not require filling in reason */}
 
               {/* Divider */}
               <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
@@ -213,8 +192,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 </button>
                 <button
                   type="submit"
-                  disabled={!canProceed}
-                  className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
+                  className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
                 >
                   {t("unlock.next")}
                 </button>
@@ -319,9 +297,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:bg-green-400 transition font-medium flex items-center gap-2"
               >
                 {loading && <Loader className="w-4 h-4 animate-spin" />}
-                {loading
-                  ? t("unlock.processing")
-                  : t("unlock.confirmAction")}
+                {loading ? t("unlock.processing") : t("unlock.confirmAction")}
               </button>
             </div>
           </div>

@@ -7,6 +7,7 @@ interface DangerZoneSectionProps {
   onSoftDelete: () => void;
   onHardDelete: () => void;
   isOtherAdmin: boolean;
+  canLock?: boolean;
 }
 
 const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
@@ -14,6 +15,7 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
   onSoftDelete,
   onHardDelete,
   isOtherAdmin,
+  canLock = true,
 }) => {
   const { t } = useUsersTranslation();
   const getButtonClass = (disabled: boolean, isDangerous: boolean = false) => {
@@ -38,30 +40,33 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
       <p className="text-gray-600 text-sm mb-6">{t("detail.dangerZoneDesc")}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="border border-gray-200 rounded-lg p-4">
-          <div className="flex items-center gap-3 mb-3">
-            <Lock className="w-5 h-5 text-gray-700" />
-            <h3 className="font-semibold text-gray-900">
+        {/* Lock Account Section - Only show if user has lock permission */}
+        {canLock && (
+          <div className="border border-gray-200 rounded-lg p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <Lock className="w-5 h-5 text-gray-700" />
+              <h3 className="font-semibold text-gray-900">
+                {t("detail.lockAccount")}
+              </h3>
+            </div>
+            <p className="text-gray-600 text-sm mb-4">
+              {t("detail.lockAccountDesc")}
+            </p>
+            <button
+              onClick={onLockAccount}
+              disabled={isOtherAdmin}
+              className={getButtonClass(isOtherAdmin)}
+              title={
+                isOtherAdmin
+                  ? t("detail.cannotPerformOnAdmin")
+                  : t("detail.lockAccount")
+              }
+            >
+              <Lock className="w-4 h-4" />
               {t("detail.lockAccount")}
-            </h3>
+            </button>
           </div>
-          <p className="text-gray-600 text-sm mb-4">
-            {t("detail.lockAccountDesc")}
-          </p>
-          <button
-            onClick={onLockAccount}
-            disabled={isOtherAdmin}
-            className={getButtonClass(isOtherAdmin)}
-            title={
-              isOtherAdmin
-                ? t("detail.cannotPerformOnAdmin")
-                : t("detail.lockAccount")
-            }
-          >
-            <Lock className="w-4 h-4" />
-            {t("detail.lockAccount")}
-          </button>
-        </div>
+        )}
 
         <div className="border border-orange-200 rounded-lg p-4 bg-orange-50">
           <div className="flex items-center gap-3 mb-3">
@@ -109,7 +114,7 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
             }
           >
             <Trash2 className="w-4 h-4" />
-            Permanent Delete
+            {t("common.permanentDelete")}
           </button>
         </div>
       </div>
