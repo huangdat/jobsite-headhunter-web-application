@@ -124,6 +124,7 @@ public enum ErrorCode {
     APPLICATION_PHONE_REQUIRED(HttpStatus.BAD_REQUEST, "Phone number is required"),
     APPLICATION_JOB_ID_REQUIRED(HttpStatus.BAD_REQUEST, "Job ID is required"),
     APPLICATION_STATUS_REQUIRED(HttpStatus.BAD_REQUEST, "Application status is required"),
+    APPLICATION_CV_REQUIRED(HttpStatus.BAD_REQUEST, "CV is required. Please upload a CV to your profile first"),
 
     // Generic file extension validation (used by @ValidFileExtension)
     FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "Invalid file type. Please upload a file with an allowed extension"),
