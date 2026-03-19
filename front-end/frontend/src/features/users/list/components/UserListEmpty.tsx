@@ -1,10 +1,15 @@
-import React from 'react';
+import React from "react";
+import { useUsersTranslation } from "@/shared/hooks";
 
 interface UserListEmptyProps {
   onClearFilters?: () => void;
 }
 
-export const UserListEmpty: React.FC<UserListEmptyProps> = ({ onClearFilters }) => {
+export const UserListEmpty: React.FC<UserListEmptyProps> = ({
+  onClearFilters,
+}) => {
+  const { t } = useUsersTranslation();
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
       <div className="flex flex-col items-center justify-center min-h-[calc(400px)] p-12 text-center">
@@ -12,17 +17,17 @@ export const UserListEmpty: React.FC<UserListEmptyProps> = ({ onClearFilters }) 
           <span className="material-symbols-outlined text-4xl">search_off</span>
         </div>
         <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
-          No results found
+          {t("list.noResults")}
         </h3>
         <p className="text-slate-500 dark:text-slate-400 max-w-xs mx-auto text-sm">
-          We couldn't find any users matching your search criteria. Try adjusting your filters
-          or search terms.
+          Chúng tôi không tìm thấy người dùng nào phù hợp với tiêu chí tìm kiếm
+          của bạn. Vui lòng điều chỉnh bộ lọc hoặc điều khoản tìm kiếm.
         </p>
         <button
           onClick={onClearFilters}
           className="mt-6 px-4 py-2 text-primary font-bold text-sm hover:bg-primary/5 rounded-lg transition-colors"
         >
-          Clear all filters
+          {t("list.clearAllFilters")}
         </button>
       </div>
     </div>

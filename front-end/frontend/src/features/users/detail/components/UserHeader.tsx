@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckCircle } from "lucide-react";
+import { useUsersTranslation } from "@/shared/hooks";
 
 interface UserHeaderProps {
   user: {
@@ -13,17 +14,23 @@ interface UserHeaderProps {
 }
 
 const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
+  const { t } = useUsersTranslation();
+
   const statusConfig = {
-    ACTIVE: { bg: "bg-green-100", text: "text-green-800", label: "Active" },
+    ACTIVE: {
+      bg: "bg-green-100",
+      text: "text-green-800",
+      label: t("statuses.active"),
+    },
     INACTIVE: {
       bg: "bg-gray-100",
       text: "text-gray-800",
-      label: "Inactive",
+      label: t("statuses.inactive"),
     },
     SUSPENDED: {
       bg: "bg-red-100",
       text: "text-red-800",
-      label: "Suspended",
+      label: t("statuses.suspended"),
     },
   };
 
@@ -41,7 +48,7 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
       <div className="flex items-start gap-3 flex-row sm:flex-col">
         {/* Avatar + Info */}
         <div className="flex items-start gap-6 flex-1">
-          <div className="flex-shrink-0">
+          <div className="flex-0">
             <img
               src={user.avatar}
               alt={user.fullName}
@@ -68,21 +75,23 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
                   {status.label}
                 </span>
               </div>
-              <span className="text-gray-600 text-sm">ID: {user.id}</span>
               <span className="text-gray-600 text-sm">
-                Joined: {user.joinedDate}
+                {t("detail.id")}: {user.id}
+              </span>
+              <span className="text-gray-600 text-sm">
+                {t("detail.joinedDate")}: {user.joinedDate}
               </span>
             </div>
           </div>
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-2 flex-shrink-0 lg:w-full lg:mt-4">
+        <div className="flex gap-2 flex-0 lg:w-full lg:mt-4">
           <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-medium whitespace-nowrap">
-            ✎ Edit Profile
+            ✎ {t("detail.editProfile")}
           </button>
           <button className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium whitespace-nowrap">
-            📥 Export Data
+            📥 {t("detail.exportData")}
           </button>
         </div>
       </div>

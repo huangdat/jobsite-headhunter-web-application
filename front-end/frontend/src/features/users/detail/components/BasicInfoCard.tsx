@@ -1,5 +1,6 @@
-import React from 'react';
-import { Users } from 'lucide-react';
+import React from "react";
+import { Users } from "lucide-react";
+import { useUsersTranslation } from "@/shared/hooks";
 
 interface BasicInfoCardProps {
   user: {
@@ -12,21 +13,23 @@ interface BasicInfoCardProps {
 }
 
 const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
-  const displayCompany = user.company ? user.company : '—';
+  const { t } = useUsersTranslation();
+  const displayCompany = user.company ? user.company : "—";
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-lg font-semibold flex items-center gap-2 mb-6">
         <Users className="w-5 h-5 text-green-500" />
-        Basic Information
+        {t("detail.basicInformation")}
       </h2>
 
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Full Name
+            {t("detail.fullName")}
           </label>
           <input
+            aria-label={t("aria.fullName")}
             type="text"
             value={user.fullName}
             readOnly
@@ -37,9 +40,10 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email
+            {t("detail.email")}
           </label>
           <input
+            aria-label={t("aria.email")}
             type="email"
             value={user.email}
             readOnly
@@ -50,9 +54,10 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Phone Number
+            {t("detail.phoneNumber")}
           </label>
           <input
+            aria-label={t("aria.phone")}
             type="tel"
             value={user.phone}
             readOnly
@@ -63,9 +68,10 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Company / Organization
+            {t("detail.company")}
           </label>
           <input
+            aria-label={t("aria.company")}
             type="text"
             value={displayCompany}
             readOnly
@@ -77,9 +83,10 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
         {user.biography && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Biography
+              {t("detail.biography")}
             </label>
             <textarea
+              aria-label={t("aria.biography")}
               value={user.biography}
               readOnly
               disabled

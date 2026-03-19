@@ -1,5 +1,6 @@
 import React from "react";
 import { AlertTriangle, Lock, Trash2, AlertCircle } from "lucide-react";
+import { useUsersTranslation } from "@/shared/hooks";
 
 interface DangerZoneSectionProps {
   onLockAccount: () => void;
@@ -14,6 +15,7 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
   onHardDelete,
   isOtherAdmin,
 }) => {
+  const { t } = useUsersTranslation();
   const getButtonClass = (disabled: boolean, isDangerous: boolean = false) => {
     if (disabled) {
       return "px-4 py-3 rounded-lg font-medium opacity-50 cursor-not-allowed bg-gray-200 text-gray-500 flex items-center gap-2 justify-center w-full";
@@ -28,21 +30,23 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
     <div className="bg-white rounded-lg border-2 border-red-200 p-6">
       <div className="flex items-center gap-3 mb-4">
         <AlertTriangle className="w-6 h-6 text-red-600" />
-        <h2 className="text-lg font-bold text-red-700">Danger Zone</h2>
+        <h2 className="text-lg font-bold text-red-700">
+          {t("detail.dangerZone")}
+        </h2>
       </div>
 
-      <p className="text-gray-600 text-sm mb-6">
-        The actions below will directly affect user access and system data.
-      </p>
+      <p className="text-gray-600 text-sm mb-6">{t("detail.dangerZoneDesc")}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="border border-gray-200 rounded-lg p-4">
           <div className="flex items-center gap-3 mb-3">
             <Lock className="w-5 h-5 text-gray-700" />
-            <h3 className="font-semibold text-gray-900">Lock Account</h3>
+            <h3 className="font-semibold text-gray-900">
+              {t("detail.lockAccount")}
+            </h3>
           </div>
           <p className="text-gray-600 text-sm mb-4">
-            Temporarily block access. User can unlock when needed.
+            {t("detail.lockAccountDesc")}
           </p>
           <button
             onClick={onLockAccount}
@@ -50,43 +54,49 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
             className={getButtonClass(isOtherAdmin)}
             title={
               isOtherAdmin
-                ? "Cannot perform on other Admin"
-                : "Lock account"
+                ? t("detail.cannotPerformOnAdmin")
+                : t("detail.lockAccount")
             }
           >
             <Lock className="w-4 h-4" />
-            Lock Account
+            {t("detail.lockAccount")}
           </button>
         </div>
 
         <div className="border border-orange-200 rounded-lg p-4 bg-orange-50">
           <div className="flex items-center gap-3 mb-3">
             <AlertCircle className="w-5 h-5 text-orange-700" />
-            <h3 className="font-semibold text-gray-900">Soft Delete</h3>
+            <h3 className="font-semibold text-gray-900">
+              {t("detail.softDelete")}
+            </h3>
           </div>
           <p className="text-gray-600 text-sm mb-4">
-            Mark for deletion. Data is kept for 30 days for recovery.
+            {t("detail.softDeleteDesc")}
           </p>
           <button
             onClick={onSoftDelete}
             disabled={isOtherAdmin}
             className={getButtonClass(isOtherAdmin)}
             title={
-              isOtherAdmin ? "Cannot perform on other Admin" : "Soft delete"
+              isOtherAdmin
+                ? t("detail.cannotPerformOnAdmin")
+                : t("detail.softDelete")
             }
           >
             <Trash2 className="w-4 h-4" />
-            Soft Delete
+            {t("detail.softDelete")}
           </button>
         </div>
 
         <div className="border border-red-300 rounded-lg p-4 bg-red-50">
           <div className="flex items-center gap-3 mb-3">
             <AlertTriangle className="w-5 h-5 text-red-700" />
-            <h3 className="font-semibold text-gray-900">Permanent Delete</h3>
+            <h3 className="font-semibold text-gray-900">
+              {t("detail.hardDelete")}
+            </h3>
           </div>
           <p className="text-gray-600 text-sm mb-4">
-            Permanently delete account and data. Cannot be undone.
+            {t("detail.hardDeleteDesc")}
           </p>
           <button
             onClick={onHardDelete}
@@ -94,8 +104,8 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
             className={getButtonClass(isOtherAdmin, true)}
             title={
               isOtherAdmin
-                ? "Cannot perform on other Admin"
-                : "Permanently delete"
+                ? t("detail.cannotPerformOnAdmin")
+                : t("detail.hardDelete")
             }
           >
             <Trash2 className="w-4 h-4" />
