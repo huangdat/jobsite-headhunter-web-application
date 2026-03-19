@@ -154,4 +154,47 @@ export const usersApi = {
     );
     return res.data.result;
   },
+
+  /**
+   * Lock user account
+   * AC1: Lock successfully - Change status to INACTIVE, invalidate refresh token, audit log, send email
+   * @param userId - User ID to lock
+   * @param data - Lock data with reason, auto-unlock date, email and logout settings
+   */
+  lockUser: async (
+    userId: string,
+    data: {
+      reason: string;
+      autoUnlockDate?: string;
+      sendEmail: boolean;
+      logoutCurrentSession: boolean;
+    }
+  ): Promise<{ success: boolean; message: string }> => {
+    const res = await apiClient.post<any>(
+      API_ENDPOINTS.USERS.LOCK(userId),
+      data
+    );
+    return res.data.result;
+  },
+
+  /**
+   * Unlock user account
+   * AC2: Unlock successfully - Change status to ACTIVE, send email, force password change
+   * @param userId - User ID to unlock
+   * @param data - Unlock data with reason and email/password change settings
+   */
+  unlockUser: async (
+    userId: string,
+    data: {
+      reason: string;
+      sendEmail: boolean;
+      requirePasswordChange: boolean;
+    }
+  ): Promise<{ success: boolean; message: string }> => {
+    const res = await apiClient.post<any>(
+      API_ENDPOINTS.USERS.UNLOCK(userId),
+      data
+    );
+    return res.data.result;
+  },
 };

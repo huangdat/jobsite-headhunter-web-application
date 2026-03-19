@@ -25,5 +25,5 @@ export interface UserDetail {
   status: UserStatus;
   createdAt: string;
 
-  loginHistory: LoginHistory[];
+  loginHistory?: LoginHistory[];
 }

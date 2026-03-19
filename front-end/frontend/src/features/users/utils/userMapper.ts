@@ -94,10 +94,14 @@ export const userMapper = {
 
   /**
    * Map UserDetail login history to LoginSession array
+   * Handles undefined/null loginHistory from backend
    */
   toLoginSessions: (
-    loginHistory: UserDetail["loginHistory"]
+    loginHistory: UserDetail["loginHistory"] | undefined
   ): LoginSession[] => {
+    if (!loginHistory || loginHistory.length === 0) {
+      return [];
+    }
     return loginHistory.map((log) => ({
       dateTime: new Date(log.loginAt).toLocaleDateString("en-US", {
         year: "numeric",
