@@ -148,6 +148,7 @@
     "reasonLabel": "Lock Reason",
     "selectReasonPlaceholder": "Select a lock reason",
     "autoUnlockDateLabel": "Auto Unlock Date",
+    "autoUnlockDatePlaceholder": "Select unlock date and time",
     "optional": "Optional",
     "autoUnlockDateHint": "Account will automatically unlock on this date",
     "notificationSettings": "Notification Settings",

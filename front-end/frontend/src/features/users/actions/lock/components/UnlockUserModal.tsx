@@ -135,6 +135,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                   onChange={(e) => setReason(e.target.value)}
                   required
                   placeholder={t("unlock.reasonPlaceholder")}
+                  aria-label={t("unlock.reasonLabel")}
                   rows={4}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 />
@@ -281,6 +282,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                     type="checkbox"
                     checked={sendEmail}
                     readOnly
+                    aria-label={t("unlock.sendEmail")}
                     className="w-4 h-4"
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
@@ -292,6 +294,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                     type="checkbox"
                     checked={requirePasswordChange}
                     readOnly
+                    aria-label={t("unlock.requirePasswordChange")}
                     className="w-4 h-4"
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">

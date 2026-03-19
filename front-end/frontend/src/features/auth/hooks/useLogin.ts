@@ -33,7 +33,7 @@ export const useLogin = () => {
       const isUsername = /^[a-zA-Z][a-zA-Z0-9_]{7,31}$/.test(input);
 
       if (!isEmail && !isUsername) {
-        newErrors.email = "Please enter a valid username or email address";
+        newErrors.email = "Please enter a valid username";
       }
     }
 

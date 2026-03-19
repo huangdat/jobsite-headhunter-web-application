@@ -146,6 +146,7 @@
     "reasonLabel": "Lý do Khóa",
     "selectReasonPlaceholder": "Chọn lý do khóa",
     "autoUnlockDateLabel": "Ngày Mở khóa Tự động",
+    "autoUnlockDatePlaceholder": "Chọn ngày và giờ mở khóa",
     "optional": "Tùy chọn",
     "autoUnlockDateHint": "Tài khoản sẽ tự động mở khóa vào ngày này",
     "notificationSettings": "Cài đặt Thông báo",

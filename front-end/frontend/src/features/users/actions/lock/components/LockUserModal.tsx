@@ -201,6 +201,8 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   value={autoUnlockDate}
                   onChange={(e) => setAutoUnlockDate(e.target.value)}
                   min={new Date().toISOString().slice(0, 16)}
+                  placeholder={t("lock.autoUnlockDatePlaceholder")}
+                  aria-label={t("lock.autoUnlockDateLabel")}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition"
                 />
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -352,6 +354,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     type="checkbox"
                     checked={sendEmail}
                     readOnly
+                    aria-label={t("lock.sendEmail")}
                     className="w-4 h-4"
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
@@ -363,6 +366,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     type="checkbox"
                     checked={logoutCurrentSession}
                     readOnly
+                    aria-label={t("lock.logoutSession")}
                     className="w-4 h-4"
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
