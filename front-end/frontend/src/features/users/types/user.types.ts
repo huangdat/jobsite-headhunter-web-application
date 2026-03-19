@@ -18,6 +18,7 @@ export interface UserDetail {
   phone?: string;
   company?: string | null;
   bio?: string;
+  avatar?: string;
 
   username: string;
   role: UserRole;

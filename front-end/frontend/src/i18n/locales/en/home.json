@@ -12,7 +12,9 @@
     "profile": "PROFILE",
     "changePassword": "CHANGE PASSWORD",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "savedJobs": "Saved Jobs",
+    "notifications": "Notifications"
   },
   "hero": {
     "title": "Find Your Next",
