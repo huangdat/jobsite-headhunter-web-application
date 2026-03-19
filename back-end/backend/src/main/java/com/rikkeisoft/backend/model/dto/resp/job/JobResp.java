@@ -35,3 +35,4 @@ public class JobResp {
     String headhunterId;
     String headhunterName;
 }
+
