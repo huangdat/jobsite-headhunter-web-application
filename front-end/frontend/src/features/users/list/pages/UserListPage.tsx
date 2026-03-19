@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   UserListHeader,
   UserListTable,
@@ -14,6 +15,7 @@ interface UserListPageProps {
 }
 
 export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
+  const navigate = useNavigate();
   const [showFilters, setShowFilters] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
 
@@ -174,7 +176,7 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
               sortBy={sortBy}
               onSort={handleSort}
               onViewDetails={(userId) => {
-                console.log("📋 View user details:", userId);
+                navigate(`/users/${userId}`);
               }}
               onLockUser={(userId) => {
                 console.log("🔒 Lock user action:", userId);

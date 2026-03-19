@@ -17,6 +17,8 @@ export const API_ENDPOINTS = {
     SEARCH: "/api/account/search",
     SOFT_DELETE: (id: string) => `/api/account/${id}/soft-delete`,
     HARD_DELETE: (id: string) => `/api/account/${id}`,
+    LOCK: (id: string) => `/api/account/${id}/lock`,
+    UNLOCK: (id: string) => `/api/account/${id}/unlock`,
   },
 };
 
@@ -51,6 +53,8 @@ export const DELETE_TYPES = {
 export const AUDIT_LOG_ACTIONS = {
   SOFT_DELETE: "SOFT_DELETE",
   HARD_DELETE: "HARD_DELETE",
+  LOCK_USER: "LOCK_USER",
+  UNLOCK_USER: "UNLOCK_USER",
 };
 
 /**
@@ -76,6 +80,8 @@ export const ERROR_CODES = {
   UNAUTHORIZED: "UNAUTHORIZED",
   FORBIDDEN: "FORBIDDEN",
   SERVER_ERROR: "SERVER_ERROR",
+  CANNOT_LOCK_YOURSELF: "CANNOT_LOCK_YOURSELF",
+  INSUFFICIENT_PERMISSION: "INSUFFICIENT_PERMISSION",
 };
 
 /**
