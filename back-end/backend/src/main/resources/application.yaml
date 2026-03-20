@@ -3,11 +3,8 @@ spring:
     name: backend
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
   datasource:
     url: "jdbc:mysql://localhost:3306/headhunt"
     username: root
