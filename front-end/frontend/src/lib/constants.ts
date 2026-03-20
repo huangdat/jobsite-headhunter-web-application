@@ -6,7 +6,8 @@
 
 // API Base URLs
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
+  BASE_URL:
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
   TIMEOUT: 15000,
   RETRY_COUNT: 3,
   RETRY_DELAY: 1000,
@@ -27,7 +28,7 @@ export const API_ENDPOINTS = {
     REGISTER_SOCIAL: "/api/auth/register-social",
     CHECK_EMAIL_USERNAME: "/api/account/check-email-username-exist",
   },
-  
+
   // OTP
   OTP: {
     SEND_SIGNUP: "/api/otp/send-signup",
@@ -44,6 +45,7 @@ export const API_ENDPOINTS = {
     GET_PROFILE: "/api/account/profile",
     UPDATE_PROFILE: "/api/account/profile",
     CHANGE_PASSWORD: "/api/account/changeMyPassword",
+    SEARCH: "/api/account/search", // Admin: Search/Classification - requires ADMIN role
   },
 
   // Jobs
@@ -111,3 +113,20 @@ export const USER_ROLES = {
 } as const;
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
+
+// Admin Features & Routes
+export const ADMIN_FEATURES = {
+  // Admin Dashboard Routes
+  USERS_MANAGEMENT: "/users",
+  USER_CLASSIFICATION: "/users/classification",
+  USER_DETAIL: (userId: string) => `/users/${userId}`,
+
+  // Admin-only API Endpoints (require SCOPE_ADMIN authority)
+  ENDPOINTS: {
+    SEARCH_USERS: "/api/account/search", // Search & Classification feature
+    LOCK_USER: (userId: string) => `/api/account/${userId}/lock`,
+    UNLOCK_USER: (userId: string) => `/api/account/${userId}/unlock`,
+    SOFT_DELETE_USER: (userId: string) => `/api/account/${userId}/soft-delete`,
+    HARD_DELETE_USER: (userId: string) => `/api/account/${userId}`,
+  },
+} as const;
