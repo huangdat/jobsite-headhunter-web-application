@@ -32,6 +32,7 @@ export interface LockUserModalProps {
 
 type ModalStep =
   | "form"
+  | "other-reason"
   | "confirmation"
   | "success"
   | "error"
@@ -68,6 +69,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
 
   // Form state
   const [reason, setReason] = useState("");
+  const [otherReasonText, setOtherReasonText] = useState("");
   const [autoUnlockDate, setAutoUnlockDate] = useState("");
   const [sendEmail, setSendEmail] = useState(true);
   const [logoutCurrentSession, setLogoutCurrentSession] = useState(true);
@@ -78,6 +80,20 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
     e.preventDefault();
     if (!canProceed) return;
 
+    // If reason is "other", navigate to other-reason input screen
+    if (reason === "other") {
+      setStep("other-reason");
+    } else {
+      setStep("confirmation");
+    }
+  };
+
+  const handleOtherReasonSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (otherReasonText.trim() === "") return;
+
+    // Update reason with the custom text
+    setReason(otherReasonText);
     setStep("confirmation");
   };
 
@@ -128,6 +144,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
   const handleReset = () => {
     setStep("form");
     setReason("");
+    setOtherReasonText("");
     setAutoUnlockDate("");
     setSendEmail(true);
     setLogoutCurrentSession(true);
@@ -224,7 +241,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     checked={sendEmail}
                     onChange={(e) => setSendEmail(e.target.checked)}
                     className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 cursor-pointer"
-                  aria-label={t("lock.sendEmailLabel")}
+                    aria-label={t("lock.sendEmailLabel")}
                   />
                   <label htmlFor="sendEmail" className="flex-1 cursor-pointer">
                     <p className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
@@ -245,7 +262,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     checked={logoutCurrentSession}
                     onChange={(e) => setLogoutCurrentSession(e.target.checked)}
                     className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 cursor-pointer"
-                  aria-label={t("lock.logoutSessionLabel")}
+                    aria-label={t("lock.logoutSessionLabel")}
                   />
                   <label
                     htmlFor="logoutCurrentSession"
@@ -275,6 +292,75 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   type="submit"
                   disabled={!canProceed}
                   className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
+                >
+                  {t("lock.next")}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* Step 1.5: Other Reason Input */}
+        {step === "other-reason" && (
+          <div className="p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <Lock className="w-8 h-8 text-blue-600" />
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                {t("lock.otherReasonTitle") || "Specify Lock Reason"}
+              </h2>
+            </div>
+
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+              <p className="text-blue-900 dark:text-blue-200 font-medium">
+                {t("lock.otherReasonDesc") ||
+                  "Please provide a detailed reason for locking this account."}
+              </p>
+              <p className="text-blue-800 dark:text-blue-300 text-sm mt-2">
+                {t("lock.userInfo")}:{" "}
+                <span className="font-semibold">{userName}</span>
+              </p>
+            </div>
+
+            <form onSubmit={handleOtherReasonSubmit}>
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                  {t("lock.reasonLabel")}{" "}
+                  <span className="text-red-600">*</span>
+                </label>
+                <textarea
+                  value={otherReasonText}
+                  onChange={(e) => setOtherReasonText(e.target.value)}
+                  placeholder={
+                    t("lock.otherReasonPlaceholder") ||
+                    "Enter the specific reason..."
+                  }
+                  required
+                  rows={4}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  aria-label={t("lock.reasonLabel")}
+                />
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+                  {t("lock.otherReasonHint") ||
+                    "This reason will be recorded in the system."}
+                </p>
+              </div>
+
+              <div className="flex gap-3 justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOtherReasonText("");
+                    setReason("");
+                    setStep("form");
+                  }}
+                  className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
+                >
+                  {t("lock.back")}
+                </button>
+                <button
+                  type="submit"
+                  disabled={otherReasonText.trim() === ""}
+                  className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
                 >
                   {t("lock.next")}
                 </button>

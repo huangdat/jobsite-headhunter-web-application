@@ -21,10 +21,10 @@ export interface DeleteUserModalProps {
   userId: string;
   relatedDataCount: RelatedDataCount;
   onClose: () => void;
-  onConfirm: (deleteType: "soft" | "hard") => Promise<void>;
+  onConfirm: (deleteType: "soft" | "hard", reason?: string) => Promise<void>;
 }
 
-type ModalStep = "choice" | "confirmation" | "success" | "error" | "conflict";
+type ModalStep = "choice" | "reason" | "confirmation" | "success" | "error" | "conflict";
 
 interface DeleteSuccess {
   type: "success";
@@ -55,11 +55,25 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   const [selectedType, setSelectedType] = useState<"soft" | "hard" | null>(
     null
   );
+  const [reason, setReason] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<DeleteResult | null>(null);
 
   const handleSelectType = (type: "soft" | "hard") => {
     setSelectedType(type);
+    // For soft delete, go to reason input first
+    if (type === "soft") {
+      setStep("reason");
+    } else {
+      setStep("confirmation");
+    }
+  };
+
+  const handleReasonSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (reason.trim() === "") {
+      return;
+    }
     setStep("confirmation");
   };
 
@@ -68,7 +82,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
     setLoading(true);
     try {
-      await onConfirm(selectedType);
+      await onConfirm(selectedType, selectedType === "soft" ? reason : undefined);
       setResult({ type: "success" });
       setStep("success");
 
@@ -109,6 +123,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   const handleReset = () => {
     setStep("choice");
     setSelectedType(null);
+    setReason("");
     setResult(null);
   };
 
@@ -298,6 +313,69 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 {t("delete.next")}
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Step 1.5: Soft Delete Reason Input */}
+        {step === "reason" && selectedType === "soft" && (
+          <div className="p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <Lock className="w-8 h-8 text-blue-600" />
+              <h2 className="text-2xl font-bold text-gray-900">
+                {t("delete.softDeleteReasonTitle")}
+              </h2>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <p className="text-blue-900 font-medium">
+                {t("delete.softDeleteReasonDesc")}
+              </p>
+              <p className="text-blue-800 text-sm mt-2">
+                {t("delete.userInfo")}:{" "}
+                <span className="font-semibold">{userName}</span>
+              </p>
+            </div>
+
+            <form onSubmit={handleReasonSubmit}>
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  {t("delete.reasonLabel")} <span className="text-red-600">*</span>
+                </label>
+                <textarea
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  placeholder={t("delete.reasonPlaceholder")}
+                  required
+                  rows={4}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  aria-label={t("delete.reasonLabel")}
+                />
+                <p className="text-xs text-gray-600 mt-1">
+                  {t("delete.reasonHint")}
+                </p>
+              </div>
+
+              <div className="flex gap-3 justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setReason("");
+                    setSelectedType(null);
+                    setStep("choice");
+                  }}
+                  className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
+                >
+                  {t("delete.back")}
+                </button>
+                <button
+                  type="submit"
+                  disabled={reason.trim() === ""}
+                  className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
+                >
+                  {t("delete.next")}
+                </button>
+              </div>
+            </form>
           </div>
         )}
 

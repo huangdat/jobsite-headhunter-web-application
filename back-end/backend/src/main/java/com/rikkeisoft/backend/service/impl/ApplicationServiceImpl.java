@@ -47,9 +47,9 @@ import java.time.LocalDateTime;
  */
 public class ApplicationServiceImpl implements ApplicationService {
     AccountRepo accountRepo;
-   
+
     JobRepo jobRepo;
- 
+
     CandidateCvRepo candidateCvRepo;
 
     ApplicationRepo applicationRepo;
@@ -66,14 +66,14 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .orElseThrow(() -> new AppException(ErrorCode.UNAUTHORIZED));
 
         // AC3 - check if candidate already applied to this job
-        if(applicationRepo.existsByJobIdAndCandidateId(jobId, account.getId())){
+        if (applicationRepo.existsByJobIdAndCandidateId(jobId, account.getId())) {
             throw new AppException(ErrorCode.APPLICATION_ALREADY_EXISTS);
         }
 
         Job job = jobRepo.findById(jobId).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
 
         // AC2 - check if Job status still accept application
-        if(!job.getStatus().equals(JobStatus.OPEN)){
+        if (!job.getStatus().equals(JobStatus.OPEN)) {
             throw new AppException(ErrorCode.JOB_NOT_OPEN);
         }
 
@@ -86,7 +86,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = Application.builder()
                 .job(job)
                 .candidate(account)
-//                .collaborator() // No logic to handle collaborator yet
+                // .collaborator() // No logic to handle collaborator yet
                 .cvSnapshotUrl(finalCvUrl)
                 .coverLetter(applicationCreateReq.getCoverLetter())
                 .fullName(applicationCreateReq.getFullName())
@@ -105,28 +105,22 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
 
     @PreAuthorize("hasAnyAuthority( 'SCOPE_CANDIDATE')")
-    public Page<ApplicationResp> getMyApplications(Pageable pageable) {
+    public Page<ApplicationResp> getMyApplications(Pageable pageable, ApplicationStatus status) {
 
         JwtAuthenticationToken auth = (JwtAuthenticationToken) SecurityContextHolder.getContext()
-                                .getAuthentication();
-                String username = auth.getToken().getSubject();
+                .getAuthentication();
+        String username = auth.getToken().getSubject();
 
-               
+        Account account = accountRepo.findByUsername(username)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
 
-               
-                Account account = accountRepo.findByUsername(username)
-                                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
-
-                String candidateId = account.getId(); 
-        // STEP 1: Validate candidateId
-        if (candidateId == null || candidateId.isEmpty()) {
-            throw new AppException(ErrorCode.UNAUTHORIZED);
+        String candidateId = account.getId();
+        Page<Application> applicationPage;
+        if (status != null) {
+            applicationPage = applicationRepo.findByCandidate_IdAndStatus(candidateId, status, pageable);
+        } else {
+            applicationPage = applicationRepo.findAllByCandidate_Id(candidateId, pageable);
         }
-
-      
-        Page<Application> applicationPage = applicationRepo.findAllByCandidate_Id(
-                candidateId,
-                pageable);
 
         // STEP 4: Map Entity → DTO
         // MapStruct tự động map snapshot fields
@@ -144,6 +138,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         return result;
 
     }
+
     @Override
     public Page<ApplicationResp> getJobPipeline(Long jobId, Pageable pageable) {
         // get Candidate id to put into ApplicationDetailResp

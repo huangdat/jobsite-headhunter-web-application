@@ -10,7 +10,14 @@
   "currentUserName": "Alex Nguyen",
   "common": {
     "adminUserTitle": "Admin User",
-    "appVersion": "v2.4.0 Release"
+    "appVersion": "v2.4.0 Release",
+    "permanentDelete": "Permanent Delete",
+    "appName": "JobSite",
+    "allRightsReserved": "All rights reserved © 2026",
+    "section": {
+      "account": "Account"
+    },
+    "exampleEmail": "alex.n@referral.io"
   },
   "messages": {
     "signedInSuccess": "Signed in successfully."

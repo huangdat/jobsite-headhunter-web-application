@@ -1,5 +1,7 @@
 package com.rikkeisoft.backend.controller.application;
 
+import com.rikkeisoft.backend.enums.ApplicationSortField;
+import com.rikkeisoft.backend.enums.ApplicationStatus;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.APIResponse;
@@ -50,13 +52,16 @@ public class CandidateApplicationController {
         @GetMapping("/candidates/me/applications")
         public APIResponse<Page<ApplicationResp>> getMyApplications(
                         @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "10") int size) {
+                        @RequestParam(defaultValue = "10") int size,
+                        @RequestParam(defaultValue = "APPLIED_AT") ApplicationSortField sortBy,
+                        @RequestParam(defaultValue = "DESC") Sort.Direction direction,
+                        @RequestParam(required = false) ApplicationStatus status) {
 
                 // STEP 3: Tạo Pageable và query
-                Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "appliedAt");
+                Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy.getFieldName()));
 
                 return APIResponse.<Page<ApplicationResp>>builder()
-                                .result(applicationService.getMyApplications(pageable))
+                                .result(applicationService.getMyApplications(pageable, status))
                                 .build();
         }
 }
