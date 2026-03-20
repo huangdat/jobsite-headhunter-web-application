@@ -1,42 +1,92 @@
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useEffect, useState } from "react";
+import type { Job } from "../types";
+import { useHomeTranslation } from "@/shared/hooks";
+import { getRandomLatestJobs } from "@/shared/utils/jobService";
+import { JOB_TYPE_COLORS } from "../constants";
 
 export function FeaturedJobs() {
-  const { t } = useAppTranslation();
+  const { t } = useHomeTranslation();
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const data = await getRandomLatestJobs();
+        setJobs(data.jobs || []);
+      } catch (err) {
+        console.error("Failed to fetch featured jobs:", err);
+        setError(t("messages.errorLoadJobs"));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
-      <h2 className="text-2xl font-bold mb-10">{t("home.featuredJobs.title")}</h2>
+      <h2 className="text-2xl font-bold mb-10">{t("featuredJobs.title")}</h2>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition"
-          >
-            <h3 className="font-semibold">Backend Architect</h3>
-            <p className="text-gray-500 text-sm">Nexus Data Solutions</p>
+      {loading && (
+        <div className="text-center py-12">
+          <p className="text-gray-500">{t("messages.loadingJobs")}</p>
+        </div>
+      )}
 
-            <div className="flex gap-2 mt-3 text-xs">
-              <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded">
-                FULL-TIME
-              </span>
-              <span className="bg-orange-100 text-orange-600 px-2 py-1 rounded">
-                REMOTE
-              </span>
-            </div>
+      {error && (
+        <div className="text-center py-12">
+          <p className="text-red-500">{error}</p>
+        </div>
+      )}
 
-            <div className="flex justify-between mt-6 text-sm">
-              <span>Ho Chi Minh</span>
-              <span className="font-semibold">$3,500 - $5,000</span>
-            </div>
+      {!loading && !error && jobs.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-gray-500">{t("messages.noFeaturedJobs")}</p>
+        </div>
+      )}
+
+      {!loading && !error && jobs.length > 0 && (
+        <>
+          <div className="grid md:grid-cols-3 gap-6">
+            {jobs.map((job) => (
+              <div
+                key={job.id}
+                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition"
+              >
+                <h3 className="font-semibold">{job.title}</h3>
+                <p className="text-gray-500 text-sm">{job.company}</p>
+
+                <div className="flex gap-2 mt-3 text-xs">
+                  <span
+                    className={`${JOB_TYPE_COLORS["FULL-TIME"].bg} ${JOB_TYPE_COLORS["FULL-TIME"].text} px-2 py-1 rounded`}
+                  >
+                    {t("jobTypes.fullTime")}
+                  </span>
+                  <span
+                    className={`${JOB_TYPE_COLORS.REMOTE.bg} ${JOB_TYPE_COLORS.REMOTE.text} px-2 py-1 rounded`}
+                  >
+                    {t("jobTypes.remote")}
+                  </span>
+                </div>
+
+                <div className="flex justify-between mt-6 text-sm">
+                  <span>{job.location}</span>
+                  <span className="font-semibold">{job.salary}</span>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="text-center mt-12">
-        <button className="border px-6 py-3 rounded-xl hover:bg-gray-100 transition cursor-pointer">
-          {t("home.featuredJobs.viewMore")}
-        </button>
-      </div>
+          <div className="text-center mt-12">
+            <button className="border px-6 py-3 rounded-xl hover:bg-gray-100 transition cursor-pointer">
+              {t("featuredJobs.viewMore")}
+            </button>
+          </div>
+        </>
+      )}
     </section>
   );
 }

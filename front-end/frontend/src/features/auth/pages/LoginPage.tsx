@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
 import { AnimatedCheckbox } from "../components/AnimatedCheckbox";
 import { useLogin } from "../hooks";
 import {
@@ -50,7 +50,7 @@ const clearOAuthCallbackParams = () => {
 };
 
 export function LoginPage() {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, isInitializing, signIn } = useAuth();
@@ -81,12 +81,12 @@ export function LoginPage() {
     async (result: LoginResult | SocialAuthResponse) => {
       if (isLoginResult(result) && result.authenticated && result.accessToken) {
         await signIn(result.accessToken);
-        toast.success(t("auth.messages.signedInSuccess"));
+        toast.success(t("messages.signedInSuccess"));
         navigate("/home", { replace: true });
         return;
       }
 
-      toast.info(t("auth.messages.socialAccountFound"));
+      toast.info(t("messages.socialAccountFound"));
       navigate("/select-role");
     },
     [navigate, signIn]
@@ -94,9 +94,7 @@ export function LoginPage() {
 
   const handleGoogleClick = () => {
     if (!googleEnabled) {
-      toast.error(
-        "Google sign-in is currently unavailable. Please contact support."
-      );
+      toast.error(t("messages.googleSignInUnavailable"));
       return;
     }
 
@@ -125,9 +123,7 @@ export function LoginPage() {
 
   const handleLinkedInClick = () => {
     if (!linkedInEnabled) {
-      toast.error(
-        "LinkedIn sign-in is currently unavailable. Please contact support."
-      );
+      toast.error(t("messages.linkedinSignInUnavailable"));
       return;
     }
 
@@ -203,7 +199,7 @@ export function LoginPage() {
       }
 
       if (linkedInError || googleError) {
-        toast.error(t("auth.messages.socialSignInCancelled"));
+        toast.error(t("messages.socialSignInCancelled"));
         clearOAuthCallbackParams();
         sessionStorage.removeItem(SOCIAL_PROVIDER_KEY);
         sessionStorage.removeItem(SOCIAL_STATE_KEY);
@@ -211,7 +207,7 @@ export function LoginPage() {
       }
 
       if (!expectedState) {
-        toast.error(t("auth.messages.invalidSocialState"));
+        toast.error(t("messages.invalidSocialState"));
         clearOAuthCallbackParams();
         sessionStorage.removeItem(SOCIAL_PROVIDER_KEY);
         return;
@@ -243,7 +239,7 @@ export function LoginPage() {
       } catch (error) {
         const message = extractApiErrorMessage(
           error,
-          "Unable to sign in with social account. Please try again."
+          t("messages.unableToSignIn")
         );
         toast.error(message);
       } finally {
@@ -288,28 +284,27 @@ export function LoginPage() {
   }, [isAuthenticated, isInitializing, navigate]);
 
   return (
-    <AuthLayout ctaButton={{ to: "/select-role", label: "Sign Up" }}>
+    <AuthLayout
+      ctaButton={{ to: "/select-role", label: t("pages.signup") }}
+    >
       <div className="w-full max-w-5xl min-h-150 bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
-            Find Talent. <br />
-            Earn Rewards.
+            {t("pages.login.heroTitlePart1")} <br />
+            {t("pages.login.heroTitlePart2")}
           </h1>
 
-          <p className="text-gray-300 mt-6">
-            Join JobSite’s professional referral network and connect great
-            talent with top companies.
-          </p>
+          <p className="text-gray-300 mt-6">{t("pages.login.heroSubtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10">
-          <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
+          <h2 className="text-3xl font-bold mb-2">
+            {t("pages.login.welcomeBack")}
+          </h2>
 
-          <p className="text-gray-500 mb-8">
-            Enter your credentials to access your account.
-          </p>
+          <p className="text-gray-500 mb-8">{t("pages.login.subtitle")}</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -318,27 +313,26 @@ export function LoginPage() {
             className="space-y-6"
           >
             {/* USERNAME OR EMAIL */}
-            <FormField label="Username" error={errors.email}>
+            <FormField label={t("labels.username")} error={errors.email}>
               <Input
                 name="username"
                 autoComplete="username"
                 icon={<MdAccountCircle />}
                 type="text"
-                placeholder="john_doe123"
+                placeholder={t("placeholders.username")}
                 value={formData.email}
                 onChange={(e) => handleChange("email")(e.target.value)}
               />
-              <p className="text-xs text-slate-500 mt-1">Enter your username</p>
             </FormField>
 
             {/* PASSWORD */}
-            <FormField label="Password" error={errors.password}>
+            <FormField label={t("labels.password")} error={errors.password}>
               <Input
                 name="password"
                 autoComplete="current-password"
                 icon={<MdLockOutline />}
                 type={showPassword ? "text" : "password"}
-                placeholder={t("auth.placeholders.password")}
+                placeholder={t("placeholders.password")}
                 value={formData.password}
                 onChange={(e) => handleChange("password")(e.target.value)}
                 rightIcon={
@@ -362,11 +356,11 @@ export function LoginPage() {
               <AnimatedCheckbox
                 checked={formData.rememberMe ?? false}
                 onChange={(value: boolean) => handleChange("rememberMe")(value)}
-                label="Remember me"
+                label={t("pages.login.rememberMe")}
               />
 
               <Link to="/forgot-password" className="text-lime-500">
-                Forgot password?
+                {t("pages.login.forgotPasswordLink")}
               </Link>
             </div>
 
@@ -379,13 +373,15 @@ export function LoginPage() {
               className="w-full flex justify-center gap-2 cursor-pointer"
             >
               <HiOutlineArrowRight />
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? t("pages.login.signingIn") : t("buttons.signIn")}
             </Button>
 
             {/* DIVIDER */}
             <div className="flex items-center gap-4 my-6">
               <div className="flex-1 h-px bg-slate-200"></div>
-              <span className="text-sm text-gray-400">or continue with</span>
+              <span className="text-sm text-gray-400">
+                {t("pages.login.orContinueWith")}
+              </span>
               <div className="flex-1 h-px bg-slate-200"></div>
             </div>
 
@@ -400,10 +396,10 @@ export function LoginPage() {
             {/* REGISTER LINK */}
             <div className="text-center mt-6 text-sm">
               <span className="text-slate-500">
-                Don't have an account yet?{" "}
+                {t("pages.login.noAccount")}{" "}
               </span>
               <Link to="/select-role" className="text-lime-500 hover:underline">
-                Sign up
+                {t("pages.login.registerLink")}
               </Link>
             </div>
           </form>

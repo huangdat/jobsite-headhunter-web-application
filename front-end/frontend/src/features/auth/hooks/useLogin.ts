@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { login } from "../services/authApi";
 import type { LoginFormData } from "../types";
 import { useAuth } from "../context/useAuth";
+import { useAuthTranslation } from "@/shared/hooks";
 import { extractApiErrorMessage } from "../utils/apiError";
 
 const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
@@ -11,6 +12,7 @@ const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
 export const useLogin = () => {
   const navigate = useNavigate();
   const { signIn } = useAuth();
+  const { t } = useAuthTranslation();
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -24,22 +26,22 @@ export const useLogin = () => {
 
     // Username or Email validation
     if (!data.email.trim()) {
-      newErrors.email = "Username or email is required";
+      newErrors.email = t("validation.usernameEmailRequired");
     } else {
       const input = data.email.trim();
       const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
       const isUsername = /^[a-zA-Z][a-zA-Z0-9_]{7,31}$/.test(input);
 
       if (!isEmail && !isUsername) {
-        newErrors.email = "Please enter a valid username or email address";
+        newErrors.email = t("validation.invalidUsername");
       }
     }
 
     // Password validation
     if (!data.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = t("validation.passwordRequired");
     } else if (data.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+      newErrors.password = t("validation.passwordMinLength");
     }
 
     setErrors(newErrors);
@@ -73,7 +75,7 @@ export const useLogin = () => {
         }
 
         // Success Notification
-        toast.success("Welcome Back! Login Successful.");
+        toast.success(t("messages.signedInSuccess"));
 
         navigate("/home");
         return;

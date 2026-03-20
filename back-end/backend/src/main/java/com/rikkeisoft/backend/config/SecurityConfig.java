@@ -41,11 +41,10 @@ public class SecurityConfig {
     protected String SIGNER_KEY;
 
     // Define endpoint access rules based on user roles and HTTP methods
-    // TODO: Re-enable after fixing JPA entityManager issue
-    // TokenInvalidationFilter tokenInvalidationFilter;
+    TokenInvalidationFilter tokenInvalidationFilter;
 
     String[] PUBLIC_POST_ENDPOINTS = {"/api/upload", "/api/auth/**", "/api/otp/**", "/api/account/signup-headhunter", "/api/account/signup-collaborator", "/api/account/signup-candidate", "/api/account/check-email-username-exist"};
-    String[] PUBLIC_GET_ENDPOINTS = {"/api/auth/", "/api/business-profile/10-best", "/api/jobs/", "/api/skills"};
+    String[] PUBLIC_GET_ENDPOINTS = {"/api/auth/**", "/api/business-profile/10-best", "/api/jobs/random-latest", "/api/business-profile", "api/cv/myCv"};
     String[] PUBLIC_PUT_ENDPOINTS = {};
 
     /**
@@ -78,8 +77,7 @@ public class SecurityConfig {
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
 
         // Reject requests which present an invalidated token (logged out tokens)
-        // TODO: Fix JPA entityManager issue before re-enabling
-        // httpSecurity.addFilterBefore(tokenInvalidationFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(tokenInvalidationFilter, UsernamePasswordAuthenticationFilter.class);
 
         // Disable CSRF protection for simplicity in this example.
         httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());

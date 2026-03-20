@@ -35,3 +35,8 @@ npm/
 lint-output.tmp
 *.tmp
 docs/**
+
+# Refernces of AI designs
+**/assets/users/
+
+../../.vscode/

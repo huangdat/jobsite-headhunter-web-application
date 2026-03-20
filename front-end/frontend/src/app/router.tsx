@@ -11,6 +11,9 @@ import {
   ChangePasswordPage,
 } from "@/features/auth/pages";
 import { HomePage } from "@/features/home/pages/HomePage";
+import { UserListPage } from "@/features/users/list";
+import { UserClassificationPage } from "@/features/users/classification";
+import { AdminLayout } from "@/features/users/list/layouts/AdminLayout";
 import { GuestOnlyRoute } from "@/features/auth/components/GuestOnlyRoute";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 import { JobListPage } from "@/features/jobs/pages/JobListPage";
@@ -22,6 +25,8 @@ import { JobManagePage } from "@/features/jobs/pages/JobManagePage";
 import { ApplicantsPage } from "@/features/headhunter/pages/ApplicantsPage";
 import { JobsHubPage } from "@/features/headhunter/pages/JobsHubPage";
 import { MainLayout } from "@/shared/layouts/MainLayout";
+import { AdminOnlyRoute } from "@/features/auth/components/AdminOnlyRoute";
+import { UserDetailPage } from "@/features/users/detail";
 
 export function AppRouter() {
   return (
@@ -144,6 +149,37 @@ export function AppRouter() {
             }
           />
       </Route>
+      <Route path="/home" element={<HomePage />} />
+      <Route
+        path="/users"
+        element={
+          <AdminOnlyRoute>
+            <AdminLayout>
+              <UserListPage />
+            </AdminLayout>
+          </AdminOnlyRoute>
+        }
+      />
+      <Route
+        path="/users/classification"
+        element={
+          <AdminOnlyRoute>
+            <AdminLayout>
+              <UserClassificationPage />
+            </AdminLayout>
+          </AdminOnlyRoute>
+        }
+      />
+      <Route
+        path="/users/:userId"
+        element={
+          <AdminOnlyRoute>
+            <AdminLayout>
+              <UserDetailPage />
+            </AdminLayout>
+          </AdminOnlyRoute>
+        }
+      />
     </Routes>
   );
 }

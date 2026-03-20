@@ -1,4 +1,5 @@
 import { apiClient } from "@/shared/utils/axios";
+import { API_ENDPOINTS } from "@/lib/constants";
 import type {
   ApiResponse,
   LoginRequest,
@@ -23,8 +24,8 @@ import type {
 
 export const login = async (data: LoginRequest) => {
   const res = await apiClient.post<ApiResponse<LoginResult>>(
-    "/api/auth/login",
-    data,
+    API_ENDPOINTS.AUTH.LOGIN,
+    data
   );
 
   return res.data.result;
@@ -32,15 +33,18 @@ export const login = async (data: LoginRequest) => {
 
 export const validateToken = async (data: ValidateTokenRequest) => {
   const res = await apiClient.post<ApiResponse<ValidateTokenResult>>(
-    "/api/auth/token-validate",
-    data,
+    API_ENDPOINTS.AUTH.VALIDATE_TOKEN,
+    data
   );
 
   return res.data.result;
 };
 
 export const logout = async (data: LogoutRequest) => {
-  const res = await apiClient.post<ApiResponse<void>>("/api/auth/logout", data);
+  const res = await apiClient.post<ApiResponse<void>>(
+    API_ENDPOINTS.AUTH.LOGOUT,
+    data
+  );
 
   return res.data.result;
 };
@@ -67,17 +71,17 @@ export const register = async (data: RegisterFormData) => {
   }
 
   // Role-specific fields and endpoint
-  let endpoint = "/api/account/signup-candidate"; // default
+  let endpoint = API_ENDPOINTS.ACCOUNT.SIGNUP_CANDIDATE; // default
 
   if (data.role === "headhunter") {
-    endpoint = "/api/account/signup-headhunter";
+    endpoint = API_ENDPOINTS.ACCOUNT.SIGNUP_HEADHUNTER;
     formData.append("taxCode", data.taxCode);
     // companyName and addressMain are NOT sent — backend derives them from the taxCode MST lookup
     // Optional headhunter fields
     if (data.websiteUrl) formData.append("websiteUrl", data.websiteUrl);
     if (data.companyScale) formData.append("companyScale", data.companyScale);
   } else if (data.role === "collaborator") {
-    endpoint = "/api/account/signup-collaborator";
+    endpoint = API_ENDPOINTS.ACCOUNT.SIGNUP_COLLABORATOR;
 
     // Optional collaborator fields
     if (data.commissionRate !== undefined) {
@@ -110,7 +114,7 @@ export const register = async (data: RegisterFormData) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    },
+    }
   );
 
   return res.data.result;
@@ -124,8 +128,8 @@ export const changePassword = async (data: ChangePasswordFormData) => {
   };
 
   const res = await apiClient.put<ApiResponse<string>>(
-    "/api/account/changeMyPassword",
-    payload,
+    API_ENDPOINTS.ACCOUNT.CHANGE_PASSWORD,
+    payload
   );
 
   return res.data.result;
@@ -134,8 +138,8 @@ export const changePassword = async (data: ChangePasswordFormData) => {
 // OTP Functions
 export const sendOtpSignup = async (data: SendOtpRequest) => {
   const res = await apiClient.post<ApiResponse<OtpSendResp>>(
-    "/api/otp/send-signup",
-    data,
+    API_ENDPOINTS.OTP.SEND_SIGNUP,
+    data
   );
 
   return res.data.result;
@@ -143,8 +147,8 @@ export const sendOtpSignup = async (data: SendOtpRequest) => {
 
 export const verifyOtpSignup = async (data: VerifyOtpRequest) => {
   const res = await apiClient.post<ApiResponse<OtpVerifyResp>>(
-    "/api/otp/verify-signup",
-    data,
+    API_ENDPOINTS.OTP.VERIFY_SIGNUP,
+    data
   );
 
   return res.data.result;
@@ -152,19 +156,19 @@ export const verifyOtpSignup = async (data: VerifyOtpRequest) => {
 
 export const sendOtpForgotPassword = async (data: SendOtpRequest) => {
   const res = await apiClient.post<ApiResponse<OtpSendResp>>(
-    "/api/otp/send-forgot-password",
-    data,
+    API_ENDPOINTS.OTP.SEND_FORGOT_PASSWORD,
+    data
   );
 
   return res.data.result;
 };
 
 export const verifyAndResetPassword = async (
-  data: VerifyOtpAndResetPasswordRequest,
+  data: VerifyOtpAndResetPasswordRequest
 ) => {
   const res = await apiClient.post<ApiResponse<OtpVerifyAndResetPasswordResp>>(
-    "/api/otp/verify-and-reset-password",
-    data,
+    API_ENDPOINTS.OTP.VERIFY_AND_RESET,
+    data
   );
 
   return res.data.result;
@@ -172,7 +176,7 @@ export const verifyAndResetPassword = async (
 // API for social login (Google, LinkedIn)
 export const getSocialConfig = async () => {
   const res = await apiClient.get<ApiResponse<Record<string, string>>>(
-    "/api/auth/social-config",
+    API_ENDPOINTS.AUTH.SOCIAL_CONFIG
   );
   return res.data.result;
 };
@@ -180,21 +184,38 @@ export const getSocialConfig = async () => {
 export const googleLogin = async (data: GoogleTokenRequest) => {
   const res = await apiClient.post<
     ApiResponse<LoginResult | SocialAuthResponse>
-  >("/api/auth/google/login", data);
+  >(API_ENDPOINTS.AUTH.GOOGLE_LOGIN, data);
   return res.data.result;
 };
 
 export const linkedinLogin = async (data: LinkedInTokenRequest) => {
   const res = await apiClient.post<
     ApiResponse<LoginResult | SocialAuthResponse>
-  >("/api/auth/linkedin/oauth", data);
+  >(API_ENDPOINTS.AUTH.LINKEDIN_LOGIN, data);
   return res.data.result;
 };
 
 export const registerSocial = async (data: SocialRegisterRequest) => {
   const res = await apiClient.post<ApiResponse<LoginResult>>(
-    "/api/auth/register-social",
-    data,
+    API_ENDPOINTS.AUTH.REGISTER_SOCIAL,
+    data
   );
+  return res.data.result;
+};
+
+// Check if email or username already exists
+export const checkEmailUsernameExist = async (
+  email?: string,
+  username?: string
+): Promise<boolean> => {
+  const params = new URLSearchParams();
+  if (email) params.append("email", email);
+  if (username) params.append("username", username);
+
+  // Replace post method instead of get to match backend api design
+  const res = await apiClient.post<ApiResponse<boolean>>(
+    `${API_ENDPOINTS.AUTH.CHECK_EMAIL_USERNAME}?${params.toString()}`
+  );
+
   return res.data.result;
 };

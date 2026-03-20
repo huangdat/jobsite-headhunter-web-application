@@ -1,11 +1,43 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import en from "./locales/en.json";
-import vi from "./locales/vi.json";
+
+// Import English namespaces
+import enCommon from "./locales/en/common.json";
+import enAuth from "./locales/en/auth.json";
+import enHome from "./locales/en/home.json";
+import enNavigation from "./locales/en/navigation.json";
+import enUsers from "./locales/en/users.json";
+import enJobs from "./locales/en/jobs.json";
+
+// Import Vietnamese namespaces
+import viCommon from "./locales/vi/common.json";
+import viAuth from "./locales/vi/auth.json";
+import viHome from "./locales/vi/home.json";
+import viNavigation from "./locales/vi/navigation.json";
+import viUsers from "./locales/vi/users.json";
+import viJobs from "./locales/vi/jobs.json";
 
 const resources = {
-  en: { translation: en },
-  vi: { translation: vi },
+  en: {
+    translation: {
+      ...enCommon,
+      home: enHome,
+      auth: enAuth,
+      navigation: enNavigation,
+      users: enUsers,
+      jobs: enJobs,
+    },
+  },
+  vi: {
+    translation: {
+      ...viCommon,
+      home: viHome,
+      auth: viAuth,
+      navigation: viNavigation,
+      users: viUsers,
+      jobs: viJobs,
+    },
+  },
 };
 
 // Detect user language from browser or localStorage
@@ -19,7 +51,9 @@ i18n.use(initReactI18next).init({
   resources,
   lng: getUserLanguage(),
   fallbackLng: "en",
-  debug: false,
+  debug: true, // Enable debug mode to log missing keys in console
+  ns: ["translation"],
+  defaultNS: "translation",
   interpolation: {
     escapeValue: false, // React already handles XSS
   },

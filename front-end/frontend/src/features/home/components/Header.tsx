@@ -87,40 +87,45 @@ export function Header() {
           ) : (
             <div className="relative" ref={dropdownRef}>
               <button
-                onMouseDown={(e) => {
-                  e.stopPropagation();
-                  setDropdownOpen((prev) => !prev);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setDropdownOpen((prev) => !prev);
-                  }
-                }}
-                aria-expanded={dropdownOpen}
-                aria-haspopup="true"
+                onClick={() => setDropdownOpen((prev) => !prev)}
                 className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-black font-semibold cursor-pointer hover:opacity-85 transition"
               >
                 {userInitial}
               </button>
 
               {dropdownOpen && (
-                <div id="user-dropdown" className="absolute right-0 top-[calc(100%+8px)] w-56 bg-white border border-border rounded-xl overflow-hidden z-50">
+                <div className="absolute right-0 top-[calc(100%+8px)] w-56 bg-white border border-border rounded-xl overflow-hidden z-50">
+                  {/* Header */}
                   <div className="px-4 py-3 bg-slate-50 border-b border-border flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-black font-semibold text-sm shrink-0">
                       {userInitial}
                     </div>
                     <div className="overflow-hidden">
-                      <p className="text-sm font-medium text-slate-900 truncate">{user?.username}</p>
-                      <span className={`inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium ${roleBadgeClass}`}>
-                        {user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : ""}
+                      <p className="text-sm font-medium text-slate-900 truncate">
+                        {user?.username}
+                      </p>
+                      <span
+                        className={`inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium
+                ${user?.role === "candidate" ? "bg-sky-100 text-sky-700" : ""}
+                ${user?.role === "headhunter" ? "bg-purple-100 text-purple-700" : ""}
+                ${user?.role === "collaborator" ? "bg-green-100 text-green-700" : ""}
+              `}
+                      >
+                        {user?.role
+                          ? user.role.charAt(0).toUpperCase() +
+                            user.role.slice(1)
+                          : ""}
                       </span>
                     </div>
                   </div>
 
+                  {/* Menu */}
                   <div className="py-1 border-b border-border">
                     <button
-                      onClick={() => { navigate("/profile"); setDropdownOpen(false); }}
+                      onClick={() => {
+                        navigate("/profile");
+                        setDropdownOpen(false);
+                      }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
                       {t("home.navigation.profile")}
@@ -156,6 +161,45 @@ export function Header() {
                         </button>
                       </>
                     )}
+                    <button
+                      onClick={() => {
+                        navigate("/applications");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      {t("navigation.applications")}
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate("/saved-jobs");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      {t("navigation.savedJobs")}
+                    </button>
+                  </div>
+
+                  <div className="py-1 border-b border-border">
+                    <button
+                      onClick={() => {
+                        navigate("/settings");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      {t("navigation.settings")}
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate("/notifications");
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
+                    >
+                      {t("navigation.notifications")}
+                    </button>
                   </div>
 
                   <div className="py-1">

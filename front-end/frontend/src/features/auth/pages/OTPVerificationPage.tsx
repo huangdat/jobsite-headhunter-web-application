@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { useAuthTranslation } from "@/shared/hooks";
 import { sendOtpSignup, verifyOtpSignup, register } from "../services/authApi";
 import { toast } from "sonner";
 import { MdOutlineMail, MdTimer } from "react-icons/md";
@@ -16,7 +16,7 @@ interface LocationState {
 }
 
 export function OTPVerificationPage() {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState | undefined;
@@ -83,7 +83,7 @@ export function OTPVerificationPage() {
     const pastedData = e.clipboardData.getData("text").trim();
 
     if (!/^\d{6}$/.test(pastedData)) {
-      toast.error(t("auth.validation.invalidOtp"));
+      toast.error(t("validation.invalidOtp"));
       return;
     }
 
@@ -96,7 +96,7 @@ export function OTPVerificationPage() {
     const otpCode = otp.join("");
 
     if (otpCode.length !== 6) {
-      toast.error(t("auth.validation.enterAllDigits"));
+      toast.error(t("validation.enterAllDigits"));
       return;
     }
 
@@ -115,7 +115,7 @@ export function OTPVerificationPage() {
         throw new Error(otpResponse.message || "OTP verification failed.");
       }
 
-      toast.success(t("auth.messages.emailVerified"));
+      toast.success(t("messages.emailVerified"));
 
       // Step 2: Get registration data from sessionStorage
       const registrationDataStr = sessionStorage.getItem("pendingRegistration");
@@ -184,7 +184,7 @@ export function OTPVerificationPage() {
         accountId: state.accountId,
       });
 
-      toast.success(t("auth.messages.otpResent"));
+      toast.success(t("messages.otpResent"));
       setTimeLeft(300); // Reset timer to 5 minutes
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();
@@ -208,7 +208,7 @@ export function OTPVerificationPage() {
   if (!state) return null;
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("auth.pages.login") }}>
       <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -305,7 +305,7 @@ export function OTPVerificationPage() {
               disabled={isLoading || isResending}
               className="text-sm text-slate-600 hover:text-slate-800"
             >
-              ← Back to Registration
+              {t("auth.buttons.backToRegistration")}
             </button>
           </div>
         </div>

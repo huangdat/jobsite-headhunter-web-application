@@ -39,3 +39,4 @@ public class JobResp {
     String companySize;
     String companyAddress;
 }
+

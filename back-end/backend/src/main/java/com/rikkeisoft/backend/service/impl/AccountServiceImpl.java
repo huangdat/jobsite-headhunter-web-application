@@ -10,11 +10,9 @@ import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.BusinessProfile;
+import com.rikkeisoft.backend.model.entity.CandidateCv;
 import com.rikkeisoft.backend.model.entity.CollaboratorProfile;
-import com.rikkeisoft.backend.repository.AccountRepo;
-import com.rikkeisoft.backend.repository.BusinessProfileRepo;
-import com.rikkeisoft.backend.repository.CandidateProfileRepo;
-import com.rikkeisoft.backend.repository.CollaboratorProfileRepo;
+import com.rikkeisoft.backend.repository.*;
 import com.rikkeisoft.backend.service.AccountService;
 import com.rikkeisoft.backend.service.BusinessProfileService;
 import com.rikkeisoft.backend.service.UploadService;
@@ -60,6 +58,7 @@ public class AccountServiceImpl implements AccountService {
     BusinessProfileRepo businessProfileRepo;
     CollaboratorProfileRepo collaboratorProfileRepo;
     CandidateProfileRepo candidateProfileRepo;
+    CandidateCvRepo candidateCvRepo;
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
@@ -143,6 +142,7 @@ public class AccountServiceImpl implements AccountService {
                 .build();
 
         accountRepo.save(account);
+
         return accountMapper.toAccountResp(account);
     }
 
@@ -451,6 +451,13 @@ public class AccountServiceImpl implements AccountService {
                         .build();
         candidateProfileRepo.save(candidateProfile);
         accountRepo.save(account);
+
+        // create CandidateCv for candidate account if the role is CANDIDATE (field cv_url can be null at this point, but will be set later)
+        CandidateCv candidateCv = CandidateCv.builder()
+                .candidate(account)
+                .cvUrl(null)
+                .createdAt(LocalDateTime.now())
+                .build();
 
         return accountMapper.toAccountResp(account);
     }

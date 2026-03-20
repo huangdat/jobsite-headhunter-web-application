@@ -6,9 +6,11 @@ import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.req.otp.SendByEmailRequest;
 import com.rikkeisoft.backend.model.dto.req.otp.OtpVerifyRequest;
 import com.rikkeisoft.backend.model.dto.req.otp.OtpVerifyAndResetPasswordReq;
+import com.rikkeisoft.backend.model.dto.req.otp.SendNormalEmailReq;
 import com.rikkeisoft.backend.model.dto.resp.otp.OtpSendResp;
 import com.rikkeisoft.backend.model.dto.resp.otp.OtpVerifyResp;
 import com.rikkeisoft.backend.model.dto.resp.otp.OtpVerifyAndResetPasswordResp;
+import com.rikkeisoft.backend.model.dto.resp.otp.SendNormalEmailResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.OtpToken;
 import com.rikkeisoft.backend.repository.AccountRepo;
@@ -388,5 +390,33 @@ public class OtpServiceImpl implements OtpService {
                 .email(email)
                 .build();
     }
+
+    void sendNormalEmail(String to, String subject, String content) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom(mailUsername);
+        msg.setTo(to);
+        msg.setSubject(subject);
+        msg.setText(content);
+        mailSender.send(msg);
+    }
+
+    @Override
+    public SendNormalEmailResp sendNormalEmail(SendNormalEmailReq req) {
+        try {
+            sendNormalEmail(req.getEmail(), req.getSubject(), req.getContent());
+            return SendNormalEmailResp.builder()
+                    .status(HttpStatus.OK)
+                    .message("Email sent successfully.")
+                    .build();
+        } catch (Exception e) {
+            log.error("Failed to send normal email. Email: {}", req.getEmail(), e);
+            return SendNormalEmailResp.builder()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .message("Failed to send email.")
+                    .build();
+        }
+    }
+
+
 
 }

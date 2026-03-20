@@ -147,6 +147,7 @@ public class JobManageServiceImpl implements JobManageService {
         }
 
         // update job post
+        // copy the changes from jobReq into job, as soon as updateJobPost() end, @Transactional will automatically save the job entity into repo
         jobMapper.updateJobFromRequest(jobReq, job);
 
         // Update Job Skills if provided
