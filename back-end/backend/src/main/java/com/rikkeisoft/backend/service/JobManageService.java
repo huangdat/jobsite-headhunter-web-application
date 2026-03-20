@@ -19,6 +19,8 @@ public interface JobManageService {
 
     JobResp toggleJobStatus(Long jobId, JobToggleStatusReq req, String currentUsername);
 
+    JobResp toggleVisibility(Long jobId, String currentUsername);
+
     RecommendationResp getRecommendedJobs(String username);
 
     RecommendationResp getRandomLatestJobs();

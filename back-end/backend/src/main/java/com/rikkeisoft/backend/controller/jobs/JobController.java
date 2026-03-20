@@ -1,7 +1,12 @@
 package com.rikkeisoft.backend.controller.jobs;
 
 import com.rikkeisoft.backend.model.dto.APIResponse;
+import com.rikkeisoft.backend.enums.JobStatus;
+import com.rikkeisoft.backend.enums.RankLevel;
+import com.rikkeisoft.backend.enums.WorkingType;
+import com.rikkeisoft.backend.model.dto.PagedResponse;
 import com.rikkeisoft.backend.model.dto.req.job.JobReq;
+import com.rikkeisoft.backend.model.dto.req.job.JobSearchCriteria;
 import com.rikkeisoft.backend.model.dto.req.job.JobToggleStatusReq;
 import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
@@ -29,6 +34,68 @@ public class JobController {
     JobManageService jobManageService;
     JobQueryService jobQueryService;
     SavedJobService savedJobService;
+
+    @GetMapping
+    public APIResponse<PagedResponse<JobResp>> searchJobs(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) RankLevel rankLevel,
+            @RequestParam(required = false) WorkingType workingType,
+            @RequestParam(required = false) JobStatus status,
+            @RequestParam(required = false) Double salaryMin,
+            @RequestParam(required = false) Double salaryMax,
+            @RequestParam(required = false) Double experienceMin,
+            @RequestParam(required = false) Double experienceMax,
+            @RequestParam(required = false) Boolean negotiable,
+            @RequestParam(required = false) Boolean featured,
+            @RequestParam(required = false) Boolean visible,
+            @RequestParam(required = false) String headhunterId,
+            @RequestParam(required = false) List<Long> skillIds) {
+
+        JobSearchCriteria criteria = JobSearchCriteria.builder()
+                .page(page)
+                .size(size)
+                .keyword(keyword)
+                .location(location)
+                .rankLevel(rankLevel)
+                .workingType(workingType)
+                .status(status)
+                .salaryMin(salaryMin)
+                .salaryMax(salaryMax)
+                .experienceMin(experienceMin)
+                .experienceMax(experienceMax)
+                .negotiable(negotiable)
+                .featured(featured)
+                .visible(visible)
+                .headhunterId(headhunterId)
+                .skillIds(skillIds)
+                .build();
+
+        PagedResponse<JobResp> result = jobQueryService.searchJobs(criteria);
+        APIResponse<PagedResponse<JobResp>> response = new APIResponse<>();
+        response.setResult(result);
+        return response;
+    }
+
+    @GetMapping("/my")
+    public APIResponse<PagedResponse<JobResp>> getMyJobs(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        JobSearchCriteria criteria = JobSearchCriteria.builder()
+                .page(page)
+                .size(size)
+                .headhunterId(jwt.getSubject())
+                .build();
+
+        PagedResponse<JobResp> result = jobQueryService.searchJobs(criteria);
+        APIResponse<PagedResponse<JobResp>> response = new APIResponse<>();
+        response.setResult(result);
+        return response;
+    }
 
     @GetMapping("/{id}")
     public APIResponse<JobDetailResp> getJobDetail(@PathVariable("id") Long jobId) {
@@ -90,8 +157,8 @@ public class JobController {
         return response;
     }
 
-    @PutMapping("/{id}/toggle-job-status")
-    public APIResponse<JobResp> toggleJobStatus(
+        @PutMapping("/{id}/toggle-job-status")
+        public APIResponse<JobResp> toggleJobStatusPut(
             @PathVariable("id") Long jobId,
             @RequestBody @Valid JobToggleStatusReq req,
             @AuthenticationPrincipal Jwt jwt) {
@@ -99,11 +166,40 @@ public class JobController {
         JobResp result = jobManageService.toggleJobStatus(jobId, req, username);
 
         return APIResponse.<JobResp>builder()
-                .status(HttpStatus.OK)
-                .message("Job status updated successfully")
-                .result(result)
-                .build();
-    }
+            .status(HttpStatus.OK)
+            .message("Job status updated successfully")
+            .result(result)
+            .build();
+        }
+
+        @PatchMapping("/{id}/toggle-job-status")
+        public APIResponse<JobResp> toggleJobStatusPatch(
+            @PathVariable("id") Long jobId,
+            @RequestBody @Valid JobToggleStatusReq req,
+            @AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getSubject();
+        JobResp result = jobManageService.toggleJobStatus(jobId, req, username);
+
+        return APIResponse.<JobResp>builder()
+            .status(HttpStatus.OK)
+            .message("Job status updated successfully")
+            .result(result)
+            .build();
+        }
+
+        @PatchMapping("/{id}/toggle-active")
+        public APIResponse<JobResp> toggleActive(
+            @PathVariable("id") Long jobId,
+            @AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getSubject();
+        JobResp result = jobManageService.toggleVisibility(jobId, username);
+
+        return APIResponse.<JobResp>builder()
+            .status(HttpStatus.OK)
+            .message("Job visibility toggled successfully")
+            .result(result)
+            .build();
+        }
 
     @GetMapping("/recommended")
     public APIResponse<RecommendationResp> getRecommendedJobs(@AuthenticationPrincipal Jwt jwt) {

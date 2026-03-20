@@ -1,11 +1,8 @@
-package com.rikkeisoft.backend.model.dto.resp.job;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+package com.rikkeisoft.backend.model.dto.req.job;
 
 import com.rikkeisoft.backend.enums.JobStatus;
+import com.rikkeisoft.backend.enums.RankLevel;
 import com.rikkeisoft.backend.enums.WorkingType;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,29 +10,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JobResp {
-    Long id;
-    String jobCode;
-    String title;
-    Integer quantity;
+public class JobSearchCriteria {
+    int page;
+    int size;
+    String keyword;
+    String location;
+    RankLevel rankLevel;
     WorkingType workingType;
+    JobStatus status;
     Double salaryMin;
     Double salaryMax;
-    String currency;
-    String description;
-    LocalDate deadline;
-    JobStatus status;
-    String city;
-    LocalDateTime createdAt;
+    Double experienceMin;
+    Double experienceMax;
+    Boolean negotiable;
+    Boolean featured;
+    Boolean visible;
     String headhunterId;
-    String headhunterName;
-    String companyName;
-    String companyWebsite;
-    String companySize;
-    String companyAddress;
+    List<Long> skillIds;
 }

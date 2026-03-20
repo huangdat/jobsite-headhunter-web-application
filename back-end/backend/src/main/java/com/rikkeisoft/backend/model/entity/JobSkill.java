@@ -11,15 +11,21 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "job_skill")
+@IdClass(JobSkillId.class)
 public class JobSkill {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @Column(name = "job_id")
+    Long jobId;
+
+    @Id
+    @Column(name = "skill_id")
+    Long skillId;
+
     @ManyToOne
-    @JoinColumn(name = "job_id", nullable = false)
+    @JoinColumn(name = "job_id", nullable = false, insertable = false, updatable = false)
     Job job;
 
     @ManyToOne
-    @JoinColumn(name = "skill_id", nullable = false)
+    @JoinColumn(name = "skill_id", nullable = false, insertable = false, updatable = false)
     Skill skill;
 }
