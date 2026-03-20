@@ -1,23 +1,28 @@
 import React from "react";
-import { AlertTriangle, Lock, Trash2, AlertCircle } from "lucide-react";
+import { AlertTriangle, Lock, Unlock, Trash2, AlertCircle } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface DangerZoneSectionProps {
   onLockAccount: () => void;
+  onUnlockAccount?: () => void;
   onSoftDelete: () => void;
   onHardDelete: () => void;
   isOtherAdmin: boolean;
   canLock?: boolean;
+  userStatus?: "ACTIVE" | "INACTIVE" | "SUSPENDED" | "LOCKED";
 }
 
 const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
   onLockAccount,
+  onUnlockAccount,
   onSoftDelete,
   onHardDelete,
   isOtherAdmin,
   canLock = true,
+  userStatus,
 }) => {
   const { t } = useUsersTranslation();
+  const isUserLocked = userStatus === "SUSPENDED" || userStatus === "LOCKED";
   const getButtonClass = (disabled: boolean, isDangerous: boolean = false) => {
     if (disabled) {
       return "px-4 py-3 rounded-lg font-medium opacity-50 cursor-not-allowed bg-gray-200 text-gray-500 flex items-center gap-2 justify-center w-full";
@@ -40,8 +45,8 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
       <p className="text-gray-600 text-sm mb-6">{t("detail.dangerZoneDesc")}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {/* Lock Account Section - Only show if user has lock permission */}
-        {canLock && (
+        {/* Lock Account Section - Only show if user has lock permission and user is NOT locked */}
+        {canLock && !isUserLocked && (
           <div className="border border-gray-200 rounded-lg p-4">
             <div className="flex items-center gap-3 mb-3">
               <Lock className="w-5 h-5 text-gray-700" />
@@ -64,6 +69,34 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
             >
               <Lock className="w-4 h-4" />
               {t("detail.lockAccount")}
+            </button>
+          </div>
+        )}
+
+        {/* Unlock Account Section - Only show if user has unlock permission and user IS locked */}
+        {canLock && isUserLocked && onUnlockAccount && (
+          <div className="border border-green-200 rounded-lg p-4 bg-green-50">
+            <div className="flex items-center gap-3 mb-3">
+              <Unlock className="w-5 h-5 text-green-700" />
+              <h3 className="font-semibold text-gray-900">
+                {t("detail.unlockAccount")}
+              </h3>
+            </div>
+            <p className="text-gray-600 text-sm mb-4">
+              {t("detail.unlockAccountDesc")}
+            </p>
+            <button
+              onClick={onUnlockAccount}
+              disabled={isOtherAdmin}
+              className={getButtonClass(isOtherAdmin)}
+              title={
+                isOtherAdmin
+                  ? t("detail.cannotPerformOnAdmin")
+                  : t("detail.unlockAccount")
+              }
+            >
+              <Unlock className="w-4 h-4" />
+              {t("detail.unlockAccount")}
             </button>
           </div>
         )}
