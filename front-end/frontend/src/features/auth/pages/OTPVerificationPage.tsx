@@ -191,7 +191,7 @@ export function OTPVerificationPage() {
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Failed to resend OTP"
+        t("messages.failedToResendOtp")
       );
       toast.error(errorMessage);
     } finally {
