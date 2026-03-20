@@ -45,7 +45,7 @@ public class SecurityConfig {
     // TokenInvalidationFilter tokenInvalidationFilter;
 
     String[] PUBLIC_POST_ENDPOINTS = {"/api/upload", "/api/auth/**", "/api/otp/**", "/api/account/signup-headhunter", "/api/account/signup-collaborator", "/api/account/signup-candidate", "/api/account/check-email-username-exist"};
-    String[] PUBLIC_GET_ENDPOINTS = {"/api/auth/**", "/api/business-profile/10-best", "/api/jobs/**", "/api/skills"};
+    String[] PUBLIC_GET_ENDPOINTS = {"/api/auth/", "/api/business-profile/10-best", "/api/jobs/", "/api/skills"};
     String[] PUBLIC_PUT_ENDPOINTS = {};
 
     /**
