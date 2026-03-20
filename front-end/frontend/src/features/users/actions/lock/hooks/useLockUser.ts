@@ -61,13 +61,8 @@ export const useLockUser = () => {
         throw new Error("CANNOT_LOCK_YOURSELF");
       }
 
-      // Call API to lock user
-      await usersApi.lockUser(userId, {
-        reason,
-        autoUnlockDate,
-        sendEmail,
-        logoutCurrentSession,
-      });
+      // Call API to lock user (status = SUSPENDED)
+      await usersApi.lockUser(userId);
 
       // Log audit (AC1)
       const auditLog: LockAuditLog = {

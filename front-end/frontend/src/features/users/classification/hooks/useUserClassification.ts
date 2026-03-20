@@ -79,7 +79,7 @@ export const useUserClassification = (): UseUserClassificationReturn => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [groupBy, setGroupByState] = useState<ClassificationGroupBy>("role");
-  const [shouldRetry, setShouldRetry] = useState(true);
+  // Removed unused shouldRetry variable
 
   /**
    * Fetch all users from API
@@ -88,7 +88,6 @@ export const useUserClassification = (): UseUserClassificationReturn => {
     try {
       setLoading(true);
       setError(null);
-      setShouldRetry(true);
 
       // Fetch all users (we need all for proper statistics)
       // Note: If backend provides a dedicated classification API, use that instead
@@ -98,7 +97,6 @@ export const useUserClassification = (): UseUserClassificationReturn => {
       });
 
       setAllUsers(response.items);
-      setShouldRetry(true); // Success - can retry next time if user refreshes
     } catch (err) {
       const status = (err as any)?.response?.status;
       const errorMessage = getErrorMessage(err, t);
@@ -107,10 +105,9 @@ export const useUserClassification = (): UseUserClassificationReturn => {
       console.error("Error fetching users for classification:", err);
       setAllUsers([]);
 
-      // If 403 or 401, don't retry automatically
       // User needs to fix permissions or login again
       if (status === 403 || status === 401) {
-        setShouldRetry(false);
+        // Skip retry for permission errors
       }
     } finally {
       setLoading(false);
@@ -144,13 +141,12 @@ export const useUserClassification = (): UseUserClassificationReturn => {
   }, [allUsers, groupBy]);
 
   /**
-   * Fetch users on mount (only if shouldRetry is true)
+   * Fetch users on mount only (infinite loop fix: removed fetchAllUsers from dependencies)
+   * This ensures the API is called only once when component mounts, not repeatedly
    */
   useEffect(() => {
-    if (shouldRetry) {
-      fetchAllUsers();
-    }
-  }, [fetchAllUsers, shouldRetry]);
+    fetchAllUsers();
+  }, []);
 
   /**
    * Reclassify when groupBy or allUsers changes
@@ -201,7 +197,6 @@ export const useUserClassification = (): UseUserClassificationReturn => {
    * Refetch users (allows manual retry even after permission denied)
    */
   const refetch = useCallback(async () => {
-    setShouldRetry(true);
     await fetchAllUsers();
   }, [fetchAllUsers]);
 

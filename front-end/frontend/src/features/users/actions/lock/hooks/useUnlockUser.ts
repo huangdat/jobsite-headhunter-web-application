@@ -47,12 +47,8 @@ export const useUnlockUser = () => {
     try {
       const currentUserId = localStorage.getItem(STORAGE_KEYS.USER_ID);
 
-      // Call API to unlock user
-      await usersApi.unlockUser(userId, {
-        reason,
-        sendEmail,
-        requirePasswordChange,
-      });
+      // Call API to unlock user (status = ACTIVE)
+      await usersApi.unlockUser(userId);
 
       // Log audit (AC2)
       const auditLog: UnlockAuditLog = {

@@ -28,7 +28,8 @@ export const useDeleteUser = () => {
         throw new Error(t("delete.reasonRequired"));
       }
 
-      await usersApi.softDeleteUser(userId, reason);
+      // Call API to soft delete user (status = SUSPENDED)
+      await usersApi.softDeleteUser(userId);
       return { success: true };
     } catch (err) {
       const errorMessage =
@@ -49,6 +50,7 @@ export const useDeleteUser = () => {
     setLoading(true);
     setError(null);
     try {
+      // Call API to hard delete user (status = DELETED)
       await usersApi.hardDeleteUser(userId);
       return { success: true };
     } catch (err) {
