@@ -60,7 +60,7 @@ public class JobControllerAdvice {
     // -----------------------------------------------------------------------
     private String resolveMessage(String defaultMessage) {
         try {
-            return ErrorCode.valueOf(defaultMessage).getMessage();
+            return ErrorCode.valueOf(defaultMessage).getMessageKey();
         } catch (IllegalArgumentException | NullPointerException ignored) {
             return defaultMessage; // plain string — return as-is
         }
@@ -73,7 +73,7 @@ public class JobControllerAdvice {
     private String buildMessage(FieldError fe) {
         if ("typeMismatch".equals(fe.getCode())) {
             ErrorCode ec = TYPE_MISMATCH_MESSAGES.get(fe.getField());
-            return (ec != null) ? ec.getMessage()
+            return (ec != null) ? ec.getMessageKey()
                     : "Invalid value for field: " + fe.getField();
         }
         return resolveMessage(fe.getDefaultMessage());
