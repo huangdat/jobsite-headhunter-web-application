@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
-import type { UserRole, RegisterFormData } from "../types";
+import type { RegistrationUserRole, RegisterFormData } from "../types";
 import { sendOtpSignup, checkEmailUsernameExist } from "../services/authApi";
 import { toast } from "sonner";
 import { useAuth } from "../context/useAuth";
 import { extractApiErrorMessage } from "../utils/apiError";
 import { createSchemaWithI18n } from "../utils/registerFormSchema";
+import { useStepValidation } from "../hooks/useStepValidation";
 
 import { StepIndicator } from "./StepIndicator";
 import { AccountStep } from "./AccountStep";
@@ -25,11 +26,12 @@ interface RegisterFormProps {
   role?: string;
 }
 
-const isValidRole = (role: string): role is UserRole => {
-  return ["candidate", "collaborator", "headhunter"].includes(role);
+// Validate user role during registration (form uses lowercase for UI)
+const isValidRole = (role: string): role is RegistrationUserRole => {
+  return ["candidate", "collaborator", "headhunter"].includes(role.toLowerCase());
 };
 
-const getRoleConfig = (role: UserRole) => {
+const getRoleConfig = (role: RegistrationUserRole) => {
   const configs = {
     candidate: {
       title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
@@ -58,7 +60,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing } = useAuth();
 
-  const userRole: UserRole = isValidRole(role) ? role : "candidate";
+  const userRole: RegistrationUserRole = isValidRole(role) ? role : "candidate";
   const config = getRoleConfig(userRole);
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -193,6 +195,14 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       description: t("steps.details.desc"),
     },
   ];
+
+  // Get validation state for current step
+  const { isNextButtonDisabled, isSubmitButtonDisabled } = useStepValidation(
+    form,
+    currentStep,
+    userRole,
+    isCheckingDuplicate
+  );
 
   const validateCurrentStep = async (): Promise<boolean> => {
     const fieldsToValidate =
@@ -350,7 +360,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   disabled={isSubmitting}
                   variant="outline"
                   size="xl"
-                  className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl"
+                  className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <HiOutlineArrowLeft />
                   {t("buttons.previous")}
@@ -363,8 +373,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   size="xl"
                   type="button"
                   onClick={handleNextStep}
-                  disabled={isSubmitting}
-                  className="flex-1 flex justify-center gap-2 cursor-pointer"
+                  disabled={isNextButtonDisabled}
+                  className="flex-1 flex justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {t("buttons.next")}
                   <HiOutlineArrowRight />
@@ -374,8 +384,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   variant="primary"
                   size="xl"
                   type="submit"
-                  disabled={isSubmitting || isCheckingDuplicate}
-                  className="flex-1 flex justify-center gap-2 cursor-pointer"
+                  disabled={isSubmitButtonDisabled}
+                  className="flex-1 flex justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting
                     ? t("buttons.sendingOtp")
