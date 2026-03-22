@@ -5,4 +5,5 @@ export {
   useJobsTranslation,
   useAuthTranslation,
   useHomeTranslation,
+  useCandidateTranslation,
 } from "./useFeatureTranslation";

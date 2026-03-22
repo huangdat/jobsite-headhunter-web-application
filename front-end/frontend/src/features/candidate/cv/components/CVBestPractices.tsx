@@ -1,0 +1,175 @@
+/**
+ * CVBestPractices Component
+ * Displays CV best practices and privacy control information
+ */
+
+import React from "react";
+import { useCandidateTranslation } from "@/shared/hooks";
+import type { CVBestPracticesProps } from "../types";
+
+export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
+  section = "best_practices",
+  isLoading = false,
+}) => {
+  const { t } = useCandidateTranslation();
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-2 gap-6">
+        {[1, 2].map((i) => (
+          <div
+            key={i}
+            className="bg-surface-container-low rounded-xl p-6 space-y-4"
+          >
+            <div className="h-6 bg-slate-300 dark:bg-slate-700 rounded w-40 animate-pulse" />
+            <div className="space-y-3">
+              {[1, 2, 3].map((j) => (
+                <div
+                  key={j}
+                  className="h-4 bg-slate-300 dark:bg-slate-700 rounded w-full animate-pulse"
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Privacy Control Section
+  if (section === "privacy") {
+    return (
+      <div className="grid grid-cols-2 gap-6">
+        {/* Privacy Control */}
+        <div className="bg-surface-container-low rounded-xl p-6 space-y-4">
+          {/* Icon & Title */}
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary text-lg fill">
+              security
+            </span>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+              {t("cv.management.bestPractices.privacyTitle")}
+            </h3>
+          </div>
+
+          {/* Description */}
+          <p className="text-sm text-on-surface leading-relaxed">
+            {t("cv.management.bestPractices.privacyDesc")}
+          </p>
+
+          {/* Privacy Items */}
+          <ul className="space-y-2">
+            {/* Fallback items */}
+            <li className="flex gap-2 text-sm text-on-surface-variant">
+              <span className="text-primary font-bold flex-0">•</span>
+              <span>
+                You can set specific companies to "Block List" in settings.
+              </span>
+            </li>
+            <li className="flex gap-2 text-sm text-on-surface-variant">
+              <span className="text-primary font-bold flex-0">•</span>
+              <span>
+                Control exactly what personal data is shared initially.
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Best Practices */}
+        <div className="bg-surface-container-low rounded-xl p-6 space-y-4">
+          {/* Icon & Title */}
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary text-lg fill">
+              verified_user
+            </span>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+              {t("cv.management.bestPractices.practicesTitle")}
+            </h3>
+          </div>
+
+          {/* Best Practice Items */}
+          <ul className="space-y-3">
+            <li className="flex gap-2 text-sm text-on-surface-variant">
+              <span className="text-primary font-bold flex-0">✓</span>
+              <span>
+                Quantify results with revenue, growth %, or team size.
+              </span>
+            </li>
+            <li className="flex gap-2 text-sm text-on-surface-variant">
+              <span className="text-primary font-bold flex-0">✓</span>
+              <span>Keep your executive summary under 200 words.</span>
+            </li>
+            <li className="flex gap-2 text-sm text-on-surface-variant">
+              <span className="text-primary font-bold flex-0">✓</span>
+              <span>Focus on the last 10 years of your career path.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  }
+
+  // Default Best Practices Section (Full width)
+  return (
+    <div className="bg-surface-container-low rounded-xl p-6 space-y-6">
+      {/* Section divided into 2 columns */}
+      <div className="grid grid-cols-2 gap-8">
+        {/* Privacy Control Column */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary text-lg fill">
+              security
+            </span>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+              {t("cv.management.bestPractices.privacyTitle")}
+            </h3>
+          </div>
+
+          <p className="text-sm text-on-surface-variant leading-relaxed">
+            {t("cv.management.bestPractices.privacyDesc")}
+          </p>
+
+          <ul className="space-y-2 text-sm">
+            <li className="flex gap-2 text-on-surface-variant">
+              <span className="text-primary flex-0">→</span>
+              <span>You can set specific companies to "Block List"</span>
+            </li>
+            <li className="flex gap-2 text-on-surface-variant">
+              <span className="text-primary flex-0">→</span>
+              <span>Control exactly what personal data is shared</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Best Practices Column */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary text-lg fill">
+              verified_user
+            </span>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+              {t("cv.management.bestPractices.practicesTitle")}
+            </h3>
+          </div>
+
+          <ul className="space-y-2 text-sm">
+            <li className="flex gap-2 text-on-surface-variant">
+              <span className="text-primary font-bold flex-0">•</span>
+              <span>Quantify results with revenue, growth %, or team size</span>
+            </li>
+            <li className="flex gap-2 text-on-surface-variant">
+              <span className="text-primary font-bold flex-0">•</span>
+              <span>Keep your executive summary under 200 words</span>
+            </li>
+            <li className="flex gap-2 text-on-surface-variant">
+              <span className="text-primary font-bold flex-0">•</span>
+              <span>Focus on the last 10 years of your career path</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CVBestPractices;
