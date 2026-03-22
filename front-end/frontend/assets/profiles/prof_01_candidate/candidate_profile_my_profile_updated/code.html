@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#f6f6ff",
+              "primary-container": "#6bff8f",
+              "primary-fixed": "#6bff8f",
+              "on-secondary": "#caffdc",
+              "surface": "#f6f6ff",
+              "inverse-primary": "#6bff8f",
+              "on-tertiary-fixed-variant": "#005561",
+              "tertiary": "#006573",
+              "surface-dim": "#ced4e9",
+              "on-tertiary-container": "#004b56",
+              "surface-container-highest": "#d7dcf0",
+              "primary": "#006a2d",
+              "inverse-surface": "#0a0e18",
+              "error-container": "#f95630",
+              "on-background": "#2b2e3a",
+              "primary-dim": "#005d26",
+              "tertiary-fixed-dim": "#00d1ec",
+              "secondary-fixed": "#7afbb7",
+              "surface-container-low": "#eef0ff",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-fixed-variant": "#006942",
+              "surface-tint": "#006a2d",
+              "on-secondary-container": "#005e3a",
+              "secondary-fixed-dim": "#6beca9",
+              "on-primary-fixed-variant": "#006a2d",
+              "on-tertiary-fixed": "#00363e",
+              "on-surface-variant": "#575b68",
+              "on-error-container": "#520c00",
+              "tertiary-dim": "#005865",
+              "tertiary-container": "#00e0fd",
+              "on-tertiary": "#daf8ff",
+              "outline-variant": "#a9adbb",
+              "surface-container": "#e4e7f9",
+              "secondary": "#006942",
+              "tertiary-fixed": "#00e0fd",
+              "secondary-dim": "#005c39",
+              "on-secondary-fixed": "#00492c",
+              "on-primary-fixed": "#004a1d",
+              "surface-container-high": "#dde2f5",
+              "primary-fixed-dim": "#5bf083",
+              "on-error": "#ffefec",
+              "on-surface": "#2b2e3a",
+              "error-dim": "#b92902",
+              "secondary-container": "#7afbb7",
+              "background": "#f6f6ff",
+              "on-primary": "#ceffd0",
+              "error": "#b02500",
+              "outline": "#737683",
+              "on-primary-container": "#005f28",
+              "inverse-on-surface": "#999caa",
+              "surface-variant": "#d7dcf0"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .signature-gradient {
+            background: linear-gradient(135deg, #006a2d 0%, #5bf083 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- SideNavBar (Candidate Version) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#0B0F19] border-r border-white/10 shadow-2xl flex flex-col justify-between z-50">
+<div class="flex flex-col">
+<div class="px-6 py-8">
+<h1 class="font-headline text-xl font-bold text-white tracking-tight">Kinetic Executive</h1>
+<p class="text-gray-400 text-xs mt-1">Candidate Portal</p>
+</div>
+<nav class="mt-4 flex flex-col gap-1">
+<a class="text-gray-400 hover:text-white px-6 py-3 transition-colors flex items-center gap-3 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-manrope">Dashboard</span>
+</a>
+<!-- Active Tab: My Profile -->
+<a class="border-l-4 border-[#22C55E] bg-white/5 text-[#22C55E] font-bold px-6 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-manrope">My Profile</span>
+</a>
+<a class="text-gray-400 hover:text-white px-6 py-3 transition-colors flex items-center gap-3 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-manrope">My Applications</span>
+</a>
+<a class="text-gray-400 hover:text-white px-6 py-3 transition-colors flex items-center gap-3 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-manrope">Saved Jobs</span>
+</a>
+<a class="text-gray-400 hover:text-white px-6 py-3 transition-colors flex items-center gap-3 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-manrope">Messages</span>
+</a>
+<a class="text-gray-400 hover:text-white px-6 py-3 transition-colors flex items-center gap-3 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope">Settings</span>
+</a>
+</nav>
+</div>
+<div class="p-4 border-t border-white/10">
+<div class="flex items-center gap-3 px-2 py-3 bg-white/5 rounded-xl">
+<img alt="Jane Doe Profile" class="w-10 h-10 rounded-full border border-white/20 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBON-fzefUln2WY9I51wvH-6QtiycVZIsSoq38iYYYvvexlpq1R9zPlb77khw6m27EGXdhQjAniDhAWU96uomHJgBlUMKfAg_0sMq8ZNjP8uGjKFxEWT15W4Af0eGNIU_QZc9gu2gN2V4vMFYkLcJNHhtSMgQTWZ-6whyIfa0FPabbE48GptAuaDxFXCy8eaD2zlQo55EBIvmVY20grR2zEvAJ_k6ciuucXjeQCvcgWsLFVnnmg9ZfN3GqJ14wW2hB8QGPK8__xC4"/>
+<div>
+<p class="text-white text-sm font-bold">Jane Doe</p>
+<p class="text-gray-500 text-xs">Candidate</p>
+</div>
+<span class="material-symbols-outlined text-gray-400 ml-auto" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-surface-container-low flex justify-between items-center px-8 z-40">
+<div>
+<h2 class="font-headline text-lg font-black text-on-surface">Candidate Portal</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="px-4 py-2 border border-outline text-on-surface font-label text-sm rounded-lg hover:bg-surface-container-high transition-colors">
+                    Documentation
+                </button>
+<button class="px-4 py-2 border border-outline text-on-surface font-label text-sm rounded-lg hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+                    Preview Public Profile
+                </button>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="pt-24 pb-12 px-10 max-w-6xl">
+<!-- Breadcrumb & Title Section -->
+<div class="mb-8 flex justify-between items-end">
+<div>
+<nav class="flex items-center gap-2 text-xs font-bold tracking-widest text-outline mb-2">
+<span>MY PROFILE</span>
+</nav>
+<h1 class="font-headline text-4xl font-extrabold text-on-surface tracking-tight">My Profile</h1>
+<p class="text-on-surface-variant font-medium mt-1">Manage your professional profile and job search preferences</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-4 rounded-xl shadow-sm">
+<div class="text-right">
+<p class="text-xs font-bold text-outline">AVAILABILITY</p>
+<p class="text-sm font-bold text-primary">Open for Work</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<!-- Profile Form Content -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Column: Main Form -->
+<div class="col-span-8 space-y-6">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+<h3 class="font-headline text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+                            Professional Identity
+                        </h3>
+<div class="space-y-6">
+<div class="group">
+<label class="block text-xs font-bold text-outline mb-2 ml-1">JOB TITLE</label>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-all px-4 py-3 rounded-t-lg font-medium text-on-surface" type="text" value="Senior Technical Architect"/>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="group">
+<label class="block text-xs font-bold text-outline mb-2 ml-1">YEARS OF EXPERIENCE</label>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-all px-4 py-3 rounded-t-lg font-medium text-on-surface" type="number" value="12"/>
+</div>
+<div class="group">
+<label class="block text-xs font-bold text-outline mb-2 ml-1">CURRENT STATUS</label>
+<div class="w-full bg-surface-container-low border-b-2 border-outline-variant px-4 py-3 rounded-t-lg font-medium text-on-surface flex items-center justify-between">
+<span>Actively Interviewing</span>
+<span class="material-symbols-outlined text-outline" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="group">
+<label class="block text-xs font-bold text-outline mb-2 ml-1">SALARY MIN (USD)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-outline font-bold">$</span>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-all pl-8 pr-4 py-3 rounded-t-lg font-medium text-on-surface" type="text" value="145,000"/>
+</div>
+</div>
+<div class="group">
+<label class="block text-xs font-bold text-outline mb-2 ml-1">SALARY MAX (USD)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-outline font-bold">$</span>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-all pl-8 pr-4 py-3 rounded-t-lg font-medium text-on-surface" type="text" value="185,000"/>
+</div>
+</div>
+</div>
+<div class="group">
+<label class="block text-xs font-bold text-outline mb-2 ml-1">PROFESSIONAL BIO</label>
+<textarea class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-all px-4 py-3 rounded-t-lg font-medium text-on-surface resize-none" rows="5">Results-oriented Technical Architect with 12+ years of experience in designing high-availability cloud infrastructures. Specialized in Kubernetes, distributed systems, and modernizing legacy enterprise architectures for Global 500 companies.</textarea>
+</div>
+</div>
+</div>
+<!-- Actions Bar -->
+<div class="flex items-center justify-end gap-4 pt-4">
+<button class="px-8 py-3 border border-outline text-on-surface font-headline font-bold rounded-xl hover:bg-surface-container-high transition-colors">
+                            Discard Changes
+                        </button>
+<button class="px-10 py-3 signature-gradient text-white font-headline font-bold rounded-xl shadow-xl hover:opacity-90 transform active:scale-95 transition-all">
+                            Save Changes
+                        </button>
+</div>
+</div>
+<!-- Right Column: Stats & Notes -->
+<div class="col-span-4 space-y-6">
+<div class="bg-surface-container-low p-6 rounded-xl space-y-6">
+<h4 class="text-xs font-black text-outline tracking-widest">PROFILE STRENGTH</h4>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant">Technical Depth</span>
+<span class="text-sm font-bold text-primary">9.4/10</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[94%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant">Leadership</span>
+<span class="text-sm font-bold text-primary">8.8/10</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[88%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant">Cultural Fit</span>
+<span class="text-sm font-bold text-primary">9.1/10</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[91%]"></div>
+</div>
+</div>
+</div>
+<div class="bg-[#0B0F19] p-6 rounded-xl text-white">
+<h4 class="text-xs font-black text-gray-500 tracking-widest mb-4">PROFILE TIPS</h4>
+<div class="space-y-4">
+<div class="flex gap-3">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5"></div>
+<p class="text-sm text-gray-300">Complete your skill assessment to boost visibility.</p>
+</div>
+<div class="flex gap-3">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5"></div>
+<p class="text-sm text-gray-300">Add a professional profile picture.</p>
+</div>
+<div class="flex gap-3">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5"></div>
+<p class="text-sm text-gray-300">Link your portfolio or GitHub profile.</p>
+</div>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-xl h-48 group">
+<img alt="Office Background" class="w-full h-full object-cover grayscale opacity-40 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAjjpYpNItG5AKK6zRneenuGU7ZaxqSko1p87M4o2Px8S1h4GqH4v_ILW_w6c1jHyWK6mcWEPaBEcdGS9nU-qzWQHWaG7pdQGVtHRWRpFC9fkKc0rHxuf9yTC_rNeOHe4CO6xNYjSF683gESXMsK7zo0tiHz_JZt_1Bu-t8Tiyf7B5UJgOd2NP3juhg-rx8hNcc1R3HDmSuDQtU2qOuL4Y4S6q6MZCAbT8fsovQ5AC2GHu0jsXb8EgQH9fW42J2gHn866BlUCoYb0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0B0F19] to-transparent flex flex-col justify-end p-6">
+<p class="text-xs font-bold text-primary-fixed mb-1">DATA INSIGHT</p>
+<p class="text-white font-headline text-sm font-bold leading-tight">Jane is in the top 3% of architects in our talent pool.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

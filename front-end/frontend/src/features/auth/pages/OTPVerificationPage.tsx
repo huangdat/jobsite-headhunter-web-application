@@ -3,11 +3,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
-import { sendOtpSignup, verifyOtpSignup, register } from "../services/authApi";
+import {
+  sendOtpSignup,
+  verifyOtpSignup,
+  register,
+} from "@/features/auth/services/authApi";
 import { toast } from "sonner";
 import { MdOutlineMail, MdTimer } from "react-icons/md";
-import type { RegisterFormData } from "../types";
-import { extractApiErrorMessage } from "../utils/apiError";
+import type { RegisterFormData } from "@/features/auth/types";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 interface LocationState {
   accountId: string;

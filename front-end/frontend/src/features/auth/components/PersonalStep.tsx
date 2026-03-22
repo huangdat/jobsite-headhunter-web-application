@@ -3,7 +3,7 @@ import { FormField } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdPerson, MdPhone, MdWc, MdCameraAlt } from "react-icons/md";
-import type { RegisterFormData } from "../types";
+import type { RegisterFormData } from "@/features/auth/types";
 
 interface PersonalStepProps {
   form: UseAppFormReturn<RegisterFormData>;
@@ -46,7 +46,9 @@ export function PersonalStep({ form }: PersonalStepProps) {
             >
               <option value="">{t("selectOptions.selectGender")}</option>
               <option value="MALE">{t("selectOptions.genders.male")}</option>
-              <option value="FEMALE">{t("selectOptions.genders.female")}</option>
+              <option value="FEMALE">
+                {t("selectOptions.genders.female")}
+              </option>
               <option value="OTHER">{t("selectOptions.genders.other")}</option>
             </select>
           </div>

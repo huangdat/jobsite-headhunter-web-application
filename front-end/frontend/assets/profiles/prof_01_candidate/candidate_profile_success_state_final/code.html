@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jane Doe - Professional Identity Success</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#f6f6ff",
+              "on-primary-container": "#005f28",
+              "on-surface": "#2b2e3a",
+              "surface-variant": "#d7dcf0",
+              "inverse-surface": "#0a0e18",
+              "error": "#b02500",
+              "primary-fixed": "#6bff8f",
+              "on-tertiary-container": "#004b56",
+              "tertiary-fixed-dim": "#00d1ec",
+              "tertiary-dim": "#005865",
+              "surface-container": "#e4e7f9",
+              "surface-container-high": "#dde2f5",
+              "on-secondary-fixed-variant": "#006942",
+              "secondary-fixed-dim": "#6beca9",
+              "surface-container-lowest": "#ffffff",
+              "inverse-primary": "#6bff8f",
+              "surface-dim": "#ced4e9",
+              "on-primary-fixed-variant": "#006a2d",
+              "on-primary": "#ceffd0",
+              "tertiary": "#006573",
+              "on-tertiary-fixed": "#00363e",
+              "on-tertiary": "#daf8ff",
+              "surface": "#f6f6ff",
+              "on-secondary-fixed": "#00492c",
+              "on-secondary": "#caffdc",
+              "on-tertiary-fixed-variant": "#005561",
+              "secondary-container": "#7afbb7",
+              "outline-variant": "#a9adbb",
+              "surface-bright": "#f6f6ff",
+              "primary-container": "#6bff8f",
+              "surface-container-low": "#eef0ff",
+              "on-error-container": "#520c00",
+              "surface-container-highest": "#d7dcf0",
+              "on-secondary-container": "#005e3a",
+              "on-surface-variant": "#575b68",
+              "outline": "#737683",
+              "on-background": "#2b2e3a",
+              "tertiary-fixed": "#00e0fd",
+              "secondary-dim": "#005c39",
+              "on-primary-fixed": "#004a1d",
+              "tertiary-container": "#00e0fd",
+              "inverse-on-surface": "#999caa",
+              "on-error": "#ffefec",
+              "error-dim": "#b92902",
+              "error-container": "#f95630",
+              "surface-tint": "#006a2d",
+              "secondary-fixed": "#7afbb7",
+              "primary-dim": "#005d26",
+              "primary-fixed-dim": "#5bf083",
+              "primary": "#006a2d",
+              "secondary": "#006942"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .signature-gradient {
+        background: linear-gradient(135deg, #006a2d 0%, #5bf083 100%);
+      }
+      .tonal-shift-bg-eef0ff {
+        background-color: #eef0ff;
+      }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#0B0F19] border-r border-white/10 shadow-2xl flex flex-col z-50">
+<div class="p-6">
+<h1 class="text-2xl font-bold text-white tracking-tight font-headline">PROF-01</h1>
+<p class="text-gray-400 text-xs mt-1">Senior Technical Architect</p>
+</div>
+<nav class="flex-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors font-manrope text-sm font-medium hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-white bg-white/5 border-l-4 border-[#22C55E] font-manrope text-sm font-medium" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person_pin</span>
+                Profile
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors font-manrope text-sm font-medium hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">description</span>
+                Resume
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors font-manrope text-sm font-medium hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">work_history</span>
+                Applications
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white transition-colors font-manrope text-sm font-medium hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="p-4 mt-auto">
+<button class="w-full py-3 px-4 bg-white/5 text-white rounded-xl border border-white/10 font-manrope text-sm font-semibold active:scale-95 transition-transform hover:bg-white/10">
+                Upgrade to Pro
+            </button>
+</div>
+<div class="border-t border-white/10 p-4">
+<div class="flex items-center gap-3 mb-6 px-2">
+<img alt="Jane Doe - Candidate" class="w-10 h-10 rounded-full object-cover" data-alt="Portrait of Jane Doe looking professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUuTCwS_RmCdHjOgWymzzsfna5IuBkDw1JlPvi9p5VpuhQEWYIn-G7kYI4nmv5BiixBVCRpVKR00dGCX_awIqdnGhy1oT4GlpPaz35jxRVH6prnn1MuEDER3VhJXlXYd1lx7RKYbE5pYSuAZMDaeN60fBJliL5eceJkrpZ3DzeL3vnYD9uoeL6hZU-fw81lre_8CYeP2mboCqh2Qs_NMbFr4CVlgyzt3-IJZ4ZpLmAq8jIlKLCSEq0CBIbibhdC31J_lbtQ-OvNbc"/>
+<div class="overflow-hidden">
+<p class="text-white text-sm font-semibold truncate">Jane Doe</p>
+<p class="text-gray-500 text-xs truncate">Candidate</p>
+</div>
+</div>
+<a class="flex items-center gap-3 px-2 py-2 text-gray-400 hover:text-white transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+                Help Center
+            </a>
+<a class="flex items-center gap-3 px-2 py-2 text-gray-400 hover:text-white transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-lg">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="h-16 fixed top-0 right-0 left-64 z-30 flex justify-between items-center px-8 bg-background">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search files, tasks..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-slate-100 rounded-lg transition-all active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-slate-100 rounded-lg transition-all active:opacity-80">
+<span class="material-symbols-outlined">description</span>
+</button>
+</div>
+<button class="signature-gradient text-on-primary px-6 py-2 rounded-lg font-manrope font-semibold text-sm cursor-pointer transition-all active:opacity-80">
+                Preview Profile
+            </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 min-h-screen">
+<!-- Success Banner -->
+<div class="px-8 mt-6">
+<div class="bg-primary-container text-on-primary-container px-6 py-4 rounded-xl flex items-center gap-4 shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<p class="font-medium text-sm">Profile updated successfully! All changes to PROF-01 have been synced to the database.</p>
+</div>
+</div>
+<!-- Content Grid -->
+<div class="p-8 grid grid-cols-12 gap-8">
+<!-- Header Section -->
+<div class="col-span-12 flex justify-between items-end mb-2">
+<div>
+<h2 class="font-headline text-3xl font-extrabold text-on-surface tracking-tight">Professional Identity</h2>
+<p class="text-on-surface-variant mt-1">Manage your executive presence and visibility across the platform.</p>
+</div>
+</div>
+<!-- Bento Layout Start -->
+<!-- Left Column: Form Details -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<!-- Main Form Card -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/10">
+<form class="space-y-8">
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-outline">Legal Name</label>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary px-0 py-3 text-on-surface font-medium transition-colors outline-none ring-0 focus:ring-0" type="text" value="Jane Doe"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-outline">JOB TITLE</label>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary px-0 py-3 text-on-surface font-medium transition-colors outline-none ring-0 focus:ring-0" type="text" value="Senior Technical Architect"/>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-outline">Years of Experience</label>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary px-0 py-3 text-on-surface font-medium transition-colors outline-none ring-0 focus:ring-0" type="number" value="12"/>
+</div>
+<div class="space-y-2 col-span-2">
+<label class="text-xs font-bold uppercase tracking-wider text-outline">Target Salary Range (USD)</label>
+<div class="flex items-center gap-4">
+<input class="flex-1 bg-surface-container-low border-b-2 border-outline-variant focus:border-primary px-0 py-3 text-on-surface font-medium transition-colors outline-none ring-0 focus:ring-0" type="text" value="145,000"/>
+<span class="text-outline">to</span>
+<input class="flex-1 bg-surface-container-low border-b-2 border-outline-variant focus:border-primary px-0 py-3 text-on-surface font-medium transition-colors outline-none ring-0 focus:ring-0" type="text" value="185,000"/>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-outline">PROFESSIONAL BIO</label>
+<textarea class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary px-0 py-3 text-on-surface font-medium transition-colors outline-none ring-0 focus:ring-0 resize-none" rows="4">Versatile Senior Technical Architect with 12 years of experience leading cross-functional teams and driving multi-million dollar strategy initiatives. Expert in digital transformation and organizational scaling within high-growth technology sectors.</textarea>
+</div>
+<div class="flex justify-end gap-4 pt-4">
+<button class="px-6 py-2.5 rounded-lg font-semibold text-sm border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-all" type="button">Discard Changes</button>
+<button class="px-8 py-2.5 rounded-lg font-semibold text-sm signature-gradient text-white shadow-lg shadow-primary/20 active:scale-95 transition-all" type="submit">Save Changes</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Right Column: Stats & Sidecar -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<!-- Card 1: Profile Strength -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-on-surface">Profile Strength</h3>
+<span class="text-sm font-bold text-primary">85%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden mb-2">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+<p class="text-xs text-on-surface-variant">Complete your video introduction to reach 100%.</p>
+</div>
+<!-- Card 2: Profile Tips -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/10">
+<h3 class="font-bold text-on-surface mb-4">Profile Tips</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="text-sm font-bold">Core Identity</p>
+<p class="text-xs text-on-surface-variant">Full name and title updated.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="text-sm font-bold">Salary Expectations</p>
+<p class="text-xs text-on-surface-variant">Market-aligned range defined.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-outline">radio_button_unchecked</span>
+<div>
+<p class="text-sm font-bold">Video Introduction</p>
+<p class="text-xs text-on-surface-variant">Increases visibility by 40%.</p>
+</div>
+</div>
+<button class="w-full mt-2 py-2 text-primary font-bold text-xs uppercase tracking-widest hover:bg-primary/5 rounded transition-all">Finish Remainder</button>
+</div>
+</div>
+<!-- Card 3: Data Insight -->
+<div class="bg-inverse-surface text-white p-8 rounded-xl relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-headline text-lg font-bold mb-2">Data Insight</h3>
+<div class="flex items-baseline gap-2 mb-6">
+<span class="text-4xl font-extrabold font-headline">100%</span>
+<span class="text-xs text-primary font-bold">HEALTHY</span>
+</div>
+<p class="text-gray-400 text-sm leading-relaxed mb-6">Your professional data is currently mirrored across all active recruitment pipelines.</p>
+<button class="w-full py-3 bg-white/10 hover:bg-white/20 transition-all rounded-lg text-sm font-bold border border-white/20">View Sync History</button>
+</div>
+<div class="absolute -right-4 -bottom-4 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

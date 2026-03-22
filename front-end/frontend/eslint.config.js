@@ -37,7 +37,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "@typescript-eslint/no-unused-vars": "warn",
-      "boundaries/no-unknown": ["warn", { defaultTags: ["scope:*", "type:*"] }],
+      "boundaries/no-unknown": "warn",
       "boundaries/no-cross-boundary": "warn",
       "boundaries/entry-point": "warn",
       "boundaries/external": "warn",

@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
-import type { UserRole } from "../types";
+import type { UserRole } from "@/features/auth/types";
 
 import { MdPersonSearch, MdGroups, MdWorkHistory } from "react-icons/md";
 import { HiOutlineArrowRight } from "react-icons/hi";

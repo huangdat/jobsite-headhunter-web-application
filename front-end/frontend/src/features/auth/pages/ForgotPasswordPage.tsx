@@ -6,10 +6,10 @@ import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout } from "@/shared/components";
 import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
-import type { ForgotPasswordFormData } from "../types";
-import { sendOtpForgotPassword } from "../services/authApi";
+import type { ForgotPasswordFormData } from "@/features/auth/types";
+import { sendOtpForgotPassword } from "@/features/auth/services/authApi";
 import { toast } from "sonner";
-import { extractApiErrorMessage } from "../utils/apiError";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 import { MdOutlineMail } from "react-icons/md";
 
