@@ -39,4 +39,8 @@ docs/**
 # Refernces of AI designs
 **/assets/**
 
+# Local documentation and design files (not tracked)
+*.md
+!README.md
+
 ../../.vscode/
