@@ -39,10 +39,12 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": "warn",
       "boundaries/no-unknown": "warn",
       // Custom rules for preventing hardcoded content
-      "custom/no-hardcoded-strings": "warn",
+      // NOTE: no-hardcoded-strings has too many false positives with Tailwind CSS
+      // The other more targeted custom rules  provide better coverage
+      "custom/no-hardcoded-strings": "off",
       "custom/no-api-urls": "warn",
       "custom/no-hardcoded-html-attributes": "warn",
       "custom/no-hardcoded-toast-messages": "warn",
     },
-  },
+  }
 );

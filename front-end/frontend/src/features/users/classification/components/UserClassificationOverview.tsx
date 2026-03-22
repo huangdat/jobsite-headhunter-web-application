@@ -136,6 +136,8 @@ export const UserClassificationOverview: React.FC<
                 ...groups.map((g) => g.statistics.totalCount)
               );
               const percentage = (group.statistics.totalCount / maxCount) * 100;
+              // IMPORTANT: Inline style required - height is dynamic runtime value calculated from statistics
+              // Cannot use CSS/CSS-in-JS because height depends on maxCount and group totalCount
               return (
                 <div
                   key={group.id}

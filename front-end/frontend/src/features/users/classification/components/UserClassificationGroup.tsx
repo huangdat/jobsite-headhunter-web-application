@@ -121,15 +121,15 @@ export const UserClassificationGroup: React.FC<
             </div>
             {/* Progress/Statistics Bar - Dynamic widths calculated at runtime */}
             <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
-              {/* Note: Inline styles required for dynamic percentage values */}
+              {/* IMPORTANT: Inline style required - width is dynamic runtime value from activePercentage */}
+              {/* Cannot use CSS/CSS-in-JS because percentage depends on group.statistics.activePercentage */}
               <div
                 className="bg-primary h-full transition-all"
-                // @ts-ignore
                 style={{ width: `${group.statistics.activePercentage}%` }}
               />
+              {/* IMPORTANT: Inline style required - width is dynamic runtime value (100 - activePercentage) */}
               <div
                 className="bg-slate-300 dark:bg-slate-600 h-full"
-                // @ts-ignore
                 style={{ width: `${100 - group.statistics.activePercentage}%` }}
               />
             </div>
