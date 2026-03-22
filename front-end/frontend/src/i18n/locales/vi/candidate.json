@@ -73,5 +73,112 @@
       "fullName": "Ứng viên",
       "currentTitle": "Kiến trúc sư kỹ thuật cấp cao"
     }
+  },
+  "cv": {
+    "management": {
+      "breadcrumb": "QUẢN LÝ CV",
+      "title": "Quản Lý CV",
+      "subtitle": "Quản lý các hồ sơ chuyên môn và tối ưu hóa sức mạnh hồ sơ của bạn",
+      "empty": {
+        "headline": "Chưa tải lên CV nào",
+        "description": "Nâng cao sự hiện diện chuyên môn của bạn. Tải lên CV mới nhất để bắt đầu phù hợp với các vị trí lãnh đạo cao cấp.",
+        "button": "Tải lên CV",
+        "supported": "Hỗ trợ: PDF, DOC, DOCX (tối đa 5MB)"
+      },
+      "success": {
+        "banner": "Tải lên CV thành công!",
+        "bannerDetail": "{{filename}} đã được lưu vào hộp lưu trữ hồ sơ an toàn của bạn.",
+        "activeResumes": "CV Hoạt Động",
+        "filesUsed": "{{current}} trên {{total}} tệp được sử dụng",
+        "addAnother": "Thêm phiên bản khác",
+        "addAnotherDesc": "Kéo thả tệp PDF của bạn tại đây hoặc nhấn để chọn từ máy tính",
+        "browseFiles": "Chọn Tệp"
+      },
+      "error": {
+        "banner": "Tải lên Thất bại: Tệp Không Hợp Lệ",
+        "fileFormatInvalid": "Định dạng file không hỗ trợ hoặc dung lượng vượt quá 5MB. Vui lòng kiểm tra lại yêu cầu của hệ thống.",
+        "tryAnother": "Thử Tệp Khác"
+      },
+      "fileList": {
+        "actions": {
+          "view": "Xem",
+          "download": "Tải xuống",
+          "delete": "Xóa",
+          "makeActive": "Đặt làm Chính"
+        },
+        "uploadedLabel": "Đã tải lên"
+      },
+      "profileStrength": {
+        "title": "SỨC MẠNH HỒ SƠ",
+        "percentage": "{{percent}}%",
+        "items": {
+          "contactVerified": "Thông tin liên hệ đã xác minh",
+          "summaryComplete": "Tóm tắt điều hành hoàn tất",
+          "cvUploaded": "CV Điều Hành Đã Tải lên",
+          "cvUploadedBonus": "(+12%)",
+          "referencesNeeded": "Thêm 3 Tài Liệu Tham Khảo Chuyên Môn",
+          "referencesBonus": "(+5%)",
+          "linkedinVerify": "Xác minh Danh Tính bằng LinkedIn",
+          "linkedinBonus": "(+7%)",
+          "basicCompleted": "Thông tin Cơ bản Hoàn tất"
+        }
+      },
+      "tips": {
+        "title": "MẸO TỐI ƯU HÓA CV",
+        "addKeywords": "Thêm từ khóa",
+        "addKeywordsDesc": "AI của chúng tôi phát hiện ra các thuật ngữ ngành bị thiếu như \"Quản lý PnL\" và \"Chuyển đổi\".",
+        "tailorRoles": "Điều chỉnh cho các vai trò cụ thể",
+        "tailorRolesDesc": "CV chung thực hiện kém hơn 40% trong bộ lọc tìm kiếm điều hành. Tạo các phiên bản mục tiêu.",
+        "fileFormats": "Định Dạng Tệp",
+        "fileFormatsDesc": "Sử dụng PDF để định dạng nhất quán hoặc DOCX để tương thích với ATS.",
+        "fileSize": "Kích Thước Tệp",
+        "fileSizeDesc": "Giữ tệp của bạn dưới 5MB để đảm bảo tải nhanh cho nhà tuyển dụng."
+      },
+      "bestPractices": {
+        "title": "THỰC HÀNH TỐT NHẤT CV",
+        "privacyTitle": "KIỂM SOÁT QUYỀN RIÊNG TƯ",
+        "privacyDesc": "Mức độ hiển thị CV của bạn hiện được đặt thành Bí mật. Chỉ những nhà tuyển dụng được xác minh phù hợp với cấp độ seniority và ngành bạn ưa thích mới có thể yêu cầu truy cập vào toàn bộ thông tin chi tiết của bạn.",
+        "privacyItems": [
+          "Bạn có thể đặt các công ty cụ thể vào \"Danh sách chặn\" trong cài đặt.",
+          "Kiểm soát chính xác dữ liệu cá nhân nào được chia sẻ ban đầu."
+        ],
+        "practicesTitle": "THỰC HÀNH TỐT NHẤT CV",
+        "practicesItems": [
+          "Định lượng kết quả bằng doanh thu, tỷ lệ tăng trưởng hoặc quy mô đội.",
+          "Giữ tóm tắt điều hành của bạn dưới 200 từ.",
+          "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp."
+        ]
+      },
+      "premiumServices": {
+        "premiumTitle": "DỊCH VỤ CAO CẤP",
+        "auditTitle": "Kiểm Toán CV Chuyên Môn",
+        "auditDesc": "Nhận phân tích toàn diện về hồ sơ của bạn từ các huấn luyện viên cấp cao.",
+        "bookAudit": "Đặt Kiểm Toán CV",
+        "reviewTitle": "Đánh Giá Chuyên Gia",
+        "reviewDesc": "Nhận đánh giá 1:1 của chuyên gia về CV của bạn từ Headhunter để tối đa hóa tầm tiếp cận.",
+        "getReview": "Nhận Đánh Giá Chuyên Gia"
+      },
+      "validation": {
+        "fileTooLarge": "Tệp quá lớn. Kích thước tối đa là 5MB.",
+        "invalidFileFormat": "Định dạng tệp không được hỗ trợ. Vui lòng sử dụng PDF, DOC, DOCX hoặc RTF.",
+        "uploadFailed": "Không thể tải lên tệp.",
+        "downloadFailed": "Không thể tải xuống tệp.",
+        "deleteFailed": "Không thể xóa tệp.",
+        "updateFailed": "Không thể cập nhật cài đặt.",
+        "retry": "Thử lại",
+        "dismiss": "Đóng",
+        "clear": "Xóa"
+      },
+      "upload": {
+        "selectFile": "Chọn tệp CV"
+      },
+      "messages": {
+        "uploadSuccess": "Tải lên CV thành công!",
+        "uploadError": "Đã xảy ra lỗi trong quá trình tải lên.",
+        "deleteConfirm": "Bạn có chắc chắn muốn xóa CV này không?",
+        "deleteSuccess": "Xóa CV thành công.",
+        "updateSuccess": "Cập nhật cài đặt thành công."
+      }
+    }
   }
 }

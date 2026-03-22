@@ -37,6 +37,6 @@ lint-output.tmp
 docs/**
 
 # Refernces of AI designs
-**/assets/users/
+**/assets/**
 
 ../../.vscode/

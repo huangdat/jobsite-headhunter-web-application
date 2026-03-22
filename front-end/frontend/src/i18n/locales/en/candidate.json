@@ -73,5 +73,112 @@
       "fullName": "Candidate",
       "currentTitle": "Senior Technical Architect"
     }
+  },
+  "cv": {
+    "management": {
+      "breadcrumb": "CV MANAGEMENT",
+      "title": "CV Management",
+      "subtitle": "Manage your professional resumes and optimize your profile strength",
+      "empty": {
+        "headline": "No resumes uploaded yet",
+        "description": "Elevate your executive presence. Upload your latest CV to start matching with premium leadership roles.",
+        "button": "Upload Resume",
+        "supported": "Supported: PDF, DOC, DOCX (max 5MB)"
+      },
+      "success": {
+        "banner": "Resume uploaded successfully!",
+        "bannerDetail": "{{filename}} has been saved to your secure profile vault.",
+        "activeResumes": "Active Resumes",
+        "filesUsed": "{{current}} of {{total}} files used",
+        "addAnother": "Add another version",
+        "addAnotherDesc": "Drop your PDF here or click to browse files",
+        "browseFiles": "Browse Files"
+      },
+      "error": {
+        "banner": "Upload Failed: Invalid File",
+        "fileFormatInvalid": "Định dạng file không hỗ trợ hoặc dung lượng vượt quá 5MB. Vui lòng kiểm tra lại yêu cầu của hệ thống.",
+        "tryAnother": "Try Another File"
+      },
+      "fileList": {
+        "actions": {
+          "view": "View",
+          "download": "Download",
+          "delete": "Delete",
+          "makeActive": "Make Active"
+        },
+        "uploadedLabel": "Uploaded"
+      },
+      "profileStrength": {
+        "title": "PROFILE STRENGTH",
+        "percentage": "{{percent}}%",
+        "items": {
+          "contactVerified": "Contact information verified",
+          "summaryComplete": "Executive summary complete",
+          "cvUploaded": "Executive CV Uploaded",
+          "cvUploadedBonus": "(+12%)",
+          "referencesNeeded": "Add 3 Professional References",
+          "referencesBonus": "(+5%)",
+          "linkedinVerify": "Verify Identity with LinkedIn",
+          "linkedinBonus": "(+7%)",
+          "basicCompleted": "Basic Info Completed"
+        }
+      },
+      "tips": {
+        "title": "CV OPTIMIZATION TIPS",
+        "addKeywords": "Add more keywords",
+        "addKeywordsDesc": "Our AI detected missing industry terms like \"PnL Management\" and \"Change Transformation\".",
+        "tailorRoles": "Tailor for specific roles",
+        "tailorRolesDesc": "Generic resumes perform 40% worse in executive search filters. Create targeted versions.",
+        "fileFormats": "File Formats",
+        "fileFormatsDesc": "Use PDF for consistent formatting or DOCX for ATS compatibility.",
+        "fileSize": "File Size",
+        "fileSizeDesc": "Keep your file under 5MB to ensure fast loading for recruiters."
+      },
+      "bestPractices": {
+        "title": "CV BEST PRACTICES",
+        "privacyTitle": "PRIVACY CONTROL",
+        "privacyDesc": "Your CV visibility is currently set to Confidential. Only verified recruiters matching your seniority level and preferred industries can request access to your full details.",
+        "privacyItems": [
+          "You can set specific companies to \"Block List\" in settings.",
+          "Control exactly what personal data is shared initially."
+        ],
+        "practicesTitle": "CV BEST PRACTICES",
+        "practicesItems": [
+          "Quantify results with revenue, growth %, or team size.",
+          "Keep your executive summary under 200 words.",
+          "Focus on the last 10 years of your career path."
+        ]
+      },
+      "premiumServices": {
+        "premiumTitle": "PREMIUM SERVICES",
+        "auditTitle": "Professional CV Audit",
+        "auditDesc": "Get a comprehensive analysis of your resume by our senior executive coaches.",
+        "bookAudit": "Book CV Audit",
+        "reviewTitle": "Expert Review",
+        "reviewDesc": "Get a professional 1:1 review of your CV by a Headhunter to maximize your reach.",
+        "getReview": "Get Expert Review"
+      },
+      "validation": {
+        "fileTooLarge": "File is too large. Maximum size is 5MB.",
+        "invalidFileFormat": "File format not supported. Please use PDF, DOC, DOCX, or RTF.",
+        "uploadFailed": "Failed to upload file.",
+        "downloadFailed": "Failed to download file.",
+        "deleteFailed": "Failed to delete file.",
+        "updateFailed": "Failed to update settings.",
+        "retry": "Retry",
+        "dismiss": "Dismiss",
+        "clear": "Clear"
+      },
+      "upload": {
+        "selectFile": "Select CV file"
+      },
+      "messages": {
+        "uploadSuccess": "Resume uploaded successfully!",
+        "uploadError": "An error occurred during upload.",
+        "deleteConfirm": "Are you sure you want to delete this resume?",
+        "deleteSuccess": "Resume deleted successfully.",
+        "updateSuccess": "Settings updated successfully."
+      }
+    }
   }
 }
