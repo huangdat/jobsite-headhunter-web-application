@@ -23,17 +23,23 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   /**
    * Check if a route is currently active
-   * Prevents parent routes from matching child routes
+   * Fix: Distinguish between /users (list) vs /users/classification or /users/:userId
    */
   const isRouteActive = (route: string): boolean => {
-    const currentPath = window.location.pathname;
+    const pathname = window.location.pathname;
 
-    // Exact match for all routes
-    if (currentPath === route) {
-      return true;
+    if (route === "/users") {
+      // Only active on /users or /users?... (not on child routes like /users/classification or /users/:id)
+      return pathname === "/users" || !!pathname.match(/^\/users\?/);
     }
 
-    return false;
+    if (route === "/users/classification") {
+      // Active on /users/classification exactly
+      return pathname === "/users/classification";
+    }
+
+    // Default exact match
+    return pathname === route;
   };
 
   return (

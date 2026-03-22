@@ -20,7 +20,7 @@ export function TopCompanies() {
         setCompanies(data);
       } catch (err) {
         console.error("Failed to fetch companies:", err);
-        setError("Failed to load companies");
+        setError(t("messages.errorLoadCompanies"));
       } finally {
         setLoading(false);
       }

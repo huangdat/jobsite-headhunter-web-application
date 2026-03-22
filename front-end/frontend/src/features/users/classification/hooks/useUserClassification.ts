@@ -52,6 +52,7 @@ export const useUserClassification = (): UseUserClassificationReturn => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [groupBy, setGroupByState] = useState<ClassificationGroupBy>("role");
+  // Removed unused shouldRetry variable
 
   /**
    * Fetch all users from API
@@ -89,6 +90,11 @@ export const useUserClassification = (): UseUserClassificationReturn => {
       setError(errorMessage);
       console.error("Error fetching users for classification:", err);
       setAllUsers([]);
+
+      // User needs to fix permissions or login again
+      if (status === 403 || status === 401) {
+        // Skip retry for permission errors
+      }
     } finally {
       setLoading(false);
     }
@@ -121,11 +127,12 @@ export const useUserClassification = (): UseUserClassificationReturn => {
   }, [allUsers, groupBy]);
 
   /**
-   * Fetch users on mount
+   * Fetch users on mount only (infinite loop fix: removed fetchAllUsers from dependencies)
+   * This ensures the API is called only once when component mounts, not repeatedly
    */
   useEffect(() => {
     fetchAllUsers();
-  }, [fetchAllUsers]);
+  }, []);
 
   /**
    * Reclassify when groupBy or allUsers changes

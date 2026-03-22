@@ -57,7 +57,10 @@
     "noDataAvailable": "No data available",
     "failedToFetchUsers": "Failed to fetch users",
     "failedToFetchUserDetails": "Failed to fetch user details",
-    "featureComingSoon": "Feature coming soon"
+    "featureComingSoon": "Feature coming soon",
+    "permanentDelete": "Permanent Delete",
+    "loading": "Loading...",
+    "noDataAvailable": "No data available"
   },
   "detail": {
     "userDetails": "User Details",
@@ -198,7 +201,9 @@
     "processing": "Processing...",
     "close": "Close",
     "tryAgain": "Try Again",
-    "errorLockFailed": "Failed to lock user account"
+    "errorLockFailed": "Failed to lock user account",
+    "errorGeneral": "An error occurred while locking the account",
+    "successLockUser": "User account has been locked successfully"
   },
   "unlock": {
     "title": "Unlock User Account",
@@ -234,7 +239,9 @@
     "processing": "Processing...",
     "close": "Close",
     "tryAgain": "Try Again",
-    "errorUnlockFailed": "Failed to unlock user account"
+    "errorUnlockFailed": "Failed to unlock user account",
+    "errorGeneral": "An error occurred while unlocking the account",
+    "successUnlockUser": "User account has been unlocked successfully"
   },
   "delete": {
     "title": "Delete User",

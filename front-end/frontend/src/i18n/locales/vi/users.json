@@ -61,7 +61,10 @@
     "noDataAvailable": "Không có dữ liệu",
     "failedToFetchUsers": "Không thể tải danh sách người dùng",
     "failedToFetchUserDetails": "Không thể tải chi tiết người dùng",
-    "featureComingSoon": "Tính năng sắp ra mắt"
+    "featureComingSoon": "Tính năng sắp ra mắt",
+    "permanentDelete": "Xóa vĩnh viễn",
+    "loading": "Đang tải...",
+    "noDataAvailable": "Không có dữ liệu"
   },
   "detail": {
     "userDetails": "Chi tiết Người dùng",
@@ -196,7 +199,9 @@
     "processing": "Đang xử lý...",
     "close": "Đóng",
     "tryAgain": "Thử lại",
-    "errorLockFailed": "Không thể khóa tài khoản người dùng"
+    "errorLockFailed": "Không thể khóa tài khoản người dùng",
+    "errorGeneral": "Đã xảy ra lỗi khi khóa tài khoản",
+    "successLockUser": "Tài khoản người dùng đã được khóa thành công"
   },
   "unlock": {
     "title": "Mở khóa Tài khoản Người dùng",
@@ -232,7 +237,9 @@
     "processing": "Đang xử lý...",
     "close": "Đóng",
     "tryAgain": "Thử lại",
-    "errorUnlockFailed": "Không thể mở khóa tài khoản người dùng"
+    "errorUnlockFailed": "Không thể mở khóa tài khoản người dùng",
+    "errorGeneral": "Đã xảy ra lỗi khi mở khóa tài khoản",
+    "successUnlockUser": "Tài khoản người dùng đã được mở khóa thành công"
   },
   "delete": {
     "title": "Xóa Người dùng",
