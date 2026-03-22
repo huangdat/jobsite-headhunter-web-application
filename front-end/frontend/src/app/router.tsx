@@ -13,6 +13,7 @@ import {
 import { HomePage } from "@/features/home/pages/HomePage";
 import { UserListPage } from "@/features/users/list";
 import { UserClassificationPage } from "@/features/users/classification";
+import { AdminDashboardPage } from "@/features/users/dashboard/pages";
 import { AdminLayout } from "@/features/users/list/layouts/AdminLayout";
 import { GuestOnlyRoute } from "@/features/auth/components/GuestOnlyRoute";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
@@ -90,6 +91,16 @@ export function AppRouter() {
       <Route path="/home" element={<HomePage />} />
       <Route
         path="/users"
+        element={
+          <AdminOnlyRoute>
+            <AdminLayout>
+              <AdminDashboardPage />
+            </AdminLayout>
+          </AdminOnlyRoute>
+        }
+      />
+      <Route
+        path="/users/list"
         element={
           <AdminOnlyRoute>
             <AdminLayout>
