@@ -3,7 +3,7 @@ import { useUsersTranslation } from "@/shared/hooks";
 import { FilterBadge } from "./FilterBadge";
 
 interface ActiveFilter {
-  type: "role" | "status" | "company";
+  type: "role" | "status";
   value: string;
 }
 
@@ -14,7 +14,7 @@ interface UserListHeaderProps {
   onGroupByChange?: (value: string) => void;
   onAddUserClick?: () => void;
   activeFilters?: ActiveFilter[];
-  onRemoveFilter?: (filterType: "role" | "status" | "company") => void;
+  onRemoveFilter?: (filterType: "role" | "status") => void;
   onClearFilters?: () => void;
   filterPanel?: React.ReactNode;
 }

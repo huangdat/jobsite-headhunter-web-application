@@ -6,7 +6,6 @@ import type {
   ClassificationOverviewStats,
 } from "../types/classification.types";
 import { usersApi } from "../../services/usersApi";
-import { useUsersTranslation } from "@/shared/hooks";
 import {
   classifyUsers,
   calculateOverviewStatistics,
@@ -30,39 +29,13 @@ export interface UseUserClassificationReturn {
   refetch: () => Promise<void>;
 }
 
-const PAGE_SIZE = 1000; // Load all users for classification (adjust if needed)
-
-/**
- * Extract error message from axios error
- * Handles 403, 401, and generic errors appropriately
- */
-const getErrorMessage = (err: any, t: any): string => {
-  const status = err?.response?.status;
-  const errorCode = err?.response?.data?.errorCode;
-
-  // 403 Forbidden - User doesn't have permission
-  if (status === 403 || errorCode === "FORBIDDEN") {
-    return t("users.classification.error.permissionDeniedDescription");
-  }
-
-  // 401 Unauthorized - Session expired
-  if (status === 401 || errorCode === "UNAUTHORIZED") {
-    return t("users.classification.error.unauthorizedDescription");
-  }
-
-  // Generic error
-  return err instanceof Error
-    ? err.message
-    : t("users.classification.error.loadFailedDescription");
-};
+const PAGE_SIZE = 20; // Load users for classification (small page to avoid lag)
 
 /**
  * Hook for managing user classification logic
  * Handles grouping, statistics calculation, and UI state
  */
 export const useUserClassification = (): UseUserClassificationReturn => {
-  const { t } = useUsersTranslation();
-
   // Data state
   const [allUsers, setAllUsers] = useState<UserDetail[]>([]);
   const [groups, setGroups] = useState<ClassificationGroupData[]>([]);
@@ -99,7 +72,20 @@ export const useUserClassification = (): UseUserClassificationReturn => {
       setAllUsers(response.items);
     } catch (err) {
       const status = (err as any)?.response?.status;
-      const errorMessage = getErrorMessage(err, t);
+      let errorMessage = "Failed to load users";
+      
+      // 403 Forbidden - User doesn't have permission
+      if (status === 403) {
+        errorMessage = "You do not have permission to access the classification feature.";
+      }
+      // 401 Unauthorized - Session expired
+      else if (status === 401) {
+        errorMessage = "Your session has expired. Please login again.";
+      }
+      // Generic error
+      else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
 
       setError(errorMessage);
       console.error("Error fetching users for classification:", err);
@@ -112,7 +98,7 @@ export const useUserClassification = (): UseUserClassificationReturn => {
     } finally {
       setLoading(false);
     }
-  }, [t]);
+  }, []);
 
   /**
    * Reclassify users when groupBy changes or users are fetched
