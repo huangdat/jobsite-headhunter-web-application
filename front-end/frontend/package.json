@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "preview": "vite preview",
     "prepare": "cd ../.. && husky install front-end/frontend/.husky || true",
-    "audit:i18n": "bash audit-i18n.sh || cmd /c audit-i18n.bat"
+    "audit:i18n": "node audit-i18n.js"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
