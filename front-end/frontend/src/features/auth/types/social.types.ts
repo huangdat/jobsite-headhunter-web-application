@@ -1,4 +1,4 @@
-import { type UserRole } from "./auth.types";
+import { type UserRole } from "@/features/auth/types/auth.types";
 
 export type SocialProvider = "GOOGLE" | "LINKEDIN" | "FACEBOOK" | "LOCAL";
 

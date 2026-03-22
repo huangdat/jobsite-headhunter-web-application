@@ -3,13 +3,13 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
-import type { UserRole } from "../types";
+import type { RegistrationUserRole } from "@/features/auth/types";
 
 import { MdPersonSearch, MdGroups, MdWorkHistory } from "react-icons/md";
 import { HiOutlineArrowRight } from "react-icons/hi";
 
 interface RoleOption {
-  value: UserRole;
+  value: RegistrationUserRole;
   icon: React.ReactNode;
   titleKey: string;
   descKey: string;
@@ -17,7 +17,7 @@ interface RoleOption {
 
 export function SelectRolePage() {
   const { t } = useAuthTranslation();
-  const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
+  const [selectedRole, setSelectedRole] = useState<RegistrationUserRole | null>(null);
   const navigate = useNavigate();
 
   const roleOptions: RoleOption[] = [

@@ -1,5 +1,5 @@
-import type { UserDetail } from "../types/user.types";
-import type { UserTableRow } from "../list/components/UserListTable";
+import type { UserDetail } from "@/features/users/types/user.types";
+import type { UserTableRow } from "@/features/users/list/components/UserListTable";
 
 // Types for UserDetailPage
 interface UserDetailModel {

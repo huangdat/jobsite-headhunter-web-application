@@ -20,7 +20,7 @@ import type {
   LinkedInTokenRequest,
   SocialAuthResponse,
   SocialRegisterRequest,
-} from "../types";
+} from "@/features/auth/types";
 
 export const login = async (data: LoginRequest) => {
   const res = await apiClient.post<ApiResponse<LoginResult>>(

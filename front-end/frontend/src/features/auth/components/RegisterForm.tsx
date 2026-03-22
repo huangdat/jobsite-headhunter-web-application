@@ -5,13 +5,19 @@ import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
-import type { RegistrationUserRole, RegisterFormData } from "../types";
-import { sendOtpSignup, checkEmailUsernameExist } from "../services/authApi";
+import type {
+  RegistrationUserRole,
+  RegisterFormData,
+} from "@/features/auth/types";
+import {
+  sendOtpSignup,
+  checkEmailUsernameExist,
+} from "@/features/auth/services/authApi";
 import { toast } from "sonner";
-import { useAuth } from "../context/useAuth";
-import { extractApiErrorMessage } from "../utils/apiError";
-import { createSchemaWithI18n } from "../utils/registerFormSchema";
-import { useStepValidation } from "../hooks/useStepValidation";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
+import { createSchemaWithI18n } from "@/features/auth/utils/registerFormSchema";
+import { useStepValidation } from "@/features/auth/hooks/useStepValidation";
 
 import { StepIndicator } from "./StepIndicator";
 import { AccountStep } from "./AccountStep";
@@ -28,7 +34,9 @@ interface RegisterFormProps {
 
 // Validate user role during registration (form uses lowercase for UI)
 const isValidRole = (role: string): role is RegistrationUserRole => {
-  return ["candidate", "collaborator", "headhunter"].includes(role.toLowerCase());
+  return ["candidate", "collaborator", "headhunter"].includes(
+    role.toLowerCase()
+  );
 };
 
 const getRoleConfig = (role: RegistrationUserRole) => {
@@ -295,9 +303,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const isSubmitting = form.formState.isSubmitting;
 
   return (
-    <AuthLayout
-      ctaButton={{ to: "/login", label: t("form.register.signIn") }}
-    >
+    <AuthLayout ctaButton={{ to: "/login", label: t("form.register.signIn") }}>
       <div className="w-full max-w-5xl min-h-125 bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
@@ -309,9 +315,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
             <br />
             Network
           </h1>
-          <p className="text-gray-300 mt-1">
-            {t("pages.register.subtitle")}
-          </p>
+          <p className="text-gray-300 mt-1">{t("pages.register.subtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}

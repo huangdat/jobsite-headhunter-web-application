@@ -19,6 +19,7 @@ import { GuestOnlyRoute } from "@/features/auth/components/GuestOnlyRoute";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 import { AdminOnlyRoute } from "@/features/auth/components/AdminOnlyRoute";
 import { UserDetailPage } from "@/features/users/detail";
+import { ProfileEditPage } from "@/features/candidate/profile/pages/ProfileEditPage";
 
 export function AppRouter() {
   return (
@@ -89,6 +90,14 @@ export function AppRouter() {
         }
       />
       <Route path="/home" element={<HomePage />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfileEditPage />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/users"
         element={

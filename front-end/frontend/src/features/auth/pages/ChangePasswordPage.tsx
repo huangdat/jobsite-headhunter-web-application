@@ -3,12 +3,12 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
-import type { ChangePasswordFormData } from "../types";
-import { changePassword } from "../services/authApi";
+import type { ChangePasswordFormData } from "@/features/auth/types";
+import { changePassword } from "@/features/auth/services/authApi";
 import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { toast } from "sonner";
-import { extractApiErrorMessage } from "../utils/apiError";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 export function ChangePasswordPage() {
   const { t } = useAuthTranslation();
@@ -99,8 +99,12 @@ export function ChangePasswordPage() {
         // Check if it's current password error
         if (
           response.status === 401 ||
-          responseMessage.toLowerCase().includes(t("validation.currentPasswordKey")) ||
-          responseMessage.toLowerCase().includes(t("validation.incorrectPasswordKey"))
+          responseMessage
+            .toLowerCase()
+            .includes(t("validation.currentPasswordKey")) ||
+          responseMessage
+            .toLowerCase()
+            .includes(t("validation.incorrectPasswordKey"))
         ) {
           setError("currentPassword", {
             type: "custom",

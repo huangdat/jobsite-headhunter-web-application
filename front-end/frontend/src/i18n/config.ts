@@ -8,6 +8,7 @@ import enHome from "./locales/en/home.json";
 import enNavigation from "./locales/en/navigation.json";
 import enUsers from "./locales/en/users.json";
 import enJobs from "./locales/en/jobs.json";
+import enCandidate from "./locales/en/candidate.json";
 
 // Import Vietnamese namespaces
 import viCommon from "./locales/vi/common.json";
@@ -16,6 +17,7 @@ import viHome from "./locales/vi/home.json";
 import viNavigation from "./locales/vi/navigation.json";
 import viUsers from "./locales/vi/users.json";
 import viJobs from "./locales/vi/jobs.json";
+import viCandidate from "./locales/vi/candidate.json";
 
 const resources = {
   en: {
@@ -26,6 +28,7 @@ const resources = {
       navigation: enNavigation,
       users: enUsers,
       jobs: enJobs,
+      candidate: enCandidate,
     },
   },
   vi: {
@@ -36,6 +39,7 @@ const resources = {
       navigation: viNavigation,
       users: viUsers,
       jobs: viJobs,
+      candidate: viCandidate,
     },
   },
 };

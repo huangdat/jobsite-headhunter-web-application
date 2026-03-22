@@ -1,5 +1,5 @@
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
-import type { RegisterFormData, RegistrationUserRole } from "../types";
+import type { RegisterFormData, RegistrationUserRole } from "@/features/auth/types";
 
 /**
  * Define which fields need validation for each step

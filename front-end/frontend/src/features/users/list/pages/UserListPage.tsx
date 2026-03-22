@@ -6,9 +6,9 @@ import {
   UserListEmpty,
   UserListLoading,
   UserListPagination,
-} from "../components";
-import { UserFilters } from "../../components/common/UserFilters";
-import { useUsers } from "../hooks/useUsers";
+} from "@/features/users/list/components";
+import { UserFilters } from "@/features/users/components/common/UserFilters";
+import { useUsers } from "@/features/users/list/hooks/useUsers";
 
 interface UserListPageProps {
   onAddNewUser?: () => void;

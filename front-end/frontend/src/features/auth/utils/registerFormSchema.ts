@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import type { RegistrationUserRole } from "../types";
+import type { RegistrationUserRole } from "@/features/auth/types";
 
 /**
  * Sanitize input: trim, remove script tags, escape dangerous chars

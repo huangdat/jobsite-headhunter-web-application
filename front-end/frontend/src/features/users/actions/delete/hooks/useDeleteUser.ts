@@ -1,6 +1,6 @@
 import { usersApi } from "@/features/users/services/usersApi";
 import { useState } from "react";
-import { HTTP_STATUS } from "../../../constants";
+import { HTTP_STATUS } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface DeleteUserOptions {

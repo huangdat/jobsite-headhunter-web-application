@@ -4,7 +4,7 @@ import { useAuth } from "@/features/auth/context/useAuth";
 import {
   getAdminFeatures,
   type AdminFeature,
-} from "../../config/adminFeaturesConfig";
+} from "@/features/users/config/adminFeaturesConfig";
 
 interface AdminLayoutProps {
   children: React.ReactNode;

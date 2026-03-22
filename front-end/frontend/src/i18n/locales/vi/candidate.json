@@ -1,0 +1,77 @@
+{
+  "profile": {
+    "page": {
+      "eyebrow": "HỒ SƠ CỦA TÔI",
+      "title": "Định Danh Chuyên Môn",
+      "subtitleDefault": "Quản lý hình ảnh chuyên môn và định vị ứng viên của bạn trên thị trường.",
+      "subtitleSaving": "Đang lưu hồ sơ của bạn...",
+      "subtitleSuccess": "Hồ sơ của bạn đã được cập nhật."
+    },
+    "alerts": {
+      "saveErrorTitle": "Cần xử lý: Lỗi xác thực hồ sơ",
+      "validationErrorTitle": "Vui lòng sửa các trường đang lỗi trước khi lưu.",
+      "saveSuccessTitle": "Cập nhật hồ sơ thành công.",
+      "saveSuccessBody": "Mọi thay đổi trong định danh chuyên môn của bạn đã được đồng bộ."
+    },
+    "actions": {
+      "discardChanges": "Hủy thay đổi",
+      "saveChanges": "Lưu thay đổi",
+      "saving": "Đang lưu..."
+    },
+    "sidebar": {
+      "strengthTitle": "Độ Mạnh Hồ Sơ",
+      "strengthHint": "Hoàn thiện chức danh, mức lương kỳ vọng và phần giới thiệu để tăng khả năng được nhà tuyển dụng chú ý.",
+      "tipsTitle": "Mẹo Hồ Sơ",
+      "tipOne": "Thêm các tác động có thể đo lường trong phần giới thiệu.",
+      "tipTwo": "Giữ mức lương kỳ vọng bám sát thị trường.",
+      "tipThree": "Hoàn thiện CV và liên kết portfolio ở bước kế tiếp.",
+      "insightEyebrow": "Phân Tích Dữ Liệu",
+      "insightBody": "Hồ sơ có đầy đủ thông tin định danh chuyên môn thường nhận được nhiều tương tác từ nhà tuyển dụng hơn.",
+      "insightAlt": "Phân tích dữ liệu hồ sơ"
+    },
+    "form": {
+      "sectionTitle": "Định Danh Chuyên Môn",
+      "sectionSubtitle": "Định hình cách đội ngũ tuyển dụng đánh giá hồ sơ của bạn.",
+      "openForWork": "Sẵn sàng nhận việc",
+      "fullName": "Tên pháp lý",
+      "jobTitle": "Chức danh",
+      "currentStatus": "Trạng thái hiện tại",
+      "currentStatusAria": "Trạng thái hiện tại",
+      "yearsOfExperience": "Số năm kinh nghiệm",
+      "city": "Thành phố",
+      "salaryMin": "Lương tối thiểu (USD)",
+      "salaryMax": "Lương tối đa (USD)",
+      "professionalBio": "Giới thiệu chuyên môn",
+      "currentTitlePlaceholder": "ví dụ: Kiến trúc sư kỹ thuật cấp cao",
+      "cityPlaceholder": "TP. Hồ Chí Minh",
+      "bioPlaceholder": "Tóm tắt tác động nghề nghiệp và chuyên môn nổi bật của bạn."
+    },
+    "statuses": {
+      "ACTIVELY_INTERVIEWING": "Đang phỏng vấn tích cực",
+      "OPEN_FOR_WORK": "Sẵn sàng nhận việc",
+      "PASSIVELY_LOOKING": "Đang tìm cơ hội thụ động",
+      "NOT_LOOKING": "Chưa tìm việc"
+    },
+    "validation": {
+      "currentTitleRequired": "Chức danh là bắt buộc.",
+      "currentTitleMax": "Chức danh tối đa {{max}} ký tự.",
+      "yearsOfExperienceMin": "Số năm kinh nghiệm phải từ 0 trở lên.",
+      "yearsOfExperienceMax": "Số năm kinh nghiệm phải nhỏ hơn hoặc bằng {{max}}.",
+      "salaryMinNegative": "Lương tối thiểu không được âm.",
+      "salaryMinTooHigh": "Lương tối thiểu quá cao.",
+      "salaryMaxNegative": "Lương tối đa không được âm.",
+      "salaryMaxTooHigh": "Lương tối đa quá cao.",
+      "salaryMaxInvalidRange": "Lương tối đa phải lớn hơn hoặc bằng lương tối thiểu.",
+      "bioMax": "Giới thiệu chuyên môn không được vượt quá {{max}} ký tự.",
+      "cityMax": "Tên thành phố không được vượt quá {{max}} ký tự."
+    },
+    "errors": {
+      "loadFailed": "Không thể tải hồ sơ. Vui lòng thử lại.",
+      "saveFailed": "Không thể lưu thay đổi hồ sơ. Vui lòng thử lại."
+    },
+    "fallback": {
+      "fullName": "Ứng viên",
+      "currentTitle": "Kiến trúc sư kỹ thuật cấp cao"
+    }
+  }
+}

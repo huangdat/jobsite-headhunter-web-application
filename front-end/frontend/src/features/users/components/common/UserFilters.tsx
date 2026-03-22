@@ -3,7 +3,7 @@ import { useUsersTranslation } from "@/shared/hooks";
 import {
   USERS_LIST_ROLE_VALUES,
   USERS_LIST_STATUS_VALUES,
-} from "../../list/constants";
+} from "@/features/users/list/constants";
 
 interface UserFiltersProps {
   filters: {

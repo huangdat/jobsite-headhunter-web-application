@@ -1,6 +1,6 @@
 import { apiClient } from "@/shared/utils/axios";
-import type { UserDetail } from "../types/user.types";
-import { API_ENDPOINTS } from "../constants";
+import type { UserDetail } from "@/features/users/types/user.types";
+import { API_ENDPOINTS } from "@/features/users/constants";
 
 /**
  * Backend response format (different from frontend interface)
