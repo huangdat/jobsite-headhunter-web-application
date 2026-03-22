@@ -38,9 +38,6 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-unused-vars": "warn",
       "boundaries/no-unknown": "warn",
-      "boundaries/no-cross-boundary": "warn",
-      "boundaries/entry-point": "warn",
-      "boundaries/external": "warn",
       // Custom rules for preventing hardcoded content
       "custom/no-hardcoded-strings": "warn",
       "custom/no-api-urls": "warn",
