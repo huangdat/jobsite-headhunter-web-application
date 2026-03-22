@@ -1,15 +1,15 @@
 import { useState, useCallback, useEffect } from "react";
-import type { UserDetail } from "../../types/user.types";
+import type { UserDetail } from "@/features/users/types/user.types";
 import type {
   ClassificationGroupData,
   ClassificationGroupBy,
   ClassificationOverviewStats,
-} from "../types/classification.types";
-import { usersApi } from "../../services/usersApi";
+} from "@/features/users/classification/types/classification.types";
+import { usersApi } from "@/features/users/services/usersApi";
 import {
   classifyUsers,
   calculateOverviewStatistics,
-} from "../utils/classificationUtils";
+} from "@/features/users/classification/utils/classificationUtils";
 
 export interface UseUserClassificationReturn {
   // Data
@@ -73,10 +73,11 @@ export const useUserClassification = (): UseUserClassificationReturn => {
     } catch (err) {
       const status = (err as any)?.response?.status;
       let errorMessage = "Failed to load users";
-      
+
       // 403 Forbidden - User doesn't have permission
       if (status === 403) {
-        errorMessage = "You do not have permission to access the classification feature.";
+        errorMessage =
+          "You do not have permission to access the classification feature.";
       }
       // 401 Unauthorized - Session expired
       else if (status === 401) {

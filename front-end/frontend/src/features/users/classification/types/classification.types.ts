@@ -1,4 +1,4 @@
-import type { UserDetail } from "../../types/user.types";
+import type { UserDetail } from "@/features/users/types/user.types";
 
 /**
  * Classification types and interfaces

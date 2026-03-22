@@ -1,6 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
-import type { UserStatus } from "../../types/user.types";
+import type { UserStatus } from "@/features/users/types/user.types";
 import { UserListLoading } from "./UserListLoading";
 
 export interface UserTableRow {

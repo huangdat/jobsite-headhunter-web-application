@@ -1,6 +1,6 @@
 import { usersApi } from "@/features/users/services/usersApi";
 import { useState } from "react";
-import { STORAGE_KEYS, AUDIT_LOG_ACTIONS } from "../../../constants";
+import { STORAGE_KEYS, AUDIT_LOG_ACTIONS } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface UnlockUserOptions {

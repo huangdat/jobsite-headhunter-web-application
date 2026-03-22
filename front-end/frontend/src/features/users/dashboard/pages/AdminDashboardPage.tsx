@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsersTranslation } from "@/shared/hooks";
-import { usersApi } from "../../services/usersApi";
-import type { PagedResponse } from "../../services/usersApi";
-import type { UserDetail } from "../../types/user.types";
+import { usersApi } from "@/features/users/services/usersApi";
+import type { PagedResponse } from "@/features/users/services/usersApi";
+import type { UserDetail } from "@/features/users/types/user.types";
 
 export const AdminDashboardPage: React.FC = () => {
   const { t } = useUsersTranslation();

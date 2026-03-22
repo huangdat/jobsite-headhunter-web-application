@@ -3,10 +3,10 @@ import { useUsersTranslation } from "@/shared/hooks";
 import type {
   ClassificationGroupData,
   ClassificationOverviewStats,
-} from "../types/classification.types";
+} from "@/features/users/classification/types/classification.types";
 import { UserClassificationHeader } from "./UserClassificationHeader";
 import { UserClassificationGroup } from "./UserClassificationGroup";
-import type { ClassificationGroupBy } from "../types/classification.types";
+import type { ClassificationGroupBy } from "@/features/users/classification/types/classification.types";
 
 interface UserClassificationOverviewProps {
   groups: ClassificationGroupData[];

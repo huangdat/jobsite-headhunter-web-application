@@ -1,7 +1,10 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
-import type { ClassificationGroupData } from "../types/classification.types";
-import { formatPercentage, formatCount } from "../utils/classificationUtils";
+import type { ClassificationGroupData } from "@/features/users/classification/types/classification.types";
+import {
+  formatPercentage,
+  formatCount,
+} from "@/features/users/classification/utils/classificationUtils";
 
 interface UserClassificationGroupProps {
   group: ClassificationGroupData;

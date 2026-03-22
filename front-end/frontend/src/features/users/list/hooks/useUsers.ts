@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import type { UserTableRow } from "../components/UserListTable";
-import { usersApi } from "../../services/usersApi";
-import { userMapper } from "../../utils/userMapper";
-import { DEBOUNCE_DELAY } from "../../constants";
+import type { UserTableRow } from "@/features/users/list/components/UserListTable";
+import { usersApi } from "@/features/users/services/usersApi";
+import { userMapper } from "@/features/users/utils/userMapper";
+import { DEBOUNCE_DELAY } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
 
 export interface UseUserListReturn {
