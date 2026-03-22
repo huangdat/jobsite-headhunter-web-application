@@ -26,8 +26,11 @@
     "resetFilter": "Reset"
   },
   "status": {
-    "published": "Published",
+    "DRAFT": "Draft",
+    "OPEN": "Open",
+    "CLOSED": "Closed",
     "draft": "Draft",
+    "open": "Open",
     "closed": "Closed"
   },
   "columns": {
@@ -76,7 +79,15 @@
     "contract": "Contract",
     "temporary": "Temporary",
     "remote": "Remote",
-    "freelance": "Freelance"
+    "freelance": "Freelance",
+    "workingTypes": {
+      "ONSITE": "On-site",
+      "REMOTE": "Remote",
+      "HYBRID": "Hybrid",
+      "onsite": "On-site",
+      "remote": "Remote",
+      "hybrid": "Hybrid"
+    }
   },
   "experience": {
     "entry": "Entry Level",

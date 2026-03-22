@@ -36,6 +36,10 @@
     "resetFilter": "Đặt lại"
   },
   "status": {
+    "PENDING": "Đang chờ",
+    "ACTIVE": "Hoạt động",
+    "SUSPENDED": "Bị đình chỉ",
+    "DELETED": "Đã xóa",
     "active": "Hoạt động",
     "inactive": "Không hoạt động"
   },
@@ -53,6 +57,8 @@
     "deleteUser": "Xóa Người dùng"
   },
   "common": {
+    "loading": "Đang tải người dùng...",
+    "noDataAvailable": "Không có dữ liệu",
     "failedToFetchUsers": "Không thể tải danh sách người dùng",
     "failedToFetchUserDetails": "Không thể tải chi tiết người dùng",
     "featureComingSoon": "Tính năng sắp ra mắt"
@@ -100,9 +106,10 @@
     "errorLoadingData": "Lỗi Tải Dữ liệu"
   },
   "statuses": {
+    "pending": "Đang chờ xử lý",
     "active": "Hoạt động",
-    "inactive": "Không hoạt động",
-    "suspended": "Bị Tạm dừng"
+    "suspended": "Bị Tạm dừng",
+    "deleted": "Đã xóa"
   },
   "loginStatus": {
     "successful": "Thành công",
@@ -111,12 +118,14 @@
     "failedAttempt": "Thất bại"
   },
   "roles": {
-    "administrator": "Quản trị viên",
-    "manager": "Quản lý",
-    "user": "Người dùng",
-    "admin": "Admin",
-    "editor": "Biên tập viên",
-    "viewer": "Người xem"
+    "admin": "Quản trị viên",
+    "headhunter": "Nhà tuyển dụng",
+    "collaborator": "Cộng tác viên",
+    "candidate": "Ứng viên",
+    "ADMIN": "Quản trị viên",
+    "HEADHUNTER": "Nhà tuyển dụng",
+    "COLLABORATOR": "Cộng tác viên",
+    "CANDIDATE": "Ứng viên"
   },
   "confirmations": {
     "lockAccount": "Bạn có chắc chắn muốn khóa tài khoản này không?",
@@ -145,6 +154,10 @@
     "userInfo": "Người dùng",
     "reasonLabel": "Lý do Khóa",
     "selectReasonPlaceholder": "Chọn lý do khóa",
+    "reasonSuspiciousActivity": "Hoạt động Đáng ngờ",
+    "reasonPolicyViolation": "Vi phạm Chính sách",
+    "reasonAccountCompromise": "Tài khoản Bị xâm phạm",
+    "reasonOther": "Khác",
     "otherReasonTitle": "Nêu Chi tiết Lý do Khóa",
     "otherReasonDesc": "Vui lòng cung cấp lý do chi tiết để khóa tài khoản này.",
     "otherReasonPlaceholder": "Nhập lý do cụ thể để khóa tài khoản...",
@@ -346,4 +359,3 @@
     }
   }
 }
-

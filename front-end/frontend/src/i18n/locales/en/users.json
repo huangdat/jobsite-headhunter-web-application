@@ -53,6 +53,8 @@
     "deleteUser": "Delete User"
   },
   "common": {
+    "loading": "Loading users...",
+    "noDataAvailable": "No data available",
     "failedToFetchUsers": "Failed to fetch users",
     "failedToFetchUserDetails": "Failed to fetch user details",
     "featureComingSoon": "Feature coming soon"
@@ -101,9 +103,14 @@
     "failedToFetchUserDetails": "Failed to fetch user details"
   },
   "statuses": {
+    "PENDING": "Pending",
+    "ACTIVE": "Active",
+    "SUSPENDED": "Suspended",
+    "DELETED": "Deleted",
+    "pending": "Pending",
     "active": "Active",
-    "inactive": "Inactive",
-    "suspended": "Suspended"
+    "suspended": "Suspended",
+    "deleted": "Deleted"
   },
   "loginStatus": {
     "successful": "Successful",
@@ -113,12 +120,14 @@
     "failedLabel": "Failed"
   },
   "roles": {
-    "administrator": "Administrator",
-    "manager": "Manager",
-    "user": "User",
-    "admin": "Admin",
-    "editor": "Editor",
-    "viewer": "Viewer"
+    "admin": "Administrator",
+    "headhunter": "Head Hunter",
+    "collaborator": "Collaborator",
+    "candidate": "Candidate",
+    "ADMIN": "Administrator",
+    "HEADHUNTER": "Head Hunter",
+    "COLLABORATOR": "Collaborator",
+    "CANDIDATE": "Candidate"
   },
   "confirmations": {
     "lockAccount": "Are you sure you want to lock this account?",
@@ -147,6 +156,10 @@
     "userInfo": "User",
     "reasonLabel": "Lock Reason",
     "selectReasonPlaceholder": "Select a lock reason",
+    "reasonSuspiciousActivity": "Suspicious Activity",
+    "reasonPolicyViolation": "Policy Violation",
+    "reasonAccountCompromise": "Account Compromise",
+    "reasonOther": "Other",
     "otherReasonTitle": "Specify Lock Reason",
     "otherReasonDesc": "Please provide a detailed reason for locking this account.",
     "otherReasonPlaceholder": "Enter the specific reason for locking this account...",
@@ -309,6 +322,11 @@
     "statusDescription": "Group users by their account status",
     "companyDescription": "Group users by their company affiliation",
     "createdMonthDescription": "Group users by their registration month",
+    "quickNavigation": "Quick Navigation",
+    "userManagementTitle": "User Management",
+    "userManagementDesc": "Manage all users and permissions",
+    "classificationTitle": "Classification",
+    "classificationDesc": "View user distribution and stats",
     "roles": {
       "admin": "Admin",
       "headhunter": "Headhunter",
@@ -348,4 +366,3 @@
     }
   }
 }
-

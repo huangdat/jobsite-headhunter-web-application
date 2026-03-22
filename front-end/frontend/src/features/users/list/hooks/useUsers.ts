@@ -46,7 +46,6 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
   const [filters, setFilters] = useState<{
     role?: string;
     status?: string;
-    company?: string;
   }>({});
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 

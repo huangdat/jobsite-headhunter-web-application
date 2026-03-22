@@ -52,7 +52,7 @@ export const UserListTable: React.FC<UserListTableProps> = ({
   };
 
   const handleLockClick = (userId: string, status: UserStatus) => {
-    if (status === "LOCKED") {
+    if (status === "SUSPENDED") {
       onUnlockUser?.(userId);
     } else {
       onLockUser?.(userId);
@@ -120,12 +120,12 @@ export const UserListTable: React.FC<UserListTableProps> = ({
               className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group"
             >
               <td
-                className={`px-6 py-4 ${user.status === "LOCKED" ? "opacity-60" : ""}`}
+                className={`px-6 py-4 ${user.status === "SUSPENDED" ? "opacity-60" : ""}`}
               >
                 <div className="flex items-center gap-3">
                   <div
                     className={`size-10 rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-primary/20 transition-all ${
-                      user.status === "LOCKED"
+                      user.status === "SUSPENDED"
                         ? "bg-slate-200 grayscale"
                         : "bg-primary/10"
                     }`}
@@ -164,7 +164,7 @@ export const UserListTable: React.FC<UserListTableProps> = ({
                       user.status === "ACTIVE" ? "bg-primary" : "bg-slate-400"
                     }`}
                   />
-                  {user.status === "ACTIVE" ? "Active" : "Locked"}
+                  {t(`statuses.${user.status.toLowerCase()}`)}
                 </div>
               </td>
               <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
@@ -184,18 +184,18 @@ export const UserListTable: React.FC<UserListTableProps> = ({
                   <button
                     onClick={() => handleLockClick(user.id, user.status)}
                     className={`p-1.5 rounded-lg transition-all ${
-                      user.status === "LOCKED"
+                      user.status === "SUSPENDED"
                         ? "text-amber-500 bg-amber-50"
                         : "text-slate-400 hover:text-amber-500 hover:bg-amber-50"
                     }`}
                     title={
-                      user.status === "LOCKED"
+                      user.status === "SUSPENDED"
                         ? t("actions.unlockAccount")
                         : t("actions.lockAccount")
                     }
                   >
                     <span className="material-symbols-outlined text-lg">
-                      {user.status === "LOCKED" ? "lock_open" : "lock"}
+                      {user.status === "SUSPENDED" ? "lock_open" : "lock"}
                     </span>
                   </button>
                   <button

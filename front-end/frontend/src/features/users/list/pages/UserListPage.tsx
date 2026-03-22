@@ -95,13 +95,12 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
   const activeFilters = [
     filters.role && { type: "role" as const, value: filters.role },
     filters.status && { type: "status" as const, value: filters.status },
-    filters.company && { type: "company" as const, value: filters.company },
   ].filter(Boolean) as Array<{
-    type: "role" | "status" | "company";
+    type: "role" | "status";
     value: string;
   }>;
 
-  const handleRemoveFilter = (filterType: "role" | "status" | "company") => {
+  const handleRemoveFilter = (filterType: "role" | "status") => {
     setFilters({ ...filters, [filterType]: undefined });
   };
 

@@ -27,7 +27,7 @@ interface User {
   phone: string;
   role: "Administrator" | "User" | "Manager";
   username: string;
-  status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+  status: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
   joinedDate: string;
   lastLogin: string;
   company?: string;

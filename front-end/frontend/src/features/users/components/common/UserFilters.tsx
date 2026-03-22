@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useUsersTranslation } from "@/shared/hooks";
 import {
   USERS_LIST_ROLE_VALUES,
-  USERS_LIST_COMPANY_VALUES,
   USERS_LIST_STATUS_VALUES,
 } from "../../list/constants";
 
@@ -10,7 +9,6 @@ interface UserFiltersProps {
   filters: {
     role?: string;
     status?: string;
-    company?: string;
   };
   onApply: (filters: any) => void;
   onClear: () => void;
@@ -83,27 +81,6 @@ export const UserFilters: React.FC<UserFiltersProps> = ({
           {USERS_LIST_STATUS_VALUES.map((status) => (
             <option key={status} value={status}>
               {t(`statuses.${status.toLowerCase()}`)}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Company Filter */}
-      <div>
-        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-          {t("filters.filterCompany")}
-        </label>
-        <select
-          value={localFilters.company || ""}
-          title={t("filters.filterCompany")}
-          aria-label={t("filters.filterCompany")}
-          onChange={(e) => handleChange("company", e.target.value)}
-          className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary outline-none"
-        >
-          <option value="">{t("filters.filterAllCompanies")}</option>
-          {USERS_LIST_COMPANY_VALUES.map((company) => (
-            <option key={company} value={company}>
-              {company}
             </option>
           ))}
         </select>

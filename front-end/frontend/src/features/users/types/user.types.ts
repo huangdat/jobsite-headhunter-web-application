@@ -7,9 +7,11 @@ export interface LoginHistory {
   status: "SUCCESS" | "FAILED";
 }
 
-export type UserRole = "ADMIN" | "RECRUITER" | "CANDIDATE";
+// User roles - MUST match backend Role enum
+export type UserRole = "ADMIN" | "HEADHUNTER" | "COLLABORATOR" | "CANDIDATE";
 
-export type UserStatus = "ACTIVE" | "LOCKED";
+// Account status - MUST match backend AccountStatus enum
+export type UserStatus = "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
 
 export interface UserDetail {
   id: string;

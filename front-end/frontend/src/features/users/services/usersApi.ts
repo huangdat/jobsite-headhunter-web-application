@@ -118,6 +118,7 @@ export const usersApi = {
     keyword?: string;
     role?: string;
     status?: string;
+    company?: string;
     sort?: string;
   }): Promise<PagedResponse<UserDetail>> => {
     const res = await apiClient.get<any>(API_ENDPOINTS.USERS.SEARCH, {

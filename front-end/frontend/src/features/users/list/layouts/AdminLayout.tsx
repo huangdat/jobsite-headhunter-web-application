@@ -23,12 +23,17 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   /**
    * Check if a route is currently active
+   * Prevents parent routes from matching child routes
    */
   const isRouteActive = (route: string): boolean => {
-    return (
-      window.location.pathname === route ||
-      (route === "/users" && window.location.pathname.startsWith("/users"))
-    );
+    const currentPath = window.location.pathname;
+
+    // Exact match for all routes
+    if (currentPath === route) {
+      return true;
+    }
+
+    return false;
   };
 
   return (

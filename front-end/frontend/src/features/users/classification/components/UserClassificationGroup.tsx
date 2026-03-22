@@ -117,10 +117,12 @@ export const UserClassificationGroup: React.FC<
               </span>
             </div>
             <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
+              {/* eslint-disable-next-line */}
               <div
                 className="bg-primary h-full transition-all"
                 style={{ width: `${group.statistics.activePercentage}%` }}
               />
+              {/* eslint-disable-next-line */}
               <div
                 className="bg-slate-300 dark:bg-slate-600 h-full"
                 style={{ width: `${100 - group.statistics.activePercentage}%` }}
@@ -187,9 +189,7 @@ export const UserClassificationGroup: React.FC<
                       <span className="material-symbols-outlined text-sm">
                         {user.status === "ACTIVE" ? "check_circle" : "cancel"}
                       </span>
-                      {user.status === "ACTIVE"
-                        ? t("classification.active")
-                        : t("classification.inactive")}
+                      {t(`statuses.${user.status.toLowerCase()}`)}
                     </span>
                   </div>
                 </div>

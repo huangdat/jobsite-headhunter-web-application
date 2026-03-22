@@ -9,7 +9,7 @@ interface DangerZoneSectionProps {
   onHardDelete: () => void;
   isOtherAdmin: boolean;
   canLock?: boolean;
-  userStatus?: "ACTIVE" | "INACTIVE" | "SUSPENDED" | "LOCKED";
+  userStatus?: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
 }
 
 const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
@@ -22,7 +22,7 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
   userStatus,
 }) => {
   const { t } = useUsersTranslation();
-  const isUserLocked = userStatus === "SUSPENDED" || userStatus === "LOCKED";
+  const isUserLocked = userStatus === "SUSPENDED" || userStatus === "DELETED";
   const getButtonClass = (disabled: boolean, isDangerous: boolean = false) => {
     if (disabled) {
       return "px-4 py-3 rounded-lg font-medium opacity-50 cursor-not-allowed bg-gray-200 text-gray-500 flex items-center gap-2 justify-center w-full";
