@@ -61,3 +61,18 @@ export const useHomeTranslation = () => {
     currentLanguage,
   };
 };
+
+/**
+ * Hook for candidate feature translations
+ * Usage: const { t } = useCandidateTranslation();
+ */
+export const useCandidateTranslation = () => {
+  const { t, i18n, changeLanguage, currentLanguage } = useAppTranslation();
+
+  return {
+    t: (key: string) => t(`candidate.${key}`),
+    i18n,
+    changeLanguage,
+    currentLanguage,
+  };
+};

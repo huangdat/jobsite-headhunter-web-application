@@ -1,0 +1,77 @@
+{
+  "profile": {
+    "page": {
+      "eyebrow": "MY PROFILE",
+      "title": "Professional Identity",
+      "subtitleDefault": "Manage your executive presence and candidate market positioning.",
+      "subtitleSaving": "Saving your profile...",
+      "subtitleSuccess": "Your profile is up to date."
+    },
+    "alerts": {
+      "saveErrorTitle": "Action Required: Profile Validation Errors",
+      "validationErrorTitle": "Please fix highlighted fields before saving.",
+      "saveSuccessTitle": "Profile updated successfully.",
+      "saveSuccessBody": "All changes to your professional identity have been synced."
+    },
+    "actions": {
+      "discardChanges": "Discard Changes",
+      "saveChanges": "Save Changes",
+      "saving": "Saving..."
+    },
+    "sidebar": {
+      "strengthTitle": "Profile Strength",
+      "strengthHint": "Keep your title, salary range, and bio complete to maximize recruiter visibility.",
+      "tipsTitle": "Profile Tips",
+      "tipOne": "Add measurable impact in your bio.",
+      "tipTwo": "Keep salary expectations market-aligned.",
+      "tipThree": "Complete CV and portfolio links in next step.",
+      "insightEyebrow": "Data Insight",
+      "insightBody": "Profiles with complete professional identity details receive significantly more recruiter interactions.",
+      "insightAlt": "Profile data insight"
+    },
+    "form": {
+      "sectionTitle": "Professional Identity",
+      "sectionSubtitle": "Shape how hiring teams evaluate your profile.",
+      "openForWork": "Open for work",
+      "fullName": "Legal Name",
+      "jobTitle": "Job Title",
+      "currentStatus": "Current Status",
+      "currentStatusAria": "Current Status",
+      "yearsOfExperience": "Years of Experience",
+      "city": "City",
+      "salaryMin": "Salary Min (USD)",
+      "salaryMax": "Salary Max (USD)",
+      "professionalBio": "Professional Bio",
+      "currentTitlePlaceholder": "e.g. Senior Technical Architect",
+      "cityPlaceholder": "Ho Chi Minh City",
+      "bioPlaceholder": "Summarize your professional impact and specialization."
+    },
+    "statuses": {
+      "ACTIVELY_INTERVIEWING": "Actively Interviewing",
+      "OPEN_FOR_WORK": "Open for Work",
+      "PASSIVELY_LOOKING": "Passively Looking",
+      "NOT_LOOKING": "Not Looking"
+    },
+    "validation": {
+      "currentTitleRequired": "Job title is required.",
+      "currentTitleMax": "Job title must be at most {{max}} characters.",
+      "yearsOfExperienceMin": "Years of experience must be 0 or greater.",
+      "yearsOfExperienceMax": "Years of experience must be {{max}} or below.",
+      "salaryMinNegative": "Salary Min cannot be negative.",
+      "salaryMinTooHigh": "Salary Min is too high.",
+      "salaryMaxNegative": "Salary Max cannot be negative.",
+      "salaryMaxTooHigh": "Salary Max is too high.",
+      "salaryMaxInvalidRange": "Salary Max must be greater than or equal to Salary Min.",
+      "bioMax": "Professional bio cannot exceed {{max}} characters.",
+      "cityMax": "City cannot exceed {{max}} characters."
+    },
+    "errors": {
+      "loadFailed": "Failed to load profile. Please try again.",
+      "saveFailed": "Unable to save profile changes. Please try again."
+    },
+    "fallback": {
+      "fullName": "Candidate",
+      "currentTitle": "Senior Technical Architect"
+    }
+  }
+}
