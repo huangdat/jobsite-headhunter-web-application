@@ -60,8 +60,11 @@ export function JobManagePage() {
       toast.success("Job closed.");
       await load();
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to close job.");
+      console.error("Failed to close job:", err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const e: any = err;
+      const msg = e?.response?.data?.message || e?.message;
+      toast.error(msg || "Failed to close job.");
     } finally {
       setProcessingId(null);
     }
@@ -93,23 +96,29 @@ export function JobManagePage() {
       setDialogJob(null);
       await load();
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to open job.");
+      console.error("Failed to open job:", err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const e: any = err;
+      const msg = e?.response?.data?.message || e?.message;
+      toast.error(msg || "Failed to open job.");
     } finally {
       setProcessingId(null);
     }
   };
 
   const handleHide = async (id: number) => {
-    if (!confirm("Are you sure you want to hide this job?")) return;
+    if (!confirm("Are you sure you want to toggle visibility for this job?")) return;
     setProcessingId(id);
     try {
       await deleteJobSoft(id);
       toast.success("Job visibility toggled.");
       await load();
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to change visibility.");
+      console.error("Failed to change visibility:", err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const e: any = err;
+      const msg = e?.response?.data?.message || e?.message;
+      toast.error(msg || "Failed to change visibility.");
     } finally {
       setProcessingId(null);
     }
@@ -151,7 +160,14 @@ export function JobManagePage() {
                         </Button>
                       )}
                     </div>
-                    <Button size="sm" variant="destructive" onClick={() => handleHide(job.id)} disabled={processingId === job.id}>Hide</Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => handleHide(job.id)}
+                      disabled={processingId === job.id}
+                    >
+                      {job.visible === false ? (processingId === job.id ? 'Updating...' : 'Unhide') : (processingId === job.id ? 'Updating...' : 'Hide')}
+                    </Button>
                   </>
                 )}
               </div>

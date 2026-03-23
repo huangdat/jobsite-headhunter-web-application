@@ -30,6 +30,7 @@ export interface JobSummary {
   description: string;
   deadline: string | null;
   status: JobStatus;
+  visible?: boolean;
   city: string | null;
   createdAt: string;
   headhunterId?: string;
