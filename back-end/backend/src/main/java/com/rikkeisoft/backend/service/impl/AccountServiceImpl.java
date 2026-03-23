@@ -58,6 +58,7 @@ public class AccountServiceImpl implements AccountService {
     BusinessProfileRepo businessProfileRepo;
     CollaboratorProfileRepo collaboratorProfileRepo;
     CandidateProfileRepo candidateProfileRepo;
+    JobRepo jobRepo;
     CandidateCvRepo candidateCvRepo;
 
     @Override
@@ -477,5 +478,9 @@ public class AccountServiceImpl implements AccountService {
 
         return emailExists || usernameExists;
     }
-
+    @Override
+    public Account getCurrentAccount() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return accountRepo.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+    }
 }

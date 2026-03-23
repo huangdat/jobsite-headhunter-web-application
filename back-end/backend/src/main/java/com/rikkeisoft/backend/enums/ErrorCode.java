@@ -123,6 +123,7 @@ public enum ErrorCode {
     APPLICATION_JOB_ID_REQUIRED(HttpStatus.BAD_REQUEST, "error.application_job_id_required"),
     APPLICATION_STATUS_REQUIRED(HttpStatus.BAD_REQUEST, "error.application_status_required"),
     APPLICATION_CV_REQUIRED(HttpStatus.BAD_REQUEST, "error.application.cv.required"),
+    INVALID_STATUS_TRANSITION(HttpStatus.BAD_REQUEST, "Invalid application status transition"),
 
     // Generic file extension validation (used by @ValidFileExtension)
     FILE_EXTENSION_INVALID(HttpStatus.BAD_REQUEST, "error.file_extension_invalid"),
