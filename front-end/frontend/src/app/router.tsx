@@ -20,6 +20,7 @@ import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 import { AdminOnlyRoute } from "@/features/auth/components/AdminOnlyRoute";
 import { UserDetailPage } from "@/features/users/detail";
 import { ProfileEditPage } from "@/features/candidate/profile/pages/ProfileEditPage";
+import { BusinessProfilePage } from "@/features/headhunter/business/pages";
 
 export function AppRouter() {
   return (
@@ -95,6 +96,14 @@ export function AppRouter() {
         element={
           <ProtectedRoute>
             <ProfileEditPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/business"
+        element={
+          <ProtectedRoute>
+            <BusinessProfilePage />
           </ProtectedRoute>
         }
       />
