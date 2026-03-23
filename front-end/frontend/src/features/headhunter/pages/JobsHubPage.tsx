@@ -18,6 +18,7 @@ export function JobsHubPage() {
               variant={tab === "list" ? "primary" : "outline"}
               onClick={() => setTab("list")}
               aria-pressed={tab === "list"}
+              className="w-auto whitespace-nowrap"
             >
               Danh sách
             </Button>
@@ -26,6 +27,7 @@ export function JobsHubPage() {
               variant={tab === "create" ? "primary" : "outline"}
               onClick={() => setTab("create")}
               aria-pressed={tab === "create"}
+              className="w-auto whitespace-nowrap"
             >
               Đăng tin mới
             </Button>
@@ -34,6 +36,7 @@ export function JobsHubPage() {
               variant={tab === "applicants" ? "primary" : "outline"}
               onClick={() => setTab("applicants")}
               aria-pressed={tab === "applicants"}
+              className="w-auto whitespace-nowrap"
             >
               Ứng viên
             </Button>
