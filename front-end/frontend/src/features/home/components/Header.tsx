@@ -21,12 +21,16 @@ export function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const roleBadgeClass = user?.role?.toLowerCase() === "candidate"
+  const normalizedRole = user?.role ? user.role.replace(/^roles\./i, "").toLowerCase() : "";
+
+  const roleBadgeClass = normalizedRole === "candidate"
     ? "bg-sky-100 text-sky-700"
-    : user?.role?.toLowerCase() === "headhunter"
+    : normalizedRole === "headhunter"
     ? "bg-purple-100 text-purple-700"
-    : user?.role?.toLowerCase() === "collaborator"
+    : normalizedRole === "collaborator"
     ? "bg-green-100 text-green-700"
+    : normalizedRole === "admin"
+    ? "bg-red-50 text-red-700"
     : "";
 
   useEffect(() => {
@@ -105,14 +109,9 @@ export function Header() {
                         {user?.username}
                       </p>
                       <span
-                        className={`inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium
-                ${user?.role === "CANDIDATE" ? "bg-sky-100 text-sky-700" : ""}
-                ${user?.role === "HEADHUNTER" ? "bg-purple-100 text-purple-700" : ""}
-                ${user?.role === "COLLABORATOR" ? "bg-emerald-50 text-emerald-700" : ""}
-                ${user?.role === "ADMIN" ? "bg-red-50 text-red-700" : ""}
-              `}
+                        className={`inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium ${roleBadgeClass}`}
                       >
-                        {user?.role ? t(`roles.${user.role}`) : ""}
+                        {user?.role ? t(`roles.${normalizedRole}`) : ""}
                       </span>
                     </div>
                   </div>
