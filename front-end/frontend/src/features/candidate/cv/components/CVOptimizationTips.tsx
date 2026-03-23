@@ -33,7 +33,7 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
 
   if (isLoading) {
     return (
-      <div className="bg-surface-container-low rounded-xl p-6 space-y-4">
+      <div className="bg-slate-50 rounded-xl p-6 space-y-4">
         <div className="h-5 bg-slate-300 dark:bg-slate-700 rounded w-40 animate-pulse" />
         <div className="space-y-4">
           {[1, 2].map((i) => (
@@ -49,13 +49,13 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
   }
 
   return (
-    <div className="bg-surface-container-low rounded-xl p-6 space-y-6">
+    <div className="bg-slate-50 rounded-xl p-6 space-y-6">
       {/* Title */}
       <div className="flex items-center gap-2">
-        <span className="material-symbols-outlined text-success text-3xl fill">
+        <span className="material-symbols-outlined text-emerald-600 text-3xl fill">
           lightbulb
         </span>
-        <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+        <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
           {t('cv.management.tips.title')}
         </h3>
       </div>
@@ -65,33 +65,33 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
         {displayTips.map((tip) => (
           <div
             key={tip.id}
-            className="p-4 rounded-lg bg-surface hover:bg-surface-variant transition-colors"
+            className="p-4 rounded-lg bg-white hover:bg-white-variant transition-colors"
           >
             {/* Tip Header */}
             <div className="flex items-start gap-3 mb-2">
               {tip.icon && (
-                <span className="material-symbols-outlined text-primary text-lg flex-0 mt-0.5">
+                <span className="material-symbols-outlined text-emerald-600 text-lg flex-0 mt-0.5">
                   {tip.icon}
                 </span>
               )}
-              <h4 className="text-sm font-bold text-on-surface">
+              <h4 className="text-sm font-bold text-slate-900">
                 {t(tip.title)}
               </h4>
             </div>
 
             {/* Tip Description */}
-            <p className="text-xs text-on-surface-variant leading-relaxed ml-7">
+            <p className="text-xs text-slate-600 leading-relaxed ml-7">
               {t(tip.description)}
             </p>
 
             {/* Completed Badge */}
             {tip.completed && (
               <div className="mt-3 ml-7">
-                <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded px-2 py-1">
-                  <span className="material-symbols-outlined text-success text-sm fill">
+                <div className="inline-flex items-center gap-2 bg-primary/10 border border-emerald-300/20 rounded px-2 py-1">
+                  <span className="material-symbols-outlined text-emerald-600 text-sm fill">
                     check_circle
                   </span>
-                  <span className="text-xs font-semibold text-primary">
+                  <span className="text-xs font-semibold text-emerald-600">
                     Completed
                   </span>
                 </div>
@@ -104,7 +104,7 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
       {/* Footer CTA */}
       {displayTips.length > 0 && (
         <div className="pt-4 border-t border-surface-variant">
-          <p className="text-xs text-on-surface-variant text-center">
+          <p className="text-xs text-slate-600 text-center">
             Implement these tips to improve your CV match rate
           </p>
         </div>
@@ -114,3 +114,4 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
 };
 
 export default CVOptimizationTips;
+

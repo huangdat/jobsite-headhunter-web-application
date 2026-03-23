@@ -13,11 +13,11 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
   return (
     <div className="space-y-6">
       {/* Main Empty State Card */}
-      <div className="bg-surface-container-low border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-12 text-center space-y-6">
+      <div className="bg-slate-50 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-12 text-center space-y-6">
         {/* Icon */}
         <div className="flex justify-center mb-4">
           <div className="w-20 h-20 bg-primary-container rounded-2xl flex items-center justify-center">
-            <span className="material-symbols-outlined text-primary text-4xl fill">
+            <span className="material-symbols-outlined text-emerald-600 text-4xl fill">
               description
             </span>
           </div>
@@ -25,10 +25,10 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 
         {/* Headline */}
         <div className="space-y-2">
-          <h2 className="text-2xl font-headline font-bold text-on-surface">
+          <h2 className="text-2xl font-headline font-bold text-slate-900">
             {t("cv.management.empty.headline")}
           </h2>
-          <p className="text-sm text-on-surface-variant max-w-md mx-auto leading-relaxed">
+          <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
             {t("cv.management.empty.description")}
           </p>
         </div>
@@ -43,7 +43,7 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
         </button>
 
         {/* Supported Formats Info */}
-        <p className="text-xs text-on-surface-variant mt-6">
+        <p className="text-xs text-slate-600 mt-6">
           {t("cv.management.empty.supported")}
         </p>
       </div>
@@ -51,48 +51,48 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
       {/* Bottom Info Section - 2 Columns */}
       <div className="grid grid-cols-2 gap-6">
         {/* Privacy Control */}
-        <div className="bg-surface-container-low rounded-xl p-6 space-y-4">
+        <div className="bg-slate-50 rounded-xl p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-lg fill">
+            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
               security
             </span>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
               {t("cv.management.bestPractices.privacyTitle")}
             </h3>
           </div>
 
-          <p className="text-sm text-on-surface-variant leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             Take full command of your visibility. Choose who can view your
             credentials: keep them private, open to all verified recruiters, or
             only visible to targeted executive firms.
           </p>
 
-          <ul className="space-y-2 text-xs text-on-surface-variant">
+          <ul className="space-y-2 text-xs text-slate-600">
             <li className="flex gap-2">
-              <span className="text-primary shrink-0">→</span>
+              <span className="text-emerald-600 shrink-0">→</span>
               <span>You can set specific companies to "Block List"</span>
             </li>
             <li className="flex gap-2">
-              <span className="text-primary shrink-0">→</span>
+              <span className="text-emerald-600 shrink-0">→</span>
               <span>Control exactly what personal data is shared</span>
             </li>
           </ul>
         </div>
 
         {/* Best Practices */}
-        <div className="bg-surface-container-low rounded-xl p-6 space-y-4">
+        <div className="bg-slate-50 rounded-xl p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-lg fill">
+            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
               verified_user
             </span>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
               {t("cv.management.bestPractices.practicesTitle")}
             </h3>
           </div>
 
-          <ul className="space-y-2 text-xs text-on-surface-variant">
+          <ul className="space-y-2 text-xs text-slate-600">
             <li className="flex gap-2">
-              <span className="text-primary font-bold shrink-0">•</span>
+              <span className="text-emerald-600 font-bold shrink-0">•</span>
               <span>
                 Optimize your impact. Use clean, professional formatting and
                 ensure your executive summary highlights measurable ROI to stand
@@ -100,7 +100,7 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
               </span>
             </li>
             <li className="flex gap-2">
-              <span className="text-primary font-bold shrink-0">•</span>
+              <span className="text-emerald-600 font-bold shrink-0">•</span>
               <span>
                 Focus on the last 10 years of your career path, emphasizing your
                 leadership impact and strategic accomplishments.
@@ -114,3 +114,4 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 };
 
 export default CVEmptyState;
+

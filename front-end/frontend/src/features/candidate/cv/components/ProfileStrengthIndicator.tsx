@@ -19,14 +19,14 @@ export const ProfileStrengthIndicator: React.FC<
   };
 
   const getStrengthTextColor = (percent: number) => {
-    if (percent < 40) return "text-error";
+    if (percent < 40) return "text-red-700";
     if (percent < 70) return "text-yellow-600";
-    return "text-primary";
+    return "text-emerald-600";
   };
 
   if (isLoading) {
     return (
-      <div className="bg-surface-container-low rounded-xl p-6 space-y-4">
+      <div className="bg-slate-50 rounded-xl p-6 space-y-4">
         <div className="h-6 bg-slate-300 dark:bg-slate-700 rounded w-32 animate-pulse" />
         <div className="h-2 bg-slate-300 dark:bg-slate-700 rounded w-full animate-pulse" />
         <div className="space-y-3">
@@ -42,10 +42,10 @@ export const ProfileStrengthIndicator: React.FC<
   }
 
   return (
-    <div className="bg-surface-container-low rounded-xl p-6 space-y-6">
+    <div className="bg-slate-50 rounded-xl p-6 space-y-6">
       {/* Header with Percentage */}
       <div className="flex items-baseline justify-between">
-        <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+        <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
           {t("cv.management.profileStrength.title")}
         </h3>
         <div className="flex items-baseline gap-1">
@@ -54,7 +54,7 @@ export const ProfileStrengthIndicator: React.FC<
           >
             {percentage}
           </span>
-          <span className="text-sm text-on-surface-variant">%</span>
+          <span className="text-sm text-slate-600">%</span>
         </div>
       </div>
 
@@ -73,7 +73,7 @@ export const ProfileStrengthIndicator: React.FC<
         {items.map((item) => (
           <div
             key={item.id}
-            className="flex items-start gap-3 p-3 rounded-lg bg-surface hover:bg-surface-variant transition-colors"
+            className="flex items-start gap-3 p-3 rounded-lg bg-white hover:bg-white-variant transition-colors"
           >
             {/* Status Icon */}
             <div className="flex-0 mt-0.5">
@@ -93,8 +93,8 @@ export const ProfileStrengthIndicator: React.FC<
               <p
                 className={`text-sm ${
                   item.completed
-                    ? "text-on-surface font-medium"
-                    : "text-on-surface-variant"
+                    ? "text-slate-900 font-medium"
+                    : "text-slate-600"
                 }`}
               >
                 {t(item.label)}
@@ -113,7 +113,7 @@ export const ProfileStrengthIndicator: React.FC<
 
       {/* Info Message */}
       {percentage < 100 && (
-        <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 text-xs text-on-surface-variant">
+        <div className="bg-primary/10 border border-emerald-300/20 rounded-lg p-3 text-xs text-slate-600">
           <span className="material-symbols-outlined text-sm align-middle mr-2 fill">
             info
           </span>
@@ -127,3 +127,4 @@ export const ProfileStrengthIndicator: React.FC<
 };
 
 export default ProfileStrengthIndicator;
+
