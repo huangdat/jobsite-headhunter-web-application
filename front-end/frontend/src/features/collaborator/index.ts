@@ -4,4 +4,14 @@
  * Main entry point for collaborator features
  */
 
-export * from "./commission";
+export {
+  CommissionForm,
+  CommissionStats,
+  CommissionBenefits,
+  useCommissionManagement,
+  CommissionProfilePage,
+  commissionApi,
+  type CommissionProfile,
+  type CommissionFormData,
+  type CommissionStatsData,
+} from "./commission";

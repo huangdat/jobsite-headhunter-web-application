@@ -4,8 +4,13 @@
  * Main entry point for commission features
  */
 
-export * from "./components";
-export * from "./hooks";
-export * from "./pages";
-export * from "./services";
-export * from "./types";
+export { CommissionForm, CommissionBenefits } from "./components";
+export { CommissionStats } from "./components"; // Component
+export { useCommissionManagement } from "./hooks";
+export { CommissionProfilePage } from "./pages";
+export { commissionApi } from "./services";
+export type {
+  CommissionProfile,
+  CommissionFormData,
+  CommissionStats as CommissionStatsData, // Type - alias to avoid conflict
+} from "./types";

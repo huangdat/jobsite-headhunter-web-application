@@ -71,7 +71,7 @@ export function CommissionBenefits() {
           >
             <div className="flex items-start gap-4">
               {/* Icon */}
-              <div className="flex-shrink-0 p-3 bg-emerald-50 rounded-lg">
+              <div className="shrink-0 p-3 bg-emerald-50 rounded-lg">
                 <span className="material-symbols-outlined text-emerald-600">
                   {benefit.icon}
                 </span>
@@ -79,8 +79,12 @@ export function CommissionBenefits() {
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-slate-900">{benefit.title}</h3>
-                <p className="text-sm text-slate-600 mt-1">{benefit.description}</p>
+                <h3 className="font-semibold text-slate-900">
+                  {benefit.title}
+                </h3>
+                <p className="text-sm text-slate-600 mt-1">
+                  {benefit.description}
+                </p>
               </div>
             </div>
           </div>
@@ -96,45 +100,61 @@ export function CommissionBenefits() {
         <div className="space-y-4">
           {/* Step 1 */}
           <div className="flex gap-4">
-            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full flex-shrink-0">
+            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full shrink-0">
               <span className="text-sm font-bold text-emerald-600">1</span>
             </div>
             <div>
-              <h4 className="font-medium text-slate-900">{t("howItWorks.step1.title")}</h4>
-              <p className="text-sm text-slate-600 mt-1">{t("howItWorks.step1.description")}</p>
+              <h4 className="font-medium text-slate-900">
+                {t("howItWorks.step1.title")}
+              </h4>
+              <p className="text-sm text-slate-600 mt-1">
+                {t("howItWorks.step1.description")}
+              </p>
             </div>
           </div>
 
           {/* Step 2 */}
           <div className="flex gap-4">
-            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full flex-shrink-0">
+            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full shrink-0">
               <span className="text-sm font-bold text-emerald-600">2</span>
             </div>
             <div>
-              <h4 className="font-medium text-slate-900">{t("howItWorks.step2.title")}</h4>
-              <p className="text-sm text-slate-600 mt-1">{t("howItWorks.step2.description")}</p>
+              <h4 className="font-medium text-slate-900">
+                {t("howItWorks.step2.title")}
+              </h4>
+              <p className="text-sm text-slate-600 mt-1">
+                {t("howItWorks.step2.description")}
+              </p>
             </div>
           </div>
 
           {/* Step 3 */}
           <div className="flex gap-4">
-            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full flex-shrink-0">
+            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full shrink-0">
               <span className="text-sm font-bold text-emerald-600">3</span>
             </div>
             <div>
-              <h4 className="font-medium text-slate-900">{t("howItWorks.step3.title")}</h4>
-              <p className="text-sm text-slate-600 mt-1">{t("howItWorks.step3.description")}</p>
+              <h4 className="font-medium text-slate-900">
+                {t("howItWorks.step3.title")}
+              </h4>
+              <p className="text-sm text-slate-600 mt-1">
+                {t("howItWorks.step3.description")}
+              </p>
             </div>
           </div>
 
           {/* Step 4 */}
           <div className="flex gap-4">
-            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full flex-shrink-0">
+            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full shrink-0">
               <span className="text-sm font-bold text-emerald-600">4</span>
             </div>
             <div>
-              <h4 className="font-medium text-slate-900">{t("howItWorks.step4.title")}</h4>
-              <p className="text-sm text-slate-600 mt-1">{t("howItWorks.step4.description")}</p>
+              <h4 className="font-medium text-slate-900">
+                {t("howItWorks.step4.title")}
+              </h4>
+              <p className="text-sm text-slate-600 mt-1">
+                {t("howItWorks.step4.description")}
+              </p>
             </div>
           </div>
         </div>
@@ -150,7 +170,9 @@ export function CommissionBenefits() {
           {/* FAQ Item 1 */}
           <details className="group border border-slate-200 rounded-lg">
             <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50">
-              <span className="font-medium text-slate-900">{t("faq.item1.question")}</span>
+              <span className="font-medium text-slate-900">
+                {t("faq.item1.question")}
+              </span>
               <span className="material-symbols-outlined group-open:rotate-180 transition-transform">
                 expand_more
               </span>
@@ -163,7 +185,9 @@ export function CommissionBenefits() {
           {/* FAQ Item 2 */}
           <details className="group border border-slate-200 rounded-lg">
             <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50">
-              <span className="font-medium text-slate-900">{t("faq.item2.question")}</span>
+              <span className="font-medium text-slate-900">
+                {t("faq.item2.question")}
+              </span>
               <span className="material-symbols-outlined group-open:rotate-180 transition-transform">
                 expand_more
               </span>
@@ -176,7 +200,9 @@ export function CommissionBenefits() {
           {/* FAQ Item 3 */}
           <details className="group border border-slate-200 rounded-lg">
             <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50">
-              <span className="font-medium text-slate-900">{t("faq.item3.question")}</span>
+              <span className="font-medium text-slate-900">
+                {t("faq.item3.question")}
+              </span>
               <span className="material-symbols-outlined group-open:rotate-180 transition-transform">
                 expand_more
               </span>

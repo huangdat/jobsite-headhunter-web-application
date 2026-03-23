@@ -204,7 +204,7 @@ export function ProfileForm({
             </ul>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-emerald-100 p-6 shadow-sm">
+          <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-linear-to-br from-emerald-50 to-emerald-100 p-6 shadow-sm">
             {/* Decorative Element */}
             <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-emerald-200 opacity-20" />
             <div className="absolute -bottom-4 -left-4 h-24 w-24 rounded-full bg-emerald-300 opacity-10" />

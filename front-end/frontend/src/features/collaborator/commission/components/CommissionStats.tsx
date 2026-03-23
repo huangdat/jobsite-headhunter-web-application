@@ -5,18 +5,23 @@
  */
 
 import { useTranslation } from "react-i18next";
-import type { CommissionStats } from "../../types/commission.types";
+import type { CommissionStats } from "../types/commission.types";
 
 interface CommissionStatsProps {
   stats: CommissionStats | null;
-  onRequestPayout?: (amount: number) => Promise<void>;
+  onRequestPayout?: (
+    amount: number
+  ) => Promise<{ success: boolean; payoutId: string }>;
 }
 
 /**
  * CommissionStats Component
  * Displays commission earnings, referrals, and payout information
  */
-export function CommissionStats({ stats, onRequestPayout }: CommissionStatsProps) {
+export function CommissionStats({
+  stats,
+  onRequestPayout,
+}: CommissionStatsProps) {
   const { t } = useTranslation("commission");
 
   if (!stats) {
@@ -39,10 +44,12 @@ export function CommissionStats({ stats, onRequestPayout }: CommissionStatsProps
   return (
     <div className="space-y-4">
       {/* Total Earnings Card */}
-      <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-lg p-4">
+      <div className="bg-linear-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-lg p-4">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-emerald-700 mb-1">{t("stats.totalEarnings")}</p>
+            <p className="text-sm text-emerald-700 mb-1">
+              {t("stats.totalEarnings")}
+            </p>
             <p className="text-2xl font-bold text-emerald-900">
               {formatCurrency(stats.totalEarnings)}
             </p>
@@ -51,7 +58,9 @@ export function CommissionStats({ stats, onRequestPayout }: CommissionStatsProps
             </p>
           </div>
           <div className="p-3 bg-emerald-200 rounded-lg">
-            <span className="material-symbols-outlined text-emerald-700">trending_up</span>
+            <span className="material-symbols-outlined text-emerald-700">
+              trending_up
+            </span>
           </div>
         </div>
       </div>
@@ -77,7 +86,9 @@ export function CommissionStats({ stats, onRequestPayout }: CommissionStatsProps
             {formatCurrency(stats.paidCommissions)}
           </p>
           <div className="mt-2 flex items-center gap-1 text-xs text-blue-600">
-            <span className="material-symbols-outlined text-sm">check_circle</span>
+            <span className="material-symbols-outlined text-sm">
+              check_circle
+            </span>
             {t("stats.completed")}
           </div>
         </div>
@@ -88,15 +99,23 @@ export function CommissionStats({ stats, onRequestPayout }: CommissionStatsProps
         {/* Total Referrals */}
         <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
           <p className="text-xs text-slate-600 mb-1">{t("stats.referrals")}</p>
-          <p className="text-2xl font-bold text-slate-900">{stats.referralsCount}</p>
-          <p className="text-xs text-slate-600 mt-2">{t("stats.referralsHint")}</p>
+          <p className="text-2xl font-bold text-slate-900">
+            {stats.referralsCount}
+          </p>
+          <p className="text-xs text-slate-600 mt-2">
+            {t("stats.referralsHint")}
+          </p>
         </div>
 
         {/* Active Jobs */}
         <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
           <p className="text-xs text-slate-600 mb-1">{t("stats.activeJobs")}</p>
-          <p className="text-2xl font-bold text-slate-900">{stats.activeJobsReferred}</p>
-          <p className="text-xs text-slate-600 mt-2">{t("stats.ongoingJobs")}</p>
+          <p className="text-2xl font-bold text-slate-900">
+            {stats.activeJobsReferred}
+          </p>
+          <p className="text-xs text-slate-600 mt-2">
+            {t("stats.ongoingJobs")}
+          </p>
         </div>
       </div>
 
@@ -104,10 +123,14 @@ export function CommissionStats({ stats, onRequestPayout }: CommissionStatsProps
       <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-slate-600 mb-1">{t("stats.commissionRate")}</p>
-            <p className="text-2xl font-bold text-slate-900">{stats.commissionRate}%</p>
+            <p className="text-xs text-slate-600 mb-1">
+              {t("stats.commissionRate")}
+            </p>
+            <p className="text-2xl font-bold text-slate-900">
+              {stats.commissionRate}%
+            </p>
           </div>
-          <div className="text-right text-xs text-slate-600">
+          <div className="inline-style-alert text-right text-xs text-slate-600">
             <p>{t("stats.rateInfo")}</p>
           </div>
         </div>
@@ -118,11 +141,15 @@ export function CommissionStats({ stats, onRequestPayout }: CommissionStatsProps
         <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-slate-600 mb-1">{t("stats.conversionRate")}</p>
-              <p className="text-lg font-bold text-slate-900">{stats.conversionRate}%</p>
+              <p className="text-xs text-slate-600 mb-1">
+                {t("stats.conversionRate")}
+              </p>
+              <p className="text-lg font-bold text-slate-900">
+                {stats.conversionRate}%
+              </p>
               <div className="mt-2 w-full bg-slate-200 rounded-full h-2">
                 <div
-                  className="bg-emerald-600 h-2 rounded-full"
+                  className="bg-emerald-600 h-2 rounded-full transition-all"
                   style={{ width: `${Math.min(stats.conversionRate, 100)}%` }}
                 ></div>
               </div>

@@ -51,6 +51,7 @@ export interface CommissionStats {
   pendingCommissions: number;
   paidCommissions: number;
   referralsCount: number;
+  commissionRate: number; // Current commission rate percentage
   conversionRate: number; // percentage
   activeJobsReferred: number;
 }

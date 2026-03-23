@@ -5,7 +5,7 @@
  */
 
 import { useState } from "react";
-import { useCommissionManagement } from "../../hooks/useCommissionManagement";
+import { useCommissionManagement } from "../hooks/useCommissionManagement";
 import { useTranslation } from "react-i18next";
 
 /**
@@ -16,10 +16,19 @@ import { useTranslation } from "react-i18next";
  */
 export function CommissionForm() {
   const { t } = useTranslation("commission");
-  const { formData, saving, error, success, clearError, updateField, saveProfile } =
-    useCommissionManagement();
+  const {
+    formData,
+    saving,
+    error,
+    success,
+    clearError,
+    updateField,
+    saveProfile,
+  } = useCommissionManagement();
 
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
 
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
@@ -30,7 +39,7 @@ export function CommissionForm() {
 
     if (!formData?.phoneNumber?.trim()) {
       errors.phoneNumber = t("form.validation.phoneNumberRequired");
-    } else if (!/^[0-9-+(){}\[\]\\s]+$/.test(formData.phoneNumber)) {
+    } else if (!/^[0-9\-+()\s]+$/.test(formData.phoneNumber)) {
       errors.phoneNumber = t("form.validation.phoneNumberInvalid");
     }
 
@@ -74,7 +83,7 @@ export function CommissionForm() {
       {error && (
         <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
           <div className="flex items-start gap-3">
-            <span className="material-symbols-outlined text-red-600 flex-shrink-0">
+            <span className="material-symbols-outlined text-red-600 shrink-0">
               error
             </span>
             <div>
@@ -100,7 +109,9 @@ export function CommissionForm() {
               check_circle
             </span>
             <div>
-              <p className="font-medium text-emerald-900">{t("success.profileUpdated")}</p>
+              <p className="font-medium text-emerald-900">
+                {t("success.profileUpdated")}
+              </p>
             </div>
           </div>
         </div>
@@ -112,13 +123,18 @@ export function CommissionForm() {
           <h2 className="text-lg font-semibold text-slate-900">
             {t("form.section.personalInfo")}
           </h2>
-          <p className="text-sm text-slate-600 mt-1">{t("form.section.personalInfoDesc")}</p>
+          <p className="text-sm text-slate-600 mt-1">
+            {t("form.section.personalInfoDesc")}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Full Name */}
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-slate-700 mb-2">
+            <label
+              htmlFor="fullName"
+              className="block text-sm font-medium text-slate-700 mb-2"
+            >
               {t("form.label.fullName")} <span className="text-red-500">*</span>
             </label>
             <input
@@ -134,14 +150,20 @@ export function CommissionForm() {
               placeholder={t("form.placeholder.fullName")}
             />
             {validationErrors.fullName && (
-              <p className="text-sm text-red-600 mt-1">{validationErrors.fullName}</p>
+              <p className="text-sm text-red-600 mt-1">
+                {validationErrors.fullName}
+              </p>
             )}
           </div>
 
           {/* Phone Number */}
           <div>
-            <label htmlFor="phoneNumber" className="block text-sm font-medium text-slate-700 mb-2">
-              {t("form.label.phoneNumber")} <span className="text-red-500">*</span>
+            <label
+              htmlFor="phoneNumber"
+              className="block text-sm font-medium text-slate-700 mb-2"
+            >
+              {t("form.label.phoneNumber")}{" "}
+              <span className="text-red-500">*</span>
             </label>
             <input
               id="phoneNumber"
@@ -156,7 +178,9 @@ export function CommissionForm() {
               placeholder={t("form.placeholder.phoneNumber")}
             />
             {validationErrors.phoneNumber && (
-              <p className="text-sm text-red-600 mt-1">{validationErrors.phoneNumber}</p>
+              <p className="text-sm text-red-600 mt-1">
+                {validationErrors.phoneNumber}
+              </p>
             )}
           </div>
         </div>
@@ -168,13 +192,18 @@ export function CommissionForm() {
           <h2 className="text-lg font-semibold text-slate-900">
             {t("form.section.bankingInfo")}
           </h2>
-          <p className="text-sm text-slate-600 mt-1">{t("form.section.bankingInfoDesc")}</p>
+          <p className="text-sm text-slate-600 mt-1">
+            {t("form.section.bankingInfoDesc")}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Bank Name */}
           <div>
-            <label htmlFor="bankName" className="block text-sm font-medium text-slate-700 mb-2">
+            <label
+              htmlFor="bankName"
+              className="block text-sm font-medium text-slate-700 mb-2"
+            >
               {t("form.label.bankName")} <span className="text-red-500">*</span>
             </label>
             <input
@@ -190,14 +219,20 @@ export function CommissionForm() {
               placeholder={t("form.placeholder.bankName")}
             />
             {validationErrors.bankName && (
-              <p className="text-sm text-red-600 mt-1">{validationErrors.bankName}</p>
+              <p className="text-sm text-red-600 mt-1">
+                {validationErrors.bankName}
+              </p>
             )}
           </div>
 
           {/* Account Number */}
           <div>
-            <label htmlFor="accountNumber" className="block text-sm font-medium text-slate-700 mb-2">
-              {t("form.label.accountNumber")} <span className="text-red-500">*</span>
+            <label
+              htmlFor="accountNumber"
+              className="block text-sm font-medium text-slate-700 mb-2"
+            >
+              {t("form.label.accountNumber")}{" "}
+              <span className="text-red-500">*</span>
             </label>
             <input
               id="accountNumber"
@@ -212,14 +247,20 @@ export function CommissionForm() {
               placeholder={t("form.placeholder.accountNumber")}
             />
             {validationErrors.accountNumber && (
-              <p className="text-sm text-red-600 mt-1">{validationErrors.accountNumber}</p>
+              <p className="text-sm text-red-600 mt-1">
+                {validationErrors.accountNumber}
+              </p>
             )}
           </div>
 
           {/* Account Holder Name */}
           <div>
-            <label htmlFor="accountHolderName" className="block text-sm font-medium text-slate-700 mb-2">
-              {t("form.label.accountHolderName")} <span className="text-red-500">*</span>
+            <label
+              htmlFor="accountHolderName"
+              className="block text-sm font-medium text-slate-700 mb-2"
+            >
+              {t("form.label.accountHolderName")}{" "}
+              <span className="text-red-500">*</span>
             </label>
             <input
               id="accountHolderName"
@@ -234,13 +275,18 @@ export function CommissionForm() {
               placeholder={t("form.placeholder.accountHolderName")}
             />
             {validationErrors.accountHolderName && (
-              <p className="text-sm text-red-600 mt-1">{validationErrors.accountHolderName}</p>
+              <p className="text-sm text-red-600 mt-1">
+                {validationErrors.accountHolderName}
+              </p>
             )}
           </div>
 
           {/* Swift Code */}
           <div>
-            <label htmlFor="swiftCode" className="block text-sm font-medium text-slate-700 mb-2">
+            <label
+              htmlFor="swiftCode"
+              className="block text-sm font-medium text-slate-700 mb-2"
+            >
               {t("form.label.swiftCode")}
             </label>
             <input
@@ -251,7 +297,9 @@ export function CommissionForm() {
               className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
               placeholder={t("form.placeholder.swiftCode")}
             />
-            <p className="text-xs text-slate-500 mt-1">{t("form.help.swiftCode")}</p>
+            <p className="text-xs text-slate-500 mt-1">
+              {t("form.help.swiftCode")}
+            </p>
           </div>
         </div>
       </div>
@@ -265,7 +313,9 @@ export function CommissionForm() {
         >
           {saving ? (
             <>
-              <span className="animate-spin material-symbols-outlined">progress_activity</span>
+              <span className="animate-spin material-symbols-outlined">
+                progress_activity
+              </span>
               {t("button.saving")}
             </>
           ) : (
