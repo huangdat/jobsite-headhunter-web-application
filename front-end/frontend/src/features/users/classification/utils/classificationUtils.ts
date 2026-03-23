@@ -1,10 +1,10 @@
-import type { UserDetail } from "../../types/user.types";
+import type { UserDetail } from "@/features/users/types/user.types";
 import type {
   ClassificationGroupData,
   ClassificationStatistics,
   ClassificationOverviewStats,
   ClassificationGroupBy,
-} from "../types/classification.types";
+} from "@/features/users/classification/types/classification.types";
 import { getGroupingConfig } from "./groupingConfig";
 
 /**
@@ -20,7 +20,8 @@ export const calculateGroupStatistics = (
 
   return {
     totalCount,
-    percentage: totalUsersOverall > 0 ? (totalCount / totalUsersOverall) * 100 : 0,
+    percentage:
+      totalUsersOverall > 0 ? (totalCount / totalUsersOverall) * 100 : 0,
     activeCount,
     inactiveCount,
     activePercentage: totalCount > 0 ? (activeCount / totalCount) * 100 : 0,
@@ -77,9 +78,18 @@ export const classifyUsers = (
 export const calculateOverviewStatistics = (
   groups: ClassificationGroupData[]
 ): ClassificationOverviewStats => {
-  const totalUsers = groups.reduce((sum, g) => sum + g.statistics.totalCount, 0);
-  const totalActiveUsers = groups.reduce((sum, g) => sum + g.statistics.activeCount, 0);
-  const totalInactiveUsers = groups.reduce((sum, g) => sum + g.statistics.inactiveCount, 0);
+  const totalUsers = groups.reduce(
+    (sum, g) => sum + g.statistics.totalCount,
+    0
+  );
+  const totalActiveUsers = groups.reduce(
+    (sum, g) => sum + g.statistics.activeCount,
+    0
+  );
+  const totalInactiveUsers = groups.reduce(
+    (sum, g) => sum + g.statistics.inactiveCount,
+    0
+  );
 
   return {
     totalUsers,
@@ -93,7 +103,10 @@ export const calculateOverviewStatistics = (
 /**
  * Format percentage for display
  */
-export const formatPercentage = (value: number, decimals: number = 1): string => {
+export const formatPercentage = (
+  value: number,
+  decimals: number = 1
+): string => {
   return `${value.toFixed(decimals)}%`;
 };
 

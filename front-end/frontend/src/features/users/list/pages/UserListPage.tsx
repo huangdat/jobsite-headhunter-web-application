@@ -6,9 +6,9 @@ import {
   UserListEmpty,
   UserListLoading,
   UserListPagination,
-} from "../components";
-import { UserFilters } from "../../components/common/UserFilters";
-import { useUsers } from "../hooks/useUsers";
+} from "@/features/users/list/components";
+import { UserFilters } from "@/features/users/components/common/UserFilters";
+import { useUsers } from "@/features/users/list/hooks/useUsers";
 
 interface UserListPageProps {
   onAddNewUser?: () => void;
@@ -95,13 +95,12 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
   const activeFilters = [
     filters.role && { type: "role" as const, value: filters.role },
     filters.status && { type: "status" as const, value: filters.status },
-    filters.company && { type: "company" as const, value: filters.company },
   ].filter(Boolean) as Array<{
-    type: "role" | "status" | "company";
+    type: "role" | "status";
     value: string;
   }>;
 
-  const handleRemoveFilter = (filterType: "role" | "status" | "company") => {
+  const handleRemoveFilter = (filterType: "role" | "status") => {
     setFilters({ ...filters, [filterType]: undefined });
   };
 

@@ -9,12 +9,12 @@ import {
   AuthLayout,
   PasswordRequirements,
 } from "@/shared/components";
-import { verifyAndResetPassword } from "../services/authApi";
+import { verifyAndResetPassword } from "@/features/auth/services/authApi";
 import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { toast } from "sonner";
-import type { OtpSendResp } from "../types";
-import { extractApiErrorMessage } from "../utils/apiError";
+import type { OtpSendResp } from "@/features/auth/types";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 import { MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsShieldLock } from "react-icons/bs";

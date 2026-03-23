@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-import { useAuth } from "../context/useAuth";
+import { useAuth } from "@/features/auth/context/useAuth";
 
 /**
  * Route component that restricts access to admin users only.
@@ -21,11 +21,8 @@ export function AdminOnlyRoute({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 
-  // Check if user has admin role
-  const isAdmin =
-    user?.role?.toLowerCase() === "admin" ||
-    user?.role?.toUpperCase() === "SCOPE_ADMIN" ||
-    user?.role?.includes("ADMIN");
+  // Check if user has admin role (backend returns uppercase: 'ADMIN')
+  const isAdmin = user?.role === "ADMIN";
 
   if (!isAdmin) {
     return <Navigate to="/home" replace />;

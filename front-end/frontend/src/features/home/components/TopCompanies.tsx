@@ -20,7 +20,7 @@ export function TopCompanies() {
         setCompanies(data);
       } catch (err) {
         console.error("Failed to fetch companies:", err);
-        setError("Failed to load companies");
+        setError(t("messages.errorLoadCompanies"));
       } finally {
         setLoading(false);
       }
@@ -38,7 +38,7 @@ export function TopCompanies() {
 
         {loading && (
           <div className="text-center py-12">
-            <p className="text-gray-500">
+            <p className="text-slate-600">
               {t("messages.loadingCompanies")}
             </p>
           </div>

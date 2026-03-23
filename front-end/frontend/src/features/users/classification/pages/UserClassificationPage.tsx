@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserClassification } from "../hooks/useUserClassification";
-import { UserClassificationOverview } from "../components/UserClassificationOverview";
+import { useUserClassification } from "@/features/users/classification/hooks/useUserClassification";
+import { UserClassificationOverview } from "@/features/users/classification/components/UserClassificationOverview";
 import { useUsersTranslation } from "@/shared/hooks";
 
 /**

@@ -1,6 +1,6 @@
 import { usersApi } from "@/features/users/services/usersApi";
 import { useState } from "react";
-import { STORAGE_KEYS, AUDIT_LOG_ACTIONS } from "../../../constants";
+import { STORAGE_KEYS, AUDIT_LOG_ACTIONS } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface UnlockUserOptions {
@@ -47,12 +47,8 @@ export const useUnlockUser = () => {
     try {
       const currentUserId = localStorage.getItem(STORAGE_KEYS.USER_ID);
 
-      // Call API to unlock user
-      await usersApi.unlockUser(userId, {
-        reason,
-        sendEmail,
-        requirePasswordChange,
-      });
+      // Call API to unlock user (status = ACTIVE)
+      await usersApi.unlockUser(userId);
 
       // Log audit (AC2)
       const auditLog: UnlockAuditLog = {

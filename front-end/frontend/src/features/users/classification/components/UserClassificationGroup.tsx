@@ -1,7 +1,10 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
-import type { ClassificationGroupData } from "../types/classification.types";
-import { formatPercentage, formatCount } from "../utils/classificationUtils";
+import type { ClassificationGroupData } from "@/features/users/classification/types/classification.types";
+import {
+  formatPercentage,
+  formatCount,
+} from "@/features/users/classification/utils/classificationUtils";
 
 interface UserClassificationGroupProps {
   group: ClassificationGroupData;
@@ -116,11 +119,15 @@ export const UserClassificationGroup: React.FC<
                 {t("classification.inactive")}
               </span>
             </div>
+            {/* Progress/Statistics Bar - Dynamic widths calculated at runtime */}
             <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
+              {/* IMPORTANT: Inline style required - width is dynamic runtime value from activePercentage */}
+              {/* Cannot use CSS/CSS-in-JS because percentage depends on group.statistics.activePercentage */}
               <div
                 className="bg-primary h-full transition-all"
                 style={{ width: `${group.statistics.activePercentage}%` }}
               />
+              {/* IMPORTANT: Inline style required - width is dynamic runtime value (100 - activePercentage) */}
               <div
                 className="bg-slate-300 dark:bg-slate-600 h-full"
                 style={{ width: `${100 - group.statistics.activePercentage}%` }}
@@ -187,9 +194,7 @@ export const UserClassificationGroup: React.FC<
                       <span className="material-symbols-outlined text-sm">
                         {user.status === "ACTIVE" ? "check_circle" : "cancel"}
                       </span>
-                      {user.status === "ACTIVE"
-                        ? t("classification.active")
-                        : t("classification.inactive")}
+                      {t(`statuses.${user.status.toLowerCase()}`)}
                     </span>
                   </div>
                 </div>

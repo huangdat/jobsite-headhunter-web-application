@@ -1,4 +1,4 @@
-import { validateToken, logout } from "../services/authApi";
+import { validateToken, logout } from "@/features/auth/services/authApi";
 
 const ACCESS_TOKEN_KEY = "accessToken";
 const AUTH_USER_KEY = "authUser";

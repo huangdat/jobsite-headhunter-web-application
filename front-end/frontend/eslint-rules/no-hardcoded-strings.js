@@ -36,8 +36,18 @@ const isTranslated = (node) => {
 };
 
 const isWhitelisted = (value) => {
+  // Pattern for Tailwind CSS classes and similar styling string
+  // These contain spaces but are NOT user-facing text
+  const isTailwindOrStyle =
+    /^[a-zA-Z0-9\-\s/:]*$/.test(value) &&
+    (value.includes("-") || value.includes(":") || value.includes("/"));
+
+  if (isTailwindOrStyle) {
+    return true;
+  }
+
   const whitelist = [
-    // HTML attributes
+    // HTML attributes (literal names)
     "href",
     "src",
     "alt",
@@ -46,6 +56,10 @@ const isWhitelisted = (value) => {
     "name",
     "className",
     "id",
+    "title",
+    "viewBox",
+    "d",
+    "strokeDasharray",
     // Common patterns
     ".",
     "-",
@@ -55,6 +69,8 @@ const isWhitelisted = (value) => {
     // Patterns that are clearly not user-facing text
     "^[a-zA-Z0-9/_-]*$", // URLs, paths
     "^[A-Z][a-zA-Z0-9]*$", // Component names
+    "^M[0-9 .,-]+$", // SVG path commands
+    "^[0-9 .,]+$", // Numbers and separators for paths/dimensions
   ];
 
   return whitelist.some((pattern) => {

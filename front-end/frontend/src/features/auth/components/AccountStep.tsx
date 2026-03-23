@@ -5,7 +5,7 @@ import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdOutlineMail, MdLockOutline, MdAccountCircle } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import type { RegisterFormData } from "../types";
+import type { RegisterFormData } from "@/features/auth/types";
 
 interface AccountStepProps {
   form: UseAppFormReturn<RegisterFormData>;
