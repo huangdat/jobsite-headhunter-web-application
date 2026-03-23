@@ -1,0 +1,143 @@
+{
+  "page": {
+    "title": "Commission Profile",
+    "subtitle": "Manage your commission, referrals, and payout settings",
+    "description": "Commission profile for collaborators"
+  },
+  "breadcrumb": {
+    "commission": "Commission Profile"
+  },
+  "section": {
+    "personalInfo": "Personal Information",
+    "personalInfoDesc": "Your personal contact details and account information",
+    "bankingInfo": "Banking Information",
+    "bankingInfoDesc": "Where your commissions will be paid",
+    "earnings": "Your Earnings",
+    "benefits": "Commission Program Benefits",
+    "benefitsDescription": "Unlock the full potential of your referral partnership with us",
+    "howItWorks": "How It Works",
+    "faq": "Frequently Asked Questions"
+  },
+  "form": {
+    "label": {
+      "fullName": "Full Name",
+      "phoneNumber": "Phone Number",
+      "bankName": "Bank Name",
+      "accountNumber": "Account Number",
+      "accountHolderName": "Account Holder Name",
+      "swiftCode": "SWIFT Code (Optional)"
+    },
+    "placeholder": {
+      "fullName": "Enter your full name",
+      "phoneNumber": "+84 123 456 789",
+      "bankName": "e.g., Vietcombank, Techcombank",
+      "accountNumber": "12345678910",
+      "accountHolderName": "John Doe",
+      "swiftCode": "VIETTWVT"
+    },
+    "validation": {
+      "fullNameRequired": "Full name is required",
+      "phoneNumberRequired": "Phone number is required",
+      "phoneNumberInvalid": "Please enter a valid phone number",
+      "bankNameRequired": "Bank name is required",
+      "accountNumberRequired": "Account number is required",
+      "accountHolderNameRequired": "Account holder name is required"
+    },
+    "section": {
+      "personalInfo": "Personal Information",
+      "personalInfoDesc": "Your personal contact details and account information",
+      "bankingInfo": "Banking Information",
+      "bankingInfoDesc": "Where your commissions will be paid"
+    },
+    "help": {
+      "autoSave": "Changes are saved automatically",
+      "swiftCode": "SWIFT code is used for international transfers"
+    }
+  },
+  "button": {
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "dismiss": "Dismiss",
+    "requestPayout": "Request Payout"
+  },
+  "stats": {
+    "totalEarnings": "Total Earnings",
+    "pending": "Pending Commissions",
+    "paid": "Paid Commissions",
+    "referrals": "Total Referrals",
+    "activeJobs": "Active Jobs",
+    "commissionRate": "Commission Rate",
+    "conversionRate": "Conversion Rate",
+    "lifetimeTotal": "Lifetime total",
+    "processingDays": "Pays out in {{days}} business days",
+    "completed": "Successfully paid",
+    "referralsHint": "Successful referrals made",
+    "ongoingJobs": "Jobs still ongoing",
+    "rateInfo": "Your referral commission percentage",
+    "noEarningsYet": "No earnings yet. Start making referrals to earn commissions!"
+  },
+  "benefits": {
+    "quickPayout": {
+      "title": "Quick Payout",
+      "description": "Get paid within 3 business days of successful placement"
+    },
+    "highRate": {
+      "title": "Competitive Commission",
+      "description": "Earn up to 15% commission on each successful referral"
+    },
+    "support": {
+      "title": "Dedicated Support",
+      "description": "24/7 support team to help you succeed"
+    },
+    "transparent": {
+      "title": "Transparent Tracking",
+      "description": "Real-time dashboard to track all your referrals and earnings"
+    },
+    "noLimit": {
+      "title": "Unlimited Earning",
+      "description": "No caps on how much you can earn each month"
+    },
+    "tools": {
+      "title": "Marketing Tools",
+      "description": "Free tools and resources to help you promote and recruit"
+    }
+  },
+  "howItWorks": {
+    "step1": {
+      "title": "Share Your Referral Link",
+      "description": "Get your unique referral link and share it with potential candidates or clients"
+    },
+    "step2": {
+      "title": "Track Applications",
+      "description": "Monitor all applications and placements made through your referral link"
+    },
+    "step3": {
+      "title": "Successful Placement",
+      "description": "When a successful placement is made, you earn the commission immediately"
+    },
+    "step4": {
+      "title": "Request Payout",
+      "description": "Withdraw your earnings anytime to your verified bank account"
+    }
+  },
+  "faq": {
+    "item1": {
+      "question": "How long does it take to receive my commission payment?",
+      "answer": "Commissions are processed and paid within 3-5 business days after the candidate successfully completes their work period. You can request a payout anytime, and we'll process it in our next payout cycle."
+    },
+    "item2": {
+      "question": "What is the minimum amount I need to have to request a payout?",
+      "answer": "There is no minimum payout amount. You can request a payout for any amount greater than 0 VND. However, for bank transfer efficiency, we recommend requesting payouts when you have accumulated at least 500,000 VND."
+    },
+    "item3": {
+      "question": "Can I increase my commission rate?",
+      "answer": "Your commission rate is determined based on your tier and performance. As you make more successful referrals, you may qualify for a higher commission rate. Contact our support team to discuss tier upgrades."
+    }
+  },
+  "success": {
+    "profileUpdated": "Your profile has been updated successfully"
+  },
+  "errors": {
+    "title": "Something went wrong"
+  }
+}

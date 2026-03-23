@@ -1,11 +1,9 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
-import { logout as logoutRequest, validateToken } from "../services/authApi";
+import {
+  logout as logoutRequest,
+  validateToken,
+} from "@/features/auth/services/authApi";
 
 const ACCESS_TOKEN_KEY = "accessToken";
 const AUTH_USER_KEY = "authUser";
@@ -77,7 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
       return refreshAuth();
     },
-    [refreshAuth],
+    [refreshAuth]
   );
 
   const signOut = useCallback(async () => {

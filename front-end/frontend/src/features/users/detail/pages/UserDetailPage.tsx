@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
-import { useUserDetail } from "../hooks/useUserDetail";
-import { userMapper } from "../../utils/userMapper";
-import { useDeleteUser } from "../../actions/delete/hooks";
-import { useLockUser } from "../../actions/lock/hooks/useLockUser";
-import { useUnlockUser } from "../../actions/lock/hooks/useUnlockUser";
-import { ROUTES, REDIRECT_DELAY, TOAST_DURATION } from "../../constants";
+import { useUserDetail } from "@/features/users/detail/hooks/useUserDetail";
+import { userMapper } from "@/features/users/utils/userMapper";
+import { useDeleteUser } from "@/features/users/actions/delete/hooks";
+import { useLockUser } from "@/features/users/actions/lock/hooks/useLockUser";
+import { useUnlockUser } from "@/features/users/actions/lock/hooks/useUnlockUser";
+import {
+  ROUTES,
+  REDIRECT_DELAY,
+  TOAST_DURATION,
+} from "@/features/users/constants";
 import {
   UserHeader,
   BasicInfoCard,
@@ -16,9 +20,9 @@ import {
   DangerZoneCard,
   LoadingSkeletons,
   DeleteConfirmationModal,
-} from "../components";
-import LockUserModal from "../../actions/lock/components/LockUserModal";
-import UnlockUserModal from "../../actions/lock/components/UnlockUserModal";
+} from "@/features/users/detail/components";
+import LockUserModal from "@/features/users/actions/lock/components/LockUserModal";
+import UnlockUserModal from "@/features/users/actions/lock/components/UnlockUserModal";
 
 interface User {
   id: string;
@@ -27,7 +31,7 @@ interface User {
   phone: string;
   role: "Administrator" | "User" | "Manager";
   username: string;
-  status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+  status: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
   joinedDate: string;
   lastLogin: string;
   company?: string;

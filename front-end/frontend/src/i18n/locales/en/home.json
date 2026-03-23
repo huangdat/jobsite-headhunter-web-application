@@ -14,7 +14,11 @@
     "settings": "Settings",
     "logout": "Logout",
     "savedJobs": "Saved Jobs",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "dashboard": "Dashboard",
+    "adminDashboard": "Admin Dashboard",
+    "userManagement": "User Management",
+    "classification": "Classification"
   },
   "hero": {
     "title": "Find Your Next",

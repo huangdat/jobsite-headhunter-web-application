@@ -1,5 +1,5 @@
-import type { UserDetail } from "../../types/user.types";
-import type { GroupingConfig } from "../types/classification.types";
+import type { UserDetail } from "@/features/users/types/user.types";
+import type { GroupingConfig } from "@/features/users/classification/types/classification.types";
 
 /**
  * Grouping configurations for different classification types.

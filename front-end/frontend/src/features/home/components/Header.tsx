@@ -67,7 +67,7 @@ export function Header() {
             <>
               <Link
                 to="/login"
-                className="text-sm font-medium hover:text-lime-800 transition"
+                className="text-sm font-medium hover:text-emerald-600 transition"
               >
                 {t("home.navigation.login")}
               </Link>
@@ -106,21 +106,35 @@ export function Header() {
                       </p>
                       <span
                         className={`inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium
-                ${user?.role === "candidate" ? "bg-sky-100 text-sky-700" : ""}
-                ${user?.role === "headhunter" ? "bg-purple-100 text-purple-700" : ""}
-                ${user?.role === "collaborator" ? "bg-green-100 text-green-700" : ""}
+                ${user?.role === "CANDIDATE" ? "bg-sky-100 text-sky-700" : ""}
+                ${user?.role === "HEADHUNTER" ? "bg-purple-100 text-purple-700" : ""}
+                ${user?.role === "COLLABORATOR" ? "bg-emerald-50 text-emerald-700" : ""}
+                ${user?.role === "ADMIN" ? "bg-red-50 text-red-700" : ""}
               `}
                       >
-                        {user?.role
-                          ? user.role.charAt(0).toUpperCase() +
-                            user.role.slice(1)
-                          : ""}
+                        {user?.role ? t(`roles.${user.role}`) : ""}
                       </span>
                     </div>
                   </div>
 
                   {/* Menu */}
                   <div className="py-1 border-b border-border">
+                    {/* Admin Dashboard - only show for ADMIN role */}
+                    {user?.role === "ADMIN" && (
+                      <>
+                        <button
+                          onClick={() => {
+                            navigate("/users");
+                            setDropdownOpen(false);
+                          }}
+                          className="w-full text-left px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 transition cursor-pointer flex items-center gap-2"
+                        >
+                          <span>👨‍💼</span>
+                          {t("navigation.adminDashboard")}
+                        </button>
+                        <div className="my-1 border-b border-border" />
+                      </>
+                    )}
                     <button
                       onClick={() => {
                         navigate("/profile");

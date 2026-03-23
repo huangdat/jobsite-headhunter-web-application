@@ -3,10 +3,10 @@ import { useUsersTranslation } from "@/shared/hooks";
 import type {
   ClassificationGroupData,
   ClassificationOverviewStats,
-} from "../types/classification.types";
+} from "@/features/users/classification/types/classification.types";
 import { UserClassificationHeader } from "./UserClassificationHeader";
 import { UserClassificationGroup } from "./UserClassificationGroup";
-import type { ClassificationGroupBy } from "../types/classification.types";
+import type { ClassificationGroupBy } from "@/features/users/classification/types/classification.types";
 
 interface UserClassificationOverviewProps {
   groups: ClassificationGroupData[];
@@ -136,6 +136,8 @@ export const UserClassificationOverview: React.FC<
                 ...groups.map((g) => g.statistics.totalCount)
               );
               const percentage = (group.statistics.totalCount / maxCount) * 100;
+              // IMPORTANT: Inline style required - height is dynamic runtime value calculated from statistics
+              // Cannot use CSS/CSS-in-JS because height depends on maxCount and group totalCount
               return (
                 <div
                   key={group.id}

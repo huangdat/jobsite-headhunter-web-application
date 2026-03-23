@@ -9,7 +9,7 @@ import {
   MdAttachMoney,
   MdCheckBox,
 } from "react-icons/md";
-import type { RegisterFormData } from "../types";
+import type { RegisterFormData } from "@/features/auth/types";
 
 interface CandidateDetailsStepProps {
   form: UseAppFormReturn<RegisterFormData>;

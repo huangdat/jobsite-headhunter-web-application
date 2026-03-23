@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
-import { AnimatedCheckbox } from "../components/AnimatedCheckbox";
-import { useLogin } from "../hooks";
+import { AnimatedCheckbox } from "@/features/auth/components/AnimatedCheckbox";
+import { useLogin } from "@/features/auth/hooks";
 import {
   getSocialConfig,
   googleLogin,
   linkedinLogin,
-} from "../services/authApi";
+} from "@/features/auth/services/authApi";
 import { toast } from "sonner";
-import { useAuth } from "../context/useAuth";
-import { extractApiErrorMessage } from "../utils/apiError";
-import type { LoginResult, SocialAuthResponse } from "../types";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
+import type { LoginResult, SocialAuthResponse } from "@/features/auth/types";
 
 import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -284,9 +284,7 @@ export function LoginPage() {
   }, [isAuthenticated, isInitializing, navigate]);
 
   return (
-    <AuthLayout
-      ctaButton={{ to: "/select-role", label: t("pages.signup") }}
-    >
+    <AuthLayout ctaButton={{ to: "/select-role", label: t("pages.signup") }}>
       <div className="w-full max-w-5xl min-h-150 bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">

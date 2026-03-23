@@ -1,23 +1,25 @@
-import React from 'react';
-import { useUsersTranslation } from '@/shared/hooks';
+import React from "react";
+import { useUsersTranslation } from "@/shared/hooks";
 
 interface FilterBadgeProps {
-  filterType: 'role' | 'status' | 'company';
+  filterType: "role" | "status";
   value: string;
   onRemove?: () => void;
 }
 
-export const FilterBadge: React.FC<FilterBadgeProps> = ({ filterType, value, onRemove }) => {
+export const FilterBadge: React.FC<FilterBadgeProps> = ({
+  filterType,
+  value,
+  onRemove,
+}) => {
   const { t } = useUsersTranslation();
 
   const getFilterLabel = () => {
     switch (filterType) {
-      case 'role':
+      case "role":
         return t(`roles.${value.toLowerCase()}`);
-      case 'status':
+      case "status":
         return t(`statuses.${value.toLowerCase()}`);
-      case 'company':
-        return value;
       default:
         return value;
     }
@@ -25,12 +27,10 @@ export const FilterBadge: React.FC<FilterBadgeProps> = ({ filterType, value, onR
 
   const getFilterTypeLabel = () => {
     switch (filterType) {
-      case 'role':
-        return t('filters.filterRole');
-      case 'status':
-        return t('filters.filterStatus');
-      case 'company':
-        return t('filters.filterCompany');
+      case "role":
+        return t("filters.filterRole");
+      case "status":
+        return t("filters.filterStatus");
       default:
         return filterType;
     }

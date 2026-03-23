@@ -1,6 +1,6 @@
-import type { UserDetail } from "../../types/user.types";
+import type { UserDetail } from "@/features/users/types/user.types";
 import { useEffect, useState } from "react";
-import { usersApi } from "../../services/usersApi";
+import { usersApi } from "@/features/users/services/usersApi";
 import { useUsersTranslation } from "@/shared/hooks";
 
 export const useUserDetail = (userId: string) => {
