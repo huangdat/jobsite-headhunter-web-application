@@ -9,6 +9,8 @@ import enNavigation from "./locales/en/navigation.json";
 import enUsers from "./locales/en/users.json";
 import enJobs from "./locales/en/jobs.json";
 import enCandidate from "./locales/en/candidate.json";
+import enBusiness from "./locales/en/business.json";
+import enCommission from "./locales/en/commission.json";
 
 // Import Vietnamese namespaces
 import viCommon from "./locales/vi/common.json";
@@ -18,6 +20,8 @@ import viNavigation from "./locales/vi/navigation.json";
 import viUsers from "./locales/vi/users.json";
 import viJobs from "./locales/vi/jobs.json";
 import viCandidate from "./locales/vi/candidate.json";
+import viBusiness from "./locales/vi/business.json";
+import viCommission from "./locales/vi/commission.json";
 
 const resources = {
   en: {
@@ -29,6 +33,8 @@ const resources = {
       users: enUsers,
       jobs: enJobs,
       candidate: enCandidate,
+      business: enBusiness,
+      commission: enCommission,
     },
   },
   vi: {
@@ -40,6 +46,8 @@ const resources = {
       users: viUsers,
       jobs: viJobs,
       candidate: viCandidate,
+      business: viBusiness,
+      commission: viCommission,
     },
   },
 };
