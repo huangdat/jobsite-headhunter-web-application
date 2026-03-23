@@ -29,8 +29,8 @@ import { CVManagementPage } from "@/features/candidate/cv/pages/CVManagementPage
 // PROF-03: Headhunter Business
 import { BusinessProfilePage } from "@/features/headhunter/business/pages";
 
-// PROF-04: Collaborator Commission (NEW - add when ready)
-// import { CommissionProfilePage } from "@/features/collaborator/commission/pages";
+// PROF-04: Collaborator Commission
+import { CommissionProfilePage } from "@/features/collaborator/commission/pages";
 
 // PROF-05: Admin Verification (add when ready)
 // import { VerificationPage } from "@/features/users/verification/pages";
@@ -159,15 +159,15 @@ export function AppRouter() {
       />
 
       {/* ==================== COLLABORATOR ROUTES ==================== */}
-      {/* PROF-04: Collaborator Commission (NEW - add when ready) */}
-      {/* <Route
+      {/* PROF-04: Collaborator Commission */}
+      <Route
         path="/collaborator/commission"
         element={
           <ProtectedRoute allowedRoles={["COLLABORATOR"]}>
             <CommissionProfilePage />
           </ProtectedRoute>
         }
-      /> */}
+      />
 
       {/* ==================== ADMIN ROUTES ==================== */}
       <Route
