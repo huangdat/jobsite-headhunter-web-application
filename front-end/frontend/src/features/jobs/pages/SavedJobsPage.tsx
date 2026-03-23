@@ -66,7 +66,13 @@ export function SavedJobsPage() {
       setJobs((prev) => prev.filter((job) => job.jobId !== jobId));
       toast.success("Job removed from saved list.");
     } catch {
-      toast.error("Unable to remove job. Please try again.");
+      // Provide more diagnostic info to the user if available
+      // and log the full error for debugging.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const err: any = (arguments && arguments[0]) || null;
+      console.error("Failed to remove saved job:", err);
+      const serverMessage = err?.response?.data?.message || err?.message;
+      toast.error(serverMessage || "Unable to remove job. Please try again.");
     } finally {
       setRemovingId(null);
     }

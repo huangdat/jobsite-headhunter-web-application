@@ -165,19 +165,6 @@ export function JobCreatePage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
-      <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-          HeadHunter control panel
-        </p>
-        <h1 className="mt-3 text-4xl font-semibold leading-tight">
-          Publish a compelling job and attract the right talents.
-        </h1>
-        <p className="mt-4 max-w-3xl text-lg text-emerald-100">
-          Fill in detailed requirements, responsibilities, and benefits so
-          candidates know exactly what to expect.
-        </p>
-      </div>
-
       <form
         className="mt-10 space-y-8 rounded-3xl border border-slate-100 bg-white/80 p-8 shadow-lg dark:border-slate-800 dark:bg-slate-900/70"
         onSubmit={handleSubmit(onSubmit)}
