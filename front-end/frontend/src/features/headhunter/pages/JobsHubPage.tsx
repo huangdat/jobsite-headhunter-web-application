@@ -9,9 +9,9 @@ export function JobsHubPage() {
 
   return (
     <div className="px-4 py-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">Tin tuyển dụng</h2>
-        <div className="flex gap-2">
+      <div className="mb-6 flex items-center justify-between gap-4 flex-wrap">
+        <h2 className="text-2xl font-semibold min-w-0">Tin tuyển dụng</h2>
+        <div className="flex flex-wrap gap-3">
           <div className="flex gap-3">
             <Button
               size="sm"
