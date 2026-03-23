@@ -60,23 +60,43 @@ function Button({
     asChild?: boolean;
     icon?: string | React.ReactNode;
   }) {
-  const Comp = asChild ? Slot.Root : "button";
+  // When asChild=true, Slot requires exactly ONE child element.
+  // We pass children as-is without icon (icon not supported with asChild).
+  if (asChild) {
+    const Comp = Slot.Root;
+    return (
+      <Comp
+        data-slot="button"
+        data-variant={variant}
+        data-size={size}
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+      >
+        {children}
+      </Comp>
+    );
+  }
+
+  // Normal mode: render native button with icon and children
+  const iconNode =
+    icon && typeof icon === "string" ? (
+      <span className="material-symbols-outlined text-xl">{icon}</span>
+    ) : (
+      icon || null
+    );
 
   return (
-    <Comp
-      type={asChild ? undefined : type}
+    <button
+      type={type}
       data-slot="button"
       data-variant={variant}
       data-size={size}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
-      {icon && typeof icon === "string" && (
-        <span className="material-symbols-outlined text-xl">{icon}</span>
-      )}
-      {icon && typeof icon !== "string" && icon}
+      {iconNode}
       {children}
-    </Comp>
+    </button>
   );
 }
 

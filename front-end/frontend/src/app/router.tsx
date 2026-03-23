@@ -17,6 +17,15 @@ import { AdminDashboardPage } from "@/features/users/dashboard/pages";
 import { AdminLayout } from "@/features/users/list/layouts/AdminLayout";
 import { GuestOnlyRoute } from "@/features/auth/components/GuestOnlyRoute";
 import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
+import { JobListPage } from "@/features/jobs/pages/JobListPage";
+import { JobCreatePage } from "@/features/jobs/pages/JobCreatePage";
+import { JobDetailPage } from "@/features/jobs/pages/JobDetailPage";
+import { SavedJobsPage } from "@/features/jobs/pages/SavedJobsPage";
+import { JobEditPage } from "@/features/jobs/pages/JobEditPage";
+import { JobManagePage } from "@/features/jobs/pages/JobManagePage";
+import { ApplicantsPage } from "@/features/headhunter/pages/ApplicantsPage";
+import { JobsHubPage } from "@/features/headhunter/pages/JobsHubPage";
+import { MainLayout } from "@/shared/layouts/MainLayout";
 import { AdminOnlyRoute } from "@/features/auth/components/AdminOnlyRoute";
 import { UserDetailPage } from "@/features/users/detail";
 
@@ -109,8 +118,59 @@ export function AppRouter() {
           </ProtectedRoute>
         }
       />
-
-      {/* ==================== PUBLIC ROUTES ==================== */}
+      <Route element={<MainLayout />}>
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/jobs" element={<JobListPage />} />
+          <Route
+            path="/jobs/my"
+            element={
+              <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+                <JobManagePage />
+              </ProtectedRoute>
+            }
+          />
+        <Route path="/jobs/:id" element={<JobDetailPage />} />
+        <Route
+          path="/saved-jobs"
+          element={
+            <ProtectedRoute>
+              <SavedJobsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/headhunter/jobs/new"
+          element={
+            <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+              <JobCreatePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/headhunter/jobs"
+          element={
+            <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+              <JobsHubPage />
+            </ProtectedRoute>
+          }
+        />
+          <Route
+            path="/headhunter/jobs/:id/edit"
+            element={
+              <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+                <JobEditPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/headhunter/applicants"
+            element={
+              <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+                <ApplicantsPage />
+              </ProtectedRoute>
+            }
+          />
+      </Route>
       <Route path="/home" element={<HomePage />} />
 
       {/* PROF-06: Company Detail (public - add when ready) */}

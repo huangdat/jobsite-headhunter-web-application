@@ -6,8 +6,7 @@
 
 // API Base URLs
 export const API_CONFIG = {
-  BASE_URL:
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
   TIMEOUT: 15000,
   RETRY_COUNT: 3,
   RETRY_DELAY: 1000,
@@ -28,7 +27,7 @@ export const API_ENDPOINTS = {
     REGISTER_SOCIAL: "/api/auth/register-social",
     CHECK_EMAIL_USERNAME: "/api/account/check-email-username-exist",
   },
-
+  
   // OTP
   OTP: {
     SEND_SIGNUP: "/api/otp/send-signup",

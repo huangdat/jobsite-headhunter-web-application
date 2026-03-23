@@ -9,6 +9,7 @@ export function RecommendedJobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -16,6 +17,7 @@ export function RecommendedJobs() {
         setLoading(true);
         const data = await getRecommendedJobs();
         setJobs(data.jobs || []);
+        setInfoMessage(data.message || null);
       } catch (err) {
         console.error("Failed to fetch recommended jobs:", err);
         setError(t("messages.errorLoadJobs"));
@@ -43,6 +45,12 @@ export function RecommendedJobs() {
       {loading && (
         <div className="text-center py-12">
           <p className="text-gray-500">{t("messages.loadingJobs")}</p>
+        </div>
+      )}
+
+      {!loading && infoMessage && (
+        <div className="text-center py-4">
+          <p className="text-gray-500">{infoMessage}</p>
         </div>
       )}
 

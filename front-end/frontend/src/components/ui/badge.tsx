@@ -36,6 +36,21 @@ function Badge({
   VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
   const Comp = asChild ? Slot.Root : "span"
 
+  // If using asChild, ensure Slot receives a single React element child.
+  // If consumer passed a non-element (text or multiple nodes), wrap them in a span.
+  if (asChild && !React.isValidElement(props.children)) {
+    return (
+      <Comp
+        data-slot="badge"
+        data-variant={variant}
+        className={cn(badgeVariants({ variant }), className)}
+        {...props}
+      >
+        <span>{props.children}</span>
+      </Comp>
+    )
+  }
+
   return (
     <Comp
       data-slot="badge"
