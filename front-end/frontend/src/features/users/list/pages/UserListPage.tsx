@@ -175,7 +175,7 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
               sortBy={sortBy}
               onSort={handleSort}
               onViewDetails={(userId) => {
-                navigate(`/users/${userId}`);
+                navigate(`/admin/users/${userId}`);
               }}
               onLockUser={(userId) => {
                 console.log("🔒 Lock user action:", userId);

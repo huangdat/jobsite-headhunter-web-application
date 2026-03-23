@@ -32,7 +32,7 @@ export const UserClassificationPage: React.FC = () => {
 
   const handleViewDetails = useCallback(
     (userId: string) => {
-      navigate(`/users/${userId}`);
+      navigate(`/admin/users/${userId}`);
     },
     [navigate]
   );
