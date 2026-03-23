@@ -40,8 +40,9 @@ export function JobManagePage() {
   };
 
   useEffect(() => {
-    void load();
-  }, []);
+    // Load jobs after `user` is available so returned jobs include headhunter-specific fields
+    if (user?.id) void load();
+  }, [user?.id]);
 
   const handleEdit = (id: number) => navigate(`/headhunter/jobs/${id}/edit`);
 
@@ -139,8 +140,14 @@ export function JobManagePage() {
         <div className="space-y-4">
           {jobs.map((job) => (
             <div key={job.id} className="flex items-center justify-between rounded-lg border p-4">
-              <div>
-                <div className="text-lg font-medium">{job.title}</div>
+                <div>
+                <div className="flex items-center gap-3">
+                  <div className="text-lg font-medium">{job.title}</div>
+                  {/* Visibility badge */}
+                  <div className={`text-xs px-2 py-0.5 rounded ${job.visible === false ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+                    {job.visible === false ? 'Hidden' : 'Visible'}
+                  </div>
+                </div>
                 <div className="text-sm text-slate-500">{job.companyName ?? ''} • {job.location}</div>
                 <div className="text-sm text-slate-400">Status: {job.status} • Deadline: {job.deadline ?? '—'}</div>
               </div>
@@ -165,8 +172,9 @@ export function JobManagePage() {
                       variant="destructive"
                       onClick={() => handleHide(job.id)}
                       disabled={processingId === job.id}
+                      title={job.visible === false ? 'Currently hidden — click to unhide' : 'Currently visible — click to hide'}
                     >
-                      {job.visible === false ? (processingId === job.id ? 'Updating...' : 'Unhide') : (processingId === job.id ? 'Updating...' : 'Hide')}
+                      {processingId === job.id ? 'Updating...' : (job.visible === false ? 'Unhide' : 'Hide')}
                     </Button>
                   </>
                 )}
