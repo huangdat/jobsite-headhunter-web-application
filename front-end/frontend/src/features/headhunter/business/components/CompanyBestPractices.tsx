@@ -70,10 +70,10 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
 
   if (isLoading) {
     return (
-      <div className={`rounded-lg border border-gray-200 bg-white p-6 ${className}`}>
+      <div className={`rounded-lg border border-slate-200 bg-white p-6 ${className}`}>
         <div className="space-y-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-24 animate-pulse rounded-lg bg-gray-100"></div>
+            <div key={i} className="h-24 animate-pulse rounded-lg bg-slate-100"></div>
           ))}
         </div>
       </div>
@@ -81,17 +81,17 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
   }
 
   return (
-    <div className={`rounded-lg border border-gray-200 bg-white p-6 ${className}`}>
+    <div className={`rounded-lg border border-slate-200 bg-white p-6 ${className}`}>
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100">
-          <TrendingUp className="h-6 w-6 text-green-600" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100">
+          <TrendingUp className="h-6 w-6 text-emerald-600" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-slate-900">
             {t('business.bestpractice.title', 'Best Practices')}
           </h3>
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-slate-600">
             {t('business.bestpractice.subtitle', 'Proven strategies for success')}
           </p>
         </div>
@@ -100,19 +100,19 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
       {/* Practices List */}
       <div className="space-y-4">
         {practices.map((practice) => (
-          <div key={practice.id} className="rounded-lg border border-gray-200 p-4 transition-shadow hover:shadow-md">
+          <div key={practice.id} className="rounded-lg border border-slate-200 p-4 transition-shadow hover:shadow-md">
             {/* Practice Title */}
-            <h4 className="mb-2 font-semibold text-gray-900">{t(practice.title, practice.title)}</h4>
+            <h4 className="mb-2 font-semibold text-slate-900">{t(practice.title, practice.title)}</h4>
 
             {/* Practice Description */}
-            <p className="mb-3 text-sm text-gray-700">{t(practice.description, practice.description)}</p>
+            <p className="mb-3 text-sm text-slate-700">{t(practice.description, practice.description)}</p>
 
             {/* Tips */}
             {practice.tips && practice.tips.length > 0 && (
               <ul className="space-y-2">
                 {practice.tips.map((tip, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
+                  <li key={index} className="flex items-start gap-2 text-sm text-slate-700">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
                     <span>{t(tip, tip)}</span>
                   </li>
                 ))}
@@ -123,13 +123,13 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
       </div>
 
       {/* Footer Info */}
-      <div className="mt-6 flex gap-3 rounded-lg border border-green-200 bg-green-50 p-4">
-        <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600" />
+      <div className="mt-6 flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+        <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />
         <div>
-          <p className="text-xs font-semibold text-green-900">
+          <p className="text-xs font-semibold text-emerald-900">
             {t('business.bestpractice.follow_tips', 'Follow these practices')}
           </p>
-          <p className="mt-1 text-xs text-green-800">
+          <p className="mt-1 text-xs text-emerald-800">
             {t('business.bestpractice.follow_tips_desc', 'to establish trust with recruiters and maximize opportunities')}
           </p>
         </div>

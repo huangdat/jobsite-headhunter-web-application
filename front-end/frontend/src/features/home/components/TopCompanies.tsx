@@ -38,7 +38,7 @@ export function TopCompanies() {
 
         {loading && (
           <div className="text-center py-12">
-            <p className="text-gray-500">
+            <p className="text-slate-600">
               {t("messages.loadingCompanies")}
             </p>
           </div>

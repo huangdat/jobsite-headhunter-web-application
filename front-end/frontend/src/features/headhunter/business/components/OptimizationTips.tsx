@@ -102,13 +102,13 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
   if (isLoading) {
     return (
       <div
-        className={`rounded-lg border border-gray-200 bg-white p-6 ${className}`}
+        className={`rounded-lg border border-slate-200 bg-white p-6 ${className}`}
       >
         <div className="space-y-3">
           {[...Array(3)].map((_, i) => (
             <div
               key={i}
-              className="h-20 animate-pulse rounded-lg bg-gray-100"
+              className="h-20 animate-pulse rounded-lg bg-slate-100"
             ></div>
           ))}
         </div>
@@ -121,7 +121,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
 
   return (
     <div
-      className={`rounded-lg border border-gray-200 bg-white p-6 ${className}`}
+      className={`rounded-lg border border-slate-200 bg-white p-6 ${className}`}
     >
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
@@ -129,10 +129,10 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
           <Lightbulb className="h-6 w-6 text-amber-600" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-slate-900">
             {t("business.optimization.title", "Optimization Tips")}
           </h3>
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-slate-600">
             {t(
               "business.optimization.subtitle",
               "Quick ways to boost your profile"
@@ -146,7 +146,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
         {/* High Priority Tips */}
         {highPriorityTips.length > 0 && (
           <>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-700">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-700">
               {t("business.optimization.start_here", "Start Here")}
             </p>
             {highPriorityTips.slice(0, 2).map((tip) => (
@@ -156,7 +156,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
               >
                 <div className="flex-1 min-w-0 pt-1">
                   <div className="flex items-center gap-2">
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-slate-900">
                       {t(tip.title, tip.title)}
                     </p>
                     <span
@@ -165,14 +165,14 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
                       +{tip.impact}%
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-gray-700">
+                  <p className="mt-1 text-sm text-slate-700">
                     {t(tip.description, tip.description)}
                   </p>
 
                   {tip.onAction && (
                     <button
                       onClick={tip.onAction}
-                      className="mt-2 flex items-center gap-1 text-xs font-semibold text-gray-900 hover:text-gray-700"
+                      className="mt-2 flex items-center gap-1 text-xs font-semibold text-slate-900 hover:text-slate-700"
                     >
                       {t(
                         tip.actionLabel || "common.take_action",
@@ -190,7 +190,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
         {/* Other Tips */}
         {otherTips.length > 0 && (
           <>
-            <p className="mb-2 mt-4 text-xs font-semibold uppercase tracking-wide text-gray-700">
+            <p className="mb-2 mt-4 text-xs font-semibold uppercase tracking-wide text-slate-700">
               {t("business.optimization.additional", "Additional")}
             </p>
             {otherTips.slice(0, 2).map((tip) => (
@@ -200,14 +200,14 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
               >
                 <div className="flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-slate-900">
                       {t(tip.title, tip.title)}
                     </p>
-                    <span className="shrink-0 text-xs font-semibold text-gray-600">
+                    <span className="shrink-0 text-xs font-semibold text-slate-600">
                       +{tip.impact}%
                     </span>
                   </div>
-                  <p className="mt-1 text-xs text-gray-700">
+                  <p className="mt-1 text-xs text-slate-700">
                     {t(tip.description, tip.description)}
                   </p>
                 </div>

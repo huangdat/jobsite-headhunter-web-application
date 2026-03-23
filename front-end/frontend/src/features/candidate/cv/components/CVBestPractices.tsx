@@ -19,7 +19,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
         {[1, 2].map((i) => (
           <div
             key={i}
-            className="bg-surface-container-low rounded-xl p-6 space-y-4"
+            className="bg-slate-50 rounded-xl p-6 space-y-4"
           >
             <div className="h-6 bg-slate-300 dark:bg-slate-700 rounded w-40 animate-pulse" />
             <div className="space-y-3">
@@ -41,33 +41,33 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
     return (
       <div className="grid grid-cols-2 gap-6">
         {/* Privacy Control */}
-        <div className="bg-surface-container-low rounded-xl p-6 space-y-4">
+        <div className="bg-slate-50 rounded-xl p-6 space-y-4">
           {/* Icon & Title */}
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-lg fill">
+            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
               security
             </span>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
               {t("cv.management.bestPractices.privacyTitle")}
             </h3>
           </div>
 
           {/* Description */}
-          <p className="text-sm text-on-surface leading-relaxed">
+          <p className="text-sm text-slate-900 leading-relaxed">
             {t("cv.management.bestPractices.privacyDesc")}
           </p>
 
           {/* Privacy Items */}
           <ul className="space-y-2">
             {/* Fallback items */}
-            <li className="flex gap-2 text-sm text-on-surface-variant">
-              <span className="text-primary font-bold flex-0">•</span>
+            <li className="flex gap-2 text-sm text-slate-600">
+              <span className="text-emerald-600 font-bold flex-0">•</span>
               <span>
                 You can set specific companies to "Block List" in settings.
               </span>
             </li>
-            <li className="flex gap-2 text-sm text-on-surface-variant">
-              <span className="text-primary font-bold flex-0">•</span>
+            <li className="flex gap-2 text-sm text-slate-600">
+              <span className="text-emerald-600 font-bold flex-0">•</span>
               <span>
                 Control exactly what personal data is shared initially.
               </span>
@@ -76,31 +76,31 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
         </div>
 
         {/* Best Practices */}
-        <div className="bg-surface-container-low rounded-xl p-6 space-y-4">
+        <div className="bg-slate-50 rounded-xl p-6 space-y-4">
           {/* Icon & Title */}
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-lg fill">
+            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
               verified_user
             </span>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
               {t("cv.management.bestPractices.practicesTitle")}
             </h3>
           </div>
 
           {/* Best Practice Items */}
           <ul className="space-y-3">
-            <li className="flex gap-2 text-sm text-on-surface-variant">
-              <span className="text-primary font-bold flex-0">✓</span>
+            <li className="flex gap-2 text-sm text-slate-600">
+              <span className="text-emerald-600 font-bold flex-0">✓</span>
               <span>
                 Quantify results with revenue, growth %, or team size.
               </span>
             </li>
-            <li className="flex gap-2 text-sm text-on-surface-variant">
-              <span className="text-primary font-bold flex-0">✓</span>
+            <li className="flex gap-2 text-sm text-slate-600">
+              <span className="text-emerald-600 font-bold flex-0">✓</span>
               <span>Keep your executive summary under 200 words.</span>
             </li>
-            <li className="flex gap-2 text-sm text-on-surface-variant">
-              <span className="text-primary font-bold flex-0">✓</span>
+            <li className="flex gap-2 text-sm text-slate-600">
+              <span className="text-emerald-600 font-bold flex-0">✓</span>
               <span>Focus on the last 10 years of your career path.</span>
             </li>
           </ul>
@@ -111,31 +111,31 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 
   // Default Best Practices Section (Full width)
   return (
-    <div className="bg-surface-container-low rounded-xl p-6 space-y-6">
+    <div className="bg-slate-50 rounded-xl p-6 space-y-6">
       {/* Section divided into 2 columns */}
       <div className="grid grid-cols-2 gap-8">
         {/* Privacy Control Column */}
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-lg fill">
+            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
               security
             </span>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
               {t("cv.management.bestPractices.privacyTitle")}
             </h3>
           </div>
 
-          <p className="text-sm text-on-surface-variant leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {t("cv.management.bestPractices.privacyDesc")}
           </p>
 
           <ul className="space-y-2 text-sm">
-            <li className="flex gap-2 text-on-surface-variant">
-              <span className="text-primary flex-0">→</span>
+            <li className="flex gap-2 text-slate-600">
+              <span className="text-emerald-600 flex-0">→</span>
               <span>You can set specific companies to "Block List"</span>
             </li>
-            <li className="flex gap-2 text-on-surface-variant">
-              <span className="text-primary flex-0">→</span>
+            <li className="flex gap-2 text-slate-600">
+              <span className="text-emerald-600 flex-0">→</span>
               <span>Control exactly what personal data is shared</span>
             </li>
           </ul>
@@ -144,25 +144,25 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
         {/* Best Practices Column */}
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-lg fill">
+            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
               verified_user
             </span>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
               {t("cv.management.bestPractices.practicesTitle")}
             </h3>
           </div>
 
           <ul className="space-y-2 text-sm">
-            <li className="flex gap-2 text-on-surface-variant">
-              <span className="text-primary font-bold flex-0">•</span>
+            <li className="flex gap-2 text-slate-600">
+              <span className="text-emerald-600 font-bold flex-0">•</span>
               <span>Quantify results with revenue, growth %, or team size</span>
             </li>
-            <li className="flex gap-2 text-on-surface-variant">
-              <span className="text-primary font-bold flex-0">•</span>
+            <li className="flex gap-2 text-slate-600">
+              <span className="text-emerald-600 font-bold flex-0">•</span>
               <span>Keep your executive summary under 200 words</span>
             </li>
-            <li className="flex gap-2 text-on-surface-variant">
-              <span className="text-primary font-bold flex-0">•</span>
+            <li className="flex gap-2 text-slate-600">
+              <span className="text-emerald-600 font-bold flex-0">•</span>
               <span>Focus on the last 10 years of your career path</span>
             </li>
           </ul>
@@ -173,3 +173,4 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 };
 
 export default CVBestPractices;
+

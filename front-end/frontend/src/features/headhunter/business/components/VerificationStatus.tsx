@@ -34,7 +34,7 @@ const getStatusIcon = (
 ) => {
   switch (status) {
     case "APPROVED":
-      return <CheckCircle2 className="h-10 w-10 text-green-600" />;
+      return <CheckCircle2 className="h-10 w-10 text-emerald-600" />;
     case "REJECTED":
       return (
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
@@ -56,9 +56,9 @@ const getStatusIcon = (
     case "PENDING":
     default:
       return isCompleted ? (
-        <CheckCircle2 className="h-10 w-10 text-green-600" />
+        <CheckCircle2 className="h-10 w-10 text-emerald-600" />
       ) : (
-        <Circle className="h-10 w-10 text-gray-300" />
+        <Circle className="h-10 w-10 text-slate-300" />
       );
   }
 };
@@ -66,12 +66,12 @@ const getStatusIcon = (
 const getStatusBadgeColor = (status: VerificationStatusType): string => {
   switch (status) {
     case "APPROVED":
-      return "bg-green-100 text-green-800";
+      return "bg-emerald-100 text-emerald-800";
     case "REJECTED":
       return "bg-red-100 text-red-800";
     case "PENDING":
     default:
-      return "bg-gray-100 text-gray-800";
+      return "bg-slate-100 text-slate-800";
   }
 };
 
@@ -115,10 +115,10 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-slate-900">
             {t("business.verification.status", "Verification Status")}
           </h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-slate-600">
             {t(
               "business.verification.status_desc",
               "Track your profile verification progress"
@@ -144,7 +144,7 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
               {/* Icon */}
               <div className="flex flex-col items-center">
                 <div
-                  className={`rounded-full p-1 ${isCurrent ? "bg-green-100" : isCompleted ? "bg-green-100" : "bg-gray-100"}`}
+                  className={`rounded-full p-1 ${isCurrent ? "bg-emerald-100" : isCompleted ? "bg-emerald-100" : "bg-slate-100"}`}
                 >
                   {getStatusIcon(step.status, isCompleted)}
                 </div>
@@ -154,10 +154,10 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
                   <div
                     className={`my-2 w-1 flex-1 min-h-10 ${
                       isCompleted
-                        ? "bg-green-600"
+                        ? "bg-emerald-600"
                         : isCurrent
                           ? "bg-amber-400"
-                          : "bg-gray-200"
+                          : "bg-slate-200"
                     }`}
                   />
                 )}
@@ -169,13 +169,13 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
                   isCurrent
                     ? "border-amber-200 bg-amber-50"
                     : isCompleted
-                      ? "border-green-200 bg-green-50"
-                      : "border-gray-200 bg-gray-50"
+                      ? "border-emerald-200 bg-emerald-50"
+                      : "border-slate-200 bg-slate-50"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <p
-                    className={`font-semibold ${isCurrent ? "text-amber-900" : isCompleted ? "text-green-900" : "text-gray-700"}`}
+                    className={`font-semibold ${isCurrent ? "text-amber-900" : isCompleted ? "text-emerald-900" : "text-slate-700"}`}
                   >
                     {step.label}
                   </p>
@@ -192,14 +192,14 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
 
                 {showDescription && step.description && (
                   <p
-                    className={`mt-2 text-sm ${isCurrent ? "text-amber-800" : isCompleted ? "text-green-800" : "text-gray-600"}`}
+                    className={`mt-2 text-sm ${isCurrent ? "text-amber-800" : isCompleted ? "text-emerald-800" : "text-slate-600"}`}
                   >
                     {step.description}
                   </p>
                 )}
 
                 {step.timestamp && (
-                  <p className="mt-2 text-xs text-gray-500">
+                  <p className="mt-2 text-xs text-slate-500">
                     {new Date(step.timestamp).toLocaleDateString()} at{" "}
                     {new Date(step.timestamp).toLocaleTimeString()}
                   </p>
@@ -244,13 +244,13 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
       )}
 
       {currentStatus === "APPROVED" && (
-        <div className="mt-6 flex gap-3 rounded-lg border border-green-200 bg-green-50 p-4">
-          <CheckCircle2 className="h-6 w-6 shrink-0 text-green-600" />
+        <div className="mt-6 flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+          <CheckCircle2 className="h-6 w-6 shrink-0 text-emerald-600" />
           <div className="flex-1">
-            <p className="font-semibold text-green-900">
+            <p className="font-semibold text-emerald-900">
               {t("business.verification.approved_title", "Profile Approved")}
             </p>
-            <p className="mt-1 text-sm text-green-800">
+            <p className="mt-1 text-sm text-emerald-800">
               {t(
                 "business.verification.approved_message",
                 "Your business profile is now verified and visible to candidates."

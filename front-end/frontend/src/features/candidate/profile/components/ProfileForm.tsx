@@ -5,7 +5,6 @@ import type {
   ProfileValidationErrors,
 } from "@/features/candidate/profile/types/profile.types";
 import { ProfessionalIdentity } from "@/features/candidate/profile/components/ProfessionalIdentity";
-import profileBackground from "../../../../../assets/profiles/prof_01_candidate/candidate_profile_my_profile_updated/screen.png";
 
 interface ProfileFormProps {
   values: CandidateProfileFormValues;
@@ -205,18 +204,17 @@ export function ProfileForm({
             </ul>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 p-6 text-white shadow-xl">
-            <img
-              src={profileBackground}
-              alt={t("profile.sidebar.insightAlt")}
-              className="absolute inset-0 h-full w-full object-cover opacity-25"
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-slate-950 to-slate-900/50" />
+          <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-emerald-100 p-6 shadow-sm">
+            {/* Decorative Element */}
+            <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-emerald-200 opacity-20" />
+            <div className="absolute -bottom-4 -left-4 h-24 w-24 rounded-full bg-emerald-300 opacity-10" />
+
+            {/* Content */}
             <div className="relative z-10 space-y-2">
-              <p className="text-xs font-black uppercase tracking-widest text-emerald-300">
+              <p className="text-xs font-black uppercase tracking-widest text-emerald-700">
                 {t("profile.sidebar.insightEyebrow")}
               </p>
-              <p className="text-sm font-semibold leading-relaxed text-slate-100">
+              <p className="text-sm font-semibold leading-relaxed text-emerald-900">
                 {t("profile.sidebar.insightBody")}
               </p>
             </div>

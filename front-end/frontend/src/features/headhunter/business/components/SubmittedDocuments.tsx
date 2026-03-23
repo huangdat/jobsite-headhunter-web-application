@@ -30,12 +30,12 @@ const getDocumentIcon = (type: string) => {
     case "business_license":
       return <FileText className="h-8 w-8 text-blue-600" />;
     case "registration_certificate":
-      return <FileText className="h-8 w-8 text-green-600" />;
+      return <FileText className="h-8 w-8 text-emerald-600" />;
     case "bank_statement":
       return <FileText className="h-8 w-8 text-purple-600" />;
     case "other":
     default:
-      return <File className="h-8 w-8 text-gray-600" />;
+      return <File className="h-8 w-8 text-slate-600" />;
   }
 };
 
@@ -95,13 +95,13 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
   if (documents.length === 0) {
     return (
       <div
-        className={`rounded-lg border border-dashed border-gray-300 bg-gray-50 p-8 text-center ${className}`}
+        className={`rounded-lg border border-dashed border-slate-300 bg-slate-50 p-8 text-center ${className}`}
       >
-        <FileText className="mx-auto h-12 w-12 text-gray-400" />
-        <p className="mt-4 text-sm font-medium text-gray-900">
+        <FileText className="mx-auto h-12 w-12 text-slate-400" />
+        <p className="mt-4 text-sm font-medium text-slate-900">
           {t("business.document.no_documents", "No documents uploaded")}
         </p>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-slate-600">
           {t(
             "business.document.no_documents_desc",
             "Start by uploading required business documents"
@@ -119,10 +119,10 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
           <FileText className="h-6 w-6 text-white" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-slate-900">
             {t("business.document.submitted", "Submitted Documents")}
           </h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-slate-600">
             {t(
               "business.document.submitted_desc",
               "Your uploaded business documents"
@@ -152,15 +152,15 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
         {documents.map((doc) => (
           <div
             key={doc.id}
-            className="relative flex flex-col rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-lg"
+            className="relative flex flex-col rounded-lg border border-slate-200 bg-white p-4 transition-shadow hover:shadow-lg"
           >
             {/* Document Icon */}
             <div className="mb-3 flex items-start justify-between">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-slate-100">
                 {doc.documentType && getDocumentIcon(doc.documentType)}
               </div>
               {doc.verificationStatus === "verified" && (
-                <div className="flex items-center gap-1 rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
+                <div className="flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-800">
                   <CheckCircle2 className="h-3 w-3" />
                   {t("business.document.verified", "Verified")}
                 </div>
@@ -169,16 +169,16 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
 
             {/* Document Info */}
             <div className="flex-1">
-              <p className="line-clamp-2 text-sm font-medium text-gray-900">
+              <p className="line-clamp-2 text-sm font-medium text-slate-900">
                 {doc.filename}
               </p>
-              <p className="mt-1 text-xs text-gray-600">
+              <p className="mt-1 text-xs text-slate-600">
                 {t(getDocumentTypeLabel(doc.documentType))} •{" "}
                 {formatFileSize(doc.fileSize)}
               </p>
 
               {doc.uploadedAt && (
-                <p className="mt-2 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-slate-500">
                   {t("business.document.uploaded", "Uploaded")}:{" "}
                   {new Date(doc.uploadedAt).toLocaleDateString()}
                 </p>
@@ -191,7 +191,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                 <button
                   onClick={() => onDownload(doc.id)}
                   disabled={isLoading || deletingId === doc.id}
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
                   title={t("business.document.download", "Download")}
                 >
                   <Download className="h-4 w-4" />
@@ -215,7 +215,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                       <button
                         onClick={() => setConfirmDeleteId(null)}
                         disabled={deletingId === doc.id}
-                        className="flex-1 rounded-lg border border-gray-300 bg-white px-2 py-2 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+                        className="flex-1 rounded-lg border border-slate-300 bg-white px-2 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
                       >
                         {t("business.document.cancel", "Cancel")}
                       </button>
@@ -224,7 +224,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                     <button
                       onClick={() => setConfirmDeleteId(doc.id)}
                       disabled={isLoading}
-                      className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
                       title={t("business.document.delete", "Delete")}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -240,9 +240,9 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
 
       {/* Empty State Message */}
       {documents.length === 0 && !isLoading && (
-        <div className="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8 text-center">
-          <FileText className="mx-auto h-12 w-12 text-gray-400" />
-          <p className="mt-4 text-sm font-medium text-gray-900">
+        <div className="rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+          <FileText className="mx-auto h-12 w-12 text-slate-400" />
+          <p className="mt-4 text-sm font-medium text-slate-900">
             {t("business.document.no_documents", "No documents uploaded yet")}
           </p>
         </div>

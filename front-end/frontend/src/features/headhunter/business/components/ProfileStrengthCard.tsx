@@ -21,7 +21,7 @@ export interface ProfileStrengthCardProps {
 const getStatusIcon = (status: StrengthItemStatus) => {
   switch (status) {
     case "completed":
-      return <CheckCircle2 className="h-5 w-5 text-green-600" />;
+      return <CheckCircle2 className="h-5 w-5 text-emerald-600" />;
     case "in_progress":
       return (
         <div className="relative flex h-5 w-5 items-center justify-center">
@@ -30,18 +30,18 @@ const getStatusIcon = (status: StrengthItemStatus) => {
       );
     case "incomplete":
     default:
-      return <Circle className="h-5 w-5 text-gray-300" />;
+      return <Circle className="h-5 w-5 text-slate-300" />;
   }
 };
 
 const getStrengthColor = (percentage: number) => {
-  if (percentage >= 80) return "text-green-600";
+  if (percentage >= 80) return "text-emerald-600";
   if (percentage >= 60) return "text-amber-600";
   return "text-red-600";
 };
 
 const getStrengthBgColor = (percentage: number) => {
-  if (percentage >= 80) return "bg-green-100";
+  if (percentage >= 80) return "bg-emerald-100";
   if (percentage >= 60) return "bg-amber-100";
   return "bg-red-100";
 };
@@ -70,13 +70,13 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
   if (isLoading) {
     return (
       <div
-        className={`rounded-lg border border-gray-200 bg-white p-6 ${className}`}
+        className={`rounded-lg border border-slate-200 bg-white p-6 ${className}`}
       >
         <div className="flex items-center gap-4">
-          <div className="h-20 w-20 animate-pulse rounded-full bg-gray-200"></div>
+          <div className="h-20 w-20 animate-pulse rounded-full bg-slate-200"></div>
           <div className="flex-1 space-y-2">
-            <div className="h-4 w-24 animate-pulse rounded bg-gray-200"></div>
-            <div className="h-3 w-16 animate-pulse rounded bg-gray-200"></div>
+            <div className="h-4 w-24 animate-pulse rounded bg-slate-200"></div>
+            <div className="h-3 w-16 animate-pulse rounded bg-slate-200"></div>
           </div>
         </div>
       </div>
@@ -86,9 +86,9 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
   if (!strengthData) {
     return (
       <div
-        className={`rounded-lg border border-gray-200 bg-white p-6 ${className}`}
+        className={`rounded-lg border border-slate-200 bg-white p-6 ${className}`}
       >
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-sm text-slate-600">
           {t("business.strength.no_data", "No profile data available")}
         </p>
       </div>
@@ -102,14 +102,14 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
 
   return (
     <div
-      className={`rounded-lg border border-gray-200 bg-white p-6 ${className}`}
+      className={`rounded-lg border border-slate-200 bg-white p-6 ${className}`}
     >
       {/* Header */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-lg font-semibold text-slate-900">
           {t("business.strength.title", "Profile Strength")}
         </h3>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-slate-600">
           {t(
             "business.strength.subtitle",
             "Complete your profile to maximize visibility"
@@ -130,7 +130,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
               fill="none"
               stroke="currentColor"
               strokeWidth="8"
-              className="text-gray-200"
+              className="text-slate-200"
             />
             {/* Progress circle */}
             <circle
@@ -148,7 +148,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
             <span className={`text-2xl font-bold ${strengthColor}`}>
               {Math.round(strengthData.percentage)}%
             </span>
-            <span className="text-xs text-gray-600">
+            <span className="text-xs text-slate-600">
               {t("business.strength.complete", "Complete")}
             </span>
           </div>
@@ -157,11 +157,11 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
         {/* Info */}
         <div className="flex-1">
           <div className={`rounded-lg ${strengthBgColor} p-3`}>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-sm font-semibold text-slate-900">
               {completedItems} {t("business.strength.of", "of")} {totalItems}{" "}
               {t("business.strength.items", "Items Complete")}
             </p>
-            <p className="mt-1 text-xs text-gray-700">
+            <p className="mt-1 text-xs text-slate-700">
               {strengthData.percentage >= 80
                 ? t(
                     "business.strength.excellent",
@@ -180,7 +180,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
 
       {/* Strength Items */}
       <div className="space-y-3 py-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-700">
+        <p className="text-xs font-semibold uppercase tracking-wide text-slate-700">
           {t("business.strength.breakdown", "Breakdown")}
         </p>
 
@@ -193,17 +193,17 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between gap-2">
                 <p
-                  className={`text-sm font-medium ${item.completed ? "text-gray-900" : "text-gray-700"}`}
+                  className={`text-sm font-medium ${item.completed ? "text-slate-900" : "text-slate-700"}`}
                 >
                   {t(item.label, item.label)}
                 </p>
-                <span className="shrink-0 text-xs font-semibold text-gray-600">
+                <span className="shrink-0 text-xs font-semibold text-slate-600">
                   +{item.impact}%
                 </span>
               </div>
 
               {item.description && (
-                <p className="mt-1 text-xs text-gray-600">
+                <p className="mt-1 text-xs text-slate-600">
                   {t(item.description, item.description)}
                 </p>
               )}
@@ -229,7 +229,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
 
       {/* Last Updated */}
       {strengthData.lastUpdatedAt && (
-        <p className="mt-4 text-xs text-gray-500">
+        <p className="mt-4 text-xs text-slate-500">
           {t("business.strength.updated", "Updated")}:{" "}
           {new Date(strengthData.lastUpdatedAt).toLocaleDateString()}
         </p>

@@ -16,7 +16,7 @@ export function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <h1 className="text-5xl font-bold leading-tight text-slate-900">
           {t("hero.title")}{" "}
-          <span className="text-lime-500">{t("hero.highlight")}</span>
+          <span className="text-emerald-600">{t("hero.highlight")}</span>
         </h1>
 
         <p className="mt-6 text-lg text-slate-900 max-w-2xl mx-auto">

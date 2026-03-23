@@ -133,17 +133,17 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-200 ${
           dragging
-            ? "border-primary bg-primary/5 shadow-lg"
+            ? "border-emerald-300 bg-emerald-50 shadow-lg"
             : displayError
-              ? "border-error bg-on-error/5"
-              : "border-outline-variant bg-surface-container-low"
+              ? "border-red-200 bg-red-50/5"
+              : "border-slate-200 bg-slate-50"
         }`}
       >
         {isLoading ? (
           // Loading State
           <div className="space-y-4">
             <div className="w-16 h-16 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto animate-pulse" />
-            <p className="text-on-surface font-semibold">
+            <p className="text-slate-900 font-semibold">
               {t("messages.uploading")}
             </p>
             <div className="w-full h-2 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto max-w-xs animate-pulse" />
@@ -152,31 +152,31 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
           // Error State with Selected File
           <div className="space-y-4">
             <div className="flex justify-center">
-              <div className="w-16 h-16 bg-on-error rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center">
                 <span className="material-symbols-outlined text-white text-3xl fill">
                   error
                 </span>
               </div>
             </div>
 
-            <h3 className="text-lg font-bold text-on-surface">
+            <h3 className="text-lg font-bold text-slate-900">
               {t("cv.management.error.banner")}
             </h3>
-            <p className="text-sm text-on-surface-variant">
+            <p className="text-sm text-slate-600">
               {t("cv.management.error.fileFormatInvalid")}
             </p>
 
             {/* File Preview with Error */}
-            <div className="bg-on-error/10 border border-error/20 rounded-lg p-4 mx-auto max-w-sm mt-4">
+            <div className="bg-red-50/10 border border-red-200/20 rounded-lg p-4 mx-auto max-w-sm mt-4">
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-error text-2xl fill">
+                <span className="material-symbols-outlined text-red-700 text-2xl fill">
                   description
                 </span>
                 <div className="text-left flex-1">
-                  <p className="text-sm font-semibold text-on-surface">
+                  <p className="text-sm font-semibold text-slate-900">
                     {selectedFile.name}
                   </p>
-                  <p className="text-xs text-error font-semibold">
+                  <p className="text-xs text-red-700 font-semibold">
                     {getFormattedSize(selectedFile.size)} •{" "}
                     {displayError === "validation.fileTooLarge"
                       ? "Too large"
@@ -185,7 +185,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                 </div>
                 <button
                   onClick={() => setSelectedFile(null)}
-                  className="text-error hover:bg-on-error/10 p-1 rounded transition-colors"
+                  className="text-red-700 hover:bg-red-50/10 p-1 rounded transition-colors"
                   title={t("cv.management.validation.clear")}
                   aria-label={t("cv.management.validation.clear")}
                 >
@@ -211,19 +211,19 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
             {/* Icon */}
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 bg-primary-container rounded-2xl flex items-center justify-center">
-                <span className="material-symbols-outlined text-primary text-3xl fill">
+                <span className="material-symbols-outlined text-emerald-600 text-3xl fill">
                   upload_file
                 </span>
               </div>
             </div>
 
             {/* Headline */}
-            <h3 className="text-lg font-bold text-on-surface">
+            <h3 className="text-lg font-bold text-slate-900">
               {t("cv.management.empty.headline")}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-on-surface-variant max-w-md mx-auto">
+            <p className="text-sm text-slate-600 max-w-md mx-auto">
               Drag and drop your professional CV here or click to browse files
               from your computer.
             </p>
@@ -248,7 +248,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                 aria-label={t("cv.management.upload.selectFile")}
               />
 
-              <p className="text-xs text-on-surface-variant">
+              <p className="text-xs text-slate-600">
                 {supportedFormats.map((f) => f.toUpperCase()).join(", ")} • Max{" "}
                 {getFormattedSize(maxFileSize)}
               </p>
@@ -261,3 +261,4 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 };
 
 export default CVUploadZone;
+

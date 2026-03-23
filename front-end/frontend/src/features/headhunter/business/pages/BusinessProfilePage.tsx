@@ -152,12 +152,12 @@ export const BusinessProfilePage: React.FC = () => {
             <div className="space-y-8">
               {/* Company Identity Form - Show in default or error state */}
               {!isSubmitted || hasError ? (
-                <div className="rounded-lg border border-gray-200 bg-white p-6">
+                <div className="rounded-lg border border-slate-200 bg-white p-6">
                   <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-gray-900">
+                    <h2 className="text-xl font-semibold text-slate-900">
                       {t("business.form.title")}
                     </h2>
-                    <p className="mt-1 text-sm text-gray-600">
+                    <p className="mt-1 text-sm text-slate-600">
                       {t("business.form.subtitle")}
                     </p>
                   </div>
@@ -178,8 +178,8 @@ export const BusinessProfilePage: React.FC = () => {
               {isSubmitted &&
                 verificationSteps &&
                 verificationSteps.length > 0 && (
-                  <div className="rounded-lg border border-gray-200 bg-white p-6">
-                    <h2 className="mb-6 text-xl font-semibold text-gray-900">
+                  <div className="rounded-lg border border-slate-200 bg-white p-6">
+                    <h2 className="mb-6 text-xl font-semibold text-slate-900">
                       {t("business.verification.title")}
                     </h2>
                     <VerificationStatus
@@ -190,8 +190,8 @@ export const BusinessProfilePage: React.FC = () => {
 
               {/* Submitted Documents - Show when documents exist */}
               {hasDocuments && documents && (
-                <div className="rounded-lg border border-gray-200 bg-white p-6">
-                  <h2 className="mb-6 text-xl font-semibold text-gray-900">
+                <div className="rounded-lg border border-slate-200 bg-white p-6">
+                  <h2 className="mb-6 text-xl font-semibold text-slate-900">
                     {t("business.documents.title")}
                   </h2>
                   <SubmittedDocuments documents={documents} />
@@ -201,27 +201,27 @@ export const BusinessProfilePage: React.FC = () => {
               {/* Bottom Sections - Privacy & Best Practices */}
               <div className="grid grid-cols-2 gap-6">
                 {/* Privacy Control Card */}
-                <div className="rounded-lg border border-gray-200 bg-white p-6">
+                <div className="rounded-lg border border-slate-200 bg-white p-6">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold text-slate-900">
                         {t("business.privacy.title")}
                       </h3>
-                      <p className="mt-2 text-sm text-gray-600">
+                      <p className="mt-2 text-sm text-slate-600">
                         {t("business.privacy.description")}
                       </p>
                     </div>
                   </div>
                   <button
                     type="button"
-                    className="mt-4 text-sm font-medium text-green-600 transition-colors hover:text-green-700"
+                    className="mt-4 text-sm font-medium text-emerald-600 transition-colors hover:text-emerald-700"
                   >
                     {t("business.action.configure")} →
                   </button>
                 </div>
 
                 {/* Best Practices Card */}
-                <div className="rounded-lg border border-gray-200 bg-white p-6">
+                <div className="rounded-lg border border-slate-200 bg-white p-6">
                   <CompanyBestPractices />
                 </div>
               </div>

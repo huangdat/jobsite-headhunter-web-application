@@ -49,7 +49,7 @@ export const PremiumServices: React.FC<PremiumServicesProps> = ({
         {/* CTA Button */}
         <button
           onClick={onAction}
-          className="w-full mt-4 px-4 py-3 bg-white text-primary font-bold rounded-lg hover:bg-slate-100 transition-colors text-sm flex items-center justify-center gap-2"
+          className="w-full mt-4 px-4 py-3 bg-white text-emerald-600 font-bold rounded-lg hover:bg-slate-100 transition-colors text-sm flex items-center justify-center gap-2"
         >
           <span className="material-symbols-outlined text-lg">
             calendar_today
@@ -101,3 +101,4 @@ export const PremiumServices: React.FC<PremiumServicesProps> = ({
 };
 
 export default PremiumServices;
+
