@@ -9,6 +9,8 @@ import com.rikkeisoft.backend.model.dto.req.application.ApplicationCreateReq;
 import com.rikkeisoft.backend.model.dto.req.application.ApplicationStatusUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.application.ApplicationDetailResp;
 import com.rikkeisoft.backend.model.dto.resp.application.ApplicationResp;
+import com.rikkeisoft.backend.model.entity.Application;
+import com.rikkeisoft.backend.repository.ApplicationRepo;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.Application;
 import com.rikkeisoft.backend.model.entity.CandidateCv;
@@ -24,9 +26,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -42,10 +47,13 @@ import java.time.LocalDateTime;
  */
 public class ApplicationServiceImpl implements ApplicationService {
     AccountRepo accountRepo;
-    ApplicationRepo applicationRepo;
+
     JobRepo jobRepo;
-    ApplicationMapper applicationMapper;
+
     CandidateCvRepo candidateCvRepo;
+
+    ApplicationRepo applicationRepo;
+    ApplicationMapper applicationMapper;
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')")
@@ -58,14 +66,14 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .orElseThrow(() -> new AppException(ErrorCode.UNAUTHORIZED));
 
         // AC3 - check if candidate already applied to this job
-        if(applicationRepo.existsByJobIdAndCandidateId(jobId, account.getId())){
+        if (applicationRepo.existsByJobIdAndCandidateId(jobId, account.getId())) {
             throw new AppException(ErrorCode.APPLICATION_ALREADY_EXISTS);
         }
 
         Job job = jobRepo.findById(jobId).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
 
         // AC2 - check if Job status still accept application
-        if(!job.getStatus().equals(JobStatus.OPEN)){
+        if (!job.getStatus().equals(JobStatus.OPEN)) {
             throw new AppException(ErrorCode.JOB_NOT_OPEN);
         }
 
@@ -78,7 +86,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = Application.builder()
                 .job(job)
                 .candidate(account)
-//                .collaborator() // No logic to handle collaborator yet
+                // .collaborator() // No logic to handle collaborator yet
                 .cvSnapshotUrl(finalCvUrl)
                 .coverLetter(applicationCreateReq.getCoverLetter())
                 .fullName(applicationCreateReq.getFullName())
@@ -95,10 +103,40 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public Page<ApplicationResp> getMyApplications(Pageable pageable) {
-        // get Candidate id to put into ApplicationDetailResp
 
-        return null;
+    @PreAuthorize("hasAnyAuthority( 'SCOPE_CANDIDATE')")
+    public Page<ApplicationResp> getMyApplications(Pageable pageable, ApplicationStatus status) {
+
+        JwtAuthenticationToken auth = (JwtAuthenticationToken) SecurityContextHolder.getContext()
+                .getAuthentication();
+        String username = auth.getToken().getSubject();
+
+        Account account = accountRepo.findByUsername(username)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        String candidateId = account.getId();
+        Page<Application> applicationPage;
+        if (status != null) {
+            applicationPage = applicationRepo.findByCandidate_IdAndStatus(candidateId, status, pageable);
+        } else {
+            applicationPage = applicationRepo.findAllByCandidate_Id(candidateId, pageable);
+        }
+
+        // STEP 4: Map Entity → DTO
+        // MapStruct tự động map snapshot fields
+        Page<ApplicationResp> result = applicationPage.map(application -> {
+            ApplicationResp resp = applicationMapper.toResponse(application);
+
+            // Lazy load job title từ Job entity
+            if (application.getJob() != null) {
+                resp.setJobTitle(application.getJob().getTitle());
+            }
+
+            return resp;
+        });
+
+        return result;
+
     }
 
     @Override
@@ -118,4 +156,5 @@ public class ApplicationServiceImpl implements ApplicationService {
         // get Candidate id to put into ApplicationDetailResp
         return null;
     }
+
 }
