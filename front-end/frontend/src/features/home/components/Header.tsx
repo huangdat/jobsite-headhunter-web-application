@@ -151,13 +151,13 @@ export function Header() {
                           onClick={() => { navigate("/applications"); setDropdownOpen(false); }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
-                          My Applications
+                          {t("home.navigation.applications")}
                         </button>
                         <button
                           onClick={() => { navigate("/saved-jobs"); setDropdownOpen(false); }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
-                          Saved Jobs
+                          {t("home.navigation.savedJobs")}
                         </button>
                       </>
                     )}
@@ -168,7 +168,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {t("navigation.applications")}
+                      {t("home.navigation.applications")}
                     </button>
                     <button
                       onClick={() => {
@@ -177,7 +177,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {t("navigation.savedJobs")}
+                      {t("home.navigation.savedJobs")}
                     </button>
                   </div>
 
@@ -189,7 +189,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {t("navigation.settings")}
+                      {t("home.navigation.settings")}
                     </button>
                     <button
                       onClick={() => {
@@ -198,7 +198,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {t("navigation.notifications")}
+                      {t("home.navigation.notifications")}
                     </button>
                   </div>
 

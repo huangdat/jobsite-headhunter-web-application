@@ -5,14 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface AccountSkillRepo extends JpaRepository<AccountSkill, Long> {
+public interface AccountSkillRepo extends JpaRepository<AccountSkill, com.rikkeisoft.backend.model.entity.AccountSkillId> {
 
-    List<AccountSkill> findByAccountId(String accountId);
+    List<AccountSkill> findByAccount_Id(String accountId);
 
-    List<AccountSkill> findBySkillId(Long skillId);
+    List<AccountSkill> findBySkill_Id(Long skillId);
 
-    void deleteByAccountId(String accountId);
+    void deleteByAccount_Id(String accountId);
 
-    boolean existsByAccountIdAndSkillId(String accountId, Long skillId);
+    boolean existsByAccount_IdAndSkill_Id(String accountId, Long skillId);
 
 }

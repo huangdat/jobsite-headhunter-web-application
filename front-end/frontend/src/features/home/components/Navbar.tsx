@@ -14,21 +14,21 @@ export function Navbar() {
         href="#recommended"
         className="text-sm font-medium hover:text-lime-800 transition"
       >
-        {t("navigation.recommended")}
+        {t("home.navigation.recommended")}
       </a>
 
       <a
         href="#top-companies"
         className="text-sm font-medium hover:text-lime-800 transition"
       >
-        {t("navigation.topCompanies")}
+        {t("home.navigation.topCompanies")}
       </a>
 
       <a
         href="#featured-jobs"
         className="text-sm font-medium hover:text-lime-800 transition"
       >
-        {t("navigation.featuredJobs")}
+        {t("home.navigation.featuredJobs")}
       </a>
     </nav>
   );

@@ -298,7 +298,7 @@ public class JobManageServiceImpl implements JobManageService {
                     .build();
         }
 
-        List<AccountSkill> accountSkills = accountSkillRepo.findByAccountId(account.getId());
+        List<AccountSkill> accountSkills = accountSkillRepo.findByAccount_Id(account.getId());
         if (accountSkills == null || accountSkills.isEmpty()) {
             return buildFallbackResponse(MSG_NO_CANDIDATE_SKILLS);
         }

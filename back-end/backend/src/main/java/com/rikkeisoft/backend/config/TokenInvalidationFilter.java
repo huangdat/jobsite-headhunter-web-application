@@ -13,7 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 @Slf4j
 public class TokenInvalidationFilter extends OncePerRequestFilter {
