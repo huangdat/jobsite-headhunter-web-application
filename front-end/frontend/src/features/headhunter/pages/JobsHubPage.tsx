@@ -2,33 +2,45 @@ import { useState } from "react";
 import { JobManagePage } from "@/features/jobs/pages/JobManagePage";
 import { JobCreatePage } from "@/features/jobs/pages/JobCreatePage";
 import { ApplicantsPage } from "@/features/headhunter/pages/ApplicantsPage";
+import { Button } from "@/components/ui/button";
 
 export function JobsHubPage() {
   const [tab, setTab] = useState<"list" | "create" | "applicants">("list");
 
   return (
     <div className="px-4 py-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">Tin tuyển dụng</h2>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setTab("list")}
-            className={`px-3 py-1 rounded ${tab === "list" ? "bg-[var(--brand-primary)] text-black" : "bg-white text-slate-700 border"}`}
-          >
-            Danh sách
-          </button>
-          <button
-            onClick={() => setTab("create")}
-            className={`px-3 py-1 rounded ${tab === "create" ? "bg-[var(--brand-primary)] text-black" : "bg-white text-slate-700 border"}`}
-          >
-            Đăng tin mới
-          </button>
-          <button
-            onClick={() => setTab("applicants")}
-            className={`px-3 py-1 rounded ${tab === "applicants" ? "bg-[var(--brand-primary)] text-black" : "bg-white text-slate-700 border"}`}
-          >
-            Ứng viên
-          </button>
+      <div className="mb-6 flex items-center justify-between gap-4 flex-wrap">
+        <h2 className="text-2xl font-semibold min-w-0">Tin tuyển dụng</h2>
+        <div className="flex flex-wrap gap-3">
+          <div className="flex gap-3">
+            <Button
+              size="sm"
+              variant={tab === "list" ? "primary" : "outline"}
+              onClick={() => setTab("list")}
+              aria-pressed={tab === "list"}
+              className="w-auto whitespace-nowrap"
+            >
+              Danh sách
+            </Button>
+            <Button
+              size="sm"
+              variant={tab === "create" ? "primary" : "outline"}
+              onClick={() => setTab("create")}
+              aria-pressed={tab === "create"}
+              className="w-auto whitespace-nowrap"
+            >
+              Đăng tin mới
+            </Button>
+            <Button
+              size="sm"
+              variant={tab === "applicants" ? "primary" : "outline"}
+              onClick={() => setTab("applicants")}
+              aria-pressed={tab === "applicants"}
+              className="w-auto whitespace-nowrap"
+            >
+              Ứng viên
+            </Button>
+          </div>
         </div>
       </div>
 

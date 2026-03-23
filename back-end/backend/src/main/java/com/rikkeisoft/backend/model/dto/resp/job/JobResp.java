@@ -38,5 +38,6 @@ public class JobResp {
     String companyWebsite;
     String companySize;
     String companyAddress;
+    boolean visible;
 }
 

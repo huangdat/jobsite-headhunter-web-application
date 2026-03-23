@@ -40,8 +40,9 @@ export function JobManagePage() {
   };
 
   useEffect(() => {
-    void load();
-  }, []);
+    // Load jobs after `user` is available so returned jobs include headhunter-specific fields
+    if (user?.id) void load();
+  }, [user?.id]);
 
   const handleEdit = (id: number) => navigate(`/headhunter/jobs/${id}/edit`);
 
@@ -60,8 +61,11 @@ export function JobManagePage() {
       toast.success("Job closed.");
       await load();
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to close job.");
+      console.error("Failed to close job:", err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const e: any = err;
+      const msg = e?.response?.data?.message || e?.message;
+      toast.error(msg || "Failed to close job.");
     } finally {
       setProcessingId(null);
     }
@@ -93,23 +97,29 @@ export function JobManagePage() {
       setDialogJob(null);
       await load();
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to open job.");
+      console.error("Failed to open job:", err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const e: any = err;
+      const msg = e?.response?.data?.message || e?.message;
+      toast.error(msg || "Failed to open job.");
     } finally {
       setProcessingId(null);
     }
   };
 
   const handleHide = async (id: number) => {
-    if (!confirm("Are you sure you want to hide this job?")) return;
+    if (!confirm("Are you sure you want to toggle visibility for this job?")) return;
     setProcessingId(id);
     try {
       await deleteJobSoft(id);
       toast.success("Job visibility toggled.");
       await load();
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to change visibility.");
+      console.error("Failed to change visibility:", err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const e: any = err;
+      const msg = e?.response?.data?.message || e?.message;
+      toast.error(msg || "Failed to change visibility.");
     } finally {
       setProcessingId(null);
     }
@@ -130,8 +140,14 @@ export function JobManagePage() {
         <div className="space-y-4">
           {jobs.map((job) => (
             <div key={job.id} className="flex items-center justify-between rounded-lg border p-4">
-              <div>
-                <div className="text-lg font-medium">{job.title}</div>
+                <div>
+                <div className="flex items-center gap-3">
+                  <div className="text-lg font-medium">{job.title}</div>
+                  {/* Visibility badge */}
+                  <div className={`text-xs px-2 py-0.5 rounded ${job.visible === false ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+                    {job.visible === false ? 'Hidden' : 'Visible'}
+                  </div>
+                </div>
                 <div className="text-sm text-slate-500">{job.companyName ?? ''} • {job.location}</div>
                 <div className="text-sm text-slate-400">Status: {job.status} • Deadline: {job.deadline ?? '—'}</div>
               </div>
@@ -151,7 +167,15 @@ export function JobManagePage() {
                         </Button>
                       )}
                     </div>
-                    <Button size="sm" variant="destructive" onClick={() => handleHide(job.id)} disabled={processingId === job.id}>Hide</Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => handleHide(job.id)}
+                      disabled={processingId === job.id}
+                      title={job.visible === false ? 'Currently hidden — click to unhide' : 'Currently visible — click to hide'}
+                    >
+                      {processingId === job.id ? 'Updating...' : (job.visible === false ? 'Unhide' : 'Hide')}
+                    </Button>
                   </>
                 )}
               </div>

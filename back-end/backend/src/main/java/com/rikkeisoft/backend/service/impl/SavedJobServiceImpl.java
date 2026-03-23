@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +51,8 @@ public class SavedJobServiceImpl implements SavedJobService {
 
     @Override
     @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')")
-    public void removeSavedJob(Long jobId, String username) {
+        @Transactional
+        public void removeSavedJob(Long jobId, String username) {
         Account account = accountRepo.findByUsername(username)
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
         savedJobRepo.deleteByJobIdAndCandidateId(jobId, account.getId());

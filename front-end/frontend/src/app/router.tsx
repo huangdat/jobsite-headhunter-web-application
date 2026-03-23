@@ -212,6 +212,8 @@ export function AppRouter() {
           </ProtectedRoute>
         }
       />
+      {/* Redirect base /headhunter to jobs hub so 'Tin tuyển dụng' loads by default */}
+      <Route path="/headhunter" element={<Navigate to="/headhunter/jobs" replace />} />
       {/* Keep old route for backward compatibility */}
       <Route
         path="/business"
