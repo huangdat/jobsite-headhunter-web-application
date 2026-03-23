@@ -1,6 +1,6 @@
 import { apiClient } from "@/shared/utils/axios";
-import type { UserDetail } from "../types/user.types";
-import { API_ENDPOINTS } from "../constants";
+import type { UserDetail } from "@/features/users/types/user.types";
+import { API_ENDPOINTS } from "@/features/users/constants";
 
 /**
  * Backend response format (different from frontend interface)
@@ -118,6 +118,7 @@ export const usersApi = {
     keyword?: string;
     role?: string;
     status?: string;
+    company?: string;
     sort?: string;
   }): Promise<PagedResponse<UserDetail>> => {
     const res = await apiClient.get<any>(API_ENDPOINTS.USERS.SEARCH, {
@@ -129,75 +130,64 @@ export const usersApi = {
   },
 
   /**
-   * Soft delete user (lock account, keep data for 30 days)
-   * @param userId - User ID to soft delete
-   * @param reason - Reason for soft deletion (required by backend)
+   * Update user account status
+   * Unified endpoint for all status changes:
+   * - ACTIVE: Unlock/restore account
+   * - SUSPENDED: Lock/soft delete account (keep data)
+   * - DELETED: Permanent hard delete from database
+   * - PENDING: Set to pending status
+   *
+   * @param userId - User ID to update
+   * @param status - Target status from ACCOUNT_STATUS enum
+   * @returns Updated user details
    */
-  softDeleteUser: async (
+  updateUserStatus: async (
     userId: string,
-    reason: string
-  ): Promise<{ success: boolean; message: string }> => {
-    const res = await apiClient.post<any>(
-      API_ENDPOINTS.USERS.SOFT_DELETE(userId),
-      { reason }
+    status: "ACTIVE" | "SUSPENDED" | "DELETED" | "PENDING"
+  ): Promise<UserDetail> => {
+    const res = await apiClient.put<any>(
+      API_ENDPOINTS.USERS.UPDATE_STATUS(userId),
+      {
+        status,
+      }
     );
-    return res.data.result;
+    return adaptUserDetail(res.data.result);
   },
 
   /**
-   * Hard delete user (permanent deletion, removes all user data)
+   * Convenience method: Soft delete user (lock account, keep data)
+   * Internally uses updateUserStatus with SUSPENDED status
+   * @param userId - User ID to soft delete
+   */
+  softDeleteUser: async (userId: string): Promise<UserDetail> => {
+    return usersApi.updateUserStatus(userId, "SUSPENDED");
+  },
+
+  /**
+   * Convenience method: Hard delete user (permanent deletion)
+   * Internally uses updateUserStatus with DELETED status
    * @param userId - User ID to hard delete
    * @throws Error with 409 status when user has related data
    */
-  hardDeleteUser: async (
-    userId: string
-  ): Promise<{ success: boolean; message: string }> => {
-    const res = await apiClient.delete<any>(
-      API_ENDPOINTS.USERS.HARD_DELETE(userId)
-    );
-    return res.data.result;
+  hardDeleteUser: async (userId: string): Promise<UserDetail> => {
+    return usersApi.updateUserStatus(userId, "DELETED");
   },
 
   /**
-   * Lock user account
-   * AC1: Lock successfully - Change status to INACTIVE, invalidate refresh token, audit log, send email
+   * Convenience method: Lock user account
+   * Internally uses updateUserStatus with SUSPENDED status
    * @param userId - User ID to lock
-   * @param data - Lock data with reason, auto-unlock date, email and logout settings
    */
-  lockUser: async (
-    userId: string,
-    data: {
-      reason: string;
-      autoUnlockDate?: string;
-      sendEmail: boolean;
-      logoutCurrentSession: boolean;
-    }
-  ): Promise<{ success: boolean; message: string }> => {
-    const res = await apiClient.post<any>(
-      API_ENDPOINTS.USERS.LOCK(userId),
-      data
-    );
-    return res.data.result;
+  lockUser: async (userId: string): Promise<UserDetail> => {
+    return usersApi.updateUserStatus(userId, "SUSPENDED");
   },
 
   /**
-   * Unlock user account
-   * AC2: Unlock successfully - Change status to ACTIVE, send email, force password change
+   * Convenience method: Unlock user account
+   * Internally uses updateUserStatus with ACTIVE status
    * @param userId - User ID to unlock
-   * @param data - Unlock data with reason and email/password change settings
    */
-  unlockUser: async (
-    userId: string,
-    data: {
-      reason: string;
-      sendEmail: boolean;
-      requirePasswordChange: boolean;
-    }
-  ): Promise<{ success: boolean; message: string }> => {
-    const res = await apiClient.post<any>(
-      API_ENDPOINTS.USERS.UNLOCK(userId),
-      data
-    );
-    return res.data.result;
+  unlockUser: async (userId: string): Promise<UserDetail> => {
+    return usersApi.updateUserStatus(userId, "ACTIVE");
   },
 };

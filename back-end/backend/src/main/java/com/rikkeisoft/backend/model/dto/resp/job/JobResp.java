@@ -34,5 +34,9 @@ public class JobResp {
     LocalDateTime createdAt;
     String headhunterId;
     String headhunterName;
+    String companyName;
+    String companyWebsite;
+    String companySize;
+    String companyAddress;
 }
 

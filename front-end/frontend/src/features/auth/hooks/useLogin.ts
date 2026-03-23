@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { login } from "../services/authApi";
-import type { LoginFormData } from "../types";
-import { useAuth } from "../context/useAuth";
+import { login } from "@/features/auth/services/authApi";
+import type { LoginFormData } from "@/features/auth/types";
+import { useAuth } from "@/features/auth/context/useAuth";
 import { useAuthTranslation } from "@/shared/hooks";
-import { extractApiErrorMessage } from "../utils/apiError";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
 
@@ -85,7 +85,7 @@ export const useLogin = () => {
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Unable to sign in right now. Please try again.",
+        "Unable to sign in right now. Please try again."
       );
       let errorField: "email" | "password" | "general" = "general";
 

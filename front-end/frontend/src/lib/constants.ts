@@ -6,8 +6,7 @@
 
 // API Base URLs
 export const API_CONFIG = {
-  BASE_URL:
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
   TIMEOUT: 15000,
   RETRY_COUNT: 3,
   RETRY_DELAY: 1000,
@@ -28,7 +27,7 @@ export const API_ENDPOINTS = {
     REGISTER_SOCIAL: "/api/auth/register-social",
     CHECK_EMAIL_USERNAME: "/api/account/check-email-username-exist",
   },
-
+  
   // OTP
   OTP: {
     SEND_SIGNUP: "/api/otp/send-signup",
@@ -104,15 +103,45 @@ export const VALIDATION_RULES = {
   },
 };
 
-// User Roles
+// User Roles - MUST match backend Role enum (UPPERCASE)
+// Use types from features/users/types/user.types.ts for type safety
 export const USER_ROLES = {
-  CANDIDATE: "candidate",
-  HEADHUNTER: "headhunter",
-  COLLABORATOR: "collaborator",
-  ADMIN: "admin",
+  ADMIN: "ADMIN",
+  HEADHUNTER: "HEADHUNTER",
+  COLLABORATOR: "COLLABORATOR",
+  CANDIDATE: "CANDIDATE",
 } as const;
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
+
+// Job Status - MUST match backend JobStatus enum
+export const JOB_STATUSES = {
+  DRAFT: "DRAFT",
+  OPEN: "OPEN",
+  CLOSED: "CLOSED",
+} as const;
+
+export type JobStatus = (typeof JOB_STATUSES)[keyof typeof JOB_STATUSES];
+
+// User Account Status - MUST match backend AccountStatus enum
+export const ACCOUNT_STATUSES = {
+  PENDING: "PENDING",
+  ACTIVE: "ACTIVE",
+  SUSPENDED: "SUSPENDED",
+  DELETED: "DELETED",
+} as const;
+
+export type AccountStatus =
+  (typeof ACCOUNT_STATUSES)[keyof typeof ACCOUNT_STATUSES];
+
+// Working Type - MUST match backend WorkingType enum
+export const WORKING_TYPES = {
+  ONSITE: "ONSITE",
+  REMOTE: "REMOTE",
+  HYBRID: "HYBRID",
+} as const;
+
+export type WorkingType = (typeof WORKING_TYPES)[keyof typeof WORKING_TYPES];
 
 // Admin Features & Routes
 export const ADMIN_FEATURES = {

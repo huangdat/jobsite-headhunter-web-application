@@ -14,7 +14,11 @@
     "settings": "Cài Đặt",
     "logout": "Đăng Xuất",
     "savedJobs": "Công Việc Đã Lưu",
-    "notifications": "Thông Báo"
+    "notifications": "Thông Báo",
+    "dashboard": "Bảng Điều Khiển",
+    "adminDashboard": "Bảng Điều Khiển Quản Trị",
+    "userManagement": "Quản Lý Người Dùng",
+    "classification": "Phân Loại"
   },
   "hero": {
     "title": "Tìm Cơ Hội",

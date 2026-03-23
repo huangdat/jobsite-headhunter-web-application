@@ -1,6 +1,6 @@
 import { usersApi } from "@/features/users/services/usersApi";
 import { useState } from "react";
-import { STORAGE_KEYS, AUDIT_LOG_ACTIONS } from "../../../constants";
+import { STORAGE_KEYS, AUDIT_LOG_ACTIONS } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface LockUserOptions {
@@ -56,18 +56,14 @@ export const useLockUser = () => {
       // Check permission constraints (AC3)
       const currentUserId = localStorage.getItem(STORAGE_KEYS.USER_ID);
       if (currentUserId === userId) {
-        const errorMsg = t("lock.errorCannotLockYourself") || "Cannot lock your own account";
+        const errorMsg =
+          t("lock.errorCannotLockYourself") || "Cannot lock your own account";
         setError(errorMsg);
         throw new Error("CANNOT_LOCK_YOURSELF");
       }
 
-      // Call API to lock user
-      await usersApi.lockUser(userId, {
-        reason,
-        autoUnlockDate,
-        sendEmail,
-        logoutCurrentSession,
-      });
+      // Call API to lock user (status = SUSPENDED)
+      await usersApi.lockUser(userId);
 
       // Log audit (AC1)
       const auditLog: LockAuditLog = {
@@ -91,18 +87,24 @@ export const useLockUser = () => {
       // Handle specific error codes (AC3)
       if ("code" in errorResponse) {
         if (errorResponse.code === "CANNOT_LOCK_YOURSELF") {
-          errorMessage = t("lock.errorCannotLockYourself") || "Cannot lock your own account";
+          errorMessage =
+            t("lock.errorCannotLockYourself") || "Cannot lock your own account";
         } else if (errorResponse.code === "INSUFFICIENT_PERMISSION") {
-          errorMessage = t("lock.errorInsufficientPermission") || "Insufficient permission to lock this user";
+          errorMessage =
+            t("lock.errorInsufficientPermission") ||
+            "Insufficient permission to lock this user";
         }
       } else if (errorResponse instanceof Error) {
         if (
           errorResponse.message.includes("409") ||
           errorResponse.message.includes("CANNOT_LOCK_YOURSELF")
         ) {
-          errorMessage = t("lock.errorCannotLockYourself") || "Cannot lock your own account";
+          errorMessage =
+            t("lock.errorCannotLockYourself") || "Cannot lock your own account";
         } else if (errorResponse.message.includes("INSUFFICIENT_PERMISSION")) {
-          errorMessage = t("lock.errorInsufficientPermission") || "Insufficient permission to lock this user";
+          errorMessage =
+            t("lock.errorInsufficientPermission") ||
+            "Insufficient permission to lock this user";
         } else {
           errorMessage = errorResponse.message;
         }

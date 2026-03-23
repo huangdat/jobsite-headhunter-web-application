@@ -1,7 +1,7 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
-import type { ClassificationGroupBy } from "../types/classification.types";
-import { groupingConfigs } from "../utils/groupingConfig";
+import type { ClassificationGroupBy } from "@/features/users/classification/types/classification.types";
+import { groupingConfigs } from "@/features/users/classification/utils/groupingConfig";
 
 interface UserClassificationHeaderProps {
   groupBy: ClassificationGroupBy;
@@ -128,7 +128,9 @@ export const UserClassificationHeader: React.FC<
             className="px-3 py-1.5 rounded-lg text-xs font-bold bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
             title={t("classification.expandAll")}
           >
-            <span className="material-symbols-outlined text-sm">unfold_more</span>
+            <span className="material-symbols-outlined text-sm">
+              unfold_more
+            </span>
           </button>
         )}
         {onCollapseAll && (

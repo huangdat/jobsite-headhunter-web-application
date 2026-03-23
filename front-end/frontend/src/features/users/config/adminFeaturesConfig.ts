@@ -24,7 +24,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     id: "users_list",
     icon: "group",
     labelKey: "navigation.users",
-    route: "/users",
+    route: "/users/list",
     apiEndpoint: "/api/account",
     requiredRole: "admin",
     description: "View and manage all users",

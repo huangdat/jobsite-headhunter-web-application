@@ -1,5 +1,5 @@
-import type { UserDetail } from "../types/user.types";
-import type { UserTableRow } from "../list/components/UserListTable";
+import type { UserDetail } from "@/features/users/types/user.types";
+import type { UserTableRow } from "@/features/users/list/components/UserListTable";
 
 // Types for UserDetailPage
 interface UserDetailModel {
@@ -9,7 +9,7 @@ interface UserDetailModel {
   phone: string;
   role: "Administrator" | "User" | "Manager";
   username: string;
-  status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+  status: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
   joinedDate: string;
   lastLogin: string;
   company?: string;
@@ -57,13 +57,19 @@ export const userMapper = {
     // For now, keeping as reference (component should translate these)
     const roleMap: Record<string, "Administrator" | "User" | "Manager"> = {
       ADMIN: "Administrator",
-      RECRUITER: "Manager",
+      HEADHUNTER: "Manager",
+      COLLABORATOR: "Manager",
       CANDIDATE: "User",
     };
 
-    const statusMap: Record<string, "ACTIVE" | "INACTIVE" | "SUSPENDED"> = {
+    const statusMap: Record<
+      string,
+      "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED"
+    > = {
+      PENDING: "PENDING",
       ACTIVE: "ACTIVE",
-      LOCKED: "SUSPENDED",
+      SUSPENDED: "SUSPENDED",
+      DELETED: "DELETED",
     };
 
     return {
@@ -73,7 +79,11 @@ export const userMapper = {
       phone: user.phone || "",
       role: roleMap[user.role] || "User",
       username: user.username,
-      status: statusMap[user.status] || "INACTIVE",
+      status: (statusMap[user.status] || "PENDING") as
+        | "PENDING"
+        | "ACTIVE"
+        | "SUSPENDED"
+        | "DELETED",
       joinedDate: new Date(user.createdAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",

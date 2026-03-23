@@ -1,6 +1,6 @@
 import { usersApi } from "@/features/users/services/usersApi";
 import { useState } from "react";
-import { HTTP_STATUS } from "../../../constants";
+import { HTTP_STATUS } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface DeleteUserOptions {
@@ -28,7 +28,8 @@ export const useDeleteUser = () => {
         throw new Error(t("delete.reasonRequired"));
       }
 
-      await usersApi.softDeleteUser(userId, reason);
+      // Call API to soft delete user (status = SUSPENDED)
+      await usersApi.softDeleteUser(userId);
       return { success: true };
     } catch (err) {
       const errorMessage =
@@ -49,6 +50,7 @@ export const useDeleteUser = () => {
     setLoading(true);
     setError(null);
     try {
+      // Call API to hard delete user (status = DELETED)
       await usersApi.hardDeleteUser(userId);
       return { success: true };
     } catch (err) {

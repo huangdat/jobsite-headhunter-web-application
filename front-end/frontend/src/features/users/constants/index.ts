@@ -15,12 +15,22 @@ export const API_ENDPOINTS = {
     GET_ALL: "/api/account",
     GET_BY_ID: (id: string) => `/api/account/${id}`,
     SEARCH: "/api/account/search",
-    SOFT_DELETE: (id: string) => `/api/account/${id}/soft-delete`,
-    HARD_DELETE: (id: string) => `/api/account/${id}`,
-    LOCK: (id: string) => `/api/account/${id}/lock`,
-    UNLOCK: (id: string) => `/api/account/${id}/unlock`,
+    UPDATE_STATUS: (id: string) => `/api/account/status/${id}`,
   },
 };
+
+/**
+ * Account Status Enum
+ * Maps to backend AccountStatus: PENDING, ACTIVE, SUSPENDED, DELETED
+ */
+export const ACCOUNT_STATUS = {
+  ACTIVE: "ACTIVE",
+  SUSPENDED: "SUSPENDED", // Soft Delete: Lock account, keep data
+  DELETED: "DELETED", // Hard Delete: Permanently remove from DB
+  PENDING: "PENDING",
+} as const;
+
+export type AccountStatus = (typeof ACCOUNT_STATUS)[keyof typeof ACCOUNT_STATUS];
 
 /**
  * Local Storage Keys
