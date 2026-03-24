@@ -83,8 +83,15 @@ export function JobCreatePage() {
       return;
     }
 
-    if (!values.description || values.description.replace(/<[^>]*>/g, "").trim().length === 0) {
-      toast.error("Description cannot be empty");
+    const stripMarkdown = (s = "") =>
+      s
+        .replace(/<[^>]*>/g, '')
+        .replace(/[*_~`>#\-\[\]\(\)!]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    if (!values.description || stripMarkdown(values.description).length === 0) {
+      toast.error('Description cannot be empty');
       return;
     }
 
@@ -104,7 +111,7 @@ export function JobCreatePage() {
       return;
     }
 
-    const strip = (s = "") => s.replace(/<[^>]*>/g, "").trim();
+    const strip = (s = "") => s.replace(/<[^>]*>/g, '').replace(/[*_~`>#\-\[\]\(\)!]/g, '').trim();
     if (strip(values.responsibilities).length < 50 || strip(values.requirements).length < 50) {
       toast.error("Responsibilities/Requirements must be at least 50 characters");
       return;
@@ -340,7 +347,10 @@ export function JobCreatePage() {
               name="responsibilities"
               rules={{
                 required: "Responsibilities is required",
-                validate: (v) => (v && v.replace(/<[^>]*>/g, "").trim().length >= 50) || "Responsibilities must be at least 50 characters",
+                validate: (v) => {
+                  const stripped = (v || '').replace(/<[^>]*>/g, '').replace(/[*_~`>#\-\[\]\(\)!]/g, '').trim();
+                  return (v && stripped.length >= 50) || 'Responsibilities must be at least 50 characters';
+                },
               }}
               render={({ field }) => (
                 <RichTextEditor
@@ -363,7 +373,10 @@ export function JobCreatePage() {
               name="requirements"
               rules={{
                 required: "Requirements is required",
-                validate: (v) => (v && v.replace(/<[^>]*>/g, "").trim().length >= 50) || "Requirements must be at least 50 characters",
+                validate: (v) => {
+                  const stripped = (v || '').replace(/<[^>]*>/g, '').replace(/[*_~`>#\-\[\]\(\)!]/g, '').trim();
+                  return (v && stripped.length >= 50) || 'Requirements must be at least 50 characters';
+                },
               }}
               render={({ field }) => (
                 <RichTextEditor

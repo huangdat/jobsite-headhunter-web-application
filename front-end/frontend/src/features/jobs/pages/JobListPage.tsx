@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeSanitize from 'rehype-sanitize';
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -491,9 +494,9 @@ function JobCard({ job }: { job: JobSummary & { negotiable?: boolean } }) {
           {job.workingType}
         </Badge>
       </div>
-      <p className="mt-3 line-clamp-2 text-sm text-slate-600 dark:text-slate-400">
-          {job.description}
-      </p>
+      <div className="mt-3 line-clamp-2 text-sm text-slate-600 dark:text-slate-400">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>{job.description ?? ''}</ReactMarkdown>
+      </div>
       <div className="mt-4 flex flex-wrap gap-3 text-sm text-slate-600 dark:text-slate-400">
         <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">
           {job.city ?? "Flexible"}

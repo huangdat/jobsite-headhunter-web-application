@@ -51,7 +51,7 @@ export function AppRouter() {
   return (
     <Routes>
       {/* Root redirect */}
-      <Route path="/" element={<Navigate to="/home" replace />} />
+      <Route path="/" element={<Navigate to="/headhunter/jobs" replace />} />
 
       {/* ==================== AUTH ROUTES ==================== */}
       <Route
@@ -119,7 +119,7 @@ export function AppRouter() {
         }
       />
       <Route element={<MainLayout />}>
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/home" element={<Navigate to="/headhunter/jobs" replace />} />
         <Route path="/jobs" element={<JobListPage />} />
           <Route
             path="/jobs/my"
@@ -171,7 +171,7 @@ export function AppRouter() {
             }
           />
       </Route>
-      <Route path="/home" element={<HomePage />} />
+      <Route path="/home" element={<Navigate to="/headhunter/jobs" replace />} />
 
       {/* PROF-06: Company Detail (public - add when ready) */}
       {/* <Route path="/companies/:id" element={<CompanyDetailPage />} /> */}

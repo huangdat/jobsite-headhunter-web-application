@@ -39,7 +39,10 @@
     "react-hook-form": "^7.71.2",
     "react-i18next": "^16.5.8",
     "react-icons": "^5.6.0",
+    "react-markdown": "^8.0.5",
     "react-router-dom": "^7.13.0",
+    "rehype-sanitize": "^5.0.1",
+    "remark-gfm": "^3.0.1",
     "rope-sequence": "^1.3.4",
     "shadcn": "^4.0.0",
     "sonner": "^2.0.7",
@@ -60,6 +63,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4"
