@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import DOMPurify from "dompurify";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeSanitize from 'rehype-sanitize';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
@@ -226,34 +228,38 @@ export function JobDetailPage() {
               <h2 className="text-xl font-semibold text-slate-900">Job details</h2>
               <p className="text-sm text-emerald-600">Job code: {job.jobCode}</p>
             </div>
-            <div
-              className="mt-4 text-slate-600"
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(job.description ?? "") }}
-            />
+            <div className="mt-4 text-slate-600">
+              <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
+                {job.description ?? ''}
+              </ReactMarkdown>
+            </div>
 
             <div className="mt-8 space-y-8">
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">Responsibilities</h3>
-                <div
-                  className="mt-3 whitespace-pre-line text-slate-600"
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(job.responsibilities ?? "") }}
-                />
+                <div className="mt-3 whitespace-pre-line text-slate-600">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
+                    {job.responsibilities ?? ''}
+                  </ReactMarkdown>
+                </div>
               </div>
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">Requirements</h3>
-                <div
-                  className="mt-3 whitespace-pre-line text-slate-600"
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(job.requirements ?? "") }}
-                />
+                <div className="mt-3 whitespace-pre-line text-slate-600">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
+                    {job.requirements ?? ''}
+                  </ReactMarkdown>
+                </div>
               </div>
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">Benefits</h3>
-                <div
-                  className="mt-3 whitespace-pre-line text-slate-600"
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(job.benefits ?? "") }}
-                />
+                <div className="mt-3 whitespace-pre-line text-slate-600">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
+                    {job.benefits ?? ''}
+                  </ReactMarkdown>
+                </div>
               </div>
 
               <div>

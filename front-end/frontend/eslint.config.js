@@ -40,8 +40,8 @@ export default tseslint.config(
       "boundaries/no-unknown": "warn",
       // Custom rules for preventing hardcoded content
       // NOTE: no-hardcoded-strings has too many false positives with Tailwind CSS
-      // The other more targeted custom rules  provide better coverage
-      "custom/no-hardcoded-strings": "off",
+      // but enabling it as a 'warn' helps surface obvious i18n misses during development.
+      "custom/no-hardcoded-strings": "warn",
       "custom/no-api-urls": "warn",
       "custom/no-hardcoded-html-attributes": "warn",
       "custom/no-hardcoded-toast-messages": "warn",
