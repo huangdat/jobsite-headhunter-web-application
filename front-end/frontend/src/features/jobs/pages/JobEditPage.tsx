@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
-import ErrorBoundary from "@/components/ErrorBoundary";
+// ErrorBoundary not used here
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { RichTextEditor } from "@/components/RichTextEditor";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { getJobDetail, updateJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
+import { JOB_FORM_DEFAULTS } from "../utils";
 
 export function JobEditPage() {
   const { id } = useParams<{ id: string }>();
@@ -20,24 +21,11 @@ export function JobEditPage() {
 
   const { control, register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm<JobFormValues>({
     defaultValues: {
-      title: "",
-      description: "",
-      rankLevel: "JUNIOR",
-      workingType: "ONSITE",
+      ...JOB_FORM_DEFAULTS,
       location: "",
-      addressDetail: "",
-      experience: 1,
       salaryMin: 0,
       salaryMax: 0,
-      negotiable: false,
-      currency: "VND",
-      quantity: 1,
       deadline: "",
-      skillIds: [],
-      responsibilities: "",
-      requirements: "",
-      benefits: "",
-      workingTime: "",
     },
   });
 
@@ -111,15 +99,7 @@ export function JobEditPage() {
     }
   };
 
-  const skillsByCategory = useMemo(() => {
-    const grouped: Record<string, SkillOption[]> = {};
-    skills.forEach((skill) => {
-      const key = skill.category ?? "GENERAL";
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(skill);
-    });
-    return grouped;
-  }, [skills]);
+  // grouping skills by category removed — not used in this page currently
 
   if (loading) return <div className="p-8">Loading...</div>;
 

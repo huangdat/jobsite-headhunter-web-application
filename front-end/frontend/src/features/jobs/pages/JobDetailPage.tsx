@@ -9,12 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { fetchJobDetail, fetchSavedJobs, removeSavedJob, saveJobPost } from "../services/jobsApi";
 import type { JobDetail } from "../types";
-
-const numberFormat = new Intl.NumberFormat("vi-VN", {
-  style: "currency",
-  currency: "VND",
-  maximumFractionDigits: 0,
-});
+import { formatSalaryRange } from "../utils";
 
 export function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -104,7 +99,7 @@ export function JobDetailPage() {
 
   const salaryLabel = job.negotiable
     ? "Negotiable"
-    : `${numberFormat.format(job.salaryMin)} - ${numberFormat.format(job.salaryMax)} ${job.currency}`;
+    : formatSalaryRange(job.salaryMin, job.salaryMax, job.currency);
   const deadlineLabel = job.deadline
     ? new Date(job.deadline).toLocaleDateString("en-US")
     : "Open";
