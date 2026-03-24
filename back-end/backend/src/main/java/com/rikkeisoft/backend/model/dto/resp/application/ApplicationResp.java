@@ -8,7 +8,8 @@ import lombok.experimental.FieldDefaults;
 import java.time.LocalDateTime;
 
 /**
- * Concise response payload for applications, typically used in list/pipeline views.
+ * Concise response payload for applications, typically used in list/pipeline
+ * views.
  * Contains necessary tracking IDs (jobId, candidateId).
  */
 @Data
@@ -18,9 +19,15 @@ public class ApplicationResp {
     Long jobId;
     String candidateId; // id of Account entity. not CandidateProfile's Id
     String jobTitle;
-    String fullName;
 
+    String fullName;
+  
     LocalDateTime appliedAt;
 
     ApplicationStatus status;
+
+    String email;
+    String phone;
+    String coverLetter;
+    String salaryExpectation;
 }

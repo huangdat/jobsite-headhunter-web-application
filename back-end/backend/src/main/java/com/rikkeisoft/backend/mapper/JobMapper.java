@@ -18,6 +18,10 @@ import com.rikkeisoft.backend.model.entity.JobSkill;
 public interface JobMapper {
     @Mapping(source = "headhunter.id", target = "headhunterId")
     @Mapping(source = "headhunter.fullName", target = "headhunterName")
+    @Mapping(source = "headhunter.businessProfile.companyName", target = "companyName")
+    @Mapping(source = "headhunter.businessProfile.websiteUrl", target = "companyWebsite")
+    @Mapping(source = "headhunter.businessProfile.companyScale", target = "companySize")
+    @Mapping(source = "headhunter.businessProfile.addressMain", target = "companyAddress")
     JobResp toJobResp(Job job);
 
     @Mapping(source = "headhunter.id", target = "headhunterId")

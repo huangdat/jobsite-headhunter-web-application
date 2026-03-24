@@ -1,12 +1,11 @@
 import { Navigate, useLocation } from "react-router-dom";
-
 import { useAuth } from "@/features/auth/context/useAuth";
 
 type UserRole = "CANDIDATE" | "HEADHUNTER" | "COLLABORATOR" | "ADMIN";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: UserRole[];
+  allowedRoles?: UserRole[] | string[];
 }
 
 export function ProtectedRoute({
@@ -16,22 +15,29 @@ export function ProtectedRoute({
   const location = useLocation();
   const { isAuthenticated, isInitializing, user } = useAuth();
 
-  if (isInitializing) {
-    return null;
+  // Not logged in → redirect to login
+  if (!isAuthenticated && !isInitializing) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location.pathname }}
+      />
+    );
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
-  }
-
-  // Check role if allowedRoles is specified
+  // Check role if provided
   if (allowedRoles && allowedRoles.length > 0) {
-    const userRole = user?.role as UserRole;
-    if (!userRole || !allowedRoles.includes(userRole)) {
-      // Redirect to home or unauthorized page
+    const role = (user?.role ?? "").toString().toLowerCase();
+
+    const allowed = allowedRoles.map((r) =>
+      r.toString().toLowerCase()
+    );
+
+    if (!allowed.includes(role)) {
       return <Navigate to="/home" replace />;
     }
   }
 
-  return <>{children}</>;
+  return children;
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRandomLatestJobs } from "@/shared/utils/jobService";
@@ -81,9 +82,12 @@ export function FeaturedJobs() {
           </div>
 
           <div className="text-center mt-12">
-            <button className="border px-6 py-3 rounded-xl hover:bg-gray-100 transition cursor-pointer">
+            <Link
+              to="/jobs"
+              className="inline-block border px-6 py-3 rounded-xl hover:bg-gray-100 transition"
+            >
               {t("featuredJobs.viewMore")}
-            </button>
+            </Link>
           </div>
         </>
       )}

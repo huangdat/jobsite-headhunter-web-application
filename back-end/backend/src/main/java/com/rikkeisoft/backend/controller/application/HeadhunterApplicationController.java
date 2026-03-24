@@ -8,6 +8,7 @@ import com.rikkeisoft.backend.model.dto.resp.application.ApplicationResp;
 import com.rikkeisoft.backend.model.dto.resp.interview.InterviewResp;
 import com.rikkeisoft.backend.service.ApplicationService;
 import com.rikkeisoft.backend.service.InterviewService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -45,7 +46,7 @@ public class HeadhunterApplicationController {
 
     // PATCH /applications/{id}/status - Approve/Reject/Hire
     @PatchMapping("/applications/{id}/status")
-    public APIResponse<ApplicationDetailResp> updateStatus(@PathVariable Long id, @RequestBody ApplicationStatusUpdateReq req) {
+    public APIResponse<ApplicationDetailResp> updateStatus(@PathVariable Long id,@Valid @RequestBody ApplicationStatusUpdateReq req) {
         return APIResponse.<ApplicationDetailResp>builder()
                 .result(applicationService.updateStatus(id, req))
                 .build();
