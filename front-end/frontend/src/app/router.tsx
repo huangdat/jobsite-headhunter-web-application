@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "@/features/auth/context/useAuth";
 
 import {
   LoginPage,
@@ -48,10 +49,23 @@ import { CommissionProfilePage } from "@/features/collaborator/commission/pages"
 // import { CompanyDetailPage } from "@/features/company/detail/pages";
 
 export function AppRouter() {
+  function RoleRedirect() {
+    const { isAuthenticated, isInitializing, user } = useAuth();
+
+    if (isInitializing) return null;
+
+    if (!isAuthenticated) return <Navigate to="/jobs" replace />;
+
+    const role = user?.role ? user.role.toString().toLowerCase() : null;
+    if (role === "headhunter") return <Navigate to="/headhunter/jobs" replace />;
+    if (role === "admin") return <Navigate to="/admin/dashboard" replace />;
+    return <Navigate to="/home" replace />;
+  }
+
   return (
     <Routes>
-      {/* Root redirect */}
-      <Route path="/" element={<Navigate to="/headhunter/jobs" replace />} />
+      {/* Root redirect (role-aware) */}
+      <Route path="/" element={<RoleRedirect />} />
 
       {/* ==================== AUTH ROUTES ==================== */}
       <Route
@@ -119,7 +133,7 @@ export function AppRouter() {
         }
       />
       <Route element={<MainLayout />}>
-        <Route path="/home" element={<Navigate to="/headhunter/jobs" replace />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/jobs" element={<JobListPage />} />
           <Route
             path="/jobs/my"
