@@ -262,4 +262,4 @@ thumb
 sketch
 
 coverage/
-**node_modules/
+**/node_modules/**
