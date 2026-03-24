@@ -33,18 +33,18 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": [
-        "warn",
+        "error",
         { allowConstantExport: true },
       ],
-      "@typescript-eslint/no-unused-vars": "warn",
-      "boundaries/no-unknown": "warn",
+      "@typescript-eslint/no-unused-vars": "error",
+      "boundaries/no-unknown": "error",
       // Custom rules for preventing hardcoded content
       // NOTE: no-hardcoded-strings has too many false positives with Tailwind CSS
       // but enabling it as a 'warn' helps surface obvious i18n misses during development.
-      "custom/no-hardcoded-strings": "warn",
-      "custom/no-api-urls": "warn",
-      "custom/no-hardcoded-html-attributes": "warn",
-      "custom/no-hardcoded-toast-messages": "warn",
+      "custom/no-hardcoded-strings": "error",
+      "custom/no-api-urls": "error",
+      "custom/no-hardcoded-html-attributes": "error",
+      "custom/no-hardcoded-toast-messages": "error",
     },
   }
 );

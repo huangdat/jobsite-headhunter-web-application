@@ -10,24 +10,20 @@
  * <p>{t("common.welcome")}</p>
  * const msg = t("messages.greeting");
  *
- * Exceptions:
- * - Keywords, operators, component names
- * - Type/Interface definitions
- * - Comments
+ * ✅ WHITELISTED:
+ * Tailwind CSS, imports/exports, HTML attrs, paths
  */
 
 const isTranslated = (node) => {
-  // Check if it's inside t("...") or {`...key...`}
   const parent = node.parent;
-
   if (!parent) return false;
 
-  // Check if it's argument to t() function
-  if (parent.type === "CallExpression" && parent.callee.name === "t") {
+  // ✅ t("key.path") function
+  if (parent.type === "CallExpression" && parent.callee?.name === "t") {
     return true;
   }
 
-  // Check if it's inside template literal with translation key pattern
+  // ✅ Template literal `common.key`
   if (parent.type === "TemplateLiteral" && node.value.match(/[a-z]+\.[a-z]+/)) {
     return true;
   }
@@ -36,56 +32,56 @@ const isTranslated = (node) => {
 };
 
 const isWhitelisted = (value) => {
-  // Pattern for Tailwind CSS classes and similar styling string
-  // These contain spaces but are NOT user-facing text
-  const isTailwindOrStyle =
-    /^[a-zA-Z0-9\-\s/:]*$/.test(value) &&
-    (value.includes("-") || value.includes(":") || value.includes("/"));
+  const trimmed = value.trim();
 
-  if (isTailwindOrStyle) {
-    return true;
-  }
+  // ✅ SKIP empty/whitespace
+  if (!trimmed) return true;
 
-  const whitelist = [
-    // HTML attributes (literal names)
-    "href",
-    "src",
-    "alt",
-    "placeholder",
-    "type",
-    "name",
-    "className",
-    "id",
-    "title",
-    "viewBox",
-    "d",
-    "strokeDasharray",
-    // Common patterns
-    ".",
-    "-",
-    "_",
-    "/",
-    "\\",
-    // Patterns that are clearly not user-facing text
-    "^[a-zA-Z0-9/_-]*$", // URLs, paths
-    "^[A-Z][a-zA-Z0-9]*$", // Component names
-    "^M[0-9 .,-]+$", // SVG path commands
-    "^[0-9 .,]+$", // Numbers and separators for paths/dimensions
+  // ✅ SKIP short strings (keywords, attrs)
+  if (trimmed.length < 3) return true;
+
+  // ✅ TAILWIND CSS CLASSES (FULL WHITELIST)
+  const tailwindPrefixes = [
+    'grid', 'flex', 'gap', 'p-', 'm-', 'text-', 'bg-', 'border-', 'shadow-', 
+    'rounded-', 'w-', 'h-', 'min-', 'max-', 'sm:', 'md:', 'lg:', 'xl:', '2xl:',
+    'hover:', 'focus:', 'active:', 'disabled:', 'dark:', 'first:', 'last:', 
+    'only:', 'group-', 'peer-', 'ring-', 'divide-', 'place-', 'inset-',
+    'object-', 'top-', 'right-', 'bottom-', 'left-', 'z-', 'opacity-', 'scale-',
+    'rotate-', 'skew-', 'translate-', 'animate-', 'transition-', 'delay-'
   ];
 
-  return whitelist.some((pattern) => {
-    if (pattern instanceof RegExp) {
-      return pattern.test(value);
-    }
-    return pattern === value;
-  });
+  // Tailwind pattern match
+  const isTailwind = tailwindPrefixes.some(prefix => 
+    trimmed.includes(prefix) || trimmed.match(new RegExp(`^${prefix.replace(/[-:]/g, '\\$&')}[a-zA-Z0-9\\-\\s:/\\[\\]]*$`))
+  );
+
+  if (isTailwind) return true;
+
+  // ✅ HTML attributes
+  const htmlAttrs = ['href', 'src', 'alt', 'placeholder', 'type', 'name', 'id', 'title', 'className', 'viewBox'];
+  if (htmlAttrs.includes(trimmed)) return true;
+
+  // ✅ Import/export keywords
+  const keywords = ['import', 'export', 'from', 'as', 'default'];
+  if (keywords.includes(trimmed)) return true;
+
+  // ✅ Paths/URLs (no spaces)
+  if (/^[a-zA-Z0-9/_\\-]+$/.test(trimmed)) return true;
+
+  // ✅ Component names (PascalCase)
+  if (/^[A-Z][a-zA-Z0-9]*$/.test(trimmed)) return true;
+
+  // ✅ SVG paths/numbers
+  if (/^M[0-9 .,-]+$/.test(trimmed) || /^[0-9 .,]+$/.test(trimmed)) return true;
+
+  return false;
 };
 
 export default {
   meta: {
     type: "problem",
     docs: {
-      description: "Disallow hardcoded strings in JSX/TSX files",
+      description: "Disallow hardcoded user-facing strings (Tailwind whitelisted)",
       category: "Best Practices",
       recommended: true,
     },
@@ -95,59 +91,39 @@ export default {
   create(context) {
     return {
       Literal(node) {
-        // Only check string literals
         if (typeof node.value !== "string") return;
-
-        // Skip whitespace-only strings
-        if (!node.value.trim()) return;
-
-        // Skip short strings (likely not user-facing text)
-        if (node.value.length < 3) return;
-
-        // Skip if whitelisted
-        if (isWhitelisted(node.value)) return;
-
-        // Skip if already translated
-        if (isTranslated(node)) return;
-
-        // Check if it looks like user-facing text (has space, letter)
-        const hasSpace = /\s/.test(node.value);
-        const hasLetter = /[a-zA-Z]/.test(node.value);
-
+        
+        const value = node.value.trim();
+        if (!value || value.length < 3) return;
+        
+        // ✅ SKIP whitelisted + translated
+        if (isWhitelisted(value) || isTranslated(node)) return;
+        
+        // ✅ TRIGGER: user-facing text (space + letters)
+        const hasSpace = /\s/.test(value);
+        const hasLetter = /[a-zA-Z]/.test(value);
+        
         if (hasSpace && hasLetter) {
           context.report({
             node,
-            message: `Hardcoded text detected: "${node.value}". Use i18n: {t("key.path")} instead`,
-            data: {
-              text: node.value,
-            },
+            message: `❌ Hardcoded text: "${value}". Use i18n: {t("key.path")} instead`,
           });
         }
       },
 
       JSXText(node) {
         const text = node.value.trim();
-
-        // Skip if empty or only whitespace
-        if (!text) return;
-
-        // Skip if whitelisted
-        if (isWhitelisted(text)) return;
-
-        // Skip if already in translation
-        if (isTranslated(node)) return;
-
-        // Check if looks like user text
+        if (!text || text.length < 3) return;
+        
+        if (isWhitelisted(text) || isTranslated(node)) return;
+        
         const hasSpace = /\s/.test(text);
         const hasLetter = /[a-zA-Z]/.test(text);
-
+        
         if (hasSpace && hasLetter) {
           context.report({
             node,
-            message: `Hardcoded JSX text detected: "${text}". Use i18n: {t("key.path")} instead`,
-            data: {
-              text,
-            },
+            message: `❌ Hardcoded JSX text: "${text}". Use i18n: {t("key.path")} instead`,
           });
         }
       },
