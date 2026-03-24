@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.rikkeisoft.backend.enums.ApplicationStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -30,9 +31,14 @@ public class HeadhunterApplicationController {
 
     // GET /jobs/{jobId}/applications - Pipeline view
     @GetMapping("/jobs/{jobId}/applications")
-    public APIResponse<Page<ApplicationResp>> getJobPipeline(@PathVariable Long jobId, Pageable pageable) {
+    public APIResponse<Page<ApplicationResp>> getJobPipeline(
+            @PathVariable Long jobId,
+            @RequestParam(name = "status", required = false) ApplicationStatus status,
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @org.springframework.data.web.PageableDefault(size = 10) Pageable pageable) {
+
         return APIResponse.<Page<ApplicationResp>>builder()
-                .result(applicationService.getJobPipeline(jobId, pageable))
+                .result(applicationService.getJobPipeline(jobId, status, keyword, pageable))
                 .build();
     }
 

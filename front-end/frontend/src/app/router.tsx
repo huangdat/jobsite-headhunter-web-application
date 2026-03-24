@@ -10,6 +10,7 @@ import {
   ResetPasswordSuccessPage,
   ChangePasswordPage,
 } from "@/features/auth/pages";
+import { useAuth } from "@/features/auth/context/useAuth";
 import { HomePage } from "@/features/home/pages/HomePage";
 import { UserListPage } from "@/features/users/list";
 import { UserClassificationPage } from "@/features/users/classification";
@@ -48,10 +49,25 @@ import { CommissionProfilePage } from "@/features/collaborator/commission/pages"
 // import { CompanyDetailPage } from "@/features/company/detail/pages";
 
 export function AppRouter() {
+  function RoleRedirect() {
+    const { isAuthenticated, isInitializing, user } = useAuth();
+
+    if (isInitializing) return null; // let auth finish
+
+    const role = user?.role ? user.role.toString().toLowerCase() : null;
+
+    if (!isAuthenticated) return <Navigate to="/jobs" replace />;
+
+    if (role === "headhunter") return <Navigate to="/headhunter/jobs" replace />;
+    if (role === "admin") return <Navigate to="/admin/dashboard" replace />;
+
+    // default for candidates and others: send to /home
+    return <Navigate to="/home" replace />;
+  }
   return (
     <Routes>
-      {/* Root redirect */}
-      <Route path="/" element={<Navigate to="/headhunter/jobs" replace />} />
+      {/* Root redirect with role awareness */}
+      <Route path="/" element={<RoleRedirect />} />
 
       {/* ==================== AUTH ROUTES ==================== */}
       <Route
@@ -119,7 +135,7 @@ export function AppRouter() {
         }
       />
       <Route element={<MainLayout />}>
-        <Route path="/home" element={<Navigate to="/headhunter/jobs" replace />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/jobs" element={<JobListPage />} />
           <Route
             path="/jobs/my"
@@ -171,7 +187,7 @@ export function AppRouter() {
             }
           />
       </Route>
-      <Route path="/home" element={<Navigate to="/headhunter/jobs" replace />} />
+      
 
       {/* PROF-06: Company Detail (public - add when ready) */}
       {/* <Route path="/companies/:id" element={<CompanyDetailPage />} /> */}

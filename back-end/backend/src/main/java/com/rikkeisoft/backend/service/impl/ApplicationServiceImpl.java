@@ -152,17 +152,27 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     }
 
-    @Override
-    public Page<ApplicationResp> getJobPipeline(Long jobId, Pageable pageable) {
+    
+
+        @Override
+        public Page<ApplicationResp> getJobPipeline(Long jobId, ApplicationStatus status, String keyword, Pageable pageable) {
         Account currentAccount = accountService.getCurrentAccount();
         Job job = jobRepo.findById(jobId)
-                .orElseThrow(() -> new AppException(ErrorCode.JOB_NOT_FOUND));
+            .orElseThrow(() -> new AppException(ErrorCode.JOB_NOT_FOUND));
 
         checkPermissions(currentAccount, job);
 
-        return applicationRepo.findAllByJobId(jobId, pageable)
-                .map(applicationMapper::toResponse);
-    }
+        // If client didn't provide a sort, default to appliedAt desc
+        if (pageable.getSort().isUnsorted()) {
+            pageable = org.springframework.data.domain.PageRequest.of(
+                pageable.getPageNumber(), pageable.getPageSize(), org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "appliedAt")
+            );
+        }
+
+        Page<Application> page = applicationRepo.searchByJobIdAndOptionalStatusAndKeyword(jobId, status, (keyword == null || keyword.isBlank()) ? null : keyword.trim(), pageable);
+
+        return page.map(applicationMapper::toResponse);
+        }
 
     @Override
     public ApplicationDetailResp getApplicationDetail(Long applicationId) {
