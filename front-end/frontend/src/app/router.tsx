@@ -11,6 +11,7 @@ import {
   ResetPasswordSuccessPage,
   ChangePasswordPage,
 } from "@/features/auth/pages";
+import { useAuth } from "@/features/auth/context/useAuth";
 import { HomePage } from "@/features/home/pages/HomePage";
 import { UserListPage } from "@/features/users/list";
 import { UserClassificationPage } from "@/features/users/classification";
@@ -185,7 +186,7 @@ export function AppRouter() {
             }
           />
       </Route>
-      <Route path="/home" element={<Navigate to="/headhunter/jobs" replace />} />
+      
 
       {/* PROF-06: Company Detail (public - add when ready) */}
       {/* <Route path="/companies/:id" element={<CompanyDetailPage />} /> */}

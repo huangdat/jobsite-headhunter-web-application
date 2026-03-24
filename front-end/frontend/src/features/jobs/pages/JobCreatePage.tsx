@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -9,12 +9,7 @@ import { RichTextEditor } from "@/components/RichTextEditor";
 import { createJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
-
-const defaultDeadline = () => {
-  const today = new Date();
-  today.setDate(today.getDate() + 30);
-  return today.toISOString().slice(0, 10);
-};
+import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 
 export function JobCreatePage() {
   const navigate = useNavigate();
@@ -32,24 +27,8 @@ export function JobCreatePage() {
     formState: { errors },
   } = useForm<JobFormValues>({
     defaultValues: {
-      title: "",
-      description: "",
-      rankLevel: "JUNIOR",
-      workingType: "ONSITE",
-      location: "Ho Chi Minh City",
-      addressDetail: "",
-      experience: 1,
-      salaryMin: 15000000,
-      salaryMax: 30000000,
-      negotiable: false,
-      currency: "VND",
-      quantity: 1,
-      deadline: defaultDeadline(),
-      skillIds: [],
-      responsibilities: "",
-      requirements: "",
-      benefits: "",
-      workingTime: "Mon - Fri",
+      ...JOB_FORM_DEFAULTS,
+      deadline: calculateDefaultDeadline(),
     },
   });
 

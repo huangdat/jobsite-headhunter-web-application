@@ -21,6 +21,13 @@ public interface ApplicationRepo extends JpaRepository<Application, Long> {
     // For Headhunters to view their job pipeline
     Page<Application> findAllByJobId(Long jobId, Pageable pageable);
 
+        @org.springframework.data.jpa.repository.Query("SELECT a FROM Application a WHERE a.job.id = :jobId "
+            + "AND (:status IS NULL OR a.status = :status) "
+            + "AND (:keyword IS NULL OR (LOWER(a.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')) "
+            + "OR LOWER(a.email) LIKE LOWER(CONCAT('%', :keyword, '%')) "
+            + "OR LOWER(a.phone) LIKE LOWER(CONCAT('%', :keyword, '%'))))")
+        Page<Application> searchByJobIdAndOptionalStatusAndKeyword(Long jobId, ApplicationStatus status, String keyword, Pageable pageable);
+
     // For Candidates to view their application history
     Page<Application> findAllByCandidate_Id(String accountId, Pageable pageable);
 

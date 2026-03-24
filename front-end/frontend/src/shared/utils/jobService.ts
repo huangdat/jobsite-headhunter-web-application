@@ -43,6 +43,7 @@ function mapJobRespToJob(jobResp: JobResp): Job {
     company: jobResp.headhunterName || "Unknown Company",
     salary,
     location: jobResp.city || "Unknown Location",
+    workingType: jobResp.workingType,
     match: jobResp.matchScore !== undefined && jobResp.matchScore !== null ? `${jobResp.matchScore}%` : undefined,
   };
 }
