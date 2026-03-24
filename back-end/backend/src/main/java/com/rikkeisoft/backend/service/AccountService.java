@@ -7,6 +7,7 @@ import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 
 import java.util.List;
 import com.rikkeisoft.backend.model.dto.PagedResponse;
+import com.rikkeisoft.backend.model.entity.Account;
 
 public interface AccountService {
     List<AccountResp> getAllAccounts();
@@ -15,7 +16,7 @@ public interface AccountService {
     AccountResp createAccount(AccountCreateReq req);
     AccountResp updateMyAccount(AccountUpdateReq req);
     AccountResp updateStatus(String id, String status);
-
+    Account getCurrentAccount();
     String changePassword(AccountChangePasswordreq req);
 
     PagedResponse<AccountResp> searchAccounts(int page, int size, String keyword, String role, String status, String sort);

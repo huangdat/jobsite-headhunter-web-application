@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class APIResponse <T> {
+public class APIResponse<T> {
     HttpStatus status = HttpStatus.OK; // Default status is 200 OK
     String message;
     T result;

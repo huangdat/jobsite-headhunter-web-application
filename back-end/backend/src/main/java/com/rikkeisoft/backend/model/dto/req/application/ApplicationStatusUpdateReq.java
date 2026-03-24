@@ -9,9 +9,6 @@ import lombok.Data;
  */
 @Data
 public class ApplicationStatusUpdateReq {
-    // fetch the Application ID from URL instead
     @NotNull(message = "APPLICATION_STATUS_REQUIRED")
     private ApplicationStatus status;
-
-    private String note;
 }
