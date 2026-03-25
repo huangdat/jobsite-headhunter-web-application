@@ -44,7 +44,7 @@ public class ForumComment {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
-    NewsPost post;
+    ForumPost post;
 
     /**
      * The {@link Account} that authored this comment.

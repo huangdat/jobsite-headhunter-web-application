@@ -5,7 +5,7 @@ import com.rikkeisoft.backend.model.dto.req.forum.CommentUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.forum.CommentTreeResp;
 import com.rikkeisoft.backend.repository.ForumCommentRepo;
 import com.rikkeisoft.backend.repository.CommentReactionRepo;
-import com.rikkeisoft.backend.repository.NewsPostRepo;
+import com.rikkeisoft.backend.repository.ForumPostRepo;
 import com.rikkeisoft.backend.service.ForumCommentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,7 @@ import java.util.List;
 public class ForumCommentServiceImpl implements ForumCommentService {
 
     ForumCommentRepo forumCommentRepo;
-    NewsPostRepo newsPostRepo;
+    ForumPostRepo forumPostRepo;
     CommentReactionRepo commentReactionRepo;
     MessageSource messageSource;
 
