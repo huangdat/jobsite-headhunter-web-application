@@ -36,6 +36,10 @@
     "resetFilter": "Đặt lại"
   },
   "status": {
+    "PENDING": "Đang chờ",
+    "ACTIVE": "Hoạt động",
+    "SUSPENDED": "Bị đình chỉ",
+    "DELETED": "Đã xóa",
     "active": "Hoạt động",
     "inactive": "Không hoạt động"
   },
@@ -53,9 +57,14 @@
     "deleteUser": "Xóa Người dùng"
   },
   "common": {
+    "loading": "Đang tải người dùng...",
+    "noDataAvailable": "Không có dữ liệu",
     "failedToFetchUsers": "Không thể tải danh sách người dùng",
     "failedToFetchUserDetails": "Không thể tải chi tiết người dùng",
-    "featureComingSoon": "Tính năng sắp ra mắt"
+    "featureComingSoon": "Tính năng sắp ra mắt",
+    "permanentDelete": "Xóa vĩnh viễn",
+    "loading": "Đang tải...",
+    "noDataAvailable": "Không có dữ liệu"
   },
   "detail": {
     "userDetails": "Chi tiết Người dùng",
@@ -100,9 +109,10 @@
     "errorLoadingData": "Lỗi Tải Dữ liệu"
   },
   "statuses": {
+    "pending": "Đang chờ xử lý",
     "active": "Hoạt động",
-    "inactive": "Không hoạt động",
-    "suspended": "Bị Tạm dừng"
+    "suspended": "Bị Tạm dừng",
+    "deleted": "Đã xóa"
   },
   "loginStatus": {
     "successful": "Thành công",
@@ -111,12 +121,14 @@
     "failedAttempt": "Thất bại"
   },
   "roles": {
-    "administrator": "Quản trị viên",
-    "manager": "Quản lý",
-    "user": "Người dùng",
-    "admin": "Admin",
-    "editor": "Biên tập viên",
-    "viewer": "Người xem"
+    "admin": "Quản trị viên",
+    "headhunter": "Nhà tuyển dụng",
+    "collaborator": "Cộng tác viên",
+    "candidate": "Ứng viên",
+    "ADMIN": "Quản trị viên",
+    "HEADHUNTER": "Nhà tuyển dụng",
+    "COLLABORATOR": "Cộng tác viên",
+    "CANDIDATE": "Ứng viên"
   },
   "confirmations": {
     "lockAccount": "Bạn có chắc chắn muốn khóa tài khoản này không?",
@@ -145,6 +157,14 @@
     "userInfo": "Người dùng",
     "reasonLabel": "Lý do Khóa",
     "selectReasonPlaceholder": "Chọn lý do khóa",
+    "reasonSuspiciousActivity": "Hoạt động Đáng ngờ",
+    "reasonPolicyViolation": "Vi phạm Chính sách",
+    "reasonAccountCompromise": "Tài khoản Bị xâm phạm",
+    "reasonOther": "Khác",
+    "otherReasonTitle": "Nêu Chi tiết Lý do Khóa",
+    "otherReasonDesc": "Vui lòng cung cấp lý do chi tiết để khóa tài khoản này.",
+    "otherReasonPlaceholder": "Nhập lý do cụ thể để khóa tài khoản...",
+    "otherReasonHint": "Lý do này sẽ được ghi trong hệ thống.",
     "autoUnlockDateLabel": "Ngày Mở khóa Tự động",
     "autoUnlockDatePlaceholder": "Chọn ngày và giờ mở khóa",
     "optional": "Tùy chọn",
@@ -179,7 +199,9 @@
     "processing": "Đang xử lý...",
     "close": "Đóng",
     "tryAgain": "Thử lại",
-    "errorLockFailed": "Không thể khóa tài khoản người dùng"
+    "errorLockFailed": "Không thể khóa tài khoản người dùng",
+    "errorGeneral": "Đã xảy ra lỗi khi khóa tài khoản",
+    "successLockUser": "Tài khoản người dùng đã được khóa thành công"
   },
   "unlock": {
     "title": "Mở khóa Tài khoản Người dùng",
@@ -215,7 +237,9 @@
     "processing": "Đang xử lý...",
     "close": "Đóng",
     "tryAgain": "Thử lại",
-    "errorUnlockFailed": "Không thể mở khóa tài khoản người dùng"
+    "errorUnlockFailed": "Không thể mở khóa tài khoản người dùng",
+    "errorGeneral": "Đã xảy ra lỗi khi mở khóa tài khoản",
+    "successUnlockUser": "Tài khoản người dùng đã được mở khóa thành công"
   },
   "delete": {
     "title": "Xóa Người dùng",
@@ -226,6 +250,13 @@
     "jobsCount": "Bài đăng tuyển dụng",
     "softDeleteTitle": "Xóa Mềm (Khóa Tài khoản)",
     "softDeleteDesc": "Đánh dấu tài khoản là đã xóa. Dữ liệu sẽ được giữ lại để phục hồi.",
+    "softDeleteReasonTitle": "Lý do Xóa Mềm",
+    "softDeleteReasonDesc": "Vui lòng cung cấp lý do xóa mềm tài khoản này.",
+    "reasonLabel": "Lý do Xóa",
+    "reasonPlaceholder": "Nhập lý do cho việc xóa mềm (ví dụ: Tài khoản không hoạt động, Yêu cầu của người dùng, Vi phạm chính sách)...",
+    "reasonHint": "Lý do này sẽ được ghi trong nhật ký kiểm toán.",
+    "reasonRequired": "Lý do là bắt buộc khi xóa mềm",
+    "errorReasonRequired": "Vui lòng cung cấp lý do trước khi tiếp tục",
     "softDeleteBenefit1": "Tài khoản được đánh dấu không hoạt động, không thể đăng nhập",
     "softDeleteBenefit2": "Dữ liệu được giữ trong 30 ngày để phục hồi",
     "softDeleteBenefit3": "Có thể được khôi phục bởi Admin nếu cần",
@@ -269,5 +300,69 @@
     "errorNotFound": "Không tìm thấy người dùng",
     "errorUnauthorized": "Bạn không có quyền thực hiện hành động này",
     "errorNetwork": "Lỗi mạng. Vui lòng thử lại"
+  },
+  "classification": {
+    "pageTitle": "Phân loại Người dùng",
+    "description": "Tổng quan phân bố người dùng hệ thống theo vai trò tổ chức",
+    "groupBy": "Phân loại theo",
+    "totalUsers": "Tổng Người dùng",
+    "activeRate": "Tỷ lệ Hoạt động",
+    "classificationName": "Tên Phân loại",
+    "count": "Số lượng",
+    "distribution": "Phân bố",
+    "status": "Trạng thái",
+    "expandAll": "Mở rộng Tất cả",
+    "collapseAll": "Thu gọn Tất cả",
+    "userDistributionTrend": "Xu hướng Phân bố Người dùng",
+    "systemHealth": "Sức khỏe Hệ thống Trung bình",
+    "summary": "Tóm tắt",
+    "totalGroups": "Tổng Nhóm",
+    "activeUsers": "Người dùng Hoạt động",
+    "inactiveUsers": "Người dùng Không hoạt động",
+    "groupByRole": "Phân loại theo Vai trò",
+    "groupByStatus": "Phân loại theo Trạng thái",
+    "groupByCompany": "Phân loại theo Công ty",
+    "groupByCreatedMonth": "Phân loại theo Tháng tạo",
+    "roleDescription": "Phân nhóm người dùng theo vai trò tổ chức",
+    "statusDescription": "Phân nhóm người dùng theo trạng thái tài khoản",
+    "companyDescription": "Phân nhóm người dùng theo công ty",
+    "createdMonthDescription": "Phân nhóm người dùng theo tháng đăng ký",
+    "roles": {
+      "admin": "Admin",
+      "headhunter": "Headhunter",
+      "collaborator": "Collaborator",
+      "candidate": "Ứng viên"
+    },
+    "roleSubtitles": {
+      "admin": "Quản trị viên Hệ thống",
+      "headhunter": "Chuyên gia Tuyển dụng",
+      "collaborator": "Đối tác Kinh doanh",
+      "candidate": "Người Tìm việc"
+    },
+    "statuses": {
+      "active": "Hoạt động",
+      "locked": "Khóa",
+      "suspended": "Tạm dừng",
+      "pending": "Đang chờ"
+    },
+    "statusSubtitles": {
+      "active": "Tài khoản được xác minh và có thể truy cập",
+      "locked": "Tài khoản bị vô hiệu hóa",
+      "suspended": "Tài khoản bị tạm dừng tạm thời",
+      "pending": "Chờ xác minh email"
+    },
+    "companyEmployees": "nhân viên và đại diện",
+    "usersRegisteredIn": "Người dùng đã đăng ký vào",
+    "unknown": "Không xác định",
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động",
+    "error": {
+      "permissionDenied": "Quyền Truy Cập Bị Từ Chối",
+      "permissionDeniedDescription": "Bạn không có quyền truy cập vào tính năng phân loại. Chỉ quản trị viên mới có thể xem phân loại người dùng.",
+      "unauthorized": "Chưa Được Xác Thực",
+      "unauthorizedDescription": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục.",
+      "loadFailed": "Không Thể Tải Người Dùng",
+      "loadFailedDescription": "Không thể tải dữ liệu người dùng. Vui lòng thử lại sau."
+    }
   }
 }

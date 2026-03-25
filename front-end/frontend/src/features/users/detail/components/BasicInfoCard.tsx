@@ -19,13 +19,13 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-lg font-semibold flex items-center gap-2 mb-6">
-        <Users className="w-5 h-5 text-green-500" />
+        <Users className="w-5 h-5 text-emerald-500" />
         {t("detail.basicInformation")}
       </h2>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
             {t("detail.fullName")}
           </label>
           <input
@@ -34,12 +34,12 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
             value={user.fullName}
             readOnly
             disabled
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 cursor-not-allowed"
+            className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-900 cursor-not-allowed"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
             {t("detail.email")}
           </label>
           <input
@@ -48,12 +48,12 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
             value={user.email}
             readOnly
             disabled
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 cursor-not-allowed"
+            className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-900 cursor-not-allowed"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
             {t("detail.phoneNumber")}
           </label>
           <input
@@ -62,12 +62,12 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
             value={user.phone}
             readOnly
             disabled
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 cursor-not-allowed"
+            className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-900 cursor-not-allowed"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
             {t("detail.company")}
           </label>
           <input
@@ -76,13 +76,13 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
             value={displayCompany}
             readOnly
             disabled
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 cursor-not-allowed"
+            className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-900 cursor-not-allowed"
           />
         </div>
 
         {user.biography && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-1">
               {t("detail.biography")}
             </label>
             <textarea
@@ -90,7 +90,7 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
               value={user.biography}
               readOnly
               disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 cursor-not-allowed h-24 resize-none"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-900 cursor-not-allowed h-24 resize-none"
             />
           </div>
         )}

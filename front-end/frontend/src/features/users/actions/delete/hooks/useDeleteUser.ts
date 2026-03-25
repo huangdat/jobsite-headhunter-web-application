@@ -1,23 +1,11 @@
 import { usersApi } from "@/features/users/services/usersApi";
 import { useState } from "react";
-import {
-  STORAGE_KEYS,
-  AUDIT_LOG_ACTIONS,
-  HTTP_STATUS,
-} from "../../../constants";
+import { HTTP_STATUS } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface DeleteUserOptions {
   userId: string;
-  userName: string;
-}
-
-interface DeleteAuditLog {
-  adminId: string | null;
-  timestamp: string;
-  targetUserId: string;
-  deleteType: string;
-  userName: string;
+  reason?: string; // Required for soft delete, optional for hard delete
 }
 
 export const useDeleteUser = () => {
@@ -26,25 +14,23 @@ export const useDeleteUser = () => {
   const [error, setError] = useState<string | null>(null);
 
   /**
-   * Perform soft delete on user (lock account)
+   * Perform soft delete on user (lock account, keep data for 30 days)
+   * @param options - { userId, reason }
    */
-  const softDelete = async ({ userId, userName }: DeleteUserOptions) => {
+  const softDelete = async ({
+    userId,
+    reason,
+  }: DeleteUserOptions & { reason: string }) => {
     setLoading(true);
     setError(null);
     try {
+      if (!reason || reason.trim() === "") {
+        throw new Error(t("delete.reasonRequired"));
+      }
+
+      // Call API to soft delete user (status = SUSPENDED)
       await usersApi.softDeleteUser(userId);
-
-      // Log audit (AC4)
-      const auditLog: DeleteAuditLog = {
-        adminId: localStorage.getItem(STORAGE_KEYS.USER_ID),
-        timestamp: new Date().toISOString(),
-        targetUserId: userId,
-        deleteType: AUDIT_LOG_ACTIONS.SOFT_DELETE,
-        userName,
-      };
-      console.log(`[${AUDIT_LOG_ACTIONS.SOFT_DELETE}]`, auditLog);
-
-      return { success: true, auditLog };
+      return { success: true };
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : t("delete.errorSoftDelete");
@@ -58,24 +44,15 @@ export const useDeleteUser = () => {
   /**
    * Perform hard delete on user (permanent deletion)
    * Throws 409 Conflict if user has related data
+   * @param options - { userId }
    */
-  const hardDelete = async ({ userId, userName }: DeleteUserOptions) => {
+  const hardDelete = async ({ userId }: DeleteUserOptions) => {
     setLoading(true);
     setError(null);
     try {
+      // Call API to hard delete user (status = DELETED)
       await usersApi.hardDeleteUser(userId);
-
-      // Log audit (AC4)
-      const auditLog: DeleteAuditLog = {
-        adminId: localStorage.getItem(STORAGE_KEYS.USER_ID),
-        timestamp: new Date().toISOString(),
-        targetUserId: userId,
-        deleteType: AUDIT_LOG_ACTIONS.HARD_DELETE,
-        userName,
-      };
-      console.log(`[${AUDIT_LOG_ACTIONS.HARD_DELETE}]`, auditLog);
-
-      return { success: true, auditLog };
+      return { success: true };
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : t("delete.errorHardDelete");

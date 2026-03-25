@@ -1,59 +1,51 @@
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout } from "@/shared/components";
-import { useAuthTranslation } from "@/shared/hooks";
-import type { ForgotPasswordFormData } from "../types";
-import { sendOtpForgotPassword } from "../services/authApi";
+import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
+import { useAppForm } from "@/shared/hooks/useAppForm";
+import type { ForgotPasswordFormData } from "@/features/auth/types";
+import { sendOtpForgotPassword } from "@/features/auth/services/authApi";
 import { toast } from "sonner";
-import { extractApiErrorMessage } from "../utils/apiError";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 import { MdOutlineMail } from "react-icons/md";
 
 export function ForgotPasswordPage() {
-  const { t } = useAuthTranslation();
+  const { t: tAuth } = useAuthTranslation();
+  const { t: tApp } = useAppTranslation();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<ForgotPasswordFormData>({
-    email: "",
+
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .required(tApp("validation.emailRequired"))
+      .email(tApp("validation.invalidEmail")),
   });
 
-  const [errors, setErrors] = useState<Partial<ForgotPasswordFormData>>({});
-  const [isLoading, setIsLoading] = useState(false);
+  const form = useAppForm<ForgotPasswordFormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "",
+    },
+  });
 
-  const validateForm = (): boolean => {
-    const newErrors: Partial<ForgotPasswordFormData> = {};
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = form;
 
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Validate before submitting
-    if (!validateForm()) {
-      toast.error(t("messages.invalidEmail"));
-      return;
-    }
-
-    setIsLoading(true);
-    setErrors({});
-
+  const onSubmit = async (data: ForgotPasswordFormData) => {
     try {
       const response = await sendOtpForgotPassword({
-        email: formData.email,
+        email: data.email,
         tokenType: "FORGOT_PASSWORD",
       });
 
-      toast.success(t("messages.otpSent"));
+      toast.success(tAuth("messages.otpSent"));
 
       // Navigate to reset password page with OTP data
       navigate("/reset-password", {
@@ -66,29 +58,16 @@ export function ForgotPasswordPage() {
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Failed to send OTP. Please try again.",
+        tAuth("messages.failedSendOtp")
       );
 
       toast.error(errorMessage);
-
-      setErrors({
-        email: errorMessage,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleChange = (value: string) => {
-    setFormData({ email: value });
-    if (errors.email) {
-      setErrors({});
     }
   };
 
   return (
     <AuthLayout
-      ctaButton={{ to: "/login", label: "Sign In" }}
+      ctaButton={{ to: "/login", label: tAuth("auth.pages.login") }}
       className="overflow-x-hidden"
     >
       <main className="max-w-5xl mx-auto px-4 py-8">
@@ -96,69 +75,70 @@ export function ForgotPasswordPage() {
           {/* LEFT PANEL */}
           <div className="md:w-5/12 bg-linear-to-br from-dark-panel-from to-dark-panel-to p-10 text-white">
             <h1 className="text-4xl font-bold mb-6">
-              Forgot Your <br />
-              <span className="text-brand-primary">Password?</span>
+              {tAuth("pages.forgotPassword.title")} <br />
+              <span className="text-brand-primary">
+                {tAuth("pages.forgotPassword.titleHighlight")}
+              </span>
             </h1>
 
             <p className="text-slate-400 mb-10">
-              No worries. Enter your email and we will send you a password reset
-              link.
+              {tAuth("pages.forgotPassword.subtitle")}
             </p>
 
             <div className="flex items-center gap-3 mb-4">
               <span className="material-symbols-outlined text-brand-primary">
                 lock_reset
               </span>
-              <span>Secure Password Recovery</span>
+              <span>{tAuth("pages.forgotPassword.feature1")}</span>
             </div>
 
             <div className="flex items-center gap-3 mb-4">
               <span className="material-symbols-outlined text-brand-primary">
                 verified_user
               </span>
-              <span>Protected Account Access</span>
+              <span>{tAuth("pages.forgotPassword.feature2")}</span>
             </div>
           </div>
 
           {/* RIGHT PANEL */}
           <div className="md:w-7/12 p-10">
-            <h2 className="text-3xl font-bold mb-2">Reset Your Password</h2>
+            <h2 className="text-3xl font-bold mb-2">
+              {tAuth("pages.forgotPassword.formTitle")}
+            </h2>
 
             <p className="text-slate-500 mb-8">
-              Enter the email associated with your account and we'll send you an
-              OTP code.
+              {tAuth("pages.forgotPassword.formSubtitle")}
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <FormField label="Email Address" error={errors.email}>
-                <div className="mb-4">
-                  <Input
-                    icon={<MdOutlineMail />}
-                    type="email"
-                    placeholder={t("placeholders.resetEmail")}
-                    value={formData.email}
-                    onChange={(e) => handleChange(e.target.value)}
-                  />
-                </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <FormField label={tAuth("pages.forgotPassword.emailLabel")}>
+                <Input
+                  icon={<MdOutlineMail />}
+                  type="email"
+                  placeholder={tAuth("placeholders.resetEmail")}
+                  {...register("email")}
+                />
               </FormField>
 
               <Button
                 type="submit"
                 icon="send"
-                disabled={isLoading}
+                disabled={isSubmitting}
                 className="cursor-pointer"
               >
-                {isLoading ? "Sending OTP..." : "Send OTP"}
+                {isSubmitting
+                  ? tAuth("common.sendingOtp")
+                  : tAuth("common.sendOtp")}
               </Button>
             </form>
 
             <p className="text-center text-sm text-slate-500 mt-8">
-              Remember your password?{" "}
+              {tAuth("pages.forgotPassword.rememberPassword")}{" "}
               <Link
                 to="/login"
                 className="text-lime-500 font-bold hover:underline"
               >
-                Sign in here
+                {tAuth("pages.forgotPassword.signInLink")}
               </Link>
             </p>
           </div>

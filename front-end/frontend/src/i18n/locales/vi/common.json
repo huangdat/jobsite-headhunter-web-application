@@ -10,7 +10,14 @@
   "currentUserName": "Alex Nguyen",
   "common": {
     "adminUserTitle": "Quản trị viên",
-    "appVersion": "Phiên bản 2.4.0"
+    "appVersion": "Phiên bản 2.4.0",
+    "permanentDelete": "Xóa vĩnh viễn",
+    "appName": "JobSite",
+    "allRightsReserved": "Bản quyền © 2026. Tất cả quyền được bảo lưu",
+    "section": {
+      "account": "Tài Khoản"
+    },
+    "exampleEmail": "alex.n@referral.io"
   },
   "messages": {
     "signedInSuccess": "Đã đăng nhập thành công."

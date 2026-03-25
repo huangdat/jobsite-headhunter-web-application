@@ -4,6 +4,7 @@ import com.nimbusds.jose.JOSEException;
 import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
+import com.rikkeisoft.backend.component.Translator;
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.auth.AuthenticationReq;
 import com.rikkeisoft.backend.model.dto.req.auth.LogoutReq;
@@ -33,6 +34,7 @@ import java.text.ParseException;
 public class AuthenticationController {
         AuthenticationService authenticationService;
         AccountRepo accountRepo;
+        Translator translator;
 
         /**
          * Authenticate a user with username and password.
@@ -53,7 +55,7 @@ public class AuthenticationController {
                 if (account.getStatus() != AccountStatus.ACTIVE) {
                         APIResponse<AuthenticationResp> api = APIResponse.<AuthenticationResp>builder()
                                         .status(HttpStatus.SERVICE_UNAVAILABLE)
-                                        .message("Account is not active")
+                                        .message(translator.toLocale("auth.login.account_not_active"))
                                         .result(AuthenticationResp.builder()
                                                         .authenticated(false)
                                                         .accessToken(null)
@@ -64,8 +66,8 @@ public class AuthenticationController {
 
                 APIResponse<AuthenticationResp> api = APIResponse.<AuthenticationResp>builder()
                                 .status(response.isAuthenticated() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE)
-                                .message(response.isAuthenticated() ? "Authentication successful"
-                                                : "Authentication failed")
+                                .message(response.isAuthenticated() ? translator.toLocale("auth.login.success")
+                                                : translator.toLocale("auth.login.failed"))
                                 .result(AuthenticationResp.builder()
                                                 .authenticated(response.isAuthenticated())
                                                 .accessToken(response.getAccessToken())
@@ -95,14 +97,15 @@ public class AuthenticationController {
                         // Token invalid: chỉ trả status và message, không trả result
                         return APIResponse.<TokenValidateResp>builder()
                                         .status(HttpStatus.UNAUTHORIZED)
-                                        .message("Token invalid")
+                                        .message(translator.toLocale("auth.token.invalid"))
                                         .result(null)
                                         .build();
                 }
 
                 return APIResponse.<TokenValidateResp>builder()
                                 .status(response.isValid() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED)
-                                .message(response.isValid() ? "Token valid" : "Token invalid")
+                                .message(response.isValid() ? translator.toLocale("auth.token.valid")
+                                                : translator.toLocale("auth.token.invalid"))
                                 .result(TokenValidateResp.builder()
                                                 .valid(response.isValid())
                                                 .username(response.getUsername())
@@ -118,7 +121,7 @@ public class AuthenticationController {
                         throws ParseException, JOSEException {
                 String authHeader = httpRequest.getHeader("Authorization");
                 if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                        throw new RuntimeException("Unauthorized");
+                        throw new AppException(ErrorCode.UNAUTHORIZED);
                 }
                 String callerToken = authHeader.substring("Bearer ".length()).trim();
 
@@ -126,7 +129,7 @@ public class AuthenticationController {
 
                 return APIResponse.<Void>builder()
                                 .status(HttpStatus.OK)
-                                .message("Logout successfully")
+                                .message(translator.toLocale("auth.logout.success"))
                                 .build();
         }
 

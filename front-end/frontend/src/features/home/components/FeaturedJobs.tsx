@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRandomLatestJobs } from "@/shared/utils/jobService";
@@ -60,16 +61,13 @@ export function FeaturedJobs() {
                 <p className="text-gray-500 text-sm">{job.company}</p>
 
                 <div className="flex gap-2 mt-3 text-xs">
-                  <span
-                    className={`${JOB_TYPE_COLORS["FULL-TIME"].bg} ${JOB_TYPE_COLORS["FULL-TIME"].text} px-2 py-1 rounded`}
-                  >
-                    {t("jobTypes.fullTime")}
-                  </span>
-                  <span
-                    className={`${JOB_TYPE_COLORS.REMOTE.bg} ${JOB_TYPE_COLORS.REMOTE.text} px-2 py-1 rounded`}
-                  >
-                    {t("jobTypes.remote")}
-                  </span>
+                  {job.workingType && (
+                    <span
+                      className={`${JOB_TYPE_COLORS[job.workingType as keyof typeof JOB_TYPE_COLORS]?.bg} ${JOB_TYPE_COLORS[job.workingType as keyof typeof JOB_TYPE_COLORS]?.text} px-2 py-1 rounded`}
+                    >
+                      {t(`jobTypes.${job.workingType.toLowerCase()}`)}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex justify-between mt-6 text-sm">
@@ -81,9 +79,12 @@ export function FeaturedJobs() {
           </div>
 
           <div className="text-center mt-12">
-            <button className="border px-6 py-3 rounded-xl hover:bg-gray-100 transition cursor-pointer">
+            <Link
+              to="/jobs"
+              className="inline-block border px-6 py-3 rounded-xl hover:bg-gray-100 transition"
+            >
               {t("featuredJobs.viewMore")}
-            </button>
+            </Link>
           </div>
         </>
       )}

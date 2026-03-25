@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { login } from "../services/authApi";
-import type { LoginFormData } from "../types";
-import { useAuth } from "../context/useAuth";
-import { useAppTranslation } from "@/shared/hooks";
-import { extractApiErrorMessage } from "../utils/apiError";
+import { login } from "@/features/auth/services/authApi";
+import type { LoginFormData } from "@/features/auth/types";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { useAuthTranslation } from "@/shared/hooks";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
 
 export const useLogin = () => {
   const navigate = useNavigate();
   const { signIn } = useAuth();
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -26,22 +26,22 @@ export const useLogin = () => {
 
     // Username or Email validation
     if (!data.email.trim()) {
-      newErrors.email = "Username or email is required";
+      newErrors.email = t("validation.usernameEmailRequired");
     } else {
       const input = data.email.trim();
       const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
       const isUsername = /^[a-zA-Z][a-zA-Z0-9_]{7,31}$/.test(input);
 
       if (!isEmail && !isUsername) {
-        newErrors.email = "Please enter a valid username";
+        newErrors.email = t("validation.invalidUsername");
       }
     }
 
     // Password validation
     if (!data.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = t("validation.passwordRequired");
     } else if (data.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+      newErrors.password = t("validation.passwordMinLength");
     }
 
     setErrors(newErrors);
@@ -85,7 +85,7 @@ export const useLogin = () => {
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Unable to sign in right now. Please try again.",
+        "Unable to sign in right now. Please try again."
       );
       let errorField: "email" | "password" | "general" = "general";
 

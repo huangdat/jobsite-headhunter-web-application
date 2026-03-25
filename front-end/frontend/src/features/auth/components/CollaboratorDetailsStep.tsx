@@ -3,13 +3,15 @@ import { FormField } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdPercent } from "react-icons/md";
-import type { RegisterFormData } from "../types";
+import type { RegisterFormData } from "@/features/auth/types";
 
 interface CollaboratorDetailsStepProps {
   form: UseAppFormReturn<RegisterFormData>;
 }
 
-export function CollaboratorDetailsStep({ form }: CollaboratorDetailsStepProps) {
+export function CollaboratorDetailsStep({
+  form,
+}: CollaboratorDetailsStepProps) {
   const { t } = useAuthTranslation();
   const { register } = form;
   return (

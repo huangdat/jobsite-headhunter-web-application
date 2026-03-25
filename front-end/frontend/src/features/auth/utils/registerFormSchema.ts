@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import type { UserRole } from "../types";
+import type { RegistrationUserRole } from "@/features/auth/types";
 
 /**
  * Sanitize input: trim, remove script tags, escape dangerous chars
@@ -29,7 +29,8 @@ export function createSchemaWithI18n(t: (key: string) => string) {
       .required(t("validation.fields.usernameRequired"))
       .min(8, t("validation.fields.usernameBetween"))
       .max(32, t("validation.fields.usernameBetween"))
-      .matches(/^[a-zA-Z][a-zA-Z0-9_]*$/, 
+      .matches(
+        /^[a-zA-Z][a-zA-Z0-9_]*$/,
         t("validation.fields.usernameAlphanumeric")
       )
       .transform(sanitizeInput),
@@ -64,9 +65,7 @@ export function createSchemaWithI18n(t: (key: string) => string) {
     phone: yup
       .string()
       .required(t("validation.fields.phoneRequired"))
-      .matches(/^0[3-9]\d{8,9}$/, 
-        t("validation.fields.phoneInvalid")
-      )
+      .matches(/^0[3-9]\d{8,9}$/, t("validation.fields.phoneInvalid"))
       .transform((value: string) => value.replace(/[\s-]/g, "")),
 
     gender: yup
@@ -79,18 +78,29 @@ export function createSchemaWithI18n(t: (key: string) => string) {
       .mixed<File>()
       .nullable()
       .optional()
-      .test("fileSize", t("validation.fields.avatarFileSizeExceeded"), (file: any) => {
-        if (!file) return true;
-        return file.size <= 5 * 1024 * 1024; // 5MB
-      })
-      .test("fileType", t("validation.fields.avatarFileTypeInvalid"), (file: any) => {
-        if (!file) return true;
-        return /^image\/(jpg|jpeg|png|gif|webp)$/.test(file.type);
-      }),
+      .test(
+        "fileSize",
+        t("validation.fields.avatarFileSizeExceeded"),
+        (file: any) => {
+          if (!file) return true;
+          return file.size <= 5 * 1024 * 1024; // 5MB
+        }
+      )
+      .test(
+        "fileType",
+        t("validation.fields.avatarFileTypeInvalid"),
+        (file: any) => {
+          if (!file) return true;
+          return /^image\/(jpg|jpeg|png|gif|webp)$/.test(file.type);
+        }
+      ),
 
-    role: yup.string().oneOf(["candidate", "collaborator", "headhunter"], 
-      t("validation.fields.roleInvalid")
-    ),
+    role: yup
+      .string()
+      .oneOf(
+        ["candidate", "collaborator", "headhunter"],
+        t("validation.fields.roleInvalid")
+      ),
 
     agreeToTerms: yup
       .boolean()
@@ -161,9 +171,7 @@ export function createSchemaWithI18n(t: (key: string) => string) {
     taxCode: yup
       .string()
       .required(t("validation.fields.taxCodeRequired"))
-      .matches(/^\d{10}$|^\d{13}$/, 
-        t("validation.fields.taxCodeInvalid")
-      )
+      .matches(/^\d{10}$|^\d{13}$/, t("validation.fields.taxCodeInvalid"))
       .transform(sanitizeInput),
 
     websiteUrl: yup
@@ -183,7 +191,7 @@ export function createSchemaWithI18n(t: (key: string) => string) {
   /**
    * Return function to get schema by role
    */
-  return function getSchema(role: UserRole) {
+  return function getSchema(role: RegistrationUserRole) {
     switch (role) {
       case "candidate":
         return candidateSchema;
@@ -200,39 +208,55 @@ export function createSchemaWithI18n(t: (key: string) => string) {
 /**
  * Legacy function for backward compatibility (uses English messages)
  */
-export function getRegisterSchema(role: UserRole) {
+export function getRegisterSchema(role: RegistrationUserRole) {
   const t = (key: string) => {
     // Mapping of keys to English messages for backward compatibility
     const messages: Record<string, string> = {
       "validation.fields.usernameRequired": "Username is required",
-      "validation.fields.usernameBetween": "Username must be between 8 and 32 characters",
-      "validation.fields.usernameAlphanumeric": "Username must start with a letter and contain only letters, numbers, and underscores",
+      "validation.fields.usernameBetween":
+        "Username must be between 8 and 32 characters",
+      "validation.fields.usernameAlphanumeric":
+        "Username must start with a letter and contain only letters, numbers, and underscores",
       "validation.fields.emailRequired": "Email is required",
       "validation.fields.emailInvalid": "Please enter a valid email address",
       "validation.fields.passwordRequired": "Password is required",
-      "validation.fields.passwordBetween8and16": "Password must be between 8 and 16 characters",
-      "validation.fields.passwordUppercase": "Password must contain at least one uppercase letter",
-      "validation.fields.passwordLowercase": "Password must contain at least one lowercase letter",
-      "validation.fields.passwordNumber": "Password must contain at least one number",
-      "validation.fields.confirmPasswordRequired": "Please confirm your password",
+      "validation.fields.passwordBetween8and16":
+        "Password must be between 8 and 16 characters",
+      "validation.fields.passwordUppercase":
+        "Password must contain at least one uppercase letter",
+      "validation.fields.passwordLowercase":
+        "Password must contain at least one lowercase letter",
+      "validation.fields.passwordNumber":
+        "Password must contain at least one number",
+      "validation.fields.confirmPasswordRequired":
+        "Please confirm your password",
       "validation.fields.passwordsDoNotMatch": "Passwords do not match",
       "validation.fields.fullNameRequired": "Full name is required",
-      "validation.fields.fullNameMinLength": "Full name must be at least 2 characters",
-      "validation.fields.fullNameLettersOnly": "Full name can only contain letters and spaces",
+      "validation.fields.fullNameMinLength":
+        "Full name must be at least 2 characters",
+      "validation.fields.fullNameLettersOnly":
+        "Full name can only contain letters and spaces",
       "validation.fields.phoneRequired": "Phone number is required",
-      "validation.fields.phoneInvalid": "Please enter a valid Vietnamese phone number (e.g., 0912345678)",
+      "validation.fields.phoneInvalid":
+        "Please enter a valid Vietnamese phone number (e.g., 0912345678)",
       "validation.fields.genderInvalid": "Invalid gender",
-      "validation.fields.avatarFileSizeExceeded": "File size must be less than 5MB",
-      "validation.fields.avatarFileTypeInvalid": "File must be an image (JPG, PNG, GIF, WebP)",
-      "validation.fields.yearsOfExperienceInvalid": "Years of experience cannot be negative",
-      "validation.fields.yearsOfExperienceMax": "Years of experience cannot exceed 60",
+      "validation.fields.avatarFileSizeExceeded":
+        "File size must be less than 5MB",
+      "validation.fields.avatarFileTypeInvalid":
+        "File must be an image (JPG, PNG, GIF, WebP)",
+      "validation.fields.yearsOfExperienceInvalid":
+        "Years of experience cannot be negative",
+      "validation.fields.yearsOfExperienceMax":
+        "Years of experience cannot exceed 60",
       "validation.fields.salaryInvalid": "Salary must be a number",
       "validation.fields.salaryNegative": "Salary cannot be negative",
       "validation.fields.taxCodeRequired": "Tax code is required",
       "validation.fields.taxCodeInvalid": "Tax code must be 10 or 13 digits",
       "validation.fields.websiteUrlInvalid": "Website URL must be valid",
-      "validation.fields.commissionRateInvalid": "Commission rate must be between 0 and 100",
-      "validation.fields.agreeTermsRequired": "You must agree to the terms and conditions",
+      "validation.fields.commissionRateInvalid":
+        "Commission rate must be between 0 and 100",
+      "validation.fields.agreeTermsRequired":
+        "You must agree to the terms and conditions",
     };
     return messages[key] || key;
   };

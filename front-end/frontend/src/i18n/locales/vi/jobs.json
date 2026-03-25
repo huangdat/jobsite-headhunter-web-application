@@ -26,8 +26,11 @@
     "resetFilter": "Đặt lại"
   },
   "status": {
-    "published": "Đã xuất bản",
+    "DRAFT": "Nháp",
+    "OPEN": "Đang Tuyển",
+    "CLOSED": "Đã Đóng",
     "draft": "Nháp",
+    "open": "Đang tuyển",
     "closed": "Đã đóng"
   },
   "columns": {
@@ -76,7 +79,15 @@
     "contract": "Hợp đồng",
     "temporary": "Tạm thời",
     "remote": "Làm việc từ xa",
-    "freelance": "Freelance"
+    "freelance": "Freelance",
+    "workingTypes": {
+      "ONSITE": "Tại văn phòng",
+      "REMOTE": "Làm việc từ xa",
+      "HYBRID": "Kết hợp",
+      "onsite": "Tại văn phòng",
+      "remote": "Làm việc từ xa",
+      "hybrid": "Kết hợp"
+    }
   },
   "experience": {
     "entry": "Mới vào ngành",

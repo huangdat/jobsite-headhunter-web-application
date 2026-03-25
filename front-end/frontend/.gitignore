@@ -37,6 +37,10 @@ lint-output.tmp
 docs/**
 
 # Refernces of AI designs
-**/assets/users/
+**/assets/**
+
+# Local documentation and design files (not tracked)
+*.md
+!README.md
 
 ../../.vscode/

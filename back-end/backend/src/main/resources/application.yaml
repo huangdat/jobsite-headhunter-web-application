@@ -8,12 +8,12 @@ spring:
   datasource:
     url: "jdbc:mysql://localhost:3306/headhunt"
     username: root
-    password: root
+    password: "root"
   mail:
     host: smtp.gmail.com
     port: 587
-    username: jobsiteheadhunt.forwork@gmail.com
-    password: nqkd mlow lquy ygfz
+    username: datnh.work@gmail.com
+    password: ttbl wjzq blsg ebar
     properties:
       mail:
         smtp:
@@ -28,7 +28,10 @@ spring:
           timeout: 5000
           writetimeout: 5000
     from: noreply@headhunt.app
-
+  messages:
+    basename: messages
+    encoding: UTF-8
+    cache-duration: PT1H # Cache messages for 1 hour
 server:
   port: 8080
   servlet:

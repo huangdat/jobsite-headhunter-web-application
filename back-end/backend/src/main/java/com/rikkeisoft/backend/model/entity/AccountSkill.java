@@ -12,13 +12,16 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "account_skill")
 public class AccountSkill {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @EmbeddedId
+    AccountSkillId id;
+
     @ManyToOne
+    @MapsId("accountId")
     @JoinColumn(name = "account_id", nullable = false)
     Account account;
+
     @ManyToOne
+    @MapsId("skillId")
     @JoinColumn(name = "skill_id", nullable = false)
     Skill skill;
 }

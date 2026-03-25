@@ -1,4 +1,5 @@
 package com.rikkeisoft.backend.model.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rikkeisoft.backend.enums.Currency;
 import com.rikkeisoft.backend.enums.JobStatus;
 import com.rikkeisoft.backend.enums.RankLevel;
@@ -90,4 +91,24 @@ public class Job {
 
     @Column(name = "imageUrl")
     String imageUrl;
+
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    Set<JobSkill> jobSkills;
+
+    @Builder.Default
+    @Column(name = "visible")
+    boolean visible = true;
+
+    @Builder.Default
+    @Column(name = "featured")
+    boolean featured = false;
+
+    @Column(name = "deleted_at")
+    LocalDateTime deletedAt;
+
+    @Column(name = "highlight_until")
+    LocalDateTime highlightUntil;
 }

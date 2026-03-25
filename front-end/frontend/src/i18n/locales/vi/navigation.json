@@ -3,10 +3,17 @@
   "profile": "Hồ Sơ",
   "settings": "Cài Đặt",
   "logout": "Đăng Xuất",
+  "login": "Đăng Nhập",
+  "signUp": "Đăng Ký",
+  "postJob": "Đăng Bài Tuyển Dụng",
   "dashboard": "Bảng Điều Khiển",
+  "adminDashboard": "Bảng Điều Khiển Quản Trị",
   "jobs": "Công Việc",
   "referrals": "Giới Thiệu",
+  "applications": "Hồ Sơ Ứng Tuyển",
   "savedJobs": "Công Việc Đã Lưu",
+  "notifications": "Thông Báo",
   "logs": "Nhật Ký",
-  "users": "Người Dùng"
+  "users": "Người dùng",
+  "classification": "Phân loại"
 }

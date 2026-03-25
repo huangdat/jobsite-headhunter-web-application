@@ -2,10 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
-import { useUserDetail } from "../hooks/useUserDetail";
-import { userMapper } from "../../utils/userMapper";
-import { useDeleteUser } from "../../actions/delete/hooks";
-import { ROUTES, REDIRECT_DELAY, TOAST_DURATION } from "../../constants";
+import { useUserDetail } from "@/features/users/detail/hooks/useUserDetail";
+import { userMapper } from "@/features/users/utils/userMapper";
+import { useDeleteUser } from "@/features/users/actions/delete/hooks";
+import { useLockUser } from "@/features/users/actions/lock/hooks/useLockUser";
+import { useUnlockUser } from "@/features/users/actions/lock/hooks/useUnlockUser";
+import {
+  ROUTES,
+  REDIRECT_DELAY,
+  TOAST_DURATION,
+} from "@/features/users/constants";
 import {
   UserHeader,
   BasicInfoCard,
@@ -14,7 +20,9 @@ import {
   DangerZoneCard,
   LoadingSkeletons,
   DeleteConfirmationModal,
-} from "../components";
+} from "@/features/users/detail/components";
+import LockUserModal from "@/features/users/actions/lock/components/LockUserModal";
+import UnlockUserModal from "@/features/users/actions/lock/components/UnlockUserModal";
 
 interface User {
   id: string;
@@ -23,7 +31,7 @@ interface User {
   phone: string;
   role: "Administrator" | "User" | "Manager";
   username: string;
-  status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+  status: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
   joinedDate: string;
   lastLogin: string;
   company?: string;
@@ -49,6 +57,8 @@ const UserDetailPage: React.FC = () => {
     error: apiError,
   } = useUserDetail(userId || "");
   const { softDelete, hardDelete } = useDeleteUser();
+  const { lock } = useLockUser();
+  const { unlock } = useUnlockUser();
   const [user, setUser] = useState<User | null>(null);
   const [loginHistory, setLoginHistory] = useState<LoginSession[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -57,6 +67,8 @@ const UserDetailPage: React.FC = () => {
     message: string;
   } | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isLockModalOpen, setIsLockModalOpen] = useState(false);
+  const [isUnlockModalOpen, setIsUnlockModalOpen] = useState(false);
   const relatedDataCount = {
     applications: 0,
     jobs: 0,
@@ -84,9 +96,70 @@ const UserDetailPage: React.FC = () => {
   };
 
   const handleLockAccount = async () => {
-    // Lock account will be implemented in feature-users-lock-unlock branch
-    console.log("Lock account: To be implemented via API");
-    showToast("error", t("common.featureComingSoon"));
+    setIsLockModalOpen(true);
+  };
+
+  const handleUnlockAccount = async () => {
+    setIsUnlockModalOpen(true);
+  };
+
+  const handleLockConfirm = async (lockData: {
+    reason: string;
+    autoUnlockDate?: string;
+    sendEmail: boolean;
+    logoutCurrentSession: boolean;
+  }) => {
+    if (!userId || !user) {
+      showToast("error", t("lock.errorGeneral"));
+      return;
+    }
+
+    try {
+      await lock({
+        userId,
+        userName: user.fullName,
+        ...lockData,
+      });
+
+      showToast("success", t("lock.successLockUser"));
+      setIsLockModalOpen(false);
+
+      // Refresh user data
+      setTimeout(() => window.location.reload(), REDIRECT_DELAY.MEDIUM);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : t("lock.errorGeneral");
+      showToast("error", errorMessage);
+    }
+  };
+
+  const handleUnlockConfirm = async (unlockData: {
+    reason: string;
+    sendEmail: boolean;
+    requirePasswordChange: boolean;
+  }) => {
+    if (!userId || !user) {
+      showToast("error", t("unlock.errorGeneral"));
+      return;
+    }
+
+    try {
+      await unlock({
+        userId,
+        userName: user.fullName,
+        ...unlockData,
+      });
+
+      showToast("success", t("unlock.successUnlockUser"));
+      setIsUnlockModalOpen(false);
+
+      // Refresh user data
+      setTimeout(() => window.location.reload(), REDIRECT_DELAY.MEDIUM);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : t("unlock.errorGeneral");
+      showToast("error", errorMessage);
+    }
   };
 
   const handleSoftDelete = async () => {
@@ -97,7 +170,10 @@ const UserDetailPage: React.FC = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleDeleteConfirm = async (deleteType: "soft" | "hard") => {
+  const handleDeleteConfirm = async (
+    deleteType: "soft" | "hard",
+    reason?: string
+  ) => {
     if (!userId || !user) {
       showToast("error", t("delete.errorGeneral"));
       return;
@@ -105,9 +181,13 @@ const UserDetailPage: React.FC = () => {
 
     try {
       if (deleteType === "soft") {
-        await softDelete({ userId, userName: user.fullName });
+        if (!reason) {
+          showToast("error", t("delete.errorReasonRequired"));
+          return;
+        }
+        await softDelete({ userId, reason });
       } else {
-        await hardDelete({ userId, userName: user.fullName });
+        await hardDelete({ userId });
       }
 
       // Show success message
@@ -298,9 +378,11 @@ const UserDetailPage: React.FC = () => {
         {!isViewingOtherAdmin && (
           <DangerZoneCard
             onLockAccount={handleLockAccount}
+            onUnlockAccount={handleUnlockAccount}
             onSoftDelete={handleSoftDelete}
             onHardDelete={handleHardDelete}
             isOtherAdmin={isViewingOtherAdmin}
+            userStatus={user?.status}
           />
         )}
 
@@ -312,6 +394,40 @@ const UserDetailPage: React.FC = () => {
           relatedDataCount={relatedDataCount}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
+        />
+
+        {/* Lock User Modal */}
+        <LockUserModal
+          isOpen={isLockModalOpen}
+          userName={user?.fullName || ""}
+          userId={userId || ""}
+          lockReasons={[
+            {
+              value: "suspicious_activity",
+              label:
+                t("lock.reasonSuspiciousActivity") || "Suspicious Activity",
+            },
+            {
+              value: "policy_violation",
+              label: t("lock.reasonPolicyViolation") || "Policy Violation",
+            },
+            {
+              value: "account_compromise",
+              label: t("lock.reasonAccountCompromise") || "Account Compromise",
+            },
+            { value: "other", label: t("lock.reasonOther") || "Other" },
+          ]}
+          onClose={() => setIsLockModalOpen(false)}
+          onConfirm={handleLockConfirm}
+        />
+
+        {/* Unlock User Modal */}
+        <UnlockUserModal
+          isOpen={isUnlockModalOpen}
+          userName={user?.fullName || ""}
+          userId={userId || ""}
+          onClose={() => setIsUnlockModalOpen(false)}
+          onConfirm={handleUnlockConfirm}
         />
       </div>
     </div>

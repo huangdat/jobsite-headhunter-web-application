@@ -13,6 +13,14 @@ export const JOB_TYPE_COLORS = {
     bg: "bg-orange-100",
     text: "text-orange-600",
   },
+  ONSITE: {
+    bg: "bg-purple-100",
+    text: "text-purple-600",
+  },
+  HYBRID: {
+    bg: "bg-pink-100",
+    text: "text-pink-600",
+  },
 } as const;
 
 // Match badge colors

@@ -6,7 +6,7 @@ interface UserHeaderProps {
   user: {
     fullName: string;
     role: "Administrator" | "User" | "Manager";
-    status: "ACTIVE" | "INACTIVE" | "SUSPENDED";
+    status: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
     id: string;
     joinedDate: string;
     avatar?: string;
@@ -17,20 +17,25 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
   const { t } = useUsersTranslation();
 
   const statusConfig = {
+    PENDING: {
+      bg: "bg-yellow-100",
+      text: "text-yellow-800",
+      label: t("statuses.pending"),
+    },
     ACTIVE: {
       bg: "bg-green-100",
       text: "text-green-800",
       label: t("statuses.active"),
     },
-    INACTIVE: {
-      bg: "bg-gray-100",
-      text: "text-gray-800",
-      label: t("statuses.inactive"),
-    },
     SUSPENDED: {
       bg: "bg-red-100",
       text: "text-red-800",
       label: t("statuses.suspended"),
+    },
+    DELETED: {
+      bg: "bg-slate-100",
+      text: "text-slate-800",
+      label: t("statuses.deleted"),
     },
   };
 

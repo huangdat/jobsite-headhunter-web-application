@@ -16,29 +16,35 @@ export const API_CONFIG = {
 export const API_ENDPOINTS = {
   // Auth
   AUTH: {
-    LOGIN: "/auth/login",
-    REGISTER: "/auth/register",
-    LOGOUT: "/auth/logout",
-    VALIDATE_TOKEN: "/auth/token-validate",
-    REFRESH_TOKEN: "/auth/refresh-token",
+    LOGIN: "/api/auth/login",
+    REGISTER: "/api/auth/register",
+    LOGOUT: "/api/auth/logout",
+    VALIDATE_TOKEN: "/api/auth/token-validate",
+    REFRESH_TOKEN: "/api/auth/refresh-token",
+    SOCIAL_CONFIG: "/api/auth/social-config",
+    GOOGLE_LOGIN: "/api/auth/google/login",
+    LINKEDIN_LOGIN: "/api/auth/linkedin/oauth",
+    REGISTER_SOCIAL: "/api/auth/register-social",
+    CHECK_EMAIL_USERNAME: "/api/account/check-email-username-exist",
   },
   
   // OTP
   OTP: {
-    SEND_SIGNUP: "/otp/send-signup",
-    VERIFY_SIGNUP: "/otp/verify-signup",
-    SEND_RESET: "/otp/send-reset",
-    VERIFY_RESET: "/otp/verify-reset",
+    SEND_SIGNUP: "/api/otp/send-signup",
+    VERIFY_SIGNUP: "/api/otp/verify-signup",
+    SEND_FORGOT_PASSWORD: "/api/otp/send-forgot-password",
+    VERIFY_AND_RESET: "/api/otp/verify-and-reset-password",
   },
 
   // Account
   ACCOUNT: {
-    SIGNUP_CANDIDATE: "/account/signup-candidate",
-    SIGNUP_HEADHUNTER: "/account/signup-headhunter",
-    SIGNUP_COLLABORATOR: "/account/signup-collaborator",
-    GET_PROFILE: "/account/profile",
-    UPDATE_PROFILE: "/account/profile",
-    CHANGE_PASSWORD: "/account/changeMyPassword",
+    SIGNUP_CANDIDATE: "/api/account/signup-candidate",
+    SIGNUP_HEADHUNTER: "/api/account/signup-headhunter",
+    SIGNUP_COLLABORATOR: "/api/account/signup-collaborator",
+    GET_PROFILE: "/api/account/profile",
+    UPDATE_PROFILE: "/api/account/profile",
+    CHANGE_PASSWORD: "/api/account/changeMyPassword",
+    SEARCH: "/api/account/search", // Admin: Search/Classification - requires ADMIN role
   },
 
   // Jobs
@@ -97,12 +103,59 @@ export const VALIDATION_RULES = {
   },
 };
 
-// User Roles
+// User Roles - MUST match backend Role enum (UPPERCASE)
+// Use types from features/users/types/user.types.ts for type safety
 export const USER_ROLES = {
-  CANDIDATE: "candidate",
-  HEADHUNTER: "headhunter",
-  COLLABORATOR: "collaborator",
-  ADMIN: "admin",
+  ADMIN: "ADMIN",
+  HEADHUNTER: "HEADHUNTER",
+  COLLABORATOR: "COLLABORATOR",
+  CANDIDATE: "CANDIDATE",
 } as const;
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
+
+// Job Status - MUST match backend JobStatus enum
+export const JOB_STATUSES = {
+  DRAFT: "DRAFT",
+  OPEN: "OPEN",
+  CLOSED: "CLOSED",
+} as const;
+
+export type JobStatus = (typeof JOB_STATUSES)[keyof typeof JOB_STATUSES];
+
+// User Account Status - MUST match backend AccountStatus enum
+export const ACCOUNT_STATUSES = {
+  PENDING: "PENDING",
+  ACTIVE: "ACTIVE",
+  SUSPENDED: "SUSPENDED",
+  DELETED: "DELETED",
+} as const;
+
+export type AccountStatus =
+  (typeof ACCOUNT_STATUSES)[keyof typeof ACCOUNT_STATUSES];
+
+// Working Type - MUST match backend WorkingType enum
+export const WORKING_TYPES = {
+  ONSITE: "ONSITE",
+  REMOTE: "REMOTE",
+  HYBRID: "HYBRID",
+} as const;
+
+export type WorkingType = (typeof WORKING_TYPES)[keyof typeof WORKING_TYPES];
+
+// Admin Features & Routes
+export const ADMIN_FEATURES = {
+  // Admin Dashboard Routes
+  USERS_MANAGEMENT: "/users",
+  USER_CLASSIFICATION: "/users/classification",
+  USER_DETAIL: (userId: string) => `/users/${userId}`,
+
+  // Admin-only API Endpoints (require SCOPE_ADMIN authority)
+  ENDPOINTS: {
+    SEARCH_USERS: "/api/account/search", // Search & Classification feature
+    LOCK_USER: (userId: string) => `/api/account/${userId}/lock`,
+    UNLOCK_USER: (userId: string) => `/api/account/${userId}/unlock`,
+    SOFT_DELETE_USER: (userId: string) => `/api/account/${userId}/soft-delete`,
+    HARD_DELETE_USER: (userId: string) => `/api/account/${userId}`,
+  },
+} as const;

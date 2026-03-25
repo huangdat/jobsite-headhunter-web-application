@@ -3,11 +3,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
-import { sendOtpSignup, verifyOtpSignup, register } from "../services/authApi";
+import {
+  sendOtpSignup,
+  verifyOtpSignup,
+  register,
+} from "@/features/auth/services/authApi";
 import { toast } from "sonner";
 import { MdOutlineMail, MdTimer } from "react-icons/md";
-import type { RegisterFormData } from "../types";
-import { extractApiErrorMessage } from "../utils/apiError";
+import type { RegisterFormData } from "@/features/auth/types";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 interface LocationState {
   accountId: string;
@@ -191,7 +195,7 @@ export function OTPVerificationPage() {
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Failed to resend OTP"
+        t("messages.failedToResendOtp")
       );
       toast.error(errorMessage);
     } finally {
@@ -208,7 +212,7 @@ export function OTPVerificationPage() {
   if (!state) return null;
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("auth.pages.login") }}>
       <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -305,7 +309,7 @@ export function OTPVerificationPage() {
               disabled={isLoading || isResending}
               className="text-sm text-slate-600 hover:text-slate-800"
             >
-              ← Back to Registration
+              {t("auth.buttons.backToRegistration")}
             </button>
           </div>
         </div>

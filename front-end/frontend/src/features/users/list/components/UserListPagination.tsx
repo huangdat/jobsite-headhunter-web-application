@@ -26,7 +26,7 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
     const halfVisible = Math.floor(maxVisible / 2);
 
     let startPage = Math.max(1, currentPage - halfVisible);
-    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    const endPage = Math.min(totalPages, startPage + maxVisible - 1);
 
     if (endPage - startPage < maxVisible - 1) {
       startPage = Math.max(1, endPage - maxVisible + 1);
@@ -74,7 +74,10 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
           </select>
         </div>
         <p className="text-sm text-slate-500">
-          {t("list.paginationInfo")?.replace("{{startItem}}", String(startItem)).replace("{{endItem}}", String(endItem)).replace("{{totalItems}}", String(totalItems))}
+          {t("list.paginationInfo")
+            ?.replace("{{startItem}}", String(startItem))
+            .replace("{{endItem}}", String(endItem))
+            .replace("{{totalItems}}", String(totalItems))}
         </p>
       </div>
 

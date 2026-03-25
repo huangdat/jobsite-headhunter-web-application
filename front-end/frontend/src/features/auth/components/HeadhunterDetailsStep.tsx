@@ -3,7 +3,7 @@ import { FormField } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdBusiness, MdReceipt, MdLanguage, MdGroups } from "react-icons/md";
-import type { RegisterFormData } from "../types";
+import type { RegisterFormData } from "@/features/auth/types";
 
 interface HeadhunterDetailsStepProps {
   form: UseAppFormReturn<RegisterFormData>;
@@ -28,10 +28,7 @@ export function HeadhunterDetailsStep({ form }: HeadhunterDetailsStepProps) {
         </span>
       </div>
 
-      <FormField
-        label={t("labels.taxCode")}
-        error={form.getError("taxCode")}
-      >
+      <FormField label={t("labels.taxCode")} error={form.getError("taxCode")}>
         <Input
           {...register("taxCode")}
           autoComplete="off"
@@ -58,9 +55,7 @@ export function HeadhunterDetailsStep({ form }: HeadhunterDetailsStepProps) {
             className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label={t("aria.selectCompanyScale")}
           >
-            <option value="">
-              {t("selectOptions.selectCompanyScale")}
-            </option>
+            <option value="">{t("selectOptions.selectCompanyScale")}</option>
             <option value="1-10">
               {t("selectOptions.companyScaleOptions.0.label")}
             </option>

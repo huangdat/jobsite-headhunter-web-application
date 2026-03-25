@@ -1,4 +1,4 @@
-import { CandidateRegister } from "./CandidateRegister";
+import { CandidateRegister } from "@/features/auth/components/CandidateRegister";
 
 type Props = React.ComponentProps<typeof CandidateRegister>;
 
