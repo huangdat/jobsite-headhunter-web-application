@@ -57,7 +57,7 @@ public class CommentReactionServiceImpl implements CommentReactionService {
      *     </ul>
      *   </li>
      *   <li>Recompute updated counts via
-     *       {@link CommentReactionRepo#countReactionsByTypeForComment(Long)}.</li>
+     *       {@link CommentReactionRepo#countReactionsByReactionType(Long)}.</li>
      *   <li>Return a fully populated {@link ReactionResp}.</li>
      * </ol>
      *
