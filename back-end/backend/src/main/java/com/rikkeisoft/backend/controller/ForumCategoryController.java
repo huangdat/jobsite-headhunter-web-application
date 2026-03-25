@@ -24,7 +24,7 @@ import java.util.Locale;
  * secured to require at minimum the {@code ADMIN} role; security configuration is applied
  * in the Spring Security configuration class.
  *
- * <p>Base URL: {@code /api/v1/forum/categories}
+ * <p>Base URL: {@code /api/forum/categories}
  *
  * <p>All response messages are resolved through the injected {@link MessageSource} using
  * the active request {@link Locale}, ensuring full i18n compliance with no hardcoded strings.
