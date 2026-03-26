@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -22,6 +23,7 @@ const numberFormat = new Intl.NumberFormat("vi-VN", {
 });
 
 export function JobDetailPage() {
+  const { t } = useTranslation("jobs");
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
@@ -33,14 +35,14 @@ export function JobDetailPage() {
 
   useEffect(() => {
     if (!id) {
-      setError("Job not found");
+      setError(t("detail.notFound"));
       setIsLoading(false);
       return;
     }
 
     const jobId = Number(id);
     if (Number.isNaN(jobId)) {
-      setError("Job not found");
+      setError(t("detail.notFound"));
       setIsLoading(false);
       return;
     }
@@ -52,7 +54,7 @@ export function JobDetailPage() {
         setError(null);
       })
       .catch(() => {
-        setError("Unable to load job detail. Please try again later.");
+        setError(t("detail.unableToLoad"));
       })
       .finally(() => {
         setIsLoading(false);
@@ -99,40 +101,42 @@ export function JobDetailPage() {
   if (error || !job) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-        <p className="text-lg text-slate-500">{error ?? "Job not found"}</p>
+        <p className="text-lg text-slate-500">
+          {error ?? t("detail.notFound")}
+        </p>
         <Button
           variant="link"
           className="mt-4"
           onClick={() => navigate("/jobs")}
         >
-          Back to listings
+          {t("detail.backToListings")}
         </Button>
       </div>
     );
   }
 
   const salaryLabel = job.negotiable
-    ? "Negotiable"
+    ? t("detail.salaryNegotiable")
     : `${numberFormat.format(job.salaryMin)} - ${numberFormat.format(job.salaryMax)} ${job.currency}`;
   const deadlineLabel = job.deadline
     ? new Date(job.deadline).toLocaleDateString("en-US")
-    : "Open";
+    : t("detail.salaryOpen");
 
   const overviewItems = [
-    { label: "Salary", value: salaryLabel },
-    { label: "Location", value: job.location },
-    { label: "Experience", value: `${job.experience}+ years` },
-    { label: "Working type", value: job.workingType },
-    { label: "Headcount", value: `${job.quantity} people` },
-    { label: "Deadline", value: deadlineLabel },
+    { label: t("detail.salary"), value: salaryLabel },
+    { label: t("detail.location"), value: job.location },
+    { label: t("detail.experience"), value: `${job.experience}+ years` },
+    { label: t("detail.workingType"), value: job.workingType },
+    { label: t("detail.headcount"), value: `${job.quantity} people` },
+    { label: t("detail.deadline"), value: deadlineLabel },
   ];
 
   const generalInfo = [
-    { label: "Rank", value: job.rankLevel },
-    { label: "Working hours", value: job.workingTime },
-    { label: "Status", value: job.status },
+    { label: t("detail.rank"), value: job.rankLevel },
+    { label: t("detail.workingHours"), value: job.workingTime },
+    { label: t("detail.status"), value: job.status },
     {
-      label: "Posted on",
+      label: t("detail.postedOn"),
       value: new Date(job.createdAt).toLocaleDateString("en-US"),
     },
   ];
@@ -141,7 +145,7 @@ export function JobDetailPage() {
     if (!job) return;
 
     if (!isAuthenticated) {
-      toast.info("Please sign in to save jobs.");
+      toast.info(t("messages.pleaseSignInToSaveJobs"));
       navigate("/login");
       return;
     }
@@ -151,14 +155,14 @@ export function JobDetailPage() {
       if (isSaved) {
         await removeSavedJob(job.id);
         setIsSaved(false);
-        toast.success("Job removed from saved list.");
+        toast.success(t("messages.jobRemovedFromSaved"));
       } else {
         await saveJobPost(job.id);
         setIsSaved(true);
-        toast.success("Job saved.");
+        toast.success(t("messages.jobSaved"));
       }
     } catch {
-      toast.error("Unable to update saved jobs. Please try again.");
+      toast.error(t("messages.unableToUpdateSavedJobs"));
     } finally {
       setIsSaveLoading(false);
     }
@@ -172,7 +176,7 @@ export function JobDetailPage() {
             className="hover:text-emerald-600"
             onClick={() => navigate("/jobs")}
           >
-            Jobs
+            {t("list.pageTitle")}
           </button>
           <span>/</span>
           <span className="text-slate-800">{job.title}</span>
@@ -185,7 +189,7 @@ export function JobDetailPage() {
             className="px-4 py-2 rounded-lg"
             onClick={() => navigate("/jobs")}
           >
-            Back to jobs
+            {t("detail.backToJobs")}
           </Button>
         </div>
 
@@ -193,7 +197,7 @@ export function JobDetailPage() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
-                {job.companyName ?? "Confidential company"}
+                {job.companyName ?? t("messages.confidentialCompany")}
               </p>
               <h1 className="mt-2 text-3xl font-bold text-slate-900">
                 {job.title}
@@ -211,7 +215,7 @@ export function JobDetailPage() {
                 className="flex-1 shadow-lg shadow-emerald-500/30"
                 onClick={() => navigate("/login")}
               >
-                Apply now
+                {t("detail.applyNow")}
               </Button>
               <Button
                 variant="outline"
@@ -224,7 +228,11 @@ export function JobDetailPage() {
                 onClick={handleToggleSaved}
                 disabled={isSaveLoading}
               >
-                {isSaveLoading ? "Saving..." : isSaved ? "Saved" : "Save job"}
+                {isSaveLoading
+                  ? t("detail.saving")
+                  : isSaved
+                    ? t("detail.saved")
+                    : t("detail.saveJob")}
               </Button>
             </div>
           </div>
@@ -247,10 +255,10 @@ export function JobDetailPage() {
           <div className="rounded-3xl bg-white p-8 shadow-lg">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-xl font-semibold text-slate-900">
-                Job details
+                {t("detail.jobDetailsSection")}
               </h2>
               <p className="text-sm text-emerald-600">
-                Job code: {job.jobCode}
+                {t("detail.jobCodeLabel")} {job.jobCode}
               </p>
             </div>
             <div className="mt-4 text-slate-600">
@@ -265,7 +273,7 @@ export function JobDetailPage() {
             <div className="mt-8 space-y-8">
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">
-                  Responsibilities
+                  {t("detail.responsibilities")}
                 </h3>
                 <div className="mt-3 whitespace-pre-line text-slate-600">
                   <ReactMarkdown
@@ -279,7 +287,7 @@ export function JobDetailPage() {
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">
-                  Requirements
+                  {t("detail.requirements")}
                 </h3>
                 <div className="mt-3 whitespace-pre-line text-slate-600">
                   <ReactMarkdown
@@ -293,7 +301,7 @@ export function JobDetailPage() {
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">
-                  Benefits
+                  {t("detail.benefits")}
                 </h3>
                 <div className="mt-3 whitespace-pre-line text-slate-600">
                   <ReactMarkdown
@@ -307,7 +315,7 @@ export function JobDetailPage() {
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">
-                  Required skills
+                  {t("detail.requiredSkills")}
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {job.skills?.length ? (
@@ -320,7 +328,7 @@ export function JobDetailPage() {
                       </span>
                     ))
                   ) : (
-                    <p className="text-slate-500">Not available</p>
+                    <p className="text-slate-500">{t("detail.notAvailable")}</p>
                   )}
                 </div>
               </div>
@@ -330,10 +338,10 @@ export function JobDetailPage() {
           <aside className="space-y-6 lg:sticky lg:top-24">
             <section className="rounded-3xl bg-white p-6 shadow-lg">
               <p className="text-sm uppercase tracking-wide text-slate-500">
-                Company
+                {t("detail.companySection")}
               </p>
               <h3 className="mt-2 text-xl font-semibold text-slate-900">
-                {job.companyName ?? "Confidential company"}
+                {job.companyName ?? t("messages.confidentialCompany")}
               </h3>
               <p className="mt-1 text-sm text-slate-500">
                 {job.companyAddress ?? job.addressDetail}
@@ -341,7 +349,7 @@ export function JobDetailPage() {
               <dl className="mt-4 space-y-3 text-sm text-slate-600">
                 {job.companySize && (
                   <div className="flex justify-between">
-                    <dt>Size</dt>
+                    <dt>{t("detail.sizeLabel")}</dt>
                     <dd className="font-semibold text-slate-900">
                       {job.companySize}
                     </dd>
@@ -349,7 +357,7 @@ export function JobDetailPage() {
                 )}
                 {job.companyWebsite && (
                   <div className="flex justify-between">
-                    <dt>Website</dt>
+                    <dt>{t("detail.websiteLabel")}</dt>
                     <dd>
                       <a
                         href={job.companyWebsite}
@@ -367,14 +375,14 @@ export function JobDetailPage() {
 
             <section className="rounded-3xl bg-white p-6 shadow-lg">
               <p className="text-sm uppercase tracking-wide text-slate-500">
-                General info
+                {t("detail.generalInfoSection")}
               </p>
               <dl className="mt-4 space-y-3 text-sm text-slate-600">
                 {generalInfo.map((item) => (
                   <div key={item.label} className="flex justify-between">
                     <dt>{item.label}</dt>
                     <dd className="font-semibold text-slate-900">
-                      {item.value || "Not available"}
+                      {item.value || t("detail.notAvailable")}
                     </dd>
                   </div>
                 ))}

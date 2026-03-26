@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import type {
   SubmitHandler,
+  SubmitErrorHandler,
   UseFormProps,
   FieldValues,
   Path,
@@ -65,9 +66,9 @@ export function useAppForm<T extends FieldValues>(
    */
   const handleSubmit = (
     onValid: SubmitHandler<T>,
-    onInvalid?: (errors: FieldErrors<T>) => void
+    onInvalid?: SubmitErrorHandler<T>
   ) => {
-    return form.handleSubmit(onValid, onInvalid as any);
+    return form.handleSubmit(onValid, onInvalid);
   };
 
   return {

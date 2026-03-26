@@ -1,0 +1,570 @@
+﻿
+> frontend@0.0.0 lint
+> eslint .
+
+[boundaries]: Please provide element types using the 'boundaries/elements' setting
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\App.tsx
+  6:26  error  Hardcoded text in "content" attribute: "<img src=x onerror=alert('XSS_Test')> **Test OK**". Use i18n: {t("key.path")} instead  custom/no-hardcoded-html-attributes
+  6:34  error  Γ¥î Hardcoded UI text: "<img src=x onerror=alert('XSS_Test')> **Test OK**". Use i18n: {t("key.path")} instead                    custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\components\ErrorBoundary.tsx
+  18:28  error    Unexpected any. Specify a different type                                                        @typescript-eslint/no-explicit-any
+  18:39  error    Unexpected any. Specify a different type                                                        @typescript-eslint/no-explicit-any
+  20:5   warning  Unused eslint-disable directive (no problems were reported from 'custom/no-hardcoded-strings')
+  28:12  warning  Unused eslint-disable directive (no problems were reported from 'custom/no-hardcoded-strings')
+  28:71  error    Γ¥î Hardcoded JSX text: "Editor failed to load.". Use i18n: {t("key.path")} instead               custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\components\SkillMultiSelect.tsx
+  29:12  warning  Generic Object Injection Sink  security/detect-object-injection
+  30:9   warning  Generic Object Injection Sink  security/detect-object-injection
+  32:7   warning  Generic Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\components\RegisterForm.tsx
+   63:10  warning  Generic Object Injection Sink             security/detect-object-injection
+  107:50  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  143:16  error    'error' is defined but never used         @typescript-eslint/no-unused-vars
+  176:16  error    'error' is defined but never used         @typescript-eslint/no-unused-vars
+  227:54  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\context\AuthContext.tsx
+  48:7  warning  Unused eslint-disable directive (no problems were reported from 'custom/no-hardcoded-strings')
+  54:7  warning  Unused eslint-disable directive (no problems were reported from 'custom/no-hardcoded-strings')
+  78:7  warning  Unused eslint-disable directive (no problems were reported from 'custom/no-hardcoded-strings')
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\hooks\useLogin.ts
+  140:7   warning  Unused eslint-disable directive (no problems were reported from 'custom/no-hardcoded-strings')
+  151:37  warning  Generic Object Injection Sink                                                                   security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\hooks\useStepValidation.ts
+  40:26  warning  Variable Assigned to Object Injection Sink  security/detect-object-injection
+  61:44  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  63:21  warning  Variable Assigned to Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\pages\ChangePasswordPage.tsx
+   60:54  warning  Generic Object Injection Sink                                                                                                                                                                                                                                                                                                                                      security/detect-object-injection
+  138:11  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  147:11  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  156:11  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  169:11  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\pages\LoginPage.tsx
+   92:5  warning  React Hook useCallback has a missing dependency: 't'. Either include it or remove the dependency array          react-hooks/exhaustive-deps
+  120:7  error    Hardcoded API URL detected in template literal. Use API_CONFIG or API_ENDPOINTS from "@/lib/constants" instead  custom/no-api-urls
+  146:7  error    Hardcoded API URL detected in template literal. Use API_CONFIG or API_ENDPOINTS from "@/lib/constants" instead  custom/no-api-urls
+  254:6  warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array            react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\pages\OTPVerificationPage.tsx
+   67:5   warning  Generic Object Injection Sink                                                                                                      security/detect-object-injection
+   80:35  warning  Generic Object Injection Sink                                                                                                      security/detect-object-injection
+  211:3   error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render       react-hooks/rules-of-hooks
+  215:6   warning  React Hook useEffect has missing dependencies: 'handleVerify' and 'isLoading'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  245:19  warning  Generic Object Injection Sink                                                                                                      security/detect-object-injection
+  256:17  error    Γ¥î Hardcoded aria-label: "dynamic". Use i18n: t("key.path")                                                                         custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\utils\apiError.ts
+  63:7   warning  Generic Object Injection Sink                                            security/detect-object-injection
+  65:12  warning  Generic Object Injection Sink                                            security/detect-object-injection
+  79:17  error    Γ¥î Hardcoded UI text: "NETWORK ERROR". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\auth\utils\registerFormSchema.ts
+   84:16  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   92:16  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  117:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  124:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  130:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  181:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  187:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  263:12  warning  Generic Object Injection Sink             security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\candidate\cv\components\CVUploadZone.tsx
+   30:69  warning  Generic Object Injection Sink                                     security/detect-object-injection
+  251:74  error    Γ¥î Hardcoded JSX text: "ΓÇó Max". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\candidate\cv\services\cvApi.ts
+  234:67  warning  Generic Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\candidate\cv\types\cv.types.ts
+  294:24  error  Γ¥î Hardcoded UI text: "Verified Recruiters Only". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  295:8   error  Γ¥î Hardcoded UI text: "All Recruiters". Use i18n: {t("key.path")} instead            custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\candidate\profile\hooks\useProfileUpdate.ts
+  108:11  warning  Generic Object Injection Sink  security/detect-object-injection
+  111:18  warning  Generic Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\candidate\profile\utils\sanitize.ts
+  16:16  error  Unexpected control character(s) in regular expression: \x00, \x1f  no-control-regex
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\collaborator\commission\hooks\useCommissionManagement.ts
+   77:6  warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array    react-hooks/exhaustive-deps
+  125:6  warning  React Hook useCallback has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  161:6  warning  React Hook useCallback has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\headhunter\business\components\SubmittedDocuments.tsx
+  50:10  warning  Generic Object Injection Sink  security/detect-object-injection
+  58:66  warning  Generic Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\headhunter\business\hooks\useBusinessVerification.ts
+  111:6  warning  React Hook useCallback has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\headhunter\business\hooks\useFormValidation.ts
+  160:25  warning  Variable Assigned to Object Injection Sink  security/detect-object-injection
+  178:48  warning  Function Call Object Injection Sink         security/detect-object-injection
+  180:11  warning  Generic Object Injection Sink               security/detect-object-injection
+  229:14  warning  Generic Object Injection Sink               security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\headhunter\business\services\businessApi.ts
+  255:9   error  Γ¥î Hardcoded UI text: "An error occurred". Use i18n: {t("key.path")} instead        custom/no-hardcoded-strings
+  264:38  error  Γ¥î Hardcoded UI text: "No response from server". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  270:22  error  Γ¥î Hardcoded UI text: "Unknown error occurred". Use i18n: {t("key.path")} instead   custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\headhunter\components\HeadhunterSidebar.tsx
+  12:38  error  Γ¥î Hardcoded UI text: "Tin tuyß╗ân dß╗Ñng". Use i18n: {t("key.path")} instead          custom/no-hardcoded-strings
+  13:36  error  Γ¥î Hardcoded UI text: "Quß║ún l├╜ CV". Use i18n: {t("key.path")} instead              custom/no-hardcoded-strings
+  14:41  error  Γ¥î Hardcoded UI text: "B├ío c├ío tuyß╗ân dß╗Ñng". Use i18n: {t("key.path")} instead      custom/no-hardcoded-strings
+  17:14  error  Γ¥î Hardcoded UI text: "Dß╗ïch vß╗Ñ cß╗ºa t├┤i". Use i18n: {t("key.path")} instead         custom/no-hardcoded-strings
+  22:14  error  Γ¥î Hardcoded UI text: "M├ú ╞░u ─æ├úi". Use i18n: {t("key.path")} instead               custom/no-hardcoded-strings
+  27:14  error  Γ¥î Hardcoded UI text: "Theo d├╡i ─æ╞ín h├áng". Use i18n: {t("key.path")} instead       custom/no-hardcoded-strings
+  30:42  error  Γ¥î Hardcoded UI text: "Lß╗ïch sß╗¡ hoß║ít ─æß╗Öng". Use i18n: {t("key.path")} instead       custom/no-hardcoded-strings
+  31:31  error  Γ¥î Hardcoded UI text: "C├ái ─æß║╖t t├ái khoß║ún". Use i18n: {t("key.path")} instead       custom/no-hardcoded-strings
+  32:30  error  Γ¥î Hardcoded UI text: "Hß╗Öp th╞░ hß╗ù trß╗ú". Use i18n: {t("key.path")} instead          custom/no-hardcoded-strings
+  35:32  error  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  42:58  error  Γ¥î Hardcoded JSX text: "Nh├á tuyß╗ân dß╗Ñng". Use i18n: {t("key.path")} instead         custom/no-hardcoded-strings
+  43:54  error  Γ¥î Hardcoded JSX text: "T├ái khoß║ún: Headhunter". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  48:12  error  Γ¥î Hardcoded JSX text: "─É─âng tin mß╗¢i". Use i18n: {t("key.path")} instead           custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\headhunter\pages\ApplicantsPage.tsx
+  12:44  error  Γ¥î Hardcoded JSX text: "Loading applicants...". Use i18n: {t("key.path")} instead                          custom/no-hardcoded-strings
+  17:50  error  Γ¥î Hardcoded JSX text: "This page will list applicants for your jobs.". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  20:55  error  Γ¥î Hardcoded JSX text: "No applicants yet.". Use i18n: {t("key.path")} instead                             custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\headhunter\pages\JobsHubPage.tsx
+  13:56  error  Γ¥î Hardcoded JSX text: "Tin tuyß╗ân dß╗Ñng". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  22:14  error  Γ¥î Hardcoded JSX text: "Danh s├ích". Use i18n: {t("key.path")} instead       custom/no-hardcoded-strings
+  31:14  error  Γ¥î Hardcoded JSX text: "─É─âng tin mß╗¢i". Use i18n: {t("key.path")} instead    custom/no-hardcoded-strings
+  40:14  error  Γ¥î Hardcoded JSX text: "ß╗¿ng vi├¬n". Use i18n: {t("key.path")} instead        custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\home\components\FeaturedJobs.tsx
+  29:6  warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\home\components\Header.tsx
+  134:33  error  Γ¥î Hardcoded JSX text: "≡ƒæ¿ΓÇì≡ƒÆ╝". Use i18n: {t("key.path")} instead    custom/no-hardcoded-strings
+  157:26  error  Γ¥î Hardcoded JSX text: "My jobs". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\home\components\ParticleBackground.tsx
+   92:22  warning  Generic Object Injection Sink  security/detect-object-injection
+   92:39  warning  Generic Object Injection Sink  security/detect-object-injection
+   93:22  warning  Generic Object Injection Sink  security/detect-object-injection
+   93:39  warning  Generic Object Injection Sink  security/detect-object-injection
+  100:24  warning  Generic Object Injection Sink  security/detect-object-injection
+  100:40  warning  Generic Object Injection Sink  security/detect-object-injection
+  101:24  warning  Generic Object Injection Sink  security/detect-object-injection
+  101:40  warning  Generic Object Injection Sink  security/detect-object-injection
+  138:11  warning  Generic Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\home\components\RecommendedJobs.tsx
+  30:6  warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\home\components\TopCompanies.tsx
+  30:6  warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobCreatePage.tsx
+    1:21  error    'useMemo' is defined but never used                                                                                                                                                 @typescript-eslint/no-unused-vars
+   39:17  error    Γ¥î Hardcoded UI text: "Ho Chi Minh City". Use i18n: {t("key.path")} instead                                                                                                          custom/no-hardcoded-strings
+   52:20  error    Γ¥î Hardcoded UI text: "Mon - Fri". Use i18n: {t("key.path")} instead                                                                                                                 custom/no-hardcoded-strings
+   65:21  error    Hardcoded toast message detected: "Unable to load skills list. Please retry later.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))               custom/no-hardcoded-toast-messages
+   65:21  error    Γ¥î Hardcoded UI text: "Unable to load skills list. Please retry later.". Use i18n: {t("key.path")} instead                                                                           custom/no-hardcoded-strings
+   82:19  error    Hardcoded toast message detected: "Title cannot be empty". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                         custom/no-hardcoded-toast-messages
+   82:19  error    Γ¥î Hardcoded UI text: "Title cannot be empty". Use i18n: {t("key.path")} instead                                                                                                     custom/no-hardcoded-strings
+   89:28  error    Unnecessary escape character: \[                                                                                                                                                    no-useless-escape
+   89:32  error    Unnecessary escape character: \(                                                                                                                                                    no-useless-escape
+   89:34  error    Unnecessary escape character: \)                                                                                                                                                    no-useless-escape
+   94:19  error    Hardcoded toast message detected: "Description cannot be empty". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                   custom/no-hardcoded-toast-messages
+   94:19  error    Γ¥î Hardcoded UI text: "Description cannot be empty". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+   99:19  error    Hardcoded toast message detected: "Quantity must be greater than 0". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                               custom/no-hardcoded-toast-messages
+   99:19  error    Γ¥î Hardcoded UI text: "Quantity must be greater than 0". Use i18n: {t("key.path")} instead                                                                                           custom/no-hardcoded-strings
+  105:19  error    Hardcoded toast message detected: "Deadline must be today or later". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                               custom/no-hardcoded-toast-messages
+  105:19  error    Γ¥î Hardcoded UI text: "Deadline must be today or later". Use i18n: {t("key.path")} instead                                                                                           custom/no-hardcoded-strings
+  110:19  error    Hardcoded toast message detected: "At least one skill must be selected". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                           custom/no-hardcoded-toast-messages
+  110:19  error    Γ¥î Hardcoded UI text: "At least one skill must be selected". Use i18n: {t("key.path")} instead                                                                                       custom/no-hardcoded-strings
+  117:28  error    Unnecessary escape character: \[                                                                                                                                                    no-useless-escape
+  117:32  error    Unnecessary escape character: \(                                                                                                                                                    no-useless-escape
+  117:34  error    Unnecessary escape character: \)                                                                                                                                                    no-useless-escape
+  124:9   error    Hardcoded toast message detected: "Responsibilities/Requirements must be at least 50 characters". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))  custom/no-hardcoded-toast-messages
+  124:9   error    Γ¥î Hardcoded UI text: "Responsibilities/Requirements must be at least 50 characters". Use i18n: {t("key.path")} instead                                                              custom/no-hardcoded-strings
+  131:21  error    Hardcoded toast message detected: "Salary cannot be negative". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                     custom/no-hardcoded-toast-messages
+  131:21  error    Γ¥î Hardcoded UI text: "Salary cannot be negative". Use i18n: {t("key.path")} instead                                                                                                 custom/no-hardcoded-strings
+  135:21  error    Hardcoded toast message detected: "Salary min cannot be greater than salary max". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                  custom/no-hardcoded-toast-messages
+  135:21  error    Γ¥î Hardcoded UI text: "Salary min cannot be greater than salary max". Use i18n: {t("key.path")} instead                                                                              custom/no-hardcoded-strings
+  142:45  error    Unexpected any. Specify a different type                                                                                                                                            @typescript-eslint/no-explicit-any
+  145:23  error    Hardcoded toast message detected: "Job posted successfully.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                      custom/no-hardcoded-toast-messages
+  145:23  error    Γ¥î Hardcoded UI text: "Job posted successfully.". Use i18n: {t("key.path")} instead                                                                                                  custom/no-hardcoded-strings
+  157:21  error    Γ¥î Hardcoded UI text: "Ho Chi Minh City". Use i18n: {t("key.path")} instead                                                                                                          custom/no-hardcoded-strings
+  165:24  error    Γ¥î Hardcoded UI text: "Mon - Fri". Use i18n: {t("key.path")} instead                                                                                                                 custom/no-hardcoded-strings
+  173:11  error    Hardcoded toast message detected: "Failed to create job. Please check the form and try again.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))    custom/no-hardcoded-toast-messages
+  173:11  error    Γ¥î Hardcoded UI text: "Failed to create job. Please check the form and try again.". Use i18n: {t("key.path")} instead                                                                custom/no-hardcoded-strings
+  178:19  error    Hardcoded toast message detected: "Failed to create job. Please check the form and try again.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))    custom/no-hardcoded-toast-messages
+  178:19  error    Γ¥î Hardcoded UI text: "Failed to create job. Please check the form and try again.". Use i18n: {t("key.path")} instead                                                                custom/no-hardcoded-strings
+  192:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  192:69  error    Γ¥î Hardcoded JSX text: "Job title". Use i18n: {t("key.path")} instead                                                                                                                custom/no-hardcoded-strings
+  196:15  error    Hardcoded text in "placeholder" attribute: "Senior Backend Engineer". Use i18n: {t("key.path")} instead                                                                             custom/no-hardcoded-html-attributes
+  196:27  error    Γ¥î Hardcoded UI text: "Senior Backend Engineer". Use i18n: {t("key.path")} instead                                                                                                   custom/no-hardcoded-strings
+  197:49  error    Γ¥î Hardcoded UI text: "Title is required". Use i18n: {t("key.path")} instead                                                                                                         custom/no-hardcoded-strings
+  204:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  208:15  error    Hardcoded text in "placeholder" attribute: "City". Use i18n: {t("key.path")} instead                                                                                                custom/no-hardcoded-html-attributes
+  209:52  error    Γ¥î Hardcoded UI text: "Location is required". Use i18n: {t("key.path")} instead                                                                                                      custom/no-hardcoded-strings
+  218:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  218:69  error    Γ¥î Hardcoded JSX text: "Address detail". Use i18n: {t("key.path")} instead                                                                                                           custom/no-hardcoded-strings
+  222:15  error    Hardcoded text in "placeholder" attribute: "Office address". Use i18n: {t("key.path")} instead                                                                                      custom/no-hardcoded-html-attributes
+  222:27  error    Γ¥î Hardcoded UI text: "Office address". Use i18n: {t("key.path")} instead                                                                                                            custom/no-hardcoded-strings
+  224:27  error    Γ¥î Hardcoded UI text: "Address detail is required". Use i18n: {t("key.path")} instead                                                                                                custom/no-hardcoded-strings
+  229:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  238:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  238:69  error    Γ¥î Hardcoded JSX text: "Rank level". Use i18n: {t("key.path")} instead                                                                                                               custom/no-hardcoded-strings
+  255:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  255:69  error    Γ¥î Hardcoded JSX text: "Working type". Use i18n: {t("key.path")} instead                                                                                                             custom/no-hardcoded-strings
+  268:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  268:69  error    Γ¥î Hardcoded JSX text: "Experience (years)". Use i18n: {t("key.path")} instead                                                                                                       custom/no-hardcoded-strings
+  282:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  295:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  295:69  error    Γ¥î Hardcoded JSX text: "Salary min (VND)". Use i18n: {t("key.path")} instead                                                                                                         custom/no-hardcoded-strings
+  308:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  308:69  error    Γ¥î Hardcoded JSX text: "Salary max (VND)". Use i18n: {t("key.path")} instead                                                                                                         custom/no-hardcoded-strings
+  321:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  338:76  error    Γ¥î Hardcoded JSX text: "Salary negotiable". Use i18n: {t("key.path")} instead                                                                                                        custom/no-hardcoded-strings
+  346:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  352:34  error    Γ¥î Hardcoded UI text: "Description is required". Use i18n: {t("key.path")} instead                                                                                                   custom/no-hardcoded-strings
+  357:19  error    Hardcoded text in "placeholder" attribute: "Describe the job position, company culture, and what makes this role special...". Use i18n: {t("key.path")} instead                     custom/no-hardcoded-html-attributes
+  357:31  error    Γ¥î Hardcoded UI text: "Describe the job position, company culture, and what makes this role special...". Use i18n: {t("key.path")} instead                                           custom/no-hardcoded-strings
+  368:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  375:27  error    Γ¥î Hardcoded UI text: "Responsibilities is required". Use i18n: {t("key.path")} instead                                                                                              custom/no-hardcoded-strings
+  379:40  error    Unnecessary escape character: \[                                                                                                                                                    no-useless-escape
+  379:44  error    Unnecessary escape character: \(                                                                                                                                                    no-useless-escape
+  379:46  error    Unnecessary escape character: \)                                                                                                                                                    no-useless-escape
+  383:21  error    Γ¥î Hardcoded UI text: "Responsibilities must be at least 50 characters". Use i18n: {t("key.path")} instead                                                                           custom/no-hardcoded-strings
+  391:19  error    Hardcoded text in "placeholder" attribute: "List the main tasks and responsibilities for this role (minimum 50 characters)...". Use i18n: {t("key.path")} instead                   custom/no-hardcoded-html-attributes
+  391:31  error    Γ¥î Hardcoded UI text: "List the main tasks and responsibilities for this role (minimum 50 characters)...". Use i18n: {t("key.path")} instead                                         custom/no-hardcoded-strings
+  402:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  409:27  error    Γ¥î Hardcoded UI text: "Requirements is required". Use i18n: {t("key.path")} instead                                                                                                  custom/no-hardcoded-strings
+  413:40  error    Unnecessary escape character: \[                                                                                                                                                    no-useless-escape
+  413:44  error    Unnecessary escape character: \(                                                                                                                                                    no-useless-escape
+  413:46  error    Unnecessary escape character: \)                                                                                                                                                    no-useless-escape
+  417:21  error    Γ¥î Hardcoded UI text: "Requirements must be at least 50 characters". Use i18n: {t("key.path")} instead                                                                               custom/no-hardcoded-strings
+  425:19  error    Hardcoded text in "placeholder" attribute: "Specify the skills, experience, and qualifications needed (minimum 50 characters)...". Use i18n: {t("key.path")} instead                custom/no-hardcoded-html-attributes
+  425:31  error    Γ¥î Hardcoded UI text: "Specify the skills, experience, and qualifications needed (minimum 50 characters)...". Use i18n: {t("key.path")} instead                                      custom/no-hardcoded-strings
+  436:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  442:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  442:69  error    Γ¥î Hardcoded JSX text: "Working time". Use i18n: {t("key.path")} instead                                                                                                             custom/no-hardcoded-strings
+  451:13  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  451:69  error    Γ¥î Hardcoded JSX text: "Required skills". Use i18n: {t("key.path")} instead                                                                                                          custom/no-hardcoded-strings
+  455:58  error    Γ¥î Hardcoded JSX text: "Please pick at least one skill". Use i18n: {t("key.path")} instead                                                                                           custom/no-hardcoded-strings
+  474:11  warning  A form label must be associated with a control                                                                                                                                      jsx-a11y/label-has-associated-control
+  474:67  error    Γ¥î Hardcoded JSX text: "Cover image (optional)". Use i18n: {t("key.path")} instead                                                                                                   custom/no-hardcoded-strings
+  485:47  error    Γ¥î Hardcoded UI text: "Publish job". Use i18n: {t("key.path")} instead                                                                                                               custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobDetailPage.tsx
+   36:16  error  Γ¥î Hardcoded UI text: "Job not found". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+   43:16  error  Γ¥î Hardcoded UI text: "Job not found". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+   55:18  error  Γ¥î Hardcoded UI text: "Unable to load job detail. Please try again later.". Use i18n: {t("key.path")} instead                                                          custom/no-hardcoded-strings
+  102:57  error  Γ¥î Hardcoded UI text: "Job not found". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+  107:10  error  Γ¥î Hardcoded JSX text: "Back to listings". Use i18n: {t("key.path")} instead                                                                                           custom/no-hardcoded-strings
+  125:14  error  Γ¥î Hardcoded UI text: "Working type". Use i18n: {t("key.path")} instead                                                                                                custom/no-hardcoded-strings
+  132:14  error  Γ¥î Hardcoded UI text: "Working hours". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+  135:14  error  Γ¥î Hardcoded UI text: "Posted on". Use i18n: {t("key.path")} instead                                                                                                   custom/no-hardcoded-strings
+  144:18  error  Hardcoded toast message detected: "Please sign in to save jobs.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                    custom/no-hardcoded-toast-messages
+  144:18  error  Γ¥î Hardcoded UI text: "Please sign in to save jobs.". Use i18n: {t("key.path")} instead                                                                                custom/no-hardcoded-strings
+  154:23  error  Hardcoded toast message detected: "Job removed from saved list.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                    custom/no-hardcoded-toast-messages
+  154:23  error  Γ¥î Hardcoded UI text: "Job removed from saved list.". Use i18n: {t("key.path")} instead                                                                                custom/no-hardcoded-strings
+  158:23  error  Hardcoded toast message detected: "Job saved.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                      custom/no-hardcoded-toast-messages
+  158:23  error  Γ¥î Hardcoded UI text: "Job saved.". Use i18n: {t("key.path")} instead                                                                                                  custom/no-hardcoded-strings
+  161:19  error  Hardcoded toast message detected: "Unable to update saved jobs. Please try again.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))  custom/no-hardcoded-toast-messages
+  161:19  error  Γ¥î Hardcoded UI text: "Unable to update saved jobs. Please try again.". Use i18n: {t("key.path")} instead                                                              custom/no-hardcoded-strings
+  187:12  error  Γ¥î Hardcoded JSX text: "Back to jobs". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+  196:37  error  Γ¥î Hardcoded UI text: "Confidential company". Use i18n: {t("key.path")} instead                                                                                        custom/no-hardcoded-strings
+  213:16  error  Γ¥î Hardcoded JSX text: "Apply now". Use i18n: {t("key.path")} instead                                                                                                  custom/no-hardcoded-strings
+  227:68  error  Γ¥î Hardcoded UI text: "Save job". Use i18n: {t("key.path")} instead                                                                                                    custom/no-hardcoded-strings
+  249:68  error  Γ¥î Hardcoded JSX text: "Job details". Use i18n: {t("key.path")} instead                                                                                                custom/no-hardcoded-strings
+  252:55  error  Γ¥î Hardcoded JSX text: "Job code:". Use i18n: {t("key.path")} instead                                                                                                  custom/no-hardcoded-strings
+  309:70  error  Γ¥î Hardcoded JSX text: "Required skills". Use i18n: {t("key.path")} instead                                                                                            custom/no-hardcoded-strings
+  323:51  error  Γ¥î Hardcoded JSX text: "Not available". Use i18n: {t("key.path")} instead                                                                                              custom/no-hardcoded-strings
+  336:37  error  Γ¥î Hardcoded UI text: "Confidential company". Use i18n: {t("key.path")} instead                                                                                        custom/no-hardcoded-strings
+  369:77  error  Γ¥î Hardcoded JSX text: "General info". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+  377:38  error  Γ¥î Hardcoded UI text: "Not available". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobEditPage.tsx
+    5:8   error    'ErrorBoundary' is defined but never used                                                                                                                         @typescript-eslint/no-unused-vars
+   87:21  error    Hardcoded toast message detected: "Unable to load job or skills.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))               custom/no-hardcoded-toast-messages
+   87:21  error    Γ¥î Hardcoded UI text: "Unable to load job or skills.". Use i18n: {t("key.path")} instead                                                                           custom/no-hardcoded-strings
+  106:19  error    Hardcoded toast message detected: "Please select at least one required skill.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))  custom/no-hardcoded-toast-messages
+  106:19  error    Γ¥î Hardcoded UI text: "Please select at least one required skill.". Use i18n: {t("key.path")} instead                                                              custom/no-hardcoded-strings
+  110:33  error    Hardcoded toast message detected: "Invalid job id". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                              custom/no-hardcoded-toast-messages
+  110:33  error    Γ¥î Hardcoded UI text: "Invalid job id". Use i18n: {t("key.path")} instead                                                                                          custom/no-hardcoded-strings
+  115:21  error    Hardcoded toast message detected: "Job updated successfully.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                   custom/no-hardcoded-toast-messages
+  115:21  error    Γ¥î Hardcoded UI text: "Job updated successfully.". Use i18n: {t("key.path")} instead                                                                               custom/no-hardcoded-strings
+  119:19  error    Hardcoded toast message detected: "Failed to update job.". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                       custom/no-hardcoded-toast-messages
+  119:19  error    Γ¥î Hardcoded UI text: "Failed to update job.". Use i18n: {t("key.path")} instead                                                                                   custom/no-hardcoded-strings
+  125:9   error    'skillsByCategory' is assigned a value but never used                                                                                                             @typescript-eslint/no-unused-vars
+  129:12  warning  Generic Object Injection Sink                                                                                                                                     security/detect-object-injection
+  129:26  warning  Generic Object Injection Sink                                                                                                                                     security/detect-object-injection
+  130:7   warning  Generic Object Injection Sink                                                                                                                                     security/detect-object-injection
+  135:44  error    Γ¥î Hardcoded JSX text: "Loading...". Use i18n: {t("key.path")} instead                                                                                             custom/no-hardcoded-strings
+  140:76  error    Γ¥î Hardcoded JSX text: "Edit job". Use i18n: {t("key.path")} instead                                                                                               custom/no-hardcoded-strings
+  143:67  error    Γ¥î Hardcoded JSX text: "Update an existing job posting". Use i18n: {t("key.path")} instead                                                                         custom/no-hardcoded-strings
+  146:64  error    Γ¥î Hardcoded JSX text: "Adjust details and requirements; save to update the live posting.". Use i18n: {t("key.path")} instead                                      custom/no-hardcoded-strings
+  157:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  157:69  error    Γ¥î Hardcoded JSX text: "Job title". Use i18n: {t("key.path")} instead                                                                                              custom/no-hardcoded-strings
+  161:15  error    Hardcoded text in "placeholder" attribute: "Senior Backend Engineer". Use i18n: {t("key.path")} instead                                                           custom/no-hardcoded-html-attributes
+  161:27  error    Γ¥î Hardcoded UI text: "Senior Backend Engineer". Use i18n: {t("key.path")} instead                                                                                 custom/no-hardcoded-strings
+  162:49  error    Γ¥î Hardcoded UI text: "Title is required". Use i18n: {t("key.path")} instead                                                                                       custom/no-hardcoded-strings
+  170:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  174:15  error    Hardcoded text in "placeholder" attribute: "City". Use i18n: {t("key.path")} instead                                                                              custom/no-hardcoded-html-attributes
+  175:52  error    Γ¥î Hardcoded UI text: "Location is required". Use i18n: {t("key.path")} instead                                                                                    custom/no-hardcoded-strings
+  185:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  185:69  error    Γ¥î Hardcoded JSX text: "Address detail". Use i18n: {t("key.path")} instead                                                                                         custom/no-hardcoded-strings
+  189:15  error    Hardcoded text in "placeholder" attribute: "Office address". Use i18n: {t("key.path")} instead                                                                    custom/no-hardcoded-html-attributes
+  189:27  error    Γ¥î Hardcoded UI text: "Office address". Use i18n: {t("key.path")} instead                                                                                          custom/no-hardcoded-strings
+  195:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  204:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  204:69  error    Γ¥î Hardcoded JSX text: "Rank level". Use i18n: {t("key.path")} instead                                                                                             custom/no-hardcoded-strings
+  222:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  222:69  error    Γ¥î Hardcoded JSX text: "Working type". Use i18n: {t("key.path")} instead                                                                                           custom/no-hardcoded-strings
+  236:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  236:69  error    Γ¥î Hardcoded JSX text: "Experience (years)". Use i18n: {t("key.path")} instead                                                                                     custom/no-hardcoded-strings
+  251:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  264:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  264:69  error    Γ¥î Hardcoded JSX text: "Salary min (VND)". Use i18n: {t("key.path")} instead                                                                                       custom/no-hardcoded-strings
+  274:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  274:69  error    Γ¥î Hardcoded JSX text: "Salary max (VND)". Use i18n: {t("key.path")} instead                                                                                       custom/no-hardcoded-strings
+  284:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  301:76  error    Γ¥î Hardcoded JSX text: "Salary negotiable". Use i18n: {t("key.path")} instead                                                                                      custom/no-hardcoded-strings
+  309:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  319:19  error    Hardcoded text in "placeholder" attribute: "Describe the job position, company culture, and what makes this role special...". Use i18n: {t("key.path")} instead   custom/no-hardcoded-html-attributes
+  319:31  error    Γ¥î Hardcoded UI text: "Describe the job position, company culture, and what makes this role special...". Use i18n: {t("key.path")} instead                         custom/no-hardcoded-strings
+  326:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  336:19  error    Hardcoded text in "placeholder" attribute: "List the main tasks and responsibilities for this role". Use i18n: {t("key.path")} instead                            custom/no-hardcoded-html-attributes
+  336:31  error    Γ¥î Hardcoded UI text: "List the main tasks and responsibilities for this role". Use i18n: {t("key.path")} instead                                                  custom/no-hardcoded-strings
+  343:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  353:19  error    Hardcoded text in "placeholder" attribute: "Specify the skills, experience, and qualifications needed". Use i18n: {t("key.path")} instead                         custom/no-hardcoded-html-attributes
+  353:31  error    Γ¥î Hardcoded UI text: "Specify the skills, experience, and qualifications needed". Use i18n: {t("key.path")} instead                                               custom/no-hardcoded-strings
+  360:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  367:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  367:69  error    Γ¥î Hardcoded JSX text: "Working time". Use i18n: {t("key.path")} instead                                                                                           custom/no-hardcoded-strings
+  376:13  warning  A form label must be associated with a control                                                                                                                    jsx-a11y/label-has-associated-control
+  376:69  error    Γ¥î Hardcoded JSX text: "Required skills". Use i18n: {t("key.path")} instead                                                                                        custom/no-hardcoded-strings
+  380:58  error    Γ¥î Hardcoded JSX text: "Please pick at least one skill". Use i18n: {t("key.path")} instead                                                                         custom/no-hardcoded-strings
+  398:41  error    Γ¥î Hardcoded UI text: "Save changes". Use i18n: {t("key.path")} instead                                                                                            custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobListPage.tsx
+   40:10  error    Γ¥î Hardcoded UI text: "Contact for salary". Use i18n: {t("key.path")} instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     custom/no-hardcoded-strings
+   82:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobListPage.tsx:82:7
+  80 |     const nextKeyword = filters.keyword ?? "";
+  81 |     if (nextKeyword !== keyword) {
+> 82 |       setKeyword(nextKeyword);
+     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  83 |     }
+  84 |   }, [filters.keyword, keyword]);
+  85 |                                                                react-hooks/set-state-in-effect
+   98:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobListPage.tsx:98:9
+   96 |     if (currentMin === undefined && currentMax === undefined) {
+   97 |       if (experienceValue !== "ALL") {
+>  98 |         setExperienceValue("ALL");
+      |         ^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+   99 |       }
+  100 |       return;
+  101 |     }                                  react-hooks/set-state-in-effect
+  114:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobListPage.tsx:114:9
+  112 |     if (filters.negotiable) {
+  113 |       if (salaryPreset !== "NEGOTIABLE") {
+> 114 |         setSalaryPreset("NEGOTIABLE");
+      |         ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  115 |       }
+  116 |       if (customSalaryMin || customSalaryMax) {
+  117 |         setCustomSalaryMin("");  react-hooks/set-state-in-effect
+  226:55  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+  234:53  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+  540:9   error    'navigate' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  556:9   error    'EXPERIENCE_PRESETS' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  557:9   error    'SALARY_PRESETS' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  561:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobListPage.tsx:561:5
+  559 |   useEffect(() => {
+  560 |     let active = true;
+> 561 |     setIsLoading(true);
+      |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  562 |     setError(null);
+  563 |
+  564 |     fetchJobs(filters)                                                                                                   react-hooks/set-state-in-effect
+  588:6   warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-hooks/exhaustive-deps
+  683:11  error    Definition for rule 'react/no-array-index-key' was not found                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react/no-array-index-key
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\JobManagePage.tsx
+  202:116  error  Parsing error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\jobs\pages\SavedJobsPage.tsx
+  62:6   warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  74:25  error    Use the rest parameters instead of 'arguments'                                                        prefer-rest-params
+  74:38  error    Use the rest parameters instead of 'arguments'                                                        prefer-rest-params
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\actions\delete\components\DeleteUserModal.tsx
+  108:50  error  Γ¥î Hardcoded UI text: "Unknown error". Use i18n: {t("key.path")} instead                            custom/no-hardcoded-strings
+  215:19  error  Hardcoded text in "aria-label" attribute: "Soft Delete option". Use i18n: {t("key.path")} instead  custom/no-hardcoded-html-attributes
+  215:30  error  Γ¥î Hardcoded aria-label: "Soft Delete option". Use i18n: t("key.path") instead                      custom/no-hardcoded-strings
+  269:19  error  Hardcoded text in "aria-label" attribute: "Hard Delete option". Use i18n: {t("key.path")} instead  custom/no-hardcoded-html-attributes
+  269:30  error  Γ¥î Hardcoded aria-label: "Hard Delete option". Use i18n: t("key.path") instead                      custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\actions\lock\components\LockUserModal.tsx
+  114:50  error  Γ¥î Hardcoded UI text: "Unknown error". Use i18n: {t("key.path")} instead                                               custom/no-hardcoded-strings
+  309:48  error  Γ¥î Hardcoded UI text: "Specify Lock Reason". Use i18n: {t("key.path")} instead                                         custom/no-hardcoded-strings
+  316:19  error  Γ¥î Hardcoded UI text: "Please provide a detailed reason for locking this account.". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  335:21  error  Γ¥î Hardcoded UI text: "Enter the specific reason...". Use i18n: {t("key.path")} instead                                custom/no-hardcoded-strings
+  344:21  error  Γ¥î Hardcoded UI text: "This reason will be recorded in the system.". Use i18n: {t("key.path")} instead                 custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\actions\lock\components\UnlockUserModal.tsx
+  73:50  error  Γ¥î Hardcoded UI text: "Unknown error". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\actions\lock\hooks\useLockUser.ts
+   60:48  error  Γ¥î Hardcoded UI text: "Cannot lock your own account". Use i18n: {t("key.path")} instead               custom/no-hardcoded-strings
+   92:50  error  Γ¥î Hardcoded UI text: "Cannot lock your own account". Use i18n: {t("key.path")} instead               custom/no-hardcoded-strings
+   96:13  error  Γ¥î Hardcoded UI text: "Insufficient permission to lock this user". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  104:50  error  Γ¥î Hardcoded UI text: "Cannot lock your own account". Use i18n: {t("key.path")} instead               custom/no-hardcoded-strings
+  108:13  error  Γ¥î Hardcoded UI text: "Insufficient permission to lock this user". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\classification\components\UserClassificationHeader.tsx
+  54:20  warning  Generic Object Injection Sink  security/detect-object-injection
+  84:28  warning  Generic Object Injection Sink  security/detect-object-injection
+  87:28  warning  Generic Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\classification\hooks\useUserClassification.ts
+   76:30  error    Unexpected any. Specify a different type                                                                          @typescript-eslint/no-explicit-any
+  103:6   warning  React Hook useCallback has a missing dependency: 't'. Either include it or remove the dependency array            react-hooks/exhaustive-deps
+  137:6   warning  React Hook useEffect has a missing dependency: 'fetchAllUsers'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\classification\utils\groupingConfig.ts
+   51:38  warning  Generic Object Injection Sink  security/detect-object-injection
+   64:38  warning  Generic Object Injection Sink  security/detect-object-injection
+  104:38  warning  Generic Object Injection Sink  security/detect-object-injection
+  112:10  warning  Generic Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\components\common\UserFilters.tsx
+  13:22  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\config\adminFeaturesConfig.ts
+  32:18  error    Γ¥î Hardcoded UI text: "View and manage all users". Use i18n: {t("key.path")} instead                                                 custom/no-hardcoded-strings
+  44:7   error    Γ¥î Hardcoded UI text: "View user distribution and classification by role, status, company, etc.". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  54:18  error    Γ¥î Hardcoded UI text: "View system activity and audit logs". Use i18n: {t("key.path")} instead                                       custom/no-hardcoded-strings
+  64:18  error    Γ¥î Hardcoded UI text: "Manage system settings and configurations". Use i18n: {t("key.path")} instead                                 custom/no-hardcoded-strings
+  95:19  warning  Variable Assigned to Object Injection Sink                                                                                          security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\dashboard\pages\AdminDashboardPage.tsx
+  53:42  error  Γ¥î Hardcoded JSX text: "- Admin". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\detail\components\LoginHistoryTable.tsx
+  11:26  error  Γ¥î Hardcoded UI text: "Failed Attempt". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\detail\hooks\useUserDetail.ts
+  34:6  warning  React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\detail\pages\UserDetailPage.tsx
+   47:26  error    Γ¥î Hardcoded UI text: "Failed Attempt". Use i18n: {t("key.path")} instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            custom/no-hardcoded-strings
+   82:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\detail\pages\UserDetailPage.tsx:82:7
+  80 |     if (userDetailData) {
+  81 |       const mappedUser = userMapper.toDetailModel(userDetailData);
+> 82 |       setUser(mappedUser);
+     |       ^^^^^^^ Avoid calling setState() directly within an effect
+  83 |       const mappedLoginHistory = userMapper.toLoginSessions(
+  84 |         userDetailData.loginHistory
+  85 |       );  react-hooks/set-state-in-effect
+  113:17  error    Hardcoded toast message detected: "error". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         custom/no-hardcoded-toast-messages
+  124:17  error    Hardcoded toast message detected: "success". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       custom/no-hardcoded-toast-messages
+  132:17  error    Hardcoded toast message detected: "error". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         custom/no-hardcoded-toast-messages
+  142:17  error    Hardcoded toast message detected: "error". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         custom/no-hardcoded-toast-messages
+  153:17  error    Hardcoded toast message detected: "success". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       custom/no-hardcoded-toast-messages
+  161:17  error    Hardcoded toast message detected: "error". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         custom/no-hardcoded-toast-messages
+  178:17  error    Hardcoded toast message detected: "error". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         custom/no-hardcoded-toast-messages
+  185:21  error    Hardcoded toast message detected: "error". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         custom/no-hardcoded-toast-messages
+  195:9   error    Hardcoded toast message detected: "success". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       custom/no-hardcoded-toast-messages
+  208:17  error    Hardcoded toast message detected: "error". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         custom/no-hardcoded-toast-messages
+  368:13  warning  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   jsx-a11y/anchor-is-valid
+  408:55  error    Γ¥î Hardcoded UI text: "Suspicious Activity". Use i18n: {t("key.path")} instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       custom/no-hardcoded-strings
+  412:57  error    Γ¥î Hardcoded UI text: "Policy Violation". Use i18n: {t("key.path")} instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          custom/no-hardcoded-strings
+  416:59  error    Γ¥î Hardcoded UI text: "Account Compromise". Use i18n: {t("key.path")} instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\list\components\UserListEmpty.tsx
+  22:84  error  Γ¥î Hardcoded JSX text: "Ch├║ng t├┤i kh├┤ng t├¼m thß║Ñy ng╞░ß╗¥i d├╣ng n├áo ph├╣ hß╗úp vß╗¢i ti├¬u ch├¡ t├¼m kiß║┐m
+          cß╗ºa bß║ín. Vui l├▓ng ─æiß╗üu chß╗ënh bß╗Ö lß╗ìc hoß║╖c ─æiß╗üu khoß║ún t├¼m kiß║┐m.". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\list\hooks\useUsers.ts
+   26:25  error    Unexpected any. Specify a different type                                                                @typescript-eslint/no-explicit-any
+  110:6   warning  React Hook useCallback has a missing dependency: 't'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\list\pages\UserListPage.tsx
+  69:9   warning  Generic Object Injection Sink  security/detect-object-injection
+  70:11  warning  Generic Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\services\usersApi.ts
+   42:10  warning  Generic Object Injection Sink             security/detect-object-injection
+   53:39  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   77:37  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   95:37  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  103:37  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:37  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  150:37  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\features\users\utils\userMapper.ts
+   25:26  error  Γ¥î Hardcoded UI text: "Failed Attempt". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+  128:57  error  Γ¥î Hardcoded UI text: "Failed Attempt". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\shared\components\AuthCard.tsx
+  45:47  error  Γ¥î Hardcoded JSX text: "Enter your details to continue". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\shared\components\Logo.tsx
+  35:23  warning  Variable Assigned to Object Injection Sink  security/detect-object-injection
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\shared\hooks\useAppForm.ts
+  70:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\RikkeiSoft_InternshipCourses\headhunt-web-app\front-end\frontend\src\shared\hooks\useAppTranslation.ts
+  18:44  error  Γ¥î Hardcoded UI text: "Tiß║┐ng Viß╗çt". Use i18n: {t("key.path")} instead  custom/no-hardcoded-strings
+
+Γ£û 369 problems (259 errors, 110 warnings)
+  0 errors and 6 warnings potentially fixable with the `--fix` option.
+

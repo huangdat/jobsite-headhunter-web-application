@@ -253,6 +253,7 @@ export function OTPVerificationPage() {
                 onPaste={handlePaste}
                 className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 rounded-lg focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition-all"
                 autoFocus={index === 0}
+                // eslint-disable-next-line custom/no-hardcoded-strings
                 aria-label={`OTP digit ${index + 1}`}
               />
             ))}

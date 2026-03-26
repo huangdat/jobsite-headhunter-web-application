@@ -8,7 +8,7 @@ interface LoginSession {
   ipAddress: string;
   deviceBrowser: string;
   location: string;
-  status: "Successful" | "Failed Attempt";
+  status: "Successful" | "Failed";
 }
 
 interface LoginHistoryTableProps {

@@ -105,7 +105,7 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
       {displayTips.length > 0 && (
         <div className="pt-4 border-t border-surface-variant">
           <p className="text-xs text-slate-600 text-center">
-            Implement these tips to improve your CV match rate
+            {t("candidate.tips.optimizationTitle")}
           </p>
         </div>
       )}

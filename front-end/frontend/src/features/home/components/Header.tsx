@@ -131,6 +131,7 @@ export function Header() {
                           }}
                           className="w-full text-left px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 transition cursor-pointer flex items-center gap-2"
                         >
+                          {/* eslint-disable-next-line custom/no-hardcoded-strings */}
                           <span>👨‍💼</span>
                           {t("navigation.adminDashboard")}
                         </button>
@@ -155,7 +156,7 @@ export function Header() {
                           }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
-                          My jobs
+                          {t("messages.myJobs")}
                         </button>
                         <button
                           onClick={() => {

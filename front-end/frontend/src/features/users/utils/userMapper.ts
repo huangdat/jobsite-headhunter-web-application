@@ -22,7 +22,7 @@ interface LoginSession {
   ipAddress: string;
   deviceBrowser: string;
   location: string;
-  status: "Successful" | "Failed Attempt";
+  status: "Successful" | "Failed";
 }
 
 export const userMapper = {
@@ -125,7 +125,7 @@ export const userMapper = {
       ipAddress: log.ip,
       deviceBrowser: log.device,
       location: log.location,
-      status: log.status === "SUCCESS" ? "Successful" : "Failed Attempt",
+      status: log.status === "SUCCESS" ? "Successful" : "Failed",
     }));
   },
 };

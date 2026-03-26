@@ -17,7 +17,11 @@
     "section": {
       "account": "Account"
     },
-    "exampleEmail": "alex.n@referral.io"
+    "exampleEmail": "alex.n@referral.io",
+    "languages": {
+      "en": "English",
+      "vi": "Tiếng Việt"
+    }
   },
   "messages": {
     "signedInSuccess": "Signed in successfully.",
@@ -37,6 +41,7 @@
     "noResponseFromServer": "No response from server",
     "editorFailedToLoad": "Editor failed to load.",
     "noPermissionAccess": "You do not have permission to access the classification feature.",
-    "sessionExpiredLoginAgain": "Your session has expired. Please login again."
+    "sessionExpiredLoginAgain": "Your session has expired. Please login again.",
+    "myJobs": "My jobs"
   }
 }

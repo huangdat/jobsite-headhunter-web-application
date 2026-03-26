@@ -28,7 +28,7 @@ const currencyFormatter = new Intl.NumberFormat("vi-VN", {
   maximumFractionDigits: 0,
 });
 
-const formatSalary = (job: JobSummary) => {
+const formatSalary = (job: JobSummary, tFunction: (key: string) => string) => {
   if (job.salaryMin && job.salaryMax) {
     return `${currencyFormatter.format(job.salaryMin)} - ${currencyFormatter.format(job.salaryMax)} ${job.currency}`;
   }
@@ -37,7 +37,7 @@ const formatSalary = (job: JobSummary) => {
     return `${currencyFormatter.format(job.salaryMin)} ${job.currency}`;
   }
 
-  return "Contact for salary";
+  return tFunction("list.contactForSalary");
 };
 
 const MILLION = 1_000_000;
@@ -465,6 +465,7 @@ function FilterSidebar({
 }
 
 function JobCard({ job }: { job: JobSummary & { negotiable?: boolean } }) {
+  const { t } = useTranslation("jobs");
   const navigate = useNavigate();
   const deadlineLabel = useMemo(() => {
     if (!job.deadline) return null;
@@ -515,7 +516,7 @@ function JobCard({ job }: { job: JobSummary & { negotiable?: boolean } }) {
           {job.city ?? t("jobs.list.flexible")}
         </span>
         <span className="rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800">
-          {formatSalary(job)}
+          {formatSalary(job, t)}
         </span>
         {deadlineLabel && (
           <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-800 dark:bg-amber-900/30 dark:text-amber-100">

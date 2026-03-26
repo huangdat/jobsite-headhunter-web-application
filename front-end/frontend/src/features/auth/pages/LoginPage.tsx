@@ -18,6 +18,7 @@ import type { LoginResult, SocialAuthResponse } from "@/features/auth/types";
 
 import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { OAUTH_URLS } from "@/lib/constants";
 import { HiOutlineArrowRight } from "react-icons/hi";
 
 const SOCIAL_STATE_KEY = "socialOAuthState";
@@ -116,9 +117,7 @@ export function LoginPage() {
     });
 
     setLoadingProvider("google");
-    window.location.assign(
-      `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`
-    );
+    window.location.assign(`${OAUTH_URLS.GOOGLE_AUTH}?${params.toString()}`);
   };
 
   const handleLinkedInClick = () => {
@@ -142,9 +141,7 @@ export function LoginPage() {
     });
 
     setLoadingProvider("linkedin");
-    window.location.assign(
-      `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`
-    );
+    window.location.assign(`${OAUTH_URLS.LINKEDIN_AUTH}?${params.toString()}`);
   };
 
   // Load social provider configuration once.

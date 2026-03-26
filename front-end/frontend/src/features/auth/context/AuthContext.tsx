@@ -45,14 +45,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      // eslint-disable-next-line custom/no-hardcoded-strings
       console.debug(
+        // eslint-disable-next-line custom/no-hardcoded-strings
         "[Auth] refreshAuth: validating token (masked):",
         token ? `${token.slice(0, 8)}...${token.slice(-8)}` : null
       );
       const result = await validateToken({ token });
-      // eslint-disable-next-line custom/no-hardcoded-strings
-      console.debug("[Auth] refreshAuth: validateToken result:", result);
+      console.debug(
+        // eslint-disable-next-line custom/no-hardcoded-strings
+        "[Auth] refreshAuth: validateToken result:",
+        result
+      );
 
       if (!result?.valid) {
         clearAuthStorage();
@@ -75,8 +78,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(nextUser);
       return nextUser;
     } catch {
-      // eslint-disable-next-line custom/no-hardcoded-strings
       console.error(
+        // eslint-disable-next-line custom/no-hardcoded-strings
         "[Auth] refreshAuth: validateToken failed, clearing auth storage"
       );
       clearAuthStorage();

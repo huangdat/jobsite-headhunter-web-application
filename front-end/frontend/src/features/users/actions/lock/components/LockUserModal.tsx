@@ -9,6 +9,7 @@ import {
   Mail,
   LogOut,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface LockReasonOption {
@@ -63,6 +64,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
   onConfirm,
 }) => {
   const { t } = useUsersTranslation();
+  const { t: tCommon } = useTranslation("auth");
   const [step, setStep] = useState<ModalStep>("form");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<LockResult | null>(null);
@@ -111,7 +113,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
       setStep("success");
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
+        error instanceof Error ? error.message : tCommon("common.unknownError");
 
       // Check for permission errors (AC3)
       if (
@@ -306,14 +308,13 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <Lock className="w-8 h-8 text-blue-600" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("lock.otherReasonTitle") || "Specify Lock Reason"}
+                {t("lock.otherReasonTitle")}
               </h2>
             </div>
 
             <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
               <p className="text-blue-900 dark:text-blue-200 font-medium">
-                {t("lock.otherReasonDesc") ||
-                  "Please provide a detailed reason for locking this account."}
+                {t("lock.otherReasonDesc")
               </p>
               <p className="text-blue-800 dark:text-blue-300 text-sm mt-2">
                 {t("lock.userInfo")}:{" "}
@@ -330,18 +331,14 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 <textarea
                   value={otherReasonText}
                   onChange={(e) => setOtherReasonText(e.target.value)}
-                  placeholder={
-                    t("lock.otherReasonPlaceholder") ||
-                    "Enter the specific reason..."
-                  }
+                  placeholder={t("lock.otherReasonPlaceholder")}
                   required
                   rows={4}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                   aria-label={t("lock.reasonLabel")}
                 />
                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-                  {t("lock.otherReasonHint") ||
-                    "This reason will be recorded in the system."}
+                  {t("lock.otherReasonHint")}
                 </p>
               </div>
 

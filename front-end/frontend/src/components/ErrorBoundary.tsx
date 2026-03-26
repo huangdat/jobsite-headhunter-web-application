@@ -15,7 +15,7 @@ export default class ErrorBoundary extends React.Component<
     return { hasError: true };
   }
 
-  componentDidCatch(error: any, info: any) {
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
     // log to console for now
     // eslint-disable-next-line custom/no-hardcoded-strings
     console.error("ErrorBoundary caught:", error, info);
@@ -25,8 +25,10 @@ export default class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <div className="p-4 rounded bg-red-50 text-red-700">
-          {/* eslint-disable-next-line custom/no-hardcoded-strings */}
-          Editor failed to load.
+          {
+            // eslint-disable-next-line custom/no-hardcoded-strings
+            "Editor failed to load."
+          }
         </div>
       );
     }

@@ -142,15 +142,15 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
           <ul className="space-y-2 text-sm">
             <li className="flex gap-2 text-slate-600">
               <span className="text-emerald-600 font-bold flex-0">•</span>
-              <span>Quantify results with revenue, growth %, or team size</span>
+              <span>{t("candidate.tips.bestPracticeTip1")}</span>
             </li>
             <li className="flex gap-2 text-slate-600">
               <span className="text-emerald-600 font-bold flex-0">•</span>
-              <span>Keep your executive summary under 200 words</span>
+              <span>{t("candidate.tips.bestPracticeTip2")}</span>
             </li>
             <li className="flex gap-2 text-slate-600">
               <span className="text-emerald-600 font-bold flex-0">•</span>
-              <span>Focus on the last 10 years of your career path</span>
+              <span>{t("candidate.tips.bestPracticeTip3")}</span>
             </li>
           </ul>
         </div>

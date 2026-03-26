@@ -13,6 +13,7 @@ export const sanitizeText = (value: string): string => {
     value
       .replace(/<script.*?>.*?<\/script>/gi, "")
       .replace(/[<>]/g, "")
+      // eslint-disable-next-line no-control-regex
       .replace(/[\u0000-\u001F\u007F]/g, "")
   );
 };

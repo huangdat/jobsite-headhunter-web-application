@@ -252,7 +252,7 @@ class BusinessApiService {
       const { status, data } = response;
       const errorMessage =
         (data as Record<string, unknown> | undefined)?.message ||
-        "An error occurred";
+        "common.messages.anErrorOccurred";
 
       return Object.assign(new Error(errorMessage as string), {
         status: status as number,
@@ -261,13 +261,13 @@ class BusinessApiService {
       }) as Error & { status?: number; data?: unknown; isAxiosError?: boolean };
     } else if (error instanceof Error && errorRecord.request) {
       // Request was made but no response
-      return Object.assign(new Error("No response from server"), {
+      return Object.assign(new Error("common.messages.noResponseFromServer"), {
         isNetworkError: true,
       }) as Error & { isNetworkError?: boolean };
     } else if (error instanceof Error) {
       return error;
     }
-    return new Error("Unknown error occurred");
+    return new Error("common.messages.unknownError");
   }
 }
 

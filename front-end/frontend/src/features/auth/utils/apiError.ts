@@ -76,6 +76,7 @@ export const extractApiErrorMessage = (
     return fallbackMessage;
   }
 
+  // eslint-disable-next-line custom/no-hardcoded-strings
   if (upper === "NETWORK ERROR") {
     return "auth.messages.networkError";
   }

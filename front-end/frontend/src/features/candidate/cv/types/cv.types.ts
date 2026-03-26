@@ -289,8 +289,12 @@ export const CV_STATUS_LABELS: Record<CVStatus, string> = {
   deleted: "Deleted",
 };
 
+/**
+ * Maps privacy levels to i18n key paths for displaying privacy level labels.
+ * Usage: const labels = PRIVACY_LEVEL_LABELS[level]; const displayText = t(labels);
+ */
 export const PRIVACY_LEVEL_LABELS: Record<PrivacyLevel, string> = {
-  private: "Private",
-  verified_recruiters: "Verified Recruiters Only",
-  all: "All Recruiters",
+  private: "cv.tips.visibilityPrivate",
+  verified_recruiters: "cv.tips.visibilityVerifiedOnly",
+  all: "cv.tips.visibilityAllRecruiters",
 };

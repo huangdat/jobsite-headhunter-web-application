@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,7 @@ import { getJobDetail, updateJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 
 export function JobEditPage() {
+  const { t } = useTranslation("jobs");
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [skills, setSkills] = useState<SkillOption[]>([]);
@@ -84,7 +86,7 @@ export function JobEditPage() {
         }
       })
       .catch(() => {
-        toast.error("Unable to load job or skills.");
+        toast.error(t("edit.unableToLoad"));
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -103,48 +105,38 @@ export function JobEditPage() {
 
   const onSubmit = async (values: JobFormValues) => {
     if (values.skillIds.length === 0) {
-      toast.error("Please select at least one required skill.");
+      toast.error(t("edit.pickAtLeastOneSkill"));
       return;
     }
 
-    if (!id) return toast.error("Invalid job id");
+    if (!id) return toast.error(t("edit.invalidJobId"));
 
     setSubmitting(true);
     try {
       await updateJob(Number(id), values);
-      toast.success("Job updated successfully.");
+      toast.success(t("edit.updatedSuccess"));
       navigate("/jobs/my");
     } catch (err) {
       console.error(err);
-      toast.error("Failed to update job.");
+      toast.error(t("edit.failedToUpdate"));
     } finally {
       setSubmitting(false);
     }
   };
 
-  const skillsByCategory = useMemo(() => {
-    const grouped: Record<string, SkillOption[]> = {};
-    skills.forEach((skill) => {
-      const key = skill.category ?? "GENERAL";
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(skill);
-    });
-    return grouped;
-  }, [skills]);
-
-  if (loading) return <div className="p-8">Loading...</div>;
+  if (loading) return <div className="p-8">{t("edit.loading")}</div>;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
       <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
         <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-          Edit job
+          {t("edit.pageTitle")}
         </p>
         <h1 className="mt-3 text-3xl font-semibold leading-tight">
-          Update an existing job posting
+          {t("edit.heading")}
         </h1>
         <p className="mt-4 max-w-3xl text-lg text-emerald-100">
-          Adjust details and requirements; save to update the live posting.
+          {t("edit.subtitle")}
         </p>
       </div>
 
@@ -155,11 +147,11 @@ export function JobEditPage() {
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Job title
+              {t("edit.jobTitle")}
             </label>
             <Input
-              placeholder="Senior Backend Engineer"
-              {...register("title", { required: "Title is required" })}
+              placeholder={t("edit.jobTitlePlaceholder")}
+              {...register("title", { required: t("edit.titleRequired") })}
             />
             {errors.title && (
               <p className="text-sm text-destructive">{errors.title.message}</p>
@@ -168,11 +160,13 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Location
+              {t("edit.location")}
             </label>
             <Input
-              placeholder="City"
-              {...register("location", { required: "Location is required" })}
+              placeholder={t("edit.locationPlaceholder")}
+              {...register("location", {
+                required: t("edit.locationRequired"),
+              })}
             />
             {errors.location && (
               <p className="text-sm text-destructive">
@@ -183,17 +177,17 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Address detail
+              {t("edit.addressDetail")}
             </label>
             <Input
-              placeholder="Office address"
+              placeholder={t("edit.addressDetailPlaceholder")}
               {...register("addressDetail")}
             />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Deadline
+              {t("edit.deadline")}
             </label>
             <Input type="date" {...register("deadline")} />
           </div>
@@ -202,7 +196,7 @@ export function JobEditPage() {
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Rank level
+              {t("edit.rankLevel")}
             </label>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
@@ -220,7 +214,7 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Working type
+              {t("edit.workingType")}
             </label>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
@@ -234,7 +228,7 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Experience (years)
+              {t("edit.experience")}
             </label>
             <Input
               type="number"
@@ -249,7 +243,7 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Quantity
+              {t("edit.quantity")}
             </label>
             <Input
               type="number"
@@ -262,7 +256,7 @@ export function JobEditPage() {
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Salary min (VND)
+              {t("edit.salaryMin")}
             </label>
             <Input
               type="number"
@@ -272,7 +266,7 @@ export function JobEditPage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Salary max (VND)
+              {t("edit.salaryMax")}
             </label>
             <Input
               type="number"
@@ -282,7 +276,7 @@ export function JobEditPage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Currency
+              {t("edit.currency")}
             </label>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
@@ -299,7 +293,7 @@ export function JobEditPage() {
               {...register("negotiable")}
             />
             <label htmlFor="negotiable" className="text-sm text-slate-600">
-              Salary negotiable
+              {t("edit.salaryNegotiable")}
             </label>
           </div>
         </section>
@@ -307,7 +301,7 @@ export function JobEditPage() {
         <section className="grid gap-6">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Description
+              {t("edit.description")}
             </label>
             <Controller
               control={control}
@@ -316,7 +310,7 @@ export function JobEditPage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder="Describe the job position, company culture, and what makes this role special..."
+                  placeholder={t("edit.descriptionPlaceholder")}
                 />
               )}
             />
@@ -324,7 +318,7 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Responsibilities
+              {t("edit.responsibilities")}
             </label>
             <Controller
               control={control}
@@ -333,7 +327,7 @@ export function JobEditPage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder="List the main tasks and responsibilities for this role"
+                  placeholder={t("edit.responsibilitiesPlaceholder")}
                 />
               )}
             />
@@ -341,7 +335,7 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Requirements
+              {t("edit.requirements")}
             </label>
             <Controller
               control={control}
@@ -350,7 +344,7 @@ export function JobEditPage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder="Specify the skills, experience, and qualifications needed"
+                  placeholder={t("edit.requirementsPlaceholder")}
                 />
               )}
             />
@@ -358,14 +352,14 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Benefits
+              {t("edit.benefits")}
             </label>
             <Textarea rows={3} {...register("benefits")} />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              Working time
+              {t("edit.workingTime")}
             </label>
             <Input {...register("workingTime")} />
           </div>
@@ -374,11 +368,11 @@ export function JobEditPage() {
         <section className="space-y-2">
           <div className="flex items-center justify-between">
             <label className="text-sm font-semibold text-slate-500">
-              Required skills
+              {t("edit.requiredSkills")}
             </label>
             {errors.skillIds && (
               <span className="text-xs text-destructive">
-                Please pick at least one skill
+                {t("edit.pickAtLeastOneSkill")}
               </span>
             )}
           </div>
@@ -392,10 +386,10 @@ export function JobEditPage() {
 
         <div className="flex justify-end gap-3">
           <Button type="button" variant="ghost" onClick={() => navigate(-1)}>
-            Cancel
+            {t("edit.cancelButton")}
           </Button>
           <Button type="submit" disabled={submitting}>
-            {submitting ? "Saving..." : "Save changes"}
+            {submitting ? t("edit.savingButton") : t("edit.saveButton")}
           </Button>
         </div>
       </form>

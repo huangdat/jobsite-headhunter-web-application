@@ -17,7 +17,11 @@
     "section": {
       "account": "Tài Khoản"
     },
-    "exampleEmail": "alex.n@referral.io"
+    "exampleEmail": "alex.n@referral.io",
+    "languages": {
+      "en": "English",
+      "vi": "Tiếng Việt"
+    }
   },
   "messages": {
     "signedInSuccess": "Đã đăng nhập thành công.",
@@ -37,6 +41,7 @@
     "noResponseFromServer": "Không có phản hồi từ máy chủ",
     "editorFailedToLoad": "Trình chỉnh sửa không thể tải.",
     "noPermissionAccess": "Bạn không có quyền truy cập tính năng phân loại.",
-    "sessionExpiredLoginAgain": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại."
+    "sessionExpiredLoginAgain": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.",
+    "myJobs": "Công việc của tôi"
   }
 }

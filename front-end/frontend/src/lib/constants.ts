@@ -199,6 +199,12 @@ export const WORKING_TYPES = {
 
 export type WorkingType = (typeof WORKING_TYPES)[keyof typeof WORKING_TYPES];
 
+// OAuth Provider URLs
+export const OAUTH_URLS = {
+  GOOGLE_AUTH: "https://accounts.google.com/o/oauth2/v2/auth",
+  LINKEDIN_AUTH: "https://www.linkedin.com/oauth/v2/authorization",
+} as const;
+
 // Admin Features & Routes
 export const ADMIN_FEATURES = {
   // Admin Dashboard Routes
