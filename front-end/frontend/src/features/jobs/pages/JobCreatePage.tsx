@@ -85,13 +85,13 @@ export function JobCreatePage() {
 
     const stripMarkdown = (s = "") =>
       s
-        .replace(/<[^>]*>/g, '')
-        .replace(/[*_~`>#\-\[\]\(\)!]/g, '')
-        .replace(/\s+/g, ' ')
+        .replace(/<[^>]*>/g, "")
+        .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
+        .replace(/\s+/g, " ")
         .trim();
 
     if (!values.description || stripMarkdown(values.description).length === 0) {
-      toast.error('Description cannot be empty');
+      toast.error("Description cannot be empty");
       return;
     }
 
@@ -111,9 +111,18 @@ export function JobCreatePage() {
       return;
     }
 
-    const strip = (s = "") => s.replace(/<[^>]*>/g, '').replace(/[*_~`>#\-\[\]\(\)!]/g, '').trim();
-    if (strip(values.responsibilities).length < 50 || strip(values.requirements).length < 50) {
-      toast.error("Responsibilities/Requirements must be at least 50 characters");
+    const strip = (s = "") =>
+      s
+        .replace(/<[^>]*>/g, "")
+        .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
+        .trim();
+    if (
+      strip(values.responsibilities).length < 50 ||
+      strip(values.requirements).length < 50
+    ) {
+      toast.error(
+        "Responsibilities/Requirements must be at least 50 characters"
+      );
       return;
     }
 
@@ -160,7 +169,9 @@ export function JobCreatePage() {
         }, 500);
       } else {
         console.error("Unexpected response:", res);
-        toast.error("Failed to create job. Please check the form and try again.");
+        toast.error(
+          "Failed to create job. Please check the form and try again."
+        );
       }
     } catch (error) {
       console.error("Job creation error:", error);
@@ -261,7 +272,10 @@ export function JobCreatePage() {
               type="number"
               min={0}
               step={0.5}
-              {...register("experience", { valueAsNumber: true, required: true })}
+              {...register("experience", {
+                valueAsNumber: true,
+                required: true,
+              })}
             />
           </div>
           <div className="space-y-2">
@@ -284,7 +298,10 @@ export function JobCreatePage() {
             <Input
               type="number"
               min={0}
-              {...register("salaryMin", { valueAsNumber: true, required: true })}
+              {...register("salaryMin", {
+                valueAsNumber: true,
+                required: true,
+              })}
             />
           </div>
           <div className="space-y-2">
@@ -294,7 +311,10 @@ export function JobCreatePage() {
             <Input
               type="number"
               min={0}
-              {...register("salaryMax", { valueAsNumber: true, required: true })}
+              {...register("salaryMax", {
+                valueAsNumber: true,
+                required: true,
+              })}
             />
           </div>
           <div className="space-y-2">
@@ -310,7 +330,11 @@ export function JobCreatePage() {
             </select>
           </div>
           <div className="flex items-center gap-3 pt-8">
-            <input type="checkbox" id="negotiable" {...register("negotiable")} />
+            <input
+              type="checkbox"
+              id="negotiable"
+              {...register("negotiable")}
+            />
             <label htmlFor="negotiable" className="text-sm text-slate-600">
               Salary negotiable
             </label>
@@ -335,7 +359,9 @@ export function JobCreatePage() {
               )}
             />
             {errors.description && (
-              <p className="text-sm text-destructive">{errors.description.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.description.message}
+              </p>
             )}
           </div>
           <div className="space-y-2">
@@ -348,8 +374,14 @@ export function JobCreatePage() {
               rules={{
                 required: "Responsibilities is required",
                 validate: (v) => {
-                  const stripped = (v || '').replace(/<[^>]*>/g, '').replace(/[*_~`>#\-\[\]\(\)!]/g, '').trim();
-                  return (v && stripped.length >= 50) || 'Responsibilities must be at least 50 characters';
+                  const stripped = (v || "")
+                    .replace(/<[^>]*>/g, "")
+                    .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
+                    .trim();
+                  return (
+                    (v && stripped.length >= 50) ||
+                    "Responsibilities must be at least 50 characters"
+                  );
                 },
               }}
               render={({ field }) => (
@@ -361,7 +393,9 @@ export function JobCreatePage() {
               )}
             />
             {errors.responsibilities && (
-              <p className="text-sm text-destructive">{errors.responsibilities.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.responsibilities.message}
+              </p>
             )}
           </div>
           <div className="space-y-2">
@@ -374,8 +408,14 @@ export function JobCreatePage() {
               rules={{
                 required: "Requirements is required",
                 validate: (v) => {
-                  const stripped = (v || '').replace(/<[^>]*>/g, '').replace(/[*_~`>#\-\[\]\(\)!]/g, '').trim();
-                  return (v && stripped.length >= 50) || 'Requirements must be at least 50 characters';
+                  const stripped = (v || "")
+                    .replace(/<[^>]*>/g, "")
+                    .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
+                    .trim();
+                  return (
+                    (v && stripped.length >= 50) ||
+                    "Requirements must be at least 50 characters"
+                  );
                 },
               }}
               render={({ field }) => (
@@ -387,7 +427,9 @@ export function JobCreatePage() {
               )}
             />
             {errors.requirements && (
-              <p className="text-sm text-destructive">{errors.requirements.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.requirements.message}
+              </p>
             )}
           </div>
           <div className="space-y-2">
@@ -418,7 +460,12 @@ export function JobCreatePage() {
           <SkillMultiSelect
             skills={skills}
             selectedIds={selectedSkillIds}
-            onChange={(ids) => setValue("skillIds", ids, { shouldDirty: true, shouldValidate: true })}
+            onChange={(ids) =>
+              setValue("skillIds", ids, {
+                shouldDirty: true,
+                shouldValidate: true,
+              })
+            }
             disabled={isLoadingSkills}
           />
         </section>

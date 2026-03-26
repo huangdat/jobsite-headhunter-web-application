@@ -12,7 +12,38 @@
     "searchPlaceholder": "Search by title, company or location...",
     "clearAllFilters": "Clear all filters",
     "rowsPerPage": "Rows per page:",
-    "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} jobs"
+    "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} jobs",
+    "filters": {
+      "keyword": "Keyword",
+      "keywordPlaceholder": "Job title or skill",
+      "workingType": "Working Type",
+      "allTypes": "All types",
+      "onsite": "Onsite",
+      "remote": "Remote",
+      "hybrid": "Hybrid",
+      "rankLevel": "Rank Level",
+      "allLevels": "All levels",
+      "experience": "Experience",
+      "salary": "Salary (VND)",
+      "fromMillion": "From (mil)",
+      "toMillion": "To (mil)",
+      "applyCustomRange": "Apply custom range",
+      "clearAllFilters": "Clear all filters"
+    },
+    "flexible": "Flexible",
+    "viewDetails": "View details →",
+    "noJobsFound": "No jobs found with the selected filters.",
+    "unableToLoad": "Unable to load jobs. Please try again later.",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "pagination": "Page {{page}} of {{totalPages}} — {{totalElements}} jobs",
+    "viewJobLabel": "View job {{title}}",
+    "applyBefore": "Apply before {{deadline}}",
+    "hero": {
+      "subtitle": "Opportunities for everyone",
+      "title": "Explore curated jobs that match your strengths.",
+      "description": "Filter by keywords, preferred work style, and salary expectations. Save your favorite roles or share them with friends."
+    }
   },
   "filters": {
     "filterJobs": "Filter Jobs",
@@ -95,6 +126,30 @@
     "senior": "Senior Level",
     "lead": "Lead/Manager"
   },
+  "filterPresets": {
+    "experienceOptions": {
+      "all": "All",
+      "notRequired": "Not required",
+      "under1Year": "Under 1 year",
+      "oneYear": "1 year",
+      "twoYears": "2 years",
+      "threeYears": "3 years",
+      "fourYears": "4 years",
+      "fiveYears": "5 years",
+      "over5Years": "Over 5 years"
+    },
+    "salaryOptions": {
+      "all": "All",
+      "below10M": "Below 10M",
+      "from10To15M": "10 - 15M",
+      "from15To20M": "15 - 20M",
+      "from20To25M": "20 - 25M",
+      "from25To30M": "25 - 30M",
+      "from30To50M": "30 - 50M",
+      "above50M": "Above 50M",
+      "negotiable": "Negotiable"
+    }
+  },
   "messages": {
     "noJobsFound": "No jobs found",
     "jobPostedSuccess": "Job posted successfully",
@@ -103,6 +158,56 @@
     "jobClosedSuccess": "Job closed successfully",
     "errorPosting": "Failed to post job",
     "errorUpdating": "Failed to update job",
-    "errorDeleting": "Failed to delete job"
+    "errorDeleting": "Failed to delete job",
+    "unableToLoadYourJobs": "Unable to load your jobs.",
+    "closeJobConfirm": "Close this job?",
+    "jobClosed": "Job closed.",
+    "failedToCloseJob": "Failed to close job.",
+    "pleaseChooseDeadline": "Please choose a deadline.",
+    "invalidDeadlineMessage": "Invalid deadline. Please choose a future date.",
+    "jobOpened": "Job opened.",
+    "failedToOpenJob": "Failed to open job.",
+    "toggleVisibilityConfirm": "Are you sure you want to toggle visibility for this job?",
+    "jobVisibilityToggled": "Job visibility toggled.",
+    "failedToChangeVisibility": "Failed to change visibility."
+  },
+  "manage": {
+    "pageTitle": "My Job Posts",
+    "createNewButton": "Create new",
+    "noJobsYet": "No jobs yet.",
+    "loadingJobs": "Loading jobs...",
+    "hidden": "Hidden",
+    "visible": "Visible",
+    "statusDeadline": "Status: {{status}} • Deadline: {{deadline}}",
+    "editButton": "Edit",
+    "openButton": "Open",
+    "closeButton": "Close",
+    "updatingButton": "Updating...",
+    "hideButton": "Hide",
+    "unhideButton": "Unhide",
+    "currentlyHidden": "Currently hidden — click to unhide",
+    "currentlyVisible": "Currently visible — click to hide",
+    "setNewDeadlineTitle": "Set new deadline",
+    "setNewDeadlineDescription": "Choose a new deadline to re-open this job.",
+    "cancelButton": "Cancel",
+    "confirmButton": "Confirm"
+  },
+  "saved": {
+    "pageTitle": "Saved jobs",
+    "breadcrumb": "Jobs / Saved jobs",
+    "description": "Keep track of roles you want to revisit. Remove ones you no longer need.",
+    "noSavedJobs": "No saved jobs yet",
+    "emptyStateHint": "Tap \"Save job\" on any posting to keep it here for quick access.",
+    "browseJobsButton": "Browse jobs",
+    "viewJobButton": "View job",
+    "removeButton": "Remove",
+    "removingButton": "Removing...",
+    "confidentialCompany": "Confidential company",
+    "postedText": "Posted",
+    "recentlyPosted": "Recently",
+    "unableToLoadSavedJobs": "Unable to load saved jobs. Please try again later.",
+    "jobRemovedSuccess": "Job removed from saved list.",
+    "unableToRemoveJob": "Unable to remove job. Please try again.",
+    "tryAgainButton": "Try again"
   }
 }

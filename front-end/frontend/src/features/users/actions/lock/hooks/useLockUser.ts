@@ -82,7 +82,8 @@ export const useLockUser = () => {
       return { success: true, auditLog };
     } catch (err) {
       const errorResponse = err as LockErrorResponse | Error;
-      let errorMessage = t("lock.errorLockFailed") || "Failed to lock user";
+      let errorMessage =
+        t("lock.errorLockFailed") || t("messages.failedToLockUser");
 
       // Handle specific error codes (AC3)
       if ("code" in errorResponse) {

@@ -20,6 +20,23 @@
     "exampleEmail": "alex.n@referral.io"
   },
   "messages": {
-    "signedInSuccess": "Đã đăng nhập thành công."
+    "signedInSuccess": "Đã đăng nhập thành công.",
+    "failedToLoadCommission": "Không thể tải dữ liệu hoa hồng",
+    "failedToSaveProfile": "Không thể lưu hồ sơ",
+    "failedToRequestPayout": "Không thể yêu cầu thanh toán",
+    "failedToLoadProfile": "Không thể tải hồ sơ",
+    "failedToCreateJob": "Không thể tạo công việc. Vui lòng kiểm tra biểu mẫu và thử lại.",
+    "failedToUpdateJob": "Không thể cập nhật công việc.",
+    "jobUpdatedSuccessfully": "Công việc đã được cập nhật thành công.",
+    "failedToLockUser": "Không thể khóa người dùng",
+    "failedToUnlockUser": "Không thể mở khóa người dùng",
+    "failedToLoadUsers": "Không thể tải danh sách người dùng",
+    "networkError": "LỖI MẠNG",
+    "unknownError": "Đã xảy ra lỗi không xác định",
+    "anErrorOccurred": "Đã xảy ra lỗi",
+    "noResponseFromServer": "Không có phản hồi từ máy chủ",
+    "editorFailedToLoad": "Trình chỉnh sửa không thể tải.",
+    "noPermissionAccess": "Bạn không có quyền truy cập tính năng phân loại.",
+    "sessionExpiredLoginAgain": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại."
   }
 }

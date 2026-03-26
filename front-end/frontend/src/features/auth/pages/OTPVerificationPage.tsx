@@ -116,7 +116,9 @@ export function OTPVerificationPage() {
       });
 
       if (otpResponse.status && otpResponse.status !== "OK") {
-        throw new Error(otpResponse.message || "OTP verification failed.");
+        throw new Error(
+          otpResponse.message || t("auth.messages.otpVerificationFailed")
+        );
       }
 
       toast.success(t("messages.emailVerified"));
@@ -124,7 +126,7 @@ export function OTPVerificationPage() {
       // Step 2: Get registration data from sessionStorage
       const registrationDataStr = sessionStorage.getItem("pendingRegistration");
       if (!registrationDataStr) {
-        throw new Error("Registration data not found. Please register again.");
+        throw new Error(t("auth.messages.registrationDataNotFound"));
       }
 
       const registrationData = JSON.parse(
@@ -152,20 +154,23 @@ export function OTPVerificationPage() {
         navigate("/login", {
           state: {
             email: registrationData.username, // Pass username to pre-fill login form
-            message:
-              "Registration completed! Please login with your username and password.",
+            message: t("auth.messages.registrationCompleted"),
           },
         });
       }, 1500);
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Registration failed. Please try again."
+        t("auth.messages.registrationFailed")
       );
       toast.error(errorMessage);
 
       // If registration data is missing, redirect back to register
-      if (errorMessage.includes("Registration data not found")) {
+      if (
+        errorMessage.includes(
+          t("auth.messages.registrationDataNotFoundGeneric")
+        )
+      ) {
         setTimeout(() => {
           navigate("/select-role");
         }, 2000);
@@ -217,10 +222,10 @@ export function OTPVerificationPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-800">
-            Verify Your Email
+            {t("auth.pages.otpVerification.title")}
           </h1>
           <p className="text-slate-600 mt-2">
-            We've sent a 6-digit code to your email
+            {t("auth.pages.otpVerification.subtitle")}
           </p>
         </div>
 
@@ -264,7 +269,8 @@ export function OTPVerificationPage() {
                 timeLeft <= 60 ? "text-red-600 font-semibold" : "text-slate-600"
               }
             >
-              Code expires in {formatTime(timeLeft)}
+              {t("auth.pages.otpVerification.codeExpiresIn")}{" "}
+              {formatTime(timeLeft)}
             </span>
           </div>
 
@@ -279,25 +285,28 @@ export function OTPVerificationPage() {
             className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading || otp.join("").length === 6
-              ? "Verifying..."
-              : "Verify Email"}
+              ? t("auth.buttons.connecting")
+              : t("auth.pages.otpVerification.verifyEmail")}
           </Button>
 
           {/* Resend OTP */}
           <div className="text-center">
             <p className="text-sm text-slate-600 mb-2">
-              Didn't receive the code?
+              {t("auth.pages.otpVerification.didNotReceiveCode")}
             </p>
             <button
               onClick={handleResend}
               disabled={isLoading || isResending || timeLeft > 240} // Can resend after 1 minute
               className="text-sm text-emerald-600 hover:text-emerald-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
-              {isResending ? "Sending..." : "Resend Code"}
+              {isResending
+                ? t("auth.buttons.sendingOtp")
+                : t("auth.pages.otpVerification.resendCode")}
             </button>
             {timeLeft > 240 && (
               <p className="text-xs text-slate-500 mt-1">
-                Available in {formatTime(timeLeft - 240)}
+                {t("auth.pages.otpVerification.availableIn")}{" "}
+                {formatTime(timeLeft - 240)}
               </p>
             )}
           </div>

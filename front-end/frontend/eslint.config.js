@@ -86,4 +86,12 @@ export default [
       "custom/no-hardcoded-strings": "off"
     }
   },
+
+  // ✅ EXCLUDE lib/constants.ts from API URL rule (API endpoints definition location)
+  {
+    files: ["src/lib/constants.ts"],
+    rules: {
+      "custom/no-api-urls": "off"
+    }
+  },
 ];

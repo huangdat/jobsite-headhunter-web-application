@@ -176,4 +176,3 @@ export const CVList: React.FC<CVListProps> = ({
 };
 
 export default CVList;
-

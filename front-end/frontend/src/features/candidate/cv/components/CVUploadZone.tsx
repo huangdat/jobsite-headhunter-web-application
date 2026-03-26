@@ -261,4 +261,3 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 };
 
 export default CVUploadZone;
-

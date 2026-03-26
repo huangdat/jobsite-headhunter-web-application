@@ -4,6 +4,8 @@
  * This file serves as a central registry for admin functionality
  */
 
+import { API_ENDPOINTS } from "@/lib/constants";
+
 export interface AdminFeature {
   id: string; // Feature identifier
   icon: string; // Material symbol icon name
@@ -25,7 +27,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     icon: "group",
     labelKey: "navigation.users",
     route: "/users/list",
-    apiEndpoint: "/api/account",
+    apiEndpoint: API_ENDPOINTS.USERS.GET_ALL,
     requiredRole: "admin",
     description: "View and manage all users",
   },
@@ -36,7 +38,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     icon: "category",
     labelKey: "navigation.classification",
     route: "/users/classification",
-    apiEndpoint: "/api/account/search",
+    apiEndpoint: API_ENDPOINTS.USERS.SEARCH,
     requiredRole: "admin",
     description:
       "View user distribution and classification by role, status, company, etc.",

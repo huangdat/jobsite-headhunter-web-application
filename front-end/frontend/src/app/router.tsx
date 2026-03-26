@@ -57,7 +57,8 @@ export function AppRouter() {
     if (!isAuthenticated) return <Navigate to="/jobs" replace />;
 
     const role = user?.role ? user.role.toString().toLowerCase() : null;
-    if (role === "headhunter") return <Navigate to="/headhunter/jobs" replace />;
+    if (role === "headhunter")
+      return <Navigate to="/headhunter/jobs" replace />;
     if (role === "admin") return <Navigate to="/admin/dashboard" replace />;
     return <Navigate to="/home" replace />;
   }
@@ -135,14 +136,14 @@ export function AppRouter() {
       <Route element={<MainLayout />}>
         <Route path="/home" element={<HomePage />} />
         <Route path="/jobs" element={<JobListPage />} />
-          <Route
-            path="/jobs/my"
-            element={
-              <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
-                <JobManagePage />
-              </ProtectedRoute>
-            }
-          />
+        <Route
+          path="/jobs/my"
+          element={
+            <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+              <JobManagePage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/jobs/:id" element={<JobDetailPage />} />
         <Route
           path="/saved-jobs"
@@ -168,24 +169,27 @@ export function AppRouter() {
             </ProtectedRoute>
           }
         />
-          <Route
-            path="/headhunter/jobs/:id/edit"
-            element={
-              <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
-                <JobEditPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/headhunter/applicants"
-            element={
-              <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
-                <ApplicantsPage />
-              </ProtectedRoute>
-            }
-          />
+        <Route
+          path="/headhunter/jobs/:id/edit"
+          element={
+            <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+              <JobEditPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/headhunter/applicants"
+          element={
+            <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+              <ApplicantsPage />
+            </ProtectedRoute>
+          }
+        />
       </Route>
-      <Route path="/home" element={<Navigate to="/headhunter/jobs" replace />} />
+      <Route
+        path="/home"
+        element={<Navigate to="/headhunter/jobs" replace />}
+      />
 
       {/* PROF-06: Company Detail (public - add when ready) */}
       {/* <Route path="/companies/:id" element={<CompanyDetailPage />} /> */}
@@ -227,7 +231,10 @@ export function AppRouter() {
         }
       />
       {/* Redirect base /headhunter to jobs hub so 'Tin tuyển dụng' loads by default */}
-      <Route path="/headhunter" element={<Navigate to="/headhunter/jobs" replace />} />
+      <Route
+        path="/headhunter"
+        element={<Navigate to="/headhunter/jobs" replace />}
+      />
       {/* Keep old route for backward compatibility */}
       <Route
         path="/business"

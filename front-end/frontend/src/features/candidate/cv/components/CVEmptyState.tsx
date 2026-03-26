@@ -68,14 +68,14 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
           </p>
 
           <ul className="space-y-2 text-xs text-slate-600">
-            <li className="flex gap-2">
-              <span className="text-emerald-600 shrink-0">→</span>
-              <span>You can set specific companies to "Block List"</span>
-            </li>
-            <li className="flex gap-2">
-              <span className="text-emerald-600 shrink-0">→</span>
-              <span>Control exactly what personal data is shared</span>
-            </li>
+            {t("cv.management.bestPractices.privacyItems", {
+              returnObjects: true,
+            })?.map((item: string, index: number) => (
+              <li key={index} className="flex gap-2">
+                <span className="text-emerald-600 shrink-0">→</span>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -114,4 +114,3 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 };
 
 export default CVEmptyState;
-

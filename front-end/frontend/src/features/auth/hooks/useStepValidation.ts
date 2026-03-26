@@ -1,5 +1,8 @@
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
-import type { RegisterFormData, RegistrationUserRole } from "@/features/auth/types";
+import type {
+  RegisterFormData,
+  RegistrationUserRole,
+} from "@/features/auth/types";
 
 /**
  * Define which fields need validation for each step
@@ -45,7 +48,9 @@ export function useStepValidation(
    */
   const hasStepErrors = (): boolean => {
     const fieldsToCheck = getFieldsForStep(currentStep);
-    return fieldsToCheck.some((field) => errors[field as keyof RegisterFormData]);
+    return fieldsToCheck.some(
+      (field) => errors[field as keyof RegisterFormData]
+    );
   };
 
   /**

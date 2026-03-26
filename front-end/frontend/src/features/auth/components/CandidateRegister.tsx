@@ -47,7 +47,7 @@ export function CandidateRegister({
   const { t } = useAuthTranslation();
   return (
     <>
-      <FormField label="Username" error={errors.username}>
+      <FormField label={t("auth.labels.username")} error={errors.username}>
         <Input
           icon={<MdAccountCircle />}
           placeholder={t("auth.placeholders.username")}
@@ -56,7 +56,7 @@ export function CandidateRegister({
         />
       </FormField>
 
-      <FormField label="Full Name" error={errors.fullName}>
+      <FormField label={t("auth.labels.fullName")} error={errors.fullName}>
         <Input
           icon={<MdPerson />}
           placeholder={t("auth.placeholders.name")}
@@ -65,7 +65,7 @@ export function CandidateRegister({
         />
       </FormField>
 
-      <FormField label="Email" error={errors.email}>
+      <FormField label={t("auth.labels.email")} error={errors.email}>
         <Input
           icon={<MdOutlineMail />}
           placeholder={t("auth.placeholders.email")}
@@ -74,7 +74,7 @@ export function CandidateRegister({
         />
       </FormField>
 
-      <FormField label="Phone Number" error={errors.phone}>
+      <FormField label={t("auth.labels.phoneNumber")} error={errors.phone}>
         <Input
           icon={<MdPhone />}
           placeholder={t("auth.placeholders.phone")}
@@ -85,7 +85,7 @@ export function CandidateRegister({
 
       {/* GENDER + AVATAR */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label="Gender (Optional)">
+        <FormField label={t("auth.labels.gender")}>
           <div className="relative">
             <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <select
@@ -94,15 +94,21 @@ export function CandidateRegister({
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label={t("auth.aria.selectGender")}
             >
-              <option value="">Select Gender</option>
-              <option value="MALE">Male</option>
-              <option value="FEMALE">Female</option>
-              <option value="OTHER">Other</option>
+              <option value="">{t("auth.selectOptions.selectGender")}</option>
+              <option value="MALE">
+                {t("auth.selectOptions.genders.male")}
+              </option>
+              <option value="FEMALE">
+                {t("auth.selectOptions.genders.female")}
+              </option>
+              <option value="OTHER">
+                {t("auth.selectOptions.genders.other")}
+              </option>
             </select>
           </div>
         </FormField>
 
-        <FormField label="Profile Picture (Optional)">
+        <FormField label={t("auth.labels.profilePicture")}>
           <div className="relative">
             <MdCameraAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10" />
             <input
@@ -121,7 +127,7 @@ export function CandidateRegister({
 
       {/* PASSWORD + CONFIRM PASSWORD */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label="Password">
+        <FormField label={t("auth.labels.password")}>
           <div className="relative">
             <Input
               icon={<MdLockOutline />}
@@ -141,7 +147,7 @@ export function CandidateRegister({
           </div>
         </FormField>
 
-        <FormField label="Confirm Password">
+        <FormField label={t("auth.labels.confirmPassword")}>
           <div className="relative">
             <Input
               icon={<MdLockOutline />}

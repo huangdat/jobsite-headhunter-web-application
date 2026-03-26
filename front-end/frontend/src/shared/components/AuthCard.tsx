@@ -30,14 +30,10 @@ export const AuthCard: React.FC<AuthCardProps> = ({
       {variant === "default" && (
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           {title && (
-            <h1 className="text-5xl font-bold leading-tight">
-              {title}
-            </h1>
+            <h1 className="text-5xl font-bold leading-tight">{title}</h1>
           )}
 
-          {description && (
-            <p className="text-gray-300 mt-6">{description}</p>
-          )}
+          {description && <p className="text-gray-300 mt-6">{description}</p>}
         </div>
       )}
 
@@ -46,9 +42,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
         {subtitle && (
           <>
             <h2 className="text-3xl font-bold mb-2">{subtitle}</h2>
-            <p className="text-gray-500 mb-8">
-              Enter your details to continue
-            </p>
+            <p className="text-gray-500 mb-8">Enter your details to continue</p>
           </>
         )}
         {children}

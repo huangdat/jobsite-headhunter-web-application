@@ -212,51 +212,53 @@ export function getRegisterSchema(role: RegistrationUserRole) {
   const t = (key: string) => {
     // Mapping of keys to English messages for backward compatibility
     const messages: Record<string, string> = {
-      "validation.fields.usernameRequired": "Username is required",
-      "validation.fields.usernameBetween":
-        "Username must be between 8 and 32 characters",
+      "validation.fields.usernameRequired":
+        "validation.fields.usernameRequired",
+      "validation.fields.usernameBetween": "validation.fields.usernameBetween",
       "validation.fields.usernameAlphanumeric":
-        "Username must start with a letter and contain only letters, numbers, and underscores",
-      "validation.fields.emailRequired": "Email is required",
-      "validation.fields.emailInvalid": "Please enter a valid email address",
-      "validation.fields.passwordRequired": "Password is required",
+        "validation.fields.usernameAlphanumeric",
+      "validation.fields.emailRequired": "validation.fields.emailRequired",
+      "validation.fields.emailInvalid": "validation.fields.emailInvalid",
+      "validation.fields.passwordRequired":
+        "validation.fields.passwordRequired",
       "validation.fields.passwordBetween8and16":
-        "Password must be between 8 and 16 characters",
+        "validation.fields.passwordBetween8and16",
       "validation.fields.passwordUppercase":
-        "Password must contain at least one uppercase letter",
+        "validation.fields.passwordUppercase",
       "validation.fields.passwordLowercase":
-        "Password must contain at least one lowercase letter",
-      "validation.fields.passwordNumber":
-        "Password must contain at least one number",
+        "validation.fields.passwordLowercase",
+      "validation.fields.passwordNumber": "validation.fields.passwordNumber",
       "validation.fields.confirmPasswordRequired":
-        "Please confirm your password",
-      "validation.fields.passwordsDoNotMatch": "Passwords do not match",
-      "validation.fields.fullNameRequired": "Full name is required",
+        "validation.fields.confirmPasswordRequired",
+      "validation.fields.passwordsDoNotMatch":
+        "validation.fields.passwordsDoNotMatch",
+      "validation.fields.fullNameRequired":
+        "validation.fields.fullNameRequired",
       "validation.fields.fullNameMinLength":
-        "Full name must be at least 2 characters",
+        "validation.fields.fullNameMinLength",
       "validation.fields.fullNameLettersOnly":
-        "Full name can only contain letters and spaces",
-      "validation.fields.phoneRequired": "Phone number is required",
-      "validation.fields.phoneInvalid":
-        "Please enter a valid Vietnamese phone number (e.g., 0912345678)",
-      "validation.fields.genderInvalid": "Invalid gender",
+        "validation.fields.fullNameLettersOnly",
+      "validation.fields.phoneRequired": "validation.fields.phoneRequired",
+      "validation.fields.phoneInvalid": "validation.fields.phoneInvalid",
+      "validation.fields.genderInvalid": "validation.fields.genderInvalid",
       "validation.fields.avatarFileSizeExceeded":
-        "File size must be less than 5MB",
+        "validation.fields.avatarFileSizeExceeded",
       "validation.fields.avatarFileTypeInvalid":
-        "File must be an image (JPG, PNG, GIF, WebP)",
+        "validation.fields.avatarFileTypeInvalid",
       "validation.fields.yearsOfExperienceInvalid":
-        "Years of experience cannot be negative",
+        "validation.fields.yearsOfExperienceInvalid",
       "validation.fields.yearsOfExperienceMax":
-        "Years of experience cannot exceed 60",
-      "validation.fields.salaryInvalid": "Salary must be a number",
-      "validation.fields.salaryNegative": "Salary cannot be negative",
-      "validation.fields.taxCodeRequired": "Tax code is required",
-      "validation.fields.taxCodeInvalid": "Tax code must be 10 or 13 digits",
-      "validation.fields.websiteUrlInvalid": "Website URL must be valid",
+        "validation.fields.yearsOfExperienceMax",
+      "validation.fields.salaryInvalid": "validation.fields.salaryInvalid",
+      "validation.fields.salaryNegative": "validation.fields.salaryNegative",
+      "validation.fields.taxCodeRequired": "validation.fields.taxCodeRequired",
+      "validation.fields.taxCodeInvalid": "validation.fields.taxCodeInvalid",
+      "validation.fields.websiteUrlInvalid":
+        "validation.fields.websiteUrlInvalid",
       "validation.fields.commissionRateInvalid":
-        "Commission rate must be between 0 and 100",
+        "validation.fields.commissionRateInvalid",
       "validation.fields.agreeTermsRequired":
-        "You must agree to the terms and conditions",
+        "validation.fields.agreeTermsRequired",
     };
     return messages[key] || key;
   };

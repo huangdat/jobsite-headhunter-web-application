@@ -12,7 +12,38 @@
     "searchPlaceholder": "Tìm kiếm theo tiêu đề, công ty hoặc vị trí...",
     "clearAllFilters": "Xóa tất cả bộ lọc",
     "rowsPerPage": "Dòng mỗi trang:",
-    "paginationInfo": "Hiển thị {{startItem}}-{{endItem}} của {{totalItems}} công việc"
+    "paginationInfo": "Hiển thị {{startItem}}-{{endItem}} của {{totalItems}} công việc",
+    "filters": {
+      "keyword": "Từ khóa",
+      "keywordPlaceholder": "Chức danh công việc hoặc kỹ năng",
+      "workingType": "Loại Làm việc",
+      "allTypes": "Tất cả loại",
+      "onsite": "Tại chỗ",
+      "remote": "Làm việc từ xa",
+      "hybrid": "Kết hợp",
+      "rankLevel": "Cấp độ",
+      "allLevels": "Tất cả cấp độ",
+      "experience": "Kinh nghiệm",
+      "salary": "Lương (VND)",
+      "fromMillion": "Từ (triệu)",
+      "toMillion": "Đến (triệu)",
+      "applyCustomRange": "Áp dụng khoảng tùy chỉnh",
+      "clearAllFilters": "Xóa tất cả bộ lọc"
+    },
+    "flexible": "Linh hoạt",
+    "viewDetails": "Xem chi tiết →",
+    "noJobsFound": "Không tìm thấy công việc nào với các bộ lọc được chọn.",
+    "unableToLoad": "Không thể tải công việc. Vui lòng thử lại sau.",
+    "previousPage": "Trước",
+    "nextPage": "Tiếp theo",
+    "pagination": "Trang {{page}} của {{totalPages}} — {{totalElements}} công việc",
+    "viewJobLabel": "Xem công việc {{title}}",
+    "applyBefore": "Ứng tuyển trước {{deadline}}",
+    "hero": {
+      "subtitle": "Cơ hội cho mọi người",
+      "title": "Khám phá các công việc được lựa chọn phù hợp với điểm mạnh của bạn.",
+      "description": "Lọc theo từ khóa, phong cách làm việc ưa thích và kỳ vọng lương. Lưu các vai trò yêu thích hoặc chia sẻ chúng với bạn bè."
+    }
   },
   "filters": {
     "filterJobs": "Lọc Công việc",
@@ -95,6 +126,30 @@
     "senior": "Cấp cao",
     "lead": "Lãnh đạo/Quản lý"
   },
+  "filterPresets": {
+    "experienceOptions": {
+      "all": "Tất cả",
+      "notRequired": "Không yêu cầu",
+      "under1Year": "Dưới 1 năm",
+      "oneYear": "1 năm",
+      "twoYears": "2 năm",
+      "threeYears": "3 năm",
+      "fourYears": "4 năm",
+      "fiveYears": "5 năm",
+      "over5Years": "Trên 5 năm"
+    },
+    "salaryOptions": {
+      "all": "Tất cả",
+      "below10M": "Dưới 10 triệu",
+      "from10To15M": "10 - 15 triệu",
+      "from15To20M": "15 - 20 triệu",
+      "from20To25M": "20 - 25 triệu",
+      "from25To30M": "25 - 30 triệu",
+      "from30To50M": "30 - 50 triệu",
+      "above50M": "Trên 50 triệu",
+      "negotiable": "Thương lượng"
+    }
+  },
   "messages": {
     "noJobsFound": "Không tìm thấy công việc",
     "jobPostedSuccess": "Công việc đã được đăng thành công",
@@ -103,6 +158,56 @@
     "jobClosedSuccess": "Công việc đã được đóng thành công",
     "errorPosting": "Không thể đăng công việc",
     "errorUpdating": "Không thể cập nhật công việc",
-    "errorDeleting": "Không thể xóa công việc"
+    "errorDeleting": "Không thể xóa công việc",
+    "unableToLoadYourJobs": "Không thể tải công việc của bạn.",
+    "closeJobConfirm": "Đóng công việc này?",
+    "jobClosed": "Công việc đã đóng.",
+    "failedToCloseJob": "Không thể đóng công việc.",
+    "pleaseChooseDeadline": "Vui lòng chọn hạn chót.",
+    "invalidDeadlineMessage": "Hạn chót không hợp lệ. Vui lòng chọn một ngày trong tương lai.",
+    "jobOpened": "Công việc đã mở.",
+    "failedToOpenJob": "Không thể mở công việc.",
+    "toggleVisibilityConfirm": "Bạn có chắc chắn muốn thay đổi tính khả kiến của công việc này?",
+    "jobVisibilityToggled": "Tính khả kiến công việc đã thay đổi.",
+    "failedToChangeVisibility": "Không thể thay đổi tính khả kiến."
+  },
+  "manage": {
+    "pageTitle": "Các Công Việc Của Tôi",
+    "createNewButton": "Tạo mới",
+    "noJobsYet": "Chưa có công việc nào.",
+    "loadingJobs": "Đang tải công việc...",
+    "hidden": "Ẩn",
+    "visible": "Hiển thị",
+    "statusDeadline": "Trạng thái: {{status}} • Hạn chót: {{deadline}}",
+    "editButton": "Chỉnh sửa",
+    "openButton": "Mở",
+    "closeButton": "Đóng",
+    "updatingButton": "Đang cập nhật...",
+    "hideButton": "Ẩn",
+    "unhideButton": "Hiển thị",
+    "currentlyHidden": "Hiện đang ẩn — nhấp để hiển thị",
+    "currentlyVisible": "Hiện đang hiển thị — nhấp để ẩn",
+    "setNewDeadlineTitle": "Đặt hạn chót mới",
+    "setNewDeadlineDescription": "Chọn một hạn chót mới để mở lại công việc này.",
+    "cancelButton": "Hủy",
+    "confirmButton": "Xác nhận"
+  },
+  "saved": {
+    "pageTitle": "Công việc đã lưu",
+    "breadcrumb": "Công việc / Công việc đã lưu",
+    "description": "Theo dõi các vai trò bạn muốn xem lại. Xóa những cái bạn không còn cần.",
+    "noSavedJobs": "Chưa có công việc đã lưu nào",
+    "emptyStateHint": "Nhấp vào \"Lưu công việc\" trên bất kỳ bài đăng nào để giữ nó ở đây để truy cập nhanh.",
+    "browseJobsButton": "Duyệt công việc",
+    "viewJobButton": "Xem công việc",
+    "removeButton": "Xóa",
+    "removingButton": "Đang xóa...",
+    "confidentialCompany": "Công ty bảo mật",
+    "postedText": "Đã đăng",
+    "recentlyPosted": "Gần đây",
+    "unableToLoadSavedJobs": "Không thể tải công việc đã lưu. Vui lòng thử lại sau.",
+    "jobRemovedSuccess": "Công việc đã bị xóa khỏi danh sách đã lưu.",
+    "unableToRemoveJob": "Không thể xóa công việc. Vui lòng thử lại.",
+    "tryAgainButton": "Thử lại"
   }
 }

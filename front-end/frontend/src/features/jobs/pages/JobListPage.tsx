@@ -1,12 +1,23 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeSanitize from 'rehype-sanitize';
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
+import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSanitize from "rehype-sanitize";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { fetchJobs } from "../services/jobsApi";
+import {
+  getExperiencePresets,
+  getSalaryPresets,
+} from "../constants/filterPresets";
 import type { JobFilterParams, JobListResponse, JobSummary } from "../types";
 
 const INITIAL_PAGE_SIZE = 12;
@@ -30,45 +41,6 @@ const formatSalary = (job: JobSummary) => {
 };
 
 const MILLION = 1_000_000;
-
-type ExperiencePreset = {
-  label: string;
-  value: string;
-  min?: number;
-  max?: number;
-};
-
-type SalaryPreset = {
-  label: string;
-  value: string;
-  min?: number;
-  max?: number;
-  negotiable?: boolean;
-};
-
-const EXPERIENCE_PRESETS: ReadonlyArray<ExperiencePreset> = [
-  { label: "All", value: "ALL" },
-  { label: "Not required", value: "NONE", min: 0, max: 0 },
-  { label: "Under 1 year", value: "UNDER_1", min: 0, max: 0.99 },
-  { label: "1 year", value: "ONE", min: 1, max: 1 },
-  { label: "2 years", value: "TWO", min: 2, max: 2 },
-  { label: "3 years", value: "THREE", min: 3, max: 3 },
-  { label: "4 years", value: "FOUR", min: 4, max: 4 },
-  { label: "5 years", value: "FIVE", min: 5, max: 5 },
-  { label: "Over 5 years", value: "OVER_FIVE", min: 6 },
-];
-
-const SALARY_PRESETS: ReadonlyArray<SalaryPreset> = [
-  { label: "All", value: "ALL" },
-  { label: "Below 10M", value: "LT_10", max: 10 * MILLION },
-  { label: "10 - 15M", value: "10_15", min: 10 * MILLION, max: 15 * MILLION },
-  { label: "15 - 20M", value: "15_20", min: 15 * MILLION, max: 20 * MILLION },
-  { label: "20 - 25M", value: "20_25", min: 20 * MILLION, max: 25 * MILLION },
-  { label: "25 - 30M", value: "25_30", min: 25 * MILLION, max: 30 * MILLION },
-  { label: "30 - 50M", value: "30_50", min: 30 * MILLION, max: 50 * MILLION },
-  { label: "Above 50M", value: "GT_50", min: 50 * MILLION },
-  { label: "Negotiable", value: "NEGOTIABLE", negotiable: true },
-];
 
 // Sidebar Filter Component
 function FilterSidebar({
@@ -95,11 +67,14 @@ function FilterSidebar({
     }, 400);
   };
 
-  useEffect(() => () => {
-    if (typingTimeoutRef.current) {
-      window.clearTimeout(typingTimeoutRef.current);
-    }
-  }, []);
+  useEffect(
+    () => () => {
+      if (typingTimeoutRef.current) {
+        window.clearTimeout(typingTimeoutRef.current);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     const nextKeyword = filters.keyword ?? "";
@@ -109,8 +84,14 @@ function FilterSidebar({
   }, [filters.keyword, keyword]);
 
   useEffect(() => {
-    const currentMin = typeof filters.experienceMin === "number" ? filters.experienceMin : undefined;
-    const currentMax = typeof filters.experienceMax === "number" ? filters.experienceMax : undefined;
+    const currentMin =
+      typeof filters.experienceMin === "number"
+        ? filters.experienceMin
+        : undefined;
+    const currentMax =
+      typeof filters.experienceMax === "number"
+        ? filters.experienceMax
+        : undefined;
 
     if (currentMin === undefined && currentMax === undefined) {
       if (experienceValue !== "ALL") {
@@ -120,7 +101,7 @@ function FilterSidebar({
     }
 
     const match = EXPERIENCE_PRESETS.find(
-      (option) => option.min === currentMin && option.max === currentMax,
+      (option) => option.min === currentMin && option.max === currentMax
     );
     if (match && experienceValue !== match.value) {
       setExperienceValue(match.value);
@@ -139,8 +120,10 @@ function FilterSidebar({
       return;
     }
 
-    const currentMin = typeof filters.salaryMin === "number" ? filters.salaryMin : undefined;
-    const currentMax = typeof filters.salaryMax === "number" ? filters.salaryMax : undefined;
+    const currentMin =
+      typeof filters.salaryMin === "number" ? filters.salaryMin : undefined;
+    const currentMax =
+      typeof filters.salaryMax === "number" ? filters.salaryMax : undefined;
 
     if (currentMin === undefined && currentMax === undefined) {
       if (salaryPreset !== "ALL") {
@@ -154,7 +137,10 @@ function FilterSidebar({
     }
 
     const match = SALARY_PRESETS.find(
-      (option) => !option.negotiable && option.min === currentMin && option.max === currentMax,
+      (option) =>
+        !option.negotiable &&
+        option.min === currentMin &&
+        option.max === currentMax
     );
 
     if (match) {
@@ -171,11 +157,20 @@ function FilterSidebar({
     setSalaryPreset("CUSTOM");
     setCustomSalaryMin(currentMin ? String(currentMin / MILLION) : "");
     setCustomSalaryMax(currentMax ? String(currentMax / MILLION) : "");
-  }, [filters.salaryMin, filters.salaryMax, filters.negotiable, salaryPreset, customSalaryMin, customSalaryMax]);
+  }, [
+    filters.salaryMin,
+    filters.salaryMax,
+    filters.negotiable,
+    salaryPreset,
+    customSalaryMin,
+    customSalaryMax,
+  ]);
 
   const handleExperienceChange = (value: string) => {
     setExperienceValue(value);
-    const selected = EXPERIENCE_PRESETS.find((option) => option.value === value);
+    const selected = EXPERIENCE_PRESETS.find(
+      (option) => option.value === value
+    );
     onFilterChange({
       ...filters,
       experienceMin: selected?.min,
@@ -204,8 +199,12 @@ function FilterSidebar({
       return;
     }
 
-    const minValue = customSalaryMin ? Number(customSalaryMin) * MILLION : undefined;
-    const maxValue = customSalaryMax ? Number(customSalaryMax) * MILLION : undefined;
+    const minValue = customSalaryMin
+      ? Number(customSalaryMin) * MILLION
+      : undefined;
+    const maxValue = customSalaryMax
+      ? Number(customSalaryMax) * MILLION
+      : undefined;
 
     if ((minValue ?? 0) > (maxValue ?? Infinity)) {
       return;
@@ -254,12 +253,12 @@ function FilterSidebar({
       {/* Keyword Search */}
       <div>
         <h3 className="mb-3 font-semibold text-slate-900 dark:text-white">
-          Keyword
+          {t("jobs.list.filters.keyword")}
         </h3>
         <Input
           value={keyword}
           onChange={(e) => handleKeywordChange(e.target.value)}
-          placeholder="Job title or skill"
+          placeholder={t("jobs.list.filters.keywordPlaceholder")}
           className="text-sm"
         />
       </div>
@@ -267,7 +266,7 @@ function FilterSidebar({
       {/* Working Type Filter */}
       <div>
         <h3 className="mb-3 font-semibold text-slate-900 dark:text-white">
-          Working Type
+          {t("jobs.list.filters.workingType")}
         </h3>
         <div className="space-y-2">
           <label className="flex items-center gap-2 cursor-pointer">
@@ -280,7 +279,7 @@ function FilterSidebar({
               className="w-4 h-4"
             />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              All types
+              {t("jobs.list.filters.allTypes")}
             </span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
@@ -293,7 +292,7 @@ function FilterSidebar({
               className="w-4 h-4"
             />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              Onsite
+              {t("jobs.list.filters.onsite")}
             </span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
@@ -306,7 +305,7 @@ function FilterSidebar({
               className="w-4 h-4"
             />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              Remote
+              {t("jobs.list.filters.remote")}
             </span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
@@ -319,7 +318,7 @@ function FilterSidebar({
               className="w-4 h-4"
             />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              Hybrid
+              {t("jobs.list.filters.hybrid")}
             </span>
           </label>
         </div>
@@ -328,7 +327,7 @@ function FilterSidebar({
       {/* Rank Level Filter */}
       <div>
         <h3 className="mb-3 font-semibold text-slate-900 dark:text-white">
-          Rank Level
+          {t("jobs.list.filters.rankLevel")}
         </h3>
         <div className="space-y-2">
           <label className="flex items-center gap-2 cursor-pointer">
@@ -341,116 +340,125 @@ function FilterSidebar({
               className="w-4 h-4"
             />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              All levels
+              {t("jobs.list.filters.allLevels")}
             </span>
           </label>
-          {["INTERN", "FRESHER", "JUNIOR", "MIDDLE", "SENIOR", "LEADER", "MANAGER"].map(
-            (level) => (
-              <label key={level} className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="rankLevel"
-                  value={level}
-                  checked={filters.rankLevel === level}
-                  onChange={(e) => handleRankLevelChange(e.target.value)}
-                  className="w-4 h-4"
-                />
-                <span className="text-sm text-slate-700 dark:text-slate-300">
-                  {level.charAt(0) + level.slice(1).toLowerCase()}
-                </span>
-              </label>
-            )
-          )}
+          {[
+            "INTERN",
+            "FRESHER",
+            "JUNIOR",
+            "MIDDLE",
+            "SENIOR",
+            "LEADER",
+            "MANAGER",
+          ].map((level) => (
+            <label
+              key={level}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="rankLevel"
+                value={level}
+                checked={filters.rankLevel === level}
+                onChange={(e) => handleRankLevelChange(e.target.value)}
+                className="w-4 h-4"
+              />
+              <span className="text-sm text-slate-700 dark:text-slate-300">
+                {level.charAt(0) + level.slice(1).toLowerCase()}
+              </span>
+            </label>
+          ))}
         </div>
       </div>
 
-        {/* Experience Filter */}
-        <div>
-          <div className="mb-3 flex items-center justify-between">
-            <h3 className="font-semibold text-slate-900 dark:text-white">Experience</h3>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            {EXPERIENCE_PRESETS.map((option) => (
-              <label
-                key={option.value}
-                className="flex items-center gap-2 rounded-xl border border-slate-100 px-3 py-2 text-sm text-slate-700 hover:border-emerald-300 dark:border-slate-700 dark:text-slate-200"
-              >
-                <input
-                  type="radio"
-                  name="experience"
-                  value={option.value}
-                  checked={experienceValue === option.value}
-                  onChange={(e) => handleExperienceChange(e.target.value)}
-                  className="h-4 w-4"
-                />
-                <span>{option.label}</span>
-              </label>
-            ))}
-          </div>
+      {/* Experience Filter */}
+      <div>
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="font-semibold text-slate-900 dark:text-white">
+            {t("jobs.list.filters.experience")}
+          </h3>
         </div>
-
-        {/* Salary Filter */}
-        <div>
-          <div className="mb-3 flex items-center justify-between">
-            <h3 className="font-semibold text-slate-900 dark:text-white">Salary (VND)</h3>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            {SALARY_PRESETS.map((option) => (
-              <label
-                key={option.value}
-                className="flex items-center gap-2 rounded-xl border border-slate-100 px-3 py-2 text-sm text-slate-700 hover:border-emerald-300 dark:border-slate-700 dark:text-slate-200"
-              >
-                <input
-                  type="radio"
-                  name="salary"
-                  value={option.value}
-                  checked={salaryPreset === option.value}
-                  onChange={(e) => handleSalaryPresetChange(e.target.value)}
-                  className="h-4 w-4"
-                />
-                <span>{option.label}</span>
-              </label>
-            ))}
-          </div>
-
-          <div className="mt-4 space-y-2">
-            <div className="flex items-center gap-2">
-              <Input
-                type="number"
-                min="0"
-                value={customSalaryMin}
-                onChange={(e) => setCustomSalaryMin(e.target.value)}
-                placeholder="From (mil)"
-                className="text-sm"
-              />
-              <span className="text-slate-400">-</span>
-              <Input
-                type="number"
-                min="0"
-                value={customSalaryMax}
-                onChange={(e) => setCustomSalaryMax(e.target.value)}
-                placeholder="To (mil)"
-                className="text-sm"
-              />
-            </div>
-            <Button
-              size="sm"
-              variant="outline"
-              className="w-full"
-              onClick={handleCustomSalaryApply}
+        <div className="grid grid-cols-2 gap-2">
+          {EXPERIENCE_PRESETS.map((option) => (
+            <label
+              key={option.value}
+              className="flex items-center gap-2 rounded-xl border border-slate-100 px-3 py-2 text-sm text-slate-700 hover:border-emerald-300 dark:border-slate-700 dark:text-slate-200"
             >
-              Apply custom range
-            </Button>
-          </div>
+              <input
+                type="radio"
+                name="experience"
+                value={option.value}
+                checked={experienceValue === option.value}
+                onChange={(e) => handleExperienceChange(e.target.value)}
+                className="h-4 w-4"
+              />
+              <span>{option.label}</span>
+            </label>
+          ))}
         </div>
+      </div>
+
+      {/* Salary Filter */}
+      <div>
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="font-semibold text-slate-900 dark:text-white">
+            {t("jobs.list.filters.salary")}
+          </h3>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {SALARY_PRESETS.map((option) => (
+            <label
+              key={option.value}
+              className="flex items-center gap-2 rounded-xl border border-slate-100 px-3 py-2 text-sm text-slate-700 hover:border-emerald-300 dark:border-slate-700 dark:text-slate-200"
+            >
+              <input
+                type="radio"
+                name="salary"
+                value={option.value}
+                checked={salaryPreset === option.value}
+                onChange={(e) => handleSalaryPresetChange(e.target.value)}
+                className="h-4 w-4"
+              />
+              <span>{option.label}</span>
+            </label>
+          ))}
+        </div>
+
+        <div className="mt-4 space-y-2">
+          <div className="flex items-center gap-2">
+            <Input
+              type="number"
+              min="0"
+              value={customSalaryMin}
+              onChange={(e) => setCustomSalaryMin(e.target.value)}
+              placeholder={t("jobs.list.filters.fromMillion")}
+              className="text-sm"
+            />
+            <span className="text-slate-400">-</span>
+            <Input
+              type="number"
+              min="0"
+              value={customSalaryMax}
+              onChange={(e) => setCustomSalaryMax(e.target.value)}
+              placeholder={t("jobs.list.filters.toMillion")}
+              className="text-sm"
+            />
+          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            className="w-full"
+            onClick={handleCustomSalaryApply}
+          >
+            {t("jobs.list.filters.applyCustomRange")}
+          </Button>
+        </div>
+      </div>
 
       {/* Reset Button */}
-      <Button
-        variant="ghost"
-        className="w-full"
-        onClick={handleReset}
-      >
-        Clear all filters
+      <Button variant="ghost" className="w-full" onClick={handleReset}>
+        {t("jobs.list.filters.clearAllFilters")}
       </Button>
     </aside>
   );
@@ -479,7 +487,7 @@ function JobCard({ job }: { job: JobSummary & { negotiable?: boolean } }) {
       onClick={handleNavigate}
       onKeyDown={handleKeyDown}
       className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none cursor-pointer"
-      aria-label={`View job ${job.title}`}
+      aria-label={t("jobs.list.viewJobLabel", { title: job.title })}
     >
       <div className="flex items-center justify-between gap-4">
         <div>
@@ -495,18 +503,23 @@ function JobCard({ job }: { job: JobSummary & { negotiable?: boolean } }) {
         </Badge>
       </div>
       <div className="mt-3 line-clamp-2 text-sm text-slate-600 dark:text-slate-400">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>{job.description ?? ''}</ReactMarkdown>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeSanitize]}
+        >
+          {job.description ?? ""}
+        </ReactMarkdown>
       </div>
       <div className="mt-4 flex flex-wrap gap-3 text-sm text-slate-600 dark:text-slate-400">
         <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">
-          {job.city ?? "Flexible"}
+          {job.city ?? t("jobs.list.flexible")}
         </span>
         <span className="rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800">
           {formatSalary(job)}
         </span>
         {deadlineLabel && (
           <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-800 dark:bg-amber-900/30 dark:text-amber-100">
-            Apply before {deadlineLabel}
+            {t("jobs.list.applyBefore", { deadline: deadlineLabel })}
           </span>
         )}
       </div>
@@ -514,13 +527,17 @@ function JobCard({ job }: { job: JobSummary & { negotiable?: boolean } }) {
         <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
           #{job.jobCode}
         </span>
-        <span className="text-sm font-semibold text-emerald-600">View details →</span>
+        <span className="text-sm font-semibold text-emerald-600">
+          {t("jobs.list.viewDetails")}
+        </span>
       </div>
     </div>
   );
 }
 
 export function JobListPage() {
+  const { t } = useTranslation("jobs");
+  const navigate = useNavigate();
   const [jobs, setJobs] = useState<JobSummary[]>([]);
   const [meta, setMeta] = useState<Omit<JobListResponse, "data">>({
     page: 1,
@@ -534,6 +551,10 @@ export function JobListPage() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Generate filter presets with i18n translations
+  const EXPERIENCE_PRESETS = useMemo(() => getExperiencePresets(t), [t]);
+  const SALARY_PRESETS = useMemo(() => getSalaryPresets(t), [t]);
 
   useEffect(() => {
     let active = true;
@@ -553,7 +574,7 @@ export function JobListPage() {
       })
       .catch(() => {
         if (!active) return;
-        setError("Unable to load jobs. Please try again later.");
+        setError(t("jobs.list.unableToLoad"));
       })
       .finally(() => {
         if (active) {
@@ -576,14 +597,13 @@ export function JobListPage() {
       <div className="mx-auto max-w-7xl px-4 py-10">
         <div className="rounded-3xl bg-gradient-to-br from-emerald-500 to-slate-900 p-10 text-white shadow-lg">
           <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-            Opportunities for everyone
+            {t("jobs.list.hero.subtitle")}
           </p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight">
-            Explore curated jobs that match your strengths.
+            {t("jobs.list.hero.title")}
           </h1>
           <p className="mt-4 max-w-3xl text-lg text-emerald-100">
-            Filter by keywords, preferred work style, and salary expectations. Save
-            your favorite roles or share them with friends.
+            {t("jobs.list.hero.description")}
           </p>
         </div>
       </div>
@@ -606,7 +626,7 @@ export function JobListPage() {
               {isLoading && <SkeletonGrid />}
               {!isLoading && jobs.length === 0 && (
                 <p className="col-span-full rounded-2xl border border-dashed border-slate-200 p-10 text-center text-slate-500">
-                  No jobs found with the selected filters.
+                  {t("jobs.list.noJobsFound")}
                 </p>
               )}
               {!isLoading &&
@@ -622,7 +642,11 @@ export function JobListPage() {
             {meta.totalPages > 1 && !isLoading && (
               <div className="mt-8 flex items-center justify-between rounded-2xl border border-slate-100 bg-white/70 px-6 py-4 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
                 <span>
-                  Page {meta.page} of {meta.totalPages} — {meta.totalElements} jobs
+                  {t("jobs.list.pagination", {
+                    page: meta.page,
+                    totalPages: meta.totalPages,
+                    totalElements: meta.totalElements,
+                  })}
                 </span>
                 <div className="flex gap-3">
                   <Button
@@ -631,7 +655,7 @@ export function JobListPage() {
                     disabled={meta.page === 1}
                     onClick={() => handlePageChange(meta.page - 1)}
                   >
-                    Previous
+                    {t("jobs.list.previousPage")}
                   </Button>
                   <Button
                     type="button"
@@ -639,7 +663,7 @@ export function JobListPage() {
                     disabled={meta.page === meta.totalPages}
                     onClick={() => handlePageChange(meta.page + 1)}
                   >
-                    Next
+                    {t("jobs.list.nextPage")}
                   </Button>
                 </div>
               </div>

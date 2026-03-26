@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { getMyJobs, toggleJobStatus, deleteJobSoft } from "../services/jobsApi";
@@ -16,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 export function JobManagePage() {
+  const { t } = useTranslation("jobs");
   const [jobs, setJobs] = useState<JobSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<number | null>(null);
@@ -33,7 +35,7 @@ export function JobManagePage() {
       setJobs(res.data ?? res);
     } catch (err) {
       console.error("Error loading my jobs:", err);
-      toast.error("Unable to load your jobs.");
+      toast.error(t("jobs.messages.unableToLoadYourJobs"));
     } finally {
       setLoading(false);
     }
@@ -54,18 +56,18 @@ export function JobManagePage() {
   };
 
   const handleClose = async (job: JobSummary) => {
-    if (!confirm('Close this job?')) return;
+    if (!confirm(t("jobs.messages.closeJobConfirm"))) return;
     setProcessingId(job.id);
     try {
       await toggleJobStatus(job.id);
-      toast.success("Job closed.");
+      toast.success(t("jobs.messages.jobClosed"));
       await load();
     } catch (err) {
       console.error("Failed to close job:", err);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const e: any = err;
       const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || "Failed to close job.");
+      toast.error(msg || t("jobs.messages.failedToCloseJob"));
     } finally {
       setProcessingId(null);
     }
@@ -81,18 +83,18 @@ export function JobManagePage() {
     setProcessingId(dialogJob.id);
     try {
       if (!dialogDeadline) {
-        alert("Please choose a deadline.");
+        alert(t("jobs.messages.pleaseChooseDeadline"));
         return;
       }
       const parsed = new Date(dialogDeadline);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (isNaN(parsed.getTime()) || parsed <= today) {
-        alert('Invalid deadline. Please choose a future date.');
+        alert(t("jobs.messages.invalidDeadlineMessage"));
         return;
       }
       await toggleJobStatus(dialogJob.id, dialogDeadline);
-      toast.success("Job opened.");
+      toast.success(t("jobs.messages.jobOpened"));
       setDeadlineDialogOpen(false);
       setDialogJob(null);
       await load();
@@ -101,69 +103,103 @@ export function JobManagePage() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const e: any = err;
       const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || "Failed to open job.");
+      toast.error(msg || t("jobs.messages.failedToOpenJob"));
     } finally {
       setProcessingId(null);
     }
   };
 
   const handleHide = async (id: number) => {
-    if (!confirm("Are you sure you want to toggle visibility for this job?")) return;
+    if (!confirm(t("jobs.messages.toggleVisibilityConfirm")))
+      return;
     setProcessingId(id);
     try {
       await deleteJobSoft(id);
-      toast.success("Job visibility toggled.");
+      toast.success(t("jobs.messages.jobVisibilityToggled"));
       await load();
     } catch (err) {
       console.error("Failed to change visibility:", err);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const e: any = err;
       const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || "Failed to change visibility.");
+      toast.error(msg || t("jobs.messages.failedToChangeVisibility"));
     } finally {
       setProcessingId(null);
     }
   };
 
-  if (loading) return <div className="p-8">Loading jobs...</div>;
+  if (loading) return <div className="p-8">{t("jobs.manage.loadingJobs")}</div>;
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold">My Job Posts</h2>
-        <Button onClick={() => navigate('/headhunter/jobs/new')}>Create new</Button>
+        <h2 className="text-2xl font-semibold">{t("jobs.manage.pageTitle")}</h2>
+        <Button onClick={() => navigate("/headhunter/jobs/new")}>
+          {t("jobs.manage.createNewButton")}
+        </Button>
       </div>
 
       {jobs.length === 0 ? (
-        <div>No jobs yet.</div>
+        <div>{t("jobs.manage.noJobsYet")}</div>
       ) : (
         <div className="space-y-4">
           {jobs.map((job) => (
-            <div key={job.id} className="flex items-center justify-between rounded-lg border p-4">
-                <div>
+            <div
+              key={job.id}
+              className="flex items-center justify-between rounded-lg border p-4"
+            >
+              <div>
                 <div className="flex items-center gap-3">
                   <div className="text-lg font-medium">{job.title}</div>
                   {/* Visibility badge */}
-                  <div className={`text-xs px-2 py-0.5 rounded ${job.visible === false ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
-                    {job.visible === false ? 'Hidden' : 'Visible'}
+                  <div
+                    className={`text-xs px-2 py-0.5 rounded ${job.visible === false ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
+                  >
+                    {job.visible === false ? t("jobs.manage.hidden") : t("jobs.manage.visible")}
                   </div>
                 </div>
-                <div className="text-sm text-slate-500">{job.companyName ?? ''} • {job.location}</div>
-                <div className="text-sm text-slate-400">Status: {job.status} • Deadline: {job.deadline ?? '—'}</div>
+                <div className="text-sm text-slate-500">
+                  {job.companyName ?? ""} • {job.location}
+                </div>
+                <div className="text-sm text-slate-400">
+                  {t("jobs.manage.statusDeadline", { status: job.status, deadline: job.deadline ?? "—" })}
+                </div>
               </div>
               <div className="flex items-center gap-2">
-                {((user && (user.role?.toString().toLowerCase() === 'headhunter' || user.role?.toString().toLowerCase() === 'admin')) || user?.id === job.headhunterId) && (
+                {((user &&
+                  (user.role?.toString().toLowerCase() === "headhunter" ||
+                    user.role?.toString().toLowerCase() === "admin")) ||
+                  user?.id === job.headhunterId) && (
                   <>
-                    <Button size="sm" variant="ghost" onClick={() => handleEdit(job.id)}>Edit</Button>
-                    <div className="inline-flex rounded-md shadow-sm" role="group">
-                      {job.status !== 'OPEN' && (
-                        <Button size="sm" onClick={() => handleOpen(job)} disabled={processingId === job.id} className="bg-emerald-500 text-white hover:bg-emerald-600">
-                          {processingId === job.id ? 'Updating...' : 'Open'}
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleEdit(job.id)}
+                    >
+                      {t("jobs.manage.editButton")}
+                    </Button>
+                    <div
+                      className="inline-flex rounded-md shadow-sm"
+                      role="group"
+                    >
+                      {job.status !== "OPEN" && (
+                        <Button
+                          size="sm"
+                          onClick={() => handleOpen(job)}
+                          disabled={processingId === job.id}
+                          className="bg-emerald-500 text-white hover:bg-emerald-600"
+                        >
+                          {processingId === job.id ? t("jobs.manage.updatingButton") : t("jobs.manage.openButton")}
                         </Button>
                       )}
-                      {job.status !== 'CLOSED' && (
-                        <Button size="sm" onClick={() => handleClose(job)} disabled={processingId === job.id} className="bg-red-500 text-white hover:bg-red-600">
-                          {processingId === job.id ? 'Updating...' : 'Close'}
+                      {job.status !== "CLOSED" && (
+                        <Button
+                          size="sm"
+                          onClick={() => handleClose(job)}
+                          disabled={processingId === job.id}
+                          className="bg-red-500 text-white hover:bg-red-600"
+                        >
+                          {processingId === job.id ? t("jobs.manage.updatingButton") : t("jobs.manage.closeButton")}}
                         </Button>
                       )}
                     </div>
@@ -172,9 +208,17 @@ export function JobManagePage() {
                       variant="destructive"
                       onClick={() => handleHide(job.id)}
                       disabled={processingId === job.id}
-                      title={job.visible === false ? 'Currently hidden — click to unhide' : 'Currently visible — click to hide'}
+                      title={
+                        job.visible === false
+                          ? t("jobs.manage.currentlyHidden")
+                          : t("jobs.manage.currentlyVisible")
+                      }
                     >
-                      {processingId === job.id ? 'Updating...' : (job.visible === false ? 'Unhide' : 'Hide')}
+                      {processingId === job.id
+                        ? t("jobs.manage.updatingButton")
+                        : job.visible === false
+                          ? t("jobs.manage.unhideButton")
+                          : t("jobs.manage.hideButton")}
                     </Button>
                   </>
                 )}
@@ -183,12 +227,14 @@ export function JobManagePage() {
           ))}
         </div>
       )}
-    
+
       {/* Deadline modal for opening a job */}
       <Dialog open={deadlineDialogOpen} onOpenChange={setDeadlineDialogOpen}>
         <DialogContent>
-          <DialogTitle>Set new deadline</DialogTitle>
-          <DialogDescription>Choose a new deadline to re-open this job.</DialogDescription>
+          <DialogTitle>{t("jobs.manage.setNewDeadlineTitle")}</DialogTitle>
+          <DialogDescription>
+            {t("jobs.manage.setNewDeadlineDescription")}
+          </DialogDescription>
           <div className="mt-2">
             <Input
               type="date"
@@ -198,9 +244,14 @@ export function JobManagePage() {
           </div>
           <DialogFooter>
             <DialogClose>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">{t("jobs.manage.cancelButton")}</Button>
             </DialogClose>
-            <Button onClick={confirmOpenFromDialog} disabled={processingId === dialogJob?.id}>Confirm</Button>
+            <Button
+              onClick={confirmOpenFromDialog}
+              disabled={processingId === dialogJob?.id}
+            >
+              {t("jobs.manage.confirmButton")}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -28,7 +28,14 @@ const isWhitelisted = (value, node) => {
   const parent = node.parent;
   if (parent?.type === "CallExpression") {
     const callee = parent.callee;
+    // Handle both console.log() and other functions
     if (callee?.name?.match(/^console\.(log|error|warn|info|debug)$/)) {
+      return true;
+    }
+    // Handle console.error/debug/log (MemberExpression like console.error)
+    if (callee?.type === "MemberExpression" && 
+        callee?.object?.name === "console" &&
+        callee?.property?.name?.match(/^(log|error|warn|info|debug)$/)) {
       return true;
     }
   }
@@ -188,9 +195,20 @@ export default {
           node.name?.name === "aria-label" &&
           node.value?.type === "JSXExpressionContainer"
         ) {
+          // ✅ SKIP: if using t() call for i18n
+          const expr = node.value.expression;
+          if (expr.type === "CallExpression" && expr.callee?.name === "t") {
+            return; // Approved: using i18n
+          }
+
+          // ✅ SKIP: if it's a variable (likely dynamic)
+          if (expr.type === "Identifier") {
+            return; // Variable assignment, assume OK
+          }
+
           context.report({
             node,
-            message: `❌ Hardcoded aria-label: "${node.value.expression.value || "dynamic"}". Use i18n: t("key.path")`,
+            message: `❌ Hardcoded aria-label: "${expr.value || "dynamic"}". Use i18n: t("key.path")`,
           });
         }
       },

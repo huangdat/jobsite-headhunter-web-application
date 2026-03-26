@@ -24,7 +24,13 @@ export interface DeleteUserModalProps {
   onConfirm: (deleteType: "soft" | "hard", reason?: string) => Promise<void>;
 }
 
-type ModalStep = "choice" | "reason" | "confirmation" | "success" | "error" | "conflict";
+type ModalStep =
+  | "choice"
+  | "reason"
+  | "confirmation"
+  | "success"
+  | "error"
+  | "conflict";
 
 interface DeleteSuccess {
   type: "success";
@@ -82,7 +88,10 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
     setLoading(true);
     try {
-      await onConfirm(selectedType, selectedType === "soft" ? reason : undefined);
+      await onConfirm(
+        selectedType,
+        selectedType === "soft" ? reason : undefined
+      );
       setResult({ type: "success" });
       setStep("success");
 
@@ -339,7 +348,8 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             <form onSubmit={handleReasonSubmit}>
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  {t("delete.reasonLabel")} <span className="text-red-600">*</span>
+                  {t("delete.reasonLabel")}{" "}
+                  <span className="text-red-600">*</span>
                 </label>
                 <textarea
                   value={reason}

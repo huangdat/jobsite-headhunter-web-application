@@ -4,7 +4,12 @@
  */
 
 import { useState, useCallback, useEffect } from "react";
-import type { CommissionProfile, CommissionFormData, CommissionStats } from "../types/commission.types";
+import { useTranslation } from "react-i18next";
+import type {
+  CommissionProfile,
+  CommissionFormData,
+  CommissionStats,
+} from "../types/commission.types";
 import { commissionApi } from "../services/commissionApi";
 
 interface CommissionManagementState {
@@ -18,6 +23,7 @@ interface CommissionManagementState {
 }
 
 export function useCommissionManagement() {
+  const { t } = useTranslation();
   const [state, setState] = useState<CommissionManagementState>({
     profile: null,
     stats: null,
@@ -58,7 +64,10 @@ export function useCommissionManagement() {
       } catch (err) {
         setState((prev) => ({
           ...prev,
-          error: err instanceof Error ? err.message : "Failed to load commission data",
+          error:
+            err instanceof Error
+              ? err.message
+              : t("messages.failedToLoadCommission"),
           loading: false,
         }));
       }
@@ -88,7 +97,9 @@ export function useCommissionManagement() {
     try {
       setState((prev) => ({ ...prev, saving: true, error: null }));
 
-      const updated = await commissionApi.updateCommissionProfile(state.formData);
+      const updated = await commissionApi.updateCommissionProfile(
+        state.formData
+      );
 
       setState((prev) => ({
         ...prev,
@@ -104,7 +115,10 @@ export function useCommissionManagement() {
     } catch (err) {
       setState((prev) => ({
         ...prev,
-        error: err instanceof Error ? err.message : "Failed to save profile",
+        error:
+          err instanceof Error
+            ? err.message
+            : t("messages.failedToSaveProfile"),
         saving: false,
       }));
     }
@@ -116,35 +130,35 @@ export function useCommissionManagement() {
   }, []);
 
   // Request payout
-  const requestPayout = useCallback(
-    async (amount: number) => {
-      try {
-        setState((prev) => ({ ...prev, saving: true, error: null }));
+  const requestPayout = useCallback(async (amount: number) => {
+    try {
+      setState((prev) => ({ ...prev, saving: true, error: null }));
 
-        const result = await commissionApi.requestPayout(amount);
+      const result = await commissionApi.requestPayout(amount);
 
-        setState((prev) => ({
-          ...prev,
-          saving: false,
-          success: true,
-        }));
+      setState((prev) => ({
+        ...prev,
+        saving: false,
+        success: true,
+      }));
 
-        // Refresh stats after payout
-        const updatedStats = await commissionApi.getCommissionStats();
-        setState((prev) => ({ ...prev, stats: updatedStats }));
+      // Refresh stats after payout
+      const updatedStats = await commissionApi.getCommissionStats();
+      setState((prev) => ({ ...prev, stats: updatedStats }));
 
-        return result;
-      } catch (err) {
-        setState((prev) => ({
-          ...prev,
-          error: err instanceof Error ? err.message : "Failed to request payout",
-          saving: false,
-        }));
-        throw err;
-      }
-    },
-    []
-  );
+      return result;
+    } catch (err) {
+      setState((prev) => ({
+        ...prev,
+        error:
+          err instanceof Error
+            ? err.message
+            : t("messages.failedToRequestPayout"),
+        saving: false,
+      }));
+      throw err;
+    }
+  }, []);
 
   return {
     ...state,

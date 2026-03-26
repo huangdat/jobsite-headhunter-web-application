@@ -95,10 +95,7 @@ export function CommissionProfilePage() {
               <h2 className="text-lg font-semibold text-slate-900 mb-4">
                 {commissionT("section.earnings")}
               </h2>
-              <CommissionStats
-                stats={stats}
-                onRequestPayout={requestPayout}
-              />
+              <CommissionStats stats={stats} onRequestPayout={requestPayout} />
             </div>
           </div>
         </div>

@@ -45,8 +45,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      console.debug("[Auth] refreshAuth: validating token (masked):", token ? `${token.slice(0,8)}...${token.slice(-8)}` : null);
+      // eslint-disable-next-line custom/no-hardcoded-strings
+      console.debug(
+        "[Auth] refreshAuth: validating token (masked):",
+        token ? `${token.slice(0, 8)}...${token.slice(-8)}` : null
+      );
       const result = await validateToken({ token });
+      // eslint-disable-next-line custom/no-hardcoded-strings
       console.debug("[Auth] refreshAuth: validateToken result:", result);
 
       if (!result?.valid) {
@@ -55,7 +60,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return null;
       }
 
-      const normalizedRole = result.role ? result.role.replace(/^roles\./i, "").toUpperCase() : result.role;
+      const normalizedRole = result.role
+        ? result.role.replace(/^roles\./i, "").toUpperCase()
+        : result.role;
 
       const nextUser: AuthSession = {
         id: result.id,
@@ -68,7 +75,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(nextUser);
       return nextUser;
     } catch {
-      console.error("[Auth] refreshAuth: validateToken failed, clearing auth storage");
+      // eslint-disable-next-line custom/no-hardcoded-strings
+      console.error(
+        "[Auth] refreshAuth: validateToken failed, clearing auth storage"
+      );
       clearAuthStorage();
       setUser(null);
       return null;

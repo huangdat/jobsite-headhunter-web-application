@@ -81,11 +81,11 @@ export const useLogin = () => {
         return;
       }
 
-      throw new Error("Authentication failed.");
+      throw new Error(t("auth.messages.authenticationFailed"));
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Unable to sign in right now. Please try again."
+        t("auth.messages.unableToSignInRightNow")
       );
       let errorField: "email" | "password" | "general" = "general";
 
@@ -137,6 +137,7 @@ export const useLogin = () => {
         setErrors({ email: errorMessage });
       }
 
+      // eslint-disable-next-line custom/no-hardcoded-strings
       console.error("Login detail error:", error);
     } finally {
       setIsLoading(false);

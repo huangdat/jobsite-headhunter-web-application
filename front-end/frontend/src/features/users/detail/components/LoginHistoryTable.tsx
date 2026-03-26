@@ -78,7 +78,9 @@ const LoginHistoryTable: React.FC<LoginHistoryTableProps> = ({ sessions }) => {
                   ) : (
                     <>
                       <AlertCircle className="w-4 h-4 text-red-500" />
-                      <span className="text-red-700 font-medium">{t("loginStatus.failedAttempt")}</span>
+                      <span className="text-red-700 font-medium">
+                        {t("loginStatus.failedAttempt")}
+                      </span>
                     </>
                   )}
                 </div>

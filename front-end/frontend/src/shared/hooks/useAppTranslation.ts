@@ -17,7 +17,7 @@ export const useAppTranslation = () => {
       code: i18n.language,
       nativeName: i18n.language === "vi" ? "Tiếng Việt" : "English",
     }),
-    [i18n.language],
+    [i18n.language]
   );
 
   return {

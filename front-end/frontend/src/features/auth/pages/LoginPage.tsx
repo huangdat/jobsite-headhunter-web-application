@@ -216,7 +216,7 @@ export function LoginPage() {
       try {
         if (linkedInCode) {
           if (provider !== "linkedin" || linkedInState !== expectedState) {
-            throw new Error("Invalid LinkedIn callback state");
+            throw new Error(t("auth.messages.invalidLinkedInCallbackState"));
           }
 
           setLoadingProvider("linkedin");
@@ -229,7 +229,7 @@ export function LoginPage() {
 
         if (googleIdToken) {
           if (provider !== "google" || googleState !== expectedState) {
-            throw new Error("Invalid Google callback state");
+            throw new Error(t("auth.messages.invalidGoogleCallbackState"));
           }
 
           setLoadingProvider("google");

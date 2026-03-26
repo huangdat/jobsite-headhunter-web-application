@@ -100,7 +100,9 @@ export const usersApi = {
    * Get user by ID
    */
   getUserById: async (userId: string): Promise<UserDetail> => {
-    const res = await apiClient.get<any>(API_ENDPOINTS.USERS.GET_BY_ID(userId));
+    const res = await apiClient.get<any>(
+      API_ENDPOINTS.USERS.GET_BY_ID.replace("{id}", userId)
+    );
     return res.data.result;
   },
 
@@ -146,7 +148,7 @@ export const usersApi = {
     status: "ACTIVE" | "SUSPENDED" | "DELETED" | "PENDING"
   ): Promise<UserDetail> => {
     const res = await apiClient.put<any>(
-      API_ENDPOINTS.USERS.UPDATE_STATUS(userId),
+      API_ENDPOINTS.USERS.UPDATE_STATUS.replace("{id}", userId),
       {
         status,
       }

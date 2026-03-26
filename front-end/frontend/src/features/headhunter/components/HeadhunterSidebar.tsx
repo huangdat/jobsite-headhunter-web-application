@@ -1,20 +1,40 @@
 import { Link } from "react-router-dom";
-import { BiSolidBriefcase, BiSolidFileDoc, BiChart, BiCog, BiHeadphone } from "react-icons/bi";
+import {
+  BiSolidBriefcase,
+  BiSolidFileDoc,
+  BiChart,
+  BiCog,
+  BiHeadphone,
+} from "react-icons/bi";
 
 export function HeadhunterSidebar() {
   const items = [
     { to: "/headhunter/jobs", label: "Tin tuyển dụng", icon: BiSolidBriefcase },
     { to: "/headhunter/cv", label: "Quản lý CV", icon: BiSolidFileDoc },
     { to: "/headhunter/reports", label: "Báo cáo tuyển dụng", icon: BiChart },
-    { to: "/headhunter/services", label: "Dịch vụ của tôi", icon: BiSolidBriefcase },
-    { to: "/headhunter/promotions", label: "Mã ưu đãi", icon: BiSolidBriefcase },
-    { to: "/headhunter/orders", label: "Theo dõi đơn hàng", icon: BiSolidFileDoc },
+    {
+      to: "/headhunter/services",
+      label: "Dịch vụ của tôi",
+      icon: BiSolidBriefcase,
+    },
+    {
+      to: "/headhunter/promotions",
+      label: "Mã ưu đãi",
+      icon: BiSolidBriefcase,
+    },
+    {
+      to: "/headhunter/orders",
+      label: "Theo dõi đơn hàng",
+      icon: BiSolidFileDoc,
+    },
     { to: "/headhunter/activity", label: "Lịch sử hoạt động", icon: BiChart },
     { to: "/settings", label: "Cài đặt tài khoản", icon: BiCog },
     { to: "/support", label: "Hộp thư hỗ trợ", icon: BiHeadphone },
   ];
 
-  const IconComponent = (Icon: any) => <Icon className="w-5 h-5 text-slate-700" />;
+  const IconComponent = (Icon: any) => (
+    <Icon className="w-5 h-5 text-slate-700" />
+  );
 
   return (
     <aside className="w-72 bg-white text-black min-h-screen p-6 shadow-2xl">

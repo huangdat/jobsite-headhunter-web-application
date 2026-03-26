@@ -127,4 +127,3 @@ export const ProfileStrengthIndicator: React.FC<
 };
 
 export default ProfileStrengthIndicator;
-
