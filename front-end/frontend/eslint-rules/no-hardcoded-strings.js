@@ -1,225 +1,124 @@
 /**
- * ESLint No-Hardcoded-Strings Rule v2.2 - PROF-05 WORLD-CLASS (Updated)
- * ✅ PASS: SVG paths/text, console.log*, technical data
- * ✅ BLOCK: toast.* messages, aria-label, UI text, JSX text
+ * ESLint No-Hardcoded-HTML-Attributes Rule v2.0
+ *
+ * ❌ FORBIDDEN:
+ *   <img alt="User avatar" />
+ *   <input placeholder="Enter email" />
+ *   <div aria-label={`OTP digit ${index + 1}`} />   ← template literal
+ *   <button title="Click to save" />
+ *
+ * ✅ ALLOWED:
+ *   <img alt={t("image.userAvatar")} />
+ *   <input placeholder={t("form.emailPlaceholder")} />
+ *   <div aria-label={t("labels.otpDigit", { n: index + 1 })} />
+ *   <button title={t("buttons.save")} />
+ *   <div aria-label={dynamicVariable} />   ← plain identifier OK
  */
 
+const USER_FACING_ATTRS = new Set([
+  "alt",
+  "title",
+  "placeholder",
+  "aria-label",
+  "aria-description",
+  "label",
+]);
+
+// ─── Reliable isTranslated ───────────────────────────────────────────────────
 const isTranslated = (node) => {
-  const parent = node.parent;
-  if (!parent) return false;
+  if (!node) return false;
 
-  // ✅ t("key.path") function call
-  if (parent.type === "CallExpression" && parent.callee?.name === "t") {
-    return true;
-  }
-
-  return false;
-};
-
-const isWhitelisted = (value, node) => {
-  const trimmed = value.trim();
-  if (!trimmed || trimmed.length < 3) return true;
-
-  // ✅ SVG PATHS/TEXT (CRITICAL - M5.5 11.3L9 14.8Z + title/desc)
-  if (/^[MLHVQZCSAT0-9 .,-]+$/i.test(trimmed)) return true;
-  if (/^(path|circle|rect|line|polyline|polygon)$/i.test(trimmed)) return true;
-
-  // ✅ CONSOLE.LOG* WHITELIST (dev-only)
-  const parent = node.parent;
-  if (parent?.type === "CallExpression") {
-    const callee = parent.callee;
-    // Handle both console.log() and other functions
-    if (callee?.name?.match(/^console\.(log|error|warn|info|debug)$/)) {
+  // t("key") or i18n.t("key")
+  if (node.type === "CallExpression") {
+    const callee = node.callee;
+    if (callee?.name === "t") return true;
+    if (callee?.type === "MemberExpression" && callee?.property?.name === "t")
       return true;
-    }
-    // Handle console.error/debug/log (MemberExpression like console.error)
-    if (callee?.type === "MemberExpression" && 
-        callee?.object?.name === "console" &&
-        callee?.property?.name?.match(/^(log|error|warn|info|debug)$/)) {
-      return true;
-    }
   }
 
-  // ✅ TAILWIND CSS (PERFECT WHITELIST)
-  const tailwindPrefixes = [
-    "grid",
-    "flex",
-    "gap",
-    "p-",
-    "m-",
-    "text-",
-    "bg-",
-    "border-",
-    "shadow-",
-    "rounded-",
-    "w-",
-    "h-",
-    "min-",
-    "max-",
-    "sm:",
-    "md:",
-    "lg:",
-    "xl:",
-    "2xl:",
-    "hover:",
-    "focus:",
-    "active:",
-    "disabled:",
-    "dark:",
-    "ring-",
-    "divide-",
-  ];
-  const isTailwind = tailwindPrefixes.some(
-    (prefix) =>
-      trimmed.includes(prefix) ||
-      trimmed.match(
-        new RegExp(
-          `^${prefix.replace(/[-:]/g, "\\$&")}[a-zA-Z0-9\\-\\s:/\\[\\]]*$`
-        )
-      )
-  );
-  if (isTailwind) return true;
+  // Plain variable — assume safe (dynamic value)
+  if (node.type === "Identifier") return true;
 
-  // ✅ HTTP methods + Content-Type (technical)
-  const technical = [
-    "GET",
-    "POST",
-    "PUT",
-    "DELETE",
-    "PATCH",
-    "application/json",
-  ];
-  if (technical.includes(trimmed)) return true;
+  // Conditional/ternary whose both branches are translated
+  if (node.type === "ConditionalExpression") {
+    return isTranslated(node.consequent) && isTranslated(node.alternate);
+  }
 
-  // ✅ HTML attributes (KHÔNG bao gồm aria-label!)
-  const htmlAttrs = [
-    "href",
-    "src",
-    "placeholder",
-    "type",
-    "name",
-    "id",
-    "className",
-    "viewBox",
-    "url",
-    "method",
-  ];
-  if (htmlAttrs.includes(trimmed)) return true;
-
-  // ✅ Component names (PascalCase)
-  if (/^[A-Z][a-zA-Z0-9]*$/.test(trimmed)) return true;
-
-  // ✅ File paths (no spaces)
-  if (/^[a-zA-Z0-9/_\\-]+$/.test(trimmed)) return true;
-
+  // Template literal is NOT considered translated unless it wraps a t() call
+  // (handled as a violation below)
   return false;
 };
 
-// ✅ NEW: BLOCK toast.* hard text & aria-label
-const isBlockedSpecialCase = (value, node) => {
-  const trimmed = value.trim();
-
-  // BLOCK: toast.success/error/info("Hard text")
-  const parent = node.parent;
-  if (parent?.type === "CallExpression") {
-    const callee = parent.callee;
-    if (callee?.name?.match(/^toast\.(success|error|info|warning)$/)) {
-      return true; // Force block toast hard text
-    }
-  }
-
-  // BLOCK: aria-label="User text"
-  if (parent?.type === "JSXAttribute" && parent.name?.name === "aria-label") {
-    return true; // Force block ALL aria-label
-  }
-
+const isWhitelistedValue = (text) => {
+  if (!text || text.length <= 2) return true;
+  if (!/[a-zA-Z]/.test(text)) return true;
+  // Pure lowercase-hyphen  e.g. "form-data" — technical, not UI
+  if (/^[a-z][a-z0-9-]+$/.test(text)) return true;
   return false;
 };
+
+// ─── Rule ────────────────────────────────────────────────────────────────────
 
 export default {
   meta: {
     type: "problem",
     docs: {
       description:
-        "No hardcoded UI strings (SVG safe, toast/aria-label BLOCKED, console PASS)",
+        "Disallow hardcoded strings in user-facing HTML/JSX attributes",
       category: "Best Practices",
       recommended: true,
     },
     fixable: null,
     schema: [],
   },
+
   create(context) {
     return {
-      // ✅ BLOCK JavaScript strings
-      Literal(node) {
-        if (typeof node.value !== "string") return;
-        const value = node.value.trim();
+      JSXAttribute(node) {
+        const attrName = node.name?.name;
+        if (!USER_FACING_ATTRS.has(attrName)) return;
 
-        // SKIP: technical + translated
-        if (isWhitelisted(value, node) || isTranslated(node)) return;
+        const val = node.value;
+        if (!val) return;
 
-        // ✅ NEW: BLOCK toast & aria-label FIRST (highest priority)
-        if (isBlockedSpecialCase(value, node)) {
+        // ── Case 1: aria-label="string literal" ──────────────────────────
+        if (val.type === "Literal" && typeof val.value === "string") {
+          const text = val.value.trim();
+          if (isWhitelistedValue(text)) return;
           context.report({
             node,
-            message: `❌ Hardcoded ${getErrorType(node)}: "${value}". Use i18n: t("key.path") instead`,
+            message: `❌ Hardcoded "${attrName}": "${text}". Use i18n: ${attrName}={t("key")}`,
           });
           return;
         }
 
-        // TRIGGER: UI text (space + Capital + length)
-        if (value.length > 5 && /\s/.test(value) && /[A-Z]/.test(value)) {
-          context.report({
-            node,
-            message: `❌ Hardcoded UI text: "${value}". Use i18n: {t("key.path")} instead`,
-          });
-        }
-      },
+        // ── Case 2: aria-label={expression} ──────────────────────────────
+        if (val.type === "JSXExpressionContainer") {
+          const expr = val.expression;
 
-      // ✅ BLOCK JSX text
-      JSXText(node) {
-        const text = node.value.trim();
-        if (!text || text.length < 5) return;
+          // ✅ translated or variable — OK
+          if (isTranslated(expr)) return;
 
-        if (isWhitelisted(text, node) || isTranslated(node)) return;
-
-        context.report({
-          node,
-          message: `❌ Hardcoded JSX text: "${text}". Use i18n: {t("key.path")} instead`,
-        });
-      },
-
-      // ✅ NEW: BLOCK JSX aria-label attributes
-      JSXAttribute(node) {
-        if (
-          node.name?.name === "aria-label" &&
-          node.value?.type === "JSXExpressionContainer"
-        ) {
-          // ✅ SKIP: if using t() call for i18n
-          const expr = node.value.expression;
-          if (expr.type === "CallExpression" && expr.callee?.name === "t") {
-            return; // Approved: using i18n
+          // ❌ template literal: aria-label={`OTP digit ${index + 1}`}
+          if (expr.type === "TemplateLiteral") {
+            context.report({
+              node,
+              message: `❌ Hardcoded "${attrName}" uses template literal. Use i18n: ${attrName}={t("key", { n: value })}`,
+            });
+            return;
           }
 
-          // ✅ SKIP: if it's a variable (likely dynamic)
-          if (expr.type === "Identifier") {
-            return; // Variable assignment, assume OK
+          // ❌ plain string in expression: aria-label={"Some text"}
+          if (expr.type === "Literal" && typeof expr.value === "string") {
+            const text = expr.value.trim();
+            if (isWhitelistedValue(text)) return;
+            context.report({
+              node,
+              message: `❌ Hardcoded "${attrName}": "${text}". Use i18n: ${attrName}={t("key")}`,
+            });
           }
-
-          context.report({
-            node,
-            message: `❌ Hardcoded aria-label: "${expr.value || "dynamic"}". Use i18n: t("key.path")`,
-          });
         }
       },
     };
   },
 };
-
-// Helper để customize message
-function getErrorType(node) {
-  const parent = node.parent;
-  if (parent?.callee?.name?.match(/^toast\./)) return "toast message";
-  if (parent?.name?.name === "aria-label") return "aria-label";
-  return "string";
-}
