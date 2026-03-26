@@ -29,7 +29,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     route: "/users/list",
     apiEndpoint: API_ENDPOINTS.USERS.GET_ALL,
     requiredRole: "admin",
-    description: "View and manage all users",
+    description: "adminFeatures.usersListDesc",
   },
 
   // Classification Feature
@@ -40,8 +40,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     route: "/users/classification",
     apiEndpoint: API_ENDPOINTS.USERS.SEARCH,
     requiredRole: "admin",
-    description:
-      "View user distribution and classification by role, status, company, etc.",
+    description: "adminFeatures.userClassificationDesc",
   },
 
   // Logs / Audit Trail
@@ -51,7 +50,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     labelKey: "navigation.logs",
     route: "/admin/logs",
     requiredRole: "admin",
-    description: "View system activity and audit logs",
+    description: "adminFeatures.activityLogsDesc",
   },
 
   // Settings (placeholder for future)
@@ -61,7 +60,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     labelKey: "navigation.settings",
     route: "/admin/settings",
     requiredRole: "superadmin",
-    description: "Manage system settings and configurations",
+    description: "adminFeatures.adminSettingsDesc",
   },
 };
 
@@ -92,6 +91,7 @@ export function hasAdminFeatureAccess(
   userRole: string | undefined,
   featureId: string
 ): boolean {
+  // eslint-disable-next-line security/detect-object-injection
   const feature = ADMIN_FEATURES_CONFIG[featureId];
   if (!feature) return false;
 

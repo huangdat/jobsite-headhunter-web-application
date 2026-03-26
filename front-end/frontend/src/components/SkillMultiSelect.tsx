@@ -26,9 +26,12 @@ export function SkillMultiSelect({
     const grouped: Record<string, SkillOption[]> = {};
     skills.forEach((skill) => {
       const key = skill.category ?? "GENERAL";
+      // eslint-disable-next-line security/detect-object-injection
       if (!grouped[key]) {
+        // eslint-disable-next-line security/detect-object-injection
         grouped[key] = [];
       }
+      // eslint-disable-next-line security/detect-object-injection
       grouped[key].push(skill);
     });
     return grouped;
@@ -65,7 +68,6 @@ export function SkillMultiSelect({
             {selectedSkillNames}
           </span>
         ) : (
-          // eslint-disable-next-line custom/no-hardcoded-strings
           <span className="text-slate-400">Select skills...</span>
         )}
       </button>

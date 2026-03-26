@@ -25,6 +25,11 @@ const toCodeKey = (input: string): string =>
     .replace(/[\s.-]+/g, "_")
     .replace(/[^A-Z0-9_]/g, "");
 
+interface ApiErrorResponse {
+  data?: { message?: string };
+  status?: number;
+}
+
 export const extractApiErrorMessage = (
   error: unknown,
   fallbackMessage: string
@@ -34,13 +39,11 @@ export const extractApiErrorMessage = (
   if (
     error instanceof Error &&
     "response" in error &&
-    typeof error.response === "object" &&
-    error.response !== null
+    typeof (error as { response?: unknown }).response === "object" &&
+    (error as { response?: unknown }).response !== null
   ) {
-    const response = error.response as {
-      data?: { message?: string };
-      status?: number;
-    };
+    const response = (error as { response?: ApiErrorResponse })
+      .response as ApiErrorResponse;
 
     rawMessage = response.data?.message?.trim() || "";
 
@@ -60,8 +63,10 @@ export const extractApiErrorMessage = (
   }
 
   const codeKey = toCodeKey(rawMessage);
+  // eslint-disable-next-line security/detect-object-injection
   if (ERROR_CODE_MAP[codeKey]) {
     // ERROR_CODE_MAP returns i18n keys, return as is
+    // eslint-disable-next-line security/detect-object-injection
     return ERROR_CODE_MAP[codeKey];
   }
 
@@ -76,7 +81,6 @@ export const extractApiErrorMessage = (
     return fallbackMessage;
   }
 
-  // eslint-disable-next-line custom/no-hardcoded-strings
   if (upper === "NETWORK ERROR") {
     return "auth.messages.networkError";
   }

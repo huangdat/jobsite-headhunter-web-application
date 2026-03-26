@@ -59,7 +59,7 @@ export function SavedJobsPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [t]);
 
   const handleRemove = async (jobId: number) => {
     setRemovingId(jobId);
@@ -67,11 +67,10 @@ export function SavedJobsPage() {
       await removeSavedJob(jobId);
       setJobs((prev) => prev.filter((job) => job.jobId !== jobId));
       toast.success(t("jobs.saved.jobRemovedSuccess"));
-    } catch {
-      // Provide more diagnostic info to the user if available
-      // and log the full error for debugging.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const err: any = (arguments && arguments[0]) || null;
+    } catch (error) {
+      const err = error as Error & {
+        response?: { data?: { message: string } };
+      };
       console.error("Failed to remove saved job:", err);
       const serverMessage = err?.response?.data?.message || err?.message;
       toast.error(serverMessage || t("jobs.saved.unableToRemoveJob"));
@@ -155,14 +154,14 @@ export function SavedJobsPage() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 variant="outline"
-                className="sm:min-w-[140px]"
+                className="sm:min-w-[calc(140px)]"
                 onClick={() => navigate(`/jobs/${job.jobId}`)}
               >
                 {t("jobs.saved.viewJobButton")}
               </Button>
               <Button
                 variant="ghost"
-                className="sm:min-w-[140px] text-red-600 hover:text-red-700"
+                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700"
                 onClick={() => handleRemove(job.jobId)}
                 disabled={removingId === job.jobId}
               >

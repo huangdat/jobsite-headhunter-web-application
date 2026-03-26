@@ -10,7 +10,7 @@ interface UserFiltersProps {
     role?: string;
     status?: string;
   };
-  onApply: (filters: any) => void;
+  onApply: (filters: Record<string, string | undefined>) => void;
   onClear: () => void;
 }
 

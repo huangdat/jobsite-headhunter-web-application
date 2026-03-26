@@ -137,7 +137,6 @@ export const useLogin = () => {
         setErrors({ email: errorMessage });
       }
 
-      // eslint-disable-next-line custom/no-hardcoded-strings
       console.error("Login detail error:", error);
     } finally {
       setIsLoading(false);
@@ -146,9 +145,11 @@ export const useLogin = () => {
 
   const handleChange =
     (field: keyof LoginFormData) => (value: string | boolean) => {
+       
       setFormData((prev) => ({ ...prev, [field]: value }));
 
       if (field !== "rememberMe" && errors[field]) {
+         
         setErrors((prev) => ({ ...prev, [field]: undefined }));
       }
 

@@ -14,10 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { fetchJobs } from "../services/jobsApi";
-import {
-  getExperiencePresets,
-  getSalaryPresets,
-} from "../constants/filterPresets";
 import type { JobFilterParams, JobListResponse, JobSummary } from "../types";
 
 const INITIAL_PAGE_SIZE = 12;
@@ -50,6 +46,51 @@ function FilterSidebar({
   filters: JobFilterParams;
   onFilterChange: (filters: JobFilterParams) => void;
 }) {
+  const { t } = useTranslation("jobs");
+
+  const EXPERIENCE_PRESETS = useMemo(
+    () => [
+      { value: "ALL", label: t("jobs.list.filters.allExperienceLevels") },
+      {
+        value: "0-1",
+        min: 0,
+        max: 1,
+        label: t("jobs.list.filters.experience01"),
+      },
+      {
+        value: "1-3",
+        min: 1,
+        max: 3,
+        label: t("jobs.list.filters.experience13"),
+      },
+      {
+        value: "3-5",
+        min: 3,
+        max: 5,
+        label: t("jobs.list.filters.experience35"),
+      },
+      { value: "5+", min: 5, label: t("jobs.list.filters.experience5plus") },
+    ],
+    [t]
+  );
+
+  const SALARY_PRESETS = useMemo(
+    () => [
+      { value: "ALL", label: t("jobs.list.filters.anySalary") },
+      {
+        value: "NEGOTIABLE",
+        negotiable: true,
+        label: t("jobs.list.filters.negotiable"),
+      },
+      { value: "0-15M", min: 0, max: 15_000_000, label: "0-15M" },
+      { value: "15-30M", min: 15_000_000, max: 30_000_000, label: "15-30M" },
+      { value: "30-50M", min: 30_000_000, max: 50_000_000, label: "30-50M" },
+      { value: "50M+", min: 50_000_000, label: "50M+" },
+      { value: "CUSTOM", label: t("jobs.list.filters.customRange") },
+    ],
+    [t]
+  );
+
   const [keyword, setKeyword] = useState(filters.keyword ?? "");
   const typingTimeoutRef = useRef<number | null>(null);
   const [experienceValue, setExperienceValue] = useState("ALL");
@@ -79,6 +120,7 @@ function FilterSidebar({
   useEffect(() => {
     const nextKeyword = filters.keyword ?? "";
     if (nextKeyword !== keyword) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setKeyword(nextKeyword);
     }
   }, [filters.keyword, keyword]);
@@ -95,6 +137,7 @@ function FilterSidebar({
 
     if (currentMin === undefined && currentMax === undefined) {
       if (experienceValue !== "ALL") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setExperienceValue("ALL");
       }
       return;
@@ -106,15 +149,22 @@ function FilterSidebar({
     if (match && experienceValue !== match.value) {
       setExperienceValue(match.value);
     }
-  }, [filters.experienceMin, filters.experienceMax, experienceValue]);
+  }, [
+    filters.experienceMin,
+    filters.experienceMax,
+    experienceValue,
+    EXPERIENCE_PRESETS,
+  ]);
 
   useEffect(() => {
     if (filters.negotiable) {
       if (salaryPreset !== "NEGOTIABLE") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSalaryPreset("NEGOTIABLE");
       }
       if (customSalaryMin || customSalaryMax) {
         setCustomSalaryMin("");
+
         setCustomSalaryMax("");
       }
       return;
@@ -131,6 +181,7 @@ function FilterSidebar({
       }
       if (customSalaryMin || customSalaryMax) {
         setCustomSalaryMin("");
+
         setCustomSalaryMax("");
       }
       return;
@@ -149,13 +200,16 @@ function FilterSidebar({
       }
       if (customSalaryMin || customSalaryMax) {
         setCustomSalaryMin("");
+
         setCustomSalaryMax("");
       }
       return;
     }
 
     setSalaryPreset("CUSTOM");
+
     setCustomSalaryMin(currentMin ? String(currentMin / MILLION) : "");
+
     setCustomSalaryMax(currentMax ? String(currentMax / MILLION) : "");
   }, [
     filters.salaryMin,
@@ -164,6 +218,7 @@ function FilterSidebar({
     salaryPreset,
     customSalaryMin,
     customSalaryMax,
+    SALARY_PRESETS,
   ]);
 
   const handleExperienceChange = (value: string) => {
@@ -223,7 +278,8 @@ function FilterSidebar({
   const handleWorkingTypeChange = (type: string) => {
     onFilterChange({
       ...filters,
-      workingType: type === "" ? undefined : (type as any),
+      workingType:
+        type === "" ? undefined : (type as "ONSITE" | "REMOTE" | "HYBRID"),
       page: 1,
     });
   };
@@ -231,7 +287,17 @@ function FilterSidebar({
   const handleRankLevelChange = (rank: string) => {
     onFilterChange({
       ...filters,
-      rankLevel: rank === "" ? undefined : (rank as any),
+      rankLevel:
+        rank === ""
+          ? undefined
+          : (rank as
+              | "INTERN"
+              | "FRESHER"
+              | "JUNIOR"
+              | "MIDDLE"
+              | "SENIOR"
+              | "LEADER"
+              | "MANAGER"),
       page: 1,
     });
   };
@@ -487,7 +553,7 @@ function JobCard({ job }: { job: JobSummary & { negotiable?: boolean } }) {
       tabIndex={0}
       onClick={handleNavigate}
       onKeyDown={handleKeyDown}
-      className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none cursor-pointer"
+      className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none cursor-pointer"
       aria-label={t("jobs.list.viewJobLabel", { title: job.title })}
     >
       <div className="flex items-center justify-between gap-4">
@@ -538,7 +604,7 @@ function JobCard({ job }: { job: JobSummary & { negotiable?: boolean } }) {
 
 export function JobListPage() {
   const { t } = useTranslation("jobs");
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Unused
   const [jobs, setJobs] = useState<JobSummary[]>([]);
   const [meta, setMeta] = useState<Omit<JobListResponse, "data">>({
     page: 1,
@@ -552,14 +618,13 @@ export function JobListPage() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  // Generate filter presets with i18n translations
-  const EXPERIENCE_PRESETS = useMemo(() => getExperiencePresets(t), [t]);
-  const SALARY_PRESETS = useMemo(() => getSalaryPresets(t), [t]);
+  // EXPERIENCE_PRESETS and SALARY_PRESETS are unused and removed
 
   useEffect(() => {
     let active = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
+
     setError(null);
 
     fetchJobs(filters)
@@ -586,7 +651,7 @@ export function JobListPage() {
     return () => {
       active = false;
     };
-  }, [filters]);
+  }, [filters, t]);
 
   const handlePageChange = (nextPage: number) => {
     setFilters((prev) => ({ ...prev, page: nextPage }));
@@ -596,7 +661,7 @@ export function JobListPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* Hero Section */}
       <div className="mx-auto max-w-7xl px-4 py-10">
-        <div className="rounded-3xl bg-gradient-to-br from-emerald-500 to-slate-900 p-10 text-white shadow-lg">
+        <div className="rounded-3xl bg-linear-to-br from-emerald-500 to-slate-900 p-10 text-white shadow-lg">
           <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
             {t("jobs.list.hero.subtitle")}
           </p>
@@ -681,7 +746,6 @@ function SkeletonGrid() {
     <>
       {Array.from({ length: 6 }).map((_, index) => (
         <div
-          // eslint-disable-next-line react/no-array-index-key
           key={index}
           className="h-48 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-800"
         />

@@ -27,7 +27,7 @@ export function TopCompanies() {
     };
 
     fetchCompanies();
-  }, []);
+  }, [t]);
 
   return (
     <section id="top-companies" className="bg-muted py-20">

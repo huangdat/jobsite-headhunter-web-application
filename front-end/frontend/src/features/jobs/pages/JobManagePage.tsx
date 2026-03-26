@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -26,7 +26,7 @@ export function JobManagePage() {
 
   console.log("[JobManagePage] Current user:", user);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
     try {
       console.log("[JobManagePage] Loading with user ID:", user?.id);
@@ -39,12 +39,12 @@ export function JobManagePage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [t, user?.id]);
 
   useEffect(() => {
     // Load jobs after `user` is available so returned jobs include headhunter-specific fields
     if (user?.id) void load();
-  }, [user?.id]);
+  }, [user?.id, load]);
 
   const handleEdit = (id: number) => navigate(`/headhunter/jobs/${id}/edit`);
 
@@ -110,8 +110,7 @@ export function JobManagePage() {
   };
 
   const handleHide = async (id: number) => {
-    if (!confirm(t("jobs.messages.toggleVisibilityConfirm")))
-      return;
+    if (!confirm(t("jobs.messages.toggleVisibilityConfirm"))) return;
     setProcessingId(id);
     try {
       await deleteJobSoft(id);
@@ -155,14 +154,19 @@ export function JobManagePage() {
                   <div
                     className={`text-xs px-2 py-0.5 rounded ${job.visible === false ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
                   >
-                    {job.visible === false ? t("jobs.manage.hidden") : t("jobs.manage.visible")}
+                    {job.visible === false
+                      ? t("jobs.manage.hidden")
+                      : t("jobs.manage.visible")}
                   </div>
                 </div>
                 <div className="text-sm text-slate-500">
                   {job.companyName ?? ""} • {job.location}
                 </div>
                 <div className="text-sm text-slate-400">
-                  {t("jobs.manage.statusDeadline", { status: job.status, deadline: job.deadline ?? "—" })}
+                  {t("jobs.manage.statusDeadline", {
+                    status: job.status,
+                    deadline: job.deadline ?? "—",
+                  })}
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -189,7 +193,9 @@ export function JobManagePage() {
                           disabled={processingId === job.id}
                           className="bg-emerald-500 text-white hover:bg-emerald-600"
                         >
-                          {processingId === job.id ? t("jobs.manage.updatingButton") : t("jobs.manage.openButton")}
+                          {processingId === job.id
+                            ? t("jobs.manage.updatingButton")
+                            : t("jobs.manage.openButton")}
                         </Button>
                       )}
                       {job.status !== "CLOSED" && (
@@ -199,7 +205,9 @@ export function JobManagePage() {
                           disabled={processingId === job.id}
                           className="bg-red-500 text-white hover:bg-red-600"
                         >
-                          {processingId === job.id ? t("jobs.manage.updatingButton") : t("jobs.manage.closeButton")}}
+                          {processingId === job.id
+                            ? t("jobs.manage.updatingButton")
+                            : t("jobs.manage.closeButton")}
                         </Button>
                       )}
                     </div>

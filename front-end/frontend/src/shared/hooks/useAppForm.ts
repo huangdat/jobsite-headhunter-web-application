@@ -5,7 +5,6 @@ import type {
   UseFormProps,
   FieldValues,
   Path,
-  FieldErrors,
   UseFormHandleSubmit,
 } from "react-hook-form";
 

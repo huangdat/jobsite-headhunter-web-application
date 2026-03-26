@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import ErrorBoundary from "@/components/ErrorBoundary";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -95,7 +94,7 @@ export function JobEditPage() {
     return () => {
       active = false;
     };
-  }, [id, reset]);
+  }, [id, reset, t]);
 
   const selectedSkillIds = watch("skillIds") ?? [];
 
@@ -128,7 +127,7 @@ export function JobEditPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
-      <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
+      <div className="rounded-3xl bg-linear-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
         <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
           {t("edit.pageTitle")}
         </p>

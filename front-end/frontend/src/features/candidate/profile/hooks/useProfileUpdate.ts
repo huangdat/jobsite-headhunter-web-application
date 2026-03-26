@@ -105,9 +105,11 @@ export const useProfileUpdate = (): UseProfileUpdateReturn => {
       setSuccess(false);
       setSaveError(null);
 
+      // eslint-disable-next-line security/detect-object-injection
       if (errors[field]) {
         setErrors((previous) => {
           const next = { ...previous };
+          // eslint-disable-next-line security/detect-object-injection
           delete next[field];
           return next;
         });

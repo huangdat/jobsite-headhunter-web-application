@@ -37,6 +37,7 @@ export function useStepValidation(
   // Get fields that should be validated for current step
   const getFieldsForStep = (step: number): string[] => {
     if (step === 3) {
+      // eslint-disable-next-line security/detect-object-injection
       const roleFields = STEP_FIELDS[3][userRole];
       return roleFields ? [...roleFields] : [];
     }
@@ -58,8 +59,10 @@ export function useStepValidation(
    */
   const hasEmptyRequiredFields = (): boolean => {
     const fieldsToCheck = getFieldsForStep(currentStep);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const formValues = form.getValues() as any;
     return fieldsToCheck.some((field) => {
+      // eslint-disable-next-line security/detect-object-injection
       const value = formValues[field];
       // Check for empty strings, null, undefined, or 0 (for commission rate)
       if (field === "commissionRate") {

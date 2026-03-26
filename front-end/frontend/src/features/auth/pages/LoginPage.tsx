@@ -90,7 +90,7 @@ export function LoginPage() {
       toast.info(t("messages.socialAccountFound"));
       navigate("/select-role");
     },
-    [navigate, signIn]
+    [navigate, signIn, t]
   );
 
   const handleGoogleClick = () => {
@@ -169,7 +169,7 @@ export function LoginPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [t]);
 
   // Handle OAuth callback for Google (hash fragment) and LinkedIn (query params).
   useEffect(() => {
@@ -248,7 +248,7 @@ export function LoginPage() {
     };
 
     void runOAuthCallback();
-  }, [handleSocialLoginSuccess]);
+  }, [handleSocialLoginSuccess, t]);
 
   useEffect(() => {
     if (hasHandledState.current) return;

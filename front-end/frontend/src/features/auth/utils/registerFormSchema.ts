@@ -81,7 +81,7 @@ export function createSchemaWithI18n(t: (key: string) => string) {
       .test(
         "fileSize",
         t("validation.fields.avatarFileSizeExceeded"),
-        (file: any) => {
+        (file: File | null | undefined) => {
           if (!file) return true;
           return file.size <= 5 * 1024 * 1024; // 5MB
         }
@@ -89,7 +89,7 @@ export function createSchemaWithI18n(t: (key: string) => string) {
       .test(
         "fileType",
         t("validation.fields.avatarFileTypeInvalid"),
-        (file: any) => {
+        (file: File | null | undefined) => {
           if (!file) return true;
           return /^image\/(jpg|jpeg|png|gif|webp)$/.test(file.type);
         }
@@ -114,20 +114,20 @@ export function createSchemaWithI18n(t: (key: string) => string) {
     currentTitle: yup
       .string()
       .nullable()
-      .transform((value: any) => value || undefined)
+      .transform((value: string | null | undefined) => value || undefined)
       .transform(sanitizeInput),
 
     bio: yup
       .string()
       .nullable()
       .max(500, t("validation.fields.bioMax"))
-      .transform((value: any) => value || undefined)
+      .transform((value: string | null | undefined) => value || undefined)
       .transform(sanitizeInput),
 
     city: yup
       .string()
       .nullable()
-      .transform((value: any) => value || undefined)
+      .transform((value: string | null | undefined) => value || undefined)
       .transform(sanitizeInput),
 
     yearsOfExperience: yup
@@ -178,13 +178,13 @@ export function createSchemaWithI18n(t: (key: string) => string) {
       .string()
       .nullable()
       .url(t("validation.fields.websiteUrlInvalid"))
-      .transform((value: any) => value || undefined)
+      .transform((value: string | null | undefined) => value || undefined)
       .transform(sanitizeInput),
 
     companyScale: yup
       .string()
       .nullable()
-      .transform((value: any) => value || undefined)
+      .transform((value: string | null | undefined) => value || undefined)
       .transform(sanitizeInput),
   });
 
@@ -260,6 +260,7 @@ export function getRegisterSchema(role: RegistrationUserRole) {
       "validation.fields.agreeTermsRequired":
         "validation.fields.agreeTermsRequired",
     };
+    // eslint-disable-next-line security/detect-object-injection
     return messages[key] || key;
   };
 

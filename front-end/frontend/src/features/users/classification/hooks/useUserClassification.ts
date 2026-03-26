@@ -73,7 +73,8 @@ export const useUserClassification = (): UseUserClassificationReturn => {
 
       setAllUsers(response.items);
     } catch (err) {
-      const status = (err as any)?.response?.status;
+      const status = (err as Error & { response?: { status: number } })
+        ?.response?.status;
       let errorMessage = t("messages.failedToLoadUsers");
 
       // 403 Forbidden - User doesn't have permission
@@ -100,7 +101,7 @@ export const useUserClassification = (): UseUserClassificationReturn => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   /**
    * Reclassify users when groupBy changes or users are fetched
@@ -129,12 +130,11 @@ export const useUserClassification = (): UseUserClassificationReturn => {
   }, [allUsers, groupBy]);
 
   /**
-   * Fetch users on mount only (infinite loop fix: removed fetchAllUsers from dependencies)
-   * This ensures the API is called only once when component mounts, not repeatedly
+   * Fetch users on mount and when fetchAllUsers changes
    */
   useEffect(() => {
     fetchAllUsers();
-  }, []);
+  }, [fetchAllUsers]);
 
   /**
    * Reclassify when groupBy or allUsers changes

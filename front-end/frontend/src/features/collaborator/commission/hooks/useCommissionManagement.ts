@@ -74,7 +74,7 @@ export function useCommissionManagement() {
     };
 
     fetchData();
-  }, []);
+  }, [t]);
 
   // Update form field
   const updateField = useCallback(
@@ -122,7 +122,7 @@ export function useCommissionManagement() {
         saving: false,
       }));
     }
-  }, [state.formData]);
+  }, [state.formData, t]);
 
   // Clear error
   const clearError = useCallback(() => {
@@ -130,35 +130,38 @@ export function useCommissionManagement() {
   }, []);
 
   // Request payout
-  const requestPayout = useCallback(async (amount: number) => {
-    try {
-      setState((prev) => ({ ...prev, saving: true, error: null }));
+  const requestPayout = useCallback(
+    async (amount: number) => {
+      try {
+        setState((prev) => ({ ...prev, saving: true, error: null }));
 
-      const result = await commissionApi.requestPayout(amount);
+        const result = await commissionApi.requestPayout(amount);
 
-      setState((prev) => ({
-        ...prev,
-        saving: false,
-        success: true,
-      }));
+        setState((prev) => ({
+          ...prev,
+          saving: false,
+          success: true,
+        }));
 
-      // Refresh stats after payout
-      const updatedStats = await commissionApi.getCommissionStats();
-      setState((prev) => ({ ...prev, stats: updatedStats }));
+        // Refresh stats after payout
+        const updatedStats = await commissionApi.getCommissionStats();
+        setState((prev) => ({ ...prev, stats: updatedStats }));
 
-      return result;
-    } catch (err) {
-      setState((prev) => ({
-        ...prev,
-        error:
-          err instanceof Error
-            ? err.message
-            : t("messages.failedToRequestPayout"),
-        saving: false,
-      }));
-      throw err;
-    }
-  }, []);
+        return result;
+      } catch (err) {
+        setState((prev) => ({
+          ...prev,
+          error:
+            err instanceof Error
+              ? err.message
+              : t("messages.failedToRequestPayout"),
+          saving: false,
+        }));
+        throw err;
+      }
+    },
+    [t]
+  );
 
   return {
     ...state,

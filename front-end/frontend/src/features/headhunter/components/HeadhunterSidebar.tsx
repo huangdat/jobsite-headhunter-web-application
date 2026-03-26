@@ -66,7 +66,7 @@ export function HeadhunterSidebar() {
         <div className="mt-4">
           <Link
             to="/headhunter/jobs/new"
-            className="inline-block w-full text-center bg-[var(--brand-primary)] text-black py-2 rounded-lg font-semibold hover:bg-[var(--brand-hover)] transition-colors"
+            className="inline-block w-full text-center bg-brand-primary text-black py-2 rounded-lg font-semibold hover:bg-brand-hover transition-colors"
           >
             {t("headhunter.postNewJob")}
           </Link>
@@ -78,7 +78,7 @@ export function HeadhunterSidebar() {
           <Link
             key={it.to}
             to={it.to}
-            className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-900 border border-transparent hover:border-l-4 hover:border-[var(--brand-primary)] hover:shadow-md transition-all duration-200"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-900 border border-transparent hover:border-l-4 hover:border-brand-primary] hover:shadow-md transition-all duration-200"
           >
             {it.icon && IconComponent(it.icon)}
             <span>{it.label}</span>

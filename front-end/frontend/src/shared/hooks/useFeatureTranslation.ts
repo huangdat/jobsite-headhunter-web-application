@@ -40,7 +40,8 @@ export const useAuthTranslation = () => {
   const { t, i18n, changeLanguage, currentLanguage } = useAppTranslation();
 
   return {
-    t: (key: string) => t(`auth.${key}`),
+    t: (key: string, interpolation?: Record<string, string | number>) =>
+      t(`auth.${key}`, interpolation),
     i18n,
     changeLanguage,
     currentLanguage,

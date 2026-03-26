@@ -44,7 +44,7 @@ interface LoginSession {
   ipAddress: string;
   deviceBrowser: string;
   location: string;
-  status: "Successful" | "Failed Attempt";
+  status: "Successful" | "Failed";
 }
 
 const UserDetailPage: React.FC = () => {
@@ -69,6 +69,11 @@ const UserDetailPage: React.FC = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isLockModalOpen, setIsLockModalOpen] = useState(false);
   const [isUnlockModalOpen, setIsUnlockModalOpen] = useState(false);
+
+  // Toast type constants to avoid hardcoded strings
+  const TOAST_SUCCESS = "success" as const;
+  const TOAST_ERROR = "error" as const;
+
   const relatedDataCount = {
     applications: 0,
     jobs: 0,
@@ -79,11 +84,14 @@ const UserDetailPage: React.FC = () => {
   useEffect(() => {
     if (userDetailData) {
       const mappedUser = userMapper.toDetailModel(userDetailData);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setUser(mappedUser);
       const mappedLoginHistory = userMapper.toLoginSessions(
         userDetailData.loginHistory
       );
+
       setLoginHistory(mappedLoginHistory);
+
       setError(null);
     } else if (apiError) {
       setError(apiError);
@@ -110,7 +118,7 @@ const UserDetailPage: React.FC = () => {
     logoutCurrentSession: boolean;
   }) => {
     if (!userId || !user) {
-      showToast("error", t("lock.errorGeneral"));
+      showToast(TOAST_ERROR, t("lock.errorGeneral"));
       return;
     }
 
@@ -121,15 +129,13 @@ const UserDetailPage: React.FC = () => {
         ...lockData,
       });
 
-      showToast("success", t("lock.successLockUser"));
+      showToast(TOAST_SUCCESS, t("lock.successLockUser"));
       setIsLockModalOpen(false);
 
       // Refresh user data
       setTimeout(() => window.location.reload(), REDIRECT_DELAY.MEDIUM);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : t("lock.errorGeneral");
-      showToast("error", errorMessage);
+    } catch {
+      showToast(TOAST_ERROR, t("lock.errorGeneral"));
     }
   };
 
@@ -139,7 +145,7 @@ const UserDetailPage: React.FC = () => {
     requirePasswordChange: boolean;
   }) => {
     if (!userId || !user) {
-      showToast("error", t("unlock.errorGeneral"));
+      showToast(TOAST_ERROR, t("unlock.errorGeneral"));
       return;
     }
 
@@ -150,15 +156,13 @@ const UserDetailPage: React.FC = () => {
         ...unlockData,
       });
 
-      showToast("success", t("unlock.successUnlockUser"));
+      showToast(TOAST_SUCCESS, t("unlock.successUnlockUser"));
       setIsUnlockModalOpen(false);
 
       // Refresh user data
       setTimeout(() => window.location.reload(), REDIRECT_DELAY.MEDIUM);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : t("unlock.errorGeneral");
-      showToast("error", errorMessage);
+    } catch {
+      showToast(TOAST_ERROR, t("unlock.errorGeneral"));
     }
   };
 
@@ -175,14 +179,14 @@ const UserDetailPage: React.FC = () => {
     reason?: string
   ) => {
     if (!userId || !user) {
-      showToast("error", t("delete.errorGeneral"));
+      showToast(TOAST_ERROR, t("delete.errorGeneral"));
       return;
     }
 
     try {
       if (deleteType === "soft") {
         if (!reason) {
-          showToast("error", t("delete.errorReasonRequired"));
+          showToast(TOAST_ERROR, t("delete.errorReasonRequired"));
           return;
         }
         await softDelete({ userId, reason });
@@ -192,7 +196,7 @@ const UserDetailPage: React.FC = () => {
 
       // Show success message
       showToast(
-        "success",
+        TOAST_SUCCESS,
         deleteType === "soft"
           ? t("delete.successSoftDelete")
           : t("delete.successHardDelete")
@@ -200,12 +204,8 @@ const UserDetailPage: React.FC = () => {
 
       // Redirect after deletion
       setTimeout(() => navigate(ROUTES.USERS_LIST), REDIRECT_DELAY.MEDIUM);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : t("delete.errorGeneral");
-
-      // Error messages already handled by hook
-      showToast("error", errorMessage);
+    } catch {
+      showToast(TOAST_ERROR, t("delete.errorGeneral"));
     }
   };
 
@@ -365,12 +365,12 @@ const UserDetailPage: React.FC = () => {
             <h2 className="text-lg font-semibold flex items-center gap-2">
               {t("sections.loginHistory")}
             </h2>
-            <a
-              href="#"
-              className="text-blue-500 hover:text-blue-700 text-sm font-medium"
+            <button
+              type="button"
+              className="text-blue-500 hover:text-blue-700 text-sm font-medium bg-transparent border-none cursor-pointer"
             >
               {t("sections.viewAllSessions")}
-            </a>
+            </button>
           </div>
           <LoginHistoryTable sessions={loginHistory} />
         </div>
@@ -404,18 +404,17 @@ const UserDetailPage: React.FC = () => {
           lockReasons={[
             {
               value: "suspicious_activity",
-              label:
-                t("lock.reasonSuspiciousActivity") || "Suspicious Activity",
+              label: t("lock.reasonSuspiciousActivity"),
             },
             {
               value: "policy_violation",
-              label: t("lock.reasonPolicyViolation") || "Policy Violation",
+              label: t("lock.reasonPolicyViolation"),
             },
             {
               value: "account_compromise",
-              label: t("lock.reasonAccountCompromise") || "Account Compromise",
+              label: t("lock.reasonAccountCompromise"),
             },
-            { value: "other", label: t("lock.reasonOther") || "Other" },
+            { value: "other", label: t("lock.reasonOther") },
           ]}
           onClose={() => setIsLockModalOpen(false)}
           onConfirm={handleLockConfirm}

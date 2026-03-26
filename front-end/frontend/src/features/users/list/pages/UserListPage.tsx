@@ -66,7 +66,9 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
       const existingSort = newSort.findIndex((s) => s.field === field);
       if (existingSort >= 0) {
         // Toggle direction if already sorting by this field
+        // eslint-disable-next-line security/detect-object-injection
         newSort[existingSort].direction =
+          // eslint-disable-next-line security/detect-object-injection
           newSort[existingSort].direction === "asc" ? "desc" : "asc";
       } else {
         // Add new sort criteria

@@ -314,7 +314,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
 
             <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
               <p className="text-blue-900 dark:text-blue-200 font-medium">
-                {t("lock.otherReasonDesc")
+                {t("lock.otherReasonDesc")}
               </p>
               <p className="text-blue-800 dark:text-blue-300 text-sm mt-2">
                 {t("lock.userInfo")}:{" "}

@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef, useRef } from "react";
+import { useEffect, forwardRef, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -15,14 +15,7 @@ interface RichTextEditorProps {
 
 const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
   (
-    {
-      value,
-      onChange,
-      // eslint-disable-next-line custom/no-hardcoded-strings
-      placeholder: _placeholder = "Enter text...",
-      disabled = false,
-      className,
-    },
+    { value, onChange, placeholder: _placeholder, disabled = false, className },
     ref
   ) => {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -113,18 +106,17 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
             placeholder={_placeholder}
             disabled={disabled}
             className={cn(
-              "w-1/2 p-3 min-h-[200px] resize-y rounded border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none",
+              "w-1/2 p-3 min-h-50 resize-y rounded border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none",
               disabled && "opacity-50 cursor-not-allowed"
             )}
           />
 
-          <div className="w-1/2 p-3 min-h-[200px] overflow-auto bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 prose dark:prose-invert">
+          <div className="w-1/2 p-3 min-h-50 overflow-auto bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 prose dark:prose-invert">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeSanitize]}
             >
-              {" "}
-              {value || ""}{" "}
+              {value || ""}
             </ReactMarkdown>
           </div>
         </div>

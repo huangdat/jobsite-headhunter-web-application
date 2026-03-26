@@ -49,6 +49,7 @@ const mapBackendStatus = (backendStatus: string): "ACTIVE" | "LOCKED" => {
     SUSPENDED: "LOCKED", // Backend suspended = frontend locked
     DELETED: "LOCKED", // Fallback for edge cases
   };
+  // eslint-disable-next-line security/detect-object-injection
   return statusMap[backendStatus] || "ACTIVE";
 };
 

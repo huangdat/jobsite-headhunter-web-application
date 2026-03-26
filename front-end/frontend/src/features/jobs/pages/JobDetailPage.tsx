@@ -59,7 +59,7 @@ export function JobDetailPage() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [id]);
+  }, [id, t]);
 
   useEffect(() => {
     if (!id || !isAuthenticated) {

@@ -108,7 +108,7 @@ export const useBusinessVerification = (
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [t]);
 
   /**
    * Submit profile for verification
