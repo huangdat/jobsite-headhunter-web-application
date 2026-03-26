@@ -56,8 +56,7 @@ export const useLockUser = () => {
       // Check permission constraints (AC3)
       const currentUserId = localStorage.getItem(STORAGE_KEYS.USER_ID);
       if (currentUserId === userId) {
-        const errorMsg =
-          t("lock.errorCannotLockYourself") || "Cannot lock your own account";
+        const errorMsg = t("lock.errorCannotLockYourself");
         setError(errorMsg);
         throw new Error("CANNOT_LOCK_YOURSELF");
       }
@@ -82,29 +81,24 @@ export const useLockUser = () => {
       return { success: true, auditLog };
     } catch (err) {
       const errorResponse = err as LockErrorResponse | Error;
-      let errorMessage = t("lock.errorLockFailed") || "Failed to lock user";
+      let errorMessage =
+        t("lock.errorLockFailed") || t("messages.failedToLockUser");
 
       // Handle specific error codes (AC3)
       if ("code" in errorResponse) {
         if (errorResponse.code === "CANNOT_LOCK_YOURSELF") {
-          errorMessage =
-            t("lock.errorCannotLockYourself") || "Cannot lock your own account";
+          errorMessage = t("lock.errorCannotLockYourself");
         } else if (errorResponse.code === "INSUFFICIENT_PERMISSION") {
-          errorMessage =
-            t("lock.errorInsufficientPermission") ||
-            "Insufficient permission to lock this user";
+          errorMessage = t("lock.errorInsufficientPermission");
         }
       } else if (errorResponse instanceof Error) {
         if (
           errorResponse.message.includes("409") ||
           errorResponse.message.includes("CANNOT_LOCK_YOURSELF")
         ) {
-          errorMessage =
-            t("lock.errorCannotLockYourself") || "Cannot lock your own account";
+          errorMessage = t("lock.errorCannotLockYourself");
         } else if (errorResponse.message.includes("INSUFFICIENT_PERMISSION")) {
-          errorMessage =
-            t("lock.errorInsufficientPermission") ||
-            "Insufficient permission to lock this user";
+          errorMessage = t("lock.errorInsufficientPermission");
         } else {
           errorMessage = errorResponse.message;
         }

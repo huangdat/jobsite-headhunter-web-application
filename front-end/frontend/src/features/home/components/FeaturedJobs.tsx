@@ -26,7 +26,7 @@ export function FeaturedJobs() {
     };
 
     fetchJobs();
-  }, []);
+  }, [t]);
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
       <h2 className="text-2xl font-bold mb-10">{t("featuredJobs.title")}</h2>

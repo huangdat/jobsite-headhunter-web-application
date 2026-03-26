@@ -60,6 +60,7 @@ const getRoleConfig = (role: RegistrationUserRole) => {
         t("pages.register.headhunter.subtitle"),
     },
   };
+  // eslint-disable-next-line security/detect-object-injection
   return configs[role];
 };
 
@@ -104,7 +105,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const getSchema = useMemo(() => createSchemaWithI18n(t), [t]);
 
   const form = useAppForm<RegisterFormData>({
-    resolver: yupResolver(getSchema(userRole) as any),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: yupResolver(getSchema(userRole)) as any,
     defaultValues,
   });
 
@@ -140,7 +142,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
             message: t("validation.emailExists"),
           });
         }
-      } catch (error) {
+      } catch {
         setError("email", {
           type: "custom",
           message: t("validation.emailCheckFailed"),
@@ -173,7 +175,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
             message: t("validation.usernameExists"),
           });
         }
-      } catch (error) {
+      } catch {
         setError("username", {
           type: "custom",
           message: t("validation.usernameCheckFailed"),
@@ -224,7 +226,9 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
               ? ["taxCode"]
               : ["commissionRate"];
 
-    const result = await trigger(fieldsToValidate as any);
+    const result = await trigger(
+      fieldsToValidate as unknown as Parameters<typeof trigger>[0]
+    );
     return result;
   };
 
@@ -276,7 +280,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         sendOtpSignup({ email: data.email, tokenType: "SIGN_UP" }),
         new Promise<never>((_, reject) =>
           setTimeout(
-            () => reject(new Error("Request timed out after 15s")),
+            () => reject(new Error(t("auth.messages.requestTimedOut"))),
             15000
           )
         ),

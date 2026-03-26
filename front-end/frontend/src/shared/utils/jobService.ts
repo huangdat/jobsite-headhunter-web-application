@@ -44,7 +44,10 @@ function mapJobRespToJob(jobResp: JobResp): Job {
     salary,
     location: jobResp.city || "Unknown Location",
     workingType: jobResp.workingType,
-    match: jobResp.matchScore !== undefined && jobResp.matchScore !== null ? `${jobResp.matchScore}%` : undefined,
+    match:
+      jobResp.matchScore !== undefined && jobResp.matchScore !== null
+        ? `${jobResp.matchScore}%`
+        : undefined,
   };
 }
 
@@ -62,7 +65,11 @@ export async function getRecommendedJobs(): Promise<{
     );
     const data = response.data.result;
     const mappedJobs = data.jobs.map(mapJobRespToJob);
-    return { jobs: mappedJobs, message: data.message, fallbackApplied: data.fallbackApplied };
+    return {
+      jobs: mappedJobs,
+      message: data.message,
+      fallbackApplied: data.fallbackApplied,
+    };
   } catch (error: unknown) {
     // If access forbidden (e.g., non-candidate), fallback to random latest jobs
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,7 +77,11 @@ export async function getRecommendedJobs(): Promise<{
     if (err && err.response && err.response.status === 403) {
       try {
         const fallback = await getRandomLatestJobs();
-        return { jobs: fallback.jobs, message: "Access denied. Showing latest jobs.", fallbackApplied: true };
+        return {
+          jobs: fallback.jobs,
+          message: "Access denied. Showing latest jobs.",
+          fallbackApplied: true,
+        };
       } catch (fallbackErr) {
         console.error("Error fetching fallback latest jobs:", fallbackErr);
         throw error;

@@ -1,0 +1,7 @@
+{
+  "usersListDesc": "View and manage all users",
+  "userClassificationDesc": "View user distribution and classification by role, status, company, etc.",
+  "activityLogsDesc": "View system activity and audit logs",
+  "adminSettingsDesc": "Manage system settings and configurations",
+  "adminLabel": "Admin"
+}

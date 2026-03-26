@@ -22,7 +22,7 @@
   padding: 0.25rem 0.3rem;
   border-radius: 0.25rem;
   font-size: 0.85em;
-  font-family: 'IBMPlexMono', monospace;
+  font-family: "IBMPlexMono", monospace;
 
   &::before,
   &::after {
@@ -34,7 +34,7 @@
   background: #0d0d0d;
   border-radius: 0.5rem;
   color: #fff;
-  font-family: 'JetBrainsMono', monospace;
+  font-family: "JetBrainsMono", monospace;
   margin: 1rem 0;
   padding: 1rem;
   overflow-x: auto;
@@ -137,7 +137,7 @@
 
     &::after {
       background-color: rgba(200, 200, 255, 0.4);
-      content: '';
+      content: "";
       left: 0;
       right: 0;
       top: 0;

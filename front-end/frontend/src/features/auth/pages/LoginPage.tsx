@@ -18,6 +18,7 @@ import type { LoginResult, SocialAuthResponse } from "@/features/auth/types";
 
 import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { OAUTH_URLS } from "@/lib/constants";
 import { HiOutlineArrowRight } from "react-icons/hi";
 
 const SOCIAL_STATE_KEY = "socialOAuthState";
@@ -89,7 +90,7 @@ export function LoginPage() {
       toast.info(t("messages.socialAccountFound"));
       navigate("/select-role");
     },
-    [navigate, signIn]
+    [navigate, signIn, t]
   );
 
   const handleGoogleClick = () => {
@@ -116,9 +117,7 @@ export function LoginPage() {
     });
 
     setLoadingProvider("google");
-    window.location.assign(
-      `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`
-    );
+    window.location.assign(`${OAUTH_URLS.GOOGLE_AUTH}?${params.toString()}`);
   };
 
   const handleLinkedInClick = () => {
@@ -142,9 +141,7 @@ export function LoginPage() {
     });
 
     setLoadingProvider("linkedin");
-    window.location.assign(
-      `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`
-    );
+    window.location.assign(`${OAUTH_URLS.LINKEDIN_AUTH}?${params.toString()}`);
   };
 
   // Load social provider configuration once.
@@ -172,7 +169,7 @@ export function LoginPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [t]);
 
   // Handle OAuth callback for Google (hash fragment) and LinkedIn (query params).
   useEffect(() => {
@@ -216,7 +213,7 @@ export function LoginPage() {
       try {
         if (linkedInCode) {
           if (provider !== "linkedin" || linkedInState !== expectedState) {
-            throw new Error("Invalid LinkedIn callback state");
+            throw new Error(t("auth.messages.invalidLinkedInCallbackState"));
           }
 
           setLoadingProvider("linkedin");
@@ -229,7 +226,7 @@ export function LoginPage() {
 
         if (googleIdToken) {
           if (provider !== "google" || googleState !== expectedState) {
-            throw new Error("Invalid Google callback state");
+            throw new Error(t("auth.messages.invalidGoogleCallbackState"));
           }
 
           setLoadingProvider("google");
@@ -251,7 +248,7 @@ export function LoginPage() {
     };
 
     void runOAuthCallback();
-  }, [handleSocialLoginSuccess]);
+  }, [handleSocialLoginSuccess, t]);
 
   useEffect(() => {
     if (hasHandledState.current) return;

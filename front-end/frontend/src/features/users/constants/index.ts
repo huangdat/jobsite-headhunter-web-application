@@ -1,23 +1,9 @@
 /**
  * API Endpoints Constants
- */
-/**
- * API Endpoints Constants
  *
- * Sort format (for searchUsers):
- *   - Single: "name,asc"
- *   - Multiple: "name,asc;createdAt,desc"
- *   - Separator: semicolon (;)
+ * Import from main lib/constants for consistency
  */
-export const API_ENDPOINTS = {
-  USERS: {
-    BASE: "/api/account",
-    GET_ALL: "/api/account",
-    GET_BY_ID: (id: string) => `/api/account/${id}`,
-    SEARCH: "/api/account/search",
-    UPDATE_STATUS: (id: string) => `/api/account/status/${id}`,
-  },
-};
+export { API_ENDPOINTS } from "@/lib/constants";
 
 /**
  * Account Status Enum
@@ -30,7 +16,8 @@ export const ACCOUNT_STATUS = {
   PENDING: "PENDING",
 } as const;
 
-export type AccountStatus = (typeof ACCOUNT_STATUS)[keyof typeof ACCOUNT_STATUS];
+export type AccountStatus =
+  (typeof ACCOUNT_STATUS)[keyof typeof ACCOUNT_STATUS];
 
 /**
  * Local Storage Keys

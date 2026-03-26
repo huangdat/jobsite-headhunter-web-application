@@ -166,8 +166,8 @@ export const CVList: React.FC<CVListProps> = ({
             info
           </span>
           <p className="text-sm text-yellow-800 dark:text-yellow-200">
-            You've reached the maximum number of resumes ({maxFiles}). Delete an
-            existing one to upload a new version.
+            {t("candidate.validation.maxFilesReached", { maxFiles })}.{" "}
+            {t("candidate.validation.deleteExistingToUpload")}
           </p>
         </div>
       )}
@@ -176,4 +176,3 @@ export const CVList: React.FC<CVListProps> = ({
 };
 
 export default CVList;
-

@@ -51,6 +51,7 @@ export const UserClassificationHeader: React.FC<
                 filter_list
               </span>
               <span>
+                {/* eslint-disable-next-line security/detect-object-injection */}
                 {t(groupingConfigs[groupBy]?.label || "classification.groupBy")}
               </span>
               <span className="material-symbols-outlined text-slate-400 text-lg">
@@ -81,9 +82,13 @@ export const UserClassificationHeader: React.FC<
                     )}
                     <div>
                       <p className="font-bold text-sm">
+                        {" "}
+                        {/* eslint-disable-next-line security/detect-object-injection */}{" "}
                         {t(groupingConfigs[option]?.label || "")}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-slate-400">
+                        {" "}
+                        {/* eslint-disable-next-line security/detect-object-injection */}{" "}
                         {t(groupingConfigs[option]?.description || "")}
                       </p>
                     </div>

@@ -15,9 +15,9 @@ export const useAppTranslation = () => {
   const currentLanguage = useMemo(
     () => ({
       code: i18n.language,
-      nativeName: i18n.language === "vi" ? "Tiếng Việt" : "English",
+      nativeName: t(`common.languages.${i18n.language}`),
     }),
-    [i18n.language],
+    [i18n.language, t]
   );
 
   return {

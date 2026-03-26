@@ -17,4 +17,3 @@ export function HeadhunterLayout() {
 }
 
 export default HeadhunterLayout;
-
