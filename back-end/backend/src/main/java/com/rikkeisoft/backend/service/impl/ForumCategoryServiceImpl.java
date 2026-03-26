@@ -1,8 +1,13 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.github.slugify.Slugify;
+import com.rikkeisoft.backend.enums.ErrorCode;
+import com.rikkeisoft.backend.exception.AppException;
+import com.rikkeisoft.backend.mapper.ForumCategoryMapper;
 import com.rikkeisoft.backend.model.dto.req.forum.ForumCategoryCreateReq;
 import com.rikkeisoft.backend.model.dto.req.forum.ForumCategoryUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.forum.ForumCategoryResp;
+import com.rikkeisoft.backend.model.entity.ForumCategory;
 import com.rikkeisoft.backend.repository.ForumCategoryRepo;
 import com.rikkeisoft.backend.service.ForumCategoryService;
 import lombok.AccessLevel;
@@ -11,8 +16,11 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * Skeleton implementation of {@link ForumCategoryService}.
@@ -37,6 +45,7 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
 
     ForumCategoryRepo forumCategoryRepo;
     MessageSource messageSource;
+    ForumCategoryMapper forumCategoryMapper;
 
     /**
      * {@inheritDoc}
@@ -54,8 +63,22 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      */
     @Override
     @Transactional
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ForumCategoryResp createCategory(ForumCategoryCreateReq req) {
-        return null;
+        String slug = generateSlug(req.getName());
+        if(forumCategoryRepo.existsBySlugAndSoftDeletedFalse(slug)){
+            throw new AppException(ErrorCode.CATEGORY_SLUG_CONFLICT);
+        }
+        ForumCategory newForumCategory = ForumCategory.builder()
+                .name(req.getName())
+                .slug(slug)
+                .description(req.getDescription())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        ForumCategory savedForumCategory = forumCategoryRepo.save(newForumCategory);
+        ForumCategoryResp forumCategoryResp = forumCategoryMapper.toForumCategoryResp(savedForumCategory);
+        return forumCategoryResp;
     }
 
     /**
@@ -143,13 +166,11 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      *
      * <p>Example: {@code "Kinh nghiệm phỏng vấn" → "kinh-nghiem-phong-van"}.
      *
-     * <p>Implementation should use {@code java.text.Normalizer} for Unicode decomposition
-     * followed by regex removal of non-ASCII characters and whitespace replacement with hyphens.
-     *
      * @param name the raw display name to convert; must not be blank.
      * @return a URL-safe, lowercase slug derived from the name.
      */
     private String generateSlug(String name) {
-        return null;
+        Slugify slugify = Slugify.builder().build();
+        return slugify.slugify(name);
     }
 }
