@@ -19,7 +19,7 @@ public interface ApplicationService {
     Page<ApplicationResp> getMyApplications(Pageable pageable, ApplicationStatus status);
 
     // Headhunter features
-    Page<ApplicationResp> getJobPipeline(Long jobId, Pageable pageable);
+    Page<ApplicationResp> getJobPipeline(Long jobId, ApplicationStatus status, String keyword, Pageable pageable);
 
     ApplicationDetailResp getApplicationDetail(Long applicationId);
 

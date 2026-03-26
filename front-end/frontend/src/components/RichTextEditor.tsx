@@ -1,4 +1,5 @@
 import { useEffect, forwardRef, useRef } from "react";
+import type { KeyboardEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -45,6 +46,20 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
         ta.focus();
         ta.selectionStart = ta.selectionEnd = pos;
       }, 0);
+    };
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+      // Ctrl/Cmd+B -> bold, Ctrl/Cmd+I -> italic
+      const isMod = e.ctrlKey || e.metaKey;
+      if (!isMod) return;
+      const key = (e.key || "").toLowerCase();
+      if (key === "b") {
+        e.preventDefault();
+        insertAroundSelection("**", "**");
+      } else if (key === "i") {
+        e.preventDefault();
+        insertAroundSelection("*", "*");
+      }
     };
 
     return (
@@ -103,6 +118,7 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
             ref={textareaRef}
             value={value || ""}
             onChange={(e) => onChange(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder={_placeholder}
             disabled={disabled}
             className={cn(

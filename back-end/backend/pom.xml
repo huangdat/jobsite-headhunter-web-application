@@ -172,6 +172,15 @@
 			<version>${lombok-mapstruct-binding.version}</version>
 		</dependency>
 
+		<!-- Slug Generator for SEO-friendly URL -->
+		<!-- Source: https://mvnrepository.com/artifact/com.github.slugify/slugify -->
+		<dependency>
+			<groupId>com.github.slugify</groupId>
+			<artifactId>slugify</artifactId>
+			<version>3.0.7</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

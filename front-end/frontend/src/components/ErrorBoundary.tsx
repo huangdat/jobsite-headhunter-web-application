@@ -1,4 +1,5 @@
 import React from "react";
+import { ErrorMessage } from "./ErrorMessage";
 
 type Props = { children: React.ReactNode };
 
@@ -24,7 +25,7 @@ export default class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <div className="p-4 rounded bg-red-50 text-red-700">
-          {"Editor failed to load."}
+          <ErrorMessage />
         </div>
       );
     }

@@ -144,7 +144,6 @@ export const UserClassificationOverview: React.FC<
                   key={group.id}
                   className="bg-primary/60 hover:bg-primary rounded-t transition-colors flex-1"
                   style={{ height: `${Math.max(percentage, 5)}%` }}
-                   
                   title={group.displayName + ": " + group.statistics.totalCount}
                 />
               );

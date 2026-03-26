@@ -10,6 +10,7 @@ import { RichTextEditor } from "@/components/RichTextEditor";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { getJobDetail, updateJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
+import { JOB_FORM_DEFAULTS } from "../utils";
 
 export function JobEditPage() {
   const { t } = useTranslation("jobs");
@@ -29,24 +30,11 @@ export function JobEditPage() {
     formState: { errors },
   } = useForm<JobFormValues>({
     defaultValues: {
-      title: "",
-      description: "",
-      rankLevel: "JUNIOR",
-      workingType: "ONSITE",
+      ...JOB_FORM_DEFAULTS,
       location: "",
-      addressDetail: "",
-      experience: 1,
       salaryMin: 0,
       salaryMax: 0,
-      negotiable: false,
-      currency: "VND",
-      quantity: 1,
       deadline: "",
-      skillIds: [],
-      responsibilities: "",
-      requirements: "",
-      benefits: "",
-      workingTime: "",
     },
   });
 

@@ -10,12 +10,7 @@ import { RichTextEditor } from "@/components/RichTextEditor";
 import { createJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
-
-const defaultDeadline = () => {
-  const today = new Date();
-  today.setDate(today.getDate() + 30);
-  return today.toISOString().slice(0, 10);
-};
+import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 
 export function JobCreatePage() {
   const { t } = useTranslation("jobs");
@@ -34,24 +29,8 @@ export function JobCreatePage() {
     formState: { errors },
   } = useForm<JobFormValues>({
     defaultValues: {
-      title: "",
-      description: "",
-      rankLevel: "JUNIOR",
-      workingType: "ONSITE",
-      location: t("auth.defaults.location"),
-      addressDetail: "",
-      experience: 1,
-      salaryMin: 15000000,
-      salaryMax: 30000000,
-      negotiable: false,
-      currency: "VND",
-      quantity: 1,
-      deadline: defaultDeadline(),
-      skillIds: [],
-      responsibilities: "",
-      requirements: "",
-      benefits: "",
-      workingTime: t("auth.defaults.workingTime"),
+      ...JOB_FORM_DEFAULTS,
+      deadline: calculateDefaultDeadline(),
     },
   });
 

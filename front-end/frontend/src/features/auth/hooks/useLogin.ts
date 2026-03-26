@@ -145,11 +145,10 @@ export const useLogin = () => {
 
   const handleChange =
     (field: keyof LoginFormData) => (value: string | boolean) => {
-       
       setFormData((prev) => ({ ...prev, [field]: value }));
 
+      // eslint-disable-next-line security/detect-object-injection
       if (field !== "rememberMe" && errors[field]) {
-         
         setErrors((prev) => ({ ...prev, [field]: undefined }));
       }
 

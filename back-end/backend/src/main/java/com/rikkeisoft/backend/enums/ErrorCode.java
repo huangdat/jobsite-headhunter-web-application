@@ -142,7 +142,29 @@ public enum ErrorCode {
     CV_URL_REQUIRED(HttpStatus.BAD_REQUEST, "error.cv_url_required"),
     CV_URL_INVALID(HttpStatus.BAD_REQUEST, "error.cv_url_invalid"),
     CV_VISIBILITY_REQUIRED(HttpStatus.BAD_REQUEST, "error.cv_visibility_required"),
-    NO_CVS_STORED(HttpStatus.NOT_FOUND, "error.no_cvs_stored")
+    NO_CVS_STORED(HttpStatus.NOT_FOUND, "error.no_cvs_stored"),
+
+    // Forum Category module
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "error.category_not_found"),
+    CATEGORY_SLUG_CONFLICT(HttpStatus.CONFLICT, "error.category_slug_conflict"),
+    CATEGORY_ALREADY_DELETED(HttpStatus.BAD_REQUEST, "error.category_already_deleted"),
+    CATEGORY_NAME_REQUIRED(HttpStatus.BAD_REQUEST, "error.category_name_required"),
+    CATEGORY_NAME_SIZE(HttpStatus.BAD_REQUEST, "error.category_name_size_constraint"),
+    CATEGORY_DESCRIPTION_SIZE_CONSTRAINT(HttpStatus.BAD_REQUEST, "error.category_description_size_constraint"),
+
+    // Forum Post module
+    POST_NOT_FOUND(HttpStatus.NOT_FOUND, "error.post.not.found"),
+    POST_ALREADY_DELETED(HttpStatus.BAD_REQUEST, "error.post.already.deleted"),
+    POST_FORBIDDEN(HttpStatus.FORBIDDEN, "error.post.forbidden"),
+
+    // Forum Comment module
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "error.comment.not.found"),
+    COMMENT_DELETED(HttpStatus.BAD_REQUEST, "error.comment.deleted"),
+    COMMENT_FORBIDDEN(HttpStatus.FORBIDDEN, "error.comment.forbidden"),
+    COMMENT_PARENT_MISMATCH(HttpStatus.BAD_REQUEST, "error.comment.parent.mismatch"),
+
+    // Reaction module (Posts & Comments)
+    REACTION_TYPE_INVALID(HttpStatus.BAD_REQUEST, "error.reaction.type.invalid")
     ;
 
     private final HttpStatus httpStatus;

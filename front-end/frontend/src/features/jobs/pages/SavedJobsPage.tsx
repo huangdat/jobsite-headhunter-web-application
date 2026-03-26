@@ -7,27 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { fetchSavedJobs, removeSavedJob } from "../services/jobsApi";
 import type { SavedJob } from "../types";
-
-const formatSalaryRange = (job: SavedJob) => {
-  if (job.salaryMin == null || job.salaryMax == null) {
-    return "Negotiable";
-  }
-
-  try {
-    const formatter = new Intl.NumberFormat(
-      job.currency === "VND" ? "vi-VN" : "en-US",
-      {
-        style: "currency",
-        currency: job.currency || "USD",
-        maximumFractionDigits: job.currency === "VND" ? 0 : 2,
-      }
-    );
-
-    return `${formatter.format(job.salaryMin)} - ${formatter.format(job.salaryMax)}`;
-  } catch {
-    return `${job.salaryMin.toLocaleString()} - ${job.salaryMax.toLocaleString()} ${job.currency}`;
-  }
-};
+import { formatSalaryRange } from "../utils";
 
 export function SavedJobsPage() {
   const { t } = useTranslation("jobs");
@@ -146,7 +126,11 @@ export function SavedJobsPage() {
               <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
                 <Badge variant="secondary">{job.status}</Badge>
                 <span className="font-semibold text-slate-900">
-                  {formatSalaryRange(job)}
+                  {formatSalaryRange(
+                    job.salaryMin,
+                    job.salaryMax,
+                    job.currency
+                  )}
                 </span>
               </div>
             </div>

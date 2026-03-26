@@ -15,12 +15,7 @@ import {
   saveJobPost,
 } from "../services/jobsApi";
 import type { JobDetail } from "../types";
-
-const numberFormat = new Intl.NumberFormat("vi-VN", {
-  style: "currency",
-  currency: "VND",
-  maximumFractionDigits: 0,
-});
+import { formatSalaryRange } from "../utils";
 
 export function JobDetailPage() {
   const { t } = useTranslation("jobs");
@@ -117,7 +112,7 @@ export function JobDetailPage() {
 
   const salaryLabel = job.negotiable
     ? t("detail.salaryNegotiable")
-    : `${numberFormat.format(job.salaryMin)} - ${numberFormat.format(job.salaryMax)} ${job.currency}`;
+    : formatSalaryRange(job.salaryMin, job.salaryMax, job.currency);
   const deadlineLabel = job.deadline
     ? new Date(job.deadline).toLocaleDateString("en-US")
     : t("detail.salaryOpen");
