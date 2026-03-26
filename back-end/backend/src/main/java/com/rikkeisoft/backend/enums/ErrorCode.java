@@ -145,9 +145,12 @@ public enum ErrorCode {
     NO_CVS_STORED(HttpStatus.NOT_FOUND, "error.no_cvs_stored"),
 
     // Forum Category module
-    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "error.category.not.found"),
-    CATEGORY_SLUG_CONFLICT(HttpStatus.CONFLICT, "error.category.slug.conflict"),
-    CATEGORY_ALREADY_DELETED(HttpStatus.BAD_REQUEST, "error.category.already.deleted"),
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "error.category_not_found"),
+    CATEGORY_SLUG_CONFLICT(HttpStatus.CONFLICT, "error.category_slug_conflict"),
+    CATEGORY_ALREADY_DELETED(HttpStatus.BAD_REQUEST, "error.category_already_deleted"),
+    CATEGORY_NAME_REQUIRED(HttpStatus.BAD_REQUEST, "error.category_name_required"),
+    CATEGORY_NAME_SIZE(HttpStatus.BAD_REQUEST, "error.category_name_size_constraint"),
+    CATEGORY_DESCRIPTION_SIZE_CONSTRAINT(HttpStatus.BAD_REQUEST, "error.category_description_size_constraint"),
 
     // Forum Post module
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "error.post.not.found"),
