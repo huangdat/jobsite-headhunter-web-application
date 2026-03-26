@@ -98,8 +98,13 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      */
     @Override
     @Transactional
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ForumCategoryResp updateCategory(Long categoryId, ForumCategoryUpdateReq req) {
-        return null;
+        ForumCategory forumCategory = forumCategoryRepo.findById(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        forumCategoryMapper.updateForumCategoryFromRequest(req, forumCategory);
+        forumCategory.setUpdatedAt(LocalDateTime.now());
+        return forumCategoryMapper.toForumCategoryResp(forumCategory);
     }
 
     /**
