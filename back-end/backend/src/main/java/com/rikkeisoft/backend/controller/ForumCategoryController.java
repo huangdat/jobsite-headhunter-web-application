@@ -74,7 +74,7 @@ public class ForumCategoryController {
      * new name provided. Returns {@code 404 Not Found} if the category does not exist
      * or is soft-deleted.
      *
-     * <p>HTTP: {@code PUT /api/v1/forum/categories/{id}}
+     * <p>HTTP: {@code PATCH /api/v1/forum/categories/{id}}
      *
      * @param id     the surrogate primary key of the category to update.
      * @param req    the validated request body with the new {@code name} and optional
@@ -84,7 +84,7 @@ public class ForumCategoryController {
      *         with HTTP status {@code 200 OK} and the message resolved from key
      *         {@code "forum.category.updated"}.
      */
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public APIResponse<ForumCategoryResp> updateCategory(
             @PathVariable Long id,
             @Valid @RequestBody ForumCategoryUpdateReq req,
