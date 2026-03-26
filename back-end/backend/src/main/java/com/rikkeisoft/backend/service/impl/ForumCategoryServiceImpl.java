@@ -141,8 +141,11 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      */
     @Override
     @Transactional
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ForumCategoryResp toggleCategoryStatus(Long categoryId) {
-        return null;
+        ForumCategory forumCategory = forumCategoryRepo.findById(categoryId).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        forumCategory.setActive(!forumCategory.isActive());
+        return forumCategoryMapper.toForumCategoryResp(forumCategory);
     }
 
     /**
