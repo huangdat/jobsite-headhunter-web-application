@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.enums.AuthProvider;
 import com.rikkeisoft.backend.enums.ErrorCode;
@@ -62,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
     CandidateCvRepo candidateCvRepo;
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize(SecurityConstants.ADMIN)
     public List<AccountResp> getAllAccounts() {
         if (accountRepo.count() == 0) {
             throw new AppException(ErrorCode.NO_ACCOUNTS_STORED);
@@ -80,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER') or hasAuthority('SCOPE_COLLABORATOR')")
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
     public AccountResp getAccountById(String id) {
         // find account by id
         Account account = accountRepo.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
@@ -179,7 +180,7 @@ public class AccountServiceImpl implements AccountService {
      * @return AccountResp
      */
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize(SecurityConstants.ADMIN)
     public AccountResp updateStatus(String id, String status) {
         Account account = accountRepo.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
         try {
@@ -232,6 +233,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @PreAuthorize(SecurityConstants.ADMIN)
     public PagedResponse<AccountResp> searchAccounts(int page, int size, String keyword, String role, String status, String sort) {
         // sanitize input to avoid XSS
         String safeKeyword = keyword == null ? null : HtmlUtils.htmlEscape(keyword).trim();
