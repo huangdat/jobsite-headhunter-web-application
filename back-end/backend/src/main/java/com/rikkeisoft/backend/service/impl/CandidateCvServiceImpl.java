@@ -1,12 +1,11 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.CandidateCvMapper;
-import com.rikkeisoft.backend.model.dto.PagedResponse;
 import com.rikkeisoft.backend.model.dto.req.account.*;
 import com.rikkeisoft.backend.model.dto.req.cv.CandidateCvUpdateReq;
-import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.model.dto.resp.cv.CandidateCvResp;
 import com.rikkeisoft.backend.model.entity.CandidateCv;
 import com.rikkeisoft.backend.repository.AccountRepo;
@@ -38,7 +37,7 @@ public class CandidateCvServiceImpl implements CandidateCvService {
      * @return
      */
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
     public List<CandidateCvResp> getAllCandidateCvs() {
         // chek if there are any candidate CVs stored in the repository
         if (candidateCvRepo.count() == 0) {
@@ -50,7 +49,7 @@ public class CandidateCvServiceImpl implements CandidateCvService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
     public CandidateCvResp getCvById(Long id) {
         var candidateCv = candidateCvRepo.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
@@ -58,7 +57,7 @@ public class CandidateCvServiceImpl implements CandidateCvService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
     public CandidateCvResp getCvByCandidateId(String candidateId) {
         var candidateCv = candidateCvRepo.findByCandidate_Id(candidateId)
                 .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
@@ -66,6 +65,7 @@ public class CandidateCvServiceImpl implements CandidateCvService {
     }
 
     @Override
+    @PreAuthorize(SecurityConstants.CANDIDATE)
     public CandidateCvResp getMyCv() {
         // Get the username of the currently authenticated user
         var context = SecurityContextHolder.getContext();
@@ -83,7 +83,7 @@ public class CandidateCvServiceImpl implements CandidateCvService {
 
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')") // Only users with the CANDIDATE scope can access this method
+    @PreAuthorize(SecurityConstants.CANDIDATE) // Only users with the CANDIDATE scope can access this method
     public CandidateCvResp updateMyCv(CandidateCvUpdateReq req) {
         // Get the username of the currently authenticated user
         var context = SecurityContextHolder.getContext();
@@ -108,7 +108,7 @@ public class CandidateCvServiceImpl implements CandidateCvService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')") // Only users with the CANDIDATE scope can access this method
+    @PreAuthorize(SecurityConstants.CANDIDATE) // Only users with the CANDIDATE scope can access this method
     public CandidateCvResp updateMyCvVisibility(boolean visibility) {
         // Get the username of the currently authenticated user
         var context = SecurityContextHolder.getContext();
