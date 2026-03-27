@@ -3,3 +3,6 @@
 
 npm run lint:fix
 npx lint-staged
+
+# Run comprehensive audits and generate timestamped reports
+npm run audit:all

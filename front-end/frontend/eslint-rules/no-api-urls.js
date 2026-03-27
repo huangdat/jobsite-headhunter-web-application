@@ -17,6 +17,13 @@ const API_PATTERNS = [
   /\/api\//, // /api/...
 ];
 
+const isImportPath = (value) => {
+  // Skip import paths that start with @ or ./ or ../
+  return (
+    value.startsWith("@") || value.startsWith("./") || value.startsWith("../")
+  );
+};
+
 const isWhitelisted = (value) => {
   const whitelist = [
     "http://", // Schema only
@@ -41,6 +48,9 @@ export default {
       Literal(node) {
         // Only check string literals
         if (typeof node.value !== "string") return;
+
+        // Skip if it's an import path (starts with @, ./, or ../)
+        if (isImportPath(node.value)) return;
 
         // Skip if whitelisted
         if (isWhitelisted(node.value)) return;
