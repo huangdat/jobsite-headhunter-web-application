@@ -1,0 +1,9 @@
+{
+  "filterRole": "Bộ lọcs Bộ lọc role",
+  "filterStatus": "Filters filter Trạng thái",
+  "filterUsers": "Filters filter Người dùngs",
+  "filterAllRoles": "Bộ lọcs Bộ lọc all roles",
+  "filterAllStatus": "Filters filter all Trạng thái",
+  "applyFilter": "Bộ lọcs apply Bộ lọc",
+  "resetFilter": "Bộ lọcs reset Bộ lọc"
+}

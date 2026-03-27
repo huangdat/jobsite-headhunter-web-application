@@ -1,0 +1,20 @@
+{
+  "username": "Placeholders username",
+  "password": "Placeholders password",
+  "currentPassword": "Placeholders current password",
+  "newPassword": "Placeholders new password",
+  "confirmPassword": "Placeholders confirm password",
+  "name": "Placeholders name",
+  "phone": "Placeholders phone",
+  "email": "Placeholders email",
+  "companyName": "Placeholders company name",
+  "taxId": "Placeholders tax id",
+  "companyWebsite": "Placeholders company website",
+  "commissionRate": "Placeholders commission rate",
+  "jobTitle": "Placeholders job title",
+  "experience": "Placeholders experience",
+  "location": "Placeholders location",
+  "salaryMin": "Placeholders salary min",
+  "salaryMax": "Placeholders salary max",
+  "bio": "Placeholders bio"
+}

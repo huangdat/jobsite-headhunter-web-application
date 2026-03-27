@@ -1,0 +1,62 @@
+{
+  "management": {
+    "breadcrumb": "Cv management Breadcrumb",
+    "title": "Tiêu đề",
+    "success": {
+      "banner": "Cv management Thành công banner",
+      "bannerDetail": "Cv management Thành công banner detail",
+      "addAnother": "Cv management Thành công add another",
+      "browseFiles": "Cv management Thành công browse files",
+      "activeResumes": "Cv management Thành công active resumes",
+      "filesUsed": "Cv management Thành công files used"
+    },
+    "upload": {
+      "selectFile": "Cv management Tải lên select file"
+    },
+    "profileStrength": {
+      "title": "Cv management Hồ sơ strength title"
+    },
+    "premiumServices": {
+      "premiumTitle": "Dịch vụ cao cấp",
+      "auditTitle": "Kiểm toán CV chuyên môn",
+      "auditDesc": "Mô tả kiểm toán dịch vụ cao cấp",
+      "bookAudit": "Đặt kiểm toán CV",
+      "reviewTitle": "Cv management premium services reXem title",
+      "reviewDesc": "Cv management premium services reXem desc",
+      "getReview": "Cv management premium services get reXem"
+    },
+    "error": {
+      "banner": "Cv management Lỗi banner",
+      "fileFormatInvalid": "Cv management Lỗi file format invalid",
+      "tryAnother": "Cv management Lỗi try another"
+    },
+    "validation": {
+      "clear": "Xóa",
+      "retry": "Cv management validation Thử lại",
+      "dismiss": "Cv management validation Đóng"
+    },
+    "empty": {
+      "headline": "Cv management Trống headline",
+      "description": "Cv management Trống description",
+      "button": "Cv management empty Nút",
+      "supported": "Cv management empty Hỗ trợed"
+    },
+    "tips": {
+      "title": "Mẹo"
+    },
+    "fileList": {
+      "uploadedLabel": "Cv management file list Tải lêned label",
+      "actions": {
+        "view": "Cv management file list actions Xem",
+        "download": "Cv management file list actions Tải xuống",
+        "makeActive": "Cv management file list actions make Hoạt động",
+        "delete": "Cv management file list actions Xóa"
+      }
+    },
+    "bestPractices": {
+      "privacyTitle": "Kiểm soát quyền riêng tư",
+      "practicesTitle": "Thực hành tốt nhất",
+      "privacyDesc": "Kiểm soát quyền riêng tư"
+    }
+  }
+}

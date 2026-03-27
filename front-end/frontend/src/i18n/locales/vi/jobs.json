@@ -28,7 +28,8 @@
       "fromMillion": "Từ (triệu)",
       "toMillion": "Đến (triệu)",
       "applyCustomRange": "Áp dụng khoảng tùy chỉnh",
-      "clearAllFilters": "Xóa tất cả bộ lọc"
+      "clearAllFilters": "Xóa tất cả bộ lọc",
+      "salaryVND": "Jobs list Bộ lọcs salary v n d"
     },
     "flexible": "Linh hoạt",
     "viewDetails": "Xem chi tiết →",
@@ -60,10 +61,7 @@
   "status": {
     "DRAFT": "Nháp",
     "OPEN": "Đang Tuyển",
-    "CLOSED": "Đã Đóng",
-    "draft": "Nháp",
-    "open": "Đang tuyển",
-    "closed": "Đã đóng"
+    "CLOSED": "Đã Đóng"
   },
   "columns": {
     "title": "TIÊU ĐỀ",
@@ -112,7 +110,23 @@
     "workingHours": "Giờ làm việc",
     "postedOn": "Đăng vào",
     "applyNow": "Ứng tuyển ngay",
-    "saveJob": "Lưu công việc"
+    "saveJob": "Lưu công việc",
+    "jobDetailsSection": "Job details",
+    "jobCodeLabel": "Job code:",
+    "companySection": "Company",
+    "salary": "Salary",
+    "salaryNegotiable": "Negotiable",
+    "salaryOpen": "Open",
+    "responsibilities": "Responsibilities",
+    "requiredSkills": "Required skills",
+    "notAvailable": "Not available",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "generalInfoSection": "General info",
+    "rank": "Rank",
+    "sizeLabel": "Size",
+    "websiteLabel": "Website",
+    "headcount": "Headcount"
   },
   "edit": {
     "pageTitle": "Chỉnh sửa Công việc",
@@ -204,10 +218,7 @@
     "workingTypes": {
       "ONSITE": "Tại văn phòng",
       "REMOTE": "Làm việc từ xa",
-      "HYBRID": "Kết hợp",
-      "onsite": "Tại văn phòng",
-      "remote": "Làm việc từ xa",
-      "hybrid": "Kết hợp"
+      "HYBRID": "Kết hợp"
     }
   },
   "experience": {
@@ -240,9 +251,16 @@
       "negotiable": "Thương lượng"
     }
   },
+  "auth": {
+    "defaults": {
+      "location": "Chưa xác định",
+      "workingTime": "Chưa xác định"
+    }
+  },
   "messages": {
     "noJobsFound": "Không tìm thấy công việc",
     "jobPostedSuccess": "Công việc đã được đăng thành công",
+    "jobCreatedSuccess": "Công việc được tạo thành công",
     "jobUpdatedSuccess": "Công việc đã được cập nhật thành công",
     "jobDeletedSuccess": "Công việc đã được xóa thành công",
     "jobClosedSuccess": "Công việc đã được đóng thành công",
@@ -335,7 +353,11 @@
     "salaryNegative": "Lương không thể âm",
     "salaryOrder": "Lương tối thiểu không thể lớn hơn lương tối đa"
   },
-  "messages": {
-    "jobCreatedSuccess": "Đã đăng công việc thành công."
+  "jobs": {
+    "list": {
+      "filters": {
+        "salaryVND": "Jobs list Bộ lọcs salary v n d"
+      }
+    }
   }
 }

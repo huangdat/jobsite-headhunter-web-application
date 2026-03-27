@@ -7,7 +7,17 @@
   "save": "Save",
   "delete": "Delete",
   "edit": "Edit",
+  "dismiss": "Dismiss",
   "currentUserName": "Alex Nguyen",
+  "id_token": "id_token",
+  "failedToLoadCommission": "Failed to load commission data",
+  "failedToLoadProfile": "Failed to load profile",
+  "failedToLoadUsers": "Failed to load users",
+  "failedToSaveProfile": "Failed to save profile",
+  "noPermissionAccess": "You do not have permission to access this feature",
+  "sessionExpiredLoginAgain": "Your session has expired. Please login again",
+  "searchKeywords": "Search by Keywords",
+  "searchLocation": "Search by Location",
   "common": {
     "adminUserTitle": "Admin User",
     "appVersion": "v2.4.0 Release",
@@ -21,7 +31,12 @@
     "languages": {
       "en": "English",
       "vi": "Tiếng Việt"
-    }
+    },
+    "enterDetailsDescription": "Common enter details description",
+    "failedToFetchUsers": "Common failed to fetch users",
+    "loading": "Common loading",
+    "tryAgain": "Common try again",
+    "noDataAvailable": "Common no data available"
   },
   "messages": {
     "signedInSuccess": "Signed in successfully.",

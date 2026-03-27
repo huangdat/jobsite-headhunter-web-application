@@ -1,0 +1,14 @@
+{
+  "item1": {
+    "question": "Faq item1 question",
+    "answer": "Faq item1 answer"
+  },
+  "item2": {
+    "question": "Faq item2 question",
+    "answer": "Faq item2 answer"
+  },
+  "item3": {
+    "question": "Faq item3 question",
+    "answer": "Faq item3 answer"
+  }
+}

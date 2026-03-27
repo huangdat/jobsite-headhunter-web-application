@@ -28,7 +28,8 @@
       "fromMillion": "From (mil)",
       "toMillion": "To (mil)",
       "applyCustomRange": "Apply custom range",
-      "clearAllFilters": "Clear all filters"
+      "clearAllFilters": "Clear all filters",
+      "salaryVND": "Jobs list filters salary v n d"
     },
     "flexible": "Flexible",
     "viewDetails": "View details →",
@@ -60,10 +61,7 @@
   "status": {
     "DRAFT": "Draft",
     "OPEN": "Open",
-    "CLOSED": "Closed",
-    "draft": "Draft",
-    "open": "Open",
-    "closed": "Closed"
+    "CLOSED": "Closed"
   },
   "columns": {
     "title": "TITLE",
@@ -220,10 +218,7 @@
     "workingTypes": {
       "ONSITE": "On-site",
       "REMOTE": "Remote",
-      "HYBRID": "Hybrid",
-      "onsite": "On-site",
-      "remote": "Remote",
-      "hybrid": "Hybrid"
+      "HYBRID": "Hybrid"
     }
   },
   "experience": {
@@ -256,9 +251,16 @@
       "negotiable": "Negotiable"
     }
   },
+  "auth": {
+    "defaults": {
+      "location": "Not specified",
+      "workingTime": "Not specified"
+    }
+  },
   "messages": {
     "noJobsFound": "No jobs found",
     "jobPostedSuccess": "Job posted successfully",
+    "jobCreatedSuccess": "Job created successfully",
     "jobUpdatedSuccess": "Job updated successfully",
     "jobDeletedSuccess": "Job deleted successfully",
     "jobClosedSuccess": "Job closed successfully",
@@ -351,7 +353,11 @@
     "salaryNegative": "Salary cannot be negative",
     "salaryOrder": "Salary min cannot be greater than salary max"
   },
-  "messages": {
-    "jobCreatedSuccess": "Job posted successfully."
+  "jobs": {
+    "list": {
+      "filters": {
+        "salaryVND": "Jobs list filters salary v n d"
+      }
+    }
   }
 }

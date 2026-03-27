@@ -1,0 +1,71 @@
+{
+  "selectRole": {
+    "title": "Trangs select role title",
+    "titleHighlight": "Trangs select role title highlight",
+    "subtitle": "Trangs select role subtitle",
+    "pageTitle": "Trangs select role Trang title",
+    "pageSubtitle": "Trangs select role Trang subtitle",
+    "continue": "Pages select role Tiếp tục",
+    "alreadyHaveAccount": "Pages select role already have Tài khoản"
+  },
+  "resetPasswordSuccess": {
+    "titleLeft": "Pages reset Mật khẩu success title left",
+    "titleHighlight": "Pages reset Mật khẩu success title highlight",
+    "subtitleLeft": "Pages reset Mật khẩu success subtitle left",
+    "checkItem1": "Pages reset Mật khẩu success check item1",
+    "checkItem2": "Pages reset Mật khẩu success check item2",
+    "title": "Pages reset Mật khẩu success title",
+    "subtitle": "Pages reset Mật khẩu success subtitle",
+    "signInButton": "Pages reset password success Đăng nhập button"
+  },
+  "signup": "Trangs signup",
+  "login": {
+    "heroTitlePart1": "Pages Đăng nhập hero title part1",
+    "heroTitlePart2": "Pages Đăng nhập hero title part2",
+    "heroSubtitle": "Pages Đăng nhập hero subtitle",
+    "welcomeBack": "Pages login welcome Quay lại",
+    "subtitle": "Pages Đăng nhập subtitle",
+    "rememberMe": "Pages Đăng nhập remember me",
+    "forgotPasswordLink": "Pages login forgot Mật khẩu link",
+    "signingIn": "Pages Đăng nhập signing in",
+    "orContinueWith": "Pages login or Tiếp tục with",
+    "noAccount": "Pages login no Tài khoản",
+    "registerLink": "Pages login Đăng ký link"
+  },
+  "changePassword": {
+    "securitySectionLabel": "Pages change Mật khẩu security section label",
+    "title": "Pages change Mật khẩu title",
+    "subtitle": "Pages change Mật khẩu subtitle",
+    "currentPasswordLabel": "Pages change Mật khẩu current password label",
+    "newPasswordLabel": "Pages change Mật khẩu new password label",
+    "confirmPasswordLabel": "Pages change password Xác nhận password label",
+    "submitButton": "Pages change password Gửi button",
+    "cancelButton": "Pages change password Hủy button",
+    "passwordRequirementsTitle": "Pages change Mật khẩu password requirements title",
+    "requirement1": "Pages change Mật khẩu requirement1",
+    "requirement2": "Pages change Mật khẩu requirement2",
+    "requirement3": "Pages change Mật khẩu requirement3"
+  },
+  "register": {
+    "candidate": {
+      "title": "Pages Đăng ký candidate title",
+      "subtitle": "Pages Đăng ký candidate subtitle"
+    },
+    "collaborator": {
+      "title": "Pages Đăng ký collaborator title",
+      "subtitle": "Pages Đăng ký collaborator subtitle"
+    },
+    "headhunter": {
+      "title": "Pages Đăng ký headhunter title",
+      "subtitle": "Pages Đăng ký headhunter subtitle"
+    },
+    "subtitle": "Pages Đăng ký subtitle",
+    "haveAccount": "Pages register have Tài khoản",
+    "signIn": "Pages register Đăng nhập"
+  },
+  "headhunterDetails": {
+    "companyName": "Pages headhunter details company Tên",
+    "registeredAddress": "Pages headhunter details Đăng kýed address",
+    "registeredAddressHelp": "Pages headhunter details Đăng kýed address help"
+  }
+}

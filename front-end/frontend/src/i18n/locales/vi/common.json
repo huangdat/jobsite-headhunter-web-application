@@ -7,7 +7,17 @@
   "save": "Lưu",
   "delete": "Xóa",
   "edit": "Chỉnh sửa",
+  "dismiss": "Đóng",
   "currentUserName": "Alex Nguyen",
+  "id_token": "id_token",
+  "failedToLoadCommission": "Không thể tải dữ liệu hoa hồng",
+  "failedToLoadProfile": "Không thể tải hồ sơ",
+  "failedToLoadUsers": "Không thể tải người dùng",
+  "failedToSaveProfile": "Không thể lưu hồ sơ",
+  "noPermissionAccess": "Bạn không có quyền truy cập tính năng này",
+  "sessionExpiredLoginAgain": "Phiên của bạn đã hết hạn. Vui lòng đăng nhập lại",
+  "searchKeywords": "Tìm kiếm theo Từ khóa",
+  "searchLocation": "Tìm kiếm theo Vị trí",
   "common": {
     "adminUserTitle": "Quản trị viên",
     "appVersion": "Phiên bản 2.4.0",
@@ -21,7 +31,12 @@
     "languages": {
       "en": "English",
       "vi": "Tiếng Việt"
-    }
+    },
+    "enterDetailsDescription": "Nhập mô tả chi tiết",
+    "failedToFetchUsers": "Common failed to fetch Người dùngs",
+    "loading": "Common Đang tải...",
+    "tryAgain": "Common Thử lại",
+    "noDataAvailable": "Common Không có dữ liệu available"
   },
   "messages": {
     "signedInSuccess": "Đã đăng nhập thành công.",

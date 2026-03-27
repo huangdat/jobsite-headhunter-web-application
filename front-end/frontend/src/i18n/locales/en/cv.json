@@ -1,0 +1,62 @@
+{
+  "management": {
+    "breadcrumb": "Cv management breadcrumb",
+    "title": "Cv management title",
+    "success": {
+      "banner": "Cv management success banner",
+      "bannerDetail": "Cv management success banner detail",
+      "addAnother": "Cv management success add another",
+      "browseFiles": "Cv management success browse files",
+      "activeResumes": "Cv management success active resumes",
+      "filesUsed": "Cv management success files used"
+    },
+    "upload": {
+      "selectFile": "Cv management upload select file"
+    },
+    "profileStrength": {
+      "title": "Cv management profile strength title"
+    },
+    "premiumServices": {
+      "premiumTitle": "Cv management premium services premium title",
+      "auditTitle": "Cv management premium services audit title",
+      "auditDesc": "Cv management premium services audit desc",
+      "bookAudit": "Cv management premium services book audit",
+      "reviewTitle": "Cv management premium services review title",
+      "reviewDesc": "Cv management premium services review desc",
+      "getReview": "Cv management premium services get review"
+    },
+    "error": {
+      "banner": "Cv management error banner",
+      "fileFormatInvalid": "Cv management error file format invalid",
+      "tryAnother": "Cv management error try another"
+    },
+    "validation": {
+      "clear": "Cv management validation clear",
+      "retry": "Cv management validation retry",
+      "dismiss": "Cv management validation dismiss"
+    },
+    "empty": {
+      "headline": "Cv management empty headline",
+      "description": "Cv management empty description",
+      "button": "Cv management empty button",
+      "supported": "Cv management empty supported"
+    },
+    "tips": {
+      "title": "Cv management tips title"
+    },
+    "fileList": {
+      "uploadedLabel": "Cv management file list uploaded label",
+      "actions": {
+        "view": "Cv management file list actions view",
+        "download": "Cv management file list actions download",
+        "makeActive": "Cv management file list actions make active",
+        "delete": "Cv management file list actions delete"
+      }
+    },
+    "bestPractices": {
+      "privacyTitle": "Cv management best practices privacy title",
+      "practicesTitle": "Cv management best practices practices title",
+      "privacyDesc": "Cv management best practices privacy desc"
+    }
+  }
+}

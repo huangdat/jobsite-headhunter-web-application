@@ -1,0 +1,71 @@
+{
+  "selectRole": {
+    "title": "Pages select role title",
+    "titleHighlight": "Pages select role title highlight",
+    "subtitle": "Pages select role subtitle",
+    "pageTitle": "Pages select role page title",
+    "pageSubtitle": "Pages select role page subtitle",
+    "continue": "Pages select role continue",
+    "alreadyHaveAccount": "Pages select role already have account"
+  },
+  "resetPasswordSuccess": {
+    "titleLeft": "Pages reset password success title left",
+    "titleHighlight": "Pages reset password success title highlight",
+    "subtitleLeft": "Pages reset password success subtitle left",
+    "checkItem1": "Pages reset password success check item1",
+    "checkItem2": "Pages reset password success check item2",
+    "title": "Pages reset password success title",
+    "subtitle": "Pages reset password success subtitle",
+    "signInButton": "Pages reset password success sign in button"
+  },
+  "signup": "Pages signup",
+  "login": {
+    "heroTitlePart1": "Pages login hero title part1",
+    "heroTitlePart2": "Pages login hero title part2",
+    "heroSubtitle": "Pages login hero subtitle",
+    "welcomeBack": "Pages login welcome back",
+    "subtitle": "Pages login subtitle",
+    "rememberMe": "Pages login remember me",
+    "forgotPasswordLink": "Pages login forgot password link",
+    "signingIn": "Pages login signing in",
+    "orContinueWith": "Pages login or continue with",
+    "noAccount": "Pages login no account",
+    "registerLink": "Pages login register link"
+  },
+  "changePassword": {
+    "securitySectionLabel": "Pages change password security section label",
+    "title": "Pages change password title",
+    "subtitle": "Pages change password subtitle",
+    "currentPasswordLabel": "Pages change password current password label",
+    "newPasswordLabel": "Pages change password new password label",
+    "confirmPasswordLabel": "Pages change password confirm password label",
+    "submitButton": "Pages change password submit button",
+    "cancelButton": "Pages change password cancel button",
+    "passwordRequirementsTitle": "Pages change password password requirements title",
+    "requirement1": "Pages change password requirement1",
+    "requirement2": "Pages change password requirement2",
+    "requirement3": "Pages change password requirement3"
+  },
+  "register": {
+    "candidate": {
+      "title": "Pages register candidate title",
+      "subtitle": "Pages register candidate subtitle"
+    },
+    "collaborator": {
+      "title": "Pages register collaborator title",
+      "subtitle": "Pages register collaborator subtitle"
+    },
+    "headhunter": {
+      "title": "Pages register headhunter title",
+      "subtitle": "Pages register headhunter subtitle"
+    },
+    "subtitle": "Pages register subtitle",
+    "haveAccount": "Pages register have account",
+    "signIn": "Pages register sign in"
+  },
+  "headhunterDetails": {
+    "companyName": "Pages headhunter details company name",
+    "registeredAddress": "Pages headhunter details registered address",
+    "registeredAddressHelp": "Pages headhunter details registered address help"
+  }
+}

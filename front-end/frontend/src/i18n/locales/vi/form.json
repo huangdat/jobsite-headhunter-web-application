@@ -1,0 +1,41 @@
+{
+  "validation": {
+    "fullNameRequired": "Form validation full Tên required",
+    "phoneNumberRequired": "Form validation Điện thoại number required",
+    "phoneNumberInvalid": "Form validation Điện thoại number invalid",
+    "bankNameRequired": "Form validation bank Tên required",
+    "accountNumberRequired": "Form validation Tài khoản number required",
+    "accountHolderNameRequired": "Form validation account holder Tên required"
+  },
+  "section": {
+    "personalInfo": "Biểu mẫu section personal info",
+    "personalInfoDesc": "Biểu mẫu section personal info desc",
+    "bankingInfo": "Biểu mẫu section banking info",
+    "bankingInfoDesc": "Biểu mẫu section banking info desc"
+  },
+  "label": {
+    "fullName": "Form label full Tên",
+    "phoneNumber": "Form label Điện thoại number",
+    "bankName": "Form label bank Tên",
+    "accountNumber": "Form label Tài khoản number",
+    "accountHolderName": "Form label account holder Tên",
+    "swiftCode": "Biểu mẫu label swift code"
+  },
+  "placeholder": {
+    "fullName": "Form placeholder full Tên",
+    "phoneNumber": "Form placeholder Điện thoại number",
+    "bankName": "Form placeholder bank Tên",
+    "accountNumber": "Form placeholder Tài khoản number",
+    "accountHolderName": "Form placeholder account holder Tên",
+    "swiftCode": "Biểu mẫu placeholder swift code"
+  },
+  "help": {
+    "swiftCode": "Biểu mẫu help swift code",
+    "autoSave": "Form help auto Lưu"
+  },
+  "register": {
+    "signIn": "Form register Đăng nhập",
+    "joinNetwork": "Form Đăng ký join network",
+    "professional": "Form Đăng ký professional"
+  }
+}

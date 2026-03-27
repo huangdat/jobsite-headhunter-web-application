@@ -1,0 +1,47 @@
+{
+  "page": {
+    "subtitleSaving": "Profile page subtitle saving",
+    "subtitleSuccess": "Profile page subtitle success",
+    "subtitleDefault": "Profile page subtitle default",
+    "eyebrow": "Profile page eyebrow",
+    "title": "Profile page title"
+  },
+  "alerts": {
+    "saveErrorTitle": "Profile alerts save error title",
+    "validationErrorTitle": "Profile alerts validation error title",
+    "saveSuccessTitle": "Profile alerts save success title",
+    "saveSuccessBody": "Profile alerts save success body"
+  },
+  "actions": {
+    "discardChanges": "Profile actions discard changes",
+    "saving": "Profile actions saving",
+    "saveChanges": "Profile actions save changes"
+  },
+  "sidebar": {
+    "strengthTitle": "Profile sidebar strength title",
+    "strengthHint": "Profile sidebar strength hint",
+    "tipsTitle": "Profile sidebar tips title",
+    "tipOne": "Profile sidebar tip one",
+    "tipTwo": "Profile sidebar tip two",
+    "tipThree": "Profile sidebar tip three",
+    "insightEyebrow": "Profile sidebar insight eyebrow",
+    "insightBody": "Profile sidebar insight body"
+  },
+  "form": {
+    "sectionTitle": "Profile form section title",
+    "sectionSubtitle": "Profile form section subtitle",
+    "openForWork": "Profile form open for work",
+    "fullName": "Profile form full name",
+    "jobTitle": "Profile form job title",
+    "currentTitlePlaceholder": "Profile form current title placeholder",
+    "currentStatus": "Profile form current status",
+    "currentStatusAria": "Profile form current status aria",
+    "yearsOfExperience": "Profile form years of experience",
+    "city": "Profile form city",
+    "cityPlaceholder": "Profile form city placeholder",
+    "salaryMin": "Profile form salary min",
+    "salaryMax": "Profile form salary max",
+    "professionalBio": "Profile form professional bio",
+    "bioPlaceholder": "Profile form bio placeholder"
+  }
+}

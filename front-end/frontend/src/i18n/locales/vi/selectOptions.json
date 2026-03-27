@@ -1,0 +1,26 @@
+{
+  "selectGender": "Select options select Giới tính",
+  "genders": {
+    "male": "Select options Giới tínhs male",
+    "female": "Select options Giới tínhs female",
+    "other": "Select options Giới tínhs other"
+  },
+  "selectCompanyScale": "Select options select Công ty scale",
+  "companyScaleOptions": {
+    "0": {
+      "label": "Select options Công ty scale options 0 label"
+    },
+    "1": {
+      "label": "Select options Công ty scale options 1 label"
+    },
+    "2": {
+      "label": "Select options Công ty scale options 2 label"
+    },
+    "3": {
+      "label": "Select options Công ty scale options 3 label"
+    },
+    "4": {
+      "label": "Select options Công ty scale options 4 label"
+    }
+  }
+}

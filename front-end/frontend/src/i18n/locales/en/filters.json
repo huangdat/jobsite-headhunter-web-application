@@ -1,0 +1,9 @@
+{
+  "filterRole": "Filters filter role",
+  "filterStatus": "Filters filter status",
+  "filterUsers": "Filters filter users",
+  "filterAllRoles": "Filters filter all roles",
+  "filterAllStatus": "Filters filter all status",
+  "applyFilter": "Filters apply filter",
+  "resetFilter": "Filters reset filter"
+}

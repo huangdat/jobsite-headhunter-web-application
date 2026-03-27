@@ -1,0 +1,47 @@
+{
+  "page": {
+    "subtitleSaving": "Profile page subtitle Đang lưu...",
+    "subtitleSuccess": "Hồ sơ page subtitle success",
+    "subtitleDefault": "Hồ sơ page subtitle default",
+    "eyebrow": "Hồ sơ page eyebrow",
+    "title": "Hồ sơ page title"
+  },
+  "alerts": {
+    "saveErrorTitle": "Profile alerts Lưu error title",
+    "validationErrorTitle": "Hồ sơ alerts validation error title",
+    "saveSuccessTitle": "Profile alerts Lưu success title",
+    "saveSuccessBody": "Profile alerts Lưu success body"
+  },
+  "actions": {
+    "discardChanges": "Hồ sơ actions discard changes",
+    "saving": "Profile actions Đang lưu...",
+    "saveChanges": "Profile actions Lưu changes"
+  },
+  "sidebar": {
+    "strengthTitle": "Hồ sơ sidebar strength title",
+    "strengthHint": "Hồ sơ sidebar strength hint",
+    "tipsTitle": "Hồ sơ sidebar tips title",
+    "tipOne": "Hồ sơ sidebar tip one",
+    "tipTwo": "Hồ sơ sidebar tip two",
+    "tipThree": "Hồ sơ sidebar tip three",
+    "insightEyebrow": "Hồ sơ sidebar insight eyebrow",
+    "insightBody": "Hồ sơ sidebar insight body"
+  },
+  "form": {
+    "sectionTitle": "Hồ sơ form section title",
+    "sectionSubtitle": "Hồ sơ form section subtitle",
+    "openForWork": "Hồ sơ form open for work",
+    "fullName": "Profile form full Tên",
+    "jobTitle": "Hồ sơ form job title",
+    "currentTitlePlaceholder": "Hồ sơ form current title placeholder",
+    "currentStatus": "Hồ sơ form current status",
+    "currentStatusAria": "Hồ sơ form current status aria",
+    "yearsOfExperience": "Hồ sơ form years of experience",
+    "city": "Hồ sơ form city",
+    "cityPlaceholder": "Hồ sơ form city placeholder",
+    "salaryMin": "Hồ sơ form salary min",
+    "salaryMax": "Hồ sơ form salary max",
+    "professionalBio": "Hồ sơ form professional bio",
+    "bioPlaceholder": "Hồ sơ form bio placeholder"
+  }
+}

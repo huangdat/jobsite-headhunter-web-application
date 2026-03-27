@@ -1,0 +1,14 @@
+{
+  "account": {
+    "title": "Steps account title",
+    "desc": "Steps account desc"
+  },
+  "personal": {
+    "title": "Steps personal title",
+    "desc": "Steps personal desc"
+  },
+  "details": {
+    "title": "Steps details title",
+    "desc": "Steps details desc"
+  }
+}

@@ -124,15 +124,21 @@
         }
       },
       "tips": {
-        "title": "MẸO TỐI ƯU HÓA CV",
-        "addKeywords": "Thêm từ khóa",
-        "addKeywordsDesc": "AI của chúng tôi phát hiện ra các thuật ngữ ngành bị thiếu như \"Quản lý PnL\" và \"Chuyển đổi\".",
-        "tailorRoles": "Điều chỉnh cho các vai trò cụ thể",
-        "tailorRolesDesc": "CV chung thực hiện kém hơn 40% trong bộ lọc tìm kiếm điều hành. Tạo các phiên bản mục tiêu.",
-        "fileFormats": "Định Dạng Tệp",
-        "fileFormatsDesc": "Sử dụng PDF để định dạng nhất quán hoặc DOCX để tương thích với ATS.",
-        "fileSize": "Kích Thước Tệp",
-        "fileSizeDesc": "Giữ tệp của bạn dưới 5MB để đảm bảo tải nhanh cho nhà tuyển dụng."
+        "title": "Mẹo Tối Ưu Hóa CV",
+        "bestPracticeTip1": "Định lượng kết quả bằng doanh thu, tăng trưởng % hoặc kích thước đội.",
+        "bestPracticeTip2": "Giữ tóm tắt quản lý của bạn dưới 200 từ.",
+        "bestPracticeTip3": "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp của bạn.",
+        "privacyTip1": "Kiểm soát hoàn toàn khả năng hiển thị của bạn. Chọn ai có thể xem thông tin của bạn: giữ kín, công khai cho tất cả nhà tuyển dụng xác minh, hoặc chỉ hiển thị cho các công ty điều hành cụ thể.",
+        "privacyTip2": "Tối ưu hóa tác động của bạn. Sử dụng định dạng chuyên nghiệp sạch sẽ và đảm bảo tóm tắt quản lý của bạn nêu bật ROI có thể đo lường để nổi bật với các đối tác tìm kiếm toàn cầu.",
+        "privacyTip3": "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp của bạn, nhấn mạnh tác động lãnh đạo và thành tích chiến lược của bạn.",
+        "optimizationTitle": "Áp dụng những mẹo này để cải thiện tỷ lệ khớp CV của bạn",
+        "uploadPlaceholder": "Kéo và thả CV chuyên miệc của bạn tại đây hoặc nhấp để duyệt các tệp từ máy tính của bạn.",
+        "profileStrengthHint": "Hoàn thành các mục còn lại để cải thiện khả năng hiển thị hồ sơ của bạn.",
+        "auditGuide": "Hướng dẫn cá nhân hóa từ các chuyên gia ngành",
+        "reviewGuide": "Tư vấn 1:1 với các headhunter chuyên nghiệp",
+        "visibilityPrivate": "Riêng tư",
+        "visibilityAllRecruiters": "Tất cả Nhà Tuyển Dụng",
+        "visibilityVerifiedOnly": "Chỉ Nhà Tuyển Dụng Xác Minh"
       },
       "bestPractices": {
         "title": "THỰC HÀNH TỐT NHẤT CV",
@@ -174,32 +180,61 @@
         "clear": "Xóa"
       },
       "upload": {
-        "selectFile": "Chọn tệp CV",
-        "maxFileSizeLabel": "• Tối đa"
+        "selectFile": "Chọn tệp CV"
       },
       "messages": {
         "uploadSuccess": "Tải lên CV thành công!",
         "uploadError": "Đã xảy ra lỗi trong quá trình tải lên.",
+        "uploading": "Đang tải lên...",
         "deleteConfirm": "Bạn có chắc chắn muốn xóa CV này không?",
         "deleteSuccess": "Xóa CV thành công.",
         "updateSuccess": "Cập nhật cài đặt thành công."
-      },
-      "tips": {
-        "bestPracticeTip1": "Định lượng kết quả bằng doanh thu, tăng trưởng % hoặc kích thước đội.",
-        "bestPracticeTip2": "Giữ tóm tắt quản lý của bạn dưới 200 từ.",
-        "bestPracticeTip3": "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp của bạn.",
-        "privacyTip1": "Kiểm soát hoàn toàn khả năng hiển thị của bạn. Chọn ai có thể xem thông tin của bạn: giữ kín, công khai cho tất cả nhà tuyển dụng xác minh, hoặc chỉ hiển thị cho các công ty điều hành cụ thể.",
-        "privacyTip2": "Tối ưu hóa tác động của bạn. Sử dụng định dạng chuyên nghiệp sạch sẽ và đảm bảo tóm tắt quản lý của bạn nêu bật ROI có thể đo lường để nổi bật với các đối tác tìm kiếm toàn cầu.",
-        "privacyTip3": "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp của bạn, nhấn mạnh tác động lãnh đạo và thành tích chiến lược của bạn.",
-        "optimizationTitle": "Áp dụng những mẹo này để cải thiện tỷ lệ khớp CV của bạn",
-        "uploadPlaceholder": "Kéo và thả CV chuyên miệc của bạn tại đây hoặc nhấp để duyệt các tệp từ máy tính của bạn.",
-        "profileStrengthHint": "Hoàn thành các mục còn lại để cải thiện khả năng hiển thị hồ sơ của bạn.",
-        "auditGuide": "Hướng dẫn cá nhân hóa từ các chuyên gia ngành",
-        "reviewGuide": "Tư vấn 1:1 với các headhunter chuyên nghiệp",
-        "visibilityPrivate": "Riêng tư",
-        "visibilityAllRecruiters": "Tất cả Nhà Tuyển Dụng",
-        "visibilityVerifiedOnly": "Chỉ Nhà Tuyển Dụng Xác Minh"
       }
     }
+  },
+  "upload": {
+    "maxFileSizeLabel": "Kích thước tệp tối đa: 5 MB"
+  },
+  "messages": {
+    "uploading": "Đang tải lên..."
+  },
+  "candidate": {
+    "tips": {
+      "profileStrengthHint": "Hoàn thành các mục còn lại để cải thiện khả năng hiển thị hồ sơ của bạn.",
+      "auditGuide": "Hướng dẫn cá nhân hóa từ các chuyên gia ngành",
+      "reviewGuide": "Tư vấn 1:1 với các headhunter chuyên nghiệp",
+      "uploadPlaceholder": "Kéo và thả CV chuyên miệc của bạn tại đây hoặc nhấp để duyệt các tệp từ máy tính của bạn.",
+      "optimizationTitle": "Áp dụng những mẹo này để cải thiện tỷ lệ khớp CV của bạn",
+      "privacyTip1": "Kiểm soát hoàn toàn khả năng hiển thị của bạn. Chọn ai có thể xem thông tin của bạn: giữ kín, công khai cho tất cả nhà tuyển dụng xác minh, hoặc chỉ hiển thị cho các công ty điều hành cụ thể.",
+      "privacyTip2": "Tối ưu hóa tác động của bạn. Sử dụng định dạng chuyên nghiệp sạch sẽ và đảm bảo tóm tắt quản lý của bạn nêu bật ROI có thể đo lường để nổi bật với các đối tác tìm kiếm toàn cầu.",
+      "privacyTip3": "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp của bạn, nhấn mạnh tác động lãnh đạo và thành tích chiến lược của bạn.",
+      "bestPracticeTip1": "Định lượng kết quả bằng doanh thu, tăng trưởng % hoặc kích thước đội.",
+      "bestPracticeTip2": "Giữ tóm tắt quản lý của bạn dưới 200 từ.",
+      "bestPracticeTip3": "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp của bạn."
+    },
+    "validation": {
+      "fileTooLargeShort": "Quá lớn",
+      "invalidFileFormatShort": "Định dạng không hợp lệ",
+      "deleteExistingToUpload": "Xóa một CV hiện có để tải lên phiên bản mới."
+    }
+  },
+  "tips": {
+    "profileStrengthHint": "Hoàn thành các mục còn lại để cải thiện khả năng hiển thị hồ sơ của bạn.",
+    "auditGuide": "Hướng dẫn cá nhân hóa từ các chuyên gia ngành",
+    "reviewGuide": "Tư vấn 1:1 với các headhunter chuyên nghiệp",
+    "uploadPlaceholder": "Kéo và thả CV chuyên miệc của bạn tại đây hoặc nhấp để duyệt các tệp từ máy tính của bạn.",
+    "optimizationTitle": "Áp dụng những mẹo này để cải thiện tỷ lệ khớp CV của bạn",
+    "privacyTip1": "Kiểm soát hoàn toàn khả năng hiển thị của bạn. Chọn ai có thể xem thông tin của bạn: giữ kín, công khai cho tất cả nhà tuyển dụng xác minh, hoặc chỉ hiển thị cho các công ty điều hành cụ thể.",
+    "privacyTip2": "Tối ưu hóa tác động của bạn. Sử dụng định dạng chuyên nghiệp sạch sẽ và đảm bảo tóm tắt quản lý của bạn nêu bật ROI có thể đo lường để nổi bật với các đối tác tìm kiếm toàn cầu.",
+    "privacyTip3": "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp của bạn, nhấn mạnh tác động lãnh đạo và thành tích chiến lược của bạn.",
+    "bestPracticeTip1": "Định lượng kết quả bằng doanh thu, tăng trưởng % hoặc kích thước đội.",
+    "bestPracticeTip2": "Giữ tóm tắt quản lý của bạn dưới 200 từ.",
+    "bestPracticeTip3": "Tập trung vào 10 năm cuối cùng của con đường sự nghiệp của bạn."
+  },
+  "validation": {
+    "fileTooLargeShort": "Quá lớn",
+    "invalidFileFormatShort": "Định dạng không hợp lệ",
+    "deleteExistingToUpload": "Xóa một CV hiện có để tải lên phiên bản mới.",
+    "maxFilesReached": "Đạt số lượng tệp tối đa"
   }
 }

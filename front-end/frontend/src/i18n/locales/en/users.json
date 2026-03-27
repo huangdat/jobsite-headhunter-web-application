@@ -1,4 +1,7 @@
 {
+  "admin": {
+    "label": "Admin"
+  },
   "aria": {
     "goBack": "Go back to previous page",
     "editProfile": "Edit user profile",
@@ -23,6 +26,13 @@
     "clearAllFilters": "Clear all filters",
     "rowsPerPage": "Rows per page:",
     "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} users"
+  },
+  "user": {
+    "list": {
+      "empty": {
+        "description": "No users found"
+      }
+    }
   },
   "filters": {
     "filterUsers": "Filter Users",
@@ -52,15 +62,17 @@
     "unlockAccount": "Unlock Account",
     "deleteUser": "Delete User"
   },
+  "failedToLoadUsers": "Failed to load users",
+  "noPermissionAccess": "You don't have permission to access this",
+  "sessionExpiredLoginAgain": "Your session has expired. Please login again.",
   "common": {
-    "loading": "Loading users...",
-    "noDataAvailable": "No data available",
     "failedToFetchUsers": "Failed to fetch users",
     "failedToFetchUserDetails": "Failed to fetch user details",
     "featureComingSoon": "Feature coming soon",
     "permanentDelete": "Permanent Delete",
     "loading": "Loading...",
-    "noDataAvailable": "No data available"
+    "noDataAvailable": "No data available",
+    "tryAgain": "Try Again"
   },
   "detail": {
     "userDetails": "User Details",
@@ -97,6 +109,8 @@
     "dangerZoneDesc": "The actions below will directly affect user access and system data.",
     "lockAccount": "Lock Account",
     "lockAccountDesc": "Temporarily block access. User can unlock when needed.",
+    "unlockAccount": "Unlock Account",
+    "unlockAccountDesc": "Click to unlock this account",
     "softDelete": "Soft Delete",
     "softDeleteDesc": "Mark for deletion. Data is kept for 30 days for recovery.",
     "hardDelete": "Hard Delete",
@@ -109,11 +123,7 @@
     "PENDING": "Pending",
     "ACTIVE": "Active",
     "SUSPENDED": "Suspended",
-    "DELETED": "Deleted",
-    "pending": "Pending",
-    "active": "Active",
-    "suspended": "Suspended",
-    "deleted": "Deleted"
+    "DELETED": "Deleted"
   },
   "loginStatus": {
     "successful": "Successful",
@@ -123,10 +133,6 @@
     "failedLabel": "Failed"
   },
   "roles": {
-    "admin": "Administrator",
-    "headhunter": "Head Hunter",
-    "collaborator": "Collaborator",
-    "candidate": "Candidate",
     "ADMIN": "Administrator",
     "HEADHUNTER": "Head Hunter",
     "COLLABORATOR": "Collaborator",
@@ -140,6 +146,9 @@
   "messages": {
     "lockSuccess": "Account has been locked",
     "lockError": "Unable to lock account",
+    "failedToLockUser": "Failed to lock user",
+    "unlockSuccess": "Account has been unlocked",
+    "failedToUnlockUser": "Failed to unlock user",
     "softDeleteSuccess": "Account has been deleted (can be recovered within 30 days)",
     "softDeleteError": "Unable to delete account",
     "hardDeleteSuccess": "Account has been permanently deleted",
@@ -363,8 +372,6 @@
     "companyEmployees": "employees and representatives",
     "usersRegisteredIn": "Users registered in",
     "unknown": "Unknown",
-    "active": "Active",
-    "inactive": "Inactive",
     "error": {
       "permissionDenied": "Permission Denied",
       "permissionDeniedDescription": "You do not have permission to access the classification feature. Only administrators can view user classifications.",

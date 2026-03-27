@@ -1,0 +1,14 @@
+{
+  "account": {
+    "title": "Steps Tài khoản title",
+    "desc": "Steps Tài khoản desc"
+  },
+  "personal": {
+    "title": "Tiêu đề",
+    "desc": "Mô tả cá nhân"
+  },
+  "details": {
+    "title": "Tiêu đề",
+    "desc": "Mô tả chi tiết"
+  }
+}

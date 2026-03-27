@@ -137,6 +137,11 @@
   "success": {
     "profileUpdated": "Hồ sơ của bạn đã được cập nhật thành công"
   },
+  "failedToLoadCommission": "Không thể tải hoa hồng",
+  "failedToSaveProfile": "Không thể lưu hồ sơ",
+  "messages": {
+    "failedToRequestPayout": "Không thể gửi yêu cầu chi trả"
+  },
   "errors": {
     "title": "Có gì đó không ổn"
   }

@@ -1,0 +1,16 @@
+{
+  "pageTitle": "List Trang title",
+  "rowsPerPage": "List rows per Trang",
+  "paginationInfo": "Danh sách pagination info",
+  "documentation": "List Tài liệuation",
+  "addUserButton": "List add Người dùng button",
+  "searchPlaceholder": "List Tìm kiếm placeholder",
+  "filterButton": "List filter Nút",
+  "groupByLabel": "Danh sách group by label",
+  "groupByNone": "Danh sách group by none",
+  "groupByRole": "Danh sách group by role",
+  "groupByStatus": "List group by Trạng thái",
+  "groupByCompany": "List group by Công ty",
+  "clearAllFilters": "List clear all Bộ lọcs",
+  "noResults": "List Không có kết quả"
+}

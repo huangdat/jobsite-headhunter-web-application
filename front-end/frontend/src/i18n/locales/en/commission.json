@@ -137,6 +137,11 @@
   "success": {
     "profileUpdated": "Your profile has been updated successfully"
   },
+  "failedToLoadCommission": "Failed to load commission",
+  "failedToSaveProfile": "Failed to save profile",
+  "messages": {
+    "failedToRequestPayout": "Failed to request payout"
+  },
   "errors": {
     "title": "Something went wrong"
   }

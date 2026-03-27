@@ -1,4 +1,7 @@
 {
+  "admin": {
+    "label": "Quản trị viên"
+  },
   "aria": {
     "goBack": "Quay lại trang trước",
     "editProfile": "Chỉnh sửa hồ sơ người dùng",
@@ -24,6 +27,13 @@
     "rowsPerPage": "Dòng mỗi trang:",
     "paginationInfo": "Hiển thị {{startItem}}-{{endItem}} của {{totalItems}} người dùng"
   },
+  "user": {
+    "list": {
+      "empty": {
+        "description": "Không tìm thấy người dùng nào"
+      }
+    }
+  },
   "filters": {
     "filterUsers": "Lọc Người dùng",
     "filterRole": "Vai trò",
@@ -38,10 +48,10 @@
   "status": {
     "PENDING": "Đang chờ",
     "ACTIVE": "Hoạt động",
-    "SUSPENDED": "Bị đình chỉ",
+    "SUSPENDED": "Bị khóa",
     "DELETED": "Đã xóa",
-    "active": "Hoạt động",
-    "inactive": "Không hoạt động"
+    "active": "Active",
+    "inactive": "Inactive"
   },
   "columns": {
     "user": "NGƯỜI DÙNG",
@@ -56,15 +66,17 @@
     "unlockAccount": "Mở khóa Tài khoản",
     "deleteUser": "Xóa Người dùng"
   },
+  "failedToLoadUsers": "Không thể tải danh sách người dùng",
+  "noPermissionAccess": "Bạn không có quyền truy cập",
+  "sessionExpiredLoginAgain": "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.",
   "common": {
-    "loading": "Đang tải người dùng...",
+    "loading": "Đang tải...",
     "noDataAvailable": "Không có dữ liệu",
     "failedToFetchUsers": "Không thể tải danh sách người dùng",
     "failedToFetchUserDetails": "Không thể tải chi tiết người dùng",
     "featureComingSoon": "Tính năng sắp ra mắt",
     "permanentDelete": "Xóa vĩnh viễn",
-    "loading": "Đang tải...",
-    "noDataAvailable": "Không có dữ liệu"
+    "tryAgain": "Thử Lại"
   },
   "detail": {
     "userDetails": "Chi tiết Người dùng",
@@ -101,30 +113,30 @@
     "dangerZoneDesc": "Các hành động dưới đây sẽ trực tiếp ảnh hưởng đến quyền truy cập và dữ liệu hệ thống của người dùng.",
     "lockAccount": "Khóa Tài khoản",
     "lockAccountDesc": "Tạm thời chặn quyền truy cập. Người dùng có thể mở khóa khi cần.",
+    "unlockAccount": "Mở Khóa Tài khoản",
+    "unlockAccountDesc": "Nhấp để mở khóa tài khoản này",
     "softDelete": "Xóa Mềm",
     "softDeleteDesc": "Đánh dấu để xóa. Dữ liệu được giữ trong 30 ngày để phục hồi.",
     "hardDelete": "Xóa Cứng",
     "hardDeleteDesc": "Xóa vĩnh viễn người dùng và tất cả dữ liệu liên quan. Không thể hoàn tác.",
     "cannotPerformOnAdmin": "Không thể thực hiện trên Admin khác",
-    "errorLoadingData": "Lỗi Tải Dữ liệu"
+    "errorLoadingData": "Lỗi Tải Dữ liệu",
+    "failedToFetchUserDetails": "Failed to fetch user details"
   },
   "statuses": {
-    "pending": "Đang chờ xử lý",
-    "active": "Hoạt động",
-    "suspended": "Bị Tạm dừng",
-    "deleted": "Đã xóa"
+    "PENDING": "Đang chờ xử lý",
+    "ACTIVE": "Hoạt động",
+    "SUSPENDED": "Bị Tạm dừng",
+    "DELETED": "Đã xóa"
   },
   "loginStatus": {
     "successful": "Thành công",
     "success": "Thành công",
     "failed": "Nỗ lực Thất bại",
-    "failedAttempt": "Thất bại"
+    "failedAttempt": "Thất bại",
+    "failedLabel": "Failed"
   },
   "roles": {
-    "admin": "Quản trị viên",
-    "headhunter": "Nhà tuyển dụng",
-    "collaborator": "Cộng tác viên",
-    "candidate": "Ứng viên",
     "ADMIN": "Quản trị viên",
     "HEADHUNTER": "Nhà tuyển dụng",
     "COLLABORATOR": "Cộng tác viên",
@@ -138,6 +150,9 @@
   "messages": {
     "lockSuccess": "Tài khoản đã bị khóa",
     "lockError": "Không thể khóa tài khoản",
+    "failedToLockUser": "Không thể khóa người dùng",
+    "unlockSuccess": "Tài khoản đã được mở khóa",
+    "failedToUnlockUser": "Không thể mở khóa người dùng",
     "softDeleteSuccess": "Tài khoản đã bị xóa (có thể phục hồi trong 30 ngày)",
     "softDeleteError": "Không thể xóa tài khoản",
     "hardDeleteSuccess": "Tài khoản đã bị xóa vĩnh viễn",
@@ -365,6 +380,11 @@
       "unauthorizedDescription": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục.",
       "loadFailed": "Không Thể Tải Người Dùng",
       "loadFailedDescription": "Không thể tải dữ liệu người dùng. Vui lòng thử lại sau."
-    }
+    },
+    "quickNavigation": "Quick Navigation",
+    "userManagementTitle": "User Management",
+    "userManagementDesc": "Manage all users and permissions",
+    "classificationTitle": "Classification",
+    "classificationDesc": "View user distribution and stats"
   }
 }

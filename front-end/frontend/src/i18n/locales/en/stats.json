@@ -1,0 +1,15 @@
+{
+  "totalEarnings": "Stats total earnings",
+  "lifetimeTotal": "Stats lifetime total",
+  "pending": "Stats pending",
+  "paid": "Stats paid",
+  "completed": "Stats completed",
+  "referrals": "Stats referrals",
+  "referralsHint": "Stats referrals hint",
+  "activeJobs": "Stats active jobs",
+  "ongoingJobs": "Stats ongoing jobs",
+  "commissionRate": "Stats commission rate",
+  "rateInfo": "Stats rate info",
+  "conversionRate": "Stats conversion rate",
+  "noEarningsYet": "Stats no earnings yet"
+}

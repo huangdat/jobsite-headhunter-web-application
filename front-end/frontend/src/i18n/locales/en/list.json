@@ -1,0 +1,16 @@
+{
+  "pageTitle": "List page title",
+  "rowsPerPage": "List rows per page",
+  "paginationInfo": "List pagination info",
+  "documentation": "List documentation",
+  "addUserButton": "List add user button",
+  "searchPlaceholder": "List search placeholder",
+  "filterButton": "List filter button",
+  "groupByLabel": "List group by label",
+  "groupByNone": "List group by none",
+  "groupByRole": "List group by role",
+  "groupByStatus": "List group by status",
+  "groupByCompany": "List group by company",
+  "clearAllFilters": "List clear all filters",
+  "noResults": "List no results"
+}

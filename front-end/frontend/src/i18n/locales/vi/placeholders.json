@@ -1,0 +1,20 @@
+{
+  "username": "Placeholders userTên",
+  "password": "Placeholders Mật khẩu",
+  "currentPassword": "Placeholders current Mật khẩu",
+  "newPassword": "Placeholders new Mật khẩu",
+  "confirmPassword": "Placeholders Xác nhận password",
+  "name": "Placeholders Tên",
+  "phone": "Placeholders Điện thoại",
+  "email": "Placeholders Email",
+  "companyName": "Placeholders company Tên",
+  "taxId": "Mã số thuế",
+  "companyWebsite": "Placeholders Công ty website",
+  "commissionRate": "Tỷ lệ hoa hồng",
+  "jobTitle": "Tiêu đề công việc",
+  "experience": "Kinh nghiệm",
+  "location": "Vị trí",
+  "salaryMin": "Lương tối thiểu",
+  "salaryMax": "Lương tối đa",
+  "bio": "Tiểu sử"
+}

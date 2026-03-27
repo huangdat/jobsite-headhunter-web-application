@@ -51,8 +51,13 @@
     "under_review_desc": "Admin is reviewing your information",
     "approved": "Approved",
     "approved_desc": "Profile verification complete",
+    "approved_title": "Verification Approved",
+    "approved_message": "Congratulations! Your business profile has been verified.",
     "rejected": "Rejected",
-    "rejected_desc": "Your profile needs modifications"
+    "rejected_desc": "Your profile needs modifications",
+    "rejected_title": "Verification Rejected",
+    "in_progress": "Verification in Progress",
+    "title": "Business verification title"
   },
   "documents": {
     "title": "Submitted Documents",
@@ -68,17 +73,43 @@
     "download": "Download",
     "delete": "Delete"
   },
+  "document": {
+    "no_documents": "No documents uploaded yet",
+    "no_documents_desc": "Upload business documents to verify your company",
+    "submitted": "Documents Submitted",
+    "submitted_desc": "Your documents are waiting for verification",
+    "verified": "Verified",
+    "uploaded": "Uploaded",
+    "download": "Download Document",
+    "delete": "Delete Document",
+    "confirm": "Are you sure you want to delete this document?",
+    "cancel": "Cancel",
+    "deleting": "Deleting...",
+    "delete_error": "Failed to delete document. Please try again."
+  },
   "strength": {
     "title": "Profile Strength",
     "subtitle": "Complete your profile to maximize visibility",
     "no_data": "No profile data available",
     "completed_items": "Completed",
     "total_items": "Total Items",
-    "strengthen_profile": "Strengthen Your Profile"
+    "strengthen_profile": "Strengthen Your Profile",
+    "complete": "Profile Complete",
+    "of": "of",
+    "items": "items",
+    "excellent": "Excellent",
+    "good": "Good",
+    "incomplete": "Incomplete",
+    "breakdown": "Strength Breakdown",
+    "next_action": "Next Action",
+    "updated": "Last Updated"
   },
   "optimization": {
     "title": "Optimization Tips",
     "subtitle": "Proven ways to improve your profile",
+    "start_here": "Start Here",
+    "additional": "Additional Tips",
+    "info": "Pro Tips for Success",
     "complete_profile": "Complete Your Profile",
     "complete_profile_desc": "Fill in all required fields to improve profile visibility",
     "add_document": "Add Business Documents",
@@ -122,6 +153,7 @@
     "invalid_tax_id": "Please enter a valid tax ID",
     "invalid_website": "Please enter a valid website URL"
   },
+  "failedToLoadProfile": "Failed to load profile",
   "loading": {
     "profile": "Loading profile...",
     "documents": "Loading documents...",
@@ -140,5 +172,10 @@
   },
   "state": {
     "loading": "Loading profile information..."
+  },
+  "business": {
+    "verification": {
+      "title": "Business verification title"
+    }
   }
 }
