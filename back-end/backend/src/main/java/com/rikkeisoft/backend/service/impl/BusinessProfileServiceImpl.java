@@ -1,13 +1,11 @@
 package com.rikkeisoft.backend.service.impl;
 
-import com.azure.core.annotation.Post;
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.dto.resp.business.VietQRBusinessResp;
 import com.rikkeisoft.backend.repository.*;
-import com.rikkeisoft.backend.enums.ErrorCode;
-import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.AccountMapper;
 import com.rikkeisoft.backend.mapper.BusinessProfileMapper;
 import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
@@ -64,7 +62,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_HEADHUNTER')")
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
     public BusinessProfileResp getBusinessProfileById(Long businessProfileId) {
         BusinessProfile businessProfile = businessProfileRepo.findById(businessProfileId)
                 .orElseThrow(() -> new AppException(ErrorCode.BUSINESS_PROFILE_NOT_FOUND));

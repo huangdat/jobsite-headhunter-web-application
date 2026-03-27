@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.JobMapper;
@@ -73,7 +74,7 @@ public class JobManageServiceImpl implements JobManageService {
     static String MSG_NO_OPEN_JOBS = "The system currently has no job postings.";
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER)
     public JobDetailResp createJobPost(JobReq jobReq) {
         var context = SecurityContextHolder.getContext();
         String contextName = context.getAuthentication().getName();

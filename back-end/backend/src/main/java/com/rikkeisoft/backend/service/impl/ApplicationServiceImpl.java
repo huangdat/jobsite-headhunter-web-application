@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ApplicationStatus;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
@@ -12,7 +13,6 @@ import com.rikkeisoft.backend.model.dto.resp.application.ApplicationResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.Application;
 import com.rikkeisoft.backend.repository.ApplicationRepo;
-import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.CandidateCv;
 import com.rikkeisoft.backend.model.entity.Job;
 import com.rikkeisoft.backend.enums.JobStatus;
@@ -69,7 +69,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             ApplicationStatus.CANCELLED, Set.of());
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')")
+    @PreAuthorize(SecurityConstants.CANDIDATE)
     @Transactional
     public ApplicationDetailResp applyForJob(Long jobId, ApplicationCreateReq applicationCreateReq) {
         // get Candidate id to put into ApplicationDetailResp
@@ -116,8 +116,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-
-    @PreAuthorize("hasAnyAuthority( 'SCOPE_CANDIDATE')")
+    @PreAuthorize(SecurityConstants.CANDIDATE)
     public Page<ApplicationResp> getMyApplications(Pageable pageable, ApplicationStatus status) {
 
         JwtAuthenticationToken auth = (JwtAuthenticationToken) SecurityContextHolder.getContext()
