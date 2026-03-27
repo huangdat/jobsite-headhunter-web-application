@@ -1,11 +1,13 @@
-import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { useJobsTranslation } from "@/shared/hooks";
 import { JobManagePage } from "@/features/jobs/pages/JobManagePage";
 import { JobCreatePage } from "@/features/jobs/pages/JobCreatePage";
 import { ApplicantsPage } from "@/features/headhunter/pages/ApplicantsPage";
 import { Button } from "@/components/ui/button";
 
 export function JobsHubPage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
+  const [tab, setTab] = useState<"list" | "create" | "applicants">("list");
 
   return (
     <div className="px-4 py-6">

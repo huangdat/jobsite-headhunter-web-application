@@ -7,8 +7,9 @@ import {
   XCircle,
   Loader,
 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+
 import { useUsersTranslation } from "@/shared/hooks";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 interface RelatedDataCount {
   applications?: number;
@@ -58,7 +59,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   onConfirm,
 }) => {
   const { t } = useUsersTranslation();
-  const { t: tCommon } = useTranslation("auth");
+  const { t: tCommon } = useAppTranslation();
   const [step, setStep] = useState<ModalStep>("choice");
   const [selectedType, setSelectedType] = useState<"soft" | "hard" | null>(
     null

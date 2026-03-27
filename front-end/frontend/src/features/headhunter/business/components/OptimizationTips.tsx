@@ -1,10 +1,10 @@
-/**
+﻿/**
  * Optimization Tips Component
  * Displays actionable tips to improve profile strength
  */
 
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { Lightbulb, ChevronRight } from "lucide-react";
 
 export interface OptimizationTip {
@@ -97,7 +97,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
   isLoading = false,
   className = "",
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
 
   if (isLoading) {
     return (
@@ -130,13 +130,10 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            {t("business.optimization.title", "Optimization Tips")}
+            {t("business.optimization.title")}
           </h3>
           <p className="text-xs text-slate-600">
-            {t(
-              "business.optimization.subtitle",
-              "Quick ways to boost your profile"
-            )}
+            {t("business.optimization.subtitle")}
           </p>
         </div>
       </div>
@@ -147,7 +144,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
         {highPriorityTips.length > 0 && (
           <>
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-700">
-              {t("business.optimization.start_here", "Start Here")}
+              {t("business.optimization.start_here")}
             </p>
             {highPriorityTips.slice(0, 2).map((tip) => (
               <div
@@ -157,7 +154,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
                 <div className="flex-1 min-w-0 pt-1">
                   <div className="flex items-center gap-2">
                     <p className="font-semibold text-slate-900">
-                      {t(tip.title, tip.title)}
+                      {t(tip.title)}
                     </p>
                     <span
                       className={`shrink-0 rounded-full px-2 py-1 text-xs font-semibold ${getPriorityBadgeColor(tip.priority)}`}
@@ -166,7 +163,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-slate-700">
-                    {t(tip.description, tip.description)}
+                    {t(tip.description)}
                   </p>
 
                   {tip.onAction && (
@@ -174,10 +171,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
                       onClick={tip.onAction}
                       className="mt-2 flex items-center gap-1 text-xs font-semibold text-slate-900 hover:text-slate-700"
                     >
-                      {t(
-                        tip.actionLabel || "common.take_action",
-                        "Take Action"
-                      )}
+                      {t(tip.actionLabel || "common.take_action")}
                       <ChevronRight className="h-3 w-3" />
                     </button>
                   )}
@@ -191,7 +185,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
         {otherTips.length > 0 && (
           <>
             <p className="mb-2 mt-4 text-xs font-semibold uppercase tracking-wide text-slate-700">
-              {t("business.optimization.additional", "Additional")}
+              {t("business.optimization.additional")}
             </p>
             {otherTips.slice(0, 2).map((tip) => (
               <div
@@ -200,15 +194,13 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
               >
                 <div className="flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="font-medium text-slate-900">
-                      {t(tip.title, tip.title)}
-                    </p>
+                    <p className="font-medium text-slate-900">{t(tip.title)}</p>
                     <span className="shrink-0 text-xs font-semibold text-slate-600">
                       +{tip.impact}%
                     </span>
                   </div>
                   <p className="mt-1 text-xs text-slate-700">
-                    {t(tip.description, tip.description)}
+                    {t(tip.description)}
                   </p>
                 </div>
               </div>
@@ -220,11 +212,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
       {/* Info Box */}
       <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
         <p className="text-xs font-medium text-blue-900">
-          💡{" "}
-          {t(
-            "business.optimization.info",
-            "Each completed action increases your profile visibility to recruiters"
-          )}
+          ðŸ’¡ {t("business.optimization.info")}
         </p>
       </div>
     </div>

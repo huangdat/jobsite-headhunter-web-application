@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useJobsTranslation } from "@/shared/hooks";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +10,7 @@ import type { SavedJob } from "../types";
 import { formatSalaryRange } from "../utils";
 
 export function SavedJobsPage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const navigate = useNavigate();
   const [jobs, setJobs] = useState<SavedJob[]>([]);
   const [isLoading, setIsLoading] = useState(true);

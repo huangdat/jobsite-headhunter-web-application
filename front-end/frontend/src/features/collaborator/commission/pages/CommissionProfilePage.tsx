@@ -5,7 +5,8 @@
  */
 
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import {
   CommissionForm,
   CommissionStats,
@@ -21,8 +22,8 @@ import { useCommissionManagement } from "../hooks/useCommissionManagement";
  * - Benefits section: Referral program benefits and FAQ
  */
 export function CommissionProfilePage() {
-  const { t } = useTranslation();
-  const commissionT = useTranslation("commission").t;
+  const { t: commissionT } = useCommissionTranslation();
+  const { t } = useAppTranslation();
 
   const { stats, requestPayout, loading } = useCommissionManagement();
 

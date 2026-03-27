@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useJobsTranslation } from "@/shared/hooks";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 
 export function JobCreatePage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const navigate = useNavigate();
   const [skills, setSkills] = useState<SkillOption[]>([]);
   const [isLoadingSkills, setIsLoadingSkills] = useState(true);
@@ -123,7 +123,7 @@ export function JobCreatePage() {
     try {
       const res = await createJob(values as JobFormValues);
       console.log("Job creation response:", res);
-      if (res && (res.status === 201 || res.status === 200)) {
+      if (res) {
         toast.success(t("messages.jobCreatedSuccess"));
         reset({
           title: "",

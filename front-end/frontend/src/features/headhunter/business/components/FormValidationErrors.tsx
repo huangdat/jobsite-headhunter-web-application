@@ -5,7 +5,7 @@
 
 import React from "react";
 import { AlertCircle } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type { BusinessFormErrors } from "../types/business.types";
 
 export interface FormValidationErrorProps {
@@ -23,7 +23,7 @@ export const FormValidationError: React.FC<FormValidationErrorProps> = ({
   touched = false,
   className = "",
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
 
   if (!error || !touched) return null;
 
@@ -50,7 +50,7 @@ export interface FormValidationErrorsListProps {
 export const FormValidationErrorsList: React.FC<
   FormValidationErrorsListProps
 > = ({ errors, touchedFields, className = "" }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
 
   const visibleErrors = Object.entries(errors)
     .filter(([fieldName]) => touchedFields.has(fieldName))

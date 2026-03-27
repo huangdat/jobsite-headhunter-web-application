@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useJobsTranslation } from "@/shared/hooks";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
 import {
-  fetchJobDetail,
+  getJobDetail,
   fetchSavedJobs,
   removeSavedJob,
   saveJobPost,
@@ -18,7 +18,7 @@ import type { JobDetail } from "../types";
 import { formatSalaryRange } from "../utils";
 
 export function JobDetailPage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
@@ -43,7 +43,7 @@ export function JobDetailPage() {
     }
 
     setIsLoading(true);
-    fetchJobDetail(jobId)
+    getJobDetail(jobId)
       .then((data) => {
         setJob(data);
         setError(null);

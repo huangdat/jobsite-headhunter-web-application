@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { useUsersTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type { UserDetail } from "@/features/users/types/user.types";
 import type {
   ClassificationGroupData,
@@ -37,7 +37,7 @@ const PAGE_SIZE = 20; // Load users for classification (small page to avoid lag)
  * Handles grouping, statistics calculation, and UI state
  */
 export const useUserClassification = (): UseUserClassificationReturn => {
-  const { t } = useTranslation();
+  const { t } = useUsersTranslation();
   // Data state
   const [allUsers, setAllUsers] = useState<UserDetail[]>([]);
   const [groups, setGroups] = useState<ClassificationGroupData[]>([]);
@@ -75,15 +75,15 @@ export const useUserClassification = (): UseUserClassificationReturn => {
     } catch (err) {
       const status = (err as Error & { response?: { status: number } })
         ?.response?.status;
-      let errorMessage = t("messages.failedToLoadUsers");
+      let errorMessage = t("failedToLoadUsers");
 
       // 403 Forbidden - User doesn't have permission
       if (status === 403) {
-        errorMessage = t("messages.noPermissionAccess");
+        errorMessage = t("noPermissionAccess");
       }
       // 401 Unauthorized - Session expired
       else if (status === 401) {
-        errorMessage = t("messages.sessionExpiredLoginAgain");
+        errorMessage = t("sessionExpiredLoginAgain");
       }
       // Generic error
       else if (err instanceof Error) {

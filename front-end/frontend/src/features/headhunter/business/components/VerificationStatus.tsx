@@ -1,10 +1,10 @@
-/**
+﻿/**
  * Verification Status Timeline Component
  * Displays verification progress steps
  */
 
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { CheckCircle2, Circle } from "lucide-react";
 import type { VerificationStatus as VerificationStatusType } from "../types/business.types";
 
@@ -85,25 +85,19 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
   showDescription = true,
   className = "",
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
 
   // Default timeline steps if not provided
   const defaultSteps: VerificationStep[] = [
     {
       status: "PENDING",
-      label: t("business.verification.submitted", "Submitted"),
-      description: t(
-        "business.verification.submitted_desc",
-        "Your profile is waiting for review"
-      ),
+      label: t("business.verification.submitted"),
+      description: t("business.verification.submitted_desc"),
     },
     {
       status: "APPROVED",
-      label: t("business.verification.approved", "Approved"),
-      description: t(
-        "business.verification.approved_desc",
-        "Profile verification complete"
-      ),
+      label: t("business.verification.approved"),
+      description: t("business.verification.approved_desc"),
     },
   ];
 
@@ -116,19 +110,16 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            {t("business.verification.status", "Verification Status")}
+            {t("business.verification.status")}
           </h3>
           <p className="text-sm text-slate-600">
-            {t(
-              "business.verification.status_desc",
-              "Track your profile verification progress"
-            )}
+            {t("business.verification.status_desc")}
           </p>
         </div>
         <span
           className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ${getStatusBadgeColor(currentStatus)}`}
         >
-          {t(`business.verification.${currentStatus}`, currentStatus)}
+          {t(`business.verification.${currentStatus}`)}
         </span>
       </div>
 
@@ -185,7 +176,7 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
                         <span className="absolute inline-flex h-full w-full animate-pulse rounded-full bg-amber-600"></span>
                         <span className="inline-flex h-2 w-2 rounded-full bg-amber-600"></span>
                       </span>
-                      {t("business.verification.in_progress", "In Progress")}
+                      {t("business.verification.in_progress")}
                     </span>
                   )}
                 </div>
@@ -228,16 +219,10 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
           </svg>
           <div className="flex-1">
             <p className="font-semibold text-red-900">
-              {t(
-                "business.verification.rejected_title",
-                "Verification Rejected"
-              )}
+              {t("business.verification.rejected_title")}
             </p>
             <p className="mt-1 text-sm text-red-800">
-              {t(
-                "business.verification.rejected_desc",
-                "Your profile was rejected. Please review the feedback and resubmit with corrections."
-              )}
+              {t("business.verification.rejected_desc")}
             </p>
           </div>
         </div>
@@ -248,13 +233,10 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
           <CheckCircle2 className="h-6 w-6 shrink-0 text-emerald-600" />
           <div className="flex-1">
             <p className="font-semibold text-emerald-900">
-              {t("business.verification.approved_title", "Profile Approved")}
+              {t("business.verification.approved_title")}
             </p>
             <p className="mt-1 text-sm text-emerald-800">
-              {t(
-                "business.verification.approved_message",
-                "Your business profile is now verified and visible to candidates."
-              )}
+              {t("business.verification.approved_message")}
             </p>
           </div>
         </div>

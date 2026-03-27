@@ -8,8 +8,9 @@ import {
   Mail,
   KeyRound,
 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+
 import { useUsersTranslation } from "@/shared/hooks";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 export interface UnlockUserModalProps {
   isOpen: boolean;
@@ -44,7 +45,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
   onConfirm,
 }) => {
   const { t } = useUsersTranslation();
-  const { t: tCommon } = useTranslation("auth");
+  const { t: tCommon } = useAppTranslation();
   const [step, setStep] = useState<ModalStep>("form");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<UnlockResult | null>(null);

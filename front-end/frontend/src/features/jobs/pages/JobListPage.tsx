@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useJobsTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { Button } from "@/components/ui/button";
-import { fetchJobs } from "../services/jobsApi";
+import { getJobs } from "../services/jobsApi";
 import type { JobFilterParams, JobListResponse, JobSummary } from "../types";
 import { FilterSidebar, JobCard } from "../components";
 import { INITIAL_PAGE_SIZE } from "../utils";
@@ -20,7 +20,7 @@ function SkeletonGrid() {
 }
 
 export function JobListPage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   // const navigate = useNavigate(); // Unused
   const [jobs, setJobs] = useState<JobSummary[]>([]);
   const [meta, setMeta] = useState<Omit<JobListResponse, "data">>({
@@ -44,7 +44,7 @@ export function JobListPage() {
 
     setError(null);
 
-    fetchJobs(filters)
+    getJobs(filters)
       .then((response) => {
         if (!active) return;
         setJobs(response.data);
@@ -124,13 +124,7 @@ export function JobListPage() {
             {/* Pagination */}
             {meta.totalPages > 1 && !isLoading && (
               <div className="mt-8 flex items-center justify-between rounded-2xl border border-slate-100 bg-white/70 px-6 py-4 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                <span>
-                  {t("jobs.list.pagination", {
-                    page: meta.page,
-                    totalPages: meta.totalPages,
-                    totalElements: meta.totalElements,
-                  })}
-                </span>
+                <span>{t("jobs.list.pagination")}</span>
                 <div className="flex gap-3">
                   <Button
                     type="button"

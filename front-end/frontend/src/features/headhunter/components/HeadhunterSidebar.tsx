@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useJobsTranslation } from "@/shared/hooks";
 import {
   BiSolidBriefcase,
   BiSolidFileDoc,
@@ -9,7 +9,7 @@ import {
 } from "react-icons/bi";
 
 export function HeadhunterSidebar() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const items = [
     {
       to: "/headhunter/jobs",

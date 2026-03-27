@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useJobsTranslation } from "@/shared/hooks";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import type { JobFormValues, SkillOption } from "../types";
 import { JOB_FORM_DEFAULTS } from "../utils";
 
 export function JobEditPage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [skills, setSkills] = useState<SkillOption[]>([]);

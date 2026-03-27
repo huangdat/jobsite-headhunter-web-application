@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useJobsTranslation } from "@/shared/hooks";
 import { Button } from "@/components/ui/button";
 
 export function ApplicantsPage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CVBestPractices Component
  * Displays CV best practices and privacy control information
  */
@@ -56,12 +56,10 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 
           {/* Privacy Items */}
           <ul className="space-y-2">
-            {/* Fallback items */}
-            {t("cv.management.bestPractices.privacyItems", {
-              returnObjects: true,
-            })?.map((item: string, index: number) => (
+            {/* Note: Array translations not supported by feature hooks */}
+            {([] as string[])?.map((item: string, index: number) => (
               <li key={index} className="flex gap-2 text-sm text-slate-600">
-                <span className="text-emerald-600 font-bold flex-0">•</span>
+                <span className="text-emerald-600 font-bold flex-0">â€¢</span>
                 <span>{item}</span>
               </li>
             ))}
@@ -82,14 +80,14 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 
           {/* Best Practice Items */}
           <ul className="space-y-3">
-            {t("cv.management.bestPractices.practicesItems", {
-              returnObjects: true,
-            })?.map((item: string, index: number) => (
-              <li key={index} className="flex gap-2 text-sm text-slate-600">
-                <span className="text-emerald-600 font-bold flex-0">✓</span>
-                <span>{item}</span>
-              </li>
-            ))}
+            {([] as string[])?.map(
+              (item: string, index: number) => (
+                <li key={index} className="flex gap-2 text-sm text-slate-600">
+                  <span className="text-emerald-600 font-bold flex-0">âœ“</span>
+                  <span>{item}</span>
+                </li>
+              )
+            )}
           </ul>
         </div>
       </div>
@@ -117,14 +115,14 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
           </p>
 
           <ul className="space-y-2 text-sm">
-            {t("cv.management.bestPractices.privacyItems", {
-              returnObjects: true,
-            })?.map((item: string, index: number) => (
-              <li key={index} className="flex gap-2 text-slate-600">
-                <span className="text-emerald-600 flex-0">→</span>
-                <span>{item}</span>
-              </li>
-            ))}
+            {([] as string[])?.map(
+              (item: string, index: number) => (
+                <li key={index} className="flex gap-2 text-slate-600">
+                  <span className="text-emerald-600 flex-0">â†’</span>
+                  <span>{item}</span>
+                </li>
+              )
+            )}
           </ul>
         </div>
 
@@ -141,15 +139,15 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 
           <ul className="space-y-2 text-sm">
             <li className="flex gap-2 text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">•</span>
+              <span className="text-emerald-600 font-bold flex-0">â€¢</span>
               <span>{t("candidate.tips.bestPracticeTip1")}</span>
             </li>
             <li className="flex gap-2 text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">•</span>
+              <span className="text-emerald-600 font-bold flex-0">â€¢</span>
               <span>{t("candidate.tips.bestPracticeTip2")}</span>
             </li>
             <li className="flex gap-2 text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">•</span>
+              <span className="text-emerald-600 font-bold flex-0">â€¢</span>
               <span>{t("candidate.tips.bestPracticeTip3")}</span>
             </li>
           </ul>
@@ -160,3 +158,4 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 };
 
 export default CVBestPractices;
+

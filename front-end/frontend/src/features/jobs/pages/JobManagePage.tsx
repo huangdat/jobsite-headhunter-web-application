@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+﻿import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useJobsTranslation } from "@/shared/hooks";
 import { getMyJobs, toggleJobStatus, deleteJobSoft } from "../services/jobsApi";
 import type { JobSummary } from "../types";
 import { useAuth } from "@/features/auth/context/useAuth";
@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 export function JobManagePage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const [jobs, setJobs] = useState<JobSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<number | null>(null);
@@ -160,13 +160,10 @@ export function JobManagePage() {
                   </div>
                 </div>
                 <div className="text-sm text-slate-500">
-                  {job.companyName ?? ""} • {job.location}
+                  {job.companyName ?? ""} â€¢ {job.location}
                 </div>
                 <div className="text-sm text-slate-400">
-                  {t("jobs.manage.statusDeadline", {
-                    status: job.status,
-                    deadline: job.deadline ?? "—",
-                  })}
+                  {t("jobs.manage.statusDeadline")}
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -268,3 +265,4 @@ export function JobManagePage() {
 }
 
 export default JobManagePage;
+

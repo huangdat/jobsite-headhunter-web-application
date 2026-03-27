@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CVEmptyState Component
  * Displays empty state when no CVs have been uploaded
  */
@@ -66,14 +66,14 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
           </p>
 
           <ul className="space-y-2 text-xs text-slate-600">
-            {t("cv.management.bestPractices.privacyItems", {
-              returnObjects: true,
-            })?.map((item: string, index: number) => (
-              <li key={index} className="flex gap-2">
-                <span className="text-emerald-600 shrink-0">→</span>
-                <span>{item}</span>
-              </li>
-            ))}
+            {([] as string[])?.map(
+              (item: string, index: number) => (
+                <li key={index} className="flex gap-2">
+                  <span className="text-emerald-600 shrink-0">â†’</span>
+                  <span>{item}</span>
+                </li>
+              )
+            )}
           </ul>
         </div>
 
@@ -90,11 +90,11 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 
           <ul className="space-y-2 text-xs text-slate-600">
             <li className="flex gap-2">
-              <span className="text-emerald-600 font-bold shrink-0">•</span>
+              <span className="text-emerald-600 font-bold shrink-0">â€¢</span>
               <span>{t("candidate.tips.privacyTip2")}</span>
             </li>
             <li className="flex gap-2">
-              <span className="text-emerald-600 font-bold shrink-0">•</span>
+              <span className="text-emerald-600 font-bold shrink-0">â€¢</span>
               <span>{t("candidate.tips.privacyTip3")}</span>
             </li>
           </ul>
@@ -105,3 +105,4 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 };
 
 export default CVEmptyState;
+
