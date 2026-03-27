@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { useJobsTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { useState } from "react";
+import { useJobsTranslation, useJobsQuery } from "@/shared/hooks";
 import { Button } from "@/components/ui/button";
-import { getJobs } from "../services/jobsApi";
-import type { JobFilterParams, JobListResponse, JobSummary } from "../types";
+import type { JobFilterParams, JobSummary } from "../types";
 import { FilterSidebar, JobCard } from "../components";
 import { INITIAL_PAGE_SIZE } from "../utils";
 
@@ -21,54 +20,23 @@ function SkeletonGrid() {
 
 export function JobListPage() {
   const { t } = useJobsTranslation();
-  // const navigate = useNavigate(); // Unused
-  const [jobs, setJobs] = useState<JobSummary[]>([]);
-  const [meta, setMeta] = useState<Omit<JobListResponse, "data">>({
-    page: 1,
-    size: INITIAL_PAGE_SIZE,
-    totalElements: 0,
-    totalPages: 1,
-  });
   const [filters, setFilters] = useState<JobFilterParams>({
     page: 1,
     size: INITIAL_PAGE_SIZE,
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  // EXPERIENCE_PRESETS and SALARY_PRESETS are unused and removed
 
-  useEffect(() => {
-    let active = true;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsLoading(true);
+  // React Query handles caching, loading, and error states automatically
+  const { data: response, isLoading, error } = useJobsQuery(filters);
 
-    setError(null);
-
-    getJobs(filters)
-      .then((response) => {
-        if (!active) return;
-        setJobs(response.data);
-        setMeta({
-          page: response.page,
-          size: response.size,
-          totalElements: response.totalElements,
-          totalPages: response.totalPages,
-        });
-      })
-      .catch(() => {
-        if (!active) return;
-        setError(t("jobs.list.unableToLoad"));
-      })
-      .finally(() => {
-        if (active) {
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [filters, t]);
+  const jobs = response?.data ?? [];
+  const meta = response
+    ? {
+        page: response.page,
+        size: response.size,
+        totalElements: response.totalElements,
+        totalPages: response.totalPages,
+      }
+    : { page: 1, size: INITIAL_PAGE_SIZE, totalElements: 0, totalPages: 1 };
 
   const handlePageChange = (nextPage: number) => {
     setFilters((prev) => ({ ...prev, page: nextPage }));
@@ -101,7 +69,7 @@ export function JobListPage() {
           <div className="lg:col-span-3">
             {error && (
               <div className="mb-6 rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-destructive">
-                {error}
+                {t("jobs.list.unableToLoad")}
               </div>
             )}
 

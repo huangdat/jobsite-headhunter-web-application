@@ -1,62 +1,48 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useJobsTranslation } from "@/shared/hooks";
+import {
+  useJobsTranslation,
+  useSavedJobsQuery,
+  useRemoveSavedJobMutation,
+} from "@/shared/hooks";
+import { useAuth } from "@/features/auth/context/useAuth";
+
+// Helper function to extract error message from API errors
+const getErrorMessage = (err: Error, fallback: string): string => {
+  const apiError = err as unknown as {
+    response?: { data?: { message?: string } };
+  };
+  return apiError?.response?.data?.message || err?.message || fallback;
+};
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { fetchSavedJobs, removeSavedJob } from "../services/jobsApi";
-import type { SavedJob } from "../types";
 import { formatSalaryRange } from "../utils";
 
 export function SavedJobsPage() {
   const { t } = useJobsTranslation();
   const navigate = useNavigate();
-  const [jobs, setJobs] = useState<SavedJob[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [removingId, setRemovingId] = useState<number | null>(null);
+  const { isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    let active = true;
-    setIsLoading(true);
-    fetchSavedJobs()
-      .then((data) => {
-        if (!active) return;
-        setJobs(data);
-        setError(null);
-      })
-      .catch(() => {
-        if (!active) return;
-        setError(t("jobs.saved.unableToLoadSavedJobs"));
-      })
-      .finally(() => {
-        if (active) {
-          setIsLoading(false);
-        }
-      });
+  // React Query: fetch and cache saved jobs
+  const {
+    data: jobs = [],
+    isLoading,
+    error,
+  } = useSavedJobsQuery(isAuthenticated);
 
-    return () => {
-      active = false;
-    };
-  }, [t]);
+  // Mutation: remove a saved job
+  const removeJobMutation = useRemoveSavedJobMutation();
 
-  const handleRemove = async (jobId: number) => {
-    setRemovingId(jobId);
-    try {
-      await removeSavedJob(jobId);
-      setJobs((prev) => prev.filter((job) => job.jobId !== jobId));
-      toast.success(t("jobs.saved.jobRemovedSuccess"));
-    } catch (error) {
-      const err = error as Error & {
-        response?: { data?: { message: string } };
-      };
-      console.error("Failed to remove saved job:", err);
-      const serverMessage = err?.response?.data?.message || err?.message;
-      toast.error(serverMessage || t("jobs.saved.unableToRemoveJob"));
-    } finally {
-      setRemovingId(null);
-    }
+  const handleRemove = (jobId: number) => {
+    removeJobMutation.mutate(jobId, {
+      onSuccess: () => {
+        toast.success(t("jobs.saved.jobRemovedSuccess"));
+      },
+      onError: (err: Error) => {
+        toast.error(getErrorMessage(err, t("jobs.saved.unableToRemoveJob")));
+      },
+    });
   };
 
   const renderContent = () => {
@@ -76,7 +62,9 @@ export function SavedJobsPage() {
     if (error) {
       return (
         <div className="rounded-3xl bg-white p-10 text-center shadow">
-          <p className="text-slate-600">{error}</p>
+          <p className="text-slate-600">
+            {t("jobs.saved.unableToLoadSavedJobs")}
+          </p>
           <Button className="mt-4" onClick={() => window.location.reload()}>
             {t("jobs.saved.tryAgainButton")}
           </Button>
@@ -147,9 +135,9 @@ export function SavedJobsPage() {
                 variant="ghost"
                 className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700"
                 onClick={() => handleRemove(job.jobId)}
-                disabled={removingId === job.jobId}
+                disabled={removeJobMutation.isPending}
               >
-                {removingId === job.jobId
+                {removeJobMutation.isPending
                   ? t("jobs.saved.removingButton")
                   : t("jobs.saved.removeButton")}
               </Button>

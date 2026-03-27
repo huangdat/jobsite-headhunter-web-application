@@ -1,8 +1,12 @@
-﻿import { useCallback, useEffect, useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useJobsTranslation } from "@/shared/hooks";
-import { getMyJobs, toggleJobStatus, deleteJobSoft } from "../services/jobsApi";
+import {
+  useJobsTranslation,
+  useMyJobsQuery,
+  useToggleJobStatusMutation,
+  useDeleteJobMutation,
+} from "@/shared/hooks";
 import type { JobSummary } from "../types";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { Button } from "@/components/ui/button";
@@ -16,118 +20,105 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
+// Helper function to extract error message from API errors
+const getErrorMessage = (err: Error, fallback: string): string => {
+  const apiError = err as unknown as {
+    response?: { data?: { message?: string } };
+  };
+  return apiError?.response?.data?.message || err?.message || fallback;
+};
+
 export function JobManagePage() {
   const { t } = useJobsTranslation();
-  const [jobs, setJobs] = useState<JobSummary[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [processingId, setProcessingId] = useState<number | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  console.log("[JobManagePage] Current user:", user);
+  // Query for current user's jobs
+  const { data: response, isLoading } = useMyJobsQuery(1, 50);
+  const jobs = response?.data ?? [];
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      console.log("[JobManagePage] Loading with user ID:", user?.id);
-      const res = await getMyJobs(1, 50);
-      console.log("My jobs response:", res);
-      setJobs(res.data ?? res);
-    } catch (err) {
-      console.error("Error loading my jobs:", err);
-      toast.error(t("jobs.messages.unableToLoadYourJobs"));
-    } finally {
-      setLoading(false);
-    }
-  }, [t, user?.id]);
+  // Mutations for job actions
+  const toggleJobStatusMutation = useToggleJobStatusMutation();
+  const deleteJobMutation = useDeleteJobMutation();
 
-  useEffect(() => {
-    // Load jobs after `user` is available so returned jobs include headhunter-specific fields
-    if (user?.id) void load();
-  }, [user?.id, load]);
+  // Dialog state
+  const [deadlineDialogOpen, setDeadlineDialogOpen] = useState(false);
+  const [dialogJob, setDialogJob] = useState<JobSummary | null>(null);
+  const [dialogDeadline, setDialogDeadline] = useState<string>("");
 
   const handleEdit = (id: number) => navigate(`/headhunter/jobs/${id}/edit`);
 
-  const handleOpen = async (job: JobSummary) => {
-    // open modal instead of prompt
+  const handleOpen = (job: JobSummary) => {
     setDialogJob(job);
     setDialogDeadline(job.deadline ?? "");
     setDeadlineDialogOpen(true);
   };
 
-  const handleClose = async (job: JobSummary) => {
+  const handleClose = (job: JobSummary) => {
     if (!confirm(t("jobs.messages.closeJobConfirm"))) return;
-    setProcessingId(job.id);
-    try {
-      await toggleJobStatus(job.id);
-      toast.success(t("jobs.messages.jobClosed"));
-      await load();
-    } catch (err) {
-      console.error("Failed to close job:", err);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const e: any = err;
-      const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || t("jobs.messages.failedToCloseJob"));
-    } finally {
-      setProcessingId(null);
-    }
+    toggleJobStatusMutation.mutate(
+      { jobId: job.id },
+      {
+        onSuccess: () => {
+          toast.success(t("jobs.messages.jobClosed"));
+        },
+        onError: (err: Error) => {
+          toast.error(
+            getErrorMessage(err, t("jobs.messages.failedToCloseJob"))
+          );
+        },
+      }
+    );
   };
 
-  // Dialog state and handlers
-  const [deadlineDialogOpen, setDeadlineDialogOpen] = useState(false);
-  const [dialogJob, setDialogJob] = useState<JobSummary | null>(null);
-  const [dialogDeadline, setDialogDeadline] = useState<string>("");
-
-  const confirmOpenFromDialog = async () => {
+  const confirmOpenFromDialog = () => {
     if (!dialogJob) return;
-    setProcessingId(dialogJob.id);
-    try {
-      if (!dialogDeadline) {
-        alert(t("jobs.messages.pleaseChooseDeadline"));
-        return;
-      }
-      const parsed = new Date(dialogDeadline);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (isNaN(parsed.getTime()) || parsed <= today) {
-        alert(t("jobs.messages.invalidDeadlineMessage"));
-        return;
-      }
-      await toggleJobStatus(dialogJob.id, dialogDeadline);
-      toast.success(t("jobs.messages.jobOpened"));
-      setDeadlineDialogOpen(false);
-      setDialogJob(null);
-      await load();
-    } catch (err) {
-      console.error("Failed to open job:", err);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const e: any = err;
-      const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || t("jobs.messages.failedToOpenJob"));
-    } finally {
-      setProcessingId(null);
+
+    if (!dialogDeadline) {
+      alert(t("jobs.messages.pleaseChooseDeadline"));
+      return;
     }
+
+    const parsed = new Date(dialogDeadline);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (isNaN(parsed.getTime()) || parsed <= today) {
+      alert(t("jobs.messages.invalidDeadlineMessage"));
+      return;
+    }
+
+    toggleJobStatusMutation.mutate(
+      { jobId: dialogJob.id, deadline: dialogDeadline },
+      {
+        onSuccess: () => {
+          toast.success(t("jobs.messages.jobOpened"));
+          setDeadlineDialogOpen(false);
+          setDialogJob(null);
+        },
+        onError: (err: Error) => {
+          toast.error(getErrorMessage(err, t("jobs.messages.failedToOpenJob")));
+        },
+      }
+    );
   };
 
-  const handleHide = async (id: number) => {
+  const handleHide = (id: number) => {
     if (!confirm(t("jobs.messages.toggleVisibilityConfirm"))) return;
-    setProcessingId(id);
-    try {
-      await deleteJobSoft(id);
-      toast.success(t("jobs.messages.jobVisibilityToggled"));
-      await load();
-    } catch (err) {
-      console.error("Failed to change visibility:", err);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const e: any = err;
-      const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || t("jobs.messages.failedToChangeVisibility"));
-    } finally {
-      setProcessingId(null);
-    }
+    deleteJobMutation.mutate(id, {
+      onSuccess: () => {
+        toast.success(t("jobs.messages.jobVisibilityToggled"));
+      },
+      onError: (err: Error) => {
+        toast.error(
+          getErrorMessage(err, t("jobs.messages.failedToChangeVisibility"))
+        );
+      },
+    });
   };
 
-  if (loading) return <div className="p-8">{t("jobs.manage.loadingJobs")}</div>;
+  if (isLoading)
+    return <div className="p-8">{t("jobs.manage.loadingJobs")}</div>;
 
   return (
     <div className="p-6">
@@ -187,10 +178,10 @@ export function JobManagePage() {
                         <Button
                           size="sm"
                           onClick={() => handleOpen(job)}
-                          disabled={processingId === job.id}
+                          disabled={toggleJobStatusMutation.isPending}
                           className="bg-emerald-500 text-white hover:bg-emerald-600"
                         >
-                          {processingId === job.id
+                          {toggleJobStatusMutation.isPending
                             ? t("jobs.manage.updatingButton")
                             : t("jobs.manage.openButton")}
                         </Button>
@@ -199,10 +190,10 @@ export function JobManagePage() {
                         <Button
                           size="sm"
                           onClick={() => handleClose(job)}
-                          disabled={processingId === job.id}
+                          disabled={toggleJobStatusMutation.isPending}
                           className="bg-red-500 text-white hover:bg-red-600"
                         >
-                          {processingId === job.id
+                          {toggleJobStatusMutation.isPending
                             ? t("jobs.manage.updatingButton")
                             : t("jobs.manage.closeButton")}
                         </Button>
@@ -212,14 +203,14 @@ export function JobManagePage() {
                       size="sm"
                       variant="destructive"
                       onClick={() => handleHide(job.id)}
-                      disabled={processingId === job.id}
+                      disabled={deleteJobMutation.isPending}
                       title={
                         job.visible === false
                           ? t("jobs.manage.currentlyHidden")
                           : t("jobs.manage.currentlyVisible")
                       }
                     >
-                      {processingId === job.id
+                      {deleteJobMutation.isPending
                         ? t("jobs.manage.updatingButton")
                         : job.visible === false
                           ? t("jobs.manage.unhideButton")
@@ -253,7 +244,7 @@ export function JobManagePage() {
             </DialogClose>
             <Button
               onClick={confirmOpenFromDialog}
-              disabled={processingId === dialogJob?.id}
+              disabled={toggleJobStatusMutation.isPending}
             >
               {t("jobs.manage.confirmButton")}
             </Button>
@@ -265,4 +256,3 @@ export function JobManagePage() {
 }
 
 export default JobManagePage;
-
