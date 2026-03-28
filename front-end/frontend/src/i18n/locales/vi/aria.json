@@ -1,13 +1,13 @@
 {
-  "goBack": "Aria go Quay lại",
-  "editProfile": "Aria Chỉnh sửa profile",
-  "fullName": "Aria full Tên",
-  "email": "Aria Email",
-  "phone": "Aria Điện thoại",
-  "company": "Aria Công ty",
-  "biography": "Aria Tiểu sử",
-  "selectGender": "Aria select Giới tính",
-  "uploadProfilePicture": "Aria Tải lên profile picture",
-  "uploadAvatar": "Aria Tải lên avatar",
-  "selectCompanyScale": "Aria select Công ty scale"
+  "goBack": "Quay lại",
+  "editProfile": "Chỉnh sửa hồ sơ",
+  "fullName": "Họ và tên",
+  "email": "Email",
+  "phone": "Điện thoại",
+  "company": "Công ty",
+  "biography": "Tiểu sử",
+  "selectGender": "Chọn giới tính",
+  "uploadProfilePicture": "Tải lên ảnh hồ sơ",
+  "uploadAvatar": "Tải lên avatar",
+  "selectCompanyScale": "Chọn quy mô công ty"
 }

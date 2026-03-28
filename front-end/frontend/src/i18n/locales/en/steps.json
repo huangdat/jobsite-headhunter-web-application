@@ -1,14 +1,14 @@
 {
   "account": {
-    "title": "Steps account title",
-    "desc": "Steps account desc"
+    "title": "Account title",
+    "desc": "Account description"
   },
   "personal": {
-    "title": "Steps personal title",
-    "desc": "Steps personal desc"
+    "title": "Personal title",
+    "desc": "Personal description"
   },
   "details": {
-    "title": "Steps details title",
-    "desc": "Steps details desc"
+    "title": "Details title",
+    "desc": "Details description"
   }
 }

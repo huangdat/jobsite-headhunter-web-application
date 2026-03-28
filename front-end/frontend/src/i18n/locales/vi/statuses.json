@@ -1,6 +1,6 @@
 {
-  "pending": "Trạng tháies pending",
-  "active": "Trạng tháies active",
-  "suspended": "Trạng tháies suspended",
-  "deleted": "Statuses Xóad"
+  "pending": "Đang chờ",
+  "active": "Đang hoạt động",
+  "suspended": "Bị tạm ngưng",
+  "deleted": "Đã xóa"
 }

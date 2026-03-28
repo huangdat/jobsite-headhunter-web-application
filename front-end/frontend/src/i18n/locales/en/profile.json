@@ -1,47 +1,47 @@
 {
   "page": {
-    "subtitleSaving": "Profile page subtitle saving",
-    "subtitleSuccess": "Profile page subtitle success",
-    "subtitleDefault": "Profile page subtitle default",
-    "eyebrow": "Profile page eyebrow",
-    "title": "Profile page title"
+    "subtitleSaving": "Subtitle saving",
+    "subtitleSuccess": "Subtitle success",
+    "subtitleDefault": "Subtitle default",
+    "eyebrow": "Eyebrow",
+    "title": "Title"
   },
   "alerts": {
-    "saveErrorTitle": "Profile alerts save error title",
-    "validationErrorTitle": "Profile alerts validation error title",
-    "saveSuccessTitle": "Profile alerts save success title",
-    "saveSuccessBody": "Profile alerts save success body"
+    "saveErrorTitle": "Save error title",
+    "validationErrorTitle": "Validation error title",
+    "saveSuccessTitle": "Save success title",
+    "saveSuccessBody": "Save success body"
   },
   "actions": {
-    "discardChanges": "Profile actions discard changes",
-    "saving": "Profile actions saving",
-    "saveChanges": "Profile actions save changes"
+    "discardChanges": "Discard changes",
+    "saving": "Saving",
+    "saveChanges": "Save changes"
   },
   "sidebar": {
-    "strengthTitle": "Profile sidebar strength title",
-    "strengthHint": "Profile sidebar strength hint",
-    "tipsTitle": "Profile sidebar tips title",
-    "tipOne": "Profile sidebar tip one",
-    "tipTwo": "Profile sidebar tip two",
-    "tipThree": "Profile sidebar tip three",
-    "insightEyebrow": "Profile sidebar insight eyebrow",
-    "insightBody": "Profile sidebar insight body"
+    "strengthTitle": "Strength title",
+    "strengthHint": "Strength hint",
+    "tipsTitle": "Tips title",
+    "tipOne": "Tip one",
+    "tipTwo": "Tip two",
+    "tipThree": "Tip three",
+    "insightEyebrow": "Insight eyebrow",
+    "insightBody": "Insight body"
   },
   "form": {
-    "sectionTitle": "Profile form section title",
-    "sectionSubtitle": "Profile form section subtitle",
-    "openForWork": "Profile form open for work",
-    "fullName": "Profile form full name",
-    "jobTitle": "Profile form job title",
-    "currentTitlePlaceholder": "Profile form current title placeholder",
-    "currentStatus": "Profile form current status",
-    "currentStatusAria": "Profile form current status aria",
-    "yearsOfExperience": "Profile form years of experience",
-    "city": "Profile form city",
-    "cityPlaceholder": "Profile form city placeholder",
-    "salaryMin": "Profile form salary min",
-    "salaryMax": "Profile form salary max",
-    "professionalBio": "Profile form professional bio",
-    "bioPlaceholder": "Profile form bio placeholder"
+    "sectionTitle": "Section title",
+    "sectionSubtitle": "Section subtitle",
+    "openForWork": "Open for work",
+    "fullName": "Full name",
+    "jobTitle": "Job title",
+    "currentTitlePlaceholder": "Current title placeholder",
+    "currentStatus": "Current status",
+    "currentStatusAria": "Current status aria",
+    "yearsOfExperience": "Years of experience",
+    "city": "City",
+    "cityPlaceholder": "City placeholder",
+    "salaryMin": "Salary min",
+    "salaryMax": "Salary max",
+    "professionalBio": "Professional bio",
+    "bioPlaceholder": "Bio placeholder"
   }
 }

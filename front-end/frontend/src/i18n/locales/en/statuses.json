@@ -1,6 +1,6 @@
 {
-  "pending": "Statuses pending",
-  "active": "Statuses active",
-  "suspended": "Statuses suspended",
-  "deleted": "Statuses deleted"
+  "pending": "Pending",
+  "active": "Active",
+  "suspended": "Suspended",
+  "deleted": "Deleted"
 }

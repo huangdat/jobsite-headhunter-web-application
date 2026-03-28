@@ -1,56 +1,56 @@
 {
   "management": {
-    "breadcrumb": "Cv management Breadcrumb",
+    "breadcrumb": "Đường dẫn",
     "title": "Tiêu đề",
     "success": {
-      "banner": "Cv management Thành công banner",
-      "bannerDetail": "Cv management Thành công banner detail",
-      "addAnother": "Cv management Thành công add another",
-      "browseFiles": "Cv management Thành công browse files",
-      "activeResumes": "Cv management Thành công active resumes",
-      "filesUsed": "Cv management Thành công files used"
+      "banner": "Thành công",
+      "bannerDetail": "Chi tiết thành công",
+      "addAnother": "Thêm CV khác",
+      "browseFiles": "Duyệt tệp",
+      "activeResumes": "CV hoạt động",
+      "filesUsed": "Tệp đã sử dụng"
     },
     "upload": {
-      "selectFile": "Cv management Tải lên select file"
+      "selectFile": "Chọn tệp"
     },
     "profileStrength": {
-      "title": "Cv management Hồ sơ strength title"
+      "title": "Mức độ mạnh của hồ sơ"
     },
     "premiumServices": {
       "premiumTitle": "Dịch vụ cao cấp",
       "auditTitle": "Kiểm toán CV chuyên môn",
       "auditDesc": "Mô tả kiểm toán dịch vụ cao cấp",
       "bookAudit": "Đặt kiểm toán CV",
-      "reviewTitle": "Cv management premium services reXem title",
-      "reviewDesc": "Cv management premium services reXem desc",
-      "getReview": "Cv management premium services get reXem"
+      "reviewTitle": "Xem lại dịch vụ cao cấp",
+      "reviewDesc": "Mô tả xem lại dịch vụ cao cấp",
+      "getReview": "Nhận xem lại"
     },
     "error": {
-      "banner": "Cv management Lỗi banner",
-      "fileFormatInvalid": "Cv management Lỗi file format invalid",
-      "tryAnother": "Cv management Lỗi try another"
+      "banner": "Lỗi",
+      "fileFormatInvalid": "Định dạng tệp không hợp lệ",
+      "tryAnother": "Thử tệp khác"
     },
     "validation": {
       "clear": "Xóa",
-      "retry": "Cv management validation Thử lại",
-      "dismiss": "Cv management validation Đóng"
+      "retry": "Thử lại",
+      "dismiss": "Đóng"
     },
     "empty": {
-      "headline": "Cv management Trống headline",
-      "description": "Cv management Trống description",
-      "button": "Cv management empty Nút",
-      "supported": "Cv management empty Hỗ trợed"
+      "headline": "Không có CV nào được tải lên",
+      "description": "Không có CV nào được tải lên",
+      "button": "Tải lên CV",
+      "supported": "Hỗ trợ các định dạng tệp: PDF, DOC, DOCX"
     },
     "tips": {
       "title": "Mẹo"
     },
     "fileList": {
-      "uploadedLabel": "Cv management file list Tải lêned label",
+      "uploadedLabel": "Đã tải lên",
       "actions": {
-        "view": "Cv management file list actions Xem",
-        "download": "Cv management file list actions Tải xuống",
-        "makeActive": "Cv management file list actions make Hoạt động",
-        "delete": "Cv management file list actions Xóa"
+        "view": "Xem",
+        "download": "Tải xuống",
+        "makeActive": "Đặt làm hoạt động",
+        "delete": "Xóa"
       }
     },
     "bestPractices": {

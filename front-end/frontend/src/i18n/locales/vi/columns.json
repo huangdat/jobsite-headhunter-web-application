@@ -1,7 +1,7 @@
 {
-  "user": "Columns Người dùng",
+  "user": "Người dùng",
   "role": "Vai trò",
-  "status": "Columns Trạng thái",
-  "company": "Columns Công ty",
+  "status": "Trạng thái",
+  "company": "Công ty",
   "actions": "Hành động"
 }

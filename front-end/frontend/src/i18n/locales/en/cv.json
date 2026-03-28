@@ -1,62 +1,62 @@
 {
   "management": {
-    "breadcrumb": "Cv management breadcrumb",
-    "title": "Cv management title",
+    "breadcrumb": "Breadcrumb",
+    "title": "Title",
     "success": {
-      "banner": "Cv management success banner",
-      "bannerDetail": "Cv management success banner detail",
-      "addAnother": "Cv management success add another",
-      "browseFiles": "Cv management success browse files",
-      "activeResumes": "Cv management success active resumes",
-      "filesUsed": "Cv management success files used"
+      "banner": "Success banner",
+      "bannerDetail": "Success banner detail",
+      "addAnother": "Success add another",
+      "browseFiles": "Success browse files",
+      "activeResumes": "Success active resumes",
+      "filesUsed": "Success files used"
     },
     "upload": {
-      "selectFile": "Cv management upload select file"
+      "selectFile": "Upload select file"
     },
     "profileStrength": {
-      "title": "Cv management profile strength title"
+      "title": "Profile strength title"
     },
     "premiumServices": {
-      "premiumTitle": "Cv management premium services premium title",
-      "auditTitle": "Cv management premium services audit title",
-      "auditDesc": "Cv management premium services audit desc",
-      "bookAudit": "Cv management premium services book audit",
-      "reviewTitle": "Cv management premium services review title",
-      "reviewDesc": "Cv management premium services review desc",
-      "getReview": "Cv management premium services get review"
+      "premiumTitle": "Premium services premium title",
+      "auditTitle": "Premium services audit title",
+      "auditDesc": "Premium services audit desc",
+      "bookAudit": "Premium services book audit",
+      "reviewTitle": "Premium services review title",
+      "reviewDesc": "Premium services review desc",
+      "getReview": "Premium services get review"
     },
     "error": {
-      "banner": "Cv management error banner",
-      "fileFormatInvalid": "Cv management error file format invalid",
-      "tryAnother": "Cv management error try another"
+      "banner": "Error banner",
+      "fileFormatInvalid": "Error file format invalid",
+      "tryAnother": "Error try another"
     },
     "validation": {
-      "clear": "Cv management validation clear",
-      "retry": "Cv management validation retry",
-      "dismiss": "Cv management validation dismiss"
+      "clear": "Validation clear",
+      "retry": "Validation retry",
+      "dismiss": "Validation dismiss"
     },
     "empty": {
-      "headline": "Cv management empty headline",
-      "description": "Cv management empty description",
-      "button": "Cv management empty button",
-      "supported": "Cv management empty supported"
+      "headline": "Empty headline",
+      "description": "Empty description",
+      "button": "Empty button",
+      "supported": "Empty supported"
     },
     "tips": {
-      "title": "Cv management tips title"
+      "title": "Tips title"
     },
     "fileList": {
-      "uploadedLabel": "Cv management file list uploaded label",
+      "uploadedLabel": "File list uploaded label",
       "actions": {
-        "view": "Cv management file list actions view",
-        "download": "Cv management file list actions download",
-        "makeActive": "Cv management file list actions make active",
-        "delete": "Cv management file list actions delete"
+        "view": "File list actions view",
+        "download": "File list actions download",
+        "makeActive": "File list actions make active",
+        "delete": "File list actions delete"
       }
     },
     "bestPractices": {
-      "privacyTitle": "Cv management best practices privacy title",
-      "practicesTitle": "Cv management best practices practices title",
-      "privacyDesc": "Cv management best practices privacy desc"
+      "privacyTitle": "Best practices privacy title",
+      "practicesTitle": "Best practices practices title",
+      "privacyDesc": "Best practices privacy desc"
     }
   }
 }

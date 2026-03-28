@@ -1,6 +1,6 @@
 {
-  "viewDetails": "Actions Xem details",
-  "unlockAccount": "Actions unlock Tài khoản",
-  "lockAccount": "Actions lock Tài khoản",
-  "deleteUser": "Actions Xóa user"
+  "viewDetails": "Xem chi tiết",
+  "unlockAccount": "Mở khóa tài khoản",
+  "lockAccount": "Khóa tài khoản",
+  "deleteUser": "Xóa người dùng"
 }

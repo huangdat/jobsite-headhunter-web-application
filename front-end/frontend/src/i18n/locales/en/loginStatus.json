@@ -1,4 +1,4 @@
 {
-  "success": "Login status success",
-  "failedAttempt": "Login status failed attempt"
+  "success": "Success",
+  "failedAttempt": "Failed attempt"
 }

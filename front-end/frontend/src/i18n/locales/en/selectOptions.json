@@ -1,26 +1,26 @@
 {
-  "selectGender": "Select options select gender",
+  "selectGender": "Select gender",
   "genders": {
-    "male": "Select options genders male",
-    "female": "Select options genders female",
-    "other": "Select options genders other"
+    "male": "Male",
+    "female": "Female",
+    "other": "Other"
   },
-  "selectCompanyScale": "Select options select company scale",
+  "selectCompanyScale": "Select company scale",
   "companyScaleOptions": {
     "0": {
-      "label": "Select options company scale options 0 label"
+      "label": "Company scale options 0 label"
     },
     "1": {
-      "label": "Select options company scale options 1 label"
+      "label": "Company scale options 1 label"
     },
     "2": {
-      "label": "Select options company scale options 2 label"
+      "label": "Company scale options 2 label"
     },
     "3": {
-      "label": "Select options company scale options 3 label"
+      "label": "Company scale options 3 label"
     },
     "4": {
-      "label": "Select options company scale options 4 label"
+      "label": "Company scale options 4 label"
     }
   }
 }

@@ -1,8 +1,8 @@
 {
-  "headhunterDetails": "Chi tiết headhunter",
-  "taxCodeInfo": "Descriptions tax Mã info",
+  "headhunterDetails": "Chi tiết Headhunter",
+  "taxCodeInfo": "Thông tin mã số thuế",
   "collaboratorDetails": "Chi tiết cộng tác viên",
   "commissionRateTip": "Mẹo tỷ lệ hoa hồng",
-  "collaboratorInfo": "Descriptions collaborator Thông tin",
+  "collaboratorInfo": "Thông tin cộng tác viên",
   "candidateDetails": "Chi tiết ứng viên"
 }

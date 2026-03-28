@@ -1,7 +1,7 @@
 {
   "list": {
     "empty": {
-      "description": "User list empty description"
+      "description": "No users found"
     }
   }
 }

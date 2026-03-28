@@ -1,4 +1,4 @@
 {
-  "success": "Login status Thành công",
-  "failedAttempt": "Login Trạng thái failed attempt"
+  "success": "Thành công",
+  "failedAttempt": "Thất bại"
 }

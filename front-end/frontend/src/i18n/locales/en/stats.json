@@ -1,15 +1,15 @@
 {
-  "totalEarnings": "Stats total earnings",
-  "lifetimeTotal": "Stats lifetime total",
-  "pending": "Stats pending",
-  "paid": "Stats paid",
-  "completed": "Stats completed",
-  "referrals": "Stats referrals",
-  "referralsHint": "Stats referrals hint",
-  "activeJobs": "Stats active jobs",
-  "ongoingJobs": "Stats ongoing jobs",
-  "commissionRate": "Stats commission rate",
-  "rateInfo": "Stats rate info",
-  "conversionRate": "Stats conversion rate",
-  "noEarningsYet": "Stats no earnings yet"
+  "totalEarnings": "Total earnings",
+  "lifetimeTotal": "Lifetime total",
+  "pending": "Pending",
+  "paid": "Paid",
+  "completed": "Completed",
+  "referrals": "Referrals",
+  "referralsHint": "Referrals hint",
+  "activeJobs": "Active jobs",
+  "ongoingJobs": "Ongoing jobs",
+  "commissionRate": "Commission rate",
+  "rateInfo": "Rate info",
+  "conversionRate": "Conversion rate",
+  "noEarningsYet": "No earnings yet"
 }

@@ -1,9 +1,9 @@
 {
-  "filterRole": "Bộ lọcs Bộ lọc role",
-  "filterStatus": "Filters filter Trạng thái",
-  "filterUsers": "Filters filter Người dùngs",
-  "filterAllRoles": "Bộ lọcs Bộ lọc all roles",
-  "filterAllStatus": "Filters filter all Trạng thái",
-  "applyFilter": "Bộ lọcs apply Bộ lọc",
-  "resetFilter": "Bộ lọcs reset Bộ lọc"
+  "filterRole": "Lọc theo vai trò",
+  "filterStatus": "Lọc theo trạng thái",
+  "filterUsers": "Lọc theo người dùng",
+  "filterAllRoles": "Lọc tất cả vai trò",
+  "filterAllStatus": "Lọc tất cả trạng thái",
+  "applyFilter": "Áp dụng bộ lọc",
+  "resetFilter": "Đặt lại bộ lọc"
 }

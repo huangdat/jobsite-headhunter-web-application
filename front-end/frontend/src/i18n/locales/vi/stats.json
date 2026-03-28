@@ -1,15 +1,15 @@
 {
   "totalEarnings": "Tổng lợi nhuận",
   "lifetimeTotal": "Tổng số tuổi thọ",
-  "pending": "Stats Đang chờ",
+  "pending": "Đang chờ",
   "paid": "Đã trả",
-  "completed": "Stats Hoàn thành",
+  "completed": "Hoàn thành",
   "referrals": "Giới thiệu",
   "referralsHint": "Gợi ý giới thiệu",
-  "activeJobs": "Stats Hoạt động jobs",
+  "activeJobs": "Công việc đang hoạt động",
   "ongoingJobs": "Công việc đang diễn ra",
   "commissionRate": "Tỷ lệ hoa hồng",
-  "rateInfo": "Stats rate Thông tin",
+  "rateInfo": "Thông tin tỷ lệ",
   "conversionRate": "Tỷ lệ chuyển đổi",
   "noEarningsYet": "Chưa có lợi nhuận"
 }

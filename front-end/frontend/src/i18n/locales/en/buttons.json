@@ -1,7 +1,7 @@
 {
-  "signIn": "Buttons sign in",
-  "previous": "Buttons previous",
-  "next": "Buttons next",
-  "sendingOtp": "Buttons sending otp",
-  "createAccount": "Buttons create account"
+  "signIn": "Sign in",
+  "previous": "Previous",
+  "next": "Next",
+  "sendingOtp": "Sending OTP",
+  "createAccount": "Create account"
 }

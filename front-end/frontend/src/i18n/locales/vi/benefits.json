@@ -1,26 +1,26 @@
 {
   "quickPayout": {
-    "title": "Benefits Thanh toán nhanh title",
-    "description": "Benefits Thanh toán nhanh description"
+    "title": "Thanh toán nhanh",
+    "description": "Thanh toán nhanh"
   },
   "highRate": {
-    "title": "Benefits Tỷ lệ cao title",
-    "description": "Benefits Tỷ lệ cao description"
+    "title": "Tỷ lệ cao",
+    "description": "Tỷ lệ cao"
   },
   "support": {
-    "title": "Benefits Hỗ trợ title",
-    "description": "Benefits Hỗ trợ description"
+    "title": "Hỗ trợ",
+    "description": "Hỗ trợ"
   },
   "transparent": {
-    "title": "Benefits Minh bạch title",
-    "description": "Benefits Minh bạch description"
+    "title": "Minh bạch",
+    "description": "Minh bạch"
   },
   "noLimit": {
-    "title": "Benefits Không giới hạn title",
-    "description": "Benefits Không giới hạn description"
+    "title": "Không giới hạn",
+    "description": "Không giới hạn"
   },
   "tools": {
-    "title": "Benefits Công cụ title",
-    "description": "Benefits Công cụ description"
+    "title": "Công cụ",
+    "description": "Công cụ"
   }
 }

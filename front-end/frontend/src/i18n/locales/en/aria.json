@@ -1,13 +1,13 @@
 {
-  "goBack": "Aria go back",
-  "editProfile": "Aria edit profile",
-  "fullName": "Aria full name",
-  "email": "Aria email",
-  "phone": "Aria phone",
-  "company": "Aria company",
-  "biography": "Aria biography",
-  "selectGender": "Aria select gender",
-  "uploadProfilePicture": "Aria upload profile picture",
-  "uploadAvatar": "Aria upload avatar",
-  "selectCompanyScale": "Aria select company scale"
+  "goBack": "go back",
+  "editProfile": "edit profile",
+  "fullName": "full name",
+  "email": "email",
+  "phone": "phone",
+  "company": "company",
+  "biography": "biography",
+  "selectGender": "select gender",
+  "uploadProfilePicture": "upload profile picture",
+  "uploadAvatar": "upload avatar",
+  "selectCompanyScale": "select company scale"
 }

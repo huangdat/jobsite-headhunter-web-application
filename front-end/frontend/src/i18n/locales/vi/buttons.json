@@ -1,7 +1,7 @@
 {
-  "signIn": "Buttons Đăng nhập",
-  "previous": "Buttons Quay lại",
-  "next": "Buttons Tiếp",
-  "sendingOtp": "Núts sending otp",
-  "createAccount": "Buttons Tạo tài khoản"
+  "signIn": "Đăng nhập",
+  "previous": "Quay lại",
+  "next": "Tiếp",
+  "sendingOtp": "Đang gửi OTP",
+  "createAccount": "Tạo tài khoản"
 }
