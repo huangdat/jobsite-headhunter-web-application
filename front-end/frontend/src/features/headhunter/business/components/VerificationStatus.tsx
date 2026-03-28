@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Verification Status Timeline Component
  * Displays verification progress steps
  */

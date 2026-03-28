@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Error Banner Component
  * Displays red error notification with warning icon
  */

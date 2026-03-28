@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Success Banner Component
  * Displays green success notification with checkmark
  */

@@ -315,14 +315,14 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 onClick={handleClose}
                 className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
               >
-                {t("buttons.cancel")}
+                {t("users.buttons.cancel")}
               </button>
               <button
                 onClick={() => setStep("confirmation")}
                 disabled={!selectedType}
                 className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
               >
-                {t("buttons.next")}
+                {t("users.buttons.next")}
               </button>
             </div>
           </div>
@@ -385,7 +385,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   disabled={reason.trim() === ""}
                   className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
                 >
-                  {t("buttons.next")}
+                  {t("users.buttons.next")}
                 </button>
               </div>
             </form>

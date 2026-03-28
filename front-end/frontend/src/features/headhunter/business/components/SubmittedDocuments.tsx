@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Submitted Documents Component
  * Display uploaded business documents in grid
  */
@@ -136,7 +136,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
             onClick={() => setDeleteError(null)}
             className="text-red-600 hover:text-red-700"
           >
-            Ã—
+            ×
           </button>
         </div>
       )}
@@ -167,7 +167,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                 {doc.filename}
               </p>
               <p className="mt-1 text-xs text-slate-600">
-                {t(getDocumentTypeLabel(doc.documentType))} â€¢{" "}
+                {t(getDocumentTypeLabel(doc.documentType))} •{" "}
                 {formatFileSize(doc.fileSize)}
               </p>
 

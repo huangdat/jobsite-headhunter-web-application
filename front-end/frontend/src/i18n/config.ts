@@ -12,7 +12,6 @@ import enCandidate from "./locales/en/candidate.json";
 import enBusiness from "./locales/en/business.json";
 import enCommission from "./locales/en/commission.json";
 import enAria from "./locales/en/aria.json";
-import enButtons from "./locales/en/buttons.json";
 import enDescriptions from "./locales/en/descriptions.json";
 import enCheckboxLabels from "./locales/en/checkboxLabels.json";
 
@@ -65,7 +64,6 @@ import viCandidate from "./locales/vi/candidate.json";
 import viBusiness from "./locales/vi/business.json";
 import viCommission from "./locales/vi/commission.json";
 import viAria from "./locales/vi/aria.json";
-import viButtons from "./locales/vi/buttons.json";
 import viDescriptions from "./locales/vi/descriptions.json";
 import viCheckboxLabels from "./locales/vi/checkboxLabels.json";
 
@@ -112,7 +110,6 @@ const resources = {
     translation: {
       ...enCommon,
       ...enAria,
-      ...enButtons,
       ...enDescriptions,
       ...enCheckboxLabels,
       home: enHome,
@@ -165,7 +162,6 @@ const resources = {
     translation: {
       ...viCommon,
       ...viAria,
-      ...viButtons,
       ...viDescriptions,
       ...viCheckboxLabels,
       home: viHome,

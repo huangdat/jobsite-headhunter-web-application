@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import {
@@ -151,7 +151,7 @@ export function JobManagePage() {
                   </div>
                 </div>
                 <div className="text-sm text-slate-500">
-                  {job.companyName ?? ""} â€¢ {job.location}
+                  {job.companyName ?? ""} • {job.location}
                 </div>
                 <div className="text-sm text-slate-400">
                   {t("jobs.manage.statusDeadline")}

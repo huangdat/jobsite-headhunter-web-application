@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Optimization Tips Component
  * Displays actionable tips to improve profile strength
  */
@@ -212,7 +212,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
       {/* Info Box */}
       <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
         <p className="text-xs font-medium text-blue-900">
-          ðŸ’¡ {t("business.optimization.info")}
+          💡 {t("business.optimization.info")}
         </p>
       </div>
     </div>

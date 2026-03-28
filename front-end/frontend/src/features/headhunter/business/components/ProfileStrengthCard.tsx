@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Profile Strength Card Component
  * Displays profile completion percentage and strength items
  */

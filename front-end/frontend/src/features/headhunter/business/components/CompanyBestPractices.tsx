@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Company Best Practices Component
  * Displays best practices for using the platform
  */

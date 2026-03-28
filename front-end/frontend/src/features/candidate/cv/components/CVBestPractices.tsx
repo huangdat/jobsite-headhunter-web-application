@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CVBestPractices Component
  * Displays CV best practices and privacy control information
  */
@@ -59,7 +59,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
             {/* Note: Array translations not supported by feature hooks */}
             {([] as string[])?.map((item: string, index: number) => (
               <li key={index} className="flex gap-2 text-sm text-slate-600">
-                <span className="text-emerald-600 font-bold flex-0">â€¢</span>
+                <span className="text-emerald-600 font-bold flex-0">•</span>
                 <span>{item}</span>
               </li>
             ))}
@@ -83,7 +83,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
             {([] as string[])?.map(
               (item: string, index: number) => (
                 <li key={index} className="flex gap-2 text-sm text-slate-600">
-                  <span className="text-emerald-600 font-bold flex-0">âœ“</span>
+                  <span className="text-emerald-600 font-bold flex-0">✓</span>
                   <span>{item}</span>
                 </li>
               )
@@ -118,7 +118,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
             {([] as string[])?.map(
               (item: string, index: number) => (
                 <li key={index} className="flex gap-2 text-slate-600">
-                  <span className="text-emerald-600 flex-0">â†’</span>
+                  <span className="text-emerald-600 flex-0">→</span>
                   <span>{item}</span>
                 </li>
               )
@@ -139,15 +139,15 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 
           <ul className="space-y-2 text-sm">
             <li className="flex gap-2 text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">â€¢</span>
+              <span className="text-emerald-600 font-bold flex-0">•</span>
               <span>{t("candidate.tips.bestPracticeTip1")}</span>
             </li>
             <li className="flex gap-2 text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">â€¢</span>
+              <span className="text-emerald-600 font-bold flex-0">•</span>
               <span>{t("candidate.tips.bestPracticeTip2")}</span>
             </li>
             <li className="flex gap-2 text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">â€¢</span>
+              <span className="text-emerald-600 font-bold flex-0">•</span>
               <span>{t("candidate.tips.bestPracticeTip3")}</span>
             </li>
           </ul>

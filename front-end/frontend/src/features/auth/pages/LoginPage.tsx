@@ -368,7 +368,7 @@ export function LoginPage() {
               className="w-full flex justify-center gap-2 cursor-pointer"
             >
               <HiOutlineArrowRight />
-              {isLoading ? t("pages.login.signingIn") : t("buttons.signIn")}
+              {isLoading ? t("pages.login.signingIn") : t("auth.buttons.signIn")}
             </Button>
 
             {/* DIVIDER */}
