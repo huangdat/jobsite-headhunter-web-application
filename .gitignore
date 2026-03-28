@@ -267,5 +267,7 @@ coverage/
 /docs/**/*.md
 audit-report.txt
 audit-summary.txt
+unused-keys-full.txt
 **/audit-report.txt
 **/audit-summary.txt
+**/unused-keys-full.txt

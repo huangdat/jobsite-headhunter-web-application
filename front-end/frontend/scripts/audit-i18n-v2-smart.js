@@ -258,21 +258,44 @@ report += `═══════════════════════
 END OF REPORT
 `;
 
-// Save to file
+// Save main report to file
 const filename = `audit-report.txt`;
 fs.writeFileSync(filename, report, "utf8");
+
+// Export full unused keys list to separate file for easy tracking
+if (unusedKeys.length > 0) {
+  const unusedKeysFilename = `unused-keys-full.txt`;
+  const unusedKeysContent = `UNUSED i18n KEYS AUDIT
+═════════════════════════════════════════════════════════════════════════════
+Generated: ${new Date().toISOString()}
+Total unused keys: ${unusedKeys.length}
+
+FULL LIST (one key per line):
+─────────────────────────────────────────────────────────────────────────────
+
+${unusedKeys.join("\n")}
+
+═════════════════════════════════════════════════════════════════════════════
+END OF UNUSED KEYS LIST
+`;
+  fs.writeFileSync(unusedKeysFilename, unusedKeysContent, "utf8");
+  console.log(`📄 Full unused keys list exported to: ${unusedKeysFilename}`);
+}
 
 console.log(`✅ Smart audit report saved to: ${filename}`);
 console.log(`📋 Missing keys (after filtering): ${missingKeys.length}`);
 console.log(`📋 Unused keys: ${unusedKeys.length}`);
-console.log(`\n📌 First 15 real missing keys:\n`);
-missingKeys.slice(0, 15).forEach((key) => {
-  console.log(`\n   KEY: "${key}"`);
-  const locations = usedKeysMap.get(key);
-  locations.slice(0, 2).forEach((loc) => {
-    console.log(`   → ${loc.file}:${loc.line}`);
+
+if (missingKeys.length > 0) {
+  console.log(`\n📌 First 15 missing keys:\n`);
+  missingKeys.slice(0, 15).forEach((key) => {
+    console.log(`\n   KEY: "${key}"`);
+    const locations = usedKeysMap.get(key);
+    locations.slice(0, 2).forEach((loc) => {
+      console.log(`   → ${loc.file}:${loc.line}`);
+    });
+    if (locations.length > 2) {
+      console.log(`   ... and ${locations.length - 2} more`);
+    }
   });
-  if (locations.length > 2) {
-    console.log(`   ... and ${locations.length - 2} more`);
-  }
-});
+}
