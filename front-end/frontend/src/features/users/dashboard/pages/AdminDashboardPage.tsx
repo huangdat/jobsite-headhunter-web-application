@@ -50,7 +50,7 @@ export const AdminDashboardPage: React.FC = () => {
       {/* Header */}
       <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-          {t("classification.pageTitle")} - {t("users.admin.label")}
+          {t("classification.pageTitle")} - {t("admin.label")}
         </h1>
         <p className="text-slate-600 dark:text-slate-400 mt-1">
           {t("classification.description")}
@@ -190,3 +190,4 @@ export const AdminDashboardPage: React.FC = () => {
 };
 
 export default AdminDashboardPage;
+

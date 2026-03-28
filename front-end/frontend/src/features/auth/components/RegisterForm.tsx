@@ -280,7 +280,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         sendOtpSignup({ email: data.email, tokenType: "SIGN_UP" }),
         new Promise<never>((_, reject) =>
           setTimeout(
-            () => reject(new Error(t("auth.messages.requestTimedOut"))),
+            () => reject(new Error(t("messages.requestTimedOut"))),
             15000
           )
         ),

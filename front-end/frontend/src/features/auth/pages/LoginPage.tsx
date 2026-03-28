@@ -213,7 +213,7 @@ export function LoginPage() {
       try {
         if (linkedInCode) {
           if (provider !== "linkedin" || linkedInState !== expectedState) {
-            throw new Error(t("auth.messages.invalidLinkedInCallbackState"));
+            throw new Error(t("messages.invalidLinkedInCallbackState"));
           }
 
           setLoadingProvider("linkedin");
@@ -226,7 +226,7 @@ export function LoginPage() {
 
         if (googleIdToken) {
           if (provider !== "google" || googleState !== expectedState) {
-            throw new Error(t("auth.messages.invalidGoogleCallbackState"));
+            throw new Error(t("messages.invalidGoogleCallbackState"));
           }
 
           setLoadingProvider("google");
@@ -368,7 +368,7 @@ export function LoginPage() {
               className="w-full flex justify-center gap-2 cursor-pointer"
             >
               <HiOutlineArrowRight />
-              {isLoading ? t("pages.login.signingIn") : t("auth.buttons.signIn")}
+              {isLoading ? t("pages.login.signingIn") : t("buttons.signIn")}
             </Button>
 
             {/* DIVIDER */}

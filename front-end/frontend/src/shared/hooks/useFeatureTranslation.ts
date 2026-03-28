@@ -79,21 +79,6 @@ export const useCandidateTranslation = () => {
 };
 
 /**
- * Hook for admin features translations
- * Usage: const { t } = useAdminFeaturesTranslation();
- */
-export const useAdminFeaturesTranslation = () => {
-  const { t, i18n, changeLanguage, currentLanguage } = useAppTranslation();
-
-  return {
-    t: (key: string) => t(`adminFeatures.${key}`),
-    i18n,
-    changeLanguage,
-    currentLanguage,
-  };
-};
-
-/**
  * Hook for business feature translations
  * Usage: const { t } = useBusinessTranslation();
  */

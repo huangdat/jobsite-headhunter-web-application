@@ -82,25 +82,27 @@ function scanCodeWithLocations() {
 
   // Feature hook to namespace prefix mapping
   const hookNamespaces = {
+    useAuthTranslation: "auth",
     useBusinessTranslation: "business",
     useUsersTranslation: "users",
     useCommissionTranslation: "commission",
     useCandidateTranslation: "candidate",
     useJobsTranslation: "jobs",
     useHomeTranslation: "home",
+    useNavigationTranslation: "navigation",
     useAppTranslation: null, // No prefix - uses full keys like "common.dismiss"
   };
-
-  // Skip definition files - they show imports, not actual usage
-  const skipDefinitionFiles = [
-    /useFeatureTranslation\.ts/,
-    /useAppTranslation\.ts/,
-  ];
 
   // Patterns that indicate false positives
   const falsePositiveContexts = [
     /\.get\s*\(\s*["']state["']\s*\)/, // URL params like searchParams.get("state")
     /\.getContext\s*\(\s*["']2d["']\s*\)/, // Canvas context
+  ];
+
+  // Skip definition files - they show imports, not actual usage
+  const skipDefinitionFiles = [
+    /useFeatureTranslation\.ts/,
+    /useAppTranslation\.ts/,
   ];
 
   files.forEach((file) => {
@@ -157,13 +159,16 @@ function scanCodeWithLocations() {
 
               let finalKey = trimmedKey;
 
-              // Only apply namespace if file uses a SINGLE feature hook (excluding useAppTranslation)
-              // This avoids ambiguity when multiple hooks are used with different variable names
+              // Check if this file uses feature hooks
+              // For each detected hook, if the key doesn't already have the hook's namespace,
+              // we can infer that the key should be prefixed with that namespace
               const featureHooks = [...detectedHooks.entries()].filter(
                 ([, ns]) => ns !== null
               );
+
+              // If exactly ONE feature hook is detected, apply its namespace if not already present
               if (featureHooks.length === 1) {
-                const [, namespace] = featureHooks[0];
+                const [hookName, namespace] = featureHooks[0];
                 // Apply namespace prefix if key doesn't already start with it
                 if (!trimmedKey.startsWith(`${namespace}.`)) {
                   finalKey = `${namespace}.${trimmedKey}`;

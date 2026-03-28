@@ -51,7 +51,7 @@ export function SelectRolePage() {
   };
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: t("auth.buttons.signIn") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <div className="w-full max-w-5xl min-h-[calc(600px)] bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
@@ -130,7 +130,7 @@ export function SelectRolePage() {
             <p className="text-center text-sm text-slate-500 mt-4">
               {t("pages.selectRole.alreadyHaveAccount")}{" "}
               <Link to="/login" className="text-lime-500 font-medium">
-                {t("auth.buttons.signIn")}
+                {t("buttons.signIn")}
               </Link>
             </p>
           </form>

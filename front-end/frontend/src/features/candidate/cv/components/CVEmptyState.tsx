@@ -62,7 +62,7 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
           </div>
 
           <p className="text-sm text-slate-600 leading-relaxed">
-            {t("candidate.tips.privacyTip1")}
+            {t("tips.privacyTip1")}
           </p>
 
           <ul className="space-y-2 text-xs text-slate-600">
@@ -91,11 +91,11 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
           <ul className="space-y-2 text-xs text-slate-600">
             <li className="flex gap-2">
               <span className="text-emerald-600 font-bold shrink-0">•</span>
-              <span>{t("candidate.tips.privacyTip2")}</span>
+              <span>{t("tips.privacyTip2")}</span>
             </li>
             <li className="flex gap-2">
               <span className="text-emerald-600 font-bold shrink-0">•</span>
-              <span>{t("candidate.tips.privacyTip3")}</span>
+              <span>{t("tips.privacyTip3")}</span>
             </li>
           </ul>
         </div>
@@ -105,4 +105,5 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 };
 
 export default CVEmptyState;
+
 

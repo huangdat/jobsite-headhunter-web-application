@@ -37,10 +37,10 @@ export function SavedJobsPage() {
   const handleRemove = (jobId: number) => {
     removeJobMutation.mutate(jobId, {
       onSuccess: () => {
-        toast.success(t("jobs.saved.jobRemovedSuccess"));
+        toast.success(t("saved.jobRemovedSuccess"));
       },
       onError: (err: Error) => {
-        toast.error(getErrorMessage(err, t("jobs.saved.unableToRemoveJob")));
+        toast.error(getErrorMessage(err, t("saved.unableToRemoveJob")));
       },
     });
   };
@@ -63,10 +63,10 @@ export function SavedJobsPage() {
       return (
         <div className="rounded-3xl bg-white p-10 text-center shadow">
           <p className="text-slate-600">
-            {t("jobs.saved.unableToLoadSavedJobs")}
+            {t("saved.unableToLoadSavedJobs")}
           </p>
           <Button className="mt-4" onClick={() => window.location.reload()}>
-            {t("jobs.saved.tryAgainButton")}
+            {t("saved.tryAgainButton")}
           </Button>
         </div>
       );
@@ -76,13 +76,13 @@ export function SavedJobsPage() {
       return (
         <div className="rounded-3xl bg-white p-10 text-center shadow">
           <p className="text-lg font-semibold text-slate-900">
-            {t("jobs.saved.noSavedJobs")}
+            {t("saved.noSavedJobs")}
           </p>
           <p className="mt-2 text-sm text-slate-500">
-            {t("jobs.saved.emptyStateHint")}
+            {t("saved.emptyStateHint")}
           </p>
           <Button className="mt-6" onClick={() => navigate("/jobs")}>
-            {t("jobs.saved.browseJobsButton")}
+            {t("saved.browseJobsButton")}
           </Button>
         </div>
       );
@@ -97,7 +97,7 @@ export function SavedJobsPage() {
           >
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">
-                {job.companyName ?? t("jobs.saved.confidentialCompany")}
+                {job.companyName ?? t("saved.confidentialCompany")}
               </p>
               <h3 className="mt-1 text-lg font-semibold text-slate-900">
                 {job.title}
@@ -105,10 +105,10 @@ export function SavedJobsPage() {
               <div className="mt-2 flex flex-wrap gap-3 text-sm text-slate-500">
                 <span>{job.location}</span>
                 <span>
-                  {t("jobs.saved.postedText")}{" "}
+                  {t("saved.postedText")}{" "}
                   {job.postedDate
                     ? new Date(job.postedDate).toLocaleDateString("en-US")
-                    : t("jobs.saved.recentlyPosted")}
+                    : t("saved.recentlyPosted")}
                 </span>
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
@@ -129,7 +129,7 @@ export function SavedJobsPage() {
                 className="sm:min-w-[calc(140px)]"
                 onClick={() => navigate(`/jobs/${job.jobId}`)}
               >
-                {t("jobs.saved.viewJobButton")}
+                {t("saved.viewJobButton")}
               </Button>
               <Button
                 variant="ghost"
@@ -138,8 +138,8 @@ export function SavedJobsPage() {
                 disabled={removeJobMutation.isPending}
               >
                 {removeJobMutation.isPending
-                  ? t("jobs.saved.removingButton")
-                  : t("jobs.saved.removeButton")}
+                  ? t("saved.removingButton")
+                  : t("saved.removeButton")}
               </Button>
             </div>
           </div>
@@ -152,12 +152,12 @@ export function SavedJobsPage() {
     <div className="bg-slate-50 pb-16 pt-10">
       <div className="mx-auto max-w-6xl space-y-6 px-4">
         <div>
-          <p className="text-sm text-slate-500">{t("jobs.saved.breadcrumb")}</p>
+          <p className="text-sm text-slate-500">{t("saved.breadcrumb")}</p>
           <h1 className="mt-1 text-3xl font-bold text-slate-900">
-            {t("jobs.saved.pageTitle")}
+            {t("saved.pageTitle")}
           </h1>
           <p className="mt-2 text-sm text-slate-500">
-            {t("jobs.saved.description")}
+            {t("saved.description")}
           </p>
         </div>
 
@@ -166,3 +166,4 @@ export function SavedJobsPage() {
     </div>
   );
 }
+

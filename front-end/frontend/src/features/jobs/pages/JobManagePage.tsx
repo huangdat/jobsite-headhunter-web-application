@@ -55,16 +55,16 @@ export function JobManagePage() {
   };
 
   const handleClose = (job: JobSummary) => {
-    if (!confirm(t("jobs.messages.closeJobConfirm"))) return;
+    if (!confirm(t("messages.closeJobConfirm"))) return;
     toggleJobStatusMutation.mutate(
       { jobId: job.id },
       {
         onSuccess: () => {
-          toast.success(t("jobs.messages.jobClosed"));
+          toast.success(t("messages.jobClosed"));
         },
         onError: (err: Error) => {
           toast.error(
-            getErrorMessage(err, t("jobs.messages.failedToCloseJob"))
+            getErrorMessage(err, t("messages.failedToCloseJob"))
           );
         },
       }
@@ -75,7 +75,7 @@ export function JobManagePage() {
     if (!dialogJob) return;
 
     if (!dialogDeadline) {
-      alert(t("jobs.messages.pleaseChooseDeadline"));
+      alert(t("messages.pleaseChooseDeadline"));
       return;
     }
 
@@ -84,7 +84,7 @@ export function JobManagePage() {
     today.setHours(0, 0, 0, 0);
 
     if (isNaN(parsed.getTime()) || parsed <= today) {
-      alert(t("jobs.messages.invalidDeadlineMessage"));
+      alert(t("messages.invalidDeadlineMessage"));
       return;
     }
 
@@ -92,45 +92,45 @@ export function JobManagePage() {
       { jobId: dialogJob.id, deadline: dialogDeadline },
       {
         onSuccess: () => {
-          toast.success(t("jobs.messages.jobOpened"));
+          toast.success(t("messages.jobOpened"));
           setDeadlineDialogOpen(false);
           setDialogJob(null);
         },
         onError: (err: Error) => {
-          toast.error(getErrorMessage(err, t("jobs.messages.failedToOpenJob")));
+          toast.error(getErrorMessage(err, t("messages.failedToOpenJob")));
         },
       }
     );
   };
 
   const handleHide = (id: number) => {
-    if (!confirm(t("jobs.messages.toggleVisibilityConfirm"))) return;
+    if (!confirm(t("messages.toggleVisibilityConfirm"))) return;
     deleteJobMutation.mutate(id, {
       onSuccess: () => {
-        toast.success(t("jobs.messages.jobVisibilityToggled"));
+        toast.success(t("messages.jobVisibilityToggled"));
       },
       onError: (err: Error) => {
         toast.error(
-          getErrorMessage(err, t("jobs.messages.failedToChangeVisibility"))
+          getErrorMessage(err, t("messages.failedToChangeVisibility"))
         );
       },
     });
   };
 
   if (isLoading)
-    return <div className="p-8">{t("jobs.manage.loadingJobs")}</div>;
+    return <div className="p-8">{t("manage.loadingJobs")}</div>;
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold">{t("jobs.manage.pageTitle")}</h2>
+        <h2 className="text-2xl font-semibold">{t("manage.pageTitle")}</h2>
         <Button onClick={() => navigate("/headhunter/jobs/new")}>
-          {t("jobs.manage.createNewButton")}
+          {t("manage.createNewButton")}
         </Button>
       </div>
 
       {jobs.length === 0 ? (
-        <div>{t("jobs.manage.noJobsYet")}</div>
+        <div>{t("manage.noJobsYet")}</div>
       ) : (
         <div className="space-y-4">
           {jobs.map((job) => (
@@ -146,15 +146,15 @@ export function JobManagePage() {
                     className={`text-xs px-2 py-0.5 rounded ${job.visible === false ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
                   >
                     {job.visible === false
-                      ? t("jobs.manage.hidden")
-                      : t("jobs.manage.visible")}
+                      ? t("manage.hidden")
+                      : t("manage.visible")}
                   </div>
                 </div>
                 <div className="text-sm text-slate-500">
                   {job.companyName ?? ""} • {job.location}
                 </div>
                 <div className="text-sm text-slate-400">
-                  {t("jobs.manage.statusDeadline")}
+                  {t("manage.statusDeadline")}
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -168,7 +168,7 @@ export function JobManagePage() {
                       variant="ghost"
                       onClick={() => handleEdit(job.id)}
                     >
-                      {t("jobs.manage.editButton")}
+                      {t("manage.editButton")}
                     </Button>
                     <div
                       className="inline-flex rounded-md shadow-sm"
@@ -182,8 +182,8 @@ export function JobManagePage() {
                           className="bg-emerald-500 text-white hover:bg-emerald-600"
                         >
                           {toggleJobStatusMutation.isPending
-                            ? t("jobs.manage.updatingButton")
-                            : t("jobs.manage.openButton")}
+                            ? t("manage.updatingButton")
+                            : t("manage.openButton")}
                         </Button>
                       )}
                       {job.status !== "CLOSED" && (
@@ -194,8 +194,8 @@ export function JobManagePage() {
                           className="bg-red-500 text-white hover:bg-red-600"
                         >
                           {toggleJobStatusMutation.isPending
-                            ? t("jobs.manage.updatingButton")
-                            : t("jobs.manage.closeButton")}
+                            ? t("manage.updatingButton")
+                            : t("manage.closeButton")}
                         </Button>
                       )}
                     </div>
@@ -206,15 +206,15 @@ export function JobManagePage() {
                       disabled={deleteJobMutation.isPending}
                       title={
                         job.visible === false
-                          ? t("jobs.manage.currentlyHidden")
-                          : t("jobs.manage.currentlyVisible")
+                          ? t("manage.currentlyHidden")
+                          : t("manage.currentlyVisible")
                       }
                     >
                       {deleteJobMutation.isPending
-                        ? t("jobs.manage.updatingButton")
+                        ? t("manage.updatingButton")
                         : job.visible === false
-                          ? t("jobs.manage.unhideButton")
-                          : t("jobs.manage.hideButton")}
+                          ? t("manage.unhideButton")
+                          : t("manage.hideButton")}
                     </Button>
                   </>
                 )}
@@ -227,9 +227,9 @@ export function JobManagePage() {
       {/* Deadline modal for opening a job */}
       <Dialog open={deadlineDialogOpen} onOpenChange={setDeadlineDialogOpen}>
         <DialogContent>
-          <DialogTitle>{t("jobs.manage.setNewDeadlineTitle")}</DialogTitle>
+          <DialogTitle>{t("manage.setNewDeadlineTitle")}</DialogTitle>
           <DialogDescription>
-            {t("jobs.manage.setNewDeadlineDescription")}
+            {t("manage.setNewDeadlineDescription")}
           </DialogDescription>
           <div className="mt-2">
             <Input
@@ -240,13 +240,13 @@ export function JobManagePage() {
           </div>
           <DialogFooter>
             <DialogClose>
-              <Button variant="outline">{t("jobs.manage.cancelButton")}</Button>
+              <Button variant="outline">{t("manage.cancelButton")}</Button>
             </DialogClose>
             <Button
               onClick={confirmOpenFromDialog}
               disabled={toggleJobStatusMutation.isPending}
             >
-              {t("jobs.manage.confirmButton")}
+              {t("manage.confirmButton")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -256,3 +256,4 @@ export function JobManagePage() {
 }
 
 export default JobManagePage;
+

@@ -5,7 +5,7 @@ import { AuthLayout } from "@/shared/components";
 export function ResetPasswordSuccessPage() {
   const { t } = useAuthTranslation();
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: t("auth.buttons.signIn") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <main className="max-w-5xl mx-auto px-4 pt-12">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}

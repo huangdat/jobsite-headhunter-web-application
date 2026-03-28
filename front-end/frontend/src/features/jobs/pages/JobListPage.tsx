@@ -48,13 +48,13 @@ export function JobListPage() {
       <div className="mx-auto max-w-7xl px-4 py-10">
         <div className="rounded-3xl bg-linear-to-br from-emerald-500 to-slate-900 p-10 text-white shadow-lg">
           <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-            {t("jobs.list.hero.subtitle")}
+            {t("list.hero.subtitle")}
           </p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight">
-            {t("jobs.list.hero.title")}
+            {t("list.hero.title")}
           </h1>
           <p className="mt-4 max-w-3xl text-lg text-emerald-100">
-            {t("jobs.list.hero.description")}
+            {t("list.hero.description")}
           </p>
         </div>
       </div>
@@ -69,7 +69,7 @@ export function JobListPage() {
           <div className="lg:col-span-3">
             {error && (
               <div className="mb-6 rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-destructive">
-                {t("jobs.list.unableToLoad")}
+                {t("list.unableToLoad")}
               </div>
             )}
 
@@ -77,7 +77,7 @@ export function JobListPage() {
               {isLoading && <SkeletonGrid />}
               {!isLoading && jobs.length === 0 && (
                 <p className="col-span-full rounded-2xl border border-dashed border-slate-200 p-10 text-center text-slate-500">
-                  {t("jobs.list.noJobsFound")}
+                  {t("list.noJobsFound")}
                 </p>
               )}
               {!isLoading &&
@@ -92,7 +92,7 @@ export function JobListPage() {
             {/* Pagination */}
             {meta.totalPages > 1 && !isLoading && (
               <div className="mt-8 flex items-center justify-between rounded-2xl border border-slate-100 bg-white/70 px-6 py-4 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                <span>{t("jobs.list.pagination")}</span>
+                <span>{t("list.pagination")}</span>
                 <div className="flex gap-3">
                   <Button
                     type="button"
@@ -100,7 +100,7 @@ export function JobListPage() {
                     disabled={meta.page === 1}
                     onClick={() => handlePageChange(meta.page - 1)}
                   >
-                    {t("jobs.list.previousPage")}
+                    {t("list.previousPage")}
                   </Button>
                   <Button
                     type="button"
@@ -108,7 +108,7 @@ export function JobListPage() {
                     disabled={meta.page === meta.totalPages}
                     onClick={() => handlePageChange(meta.page + 1)}
                   >
-                    {t("jobs.list.nextPage")}
+                    {t("list.nextPage")}
                   </Button>
                 </div>
               </div>
@@ -119,3 +119,4 @@ export function JobListPage() {
     </div>
   );
 }
+

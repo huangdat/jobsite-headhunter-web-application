@@ -118,7 +118,7 @@ export const ProfileStrengthIndicator: React.FC<
             info
           </span>
           <span className="text-slate-600 dark:text-slate-300">
-            {t("candidate.tips.profileStrengthHint")}
+            {t("tips.profileStrengthHint")}
           </span>
         </div>
       )}
@@ -127,3 +127,4 @@ export const ProfileStrengthIndicator: React.FC<
 };
 
 export default ProfileStrengthIndicator;
+

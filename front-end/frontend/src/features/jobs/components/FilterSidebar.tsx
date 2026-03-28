@@ -44,7 +44,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
         <Input
           value={keyword}
           onChange={(e) => handleKeywordChange(e.target.value)}
-          placeholder={t("jobs.list.filters.keywordPlaceholder")}
+          placeholder={t("list.filters.keywordPlaceholder")}
           className="text-sm"
         />
       </div>
@@ -52,7 +52,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
       {/* Working Type Filter */}
       <div>
         <h3 className="mb-3 font-semibold text-slate-900 dark:text-white">
-          {t("jobs.list.filters.workingType")}
+          {t("list.filters.workingType")}
         </h3>
         <div className="space-y-2">
           <label className="flex items-center gap-2 cursor-pointer">
@@ -65,7 +65,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
               className="w-4 h-4"
             />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              {t("jobs.list.filters.allTypes")}
+              {t("list.filters.allTypes")}
             </span>
           </label>
           {WORKING_TYPES.map((type) => (
@@ -92,7 +92,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
       {/* Rank Level Filter */}
       <div>
         <h3 className="mb-3 font-semibold text-slate-900 dark:text-white">
-          {t("jobs.list.filters.rankLevel")}
+          {t("list.filters.rankLevel")}
         </h3>
         <div className="space-y-2">
           <label className="flex items-center gap-2 cursor-pointer">
@@ -105,7 +105,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
               className="w-4 h-4"
             />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              {t("jobs.list.filters.allLevels")}
+              {t("list.filters.allLevels")}
             </span>
           </label>
           {RANK_LEVELS.map((level) => (
@@ -160,7 +160,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
       <div>
         <div className="mb-3 flex items-center justify-between">
           <h3 className="font-semibold text-slate-900 dark:text-white">
-            {t("jobs.list.filters.salaryVND")}
+            {t("list.filters.salaryVND")}
           </h3>
         </div>
         <div className="grid grid-cols-2 gap-2">
@@ -189,7 +189,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
               min="0"
               value={customSalaryMin}
               onChange={(e) => setCustomSalaryMin(e.target.value)}
-              placeholder={t("jobs.list.filters.fromMillion")}
+              placeholder={t("list.filters.fromMillion")}
               className="text-sm"
             />
             <span className="text-slate-400">-</span>
@@ -198,7 +198,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
               min="0"
               value={customSalaryMax}
               onChange={(e) => setCustomSalaryMax(e.target.value)}
-              placeholder={t("jobs.list.filters.toMillion")}
+              placeholder={t("list.filters.toMillion")}
               className="text-sm"
             />
           </div>
@@ -208,15 +208,17 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
             className="w-full"
             onClick={handleCustomSalaryApply}
           >
-            {t("jobs.list.filters.applyCustomRange")}
+            {t("list.filters.applyCustomRange")}
           </Button>
         </div>
       </div>
 
       {/* Reset Button */}
       <Button variant="ghost" className="w-full" onClick={handleReset}>
-        {t("jobs.list.filters.clearAllFilters")}
+        {t("list.filters.clearAllFilters")}
       </Button>
     </aside>
   );
 }
+
+

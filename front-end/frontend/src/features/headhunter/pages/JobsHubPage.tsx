@@ -13,7 +13,7 @@ export function JobsHubPage() {
     <div className="px-4 py-6">
       <div className="mb-6 flex items-center justify-between gap-4 flex-wrap">
         <h2 className="text-2xl font-semibold min-w-0">
-          {t("headhunter.jobPostings")}
+          {t("jobPostings")}
         </h2>
         <div className="flex flex-wrap gap-3">
           <div className="flex gap-3">
@@ -24,7 +24,7 @@ export function JobsHubPage() {
               aria-pressed={tab === "list"}
               className="w-auto whitespace-nowrap"
             >
-              {t("headhunter.list")}
+              {t("list")}
             </Button>
             <Button
               size="sm"
@@ -33,7 +33,7 @@ export function JobsHubPage() {
               aria-pressed={tab === "create"}
               className="w-auto whitespace-nowrap"
             >
-              {t("headhunter.postNewJob")}
+              {t("postNewJob")}
             </Button>
             <Button
               size="sm"
@@ -42,7 +42,7 @@ export function JobsHubPage() {
               aria-pressed={tab === "applicants"}
               className="w-auto whitespace-nowrap"
             >
-              {t("headhunter.candidates")}
+              {t("candidates")}
             </Button>
           </div>
         </div>
@@ -58,3 +58,4 @@ export function JobsHubPage() {
 }
 
 export default JobsHubPage;
+
