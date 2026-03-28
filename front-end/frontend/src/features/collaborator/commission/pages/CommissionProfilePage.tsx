@@ -23,7 +23,7 @@ import { useCommissionManagement } from "../hooks/useCommissionManagement";
  */
 export function CommissionProfilePage() {
   const { t: commissionT } = useCommissionTranslation();
-  const { t } = useAppTranslation();
+  const { t: tCommon } = useAppTranslation();
 
   const { stats, requestPayout, loading } = useCommissionManagement();
 
@@ -37,7 +37,7 @@ export function CommissionProfilePage() {
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-          <p className="text-slate-600">{t("common.loading")}</p>
+          <p className="text-slate-600">{tCommon("common.loading")}</p>
         </div>
       </div>
     );
@@ -51,7 +51,7 @@ export function CommissionProfilePage() {
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 text-sm mb-4">
             <a href="/" className="text-slate-600 hover:text-slate-900">
-              {t("breadcrumb.home")}
+              {tCommon("breadcrumb.home")}
             </a>
             <span className="text-slate-400">/</span>
             <span className="text-slate-900">

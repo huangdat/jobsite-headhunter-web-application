@@ -292,7 +292,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 disabled={loading}
                 className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition font-medium"
               >
-                {t("unlock.back")}
+                {t("buttons.back")}
               </button>
               <button
                 onClick={handleConfirmUnlock}

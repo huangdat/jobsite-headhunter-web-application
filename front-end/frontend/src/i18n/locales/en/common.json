@@ -10,15 +10,11 @@
   "dismiss": "Dismiss",
   "currentUserName": "Alex Nguyen",
   "id_token": "id_token",
-  "failedToLoadCommission": "Failed to load commission data",
-  "failedToLoadProfile": "Failed to load profile",
-  "failedToLoadUsers": "Failed to load users",
-  "failedToSaveProfile": "Failed to save profile",
-  "noPermissionAccess": "You do not have permission to access this feature",
-  "sessionExpiredLoginAgain": "Your session has expired. Please login again",
-  "searchKeywords": "Search by Keywords",
-  "searchLocation": "Search by Location",
+  "breadcrumb": {
+    "home": "Home"
+  },
   "common": {
+    "loading": "Loading...",
     "adminUserTitle": "Admin User",
     "appVersion": "v2.4.0 Release",
     "permanentDelete": "Permanent Delete",

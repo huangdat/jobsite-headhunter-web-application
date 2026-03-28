@@ -1,4 +1,22 @@
 {
+  "buttons": {
+    "cancel": "Cancel",
+    "next": "Next",
+    "back": "Back",
+    "close": "Close",
+    "processing": "Processing...",
+    "tryAgain": "Try Again",
+    "confirmAction": "Confirm"
+  },
+  "fields": {
+    "userInfo": "User",
+    "timestamp": "Timestamp",
+    "affectedUser": "Affected User",
+    "userId": "User ID",
+    "reason": "Reason",
+    "sendEmail": "Send Email Notification",
+    "requirePasswordChange": "Require Password Change"
+  },
   "admin": {
     "label": "Admin"
   },

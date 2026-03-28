@@ -1,14 +1,18 @@
 spring:
   application:
     name: backend
+
+  config:
+    import:
+      - optional:file:.env[.properties]
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: "jdbc:mysql://localhost:3306/headhunt"
+    url: "jdbc:mysql://localhost:${MYSQL_PORT:3306}/headhunt"
     username: root
-    password: "root"
+    password: ${MYSQL_ROOT_PASSWORD:"password"}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -33,7 +37,7 @@ spring:
     encoding: UTF-8
     cache-duration: PT1H # Cache messages for 1 hour
 server:
-  port: 8080
+  port: ${PORT:8080}
   servlet:
     context-path: /headhunt
 
@@ -67,11 +71,11 @@ cors:
 
 logging:
   level:
-    org.springframework.security: DEBUG
-    org.springframework.web: DEBUG
+    root: INFO
+    org.springframework.security: INFO
+    org.springframework.web: INFO
 
 azure:
   storage:
     connection-string: "DefaultEndpointsProtocol=https;AccountName=headhunterstorage;AccountKey=J5wBrVeufVXHdxnrBWSIKSE8Q8SnJ4onHA+NZW58mXJWUvn/4TcljiAGeQQh2EE9qjZUWUql36GF+AStVmQeJA==;EndpointSuffix=core.windows.net"
     container-name: "uploads"
-

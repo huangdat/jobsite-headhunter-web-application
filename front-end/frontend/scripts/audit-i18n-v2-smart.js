@@ -87,6 +87,7 @@ function scanCodeWithLocations() {
     useCommissionTranslation: "commission",
     useCandidateTranslation: "candidate",
     useJobsTranslation: "jobs",
+    useHomeTranslation: "home",
     useAppTranslation: null, // No prefix - uses full keys like "common.dismiss"
   };
 
@@ -156,16 +157,16 @@ function scanCodeWithLocations() {
 
               let finalKey = trimmedKey;
 
-              // Only apply namespace if file uses a SINGLE feature hook (not including useAppTranslation)
+              // Only apply namespace if file uses a SINGLE feature hook (excluding useAppTranslation)
               // This avoids ambiguity when multiple hooks are used with different variable names
-              if (detectedHooks.size === 1) {
-                const [, namespace] = [...detectedHooks.entries()][0];
-                // Only apply if it's a feature hook (not useAppTranslation which has null namespace)
-                if (namespace) {
-                  // Apply namespace prefix if key doesn't already start with it
-                  if (!trimmedKey.startsWith(`${namespace}.`)) {
-                    finalKey = `${namespace}.${trimmedKey}`;
-                  }
+              const featureHooks = [...detectedHooks.entries()].filter(
+                ([, ns]) => ns !== null
+              );
+              if (featureHooks.length === 1) {
+                const [, namespace] = featureHooks[0];
+                // Apply namespace prefix if key doesn't already start with it
+                if (!trimmedKey.startsWith(`${namespace}.`)) {
+                  finalKey = `${namespace}.${trimmedKey}`;
                 }
               }
 
