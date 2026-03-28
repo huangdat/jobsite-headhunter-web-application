@@ -15,6 +15,9 @@ import enAria from "./locales/en/aria.json";
 import enButtons from "./locales/en/buttons.json";
 import enDescriptions from "./locales/en/descriptions.json";
 import enCheckboxLabels from "./locales/en/checkboxLabels.json";
+import enLock from "./locales/en/lock.json";
+import enUnlock from "./locales/en/unlock.json";
+import enDelete from "./locales/en/delete.json";
 
 // Import Vietnamese namespaces
 import viCommon from "./locales/vi/common.json";
@@ -30,6 +33,9 @@ import viAria from "./locales/vi/aria.json";
 import viButtons from "./locales/vi/buttons.json";
 import viDescriptions from "./locales/vi/descriptions.json";
 import viCheckboxLabels from "./locales/vi/checkboxLabels.json";
+import viLock from "./locales/vi/lock.json";
+import viUnlock from "./locales/vi/unlock.json";
+import viDelete from "./locales/vi/delete.json";
 
 const resources = {
   en: {
@@ -39,6 +45,9 @@ const resources = {
       ...enButtons,
       ...enDescriptions,
       ...enCheckboxLabels,
+      ...enLock,
+      ...enUnlock,
+      ...enDelete,
       home: enHome,
       auth: enAuth,
       navigation: enNavigation,
@@ -56,6 +65,9 @@ const resources = {
       ...viButtons,
       ...viDescriptions,
       ...viCheckboxLabels,
+      ...viLock,
+      ...viUnlock,
+      ...viDelete,
       home: viHome,
       auth: viAuth,
       navigation: viNavigation,
