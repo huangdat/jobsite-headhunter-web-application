@@ -262,3 +262,10 @@ sketch
 
 coverage/
 **/node_modules/**
+# Documentation and notes - local development only
+# These files are tracked for reference but not committed to remote
+/docs/**/*.md
+audit-report.txt
+audit-summary.txt
+**/audit-report.txt
+**/audit-summary.txt
