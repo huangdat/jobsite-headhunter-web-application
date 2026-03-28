@@ -138,7 +138,9 @@ export function JobEditPage() {
             </label>
             <Input
               placeholder={t("edit.placeholders.jobTitle")}
-              {...register("title", { required: t("edit.validation.titleRequired") })}
+              {...register("title", {
+                required: t("edit.validation.titleRequired"),
+              })}
             />
             {errors.title && (
               <p className="text-sm text-destructive">{errors.title.message}</p>
@@ -297,7 +299,7 @@ export function JobEditPage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("edit.placeholders.description")}  
+                  placeholder={t("edit.placeholders.description")}
                 />
               )}
             />
@@ -314,7 +316,7 @@ export function JobEditPage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("edit.placeholders.responsibilities")}  
+                  placeholder={t("edit.placeholders.responsibilities")}
                 />
               )}
             />
@@ -331,7 +333,7 @@ export function JobEditPage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("edit.placeholders.requirements")}  
+                  placeholder={t("edit.placeholders.requirements")}
                 />
               )}
             />

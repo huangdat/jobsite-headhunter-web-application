@@ -174,7 +174,9 @@ export function JobCreatePage() {
             </label>
             <Input
               placeholder={t("create.placeholders.jobTitle")}
-              {...register("title", { required: t("create.validation.titleRequired") })}
+              {...register("title", {
+                required: t("create.validation.titleRequired"),
+              })}
             />
             {errors.title && (
               <p className="text-sm text-destructive">{errors.title.message}</p>
@@ -466,7 +468,9 @@ export function JobCreatePage() {
             Clear
           </Button>
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? t("create.messages.publishingJob") : t("create.messages.publishJob")}
+            {isSubmitting
+              ? t("create.messages.publishingJob")
+              : t("create.messages.publishJob")}
           </Button>
         </div>
       </form>
