@@ -168,7 +168,7 @@ function scanCodeWithLocations() {
 
               // If exactly ONE feature hook is detected, apply its namespace if not already present
               if (featureHooks.length === 1) {
-                const [hookName, namespace] = featureHooks[0];
+                const [, namespace] = featureHooks[0];
                 // Apply namespace prefix if key doesn't already start with it
                 if (!trimmedKey.startsWith(`${namespace}.`)) {
                   finalKey = `${namespace}.${trimmedKey}`;

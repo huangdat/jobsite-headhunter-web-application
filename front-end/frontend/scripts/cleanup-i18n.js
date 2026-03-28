@@ -16,7 +16,7 @@ let unusedKeys = [];
 try {
   const report = JSON.parse(fs.readFileSync("unused-keys-report.json", "utf8"));
   unusedKeys = report.unusedKeys;
-} catch (error) {
+} catch {
   console.error("❌ Error reading unused-keys-report.json");
   console.error("   Run 'node scripts/extract-unused-keys.js' first");
   process.exit(1);
@@ -57,7 +57,7 @@ function deleteNestedKey(obj, keyPath) {
 function cleanEmptyObjects(obj, keyPath) {
   const keys = keyPath.split(".");
   let current = obj;
-  const path = [];
+  const pathStack = [];
 
   // Build path to each level
   for (let i = 0; i < keys.length - 1; i++) {
@@ -68,14 +68,14 @@ function cleanEmptyObjects(obj, keyPath) {
     ) {
       return; // Can't proceed if path is invalid
     }
-    path.push({ obj: current, key: keys[i] });
+    pathStack.push({ obj: current, key: keys[i] });
     current = current[keys[i]];
   }
 
   // Clean up empty objects from bottom to top
-  for (let i = path.length - 1; i >= 0; i--) {
-    const parent = path[i].obj;
-    const key = path[i].key;
+  for (let i = pathStack.length - 1; i >= 0; i--) {
+    const parent = pathStack[i].obj;
+    const key = pathStack[i].key;
     if (
       typeof parent[key] === "object" &&
       parent[key] !== null &&
@@ -91,11 +91,9 @@ function cleanEmptyObjects(obj, keyPath) {
  */
 function cleanupLocales() {
   let totalRemoved = 0;
-  const results = {};
 
   locales.forEach((locale) => {
     const files = globSync(`${localesDir}/${locale}/*.json`);
-    const localeResults = {};
 
     files.forEach((file) => {
       try {
@@ -114,7 +112,6 @@ function cleanupLocales() {
         if (removedCount > 0) {
           // Write back the cleaned file
           fs.writeFileSync(filePath, JSON.stringify(content, null, 2) + "\n");
-          localeResults[file] = removedCount;
           totalRemoved += removedCount;
           console.log(
             `  ✅ ${path.relative(process.cwd(), filePath)}: ${removedCount} keys removed`
@@ -124,11 +121,9 @@ function cleanupLocales() {
         console.error(`  ❌ Error processing ${file}:`, error.message);
       }
     });
-
-    results[locale] = localeResults;
   });
 
-  return { totalRemoved, results };
+  return { totalRemoved };
 }
 
 /**
@@ -138,7 +133,7 @@ try {
   console.log("🧹 Starting i18n cleanup...\n");
   console.log(`📋 Total unused keys to remove: ${unusedKeys.length}\n`);
 
-  const { totalRemoved, results } = cleanupLocales();
+  const { totalRemoved } = cleanupLocales();
 
   console.log("\n✅ Cleanup completed!\n");
   console.log(

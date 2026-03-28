@@ -1,4 +1,7 @@
 {
+  "listTabLabel": "[VI] List",
+  "createTabLabel": "[VI] Create",
+  "applicantsTabLabel": "[VI] Applicants",
   "list": {
     "pageTitle": "Quản lý Công việc",
     "documentation": "Tài liệu",
@@ -376,5 +379,20 @@
         "salaryVND": "Jobs list Bộ lọcs salary v n d"
       }
     }
-  }
+  },
+  "accountSettings": "[VI] Account Settings",
+  "activityLog": "[VI] Activity Log",
+  "applicantPageInfo": "[VI] Applicants",
+  "candidates": "[VI] Candidates",
+  "jobPostings": "[VI] Job Postings",
+  "loadingApplicants": "[VI] Loading applicants...",
+  "manageCv": "[VI] Manage CV",
+  "myServices": "[VI] My Services",
+  "noApplicantsYet": "[VI] No applicants yet",
+  "orderTracking": "[VI] Order Tracking",
+  "postNewJob": "[VI] Post New Job",
+  "profileTitle": "[VI] Profile",
+  "promotionCodes": "[VI] Promotion Codes",
+  "recruitmentReport": "[VI] Recruitment Report",
+  "supportInbox": "[VI] Support Inbox"
 }

@@ -12,9 +12,7 @@ export function JobsHubPage() {
   return (
     <div className="px-4 py-6">
       <div className="mb-6 flex items-center justify-between gap-4 flex-wrap">
-        <h2 className="text-2xl font-semibold min-w-0">
-          {t("jobPostings")}
-        </h2>
+        <h2 className="text-2xl font-semibold min-w-0">{t("jobPostings")}</h2>
         <div className="flex flex-wrap gap-3">
           <div className="flex gap-3">
             <Button
@@ -24,7 +22,7 @@ export function JobsHubPage() {
               aria-pressed={tab === "list"}
               className="w-auto whitespace-nowrap"
             >
-              {t("list")}
+              {t("listTabLabel")}
             </Button>
             <Button
               size="sm"
@@ -58,4 +56,3 @@ export function JobsHubPage() {
 }
 
 export default JobsHubPage;
-

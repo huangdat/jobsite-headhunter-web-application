@@ -15,5 +15,8 @@
   "notifications": "Notifications",
   "logs": "Logs",
   "users": "Users",
-  "classification": "Classification"
+  "classification": "Classification",
+  "featuredJobs": "Featured Jobs",
+  "recommended": "Recommended",
+  "topCompanies": "Top Companies"
 }

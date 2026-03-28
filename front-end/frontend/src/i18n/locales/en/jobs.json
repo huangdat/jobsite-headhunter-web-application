@@ -1,4 +1,7 @@
 {
+  "listTabLabel": "List",
+  "createTabLabel": "Create",
+  "applicantsTabLabel": "Applicants",
   "list": {
     "pageTitle": "Job Management",
     "documentation": "Documentation",
@@ -376,5 +379,20 @@
         "salaryVND": "Jobs list filters salary v n d"
       }
     }
-  }
+  },
+  "accountSettings": "Account Settings",
+  "activityLog": "Activity Log",
+  "applicantPageInfo": "Applicants",
+  "candidates": "Candidates",
+  "jobPostings": "Job Postings",
+  "loadingApplicants": "Loading applicants...",
+  "manageCv": "Manage CV",
+  "myServices": "My Services",
+  "noApplicantsYet": "No applicants yet",
+  "orderTracking": "Order Tracking",
+  "postNewJob": "Post New Job",
+  "profileTitle": "Profile",
+  "promotionCodes": "Promotion Codes",
+  "recruitmentReport": "Recruitment Report",
+  "supportInbox": "Support Inbox"
 }

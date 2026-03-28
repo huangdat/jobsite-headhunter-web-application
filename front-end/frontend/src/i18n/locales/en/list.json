@@ -12,5 +12,19 @@
   "groupByStatus": "Group by status",
   "groupByCompany": "Group by company",
   "clearAllFilters": "Clear all filters",
-  "noResults": "No results"
+  "noResults": "No results",
+  "applyBefore": "Apply before",
+  "filters": {
+    "allLevels": "All Levels",
+    "allTypes": "All Types",
+    "applyCustomRange": "Apply Custom Range",
+    "clearAllFilters": "Clear All Filters",
+    "fromMillion": "From (Million VND)",
+    "keywordPlaceholder": "Search keywords...",
+    "rankLevel": "Rank Level",
+    "salaryVND": "Salary (VND)",
+    "toMillion": "To (Million VND)",
+    "workingType": "Working Type"
+  },
+  "viewDetails": "View Details"
 }

@@ -37,8 +37,8 @@ function getUnusedKeysFromAudit() {
       .filter((line) => line && !line.startsWith("..."));
 
     return keys;
-  } catch (error) {
-    console.error("❌ Error reading audit report:", error.message);
+  } catch {
+    console.error("❌ Error reading audit report:");
     return [];
   }
 }
@@ -81,7 +81,7 @@ function getUsedKeysFromCode() {
           }
         }
       });
-    } catch (error) {
+    } catch {
       // Skip unreadable files
     }
   });

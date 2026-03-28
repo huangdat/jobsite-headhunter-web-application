@@ -12,5 +12,19 @@
   "groupByStatus": "Nhóm theo trạng thái",
   "groupByCompany": "Nhóm theo công ty",
   "clearAllFilters": "Xóa tất cả bộ lọc",
-  "noResults": "Không có kết quả"
+  "noResults": "Không có kết quả",
+  "applyBefore": "[VI] Apply before",
+  "filters": {
+    "allLevels": "[VI] All Levels",
+    "allTypes": "[VI] All Types",
+    "applyCustomRange": "[VI] Apply Custom Range",
+    "clearAllFilters": "[VI] Clear All Filters",
+    "fromMillion": "[VI] From (Million VND)",
+    "keywordPlaceholder": "[VI] Search keywords...",
+    "rankLevel": "[VI] Rank Level",
+    "salaryVND": "[VI] Salary (VND)",
+    "toMillion": "[VI] To (Million VND)",
+    "workingType": "[VI] Working Type"
+  },
+  "viewDetails": "[VI] View Details"
 }
