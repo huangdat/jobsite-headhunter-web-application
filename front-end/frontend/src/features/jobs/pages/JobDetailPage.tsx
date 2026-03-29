@@ -302,7 +302,7 @@ export function JobDetailPage() {
             </div>
           </div>
 
-          <aside className="space-y-6 lg:sticky lg:top-24">
+          <aside className="space-y-6">
             <section className="rounded-3xl bg-white p-6 shadow-lg">
               <p className="text-sm uppercase tracking-wide text-slate-500">
                 {t("detail.companySection")}
@@ -354,6 +354,20 @@ export function JobDetailPage() {
                   </div>
                 ))}
               </dl>
+            </section>
+
+            <section className="rounded-3xl bg-white p-6 shadow-lg">
+              <p className="text-sm uppercase tracking-wide text-slate-500">Contact</p>
+              <p className="mt-2 text-lg font-semibold text-slate-900">{job.headhunterName ?? "Recruiter not available"}</p>
+              <p className="text-sm text-slate-500">{job.companyAddress ?? job.addressDetail}</p>
+              <Button
+                variant="primary"
+                size="lg"
+                className="mt-6 w-full justify-center shadow-lg shadow-slate-900/20"
+                onClick={() => navigate("/login")}
+              >
+                Send CV to recruiter
+              </Button>
             </section>
           </aside>
         </div>
