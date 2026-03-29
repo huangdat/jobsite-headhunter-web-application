@@ -9,6 +9,7 @@ import { EXPERIENCE_PRESETS, SALARY_PRESETS, MILLION } from "../utils";
 
 interface UseJobFiltersReturn {
   keyword: string;
+  location: string;
   experienceValue: string;
   salaryPreset: string;
   customSalaryMin: string;
@@ -19,12 +20,14 @@ interface UseJobFiltersReturn {
   handleCustomSalaryApply: () => void;
   handleWorkingTypeChange: (type: string) => void;
   handleRankLevelChange: (rank: string) => void;
+  handleLocationChange: (value: string) => void;
   handleReset: () => void;
   setKeyword: (value: string) => void;
   setExperienceValue: (value: string) => void;
   setSalaryPreset: (value: string) => void;
   setCustomSalaryMin: (value: string) => void;
   setCustomSalaryMax: (value: string) => void;
+  setLocation: (value: string) => void;
 }
 
 export const useJobFilters = (
@@ -33,6 +36,7 @@ export const useJobFilters = (
   pageSize: number = 12
 ): UseJobFiltersReturn => {
   const [keyword, setKeyword] = useState(filters.keyword ?? "");
+  const [location, setLocation] = useState(filters.location ?? "");
   const [experienceValue, setExperienceValue] = useState("ALL");
   const [salaryPreset, setSalaryPreset] = useState("ALL");
   const [customSalaryMin, setCustomSalaryMin] = useState("");
@@ -46,6 +50,14 @@ export const useJobFilters = (
       setKeyword(nextKeyword);
     }
   }, [filters.keyword, keyword]);
+
+  // Sync location from filters
+  useEffect(() => {
+    const nextLocation = filters.location ?? "";
+    if (nextLocation !== location) {
+      setLocation(nextLocation);
+    }
+  }, [filters.location, location]);
 
   // Sync experience from filters
   useEffect(() => {
@@ -135,6 +147,11 @@ export const useJobFilters = (
     });
   };
 
+  const handleLocationChange = (value: string) => {
+    setLocation(value);
+    onFilterChange({ ...filters, location: value || undefined, page: 1 });
+  };
+
   const handleSalaryPresetChange = (value: string) => {
     setSalaryPreset(value);
     setCustomSalaryMin("");
@@ -194,6 +211,7 @@ export const useJobFilters = (
     setSalaryPreset("ALL");
     setCustomSalaryMin("");
     setCustomSalaryMax("");
+    setLocation("");
     onFilterChange({
       page: 1,
       size: pageSize,
@@ -211,6 +229,7 @@ export const useJobFilters = (
 
   return {
     keyword,
+    location,
     experienceValue,
     salaryPreset,
     customSalaryMin,
@@ -221,11 +240,13 @@ export const useJobFilters = (
     handleCustomSalaryApply,
     handleWorkingTypeChange,
     handleRankLevelChange,
+    handleLocationChange,
     handleReset,
     setKeyword,
     setExperienceValue,
     setSalaryPreset,
     setCustomSalaryMin,
     setCustomSalaryMax,
+    setLocation,
   };
 };

@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeSanitize from 'rehype-sanitize';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
@@ -158,17 +155,6 @@ export function JobDetailPage() {
           <span className="text-slate-800">{job.title}</span>
         </div>
 
-        <div className="mt-4">
-          <Button
-            variant="outline"
-            size="lg"
-            className="px-4 py-2 rounded-lg"
-            onClick={() => navigate("/jobs")}
-          >
-            Back to jobs
-          </Button>
-        </div>
-
         <div className="rounded-3xl bg-white p-8 shadow-xl">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
@@ -223,38 +209,22 @@ export function JobDetailPage() {
               <h2 className="text-xl font-semibold text-slate-900">Job details</h2>
               <p className="text-sm text-emerald-600">Job code: {job.jobCode}</p>
             </div>
-            <div className="mt-4 text-slate-600">
-              <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
-                {job.description ?? ''}
-              </ReactMarkdown>
-            </div>
+            <p className="mt-4 text-slate-600">{job.description}</p>
 
             <div className="mt-8 space-y-8">
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">Responsibilities</h3>
-                <div className="mt-3 whitespace-pre-line text-slate-600">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
-                    {job.responsibilities ?? ''}
-                  </ReactMarkdown>
-                </div>
+                <p className="mt-3 whitespace-pre-line text-slate-600">{job.responsibilities}</p>
               </div>
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">Requirements</h3>
-                <div className="mt-3 whitespace-pre-line text-slate-600">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
-                    {job.requirements ?? ''}
-                  </ReactMarkdown>
-                </div>
+                <p className="mt-3 whitespace-pre-line text-slate-600">{job.requirements}</p>
               </div>
 
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">Benefits</h3>
-                <div className="mt-3 whitespace-pre-line text-slate-600">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
-                    {job.benefits ?? ''}
-                  </ReactMarkdown>
-                </div>
+                <p className="mt-3 whitespace-pre-line text-slate-600">{job.benefits}</p>
               </div>
 
               <div>
@@ -274,7 +244,7 @@ export function JobDetailPage() {
             </div>
           </div>
 
-          <aside className="space-y-6 lg:sticky lg:top-24">
+          <aside className="space-y-6">
             <section className="rounded-3xl bg-white p-6 shadow-lg">
               <p className="text-sm uppercase tracking-wide text-slate-500">Company</p>
               <h3 className="mt-2 text-xl font-semibold text-slate-900">{job.companyName ?? "Confidential company"}</h3>
@@ -309,6 +279,20 @@ export function JobDetailPage() {
                   </div>
                 ))}
               </dl>
+            </section>
+
+            <section className="rounded-3xl bg-white p-6 shadow-lg">
+              <p className="text-sm uppercase tracking-wide text-slate-500">Contact</p>
+              <p className="mt-2 text-lg font-semibold text-slate-900">{job.headhunterName ?? "Recruiter not available"}</p>
+              <p className="text-sm text-slate-500">{job.companyAddress ?? job.addressDetail}</p>
+              <Button
+                variant="primary"
+                size="lg"
+                className="mt-6 w-full justify-center shadow-lg shadow-slate-900/20"
+                onClick={() => navigate("/login")}
+              >
+                Send CV to recruiter
+              </Button>
             </section>
           </aside>
         </div>

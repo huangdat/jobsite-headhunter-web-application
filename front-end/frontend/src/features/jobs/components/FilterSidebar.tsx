@@ -12,6 +12,7 @@ interface FilterSidebarProps {
 export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
   const {
     keyword,
+    location,
     experienceValue,
     salaryPreset,
     customSalaryMin,
@@ -20,6 +21,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
     handleExperienceChange,
     handleSalaryPresetChange,
     handleCustomSalaryApply,
+    handleLocationChange,
     handleWorkingTypeChange,
     handleRankLevelChange,
     handleReset,
@@ -38,6 +40,17 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
           value={keyword}
           onChange={(e) => handleKeywordChange(e.target.value)}
           placeholder="Job title or skill"
+          className="text-sm"
+        />
+      </div>
+
+      {/* Location Filter */}
+      <div>
+        <h3 className="mb-3 font-semibold text-slate-900 dark:text-white">Location</h3>
+        <Input
+          value={location}
+          onChange={(e) => handleLocationChange(e.target.value)}
+          placeholder="City or 'Remote'"
           className="text-sm"
         />
       </div>
