@@ -32,6 +32,7 @@ export const Logo: React.FC<LogoProps> = ({
     },
   };
 
+  // eslint-disable-next-line security/detect-object-injection
   const currentSize = sizes[size];
 
   return (

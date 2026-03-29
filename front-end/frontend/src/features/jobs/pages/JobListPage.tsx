@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { fetchJobs } from "../services/jobsApi";
 import type { JobFilterParams, JobListResponse, JobSummary } from "../types";
 import { FilterSidebar, JobCard } from "../components";
 import { INITIAL_PAGE_SIZE } from "../utils";
-// Local constants and UI implementations have been moved to shared components and utils.
-// This file now imports `FilterSidebar` and `JobCard` from the central components index.
 
 function SkeletonGrid() {
   return (
     <>
       {Array.from({ length: 6 }).map((_, index) => (
         <div
-          // eslint-disable-next-line react/no-array-index-key
           key={index}
           className="h-48 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-800"
         />
@@ -22,6 +20,8 @@ function SkeletonGrid() {
 }
 
 export function JobListPage() {
+  const { t } = useTranslation("jobs");
+  // const navigate = useNavigate(); // Unused
   const [jobs, setJobs] = useState<JobSummary[]>([]);
   const [meta, setMeta] = useState<Omit<JobListResponse, "data">>({
     page: 1,
@@ -35,10 +35,13 @@ export function JobListPage() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // EXPERIENCE_PRESETS and SALARY_PRESETS are unused and removed
 
   useEffect(() => {
     let active = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
+
     setError(null);
 
     fetchJobs(filters)
@@ -54,7 +57,7 @@ export function JobListPage() {
       })
       .catch(() => {
         if (!active) return;
-        setError("Unable to load jobs. Please try again later.");
+        setError(t("jobs.list.unableToLoad"));
       })
       .finally(() => {
         if (active) {
@@ -65,7 +68,7 @@ export function JobListPage() {
     return () => {
       active = false;
     };
-  }, [filters]);
+  }, [filters, t]);
 
   const handlePageChange = (nextPage: number) => {
     setFilters((prev) => ({ ...prev, page: nextPage }));
@@ -75,16 +78,15 @@ export function JobListPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* Hero Section */}
       <div className="mx-auto max-w-7xl px-4 py-10">
-        <div className="rounded-3xl bg-gradient-to-br from-emerald-500 to-slate-900 p-10 text-white shadow-lg">
+        <div className="rounded-3xl bg-linear-to-br from-emerald-500 to-slate-900 p-10 text-white shadow-lg">
           <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-            Opportunities for everyone
+            {t("jobs.list.hero.subtitle")}
           </p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight">
-            Explore curated jobs that match your strengths.
+            {t("jobs.list.hero.title")}
           </h1>
           <p className="mt-4 max-w-3xl text-lg text-emerald-100">
-            Filter by keywords, preferred work style, and salary expectations. Save
-            your favorite roles or share them with friends.
+            {t("jobs.list.hero.description")}
           </p>
         </div>
       </div>
@@ -107,7 +109,7 @@ export function JobListPage() {
               {isLoading && <SkeletonGrid />}
               {!isLoading && jobs.length === 0 && (
                 <p className="col-span-full rounded-2xl border border-dashed border-slate-200 p-10 text-center text-slate-500">
-                  No jobs found with the selected filters.
+                  {t("jobs.list.noJobsFound")}
                 </p>
               )}
               {!isLoading &&
@@ -123,7 +125,11 @@ export function JobListPage() {
             {meta.totalPages > 1 && !isLoading && (
               <div className="mt-8 flex items-center justify-between rounded-2xl border border-slate-100 bg-white/70 px-6 py-4 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
                 <span>
-                  Page {meta.page} of {meta.totalPages} — {meta.totalElements} jobs
+                  {t("jobs.list.pagination", {
+                    page: meta.page,
+                    totalPages: meta.totalPages,
+                    totalElements: meta.totalElements,
+                  })}
                 </span>
                 <div className="flex gap-3">
                   <Button
@@ -132,7 +138,7 @@ export function JobListPage() {
                     disabled={meta.page === 1}
                     onClick={() => handlePageChange(meta.page - 1)}
                   >
-                    Previous
+                    {t("jobs.list.previousPage")}
                   </Button>
                   <Button
                     type="button"
@@ -140,7 +146,7 @@ export function JobListPage() {
                     disabled={meta.page === meta.totalPages}
                     onClick={() => handlePageChange(meta.page + 1)}
                   >
-                    Next
+                    {t("jobs.list.nextPage")}
                   </Button>
                 </div>
               </div>

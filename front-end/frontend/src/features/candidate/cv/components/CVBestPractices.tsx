@@ -17,10 +17,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
     return (
       <div className="grid grid-cols-2 gap-6">
         {[1, 2].map((i) => (
-          <div
-            key={i}
-            className="bg-slate-50 rounded-xl p-6 space-y-4"
-          >
+          <div key={i} className="bg-slate-50 rounded-xl p-6 space-y-4">
             <div className="h-6 bg-slate-300 dark:bg-slate-700 rounded w-40 animate-pulse" />
             <div className="space-y-3">
               {[1, 2, 3].map((j) => (
@@ -60,18 +57,14 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
           {/* Privacy Items */}
           <ul className="space-y-2">
             {/* Fallback items */}
-            <li className="flex gap-2 text-sm text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">•</span>
-              <span>
-                You can set specific companies to "Block List" in settings.
-              </span>
-            </li>
-            <li className="flex gap-2 text-sm text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">•</span>
-              <span>
-                Control exactly what personal data is shared initially.
-              </span>
-            </li>
+            {t("cv.management.bestPractices.privacyItems", {
+              returnObjects: true,
+            })?.map((item: string, index: number) => (
+              <li key={index} className="flex gap-2 text-sm text-slate-600">
+                <span className="text-emerald-600 font-bold flex-0">•</span>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -89,20 +82,14 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 
           {/* Best Practice Items */}
           <ul className="space-y-3">
-            <li className="flex gap-2 text-sm text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">✓</span>
-              <span>
-                Quantify results with revenue, growth %, or team size.
-              </span>
-            </li>
-            <li className="flex gap-2 text-sm text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">✓</span>
-              <span>Keep your executive summary under 200 words.</span>
-            </li>
-            <li className="flex gap-2 text-sm text-slate-600">
-              <span className="text-emerald-600 font-bold flex-0">✓</span>
-              <span>Focus on the last 10 years of your career path.</span>
-            </li>
+            {t("cv.management.bestPractices.practicesItems", {
+              returnObjects: true,
+            })?.map((item: string, index: number) => (
+              <li key={index} className="flex gap-2 text-sm text-slate-600">
+                <span className="text-emerald-600 font-bold flex-0">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -130,14 +117,14 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
           </p>
 
           <ul className="space-y-2 text-sm">
-            <li className="flex gap-2 text-slate-600">
-              <span className="text-emerald-600 flex-0">→</span>
-              <span>You can set specific companies to "Block List"</span>
-            </li>
-            <li className="flex gap-2 text-slate-600">
-              <span className="text-emerald-600 flex-0">→</span>
-              <span>Control exactly what personal data is shared</span>
-            </li>
+            {t("cv.management.bestPractices.privacyItems", {
+              returnObjects: true,
+            })?.map((item: string, index: number) => (
+              <li key={index} className="flex gap-2 text-slate-600">
+                <span className="text-emerald-600 flex-0">→</span>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -155,15 +142,15 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
           <ul className="space-y-2 text-sm">
             <li className="flex gap-2 text-slate-600">
               <span className="text-emerald-600 font-bold flex-0">•</span>
-              <span>Quantify results with revenue, growth %, or team size</span>
+              <span>{t("candidate.tips.bestPracticeTip1")}</span>
             </li>
             <li className="flex gap-2 text-slate-600">
               <span className="text-emerald-600 font-bold flex-0">•</span>
-              <span>Keep your executive summary under 200 words</span>
+              <span>{t("candidate.tips.bestPracticeTip2")}</span>
             </li>
             <li className="flex gap-2 text-slate-600">
               <span className="text-emerald-600 font-bold flex-0">•</span>
-              <span>Focus on the last 10 years of your career path</span>
+              <span>{t("candidate.tips.bestPracticeTip3")}</span>
             </li>
           </ul>
         </div>
@@ -173,4 +160,3 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
 };
 
 export default CVBestPractices;
-

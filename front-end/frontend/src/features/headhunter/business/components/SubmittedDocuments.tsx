@@ -47,6 +47,7 @@ const getDocumentTypeLabel = (type: string): string => {
     bank_statement: "business.document.bank_statement",
     other: "business.document.other",
   };
+  // eslint-disable-next-line security/detect-object-injection
   return typeMap[type] || type;
 };
 
@@ -55,6 +56,7 @@ const formatFileSize = (bytes: number): string => {
   const k = 1024;
   const sizes = ["B", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
+  // eslint-disable-next-line security/detect-object-injection
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 };
 

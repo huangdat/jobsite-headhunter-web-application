@@ -1,17 +1,17 @@
 const ERROR_CODE_MAP: Record<string, string> = {
-  ACCOUNT_NOT_FOUND: "Account not found.",
-  USER_NOT_FOUND: "User not found.",
-  INVALID_CREDENTIALS: "Invalid username/email or password.",
-  UNAUTHENTICATED: "Unauthorized request. Please sign in again.",
-  FORBIDDEN: "You do not have permission to perform this action.",
-  EMAIL_INVALID: "Please enter a valid email address.",
-  USERNAME_INVALID: "Please enter a valid username.",
-  PASSWORD_INVALID: "Password does not meet security requirements.",
-  OTP_INVALID: "The OTP code is invalid.",
-  OTP_EXPIRED: "The OTP code has expired. Please request a new one.",
-  TOKEN_EXPIRED: "Your session has expired. Please sign in again.",
-  TOKEN_INVALID: "Your session is invalid. Please sign in again.",
-  DATA_INVALID: "Submitted data is invalid. Please review and try again.",
+  ACCOUNT_NOT_FOUND: "auth.messages.accountNotFound",
+  USER_NOT_FOUND: "auth.messages.userNotFound",
+  INVALID_CREDENTIALS: "auth.messages.invalidUsernameEmailPassword",
+  UNAUTHENTICATED: "auth.messages.unauthorizedRequest",
+  FORBIDDEN: "auth.messages.noPermission",
+  EMAIL_INVALID: "auth.messages.invalidEmail",
+  USERNAME_INVALID: "auth.messages.invalidUsername",
+  PASSWORD_INVALID: "auth.messages.passwordNotMeetSecurity",
+  OTP_INVALID: "auth.messages.invalidOtpCode",
+  OTP_EXPIRED: "auth.messages.otpExpired",
+  TOKEN_EXPIRED: "auth.messages.sessionExpired",
+  TOKEN_INVALID: "auth.messages.sessionInvalid",
+  DATA_INVALID: "auth.messages.dataInvalid",
 };
 
 const ASCII_ONLY_REGEX = /^[\u0020-\u007E]+$/;
@@ -25,31 +25,34 @@ const toCodeKey = (input: string): string =>
     .replace(/[\s.-]+/g, "_")
     .replace(/[^A-Z0-9_]/g, "");
 
+interface ApiErrorResponse {
+  data?: { message?: string };
+  status?: number;
+}
+
 export const extractApiErrorMessage = (
   error: unknown,
-  fallbackMessage: string,
+  fallbackMessage: string
 ): string => {
   let rawMessage = "";
 
   if (
     error instanceof Error &&
     "response" in error &&
-    typeof error.response === "object" &&
-    error.response !== null
+    typeof (error as { response?: unknown }).response === "object" &&
+    (error as { response?: unknown }).response !== null
   ) {
-    const response = error.response as {
-      data?: { message?: string };
-      status?: number;
-    };
+    const response = (error as { response?: ApiErrorResponse })
+      .response as ApiErrorResponse;
 
     rawMessage = response.data?.message?.trim() || "";
 
     if (!rawMessage && response.status === 401) {
-      return "Unauthorized request. Please sign in again.";
+      return "auth.messages.unauthorizedRequest";
     }
 
     if (!rawMessage && response.status === 404) {
-      return "Requested resource was not found.";
+      return "auth.messages.resourceNotFound";
     }
   } else if (error instanceof Error) {
     rawMessage = error.message?.trim() || "";
@@ -60,7 +63,10 @@ export const extractApiErrorMessage = (
   }
 
   const codeKey = toCodeKey(rawMessage);
+  // eslint-disable-next-line security/detect-object-injection
   if (ERROR_CODE_MAP[codeKey]) {
+    // ERROR_CODE_MAP returns i18n keys, return as is
+    // eslint-disable-next-line security/detect-object-injection
     return ERROR_CODE_MAP[codeKey];
   }
 
@@ -76,7 +82,7 @@ export const extractApiErrorMessage = (
   }
 
   if (upper === "NETWORK ERROR") {
-    return "Cannot connect to server. Please check your connection and try again.";
+    return "auth.messages.networkError";
   }
 
   // Keep frontend notifications in English only.
@@ -89,3 +95,13 @@ export const extractApiErrorMessage = (
 
   return rawMessage;
 };
+
+export const ERROR_MESSAGES = {
+  otpExpired: "auth.messages.otpExpired",
+  sessionExpired: "auth.messages.sessionExpired",
+  sessionInvalid: "auth.messages.sessionInvalid",
+  dataInvalid: "auth.messages.dataInvalid",
+  unauthorizedRequest: "auth.messages.unauthorizedRequest",
+  resourceNotFound: "auth.messages.resourceNotFound",
+  networkError: "auth.messages.networkError",
+} as const;

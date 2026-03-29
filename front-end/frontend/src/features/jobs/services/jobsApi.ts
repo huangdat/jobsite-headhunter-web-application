@@ -1,4 +1,5 @@
 import { apiClient } from "@/shared/utils/axios";
+import { API_ENDPOINTS } from "@/lib/constants";
 import type {
   JobListResponse,
   JobDetail,
@@ -8,28 +9,38 @@ import type {
 import type { ApiResponse } from "@/features/auth/types/api.types";
 
 export const fetchSkills = async () => {
-  const res = await apiClient.get<ApiResponse<import("../types").SkillOption[]>>(
-    "/api/skills",
-  );
+  const res = await apiClient.get<
+    ApiResponse<import("../types").SkillOption[]>
+  >(API_ENDPOINTS.JOBS.GET_SKILLS);
   return res.data.result;
 };
 
 export const getJobs = async (params: JobFilterParams) => {
-  const res = await apiClient.get<ApiResponse<JobListResponse>>("/api/jobs", { params });
+  const res = await apiClient.get<ApiResponse<JobListResponse>>(
+    API_ENDPOINTS.JOBS.GET_LIST,
+    {
+      params,
+    }
+  );
   return res.data.result;
 };
 
 export const getMyJobs = async (page = 1, size = 10) => {
   console.log(`[API] Calling getMyJobs with page=${page}, size=${size}`);
-  const res = await apiClient.get<ApiResponse<JobListResponse>>("/api/jobs/my", {
-    params: { page, size },
-  });
+  const res = await apiClient.get<ApiResponse<JobListResponse>>(
+    API_ENDPOINTS.JOBS.GET_MY_JOBS,
+    {
+      params: { page, size },
+    }
+  );
   console.log(`[API] getMyJobs response:`, res.data);
   return res.data.result;
 };
 
 export const getJobDetail = async (id: number) => {
-  const res = await apiClient.get<ApiResponse<JobDetail>>(`/api/jobs/${id}`);
+  const res = await apiClient.get<ApiResponse<JobDetail>>(
+    API_ENDPOINTS.JOBS.GET_BY_ID.replace("{id}", String(id))
+  );
   return res.data.result;
 };
 
@@ -63,7 +74,7 @@ export const createJob = async (form: JobFormValues) => {
     fd.append("image", form.postImage[0]);
   }
 
-  const res = await apiClient.post("/api/jobs", fd, {
+  const res = await apiClient.post(API_ENDPOINTS.JOBS.CREATE, fd, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
@@ -81,14 +92,19 @@ export const updateJob = async (id: number, form: Partial<JobFormValues>) => {
   if (form.workingType) fd.append("workingType", form.workingType);
   if (form.location) fd.append("location", form.location);
   if (form.addressDetail) fd.append("addressDetail", form.addressDetail);
-  if (form.experience !== undefined) fd.append("experience", String(form.experience));
-  if (form.salaryMin !== undefined) fd.append("salaryMin", String(form.salaryMin));
-  if (form.salaryMax !== undefined) fd.append("salaryMax", String(form.salaryMax));
-  if (form.negotiable !== undefined) fd.append("negotiable", String(Boolean(form.negotiable)));
+  if (form.experience !== undefined)
+    fd.append("experience", String(form.experience));
+  if (form.salaryMin !== undefined)
+    fd.append("salaryMin", String(form.salaryMin));
+  if (form.salaryMax !== undefined)
+    fd.append("salaryMax", String(form.salaryMax));
+  if (form.negotiable !== undefined)
+    fd.append("negotiable", String(Boolean(form.negotiable)));
   if (form.currency) fd.append("currency", form.currency);
   if (form.quantity !== undefined) fd.append("quantity", String(form.quantity));
   if (form.deadline) fd.append("deadline", form.deadline);
-  if (form.responsibilities) fd.append("responsibilities", form.responsibilities);
+  if (form.responsibilities)
+    fd.append("responsibilities", form.responsibilities);
   if (form.requirements) fd.append("requirements", form.requirements);
   if (form.benefits) fd.append("benefits", form.benefits);
   if (form.workingTime) fd.append("workingTime", form.workingTime);
@@ -101,9 +117,13 @@ export const updateJob = async (id: number, form: Partial<JobFormValues>) => {
     fd.append("image", form.postImage[0]);
   }
 
-  const res = await apiClient.patch(`/api/jobs/${id}`, fd, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  const res = await apiClient.patch(
+    API_ENDPOINTS.JOBS.UPDATE.replace("{id}", String(id)),
+    fd,
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    }
+  );
 
   return res.data.result;
 };
@@ -111,12 +131,17 @@ export const updateJob = async (id: number, form: Partial<JobFormValues>) => {
 export const toggleJobStatus = async (id: number, newDeadline?: string) => {
   // Always send a JSON body because the backend expects a request body.
   const payload = newDeadline ? { newDeadline } : {};
-  const res = await apiClient.patch(`/api/jobs/${id}/toggle-job-status`, payload);
+  const res = await apiClient.patch(
+    API_ENDPOINTS.JOBS.TOGGLE_STATUS.replace("{id}", String(id)),
+    payload
+  );
   return res.data;
 };
 
 export const deleteJobSoft = async (id: number) => {
-  const res = await apiClient.patch(`/api/jobs/${id}/toggle-active`);
+  const res = await apiClient.patch(
+    API_ENDPOINTS.JOBS.DELETE_SOFT.replace("{id}", String(id))
+  );
   return res.data;
 };
 // convenience aliases expected by pages/components
@@ -124,17 +149,23 @@ export const fetchJobDetail = getJobDetail;
 export const fetchJobs = getJobs;
 
 export const saveJobPost = async (jobId: number) => {
-  const res = await apiClient.post<ApiResponse<string>>(`/api/jobs/${jobId}/save`);
+  const res = await apiClient.post<ApiResponse<string>>(
+    API_ENDPOINTS.JOBS.SAVE.replace("{id}", String(jobId))
+  );
   return res.data.result;
 };
 
 export const removeSavedJob = async (jobId: number) => {
-  const res = await apiClient.delete<ApiResponse<string>>(`/api/jobs/${jobId}/save`);
+  const res = await apiClient.delete<ApiResponse<string>>(
+    API_ENDPOINTS.JOBS.REMOVE_SAVED.replace("{id}", String(jobId))
+  );
   return res.data.result;
 };
 
 export const fetchSavedJobs = async () => {
-  const res = await apiClient.get<ApiResponse<import("../types").SavedJob[]>>("/api/jobs/saved");
+  const res = await apiClient.get<ApiResponse<import("../types").SavedJob[]>>(
+    API_ENDPOINTS.JOBS.GET_SAVED
+  );
   return res.data.result;
 };
 

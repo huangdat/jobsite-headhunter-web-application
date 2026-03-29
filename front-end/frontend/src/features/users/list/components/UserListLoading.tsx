@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const UserListLoading: React.FC = () => {
   return (
@@ -9,22 +9,34 @@ export const UserListLoading: React.FC = () => {
             <tr className="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
               <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                 <div className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
-                  User <span className="material-symbols-outlined text-sm">unfold_more</span>
+                  User{" "}
+                  <span className="material-symbols-outlined text-sm">
+                    unfold_more
+                  </span>
                 </div>
               </th>
               <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                 <div className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
-                  Role <span className="material-symbols-outlined text-sm">unfold_more</span>
+                  Role{" "}
+                  <span className="material-symbols-outlined text-sm">
+                    unfold_more
+                  </span>
                 </div>
               </th>
               <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                 <div className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
-                  Status <span className="material-symbols-outlined text-sm">unfold_more</span>
+                  Status{" "}
+                  <span className="material-symbols-outlined text-sm">
+                    unfold_more
+                  </span>
                 </div>
               </th>
               <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                 <div className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
-                  Company <span className="material-symbols-outlined text-sm">unfold_more</span>
+                  Company{" "}
+                  <span className="material-symbols-outlined text-sm">
+                    unfold_more
+                  </span>
                 </div>
               </th>
               <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 text-right">

@@ -31,7 +31,7 @@ export const useUserDetail = (userId: string) => {
     if (userId) {
       fetchUserDetail();
     }
-  }, [userId]);
+  }, [userId, t]);
 
   return { data, loading, error };
 };

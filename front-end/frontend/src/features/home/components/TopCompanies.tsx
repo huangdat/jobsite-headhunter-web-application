@@ -27,20 +27,16 @@ export function TopCompanies() {
     };
 
     fetchCompanies();
-  }, []);
+  }, [t]);
 
   return (
     <section id="top-companies" className="bg-muted py-20">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-2xl font-bold mb-12">
-          {t("topCompanies.title")}
-        </h2>
+        <h2 className="text-2xl font-bold mb-12">{t("topCompanies.title")}</h2>
 
         {loading && (
           <div className="text-center py-12">
-            <p className="text-slate-600">
-              {t("messages.loadingCompanies")}
-            </p>
+            <p className="text-slate-600">{t("messages.loadingCompanies")}</p>
           </div>
         )}
 

@@ -7,6 +7,7 @@ import {
   XCircle,
   Loader,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface RelatedDataCount {
@@ -24,7 +25,13 @@ export interface DeleteUserModalProps {
   onConfirm: (deleteType: "soft" | "hard", reason?: string) => Promise<void>;
 }
 
-type ModalStep = "choice" | "reason" | "confirmation" | "success" | "error" | "conflict";
+type ModalStep =
+  | "choice"
+  | "reason"
+  | "confirmation"
+  | "success"
+  | "error"
+  | "conflict";
 
 interface DeleteSuccess {
   type: "success";
@@ -51,6 +58,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   onConfirm,
 }) => {
   const { t } = useUsersTranslation();
+  const { t: tCommon } = useTranslation("auth");
   const [step, setStep] = useState<ModalStep>("choice");
   const [selectedType, setSelectedType] = useState<"soft" | "hard" | null>(
     null
@@ -82,7 +90,10 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
     setLoading(true);
     try {
-      await onConfirm(selectedType, selectedType === "soft" ? reason : undefined);
+      await onConfirm(
+        selectedType,
+        selectedType === "soft" ? reason : undefined
+      );
       setResult({ type: "success" });
       setStep("success");
 
@@ -96,7 +107,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
       });
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
+        error instanceof Error ? error.message : tCommon("common.unknownError");
 
       // Check if it's a conflict error (AC2 - 409)
       if (
@@ -203,7 +214,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   checked={selectedType === "soft"}
                   onChange={() => {}}
                   className="mt-1"
-                  aria-label="Soft Delete option"
+                  aria-label={t("delete.softDeleteOptionAriaLabel")}
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
@@ -257,7 +268,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   onChange={() => {}}
                   disabled={hasRelatedData}
                   className="mt-1"
-                  aria-label="Hard Delete option"
+                  aria-label={t("delete.hardDeleteOptionAriaLabel")}
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
@@ -339,7 +350,8 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             <form onSubmit={handleReasonSubmit}>
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  {t("delete.reasonLabel")} <span className="text-red-600">*</span>
+                  {t("delete.reasonLabel")}{" "}
+                  <span className="text-red-600">*</span>
                 </label>
                 <textarea
                   value={reason}

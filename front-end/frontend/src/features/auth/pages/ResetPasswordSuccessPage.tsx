@@ -19,7 +19,9 @@ export function ResetPasswordSuccessPage() {
 
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
                 {t("pages.resetPasswordSuccess.titleLeft")} <br />
-                <span className="text-brand-primary">{t("pages.resetPasswordSuccess.titleHighlight")}</span>
+                <span className="text-brand-primary">
+                  {t("pages.resetPasswordSuccess.titleHighlight")}
+                </span>
               </h1>
 
               <p className="text-gray-300 text-lg leading-relaxed max-w-sm">
@@ -58,7 +60,9 @@ export function ResetPasswordSuccessPage() {
                   </span>
                 </div>
               </div>
-              <h2 className="text-3xl font-bold mb-4">{t("pages.resetPasswordSuccess.title")}</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                {t("pages.resetPasswordSuccess.title")}
+              </h2>
               <p className="text-slate-500 dark:text-slate-400 text-lg mb-10 leading-relaxed">
                 {t("pages.resetPasswordSuccess.subtitle")}
               </p>

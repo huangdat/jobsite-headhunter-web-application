@@ -24,7 +24,9 @@ export const FormField: React.FC<FormFieldProps> = ({
 
       {error && (
         <div className="flex items-center gap-1 text-red-500">
-          <span className="material-symbols-outlined text-[calc(12px)]!">error</span>
+          <span className="material-symbols-outlined text-[calc(12px)]!">
+            error
+          </span>
           <p className="text-xs font-medium">{error}</p>
         </div>
       )}

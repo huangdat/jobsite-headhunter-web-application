@@ -6,7 +6,8 @@
 
 // API Base URLs
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
+  BASE_URL:
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
   TIMEOUT: 15000,
   RETRY_COUNT: 3,
   RETRY_DELAY: 1000,
@@ -27,7 +28,7 @@ export const API_ENDPOINTS = {
     REGISTER_SOCIAL: "/api/auth/register-social",
     CHECK_EMAIL_USERNAME: "/api/account/check-email-username-exist",
   },
-  
+
   // OTP
   OTP: {
     SEND_SIGNUP: "/api/otp/send-signup",
@@ -47,19 +48,74 @@ export const API_ENDPOINTS = {
     SEARCH: "/api/account/search", // Admin: Search/Classification - requires ADMIN role
   },
 
-  // Jobs
-  JOBS: {
-    GET_RECOMMENDED: "/api/jobs/recommended",
-    GET_RANDOM_LATEST: "/api/jobs/random-latest",
-    GET_BY_ID: "/api/jobs/{id}",
-    GET_SAVED: "/api/jobs/saved",
+  // Users (Admin Management)
+  USERS: {
+    GET_ALL: "/api/account",
+    GET_BY_ID: "/api/account/{id}",
+    SEARCH: "/api/account/search",
+    UPDATE_STATUS: "/api/account/status/{id}",
+    LOCK: "/api/account/lock/{id}",
+    UNLOCK: "/api/account/unlock/{id}",
+    DELETE: "/api/account/{id}",
   },
 
-  // Business Profiles
+  // Jobs
+  JOBS: {
+    GET_SKILLS: "/api/skills",
+    GET_LIST: "/api/jobs",
+    GET_BY_ID: "/api/jobs/{id}",
+    GET_MY_JOBS: "/api/jobs/my",
+    GET_RECOMMENDED: "/api/jobs/recommended",
+    GET_RANDOM_LATEST: "/api/jobs/random-latest",
+    GET_SAVED: "/api/jobs/saved",
+    CREATE: "/api/jobs",
+    UPDATE: "/api/jobs/{id}",
+    DELETE_SOFT: "/api/jobs/{id}",
+    TOGGLE_STATUS: "/api/jobs/{id}/toggle-status",
+    SAVE: "/api/jobs/{id}/save",
+    REMOVE_SAVED: "/api/jobs/{id}/saved",
+  },
+
+  // Business Profiles (View)
   BUSINESS_PROFILE: {
     GET_TOP_10: "/api/business-profile/10-best",
     GET_ALL: "/api/business-profile",
     GET_BY_ID: "/api/business-profile/{id}",
+  },
+
+  // Business Verification (Submission & Management)
+  // NOTE: Uses relative paths (without "/api/") because businessApi.ts has baseURL="/api"
+  BUSINESS: {
+    SUBMIT_PROFILE: "/business/profile/submit",
+    GET_STATUS: "/business/profile/status",
+    GET_STRENGTH: "/business/profile/strength",
+    VALIDATE_FIELD: "/business/validate",
+    GET_VERIFICATION_STEPS: "/business/profile/verification-steps",
+    GET_DOCUMENTS: "/business/profile/documents",
+    DOWNLOAD_DOCUMENT: "/business/profile/documents/{id}/download",
+    DELETE_DOCUMENT: "/business/profile/documents/{id}",
+    UPDATE_PROFILE: "/business/profile/update",
+    GET_OPTIMIZATION_TIPS: "/business/profile/optimization-tips",
+  },
+
+  // Collaborator Commission Management
+  COLLABORATOR: {
+    GET_COMMISSION_PROFILE: "/api/collaborator/commission/profile",
+    UPDATE_COMMISSION_PROFILE: "/api/collaborator/commission/profile",
+    GET_COMMISSION_STATS: "/api/collaborator/commission/stats",
+    VERIFY_BANKING_INFO: "/api/collaborator/commission/verify-banking",
+  },
+
+  // Candidate CV & Profile Management
+  CANDIDATE: {
+    CV_UPLOAD: "/api/candidate/cv/upload",
+    CV_LIST: "/api/candidate/cv/list",
+    CV_DETAIL: "/api/candidate/cv/{id}",
+    CV_DOWNLOAD: "/api/candidate/cv/{id}/download",
+    CV_DELETE: "/api/candidate/cv/{id}",
+    CV_MAKE_ACTIVE: "/api/candidate/cv/{id}/make-active",
+    PROFILE_STRENGTH: "/api/candidate/profile/strength",
+    PRIVACY_SETTINGS: "/api/candidate/profile/privacy",
   },
 
   // Add more endpoints as needed
@@ -142,6 +198,12 @@ export const WORKING_TYPES = {
 } as const;
 
 export type WorkingType = (typeof WORKING_TYPES)[keyof typeof WORKING_TYPES];
+
+// OAuth Provider URLs
+export const OAUTH_URLS = {
+  GOOGLE_AUTH: "https://accounts.google.com/o/oauth2/v2/auth",
+  LINKEDIN_AUTH: "https://www.linkedin.com/oauth/v2/authorization",
+} as const;
 
 // Admin Features & Routes
 export const ADMIN_FEATURES = {

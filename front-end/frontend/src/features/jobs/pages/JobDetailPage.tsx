@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSanitize from "rehype-sanitize";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { fetchJobDetail, fetchSavedJobs, removeSavedJob, saveJobPost } from "../services/jobsApi";
+import {
+  fetchJobDetail,
+  fetchSavedJobs,
+  removeSavedJob,
+  saveJobPost,
+} from "../services/jobsApi";
 import type { JobDetail } from "../types";
 import { formatSalaryRange } from "../utils";
 
 export function JobDetailPage() {
+  const { t } = useTranslation("jobs");
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
@@ -20,14 +30,14 @@ export function JobDetailPage() {
 
   useEffect(() => {
     if (!id) {
-      setError("Job not found");
+      setError(t("detail.notFound"));
       setIsLoading(false);
       return;
     }
 
     const jobId = Number(id);
     if (Number.isNaN(jobId)) {
-      setError("Job not found");
+      setError(t("detail.notFound"));
       setIsLoading(false);
       return;
     }
@@ -39,12 +49,12 @@ export function JobDetailPage() {
         setError(null);
       })
       .catch(() => {
-        setError("Unable to load job detail. Please try again later.");
+        setError(t("detail.unableToLoad"));
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [id]);
+  }, [id, t]);
 
   useEffect(() => {
     if (!id || !isAuthenticated) {
@@ -86,42 +96,51 @@ export function JobDetailPage() {
   if (error || !job) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-        <p className="text-lg text-slate-500">{error ?? "Job not found"}</p>
-        <Button variant="link" className="mt-4" onClick={() => navigate("/jobs")}>
-          Back to listings
+        <p className="text-lg text-slate-500">
+          {error ?? t("detail.notFound")}
+        </p>
+        <Button
+          variant="link"
+          className="mt-4"
+          onClick={() => navigate("/jobs")}
+        >
+          {t("detail.backToListings")}
         </Button>
       </div>
     );
   }
 
   const salaryLabel = job.negotiable
-    ? "Negotiable"
+    ? t("detail.salaryNegotiable")
     : formatSalaryRange(job.salaryMin, job.salaryMax, job.currency);
   const deadlineLabel = job.deadline
     ? new Date(job.deadline).toLocaleDateString("en-US")
-    : "Open";
+    : t("detail.salaryOpen");
 
   const overviewItems = [
-    { label: "Salary", value: salaryLabel },
-    { label: "Location", value: job.location },
-    { label: "Experience", value: `${job.experience}+ years` },
-    { label: "Working type", value: job.workingType },
-    { label: "Headcount", value: `${job.quantity} people` },
-    { label: "Deadline", value: deadlineLabel },
+    { label: t("detail.salary"), value: salaryLabel },
+    { label: t("detail.location"), value: job.location },
+    { label: t("detail.experience"), value: `${job.experience}+ years` },
+    { label: t("detail.workingType"), value: job.workingType },
+    { label: t("detail.headcount"), value: `${job.quantity} people` },
+    { label: t("detail.deadline"), value: deadlineLabel },
   ];
 
   const generalInfo = [
-    { label: "Rank", value: job.rankLevel },
-    { label: "Working hours", value: job.workingTime },
-    { label: "Status", value: job.status },
-    { label: "Posted on", value: new Date(job.createdAt).toLocaleDateString("en-US") },
+    { label: t("detail.rank"), value: job.rankLevel },
+    { label: t("detail.workingHours"), value: job.workingTime },
+    { label: t("detail.status"), value: job.status },
+    {
+      label: t("detail.postedOn"),
+      value: new Date(job.createdAt).toLocaleDateString("en-US"),
+    },
   ];
 
   const handleToggleSaved = async () => {
     if (!job) return;
 
     if (!isAuthenticated) {
-      toast.info("Please sign in to save jobs.");
+      toast.info(t("messages.pleaseSignInToSaveJobs"));
       navigate("/login");
       return;
     }
@@ -131,14 +150,14 @@ export function JobDetailPage() {
       if (isSaved) {
         await removeSavedJob(job.id);
         setIsSaved(false);
-        toast.success("Job removed from saved list.");
+        toast.success(t("messages.jobRemovedFromSaved"));
       } else {
         await saveJobPost(job.id);
         setIsSaved(true);
-        toast.success("Job saved.");
+        toast.success(t("messages.jobSaved"));
       }
     } catch {
-      toast.error("Unable to update saved jobs. Please try again.");
+      toast.error(t("messages.unableToUpdateSavedJobs"));
     } finally {
       setIsSaveLoading(false);
     }
@@ -148,20 +167,36 @@ export function JobDetailPage() {
     <div className="bg-slate-50 pb-16 pt-10">
       <div className="mx-auto max-w-6xl space-y-8 px-4">
         <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
-          <button className="hover:text-emerald-600" onClick={() => navigate("/jobs")}>
-            Jobs
+          <button
+            className="hover:text-emerald-600"
+            onClick={() => navigate("/jobs")}
+          >
+            {t("list.pageTitle")}
           </button>
           <span>/</span>
           <span className="text-slate-800">{job.title}</span>
+        </div>
+
+        <div className="mt-4">
+          <Button
+            variant="outline"
+            size="lg"
+            className="px-4 py-2 rounded-lg"
+            onClick={() => navigate("/jobs")}
+          >
+            {t("detail.backToJobs")}
+          </Button>
         </div>
 
         <div className="rounded-3xl bg-white p-8 shadow-xl">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
-                {job.companyName ?? "Confidential company"}
+                {job.companyName ?? t("messages.confidentialCompany")}
               </p>
-              <h1 className="mt-2 text-3xl font-bold text-slate-900">{job.title}</h1>
+              <h1 className="mt-2 text-3xl font-bold text-slate-900">
+                {job.title}
+              </h1>
               <div className="mt-4 flex flex-wrap gap-3 text-sm">
                 <Badge variant="secondary">{job.workingType}</Badge>
                 <Badge variant="secondary">{job.rankLevel}</Badge>
@@ -175,18 +210,24 @@ export function JobDetailPage() {
                 className="flex-1 shadow-lg shadow-emerald-500/30"
                 onClick={() => navigate("/login")}
               >
-                Apply now
+                {t("detail.applyNow")}
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 className={`flex-1 border-2 ${
-                  isSaved ? "border-emerald-300 bg-emerald-50 text-emerald-700" : "border-slate-200"
+                  isSaved
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-700"
+                    : "border-slate-200"
                 }`}
                 onClick={handleToggleSaved}
                 disabled={isSaveLoading}
               >
-                {isSaveLoading ? "Saving..." : isSaved ? "Saved" : "Save job"}
+                {isSaveLoading
+                  ? t("detail.saving")
+                  : isSaved
+                    ? t("detail.saved")
+                    : t("detail.saveJob")}
               </Button>
             </div>
           </div>
@@ -197,7 +238,9 @@ export function JobDetailPage() {
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   {item.label}
                 </p>
-                <p className="mt-2 text-lg font-semibold text-slate-900">{item.value}</p>
+                <p className="mt-2 text-lg font-semibold text-slate-900">
+                  {item.value}
+                </p>
               </div>
             ))}
           </div>
@@ -206,38 +249,81 @@ export function JobDetailPage() {
         <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
           <div className="rounded-3xl bg-white p-8 shadow-lg">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 className="text-xl font-semibold text-slate-900">Job details</h2>
-              <p className="text-sm text-emerald-600">Job code: {job.jobCode}</p>
+              <h2 className="text-xl font-semibold text-slate-900">
+                {t("detail.jobDetailsSection")}
+              </h2>
+              <p className="text-sm text-emerald-600">
+                {t("detail.jobCodeLabel")} {job.jobCode}
+              </p>
             </div>
-            <p className="mt-4 text-slate-600">{job.description}</p>
+            <div className="mt-4 text-slate-600">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeSanitize]}
+              >
+                {job.description ?? ""}
+              </ReactMarkdown>
+            </div>
 
             <div className="mt-8 space-y-8">
               <div>
-                <h3 className="text-lg font-semibold text-slate-900">Responsibilities</h3>
-                <p className="mt-3 whitespace-pre-line text-slate-600">{job.responsibilities}</p>
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {t("detail.responsibilities")}
+                </h3>
+                <div className="mt-3 whitespace-pre-line text-slate-600">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeSanitize]}
+                  >
+                    {job.responsibilities ?? ""}
+                  </ReactMarkdown>
+                </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-slate-900">Requirements</h3>
-                <p className="mt-3 whitespace-pre-line text-slate-600">{job.requirements}</p>
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {t("detail.requirements")}
+                </h3>
+                <div className="mt-3 whitespace-pre-line text-slate-600">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeSanitize]}
+                  >
+                    {job.requirements ?? ""}
+                  </ReactMarkdown>
+                </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-slate-900">Benefits</h3>
-                <p className="mt-3 whitespace-pre-line text-slate-600">{job.benefits}</p>
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {t("detail.benefits")}
+                </h3>
+                <div className="mt-3 whitespace-pre-line text-slate-600">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeSanitize]}
+                  >
+                    {job.benefits ?? ""}
+                  </ReactMarkdown>
+                </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-slate-900">Required skills</h3>
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {t("detail.requiredSkills")}
+                </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {job.skills?.length ? (
                     job.skills.map((skill) => (
-                      <span key={skill.id} className="rounded-full bg-emerald-50 px-4 py-1 text-sm font-medium text-emerald-700">
+                      <span
+                        key={skill.id}
+                        className="rounded-full bg-emerald-50 px-4 py-1 text-sm font-medium text-emerald-700"
+                      >
                         {skill.name}
                       </span>
                     ))
                   ) : (
-                    <p className="text-slate-500">Not available</p>
+                    <p className="text-slate-500">{t("detail.notAvailable")}</p>
                   )}
                 </div>
               </div>
@@ -246,21 +332,34 @@ export function JobDetailPage() {
 
           <aside className="space-y-6">
             <section className="rounded-3xl bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-wide text-slate-500">Company</p>
-              <h3 className="mt-2 text-xl font-semibold text-slate-900">{job.companyName ?? "Confidential company"}</h3>
-              <p className="mt-1 text-sm text-slate-500">{job.companyAddress ?? job.addressDetail}</p>
+              <p className="text-sm uppercase tracking-wide text-slate-500">
+                {t("detail.companySection")}
+              </p>
+              <h3 className="mt-2 text-xl font-semibold text-slate-900">
+                {job.companyName ?? t("messages.confidentialCompany")}
+              </h3>
+              <p className="mt-1 text-sm text-slate-500">
+                {job.companyAddress ?? job.addressDetail}
+              </p>
               <dl className="mt-4 space-y-3 text-sm text-slate-600">
                 {job.companySize && (
                   <div className="flex justify-between">
-                    <dt>Size</dt>
-                    <dd className="font-semibold text-slate-900">{job.companySize}</dd>
+                    <dt>{t("detail.sizeLabel")}</dt>
+                    <dd className="font-semibold text-slate-900">
+                      {job.companySize}
+                    </dd>
                   </div>
                 )}
                 {job.companyWebsite && (
                   <div className="flex justify-between">
-                    <dt>Website</dt>
+                    <dt>{t("detail.websiteLabel")}</dt>
                     <dd>
-                      <a href={job.companyWebsite} className="font-semibold text-emerald-600" target="_blank" rel="noreferrer">
+                      <a
+                        href={job.companyWebsite}
+                        className="font-semibold text-emerald-600"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         {job.companyWebsite}
                       </a>
                     </dd>
@@ -270,12 +369,16 @@ export function JobDetailPage() {
             </section>
 
             <section className="rounded-3xl bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-wide text-slate-500">General info</p>
+              <p className="text-sm uppercase tracking-wide text-slate-500">
+                {t("detail.generalInfoSection")}
+              </p>
               <dl className="mt-4 space-y-3 text-sm text-slate-600">
                 {generalInfo.map((item) => (
                   <div key={item.label} className="flex justify-between">
                     <dt>{item.label}</dt>
-                    <dd className="font-semibold text-slate-900">{item.value || "Not available"}</dd>
+                    <dd className="font-semibold text-slate-900">
+                      {item.value || t("detail.notAvailable")}
+                    </dd>
                   </div>
                 ))}
               </dl>

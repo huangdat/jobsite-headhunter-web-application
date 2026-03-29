@@ -1,10 +1,10 @@
 /**
  * PROF-03 Business Profile & Verification
  * Phase 6: i18n Translation Keys Mapping
- * 
+ *
  * Complete list of all i18n keys used across all components
  * Use this as reference for translation file structure
- * 
+ *
  * Pattern: business.{section}.{key}
  */
 
@@ -166,16 +166,16 @@ export const BUSINESS_I18N_KEYS = {
 /**
  * Usage Examples
  * ==============
- * 
+ *
  * In Components:
  * const { t } = useTranslation();
  * <h1>{t(BUSINESS_I18N_KEYS.page.title)}</h1>
- * 
+ *
  * Or Direct (current implementation):
  * <h1>{t("business.page.title")}</h1>
- * 
+ *
  * Translation File Structure (i18n/locales/en/business.json):
- * 
+ *
  * {
  *   "business": {
  *     "page": {

@@ -3,6 +3,16 @@ import type { UserDetail } from "@/features/users/types/user.types";
 import { API_ENDPOINTS } from "@/features/users/constants";
 
 /**
+ * Generic API response wrapper for backend responses
+ * @internal - All API responses follow this structure with a nested result property
+ */
+interface ApiResponse<T> {
+  result: T;
+  success: boolean;
+  message?: string;
+}
+
+/**
  * Backend response format (different from frontend interface)
  * @internal - This adapter handles backend response transformation
  */
@@ -39,6 +49,7 @@ const mapBackendStatus = (backendStatus: string): "ACTIVE" | "LOCKED" => {
     SUSPENDED: "LOCKED", // Backend suspended = frontend locked
     DELETED: "LOCKED", // Fallback for edge cases
   };
+  // eslint-disable-next-line security/detect-object-injection
   return statusMap[backendStatus] || "ACTIVE";
 };
 
@@ -50,16 +61,21 @@ const mapBackendStatus = (backendStatus: string): "ACTIVE" | "LOCKED" => {
  * - Status enum conversion (AccountStatus → UserStatus)
  * - Role array handling (backend returns Set<String>, frontend needs single role)
  */
-const adaptUserDetail = (backendUser: any): UserDetail => {
+const adaptUserDetail = (
+  backendUser: Omit<UserDetail, "status">
+): UserDetail => {
   return {
     ...backendUser,
     // Convert backend AccountStatus enum to frontend UserStatus
-    status: mapBackendStatus(backendUser.status),
+    status: mapBackendStatus(backendUser.status as string),
     // If backend returns multiple roles (Set<String>), take first one
     // This assumes business logic: users can have multiple roles but we display primary
     role:
-      Array.isArray(backendUser.roles) && backendUser.roles.length > 0
-        ? backendUser.roles[0]
+      Array.isArray((backendUser as Record<string, unknown>).roles) &&
+      ((backendUser as Record<string, unknown>).roles as unknown[]).length > 0
+        ? ((
+            (backendUser as Record<string, unknown>).roles as unknown[]
+          )[0] as string)
         : backendUser.role || "CANDIDATE",
   };
 };
@@ -74,7 +90,7 @@ const adaptUserDetail = (backendUser: any): UserDetail => {
  * Also adapts individual user objects within the response.
  */
 const adaptPagedResponse = (
-  backendResp: BackendPagedResponse<any>
+  backendResp: BackendPagedResponse<UserDetail>
 ): PagedResponse<UserDetail> => {
   return {
     items: backendResp.data.map(adaptUserDetail),
@@ -92,7 +108,9 @@ export const usersApi = {
    * This endpoint loads all users without pagination which is not scalable
    */
   getUsers: async (): Promise<UserDetail[]> => {
-    const res = await apiClient.get<any>(API_ENDPOINTS.USERS.GET_ALL);
+    const res = await apiClient.get<ApiResponse<UserDetail[]>>(
+      API_ENDPOINTS.USERS.GET_ALL
+    );
     return res.data.result;
   },
 
@@ -100,7 +118,9 @@ export const usersApi = {
    * Get user by ID
    */
   getUserById: async (userId: string): Promise<UserDetail> => {
-    const res = await apiClient.get<any>(API_ENDPOINTS.USERS.GET_BY_ID(userId));
+    const res = await apiClient.get<ApiResponse<UserDetail>>(
+      API_ENDPOINTS.USERS.GET_BY_ID.replace("{id}", userId)
+    );
     return res.data.result;
   },
 
@@ -121,7 +141,9 @@ export const usersApi = {
     company?: string;
     sort?: string;
   }): Promise<PagedResponse<UserDetail>> => {
-    const res = await apiClient.get<any>(API_ENDPOINTS.USERS.SEARCH, {
+    const res = await apiClient.get<
+      ApiResponse<BackendPagedResponse<UserDetail>>
+    >(API_ENDPOINTS.USERS.SEARCH, {
       params,
     });
     // Backend returns { data, totalElements, ... }
@@ -145,8 +167,8 @@ export const usersApi = {
     userId: string,
     status: "ACTIVE" | "SUSPENDED" | "DELETED" | "PENDING"
   ): Promise<UserDetail> => {
-    const res = await apiClient.put<any>(
-      API_ENDPOINTS.USERS.UPDATE_STATUS(userId),
+    const res = await apiClient.put<ApiResponse<UserDetail>>(
+      API_ENDPOINTS.USERS.UPDATE_STATUS.replace("{id}", userId),
       {
         status,
       }

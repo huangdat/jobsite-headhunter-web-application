@@ -4,25 +4,32 @@
     "modules": [
       {
         "name": "shared",
-        "pattern": "src/shared/*",
-        "importRestriction": ["parent", "index"]
+        "pattern": "src/shared/**",
+        "importRestriction": ["parent", "index", "sibling"]
       },
       {
         "name": "features",
-        "pattern": "src/features/*/*",
-        "importRestriction": ["sibling", "parent"]
-      },
-      {
-        "name": "app",
-        "pattern": "src/app/*",
-        "importRestriction": ["parent", "index"]
+        "pattern": "src/features/**",
+        "importRestriction": ["sibling", "parent", "shared"]
       },
       {
         "name": "components",
-        "pattern": "src/components/*",
+        "pattern": "src/components/**",
+        "importRestriction": ["parent", "index"]
+      },
+      {
+        "name": "app",
+        "pattern": "src/app/**",
         "importRestriction": ["parent", "index"]
       }
     ],
-    "allowUncrossable": true
+    "elements": {
+      "**/*.ts": "module",
+      "**/*.tsx": "module",
+      "src/shared/**/*.ts": "dependency",
+      "src/shared/**/*.tsx": "dependency"
+    },
+    "allowUncrossable": true,
+    "zonePatterns": ["src/shared/**", "src/features/**"]
   }
 }

@@ -198,7 +198,6 @@ maven-eclipse.xml
 
 # Maven
 .m2/
-repository/
 .mvn/
 maven/
 
@@ -262,3 +261,4 @@ thumb
 sketch
 
 coverage/
+**/node_modules/**

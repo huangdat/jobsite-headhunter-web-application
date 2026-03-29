@@ -67,7 +67,7 @@ export const useUnlockUser = () => {
     } catch (err) {
       const errorResponse = err as UnlockErrorResponse | Error;
       let errorMessage =
-        t("unlock.errorUnlockFailed") || "Failed to unlock user";
+        t("unlock.errorUnlockFailed") || t("messages.failedToUnlockUser");
 
       if (errorResponse instanceof Error) {
         errorMessage = errorResponse.message;

@@ -27,7 +27,7 @@ export function RecommendedJobs() {
     };
 
     fetchJobs();
-  }, []);
+  }, [t]);
   return (
     <section id="recommended" className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex justify-between items-center mb-8">

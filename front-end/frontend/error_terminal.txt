@@ -1,0 +1,256 @@
+[{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "typescript",
+	"code": "2304",
+	"severity": 8,
+	"message": "Cannot find name 't'.",
+	"source": "ts",
+	"startLineNumber": 45,
+	"startColumn": 24,
+	"endLineNumber": 45,
+	"endColumn": 25,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"Working Type\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 52,
+	"startColumn": 75,
+	"endLineNumber": 54,
+	"endColumn": 9,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"All types\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 65,
+	"startColumn": 74,
+	"endLineNumber": 67,
+	"endColumn": 13,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"Rank Level\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 92,
+	"startColumn": 75,
+	"endLineNumber": 94,
+	"endColumn": 9,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"All levels\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 105,
+	"startColumn": 74,
+	"endLineNumber": 107,
+	"endColumn": 13,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"Salary (VND)\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 160,
+	"startColumn": 72,
+	"endLineNumber": 162,
+	"endColumn": 11,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "typescript",
+	"code": "2304",
+	"severity": 8,
+	"message": "Cannot find name 't'.",
+	"source": "ts",
+	"startLineNumber": 190,
+	"startColumn": 28,
+	"endLineNumber": 190,
+	"endColumn": 29,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "typescript",
+	"code": "2304",
+	"severity": 8,
+	"message": "Cannot find name 't'.",
+	"source": "ts",
+	"startLineNumber": 199,
+	"startColumn": 28,
+	"endLineNumber": 199,
+	"endColumn": 29,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"Apply custom range\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 208,
+	"startColumn": 12,
+	"endLineNumber": 210,
+	"endColumn": 11,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/FilterSidebar.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"Clear all filters\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 215,
+	"startColumn": 72,
+	"endLineNumber": 217,
+	"endColumn": 7,
+	"modelVersionId": 6,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/JobCard.tsx",
+	"owner": "typescript",
+	"code": "2304",
+	"severity": 8,
+	"message": "Cannot find name 't'.",
+	"source": "ts",
+	"startLineNumber": 37,
+	"startColumn": 19,
+	"endLineNumber": 37,
+	"endColumn": 20,
+	"modelVersionId": 3,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/JobCard.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"Apply before\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 68,
+	"startColumn": 120,
+	"endLineNumber": 69,
+	"endColumn": 26,
+	"modelVersionId": 3,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/JobCard.tsx",
+	"owner": "eslint5",
+	"code": "custom/no-hardcoded-strings",
+	"severity": 8,
+	"message": "❌ Hardcoded JSX text: \"View details →\". Use i18n: {t(\"key.path\")} instead",
+	"source": "eslint",
+	"startLineNumber": 77,
+	"startColumn": 66,
+	"endLineNumber": 79,
+	"endColumn": 9,
+	"modelVersionId": 3,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/JobCard.tsx",
+	"owner": "tailwindcss-intellisense",
+	"code": "cssConflict",
+	"severity": 4,
+	"message": "'focus-visible:outline' applies the same CSS properties as 'focus-visible:outline-2'.",
+	"startLineNumber": 36,
+	"startColumn": 151,
+	"endLineNumber": 36,
+	"endColumn": 172,
+	"relatedInformation": [
+		{
+			"startLineNumber": 36,
+			"startColumn": 173,
+			"endLineNumber": 36,
+			"endColumn": 196,
+			"message": "focus-visible:outline-2",
+			"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/JobCard.tsx"
+		}
+	],
+	"modelVersionId": 3,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/JobCard.tsx",
+	"owner": "tailwindcss-intellisense",
+	"code": "cssConflict",
+	"severity": 4,
+	"message": "'focus-visible:outline-2' applies the same CSS properties as 'focus-visible:outline'.",
+	"startLineNumber": 36,
+	"startColumn": 173,
+	"endLineNumber": 36,
+	"endColumn": 196,
+	"relatedInformation": [
+		{
+			"startLineNumber": 36,
+			"startColumn": 151,
+			"endLineNumber": 36,
+			"endColumn": 172,
+			"message": "focus-visible:outline",
+			"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/jobs/components/JobCard.tsx"
+		}
+	],
+	"modelVersionId": 3,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/candidate/cv/components/ProfileStrengthIndicator.tsx",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "no-inline-styles",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/user-guide/hints/hint-no-inline-styles/",
+			"scheme": "https",
+			"authority": "webhint.io"
+		}
+	},
+	"severity": 4,
+	"message": "CSS inline styles should not be used, move styles to an external CSS file",
+	"source": "Microsoft Edge Tools",
+	"startLineNumber": 64,
+	"startColumn": 12,
+	"endLineNumber": 64,
+	"endColumn": 15,
+	"modelVersionId": 1,
+	"origin": "extHost1"
+},{
+	"resource": "/d:/RikkeiSoft_InternshipCourses/headhunt-web-app/front-end/frontend/src/features/users/classification/components/UserClassificationOverview.tsx",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "no-inline-styles",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/user-guide/hints/hint-no-inline-styles/",
+			"scheme": "https",
+			"authority": "webhint.io"
+		}
+	},
+	"severity": 4,
+	"message": "CSS inline styles should not be used, move styles to an external CSS file",
+	"source": "Microsoft Edge Tools",
+	"startLineNumber": 143,
+	"startColumn": 18,
+	"endLineNumber": 143,
+	"endColumn": 21,
+	"modelVersionId": 13,
+	"origin": "extHost1"
+}]

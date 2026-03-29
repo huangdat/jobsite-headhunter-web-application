@@ -161,16 +161,21 @@
       "validation": {
         "fileTooLarge": "File is too large. Maximum size is 5MB.",
         "invalidFileFormat": "File format not supported. Please use PDF, DOC, DOCX, or RTF.",
+        "fileTooLargeShort": "Too large",
+        "invalidFileFormatShort": "Invalid format",
         "uploadFailed": "Failed to upload file.",
         "downloadFailed": "Failed to download file.",
         "deleteFailed": "Failed to delete file.",
         "updateFailed": "Failed to update settings.",
+        "maxFilesReached": "You've reached the maximum number of resumes",
+        "deleteExistingToUpload": "Delete an existing one to upload a new version.",
         "retry": "Retry",
         "dismiss": "Dismiss",
         "clear": "Clear"
       },
       "upload": {
-        "selectFile": "Select CV file"
+        "selectFile": "Select CV file",
+        "maxFileSizeLabel": "• Max"
       },
       "messages": {
         "uploadSuccess": "Resume uploaded successfully!",
@@ -178,6 +183,22 @@
         "deleteConfirm": "Are you sure you want to delete this resume?",
         "deleteSuccess": "Resume deleted successfully.",
         "updateSuccess": "Settings updated successfully."
+      },
+      "tips": {
+        "bestPracticeTip1": "Quantify results with revenue, growth %, or team size.",
+        "bestPracticeTip2": "Keep your executive summary under 200 words.",
+        "bestPracticeTip3": "Focus on the last 10 years of your career path.",
+        "privacyTip1": "Take full command of your visibility. Choose who can view your credentials: keep them private, open to all verified recruiters, or only visible to targeted executive firms.",
+        "privacyTip2": "Optimize your impact. Use clean, professional formatting and ensure your executive summary highlights measurable ROI to stand out to global search partners.",
+        "privacyTip3": "Focus on the last 10 years of your career path, emphasizing your leadership impact and strategic accomplishments.",
+        "optimizationTitle": "Implement these tips to improve your CV match rate",
+        "uploadPlaceholder": "Drag and drop your professional CV here or click to browse files from your computer.",
+        "profileStrengthHint": "Complete remaining items to improve your profile visibility.",
+        "auditGuide": "Personalized guidance from industry experts",
+        "reviewGuide": "1:1 consultation with professional headhunters",
+        "visibilityPrivate": "Private",
+        "visibilityAllRecruiters": "All Recruiters",
+        "visibilityVerifiedOnly": "Verified Recruiters Only"
       }
     }
   }

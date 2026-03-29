@@ -294,6 +294,8 @@
     "tryAgain": "Try Again",
     "softDelete": "Soft Delete",
     "hardDelete": "Hard Delete",
+    "softDeleteOptionAriaLabel": "Soft Delete option",
+    "hardDeleteOptionAriaLabel": "Hard Delete option",
     "useSoftDelete": "Use Soft Delete Instead",
     "errorSoftDelete": "Failed to soft delete user",
     "errorHardDelete": "Failed to hard delete user",

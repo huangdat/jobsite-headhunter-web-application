@@ -2,4 +2,4 @@
  * CV Services Exports
  */
 
-export * from './cvApi';
+export * from "./cvApi";

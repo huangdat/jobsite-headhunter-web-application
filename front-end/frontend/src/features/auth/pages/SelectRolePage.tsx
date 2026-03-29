@@ -17,7 +17,9 @@ interface RoleOption {
 
 export function SelectRolePage() {
   const { t } = useAuthTranslation();
-  const [selectedRole, setSelectedRole] = useState<RegistrationUserRole | null>(null);
+  const [selectedRole, setSelectedRole] = useState<RegistrationUserRole | null>(
+    null
+  );
   const navigate = useNavigate();
 
   const roleOptions: RoleOption[] = [
