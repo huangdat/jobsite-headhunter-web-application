@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { VerificationStatus as VerificationStatusType } from "../types/business.types";
 import { useBusinessVerification } from "../hooks/useBusinessVerification";
 import {
@@ -19,7 +19,7 @@ import {
  * States: form-filling → submitted → error
  */
 export const BusinessProfilePage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
   const {
     // Profile state
     formData,

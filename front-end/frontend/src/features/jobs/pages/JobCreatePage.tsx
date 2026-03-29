@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useJobsTranslation } from "@/shared/hooks";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 
 export function JobCreatePage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const navigate = useNavigate();
   const [skills, setSkills] = useState<SkillOption[]>([]);
   const [isLoadingSkills, setIsLoadingSkills] = useState(true);
@@ -61,7 +61,7 @@ export function JobCreatePage() {
   const onSubmit = async (values: JobFormValues) => {
     // Basic client-side validations according to ACs
     if (!values.title || values.title.trim().length === 0) {
-      toast.error(t("validation.titleRequired"));
+      toast.error(t("create.validation.titleRequired"));
       return;
     }
 
@@ -74,7 +74,7 @@ export function JobCreatePage() {
         .trim();
 
     if (!values.description || stripMarkdown(values.description).length === 0) {
-      toast.error(t("validation.descriptionRequired"));
+      toast.error(t("create.validation.descriptionRequired"));
       return;
     }
 
@@ -123,7 +123,7 @@ export function JobCreatePage() {
     try {
       const res = await createJob(values as JobFormValues);
       console.log("Job creation response:", res);
-      if (res && (res.status === 201 || res.status === 200)) {
+      if (res) {
         toast.success(t("messages.jobCreatedSuccess"));
         reset({
           title: "",
@@ -136,7 +136,7 @@ export function JobCreatePage() {
           postImage: undefined,
           rankLevel: "JUNIOR",
           workingType: "ONSITE",
-          location: t("auth.defaults.location"),
+          location: t("defaults.location"),
           experience: 1,
           salaryMin: 15000000,
           salaryMax: 30000000,
@@ -144,18 +144,18 @@ export function JobCreatePage() {
           currency: "VND",
           quantity: 1,
           deadline: "",
-          workingTime: t("auth.defaults.workingTime"),
+          workingTime: t("defaults.workingTime"),
         });
         setTimeout(() => {
           navigate("/headhunter/jobs");
         }, 500);
       } else {
         console.error("Unexpected response:", res);
-        toast.error(t("create.failedToCreate"));
+        toast.error(t("create.messages.failedToCreate"));
       }
     } catch (error) {
       console.error("Job creation error:", error);
-      toast.error(t("create.failedToCreate"));
+      toast.error(t("create.messages.failedToCreate"));
     } finally {
       setIsSubmitting(false);
     }
@@ -170,11 +170,13 @@ export function JobCreatePage() {
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.jobTitle")}
+              {t("create.labels.jobTitle")}
             </label>
             <Input
-              placeholder={t("create.jobTitlePlaceholder")}
-              {...register("title", { required: t("create.titleRequired") })}
+              placeholder={t("create.placeholders.jobTitle")}
+              {...register("title", {
+                required: t("create.validation.titleRequired"),
+              })}
             />
             {errors.title && (
               <p className="text-sm text-destructive">{errors.title.message}</p>
@@ -182,12 +184,12 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.location")}
+              {t("create.labels.location")}
             </label>
             <Input
-              placeholder={t("create.locationPlaceholder")}
+              placeholder={t("create.placeholders.location")}
               {...register("location", {
-                required: t("create.locationRequired"),
+                required: t("create.validation.locationRequired"),
               })}
             />
             {errors.location && (
@@ -198,18 +200,18 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.addressDetail")}
+              {t("create.labels.addressDetail")}
             </label>
             <Input
-              placeholder={t("create.addressDetailPlaceholder")}
+              placeholder={t("create.placeholders.addressDetail")}
               {...register("addressDetail", {
-                required: t("create.addressDetailRequired"),
+                required: t("create.validation.addressDetailRequired"),
               })}
             />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.deadline")}
+              {t("create.labels.deadline")}
             </label>
             <Input type="date" {...register("deadline", { required: true })} />
           </div>
@@ -218,7 +220,7 @@ export function JobCreatePage() {
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.rankLevel")}
+              {t("create.labels.rankLevel")}
             </label>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
@@ -235,7 +237,7 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.workingType")}
+              {t("create.labels.workingType")}
             </label>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
@@ -248,7 +250,7 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.experience")}
+              {t("create.labels.experience")}
             </label>
             <Input
               type="number"
@@ -262,7 +264,7 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.quantity")}
+              {t("create.labels.quantity")}
             </label>
             <Input
               type="number"
@@ -275,7 +277,7 @@ export function JobCreatePage() {
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.salaryMin")}
+              {t("create.labels.salaryMin")}
             </label>
             <Input
               type="number"
@@ -288,7 +290,7 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.salaryMax")}
+              {t("create.labels.salaryMax")}
             </label>
             <Input
               type="number"
@@ -301,7 +303,7 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.currency")}
+              {t("create.labels.currency")}
             </label>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
@@ -318,7 +320,7 @@ export function JobCreatePage() {
               {...register("negotiable")}
             />
             <label htmlFor="negotiable" className="text-sm text-slate-600">
-              {t("create.salaryNegotiable")}
+              {t("create.labels.salaryNegotiable")}
             </label>
           </div>
         </section>
@@ -326,17 +328,17 @@ export function JobCreatePage() {
         <section className="grid gap-6">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.description")}
+              {t("create.labels.description")}
             </label>
             <Controller
               control={control}
               name="description"
-              rules={{ required: t("create.descriptionRequired") }}
+              rules={{ required: t("create.validation.descriptionRequired") }}
               render={({ field }) => (
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("create.descriptionPlaceholder")}
+                  placeholder={t("create.placeholders.description")}
                 />
               )}
             />
@@ -348,13 +350,13 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.responsibilities")}
+              {t("create.labels.responsibilities")}
             </label>
             <Controller
               control={control}
               name="responsibilities"
               rules={{
-                required: t("create.responsibilitiesRequired"),
+                required: t("create.validation.responsibilitiesRequired"),
                 validate: (v) => {
                   const stripped = (v || "")
                     .replace(/<[^>]*>/g, "")
@@ -363,7 +365,7 @@ export function JobCreatePage() {
                     .trim();
                   return (
                     (v && stripped.length >= 50) ||
-                    t("create.responsibilitiesMinLength")
+                    t("create.validation.responsibilitiesMinLength")
                   );
                 },
               }}
@@ -371,7 +373,7 @@ export function JobCreatePage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("create.responsibilitiesPlaceholder")}
+                  placeholder={t("create.placeholders.responsibilities")}
                 />
               )}
             />
@@ -383,13 +385,13 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.requirements")}
+              {t("create.labels.requirements")}
             </label>
             <Controller
               control={control}
               name="requirements"
               rules={{
-                required: t("create.requirementsRequired"),
+                required: t("create.validation.requirementsRequired"),
                 validate: (v) => {
                   const stripped = (v || "")
                     .replace(/<[^>]*>/g, "")
@@ -398,7 +400,7 @@ export function JobCreatePage() {
                     .trim();
                   return (
                     (v && stripped.length >= 50) ||
-                    t("create.requirementsMinLength")
+                    t("create.validation.requirementsMinLength")
                   );
                 },
               }}
@@ -406,7 +408,7 @@ export function JobCreatePage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("create.requirementsPlaceholder")}
+                  placeholder={t("create.placeholders.requirements")}
                 />
               )}
             />
@@ -418,13 +420,13 @@ export function JobCreatePage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.benefits")}
+              {t("create.labels.benefits")}
             </label>
             <Textarea rows={3} {...register("benefits", { required: true })} />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.workingTime")}
+              {t("create.labels.workingTime")}
             </label>
             <Input {...register("workingTime", { required: true })} />
           </div>
@@ -433,11 +435,11 @@ export function JobCreatePage() {
         <section className="space-y-2">
           <div className="flex items-center justify-between">
             <label className="text-sm font-semibold text-slate-500">
-              {t("create.requiredSkills")}
+              {t("create.labels.requiredSkills")}
             </label>
             {errors.skillIds && (
               <span className="text-xs text-destructive">
-                {t("create.pickAtLeastOneSkill")}
+                {t("create.messages.pickAtLeastOneSkill")}
               </span>
             )}
           </div>
@@ -456,7 +458,7 @@ export function JobCreatePage() {
 
         <section className="space-y-2">
           <label className="text-sm font-semibold text-slate-500">
-            {t("create.coverImage")}
+            {t("create.labels.coverImage")}
           </label>
           <Input type="file" accept="image/*" {...register("postImage")} />
         </section>
@@ -466,7 +468,9 @@ export function JobCreatePage() {
             Clear
           </Button>
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? t("create.publishingJob") : t("create.publishJob")}
+            {isSubmitting
+              ? t("create.messages.publishingJob")
+              : t("create.messages.publishJob")}
           </Button>
         </div>
       </form>

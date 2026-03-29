@@ -4,14 +4,14 @@
  * Displays referral benefits and exclusive features
  */
 
-import { useTranslation } from "react-i18next";
+import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 
 /**
  * CommissionBenefits Component
  * Displays information about referral program benefits
  */
 export function CommissionBenefits() {
-  const { t } = useTranslation("commission");
+  const { t } = useCommissionTranslation();
 
   const benefits = [
     {

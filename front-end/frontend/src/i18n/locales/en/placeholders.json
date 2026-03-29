@@ -1,0 +1,20 @@
+{
+  "username": "Username",
+  "password": "Password",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "confirmPassword": "Confirm password",
+  "name": "Name",
+  "phone": "Phone",
+  "email": "Email",
+  "companyName": "Company name",
+  "taxId": "Tax ID",
+  "companyWebsite": "Company website",
+  "commissionRate": "Commission rate",
+  "jobTitle": "Job title",
+  "experience": "Experience",
+  "location": "Location",
+  "salaryMin": "Salary min",
+  "salaryMax": "Salary max",
+  "bio": "Bio"
+}

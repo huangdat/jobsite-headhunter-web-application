@@ -1,5 +1,4 @@
 {
-  "home": "Trang Chủ",
   "profile": "Hồ Sơ",
   "settings": "Cài Đặt",
   "logout": "Đăng Xuất",
@@ -15,5 +14,8 @@
   "notifications": "Thông Báo",
   "logs": "Nhật Ký",
   "users": "Người dùng",
-  "classification": "Phân loại"
+  "classification": "Phân loại",
+  "featuredJobs": "[VI] Featured Jobs",
+  "recommended": "[VI] Recommended",
+  "topCompanies": "[VI] Top Companies"
 }

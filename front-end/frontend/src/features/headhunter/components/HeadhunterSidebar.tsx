@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useJobsTranslation } from "@/shared/hooks";
 import {
   BiSolidBriefcase,
   BiSolidFileDoc,
@@ -9,45 +9,45 @@ import {
 } from "react-icons/bi";
 
 export function HeadhunterSidebar() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const items = [
     {
       to: "/headhunter/jobs",
-      label: t("headhunter.jobPostings"),
+      label: t("jobPostings"),
       icon: BiSolidBriefcase,
     },
     {
       to: "/headhunter/cv",
-      label: t("headhunter.manageCv"),
+      label: t("manageCv"),
       icon: BiSolidFileDoc,
     },
     {
       to: "/headhunter/reports",
-      label: t("headhunter.recruitmentReport"),
+      label: t("recruitmentReport"),
       icon: BiChart,
     },
     {
       to: "/headhunter/services",
-      label: t("headhunter.myServices"),
+      label: t("myServices"),
       icon: BiSolidBriefcase,
     },
     {
       to: "/headhunter/promotions",
-      label: t("headhunter.promotionCodes"),
+      label: t("promotionCodes"),
       icon: BiSolidBriefcase,
     },
     {
       to: "/headhunter/orders",
-      label: t("headhunter.orderTracking"),
+      label: t("orderTracking"),
       icon: BiSolidFileDoc,
     },
     {
       to: "/headhunter/activity",
-      label: t("headhunter.activityLog"),
+      label: t("activityLog"),
       icon: BiChart,
     },
-    { to: "/settings", label: t("headhunter.accountSettings"), icon: BiCog },
-    { to: "/support", label: t("headhunter.supportInbox"), icon: BiHeadphone },
+    { to: "/settings", label: t("accountSettings"), icon: BiCog },
+    { to: "/support", label: t("supportInbox"), icon: BiHeadphone },
   ];
 
   const IconComponent = (Icon: React.ComponentType<{ className?: string }>) => (
@@ -58,17 +58,17 @@ export function HeadhunterSidebar() {
     <aside className="w-72 bg-white text-black min-h-screen p-6 shadow-2xl">
       <div className="mb-6 pb-4">
         <div className="text-lg font-bold tracking-wide">
-          {t("headhunter.profileTitle")}
+          {t("profileTitle")}
         </div>
         <div className="text-xs text-slate-600 mt-1">
-          {t("headhunter.profileTitle")}
+          {t("profileTitle")}
         </div>
         <div className="mt-4">
           <Link
             to="/headhunter/jobs/new"
             className="inline-block w-full text-center bg-brand-primary text-black py-2 rounded-lg font-semibold hover:bg-brand-hover transition-colors"
           >
-            {t("headhunter.postNewJob")}
+            {t("postNewJob")}
           </Link>
         </div>
       </div>
@@ -90,3 +90,4 @@ export function HeadhunterSidebar() {
 }
 
 export default HeadhunterSidebar;
+

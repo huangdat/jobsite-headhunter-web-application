@@ -114,7 +114,7 @@ export function ResetPasswordPage() {
   };
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: tAuth("auth.pages.login") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: tAuth("pages.login") }}>
       <main className="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-0">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}

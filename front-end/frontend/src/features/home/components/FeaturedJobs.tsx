@@ -84,6 +84,7 @@ export function FeaturedJobs() {
               className="inline-block border px-6 py-3 rounded-xl hover:bg-gray-100 transition"
             >
               {t("featuredJobs.viewMore")}
+              dvddjvnzsdvnzsjk
             </Link>
           </div>
         </>

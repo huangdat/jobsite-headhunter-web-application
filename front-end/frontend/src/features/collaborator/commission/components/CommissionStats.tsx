@@ -4,7 +4,7 @@
  * Displays commission statistics in sidebar
  */
 
-import { useTranslation } from "react-i18next";
+import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type { CommissionStats } from "../types/commission.types";
 
 interface CommissionStatsProps {
@@ -22,7 +22,7 @@ export function CommissionStats({
   stats,
   onRequestPayout,
 }: CommissionStatsProps) {
-  const { t } = useTranslation("commission");
+  const { t } = useCommissionTranslation();
 
   if (!stats) {
     return (
@@ -75,7 +75,7 @@ export function CommissionStats({
           </p>
           <div className="mt-2 flex items-center gap-1 text-xs text-amber-600">
             <span className="material-symbols-outlined text-sm">schedule</span>
-            {t("stats.processingDays", { days: 3 })}
+            {t("stats.processingDays")}
           </div>
         </div>
 

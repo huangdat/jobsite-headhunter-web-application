@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import {
   Download,
   Trash2,
@@ -71,7 +71,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
   onDownload,
   className = "",
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -86,9 +86,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
       setDeleteError(null);
     } catch (error) {
       console.error("Delete failed:", error);
-      setDeleteError(
-        t("business.document.delete_error", "Failed to delete document")
-      );
+      setDeleteError(t("business.document.delete_error"));
     } finally {
       setDeletingId(null);
     }
@@ -101,13 +99,10 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
       >
         <FileText className="mx-auto h-12 w-12 text-slate-400" />
         <p className="mt-4 text-sm font-medium text-slate-900">
-          {t("business.document.no_documents", "No documents uploaded")}
+          {t("business.document.no_documents")}
         </p>
         <p className="mt-1 text-sm text-slate-600">
-          {t(
-            "business.document.no_documents_desc",
-            "Start by uploading required business documents"
-          )}
+          {t("business.document.no_documents_desc")}
         </p>
       </div>
     );
@@ -122,13 +117,10 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            {t("business.document.submitted", "Submitted Documents")}
+            {t("business.document.submitted")}
           </h3>
           <p className="text-sm text-slate-600">
-            {t(
-              "business.document.submitted_desc",
-              "Your uploaded business documents"
-            )}
+            {t("business.document.submitted_desc")}
           </p>
         </div>
       </div>
@@ -164,7 +156,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
               {doc.verificationStatus === "verified" && (
                 <div className="flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-800">
                   <CheckCircle2 className="h-3 w-3" />
-                  {t("business.document.verified", "Verified")}
+                  {t("business.document.verified")}
                 </div>
               )}
             </div>
@@ -181,7 +173,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
 
               {doc.uploadedAt && (
                 <p className="mt-2 text-xs text-slate-500">
-                  {t("business.document.uploaded", "Uploaded")}:{" "}
+                  {t("business.document.uploaded")}:{" "}
                   {new Date(doc.uploadedAt).toLocaleDateString()}
                 </p>
               )}
@@ -194,10 +186,10 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                   onClick={() => onDownload(doc.id)}
                   disabled={isLoading || deletingId === doc.id}
                   className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
-                  title={t("business.document.download", "Download")}
+                  title={t("business.document.download")}
                 >
                   <Download className="h-4 w-4" />
-                  {t("business.document.download", "Download")}
+                  {t("business.document.download")}
                 </button>
               )}
 
@@ -211,15 +203,15 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                         className="flex-1 rounded-lg bg-red-600 px-2 py-2 text-xs font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
                       >
                         {deletingId === doc.id
-                          ? t("business.document.deleting", "Deleting...")
-                          : t("business.document.confirm", "Confirm")}
+                          ? t("business.document.deleting")
+                          : t("business.document.confirm")}
                       </button>
                       <button
                         onClick={() => setConfirmDeleteId(null)}
                         disabled={deletingId === doc.id}
                         className="flex-1 rounded-lg border border-slate-300 bg-white px-2 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
                       >
-                        {t("business.document.cancel", "Cancel")}
+                        {t("business.document.cancel")}
                       </button>
                     </div>
                   ) : (
@@ -227,10 +219,10 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                       onClick={() => setConfirmDeleteId(doc.id)}
                       disabled={isLoading}
                       className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
-                      title={t("business.document.delete", "Delete")}
+                      title={t("business.document.delete")}
                     >
                       <Trash2 className="h-4 w-4" />
-                      {t("business.document.delete", "Delete")}
+                      {t("business.document.delete")}
                     </button>
                   )}
                 </div>
@@ -245,7 +237,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
         <div className="rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center">
           <FileText className="mx-auto h-12 w-12 text-slate-400" />
           <p className="mt-4 text-sm font-medium text-slate-900">
-            {t("business.document.no_documents", "No documents uploaded yet")}
+            {t("business.document.no_documents")}
           </p>
         </div>
       )}

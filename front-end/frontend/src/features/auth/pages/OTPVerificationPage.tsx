@@ -69,7 +69,7 @@ export function OTPVerificationPage() {
 
           if (otpResponse.status && otpResponse.status !== "OK") {
             throw new Error(
-              otpResponse.message || t("auth.messages.otpVerificationFailed")
+              otpResponse.message || t("messages.otpVerificationFailed")
             );
           }
 
@@ -79,7 +79,7 @@ export function OTPVerificationPage() {
             "pendingRegistration"
           );
           if (!registrationDataStr) {
-            throw new Error(t("auth.messages.registrationDataNotFound"));
+            throw new Error(t("messages.registrationDataNotFound"));
           }
 
           const registrationData = JSON.parse(
@@ -105,21 +105,19 @@ export function OTPVerificationPage() {
             navigate("/login", {
               state: {
                 email: registrationData.username,
-                message: t("auth.messages.registrationCompleted"),
+                message: t("messages.registrationCompleted"),
               },
             });
           }, 1500);
         } catch (error: unknown) {
           const errorMessage = extractApiErrorMessage(
             error,
-            t("auth.messages.registrationFailed")
+            t("messages.registrationFailed")
           );
           toast.error(errorMessage);
 
           if (
-            errorMessage.includes(
-              t("auth.messages.registrationDataNotFoundGeneric")
-            )
+            errorMessage.includes(t("messages.registrationDataNotFoundGeneric"))
           ) {
             setTimeout(() => {
               navigate("/select-role");
@@ -208,14 +206,14 @@ export function OTPVerificationPage() {
   };
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: t("auth.pages.login") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-800">
-            {t("auth.pages.otpVerification.title")}
+            {t("pages.otpVerification.title")}
           </h1>
           <p className="text-slate-600 mt-2">
-            {t("auth.pages.otpVerification.subtitle")}
+            {t("pages.otpVerification.subtitle")}
           </p>
         </div>
 
@@ -242,7 +240,7 @@ export function OTPVerificationPage() {
                 onPaste={handlePaste}
                 className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 rounded-lg focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition-all"
                 autoFocus={index === 0}
-                aria-label={t("auth.pages.otpVerification.otpDigit", {
+                aria-label={t("pages.otpVerification.otpDigit", {
                   digit: index + 1,
                 })}
               />
@@ -259,8 +257,7 @@ export function OTPVerificationPage() {
                 timeLeft <= 60 ? "text-red-600 font-semibold" : "text-slate-600"
               }
             >
-              {t("auth.pages.otpVerification.codeExpiresIn")}{" "}
-              {formatTime(timeLeft)}
+              {t("pages.otpVerification.codeExpiresIn")} {formatTime(timeLeft)}
             </span>
           </div>
 
@@ -282,7 +279,7 @@ export function OTPVerificationPage() {
                     toast.error(
                       extractApiErrorMessage(
                         error,
-                        t("auth.messages.registrationFailed")
+                        t("messages.registrationFailed")
                       )
                     );
                     setIsLoading(false);
@@ -297,13 +294,13 @@ export function OTPVerificationPage() {
             className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading || otp.join("").length === 6
-              ? t("auth.buttons.connecting")
-              : t("auth.pages.otpVerification.verifyEmail")}
+              ? t("buttons.connecting")
+              : t("pages.otpVerification.verifyEmail")}
           </Button>
 
           <div className="text-center">
             <p className="text-sm text-slate-600 mb-2">
-              {t("auth.pages.otpVerification.didNotReceiveCode")}
+              {t("pages.otpVerification.didNotReceiveCode")}
             </p>
             <button
               onClick={handleResend}
@@ -311,12 +308,12 @@ export function OTPVerificationPage() {
               className="text-sm text-emerald-600 hover:text-emerald-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
               {isResending
-                ? t("auth.buttons.sendingOtp")
-                : t("auth.pages.otpVerification.resendCode")}
+                ? t("buttons.sendingOtp")
+                : t("pages.otpVerification.resendCode")}
             </button>
             {timeLeft > 240 && (
               <p className="text-xs text-slate-500 mt-1">
-                {t("auth.pages.otpVerification.availableIn")}{" "}
+                {t("pages.otpVerification.availableIn")}{" "}
                 {formatTime(timeLeft - 240)}
               </p>
             )}
@@ -328,7 +325,7 @@ export function OTPVerificationPage() {
               disabled={isLoading || isResending}
               className="text-sm text-slate-600 hover:text-slate-800"
             >
-              {t("auth.buttons.backToRegistration")}
+              {t("buttons.backToRegistration")}
             </button>
           </div>
         </div>

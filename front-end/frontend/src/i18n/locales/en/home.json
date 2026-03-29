@@ -10,14 +10,12 @@
     "signUp": "Sign Up",
     "postJob": "Post a Job",
     "profile": "PROFILE",
-    "changePassword": "CHANGE PASSWORD",
     "settings": "Settings",
     "logout": "Logout",
     "savedJobs": "Saved Jobs",
     "notifications": "Notifications",
     "dashboard": "Dashboard",
     "adminDashboard": "Admin Dashboard",
-    "userManagement": "User Management",
     "classification": "Classification"
   },
   "hero": {
@@ -52,10 +50,6 @@
     "noFeaturedJobs": "No featured jobs found",
     "noRecommendedJobs": "No recommended jobs found",
     "noCompanies": "No companies found"
-  },
-  "jobTypes": {
-    "fullTime": "FULL-TIME",
-    "remote": "REMOTE"
   },
   "badges": {
     "new": "NEW"

@@ -36,7 +36,7 @@ export function JobCard({ job }: JobCardProps) {
       onClick={handleNavigate}
       onKeyDown={handleKeyDown}
       className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none cursor-pointer"
-      aria-label={t("jobs.list.viewJobLabel", { title: job.title })}
+      aria-label={t("list.viewJobLabel", { title: job.title })}
     >
       <div className="flex items-center justify-between gap-4">
         <div>
@@ -68,7 +68,7 @@ export function JobCard({ job }: JobCardProps) {
         </span>
         {deadlineLabel && (
           <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-800 dark:bg-amber-900/30 dark:text-amber-100">
-            {t("jobs.list.applyBefore")} {deadlineLabel}
+            {t("list.applyBefore")} {deadlineLabel}
           </span>
         )}
       </div>
@@ -77,7 +77,7 @@ export function JobCard({ job }: JobCardProps) {
           #{job.jobCode}
         </span>
         <span className="text-sm font-semibold text-emerald-600">
-          {t("jobs.list.viewDetails")} →
+          {t("list.viewDetails")} →
         </span>
       </div>
     </div>

@@ -9,8 +9,9 @@ import {
   Mail,
   LogOut,
 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+
 import { useUsersTranslation } from "@/shared/hooks";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 interface LockReasonOption {
   value: string;
@@ -64,7 +65,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
   onConfirm,
 }) => {
   const { t } = useUsersTranslation();
-  const { t: tCommon } = useTranslation("auth");
+  const { t: tCommon } = useAppTranslation();
   const [step, setStep] = useState<ModalStep>("form");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<LockResult | null>(null);
@@ -178,7 +179,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 {t("lock.selectReason")} *
               </p>
               <p className="text-amber-800 dark:text-amber-300 text-sm mt-2">
-                {t("lock.userInfo")}:{" "}
+                {t("fields.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
             </div>
@@ -288,14 +289,14 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   onClick={handleClose}
                   className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
                 >
-                  {t("lock.cancel")}
+                  {t("buttons.cancel")}
                 </button>
                 <button
                   type="submit"
                   disabled={!canProceed}
                   className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
                 >
-                  {t("lock.next")}
+                  {t("buttons.next")}
                 </button>
               </div>
             </form>
@@ -359,7 +360,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   disabled={otherReasonText.trim() === ""}
                   className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
                 >
-                  {t("lock.next")}
+                  {t("buttons.next")}
                 </button>
               </div>
             </form>
@@ -563,3 +564,4 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
 };
 
 export default LockUserModal;
+

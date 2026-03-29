@@ -8,10 +8,6 @@
     "commission": "Commission Profile"
   },
   "section": {
-    "personalInfo": "Personal Information",
-    "personalInfoDesc": "Your personal contact details and account information",
-    "bankingInfo": "Banking Information",
-    "bankingInfoDesc": "Where your commissions will be paid",
     "earnings": "Your Earnings",
     "benefits": "Commission Program Benefits",
     "benefitsDescription": "Unlock the full potential of your referral partnership with us",
@@ -136,6 +132,11 @@
   },
   "success": {
     "profileUpdated": "Your profile has been updated successfully"
+  },
+  "failedToLoadCommission": "Failed to load commission",
+  "failedToSaveProfile": "Failed to save profile",
+  "messages": {
+    "failedToRequestPayout": "Failed to request payout"
   },
   "errors": {
     "title": "Something went wrong"

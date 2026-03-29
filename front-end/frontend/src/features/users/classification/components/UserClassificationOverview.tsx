@@ -58,7 +58,7 @@ export const UserClassificationOverview: React.FC<
         <div className="text-center space-y-4">
           <div>
             <p className="text-red-600 dark:text-red-400 font-bold mb-2">
-              {t("users.classification.error.permissionDenied")}
+              {t("classification.error.permissionDenied")}
             </p>
             <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
           </div>
@@ -213,3 +213,4 @@ export const UserClassificationOverview: React.FC<
     </div>
   );
 };
+
