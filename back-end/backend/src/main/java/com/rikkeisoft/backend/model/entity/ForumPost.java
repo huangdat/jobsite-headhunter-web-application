@@ -39,4 +39,7 @@ public class ForumPost {
 
     LocalDateTime createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "forum_category_id", nullable = false)
+    ForumCategory forumCategory;
 }
