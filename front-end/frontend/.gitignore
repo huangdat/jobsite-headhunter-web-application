@@ -31,6 +31,7 @@ my_local_backup.sql
 
 # Local temporary files
 .env
+!.env.example
 npm/
 lint-output.tmp
 *.tmp
