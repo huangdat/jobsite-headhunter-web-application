@@ -20,8 +20,7 @@ export const UserListEmpty: React.FC<UserListEmptyProps> = ({
           {t("list.noResults")}
         </h3>
         <p className="text-slate-500 dark:text-slate-400 max-w-xs mx-auto text-sm">
-          Chúng tôi không tìm thấy người dùng nào phù hợp với tiêu chí tìm kiếm
-          của bạn. Vui lòng điều chỉnh bộ lọc hoặc điều khoản tìm kiếm.
+          {t("user.list.empty.description")}
         </p>
         <button
           onClick={onClearFilters}

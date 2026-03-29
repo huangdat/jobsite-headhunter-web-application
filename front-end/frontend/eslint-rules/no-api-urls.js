@@ -47,7 +47,7 @@ export default {
 
         // Check if matches API URL patterns
         const isApiUrl = API_PATTERNS.some((pattern) =>
-          pattern.test(node.value),
+          pattern.test(node.value)
         );
 
         if (isApiUrl) {

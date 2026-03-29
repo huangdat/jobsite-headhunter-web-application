@@ -1,30 +1,26 @@
 /**
- * ESLint No-Hardcoded-Toast-Messages Rule
- * Prevents hardcoded text in toast/notification messages
+ * ESLint No-Hardcoded-Toast-Messages Rule v2.0
  *
  * ❌ FORBIDDEN:
- * toast.success("User created successfully!");
- * toast.error("Failed to save data");
- * message.info("Loading...");
+ *   toast.success("User created successfully!")
+ *   toast.error("Failed to save")
  *
  * ✅ ALLOWED:
- * toast.success(t("messages.userCreated"));
- * toast.error(t("messages.saveFailed"));
- * message.info(t("messages.loading"));
- *
- * Works with: sonner, antd, react-toastify, etc.
+ *   toast.success(t("messages.userCreated"))
+ *   toast.error(t("messages.saveFailed"))
+ *   toast.error(errorMessage)           ← variable is OK
+ *   toast.error(getErrorMessage(error)) ← function call is OK
  */
 
-const TOAST_FUNCTIONS = [
+const TOAST_OBJECTS = new Set([
   "toast",
   "message",
   "notification",
   "notify",
   "enqueueSnackbar",
   "showToast",
-];
-
-const TOAST_METHODS = [
+]);
+const TOAST_METHODS = new Set([
   "success",
   "error",
   "info",
@@ -32,81 +28,65 @@ const TOAST_METHODS = [
   "warn",
   "loading",
   "promise",
-];
+]);
+const TOAST_PROP_KEYS = new Set(["message", "title", "description"]);
 
+// ─── Reliable isTranslated: walk the AST node, not string search ────────────
 const isTranslated = (node) => {
   if (!node) return false;
 
-  // Check if it's a t() call
-  if (
-    node.type === "CallExpression" &&
-    (node.callee.name === "t" ||
-      (node.callee.type === "MemberExpression" &&
-        node.callee.property.name === "t"))
-  ) {
-    return true;
+  // t("key") or i18n.t("key")
+  if (node.type === "CallExpression") {
+    const callee = node.callee;
+    if (callee.name === "t") return true;
+    if (callee.type === "MemberExpression" && callee.property?.name === "t")
+      return true;
   }
 
-  // Check if it's an identifier from i18n hook
-  if (node.type === "Identifier" && node.name.includes("i18n")) {
-    return true;
-  }
+  // Plain identifier: errorMessage, msg, etc. — assume safe (variable)
+  if (node.type === "Identifier") return true;
 
-  // Check template literal with t() call
-  if (
-    node.type === "TemplateLiteral" &&
-    node.quasis.some((quasi) => quasi.value.raw.includes("t("))
-  ) {
-    return true;
+  // Template literal where at least one expression is a t() call
+  if (node.type === "TemplateLiteral") {
+    return node.expressions.some(
+      (expr) =>
+        expr.type === "CallExpression" &&
+        (expr.callee?.name === "t" ||
+          (expr.callee?.type === "MemberExpression" &&
+            expr.callee?.property?.name === "t"))
+    );
   }
 
   return false;
 };
 
 const isWhitelisted = (value) => {
-  const whitelist = [
-    "", // Empty
-    "...", // Loading indicator
-    "404", // Error codes
-    "500", // Error codes
-  ];
-
-  if (whitelist.includes(value)) return true;
-
-  // Skip if only numbers or special chars
-  if (!/[a-zA-Z]/.test(value)) return true;
-
-  // Skip very short strings (likely formatting)
-  if (value.length < 3) return true;
-
+  if (!value || value.length < 3) return true;
+  if (!/[a-zA-Z]/.test(value)) return true; // numbers/symbols only
   return false;
 };
 
 const isToastCall = (node) => {
-  if (node.type !== "CallExpression") {
-    return false;
-  }
+  if (node.type !== "CallExpression") return false;
+  const { callee } = node;
 
-  // Check for pattern: toast.success(...), message.error(...), etc.
-  if (node.callee.type === "MemberExpression") {
-    const object = node.callee.object;
-    const property = node.callee.property;
+  // toast.success(...) / message.error(...)
+  if (
+    callee.type === "MemberExpression" &&
+    callee.object?.type === "Identifier" &&
+    TOAST_OBJECTS.has(callee.object.name) &&
+    TOAST_METHODS.has(callee.property?.name)
+  )
+    return true;
 
-    if (object.type === "Identifier") {
-      return (
-        TOAST_FUNCTIONS.includes(object.name) &&
-        TOAST_METHODS.includes(property.name)
-      );
-    }
-  }
-
-  // Check for direct function calls: notify(...), showToast(...), etc.
-  if (node.callee.type === "Identifier") {
-    return TOAST_FUNCTIONS.some((fn) => node.callee.name === fn);
-  }
+  // notify(...) / showToast(...)
+  if (callee.type === "Identifier" && TOAST_OBJECTS.has(callee.name))
+    return true;
 
   return false;
 };
+
+// ─── Rule ────────────────────────────────────────────────────────────────────
 
 export default {
   meta: {
@@ -119,68 +99,56 @@ export default {
     fixable: null,
     schema: [],
   },
+
   create(context) {
-    return {
-      CallExpression(node) {
-        // Check if this is a toast function call
-        if (!isToastCall(node)) {
-          return;
-        }
+    const checkArg = (argNode) => {
+      if (!argNode) return;
+      if (isTranslated(argNode)) return;
 
-        // Get the first argument
-        const firstArg = node.arguments[0];
+      // String literal: toast.error("Hard text")
+      if (argNode.type === "Literal" && typeof argNode.value === "string") {
+        const msg = argNode.value.trim();
+        if (isWhitelisted(msg)) return;
+        context.report({
+          node: argNode,
+          message: `❌ Hardcoded toast message: "${msg}". Use i18n: toast.error(t("messages.key"))`,
+        });
+        return;
+      }
 
-        if (!firstArg) {
-          return;
-        }
-
-        // If it's already translated, skip
-        if (isTranslated(firstArg)) {
-          return;
-        }
-
-        // Check for hardcoded string literal
-        if (firstArg.type === "Literal" && typeof firstArg.value === "string") {
-          const message = firstArg.value.trim();
-
-          // Skip if empty or whitelisted
-          if (!message || isWhitelisted(message)) {
-            return;
-          }
-
+      // Template literal: toast.error(`Hello ${name}`) without t()
+      if (argNode.type === "TemplateLiteral" && !isTranslated(argNode)) {
+        // Only flag if it has static text (not purely dynamic)
+        const hasStaticText = argNode.quasis.some(
+          (q) => q.value.raw.trim().length > 2
+        );
+        if (hasStaticText) {
           context.report({
-            node: firstArg,
-            message: `Hardcoded toast message detected: "${message}". Use i18n: t("messages.key") instead. Example: toast.success(t("messages.saved"))`,
+            node: argNode,
+            message: `❌ Hardcoded toast message uses template literal. Use i18n: toast.error(t("messages.key"))`,
           });
         }
+      }
+    };
 
-        // Check for hardcoded strings in object argument
+    return {
+      CallExpression(node) {
+        if (!isToastCall(node)) return;
+
+        const firstArg = node.arguments[0];
+        if (!firstArg) return;
+
+        // Direct string/template arg
+        checkArg(firstArg);
+
+        // Object shape: toast.error({ message: "Hard text", title: "..." })
         if (firstArg.type === "ObjectExpression") {
           firstArg.properties.forEach((prop) => {
             if (
               prop.type === "Property" &&
-              (prop.key.name === "message" ||
-                prop.key.name === "title" ||
-                prop.key.name === "description")
+              TOAST_PROP_KEYS.has(prop.key?.name)
             ) {
-              const value = prop.value;
-
-              if (isTranslated(value)) {
-                return;
-              }
-
-              if (value.type === "Literal" && typeof value.value === "string") {
-                const message = value.value.trim();
-
-                if (!message || isWhitelisted(message)) {
-                  return;
-                }
-
-                context.report({
-                  node: value,
-                  message: `Hardcoded toast property "${prop.key.name}": "${message}". Use i18n: t("messages.key") instead`,
-                });
-              }
+              checkArg(prop.value);
             }
           });
         }

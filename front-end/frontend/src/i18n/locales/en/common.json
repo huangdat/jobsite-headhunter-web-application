@@ -17,9 +17,31 @@
     "section": {
       "account": "Account"
     },
-    "exampleEmail": "alex.n@referral.io"
+    "exampleEmail": "alex.n@referral.io",
+    "languages": {
+      "en": "English",
+      "vi": "Tiếng Việt"
+    }
   },
   "messages": {
-    "signedInSuccess": "Signed in successfully."
+    "signedInSuccess": "Signed in successfully.",
+    "failedToLoadCommission": "Failed to load commission data",
+    "failedToSaveProfile": "Failed to save profile",
+    "failedToRequestPayout": "Failed to request payout",
+    "failedToLoadProfile": "Failed to load profile",
+    "failedToCreateJob": "Failed to create job. Please check the form and try again.",
+    "failedToUpdateJob": "Failed to update job.",
+    "jobUpdatedSuccessfully": "Job updated successfully.",
+    "failedToLockUser": "Failed to lock user",
+    "failedToUnlockUser": "Failed to unlock user",
+    "failedToLoadUsers": "Failed to load users",
+    "networkError": "NETWORK ERROR",
+    "unknownError": "Unknown error occurred",
+    "anErrorOccurred": "An error occurred",
+    "noResponseFromServer": "No response from server",
+    "editorFailedToLoad": "Editor failed to load.",
+    "noPermissionAccess": "You do not have permission to access the classification feature.",
+    "sessionExpiredLoginAgain": "Your session has expired. Please login again.",
+    "myJobs": "My jobs"
   }
 }

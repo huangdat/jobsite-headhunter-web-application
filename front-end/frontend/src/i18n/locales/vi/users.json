@@ -292,6 +292,8 @@
     "tryAgain": "Thử lại",
     "softDelete": "Xóa Mềm",
     "hardDelete": "Xóa Cứng",
+    "softDeleteOptionAriaLabel": "Tùy chọn Xóa Mềm",
+    "hardDeleteOptionAriaLabel": "Tùy chọn Xóa Cứng",
     "useSoftDelete": "Sử dụng Xóa Mềm",
     "errorSoftDelete": "Không thể xóa mềm người dùng",
     "errorHardDelete": "Không thể xóa cứng người dùng",

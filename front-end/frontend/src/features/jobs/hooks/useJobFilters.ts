@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import type { JobFilterParams } from "../types";
+import type { JobFilterParams, WorkingType, RankLevel } from "../types";
 import { EXPERIENCE_PRESETS, SALARY_PRESETS, MILLION } from "../utils";
 
 interface UseJobFiltersReturn {
@@ -43,17 +43,25 @@ export const useJobFilters = (
   useEffect(() => {
     const nextKeyword = filters.keyword ?? "";
     if (nextKeyword !== keyword) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setKeyword(nextKeyword);
     }
   }, [filters.keyword, keyword]);
 
   // Sync experience from filters
   useEffect(() => {
-    const currentMin = typeof filters.experienceMin === "number" ? filters.experienceMin : undefined;
-    const currentMax = typeof filters.experienceMax === "number" ? filters.experienceMax : undefined;
+    const currentMin =
+      typeof filters.experienceMin === "number"
+        ? filters.experienceMin
+        : undefined;
+    const currentMax =
+      typeof filters.experienceMax === "number"
+        ? filters.experienceMax
+        : undefined;
 
     if (currentMin === undefined && currentMax === undefined) {
       if (experienceValue !== "ALL") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setExperienceValue("ALL");
       }
       return;
@@ -71,6 +79,7 @@ export const useJobFilters = (
   useEffect(() => {
     if (filters.negotiable) {
       if (salaryPreset !== "NEGOTIABLE") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSalaryPreset("NEGOTIABLE");
       }
       if (customSalaryMin || customSalaryMax) {
@@ -80,8 +89,10 @@ export const useJobFilters = (
       return;
     }
 
-    const currentMin = typeof filters.salaryMin === "number" ? filters.salaryMin : undefined;
-    const currentMax = typeof filters.salaryMax === "number" ? filters.salaryMax : undefined;
+    const currentMin =
+      typeof filters.salaryMin === "number" ? filters.salaryMin : undefined;
+    const currentMax =
+      typeof filters.salaryMax === "number" ? filters.salaryMax : undefined;
 
     if (currentMin === undefined && currentMax === undefined) {
       if (salaryPreset !== "ALL") {
@@ -95,7 +106,10 @@ export const useJobFilters = (
     }
 
     const match = SALARY_PRESETS.find(
-      (option) => !option.negotiable && option.min === currentMin && option.max === currentMax
+      (option) =>
+        !option.negotiable &&
+        option.min === currentMin &&
+        option.max === currentMax
     );
 
     if (match) {
@@ -112,7 +126,14 @@ export const useJobFilters = (
     setSalaryPreset("CUSTOM");
     setCustomSalaryMin(currentMin ? String(currentMin / MILLION) : "");
     setCustomSalaryMax(currentMax ? String(currentMax / MILLION) : "");
-  }, [filters.salaryMin, filters.salaryMax, filters.negotiable, salaryPreset, customSalaryMin, customSalaryMax]);
+  }, [
+    filters.salaryMin,
+    filters.salaryMax,
+    filters.negotiable,
+    salaryPreset,
+    customSalaryMin,
+    customSalaryMax,
+  ]);
 
   const handleKeywordChange = (value: string) => {
     setKeyword(value);
@@ -126,7 +147,9 @@ export const useJobFilters = (
 
   const handleExperienceChange = (value: string) => {
     setExperienceValue(value);
-    const selected = EXPERIENCE_PRESETS.find((option) => option.value === value);
+    const selected = EXPERIENCE_PRESETS.find(
+      (option) => option.value === value
+    );
     onFilterChange({
       ...filters,
       experienceMin: selected?.min,
@@ -155,8 +178,12 @@ export const useJobFilters = (
       return;
     }
 
-    const minValue = customSalaryMin ? Number(customSalaryMin) * MILLION : undefined;
-    const maxValue = customSalaryMax ? Number(customSalaryMax) * MILLION : undefined;
+    const minValue = customSalaryMin
+      ? Number(customSalaryMin) * MILLION
+      : undefined;
+    const maxValue = customSalaryMax
+      ? Number(customSalaryMax) * MILLION
+      : undefined;
 
     if ((minValue ?? 0) > (maxValue ?? Infinity)) {
       return;
@@ -175,7 +202,7 @@ export const useJobFilters = (
   const handleWorkingTypeChange = (type: string) => {
     onFilterChange({
       ...filters,
-      workingType: type === "" ? undefined : (type as any),
+      workingType: type === "" ? undefined : (type as WorkingType),
       page: 1,
     });
   };
@@ -183,7 +210,7 @@ export const useJobFilters = (
   const handleRankLevelChange = (rank: string) => {
     onFilterChange({
       ...filters,
-      rankLevel: rank === "" ? undefined : (rank as any),
+      rankLevel: rank === "" ? undefined : (rank as RankLevel),
       page: 1,
     });
   };

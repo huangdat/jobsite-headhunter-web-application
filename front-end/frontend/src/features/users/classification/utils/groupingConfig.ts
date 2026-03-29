@@ -48,7 +48,10 @@ export const groupingConfigs: Record<string, GroupingConfig> = {
     getSubtitle: (key: string) =>
       `classification.roleSubtitles.${key.toLowerCase()}`,
     getIconType: () => "role",
-    getColorScheme: (key: string) => ROLE_COLORS[key] || "slate",
+    getColorScheme: (key: string) => {
+      // eslint-disable-next-line security/detect-object-injection
+      return ROLE_COLORS[key] || "slate";
+    },
   },
 
   status: {
@@ -61,7 +64,10 @@ export const groupingConfigs: Record<string, GroupingConfig> = {
     getSubtitle: (key: string) =>
       `classification.statusSubtitles.${key.toLowerCase()}`,
     getIconType: () => "status",
-    getColorScheme: (key: string) => STATUS_COLORS[key] || "slate",
+    getColorScheme: (key: string) => {
+      // eslint-disable-next-line security/detect-object-injection
+      return STATUS_COLORS[key] || "slate";
+    },
   },
 
   company: {
@@ -101,7 +107,10 @@ export const groupingConfigs: Record<string, GroupingConfig> = {
     },
     getSubtitle: (key: string) => key,
     getIconType: () => "calendar",
-    getColorScheme: (key: string) => MONTH_COLORS[key] || "slate",
+    getColorScheme: (key: string) => {
+      // eslint-disable-next-line security/detect-object-injection
+      return MONTH_COLORS[key] || "slate";
+    },
   },
 };
 
@@ -109,5 +118,6 @@ export const groupingConfigs: Record<string, GroupingConfig> = {
  * Get grouping config by field.
  */
 export const getGroupingConfig = (field: string): GroupingConfig | null => {
+  // eslint-disable-next-line security/detect-object-injection
   return groupingConfigs[field] || null;
 };

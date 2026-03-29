@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.azure.core.exception.ResourceNotFoundException;
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.CollaboratorProfileMapper;
@@ -44,7 +45,7 @@ public class CollaboratorProfileServiceImpl implements CollaboratorProfileServic
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_COLLABORATOR')")
+    @PreAuthorize(SecurityConstants.COLLABORATOR)
     public CollaboratorProfileResp updateMyCommissionRate(double commissionRate) {
         // TODO Auto-generated method stub
         var context = SecurityContextHolder.getContext();

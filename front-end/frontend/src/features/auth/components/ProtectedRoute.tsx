@@ -17,22 +17,14 @@ export function ProtectedRoute({
 
   // Not logged in → redirect to login
   if (!isAuthenticated && !isInitializing) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-        state={{ from: location.pathname }}
-      />
-    );
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 
   // Check role if provided
   if (allowedRoles && allowedRoles.length > 0) {
     const role = (user?.role ?? "").toString().toLowerCase();
 
-    const allowed = allowedRoles.map((r) =>
-      r.toString().toLowerCase()
-    );
+    const allowed = allowedRoles.map((r) => r.toString().toLowerCase());
 
     if (!allowed.includes(role)) {
       return <Navigate to="/home" replace />;

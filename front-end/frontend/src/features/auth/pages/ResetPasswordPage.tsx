@@ -14,7 +14,6 @@ import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { toast } from "sonner";
 import type { OtpSendResp } from "@/features/auth/types";
-import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 import { MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsShieldLock } from "react-icons/bs";
@@ -109,13 +108,8 @@ export function ResetPasswordPage() {
       toast.success(tAuth("messages.passwordResetSuccess"));
 
       navigate("/login");
-    } catch (error: unknown) {
-      const errorMessage = extractApiErrorMessage(
-        error,
-        tAuth("messages.failedToResetPassword")
-      );
-
-      toast.error(errorMessage);
+    } catch {
+      toast.error(tAuth("messages.failedToResetPassword"));
     }
   };
 

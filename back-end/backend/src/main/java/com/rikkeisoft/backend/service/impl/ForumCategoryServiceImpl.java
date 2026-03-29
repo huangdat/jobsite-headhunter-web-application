@@ -1,6 +1,7 @@
 package com.rikkeisoft.backend.service.impl;
 
 import com.github.slugify.Slugify;
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.ForumCategoryMapper;
@@ -63,7 +64,7 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      */
     @Override
     @Transactional
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize(SecurityConstants.ADMIN)
     public ForumCategoryResp createCategory(ForumCategoryCreateReq req) {
         String slug = generateSlug(req.getName());
         if(forumCategoryRepo.existsBySlugAndSoftDeletedFalse(slug)){
@@ -98,8 +99,13 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      */
     @Override
     @Transactional
+    @PreAuthorize(SecurityConstants.ADMIN)
     public ForumCategoryResp updateCategory(Long categoryId, ForumCategoryUpdateReq req) {
-        return null;
+        ForumCategory forumCategory = forumCategoryRepo.findById(categoryId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        forumCategoryMapper.updateForumCategoryFromRequest(req, forumCategory);
+        forumCategory.setUpdatedAt(LocalDateTime.now());
+        return forumCategoryMapper.toForumCategoryResp(forumCategory);
     }
 
     /**
@@ -136,8 +142,11 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      */
     @Override
     @Transactional
+    @PreAuthorize(SecurityConstants.ADMIN)
     public ForumCategoryResp toggleCategoryStatus(Long categoryId) {
-        return null;
+        ForumCategory forumCategory = forumCategoryRepo.findById(categoryId).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        forumCategory.setActive(!forumCategory.isActive());
+        return forumCategoryMapper.toForumCategoryResp(forumCategory);
     }
 
     /**

@@ -4,6 +4,7 @@
  */
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import type {
   BusinessProfile,
   BusinessFormData,
@@ -35,6 +36,7 @@ const INITIAL_FORM_DATA: BusinessFormData = {
 export const useBusinessVerification = (
   options: UseBusinessVerificationOptions = {}
 ) => {
+  const { t } = useTranslation();
   const { autoFetchStatus = true, pollInterval = 10000 } = options;
 
   // Form state
@@ -99,12 +101,14 @@ export const useBusinessVerification = (
     } catch (error) {
       console.error("Failed to fetch profile status:", error);
       const errorMsg =
-        error instanceof Error ? error.message : "Failed to load profile";
+        error instanceof Error
+          ? error.message
+          : t("messages.failedToLoadProfile");
       setErrorMessage(errorMsg);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [t]);
 
   /**
    * Submit profile for verification

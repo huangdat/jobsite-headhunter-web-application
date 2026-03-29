@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form";
 import type {
   SubmitHandler,
+  SubmitErrorHandler,
   UseFormProps,
   FieldValues,
   Path,
-  FieldErrors,
   UseFormHandleSubmit,
 } from "react-hook-form";
 
-export type UseAppFormReturn<T extends FieldValues> = ReturnType<typeof useForm<T>> & {
+export type UseAppFormReturn<T extends FieldValues> = ReturnType<
+  typeof useForm<T>
+> & {
   getError: (fieldName: Path<T>) => string | undefined;
   hasError: (fieldName: Path<T>) => boolean;
   handleSubmit: UseFormHandleSubmit<T>;
@@ -22,7 +24,7 @@ export type UseAppFormReturn<T extends FieldValues> = ReturnType<typeof useForm<
  *   });
  */
 export function useAppForm<T extends FieldValues>(
-  options?: Omit<UseFormProps<T>, "mode">,
+  options?: Omit<UseFormProps<T>, "mode">
 ): UseAppFormReturn<T> {
   const form = useForm<T>({
     mode: "onBlur", // Validate on blur for better UX
@@ -63,9 +65,9 @@ export function useAppForm<T extends FieldValues>(
    */
   const handleSubmit = (
     onValid: SubmitHandler<T>,
-    onInvalid?: (errors: FieldErrors<T>) => void,
+    onInvalid?: SubmitErrorHandler<T>
   ) => {
-    return form.handleSubmit(onValid, onInvalid as any);
+    return form.handleSubmit(onValid, onInvalid);
   };
 
   return {

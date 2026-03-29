@@ -21,17 +21,20 @@ export function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const normalizedRole = user?.role ? user.role.replace(/^roles\./i, "").toLowerCase() : "";
-
-  const roleBadgeClass = normalizedRole === "candidate"
-    ? "bg-sky-100 text-sky-700"
-    : normalizedRole === "headhunter"
-    ? "bg-purple-100 text-purple-700"
-    : normalizedRole === "collaborator"
-    ? "bg-green-100 text-green-700"
-    : normalizedRole === "admin"
-    ? "bg-red-50 text-red-700"
+  const normalizedRole = user?.role
+    ? user.role.replace(/^roles\./i, "").toLowerCase()
     : "";
+
+  const roleBadgeClass =
+    normalizedRole === "candidate"
+      ? "bg-sky-100 text-sky-700"
+      : normalizedRole === "headhunter"
+        ? "bg-purple-100 text-purple-700"
+        : normalizedRole === "collaborator"
+          ? "bg-green-100 text-green-700"
+          : normalizedRole === "admin"
+            ? "bg-red-50 text-red-700"
+            : "";
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -146,13 +149,19 @@ export function Header() {
                     {user?.role?.toLowerCase() === "headhunter" ? (
                       <>
                         <button
-                          onClick={() => { navigate("/jobs/my"); setDropdownOpen(false); }}
+                          onClick={() => {
+                            navigate("/jobs/my");
+                            setDropdownOpen(false);
+                          }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
-                          My jobs
+                          {t("messages.myJobs")}
                         </button>
                         <button
-                          onClick={() => { navigate("/headhunter/applicants"); setDropdownOpen(false); }}
+                          onClick={() => {
+                            navigate("/headhunter/applicants");
+                            setDropdownOpen(false);
+                          }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
                           Applicants
@@ -161,13 +170,19 @@ export function Header() {
                     ) : (
                       <>
                         <button
-                          onClick={() => { navigate("/applications"); setDropdownOpen(false); }}
+                          onClick={() => {
+                            navigate("/applications");
+                            setDropdownOpen(false);
+                          }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
                           {t("home.navigation.applications")}
                         </button>
                         <button
-                          onClick={() => { navigate("/saved-jobs"); setDropdownOpen(false); }}
+                          onClick={() => {
+                            navigate("/saved-jobs");
+                            setDropdownOpen(false);
+                          }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
                           {t("home.navigation.savedJobs")}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 export function ChangePasswordPage() {
   const { t } = useAuthTranslation();
   const { t: tApp } = useAppTranslation();
+  const navigate = useNavigate();
 
   const [showPasswords, setShowPasswords] = useState({
     current: false,
@@ -57,6 +59,7 @@ export function ChangePasswordPage() {
   } = form;
 
   const togglePasswordVisibility = (field: "current" | "new" | "confirm") => {
+    // eslint-disable-next-line security/detect-object-injection
     setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
@@ -114,7 +117,7 @@ export function ChangePasswordPage() {
       }
 
       // Error notification
-      toast.error(errorMessage);
+      toast.error(t("messages.failedToChangePassword"));
     }
   };
 
@@ -135,44 +138,44 @@ export function ChangePasswordPage() {
           <h2 className="text-xl font-bold tracking-tight text-white">
             {tApp("common.appName")}
           </h2>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined text-brand-primary">
               dashboard
             </span>
             <span className="font-medium">{tApp("navigation.dashboard")}</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
+          </button>
+          <button
+            onClick={() => navigate("/jobs")}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined text-brand-primary">
               work
             </span>
             <span className="font-medium">{tApp("navigation.jobs")}</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
+          </button>
+          <button
+            onClick={() => navigate("/referrals")}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined text-brand-primary">
               group_add
             </span>
             <span className="font-medium">{tApp("navigation.referrals")}</span>
-          </a>
+          </button>
 
           <div className="pt-4 pb-2 px-4 text-xs font-semibold text-white/40 uppercase tracking-wider">
             {tApp("common.section.account")}
           </div>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary transition-colors border border-brand-primary/20"
+          <button
+            onClick={() => navigate("/settings")}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary transition-colors border border-brand-primary/20 cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined">settings</span>
             <span className="font-medium">{tApp("navigation.settings")}</span>
-          </a>
+          </button>
         </div>
 
         <div className="p-4 border-t border-white/10">

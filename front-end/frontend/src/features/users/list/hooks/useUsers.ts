@@ -23,9 +23,9 @@ export interface UseUserListReturn {
   setSearchValue: (value: string) => void;
   setCurrentPage: (page: number) => void;
   setItemsPerPage: (count: number) => void;
-  setFilters: (filters: any) => void;
+  setFilters: (filters: Record<string, string | undefined>) => void;
   setSortBy: (sort: { field: string; direction: "asc" | "desc" }[]) => void;
-  clearFilters: () => void;
+  clearFilters: () => Promise<void>;
   refetch: () => Promise<void>;
 }
 
@@ -107,14 +107,14 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, itemsPerPage, debouncedSearch, filters, sortBy]);
+  }, [currentPage, itemsPerPage, debouncedSearch, filters, sortBy, t]);
 
   // Fetch whenever dependencies change (server-side)
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
 
-  const clearFilters = useCallback(() => {
+  const clearFilters = useCallback(async () => {
     setSearchValue("");
     setFilters({});
     setCurrentPage(1);

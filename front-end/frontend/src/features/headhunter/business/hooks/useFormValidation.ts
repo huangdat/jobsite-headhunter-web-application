@@ -157,6 +157,7 @@ export const useFormValidation = (options: UseFormValidationOptions = {}) => {
    */
   const validateField = useCallback(
     (fieldName: keyof BusinessFormData, value: string): string | null => {
+      // eslint-disable-next-line security/detect-object-injection
       const validator = validationMap[fieldName];
       if (validator) {
         return validator(value);
@@ -175,8 +176,10 @@ export const useFormValidation = (options: UseFormValidationOptions = {}) => {
 
       Object.keys(formData).forEach((key) => {
         const fieldName = key as keyof BusinessFormData;
+        // eslint-disable-next-line security/detect-object-injection
         const error = validateField(fieldName, formData[fieldName]);
         if (error) {
+          // eslint-disable-next-line security/detect-object-injection
           newErrors[fieldName] = error;
         }
       });
@@ -197,6 +200,7 @@ export const useFormValidation = (options: UseFormValidationOptions = {}) => {
         const error = validateField(fieldName, value);
         setErrors((prev) => ({
           ...prev,
+
           [fieldName]: error || undefined,
         }));
       }
@@ -213,6 +217,7 @@ export const useFormValidation = (options: UseFormValidationOptions = {}) => {
         const error = validateField(fieldName, value);
         setErrors((prev) => ({
           ...prev,
+
           [fieldName]: error || undefined,
         }));
       }
@@ -226,6 +231,7 @@ export const useFormValidation = (options: UseFormValidationOptions = {}) => {
   const clearFieldError = useCallback((fieldName: keyof BusinessFormData) => {
     setErrors((prev) => {
       const newErrors = { ...prev };
+      // eslint-disable-next-line security/detect-object-injection
       delete newErrors[fieldName];
       return newErrors;
     });

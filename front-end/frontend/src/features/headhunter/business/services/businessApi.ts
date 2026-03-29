@@ -5,6 +5,7 @@
 
 import axios from "axios";
 import type { AxiosInstance } from "axios";
+import { API_ENDPOINTS } from "@/lib/constants";
 import type {
   BusinessProfile,
   SubmittedDocument,
@@ -75,7 +76,7 @@ class BusinessApiService {
       }
 
       const response = await this.api.post<SubmitProfileResponse>(
-        "/business/profile/submit",
+        API_ENDPOINTS.BUSINESS.SUBMIT_PROFILE,
         formData,
         {
           headers: {
@@ -97,7 +98,7 @@ class BusinessApiService {
   async getProfileStatus(): Promise<GetProfileStatusResponse> {
     try {
       const response = await this.api.get<GetProfileStatusResponse>(
-        "/business/profile/status"
+        API_ENDPOINTS.BUSINESS.GET_STATUS
       );
       return response.data;
     } catch (error) {
@@ -112,7 +113,7 @@ class BusinessApiService {
   async getProfileStrength(): Promise<ProfileStrengthData> {
     try {
       const response = await this.api.get<ProfileStrengthData>(
-        "/business/profile/strength"
+        API_ENDPOINTS.BUSINESS.GET_STRENGTH
       );
       return response.data;
     } catch (error) {
@@ -129,7 +130,7 @@ class BusinessApiService {
   ): Promise<ValidateFieldResponse> {
     try {
       const response = await this.api.post<ValidateFieldResponse>(
-        "/business/validate",
+        API_ENDPOINTS.BUSINESS.VALIDATE_FIELD,
         request
       );
       return response.data;
@@ -145,7 +146,7 @@ class BusinessApiService {
   async getVerificationSteps(): Promise<VerificationStep[]> {
     try {
       const response = await this.api.get<VerificationStep[]>(
-        "/business/profile/verification-steps"
+        API_ENDPOINTS.BUSINESS.GET_VERIFICATION_STEPS
       );
       return response.data;
     } catch (error) {
@@ -160,7 +161,7 @@ class BusinessApiService {
   async getSubmittedDocuments(): Promise<SubmittedDocument[]> {
     try {
       const response = await this.api.get<SubmittedDocument[]>(
-        "/business/profile/documents"
+        API_ENDPOINTS.BUSINESS.GET_DOCUMENTS
       );
       return response.data;
     } catch (error) {
@@ -175,7 +176,7 @@ class BusinessApiService {
   async downloadDocument(documentId: string): Promise<Blob> {
     try {
       const response = await this.api.get(
-        `/business/profile/documents/${documentId}/download`,
+        API_ENDPOINTS.BUSINESS.DOWNLOAD_DOCUMENT.replace("{id}", documentId),
         {
           responseType: "blob",
         }
@@ -193,7 +194,7 @@ class BusinessApiService {
   async deleteDocument(documentId: string): Promise<{ success: boolean }> {
     try {
       const response = await this.api.delete<{ success: boolean }>(
-        `/business/profile/documents/${documentId}`
+        API_ENDPOINTS.BUSINESS.DELETE_DOCUMENT.replace("{id}", documentId)
       );
       return response.data;
     } catch (error) {
@@ -210,7 +211,7 @@ class BusinessApiService {
   ): Promise<BusinessProfile> {
     try {
       const response = await this.api.put<BusinessProfile>(
-        "/business/profile/update",
+        API_ENDPOINTS.BUSINESS.UPDATE_PROFILE,
         data
       );
       return response.data;
@@ -226,7 +227,7 @@ class BusinessApiService {
   async getOptimizationTips(): Promise<string[]> {
     try {
       const response = await this.api.get<string[]>(
-        "/business/profile/optimization-tips"
+        API_ENDPOINTS.BUSINESS.GET_OPTIMIZATION_TIPS
       );
       return response.data;
     } catch (error) {
@@ -251,7 +252,7 @@ class BusinessApiService {
       const { status, data } = response;
       const errorMessage =
         (data as Record<string, unknown> | undefined)?.message ||
-        "An error occurred";
+        "common.messages.anErrorOccurred";
 
       return Object.assign(new Error(errorMessage as string), {
         status: status as number,
@@ -260,13 +261,13 @@ class BusinessApiService {
       }) as Error & { status?: number; data?: unknown; isAxiosError?: boolean };
     } else if (error instanceof Error && errorRecord.request) {
       // Request was made but no response
-      return Object.assign(new Error("No response from server"), {
+      return Object.assign(new Error("common.messages.noResponseFromServer"), {
         isNetworkError: true,
       }) as Error & { isNetworkError?: boolean };
     } else if (error instanceof Error) {
       return error;
     }
-    return new Error("Unknown error occurred");
+    return new Error("common.messages.unknownError");
   }
 }
 

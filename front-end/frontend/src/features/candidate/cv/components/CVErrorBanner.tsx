@@ -30,9 +30,7 @@ export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
       <div className="flex-1">
         <p className="text-red-700 font-bold text-sm">{t(error) || error}</p>
         {details && (
-          <p className="text-red-600 text-sm mt-1">
-            {t(details) || details}
-          </p>
+          <p className="text-red-600 text-sm mt-1">{t(details) || details}</p>
         )}
       </div>
 
@@ -64,4 +62,3 @@ export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
 };
 
 export default CVErrorBanner;
-

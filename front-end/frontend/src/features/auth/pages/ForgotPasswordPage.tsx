@@ -9,7 +9,6 @@ import { useAppForm } from "@/shared/hooks/useAppForm";
 import type { ForgotPasswordFormData } from "@/features/auth/types";
 import { sendOtpForgotPassword } from "@/features/auth/services/authApi";
 import { toast } from "sonner";
-import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 import { MdOutlineMail } from "react-icons/md";
 
@@ -55,13 +54,8 @@ export function ForgotPasswordPage() {
           expiresAt: response.expiresAt,
         },
       });
-    } catch (error: unknown) {
-      const errorMessage = extractApiErrorMessage(
-        error,
-        tAuth("messages.failedSendOtp")
-      );
-
-      toast.error(errorMessage);
+    } catch {
+      toast.error(tAuth("messages.failedSendOtp"));
     }
   };
 

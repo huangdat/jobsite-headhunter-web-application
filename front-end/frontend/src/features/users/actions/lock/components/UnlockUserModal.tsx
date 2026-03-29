@@ -8,6 +8,7 @@ import {
   Mail,
   KeyRound,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useUsersTranslation } from "@/shared/hooks";
 
 export interface UnlockUserModalProps {
@@ -43,6 +44,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
   onConfirm,
 }) => {
   const { t } = useUsersTranslation();
+  const { t: tCommon } = useTranslation("auth");
   const [step, setStep] = useState<ModalStep>("form");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<UnlockResult | null>(null);
@@ -70,7 +72,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
       setStep("success");
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
+        error instanceof Error ? error.message : tCommon("common.unknownError");
 
       setResult({
         type: "error",
