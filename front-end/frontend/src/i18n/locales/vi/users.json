@@ -2,16 +2,10 @@
   "buttons": {
     "cancel": "Hủy",
     "next": "Tiếp theo",
-    "back": "Quay lại",
-    "close": "Đóng",
-    "processing": "Đang xử lý...",
-    "tryAgain": "Thử lại",
-    "confirmAction": "Xác nhận"
+    "back": "Quay lại"
   },
   "fields": {
     "userInfo": "Người dùng",
-    "timestamp": "Dấu thời gian",
-    "affectedUser": "Người dùng Bị ảnh hưởng",
     "userId": "ID Người dùng",
     "reason": "Lý do",
     "sendEmail": "Gửi Email Thông báo",
@@ -58,8 +52,6 @@
     "filterAllRoles": "Tất cả Vai trò",
     "filterStatus": "Trạng thái",
     "filterAllStatus": "Tất cả Trạng thái",
-    "filterCompany": "Công ty",
-    "filterAllCompanies": "Tất cả Công ty",
     "applyFilter": "Áp dụng Bộ lọc",
     "resetFilter": "Đặt lại"
   },
@@ -67,9 +59,7 @@
     "PENDING": "Đang chờ",
     "ACTIVE": "Hoạt động",
     "SUSPENDED": "Bị khóa",
-    "DELETED": "Đã xóa",
-    "active": "Active",
-    "inactive": "Inactive"
+    "DELETED": "Đã xóa"
   },
   "columns": {
     "user": "NGƯỜI DÙNG",
@@ -91,19 +81,13 @@
     "loading": "Đang tải...",
     "noDataAvailable": "Không có dữ liệu",
     "failedToFetchUsers": "Không thể tải danh sách người dùng",
-    "failedToFetchUserDetails": "Không thể tải chi tiết người dùng",
-    "featureComingSoon": "Tính năng sắp ra mắt",
     "permanentDelete": "Xóa vĩnh viễn",
     "tryAgain": "Thử Lại"
   },
   "detail": {
     "userDetails": "Chi tiết Người dùng",
     "personalInfo": "Thông tin Cá nhân",
-    "accountInfo": "Thông tin Tài khoản",
     "activityLog": "Nhật ký Hoạt động",
-    "backToList": "Quay lại Danh sách",
-    "editUser": "Chỉnh sửa Người dùng",
-    "saveChanges": "Lưu Thay đổi",
     "basicInformation": "Thông tin Cơ bản",
     "fullName": "Họ và Tên",
     "email": "Email",
@@ -121,7 +105,6 @@
     "editProfile": "Chỉnh sửa Hồ sơ",
     "exportData": "Xuất Dữ liệu",
     "loginHistory": "Lịch sử Đăng nhập",
-    "dateAndTime": "Ngày & Giờ",
     "dateTime": "Ngày & Giờ",
     "ipAddress": "Địa chỉ IP",
     "deviceBrowser": "Thiết bị / Trình duyệt",
@@ -148,11 +131,8 @@
     "DELETED": "Đã xóa"
   },
   "loginStatus": {
-    "successful": "Thành công",
     "success": "Thành công",
-    "failed": "Nỗ lực Thất bại",
-    "failedAttempt": "Thất bại",
-    "failedLabel": "Failed"
+    "failedAttempt": "Thất bại"
   },
   "roles": {
     "ADMIN": "Quản trị viên",
@@ -160,21 +140,9 @@
     "COLLABORATOR": "Cộng tác viên",
     "CANDIDATE": "Ứng viên"
   },
-  "confirmations": {
-    "lockAccount": "Bạn có chắc chắn muốn khóa tài khoản này không?",
-    "softDelete": "Bạn có chắc chắn muốn xóa tài khoản này không? Dữ liệu sẽ được giữ trong 30 ngày.",
-    "hardDelete": "⚠️ BẠN CÓ CHẮC KHÔNG? Hành động này không thể hoàn tác! Tất cả dữ liệu sẽ bị xóa vĩnh viễn."
-  },
   "messages": {
-    "lockSuccess": "Tài khoản đã bị khóa",
-    "lockError": "Không thể khóa tài khoản",
     "failedToLockUser": "Không thể khóa người dùng",
-    "unlockSuccess": "Tài khoản đã được mở khóa",
-    "failedToUnlockUser": "Không thể mở khóa người dùng",
-    "softDeleteSuccess": "Tài khoản đã bị xóa (có thể phục hồi trong 30 ngày)",
-    "softDeleteError": "Không thể xóa tài khoản",
-    "hardDeleteSuccess": "Tài khoản đã bị xóa vĩnh viễn",
-    "hardDeleteError": "Không thể xóa tài khoản"
+    "failedToUnlockUser": "Không thể mở khóa người dùng"
   },
   "sections": {
     "loginHistory": "🛡️ Lịch sử Đăng nhập",
@@ -227,9 +195,6 @@
     "title": "Mở khóa Tài khoản Người dùng",
     "description": "Mở khóa một tài khoản bị khóa và khôi phục quyền truy cập",
     "userInfo": "Người dùng",
-    "reasonLabel": "Lý do Mở khóa",
-    "reasonPlaceholder": "Nêu lý do mở khóa...",
-    "reasonHint": "Giải thích ngắn gọn lý do tài khoản này được mở khóa",
     "notificationSettings": "Cài đặt Thông báo",
     "sendEmailLabel": "Gửi Email Thông báo",
     "sendEmailDescription": "Thông báo cho người dùng về việc mở khóa tài khoản qua email",
@@ -251,7 +216,6 @@
   "delete": {
     "title": "Xóa Người dùng",
     "selectMethod": "Chọn phương thức xóa cho tài khoản người dùng này",
-    "userInfo": "Người dùng",
     "relatedDataWarning": "⚠️ Người dùng này có dữ liệu liên kết:",
     "applicationsCount": "Hồ sơ ứng tuyển",
     "jobsCount": "Bài đăng tuyển dụng",
@@ -294,10 +258,7 @@
     "errorSoftDelete": "Không thể xóa mềm người dùng",
     "errorHardDelete": "Không thể xóa cứng người dùng",
     "errorConflict": "Người dùng có dữ liệu liên kết. Vui lòng dùng Xóa Mềm",
-    "errorGeneral": "Lỗi xảy ra trong quá trình xóa",
-    "errorNotFound": "Không tìm thấy người dùng",
-    "errorUnauthorized": "Bạn không có quyền thực hiện hành động này",
-    "errorNetwork": "Lỗi mạng. Vui lòng thử lại"
+    "errorGeneral": "Lỗi xảy ra trong quá trình xóa"
   },
   "classification": {
     "pageTitle": "Phân loại Người dùng",
@@ -338,29 +299,16 @@
       "candidate": "Người Tìm việc"
     },
     "statuses": {
-      "active": "Hoạt động",
-      "locked": "Khóa",
-      "suspended": "Tạm dừng",
       "pending": "Đang chờ"
     },
     "statusSubtitles": {
-      "active": "Tài khoản được xác minh và có thể truy cập",
-      "locked": "Tài khoản bị vô hiệu hóa",
-      "suspended": "Tài khoản bị tạm dừng tạm thời",
       "pending": "Chờ xác minh email"
     },
-    "companyEmployees": "nhân viên và đại diện",
-    "usersRegisteredIn": "Người dùng đã đăng ký vào",
     "unknown": "Không xác định",
     "active": "Hoạt động",
     "inactive": "Không hoạt động",
     "error": {
-      "permissionDenied": "Quyền Truy Cập Bị Từ Chối",
-      "permissionDeniedDescription": "Bạn không có quyền truy cập vào tính năng phân loại. Chỉ quản trị viên mới có thể xem phân loại người dùng.",
-      "unauthorized": "Chưa Được Xác Thực",
-      "unauthorizedDescription": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục.",
-      "loadFailed": "Không Thể Tải Người Dùng",
-      "loadFailedDescription": "Không thể tải dữ liệu người dùng. Vui lòng thử lại sau."
+      "permissionDenied": "Quyền Truy Cập Bị Từ Chối"
     },
     "quickNavigation": "Quick Navigation",
     "userManagementTitle": "User Management",

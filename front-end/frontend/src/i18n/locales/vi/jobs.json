@@ -1,29 +1,21 @@
 {
   "listTabLabel": "[VI] List",
-  "createTabLabel": "[VI] Create",
-  "applicantsTabLabel": "[VI] Applicants",
   "list": {
     "pageTitle": "Quản lý Công việc",
     "documentation": "Tài liệu",
-    "addJobButton": "Đăng Công việc Mới",
     "filterButton": "Bộ lọc",
     "groupByLabel": "Nhóm theo:",
     "groupByNone": "Không",
     "groupByStatus": "Trạng thái",
-    "groupByCategory": "Danh mục",
     "noResults": "Không tìm thấy công việc",
     "searchPlaceholder": "Tìm kiếm theo tiêu đề, công ty hoặc vị trí...",
     "clearAllFilters": "Xóa tất cả bộ lọc",
     "rowsPerPage": "Dòng mỗi trang:",
     "paginationInfo": "Hiển thị {{startItem}}-{{endItem}} của {{totalItems}} công việc",
     "filters": {
-      "keyword": "Từ khóa",
       "keywordPlaceholder": "Chức danh công việc hoặc kỹ năng",
       "workingType": "Loại Làm việc",
       "allTypes": "Tất cả loại",
-      "onsite": "Tại chỗ",
-      "remote": "Làm việc từ xa",
-      "hybrid": "Kết hợp",
       "rankLevel": "Cấp độ",
       "allLevels": "Tất cả cấp độ",
       "experience": "Kinh nghiệm",
@@ -34,7 +26,6 @@
       "clearAllFilters": "Xóa tất cả bộ lọc",
       "salaryVND": "Jobs list Bộ lọcs salary v n d"
     },
-    "flexible": "Linh hoạt",
     "viewDetails": "Xem chi tiết →",
     "noJobsFound": "Không tìm thấy công việc nào với các bộ lọc được chọn.",
     "unableToLoad": "Không thể tải công việc. Vui lòng thử lại sau.",
@@ -43,7 +34,6 @@
     "pagination": "Trang {{page}} của {{totalPages}} — {{totalElements}} công việc",
     "viewJobLabel": "Xem công việc {{title}}",
     "applyBefore": "Ứng tuyển trước {{deadline}}",
-    "contactForSalary": "Liên hệ để trao đổi mức lương",
     "hero": {
       "subtitle": "Cơ hội cho mọi người",
       "title": "Khám phá các công việc được lựa chọn phù hợp với điểm mạnh của bạn.",
@@ -51,13 +41,8 @@
     }
   },
   "filters": {
-    "filterJobs": "Lọc Công việc",
     "filterStatus": "Trạng thái",
     "filterAllStatus": "Tất cả Trạng thái",
-    "filterCategory": "Danh mục",
-    "filterAllCategories": "Tất cả Danh mục",
-    "filterLocation": "Vị trí",
-    "filterAllLocations": "Tất cả Vị trí",
     "applyFilter": "Áp dụng Bộ lọc",
     "resetFilter": "Đặt lại"
   },
@@ -74,37 +59,17 @@
     "actions": "HÀNH ĐỘNG"
   },
   "actions": {
-    "viewDetails": "Xem Chi tiết",
-    "editJob": "Chỉnh sửa Công việc",
-    "publishJob": "Xuất bản Công việc",
-    "closeJob": "Đóng Công việc",
-    "deleteJob": "Xóa Công việc"
+    "viewDetails": "Xem Chi tiết"
   },
   "detail": {
-    "jobDetails": "Chi tiết Công việc",
-    "jobTitle": "Tiêu đề Công việc",
     "company": "Công ty",
     "location": "Vị trí",
-    "jobType": "Loại Công việc",
-    "salaryRange": "Mức lương",
     "experience": "Mức kinh nghiệm",
-    "jobDescription": "Mô tả Công việc",
     "requirements": "Yêu cầu",
     "benefits": "Quyền lợi",
-    "postedDate": "Ngày Đăng",
     "deadline": "Hạn chót Ứng tuyển",
     "status": "Trạng thái",
     "applicants": "Người ứng tuyển",
-    "views": "Lượt xem",
-    "applications": "Đơn ứng tuyển",
-    "backToList": "Quay lại Danh sách",
-    "editJob": "Chỉnh sửa Công việc",
-    "saveChanges": "Lưu Thay đổi",
-    "closeJob": "Đóng Công việc",
-    "repostJob": "Đăng lại Công việc",
-    "deleteJob": "Xóa Công việc",
-    "shareJob": "Chia sẻ Công việc",
-    "viewApplicants": "Xem Người ứng tuyển",
     "notFound": "Không tìm thấy công việc",
     "unableToLoad": "Không thể tải chi tiết công việc. Vui lòng thử lại sau.",
     "backToJobs": "Quay lại công việc",
@@ -229,45 +194,18 @@
     }
   },
   "types": {
-    "fullTime": "Toàn thời gian",
-    "partTime": "Bán thời gian",
-    "contract": "Hợp đồng",
-    "temporary": "Tạm thời",
-    "remote": "Làm việc từ xa",
-    "freelance": "Freelance",
     "workingTypes": {
       "ONSITE": "Tại văn phòng",
       "REMOTE": "Làm việc từ xa",
       "HYBRID": "Kết hợp"
     }
   },
-  "experience": {
-    "entry": "Mới vào ngành",
-    "mid": "Kinh nghiệm trung bình",
-    "senior": "Cấp cao",
-    "lead": "Lãnh đạo/Quản lý"
-  },
   "filterPresets": {
     "experienceOptions": {
-      "all": "Tất cả",
-      "notRequired": "Không yêu cầu",
-      "under1Year": "Dưới 1 năm",
-      "oneYear": "1 năm",
-      "twoYears": "2 năm",
-      "threeYears": "3 năm",
-      "fourYears": "4 năm",
-      "fiveYears": "5 năm",
-      "over5Years": "Trên 5 năm"
+      "all": "Tất cả"
     },
     "salaryOptions": {
       "all": "Tất cả",
-      "below10M": "Dưới 10 triệu",
-      "from10To15M": "10 - 15 triệu",
-      "from15To20M": "15 - 20 triệu",
-      "from20To25M": "20 - 25 triệu",
-      "from25To30M": "25 - 30 triệu",
-      "from30To50M": "30 - 50 triệu",
-      "above50M": "Trên 50 triệu",
       "negotiable": "Thương lượng"
     }
   },
@@ -278,16 +216,7 @@
     }
   },
   "messages": {
-    "noJobsFound": "Không tìm thấy công việc",
-    "jobPostedSuccess": "Công việc đã được đăng thành công",
     "jobCreatedSuccess": "Công việc được tạo thành công",
-    "jobUpdatedSuccess": "Công việc đã được cập nhật thành công",
-    "jobDeletedSuccess": "Công việc đã được xóa thành công",
-    "jobClosedSuccess": "Công việc đã được đóng thành công",
-    "errorPosting": "Không thể đăng công việc",
-    "errorUpdating": "Không thể cập nhật công việc",
-    "errorDeleting": "Không thể xóa công việc",
-    "unableToLoadYourJobs": "Không thể tải công việc của bạn.",
     "closeJobConfirm": "Đóng công việc này?",
     "jobClosed": "Công việc đã đóng.",
     "failedToCloseJob": "Không thể đóng công việc.",
@@ -359,12 +288,9 @@
     "candidates": "Ứng viên",
     "loadingApplicants": "Đang tải ứng viên...",
     "applicantPageInfo": "Trang này sẽ liệt kê những ứng viên cho công việc của bạn.",
-    "noApplicantsYet": "Chưa có ứng viên nào.",
-    "loadingError": "Không thể tải ứng viên."
+    "noApplicantsYet": "Chưa có ứng viên nào."
   },
   "validation": {
-    "titleRequired": "Tiêu đề không thể trống",
-    "descriptionRequired": "Mô tả không thể trống",
     "quantityPositive": "Số lượng phải lớn hơn 0",
     "unableToLoadSkills": "Không thể tải danh sách kỹ năng. Vui lòng thử lại.",
     "dateInFuture": "Thời hạn phải là hôm nay hoặc sau",

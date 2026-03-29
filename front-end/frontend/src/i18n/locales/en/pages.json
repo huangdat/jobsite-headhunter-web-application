@@ -19,6 +19,13 @@
     "signInButton": "Reset password success sign in button"
   },
   "signup": "Signup",
+  "buttons": {
+    "connecting": "Connecting..."
+  },
+  "social": {
+    "google": "Google",
+    "linkedin": "LinkedIn"
+  },
   "login": {
     "heroTitlePart1": "Login hero title part1",
     "heroTitlePart2": "Login hero title part2",
@@ -45,6 +52,13 @@
     "requirement1": "Change password requirement1",
     "requirement2": "Change password requirement2",
     "requirement3": "Change password requirement3"
+  },
+  "passwordRequirements": {
+    "title": "Password Requirements",
+    "minLength": "At least 8 characters",
+    "uppercase": "At least one uppercase letter",
+    "lowercase": "At least one lowercase letter",
+    "number": "At least one number"
   },
   "register": {
     "candidate": {

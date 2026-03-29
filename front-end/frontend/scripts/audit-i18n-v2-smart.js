@@ -53,11 +53,8 @@ function getAllKeys() {
           for (const [key, value] of Object.entries(obj)) {
             const fullKey = prefix ? `${prefix}.${key}` : key;
             if (typeof value === "string" || typeof value === "number") {
-              if (fileName === "common") {
-                allKeys.add(fullKey);
-              } else {
-                allKeys.add(`${fileName}.${fullKey}`);
-              }
+              // ALL namespaces should have their namespace prefix
+              allKeys.add(`${fileName}.${fullKey}`);
             } else if (
               typeof value === "object" &&
               value !== null &&
@@ -76,28 +73,52 @@ function getAllKeys() {
   return allKeys;
 }
 
-function scanCodeWithLocations() {
+// Generate search patterns for a key (same logic as verify-unused-native.js)
+function generateSearchPatterns(key) {
+  const patterns = new Set();
+
+  // Full key in quotes
+  patterns.add(`"${key}"`);
+  patterns.add(`'${key}'`);
+  patterns.add(`\`${key}\``);
+
+  // Parts of the key (for feature hook usage)
+  const parts = key.split(".");
+
+  // Last part only (e.g., "signIn" from "auth.buttons.signIn")
+  if (parts.length > 0) {
+    const lastPart = parts[parts.length - 1];
+    patterns.add(`"${lastPart}"`);
+    patterns.add(`'${lastPart}'`);
+  }
+
+  // Last 2 parts (e.g., "buttons.signIn" from "auth.buttons.signIn")
+  if (parts.length > 1) {
+    const last2 = parts.slice(-2).join(".");
+    patterns.add(`"${last2}"`);
+    patterns.add(`'${last2}'`);
+  }
+
+  // Last 3 parts (e.g., "pages.login.title" from "auth.pages.login.title")
+  if (parts.length > 2) {
+    const last3 = parts.slice(-3).join(".");
+    patterns.add(`"${last3}"`);
+    patterns.add(`'${last3}'`);
+  }
+
+  // Without first namespace (e.g., "buttons.signIn" from "auth.buttons.signIn")
+  if (parts.length > 1) {
+    const withoutNamespace = parts.slice(1).join(".");
+    patterns.add(`"${withoutNamespace}"`);
+    patterns.add(`'${withoutNamespace}'`);
+  }
+
+  return Array.from(patterns);
+}
+
+function scanCodeWithLocations(allKeys) {
   const usedKeysMap = new Map(); // Map<key, Array<{file, line}>>
   const files = globSync(`${srcDir}/**/*.{js,jsx,ts,tsx}`);
-
-  // Feature hook to namespace prefix mapping
-  const hookNamespaces = {
-    useAuthTranslation: "auth",
-    useBusinessTranslation: "business",
-    useUsersTranslation: "users",
-    useCommissionTranslation: "commission",
-    useCandidateTranslation: "candidate",
-    useJobsTranslation: "jobs",
-    useHomeTranslation: "home",
-    useNavigationTranslation: "navigation",
-    useAppTranslation: null, // No prefix - uses full keys like "common.dismiss"
-  };
-
-  // Patterns that indicate false positives
-  const falsePositiveContexts = [
-    /\.get\s*\(\s*["']state["']\s*\)/, // URL params like searchParams.get("state")
-    /\.getContext\s*\(\s*["']2d["']\s*\)/, // Canvas context
-  ];
 
   // Skip definition files - they show imports, not actual usage
   const skipDefinitionFiles = [
@@ -105,6 +126,8 @@ function scanCodeWithLocations() {
     /useAppTranslation\.ts/,
   ];
 
+  // Load all source code for pattern matching
+  const allSourceCode = [];
   files.forEach((file) => {
     // Skip problematic files
     if (
@@ -116,85 +139,51 @@ function scanCodeWithLocations() {
 
     try {
       const content = fs.readFileSync(file, "utf8");
-      const lines = content.split("\n");
-
-      // Detect which feature hooks are imported/used in this file
-      const detectedHooks = new Map(); // hook name -> namespace
-      for (const [hook, namespace] of Object.entries(hookNamespaces)) {
-        // Simple string matching - more reliable than regex
-        if (content.includes(hook)) {
-          detectedHooks.set(hook, namespace);
-        }
-      }
-
-      lines.forEach((line, idx) => {
-        // Skip false positive context patterns
-        if (falsePositiveContexts.some((pattern) => pattern.test(line))) {
-          return;
-        }
-
-        const patterns = [
-          /t\s*\(\s*'([^']+)'\s*\)/g,
-          /t\s*\(\s*"([^"]+)"\s*\)/g,
-          /t\s*\(\s*`([^`]+)`\s*\)/g,
-        ];
-
-        patterns.forEach((pattern) => {
-          const matches = [...line.matchAll(pattern)];
-          matches.forEach(([, key]) => {
-            if (
-              key &&
-              key.trim() &&
-              !key.includes("$") &&
-              key.trim() !== "." &&
-              !key.trim().startsWith(".") &&
-              !key.trim().endsWith(".")
-            ) {
-              const trimmedKey = key.trim();
-
-              // Skip suspicious keys
-              if (isSuspiciousKey(trimmedKey)) {
-                return;
-              }
-
-              let finalKey = trimmedKey;
-
-              // Check if this file uses feature hooks
-              // For each detected hook, if the key doesn't already have the hook's namespace,
-              // we can infer that the key should be prefixed with that namespace
-              const featureHooks = [...detectedHooks.entries()].filter(
-                ([, ns]) => ns !== null
-              );
-
-              // If exactly ONE feature hook is detected, apply its namespace if not already present
-              if (featureHooks.length === 1) {
-                const [, namespace] = featureHooks[0];
-                // Apply namespace prefix if key doesn't already start with it
-                if (!trimmedKey.startsWith(`${namespace}.`)) {
-                  finalKey = `${namespace}.${trimmedKey}`;
-                }
-              }
-
-              if (!usedKeysMap.has(finalKey)) {
-                usedKeysMap.set(finalKey, []);
-              }
-              usedKeysMap.get(finalKey).push({
-                file: file.replace(/\\/g, "/"),
-                line: idx + 1,
-              });
-            }
-          });
-        });
-      });
+      allSourceCode.push({ file, content });
     } catch {
       // Skip files that can't be read
     }
   });
+
+  // Check each key against all source code using pattern matching
+  for (const key of allKeys) {
+    const patterns = generateSearchPatterns(key);
+
+    // Check if any pattern exists in any file
+    for (const { file, content } of allSourceCode) {
+      let foundInFile = false;
+      const lines = content.split("\n");
+
+      // Check each pattern
+      for (const pattern of patterns) {
+        if (content.includes(pattern)) {
+          // Found! Now find which lines
+          lines.forEach((line, idx) => {
+            if (line.includes(pattern)) {
+              if (!usedKeysMap.has(key)) {
+                usedKeysMap.set(key, []);
+              }
+              usedKeysMap.get(key).push({
+                file: file.replace(/\\/g, "/"),
+                line: idx + 1,
+              });
+              foundInFile = true;
+            }
+          });
+
+          if (foundInFile) break; // Found in this file, move to next file
+        }
+      }
+
+      if (foundInFile) break; // Found usage, move to next key
+    }
+  }
+
   return usedKeysMap;
 }
 
 const allKeys = getAllKeys();
-const usedKeysMap = scanCodeWithLocations();
+const usedKeysMap = scanCodeWithLocations(allKeys);
 const usedKeys = new Set(usedKeysMap.keys());
 const missingKeys = [...usedKeys].filter((key) => !allKeys.has(key)).sort();
 const unusedKeys = [...allKeys].filter((key) => !usedKeys.has(key)).sort();

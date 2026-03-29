@@ -1,29 +1,21 @@
 {
   "listTabLabel": "List",
-  "createTabLabel": "Create",
-  "applicantsTabLabel": "Applicants",
   "list": {
     "pageTitle": "Job Management",
     "documentation": "Documentation",
-    "addJobButton": "Post New Job",
     "filterButton": "Filter",
     "groupByLabel": "Group by:",
     "groupByNone": "None",
     "groupByStatus": "Status",
-    "groupByCategory": "Category",
     "noResults": "No jobs found",
     "searchPlaceholder": "Search by title, company or location...",
     "clearAllFilters": "Clear all filters",
     "rowsPerPage": "Rows per page:",
     "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} jobs",
     "filters": {
-      "keyword": "Keyword",
       "keywordPlaceholder": "Job title or skill",
       "workingType": "Working Type",
       "allTypes": "All types",
-      "onsite": "Onsite",
-      "remote": "Remote",
-      "hybrid": "Hybrid",
       "rankLevel": "Rank Level",
       "allLevels": "All levels",
       "experience": "Experience",
@@ -34,7 +26,6 @@
       "clearAllFilters": "Clear all filters",
       "salaryVND": "Jobs list filters salary v n d"
     },
-    "flexible": "Flexible",
     "viewDetails": "View details →",
     "noJobsFound": "No jobs found with the selected filters.",
     "unableToLoad": "Unable to load jobs. Please try again later.",
@@ -43,7 +34,6 @@
     "pagination": "Page {{page}} of {{totalPages}} — {{totalElements}} jobs",
     "viewJobLabel": "View job {{title}}",
     "applyBefore": "Apply before {{deadline}}",
-    "contactForSalary": "Contact for salary",
     "hero": {
       "subtitle": "Opportunities for everyone",
       "title": "Explore curated jobs that match your strengths.",
@@ -51,13 +41,8 @@
     }
   },
   "filters": {
-    "filterJobs": "Filter Jobs",
     "filterStatus": "Status",
     "filterAllStatus": "All Status",
-    "filterCategory": "Category",
-    "filterAllCategories": "All Categories",
-    "filterLocation": "Location",
-    "filterAllLocations": "All Locations",
     "applyFilter": "Apply Filter",
     "resetFilter": "Reset"
   },
@@ -74,46 +59,26 @@
     "actions": "ACTIONS"
   },
   "actions": {
-    "viewDetails": "View Details",
-    "editJob": "Edit Job",
-    "publishJob": "Publish Job",
-    "closeJob": "Close Job",
-    "deleteJob": "Delete Job"
+    "viewDetails": "View Details"
   },
   "detail": {
-    "jobDetails": "Job Details",
     "jobDetailsSection": "Job details",
     "jobCodeLabel": "Job code:",
-    "jobTitle": "Job Title",
     "company": "Company",
     "companySection": "Company",
     "location": "Location",
-    "jobType": "Job Type",
-    "salaryRange": "Salary Range",
     "salary": "Salary",
     "salaryNegotiable": "Negotiable",
     "salaryOpen": "Open",
     "experience": "Experience Level",
-    "jobDescription": "Job Description",
     "responsibilities": "Responsibilities",
     "requirements": "Requirements",
     "benefits": "Benefits",
     "requiredSkills": "Required skills",
     "notAvailable": "Not available",
-    "postedDate": "Posted Date",
     "deadline": "Application Deadline",
     "status": "Status",
     "applicants": "Applicants",
-    "views": "Views",
-    "applications": "Applications",
-    "backToList": "Back to List",
-    "editJob": "Edit Job",
-    "saveChanges": "Save Changes",
-    "closeJob": "Close Job",
-    "repostJob": "Repost Job",
-    "deleteJob": "Delete Job",
-    "shareJob": "Share Job",
-    "viewApplicants": "View Applicants",
     "notFound": "Job not found",
     "unableToLoad": "Unable to load job detail. Please try again later.",
     "backToJobs": "Back to jobs",
@@ -229,45 +194,18 @@
     }
   },
   "types": {
-    "fullTime": "Full-Time",
-    "partTime": "Part-Time",
-    "contract": "Contract",
-    "temporary": "Temporary",
-    "remote": "Remote",
-    "freelance": "Freelance",
     "workingTypes": {
       "ONSITE": "On-site",
       "REMOTE": "Remote",
       "HYBRID": "Hybrid"
     }
   },
-  "experience": {
-    "entry": "Entry Level",
-    "mid": "Mid Level",
-    "senior": "Senior Level",
-    "lead": "Lead/Manager"
-  },
   "filterPresets": {
     "experienceOptions": {
-      "all": "All",
-      "notRequired": "Not required",
-      "under1Year": "Under 1 year",
-      "oneYear": "1 year",
-      "twoYears": "2 years",
-      "threeYears": "3 years",
-      "fourYears": "4 years",
-      "fiveYears": "5 years",
-      "over5Years": "Over 5 years"
+      "all": "All"
     },
     "salaryOptions": {
       "all": "All",
-      "below10M": "Below 10M",
-      "from10To15M": "10 - 15M",
-      "from15To20M": "15 - 20M",
-      "from20To25M": "20 - 25M",
-      "from25To30M": "25 - 30M",
-      "from30To50M": "30 - 50M",
-      "above50M": "Above 50M",
       "negotiable": "Negotiable"
     }
   },
@@ -278,16 +216,7 @@
     }
   },
   "messages": {
-    "noJobsFound": "No jobs found",
-    "jobPostedSuccess": "Job posted successfully",
     "jobCreatedSuccess": "Job created successfully",
-    "jobUpdatedSuccess": "Job updated successfully",
-    "jobDeletedSuccess": "Job deleted successfully",
-    "jobClosedSuccess": "Job closed successfully",
-    "errorPosting": "Failed to post job",
-    "errorUpdating": "Failed to update job",
-    "errorDeleting": "Failed to delete job",
-    "unableToLoadYourJobs": "Unable to load your jobs.",
     "closeJobConfirm": "Close this job?",
     "jobClosed": "Job closed.",
     "failedToCloseJob": "Failed to close job.",
@@ -359,12 +288,9 @@
     "candidates": "Candidates",
     "loadingApplicants": "Loading applicants...",
     "applicantPageInfo": "This page will list applicants for your jobs.",
-    "noApplicantsYet": "No applicants yet.",
-    "loadingError": "Failed to load applicants."
+    "noApplicantsYet": "No applicants yet."
   },
   "validation": {
-    "titleRequired": "Title cannot be empty",
-    "descriptionRequired": "Description cannot be empty",
     "quantityPositive": "Quantity must be greater than 0",
     "unableToLoadSkills": "Unable to load skills list. Please retry later.",
     "dateInFuture": "Deadline must be today or later",

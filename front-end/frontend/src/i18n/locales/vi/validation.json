@@ -1,7 +1,5 @@
 {
   "unableToLoadSkills": "Không thể tải kỹ năng",
-  "titleRequired": "Tiêu đề bắt buộc",
-  "descriptionRequired": "Mô tả bắt buộc",
   "quantityPositive": "Số lượng phải là số dương",
   "dateInFuture": "Ngày phải trong tương lai",
   "skillRequired": "Kỹ năng bắt buộc",

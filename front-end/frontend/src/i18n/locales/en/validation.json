@@ -1,7 +1,5 @@
 {
   "unableToLoadSkills": "Unable to load skills",
-  "titleRequired": "Title is required",
-  "descriptionRequired": "Description is required",
   "quantityPositive": "Quantity must be positive",
   "dateInFuture": "Date must be in the future",
   "skillRequired": "Skill is required",

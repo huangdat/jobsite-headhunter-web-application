@@ -1,20 +1,15 @@
 {
-  "welcome": "Chào mừng",
-  "loading": "Đang tải...",
   "error": "Lỗi",
   "success": "Thành công",
   "cancel": "Hủy",
-  "save": "Lưu",
   "delete": "Xóa",
-  "edit": "Chỉnh sửa",
   "dismiss": "Đóng",
-  "currentUserName": "Alex Nguyen",
   "id_token": "id_token",
   "breadcrumb": {
     "home": "Trang chủ"
   },
   "common": {
-    "loading": "Đang tải...",
+    "loading": "Common Đang tải...",
     "adminUserTitle": "Quản trị viên",
     "appVersion": "Phiên bản 2.4.0",
     "permanentDelete": "Xóa vĩnh viễn",
@@ -30,9 +25,9 @@
     },
     "enterDetailsDescription": "Nhập mô tả chi tiết",
     "failedToFetchUsers": "Common failed to fetch Người dùngs",
-    "loading": "Common Đang tải...",
     "tryAgain": "Common Thử lại",
-    "noDataAvailable": "Common Không có dữ liệu available"
+    "noDataAvailable": "Common Không có dữ liệu available",
+    "unknownError": "Đã xảy ra lỗi không xác định"
   },
   "messages": {
     "signedInSuccess": "Đã đăng nhập thành công.",
@@ -40,17 +35,9 @@
     "failedToSaveProfile": "Không thể lưu hồ sơ",
     "failedToRequestPayout": "Không thể yêu cầu thanh toán",
     "failedToLoadProfile": "Không thể tải hồ sơ",
-    "failedToCreateJob": "Không thể tạo công việc. Vui lòng kiểm tra biểu mẫu và thử lại.",
-    "failedToUpdateJob": "Không thể cập nhật công việc.",
-    "jobUpdatedSuccessfully": "Công việc đã được cập nhật thành công.",
     "failedToLockUser": "Không thể khóa người dùng",
     "failedToUnlockUser": "Không thể mở khóa người dùng",
     "failedToLoadUsers": "Không thể tải danh sách người dùng",
-    "networkError": "LỖI MẠNG",
-    "unknownError": "Đã xảy ra lỗi không xác định",
-    "anErrorOccurred": "Đã xảy ra lỗi",
-    "noResponseFromServer": "Không có phản hồi từ máy chủ",
-    "editorFailedToLoad": "Trình chỉnh sửa không thể tải.",
     "noPermissionAccess": "Bạn không có quyền truy cập tính năng phân loại.",
     "sessionExpiredLoginAgain": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.",
     "myJobs": "Công việc của tôi"

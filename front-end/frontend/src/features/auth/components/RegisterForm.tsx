@@ -371,7 +371,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <HiOutlineArrowLeft />
-                  {t("auth.buttons.previous")}
+                  {t("buttons.previous")}
                 </Button>
               )}
 
@@ -384,7 +384,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   disabled={isNextButtonDisabled}
                   className="flex-1 flex justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {t("auth.buttons.next")}
+                  {t("buttons.next")}
                   <HiOutlineArrowRight />
                 </Button>
               ) : (
@@ -396,8 +396,8 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   className="flex-1 flex justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting
-                    ? t("auth.buttons.sendingOtp")
-                    : t("auth.buttons.createAccount")}
+                    ? t("buttons.sendingOtp")
+                    : t("buttons.createAccount")}
                   <HiOutlineArrowRight />
                 </Button>
               )}

@@ -136,7 +136,7 @@ export function JobCreatePage() {
           postImage: undefined,
           rankLevel: "JUNIOR",
           workingType: "ONSITE",
-          location: t("auth.defaults.location"),
+          location: t("defaults.location"),
           experience: 1,
           salaryMin: 15000000,
           salaryMax: 30000000,
@@ -144,7 +144,7 @@ export function JobCreatePage() {
           currency: "VND",
           quantity: 1,
           deadline: "",
-          workingTime: t("auth.defaults.workingTime"),
+          workingTime: t("defaults.workingTime"),
         });
         setTimeout(() => {
           navigate("/headhunter/jobs");

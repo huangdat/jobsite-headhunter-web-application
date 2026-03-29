@@ -1,20 +1,15 @@
 {
-  "welcome": "Welcome",
-  "loading": "Loading...",
   "error": "Error",
   "success": "Success",
   "cancel": "Cancel",
-  "save": "Save",
   "delete": "Delete",
-  "edit": "Edit",
   "dismiss": "Dismiss",
-  "currentUserName": "Alex Nguyen",
   "id_token": "id_token",
   "breadcrumb": {
     "home": "Home"
   },
   "common": {
-    "loading": "Loading...",
+    "loading": "Common loading",
     "adminUserTitle": "Admin User",
     "appVersion": "v2.4.0 Release",
     "permanentDelete": "Permanent Delete",
@@ -30,9 +25,9 @@
     },
     "enterDetailsDescription": "Common enter details description",
     "failedToFetchUsers": "Common failed to fetch users",
-    "loading": "Common loading",
     "tryAgain": "Common try again",
-    "noDataAvailable": "Common no data available"
+    "noDataAvailable": "Common no data available",
+    "unknownError": "Unknown error occurred"
   },
   "messages": {
     "signedInSuccess": "Signed in successfully.",
@@ -40,17 +35,9 @@
     "failedToSaveProfile": "Failed to save profile",
     "failedToRequestPayout": "Failed to request payout",
     "failedToLoadProfile": "Failed to load profile",
-    "failedToCreateJob": "Failed to create job. Please check the form and try again.",
-    "failedToUpdateJob": "Failed to update job.",
-    "jobUpdatedSuccessfully": "Job updated successfully.",
     "failedToLockUser": "Failed to lock user",
     "failedToUnlockUser": "Failed to unlock user",
     "failedToLoadUsers": "Failed to load users",
-    "networkError": "NETWORK ERROR",
-    "unknownError": "Unknown error occurred",
-    "anErrorOccurred": "An error occurred",
-    "noResponseFromServer": "No response from server",
-    "editorFailedToLoad": "Editor failed to load.",
     "noPermissionAccess": "You do not have permission to access the classification feature.",
     "sessionExpiredLoginAgain": "Your session has expired. Please login again.",
     "myJobs": "My jobs"

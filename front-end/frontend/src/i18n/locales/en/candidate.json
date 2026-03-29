@@ -26,8 +26,7 @@
       "tipTwo": "Keep salary expectations market-aligned.",
       "tipThree": "Complete CV and portfolio links in next step.",
       "insightEyebrow": "Data Insight",
-      "insightBody": "Profiles with complete professional identity details receive significantly more recruiter interactions.",
-      "insightAlt": "Profile data insight"
+      "insightBody": "Profiles with complete professional identity details receive significantly more recruiter interactions."
     },
     "form": {
       "sectionTitle": "Professional Identity",
@@ -91,7 +90,6 @@
         "activeResumes": "Active Resumes",
         "filesUsed": "{{current}} of {{total}} files used",
         "addAnother": "Add another version",
-        "addAnotherDesc": "Drop your PDF here or click to browse files",
         "browseFiles": "Browse Files"
       },
       "error": {
@@ -109,19 +107,7 @@
         "uploadedLabel": "Uploaded"
       },
       "profileStrength": {
-        "title": "PROFILE STRENGTH",
-        "percentage": "{{percent}}%",
-        "items": {
-          "contactVerified": "Contact information verified",
-          "summaryComplete": "Executive summary complete",
-          "cvUploaded": "Executive CV Uploaded",
-          "cvUploadedBonus": "(+12%)",
-          "referencesNeeded": "Add 3 Professional References",
-          "referencesBonus": "(+5%)",
-          "linkedinVerify": "Verify Identity with LinkedIn",
-          "linkedinBonus": "(+7%)",
-          "basicCompleted": "Basic Info Completed"
-        }
+        "title": "PROFILE STRENGTH"
       },
       "tips": {
         "title": "CV Optimization Tips",
@@ -135,10 +121,7 @@
         "uploadPlaceholder": "Drag and drop your professional CV here or click to browse files from your computer.",
         "profileStrengthHint": "Complete remaining items to improve your profile visibility.",
         "auditGuide": "Personalized guidance from industry experts",
-        "reviewGuide": "1:1 consultation with professional headhunters",
-        "visibilityPrivate": "Private",
-        "visibilityAllRecruiters": "All Recruiters",
-        "visibilityVerifiedOnly": "Verified Recruiters Only"
+        "reviewGuide": "1:1 consultation with professional headhunters"
       },
       "bestPractices": {
         "title": "CV BEST PRACTICES",
@@ -169,10 +152,6 @@
         "invalidFileFormat": "File format not supported. Please use PDF, DOC, DOCX, or RTF.",
         "fileTooLargeShort": "Too large",
         "invalidFileFormatShort": "Invalid format",
-        "uploadFailed": "Failed to upload file.",
-        "downloadFailed": "Failed to download file.",
-        "deleteFailed": "Failed to delete file.",
-        "updateFailed": "Failed to update settings.",
         "maxFilesReached": "You've reached the maximum number of resumes",
         "deleteExistingToUpload": "Delete an existing one to upload a new version.",
         "retry": "Retry",
@@ -181,13 +160,6 @@
       },
       "upload": {
         "selectFile": "Select CV file"
-      },
-      "messages": {
-        "uploadSuccess": "Resume uploaded successfully!",
-        "uploadError": "An error occurred during upload.",
-        "deleteConfirm": "Are you sure you want to delete this resume?",
-        "deleteSuccess": "Resume deleted successfully.",
-        "updateSuccess": "Settings updated successfully."
       }
     }
   },
