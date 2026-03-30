@@ -1,4 +1,5 @@
 package com.rikkeisoft.backend.model.entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rikkeisoft.backend.enums.Currency;
 import com.rikkeisoft.backend.enums.JobStatus;
@@ -38,7 +39,7 @@ public class Job {
 
     @Column(columnDefinition = "TEXT")
     String description;
-        
+
     @Column(columnDefinition = "TEXT")
     String responsibilities;
 
@@ -55,11 +56,11 @@ public class Job {
     @Column(name = "rank_level")
     RankLevel rankLevel;
 
-    @Enumerated(EnumType.STRING) //ONSITE, REMOTE, HYBRID
+    @Enumerated(EnumType.STRING) // ONSITE, REMOTE, HYBRID
     @Column(name = "working_type")
     WorkingType workingType;
 
-    String location; //Ho Chi Minh city, Can Tho city
+    String location; // Ho Chi Minh city, Can Tho city
 
     @Column(name = "address_detail")
     String addressDetail; // detailed address

@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Map;
 import java.util.Set;
 
 @Slf4j
@@ -42,21 +43,58 @@ public class ForumPostServiceImpl implements ForumPostService {
     ForumPostMapper forumPostMapper;
     PostReactionRepo postReactionRepo;
 
+    /**
+     * Valid status transitions:
+     * - ADMIN: can set any status freely
+     * - HEADHUNTER (own post only): DRAFT → PUBLISHED, PUBLISHED → ARCHIVED
+     * (HEADHUNTER cannot revert PUBLISHED → DRAFT or ARCHIVED → *)
+     */
+    private static final Map<PostStatus, Set<PostStatus>> HEADHUNTER_ALLOWED_TRANSITIONS = Map.of(
+            PostStatus.DRAFT, Set.of(PostStatus.PUBLISHED),
+            PostStatus.PUBLISHED, Set.of(PostStatus.ARCHIVED),
+            PostStatus.ARCHIVED, Set.of());
+
     @Override
     @Transactional
     public ForumPostResp updateStatus(Long postId, PostStatus newStatus) {
         ForumPost post = findPostById(postId);
         Account currentAccount = getCurrentAccount();
 
-        validatePermission(currentAccount, post);
-
+        Set<String> roles = currentAccount.getRoles();
+        boolean isAdmin = roles.contains(Role.ADMIN.name());
+        boolean isHeadhunter = roles.contains(Role.HEADHUNTER.name());
+        boolean isPostOwner = post.getAuthor().getId().equals(currentAccount.getId());
+        if (!isAdmin && (!isHeadhunter || !isPostOwner)) {
+            throw new AppException(ErrorCode.FORBIDDEN);
+        }
         if (post.getStatus() == newStatus) {
             return forumPostMapper.toForumPostResp(post);
+        }
+        if (!isAdmin) {
+            Set<PostStatus> allowed = HEADHUNTER_ALLOWED_TRANSITIONS.getOrDefault(post.getStatus(), Set.of());
+            if (!allowed.contains(newStatus)) {
+                throw new AppException(ErrorCode.INVALID_POST_STATUS);
+            }
         }
 
         post.setStatus(newStatus);
         forumPostRepo.save(post);
         return forumPostMapper.toForumPostResp(post);
+    }
+
+    @Override
+    @Transactional
+    public void deletePost(Long postId) {
+        ForumPost post = findPostById(postId);
+        Account currentAccount = getCurrentAccount();
+        if (!currentAccount.getRoles().contains(Role.ADMIN.name())) {
+            throw new AppException(ErrorCode.FORBIDDEN);
+        }
+        if (post.getDeletedAt() != null) {
+            throw new AppException(ErrorCode.POST_ALREADY_DELETED);
+        }
+        post.setDeletedAt(java.time.LocalDateTime.now());
+        forumPostRepo.save(post);
     }
 
     private ForumPost findPostById(Long postId) {
@@ -84,6 +122,6 @@ public class ForumPostServiceImpl implements ForumPostService {
         }
     }
 
-   
+
 
 }

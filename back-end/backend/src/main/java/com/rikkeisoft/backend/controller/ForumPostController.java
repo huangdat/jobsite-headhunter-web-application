@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@RequestMapping("/api/forum-posts")
+@RequestMapping("/api/forum/posts")
 public class ForumPostController {
 
     ForumPostService forumPostService;
 
-    @PutMapping("/{id}/status")
+    @PatchMapping("/{id}/status")
     public APIResponse<ForumPostResp> updateStatus(
             @PathVariable Long id,
             @Valid @RequestBody ForumPostUpdateStatusReq req) {
@@ -30,6 +30,15 @@ public class ForumPostController {
                 .status(HttpStatus.OK)
                 .message("Post status updated successfully")
                 .result(result)
+                .build();
+    }
+
+    @DeleteMapping("/{id}")
+    public APIResponse<Void> deletePost(@PathVariable Long id) {
+        forumPostService.deletePost(id);
+        return APIResponse.<Void>builder()
+                .status(HttpStatus.OK)
+                .message("Post deleted successfully")
                 .build();
     }
 }
