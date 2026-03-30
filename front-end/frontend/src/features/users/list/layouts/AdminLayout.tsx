@@ -78,7 +78,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                   ? "bg-green-500 text-white"
                   : "text-slate-400 hover:bg-white/5 hover:text-white"
               }`}
-              title={feature.description}
+              title={feature.description ? t(feature.description) : undefined}
             >
               <span className="material-symbols-outlined">{feature.icon}</span>
               <span className="font-medium text-sm">{t(feature.labelKey)}</span>

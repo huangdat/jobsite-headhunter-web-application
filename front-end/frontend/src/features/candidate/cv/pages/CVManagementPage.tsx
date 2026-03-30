@@ -45,7 +45,7 @@ export const CVManagementPage: React.FC = () => {
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-on-surface-variant uppercase mb-3">
             <a href="/profile" className="hover:text-primary transition-colors">
-              {t("candidate.profile.page.eyebrow")}
+              {t("profile.page.eyebrow")}
             </a>
             <span className="material-symbols-outlined text-[12px]">
               chevron_right
@@ -200,3 +200,4 @@ export const CVManagementPage: React.FC = () => {
 };
 
 export default CVManagementPage;
+

@@ -5,16 +5,16 @@ export default {
       2,
       "always",
       [
-        "feat",      // ✨ A new feature
-        "fix",       // 🐛 A bug fix
-        "docs",      // 📖 Documentation only changes
-        "style",     // 💄 Changes that don't affect code meaning
-        "refactor",  // ♻️ A code change that neither fixes a bug nor adds a feature
-        "perf",      // ⚡ A code change that improves performance
-        "test",      // ✅ Adding missing tests or correcting existing tests
-        "chore",     // 🔧 Changes to the build process or dependencies
-        "ci",        // 👷 Changes to our CI configuration files and scripts
-        "revert",    // ⏮️ Reverts a previous commit
+        "feat", // ✨ A new feature
+        "fix", // 🐛 A bug fix
+        "docs", // 📖 Documentation only changes
+        "style", // 💄 Changes that don't affect code meaning
+        "refactor", // ♻️ A code change that neither fixes a bug nor adds a feature
+        "perf", // ⚡ A code change that improves performance
+        "test", // ✅ Adding missing tests or correcting existing tests
+        "chore", // 🔧 Changes to the build process or dependencies
+        "ci", // 👷 Changes to our CI configuration files and scripts
+        "revert", // ⏮️ Reverts a previous commit
       ],
     ],
     "type-case": [2, "always", "lower-case"],

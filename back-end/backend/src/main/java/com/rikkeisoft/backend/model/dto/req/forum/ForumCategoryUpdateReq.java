@@ -32,6 +32,6 @@ public class ForumCategoryUpdateReq {
      * The updated description for the category.
      * May be {@code null} or empty if no description is desired. Maximum 500 characters.
      */
-    @Size(max = 500, message = "CATEGORY_DESCRIPTION_SIZE")
+    @Size(max = 500, message = "CATEGORY_DESCRIPTION_SIZE_CONSTRAINT")
     String description;
 }

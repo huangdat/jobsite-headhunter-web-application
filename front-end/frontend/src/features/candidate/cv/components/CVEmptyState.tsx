@@ -62,20 +62,18 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
           </div>
 
           <p className="text-sm text-slate-600 leading-relaxed">
-            Take full command of your visibility. Choose who can view your
-            credentials: keep them private, open to all verified recruiters, or
-            only visible to targeted executive firms.
+            {t("tips.privacyTip1")}
           </p>
 
           <ul className="space-y-2 text-xs text-slate-600">
-            <li className="flex gap-2">
-              <span className="text-emerald-600 shrink-0">→</span>
-              <span>You can set specific companies to "Block List"</span>
-            </li>
-            <li className="flex gap-2">
-              <span className="text-emerald-600 shrink-0">→</span>
-              <span>Control exactly what personal data is shared</span>
-            </li>
+            {([] as string[])?.map(
+              (item: string, index: number) => (
+                <li key={index} className="flex gap-2">
+                  <span className="text-emerald-600 shrink-0">→</span>
+                  <span>{item}</span>
+                </li>
+              )
+            )}
           </ul>
         </div>
 
@@ -93,18 +91,11 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
           <ul className="space-y-2 text-xs text-slate-600">
             <li className="flex gap-2">
               <span className="text-emerald-600 font-bold shrink-0">•</span>
-              <span>
-                Optimize your impact. Use clean, professional formatting and
-                ensure your executive summary highlights measurable ROI to stand
-                out to global search partners.
-              </span>
+              <span>{t("tips.privacyTip2")}</span>
             </li>
             <li className="flex gap-2">
               <span className="text-emerald-600 font-bold shrink-0">•</span>
-              <span>
-                Focus on the last 10 years of your career path, emphasizing your
-                leadership impact and strategic accomplishments.
-              </span>
+              <span>{t("tips.privacyTip3")}</span>
             </li>
           </ul>
         </div>
@@ -114,4 +105,5 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 };
 
 export default CVEmptyState;
+
 

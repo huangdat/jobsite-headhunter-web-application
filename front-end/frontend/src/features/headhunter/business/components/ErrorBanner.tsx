@@ -5,7 +5,8 @@
 
 import React, { useEffect } from "react";
 import { AlertCircle, X } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 export interface ErrorBannerProps {
   message?: string;
@@ -33,7 +34,8 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
   autoHideDuration = 0, // No auto-hide for errors by default
   action,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
+  const { t: tApp } = useAppTranslation();
   const [visible, setVisible] = React.useState(true);
 
   // Auto-hide if duration set
@@ -91,7 +93,7 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
         <button
           onClick={handleDismiss}
           className="shrink-0 text-red-400 hover:text-red-600 transition-colors"
-          aria-label={t("common.dismiss", "Dismiss")}
+          aria-label={tApp("dismiss")}
         >
           <X className="h-5 w-5" />
         </button>

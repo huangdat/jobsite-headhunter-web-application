@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { cn } from '@/lib/utils';
+import { useMemo, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface SkillOption {
   id: number;
@@ -25,10 +25,13 @@ export function SkillMultiSelect({
   const skillsByCategory = useMemo(() => {
     const grouped: Record<string, SkillOption[]> = {};
     skills.forEach((skill) => {
-      const key = skill.category ?? 'GENERAL';
+      const key = skill.category ?? "GENERAL";
+      // eslint-disable-next-line security/detect-object-injection
       if (!grouped[key]) {
+        // eslint-disable-next-line security/detect-object-injection
         grouped[key] = [];
       }
+      // eslint-disable-next-line security/detect-object-injection
       grouped[key].push(skill);
     });
     return grouped;
@@ -45,7 +48,7 @@ export function SkillMultiSelect({
   const selectedSkillNames = skills
     .filter((skill) => selectedIds.includes(skill.id))
     .map((skill) => skill.name)
-    .join(', ');
+    .join(", ");
 
   return (
     <div className="relative w-full">
@@ -54,14 +57,16 @@ export function SkillMultiSelect({
         onClick={() => setIsOpen(!isOpen)}
         disabled={disabled}
         className={cn(
-          'w-full rounded-xl border border-input bg-white px-3 py-2 text-sm text-left shadow-inner',
-          'focus-visible:border-emerald-500 focus-visible:ring-4 focus-visible:ring-emerald-100',
-          'dark:bg-slate-900',
-          disabled && 'opacity-50 cursor-not-allowed'
+          "w-full rounded-xl border border-input bg-white px-3 py-2 text-sm text-left shadow-inner",
+          "focus-visible:border-emerald-500 focus-visible:ring-4 focus-visible:ring-emerald-100",
+          "dark:bg-slate-900",
+          disabled && "opacity-50 cursor-not-allowed"
         )}
       >
         {selectedSkillNames ? (
-          <span className="text-slate-700 dark:text-slate-300">{selectedSkillNames}</span>
+          <span className="text-slate-700 dark:text-slate-300">
+            {selectedSkillNames}
+          </span>
         ) : (
           <span className="text-slate-400">Select skills...</span>
         )}
@@ -78,8 +83,9 @@ export function SkillMultiSelect({
                 <label
                   key={skill.id}
                   className={cn(
-                    'flex items-center gap-2 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer',
-                    selectedIds.includes(skill.id) && 'bg-emerald-50 dark:bg-slate-600'
+                    "flex items-center gap-2 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer",
+                    selectedIds.includes(skill.id) &&
+                      "bg-emerald-50 dark:bg-slate-600"
                   )}
                 >
                   <input

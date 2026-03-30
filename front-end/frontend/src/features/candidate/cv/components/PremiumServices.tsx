@@ -59,7 +59,7 @@ export const PremiumServices: React.FC<PremiumServicesProps> = ({
 
         {/* Footer */}
         <p className="text-xs opacity-75 text-center mt-4">
-          Personalized guidance from industry experts
+          {t("tips.auditGuide")}
         </p>
       </div>
     );
@@ -94,7 +94,7 @@ export const PremiumServices: React.FC<PremiumServicesProps> = ({
 
       {/* Footer */}
       <p className="text-xs opacity-75 text-center mt-4">
-        1:1 consultation with professional headhunters
+        {t("tips.reviewGuide")}
       </p>
     </div>
   );

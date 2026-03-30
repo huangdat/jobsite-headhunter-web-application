@@ -14,7 +14,6 @@ import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { toast } from "sonner";
 import type { OtpSendResp } from "@/features/auth/types";
-import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 import { MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsShieldLock } from "react-icons/bs";
@@ -109,18 +108,13 @@ export function ResetPasswordPage() {
       toast.success(tAuth("messages.passwordResetSuccess"));
 
       navigate("/login");
-    } catch (error: unknown) {
-      const errorMessage = extractApiErrorMessage(
-        error,
-        tAuth("messages.failedToResetPassword")
-      );
-
-      toast.error(errorMessage);
+    } catch {
+      toast.error(tAuth("messages.failedToResetPassword"));
     }
   };
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: tAuth("auth.pages.login") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: tAuth("pages.login") }}>
       <main className="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-0">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}

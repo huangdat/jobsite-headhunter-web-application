@@ -4,7 +4,12 @@
  */
 
 import { useState, useCallback, useEffect } from "react";
-import type { CommissionProfile, CommissionFormData, CommissionStats } from "../types/commission.types";
+import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
+import type {
+  CommissionProfile,
+  CommissionFormData,
+  CommissionStats,
+} from "../types/commission.types";
 import { commissionApi } from "../services/commissionApi";
 
 interface CommissionManagementState {
@@ -18,6 +23,7 @@ interface CommissionManagementState {
 }
 
 export function useCommissionManagement() {
+  const { t } = useCommissionTranslation();
   const [state, setState] = useState<CommissionManagementState>({
     profile: null,
     stats: null,
@@ -58,14 +64,15 @@ export function useCommissionManagement() {
       } catch (err) {
         setState((prev) => ({
           ...prev,
-          error: err instanceof Error ? err.message : "Failed to load commission data",
+          error:
+            err instanceof Error ? err.message : t("failedToLoadCommission"),
           loading: false,
         }));
       }
     };
 
     fetchData();
-  }, []);
+  }, [t]);
 
   // Update form field
   const updateField = useCallback(
@@ -88,7 +95,9 @@ export function useCommissionManagement() {
     try {
       setState((prev) => ({ ...prev, saving: true, error: null }));
 
-      const updated = await commissionApi.updateCommissionProfile(state.formData);
+      const updated = await commissionApi.updateCommissionProfile(
+        state.formData
+      );
 
       setState((prev) => ({
         ...prev,
@@ -104,11 +113,11 @@ export function useCommissionManagement() {
     } catch (err) {
       setState((prev) => ({
         ...prev,
-        error: err instanceof Error ? err.message : "Failed to save profile",
+        error: err instanceof Error ? err.message : t("failedToSaveProfile"),
         saving: false,
       }));
     }
-  }, [state.formData]);
+  }, [state.formData, t]);
 
   // Clear error
   const clearError = useCallback(() => {
@@ -137,13 +146,16 @@ export function useCommissionManagement() {
       } catch (err) {
         setState((prev) => ({
           ...prev,
-          error: err instanceof Error ? err.message : "Failed to request payout",
+          error:
+            err instanceof Error
+              ? err.message
+              : t("messages.failedToRequestPayout"),
           saving: false,
         }));
         throw err;
       }
     },
-    []
+    [t]
   );
 
   return {

@@ -45,7 +45,15 @@ export const SALARY_PRESETS: ReadonlyArray<SalaryPreset> = [
   { label: "Negotiable", value: "NEGOTIABLE", negotiable: true },
 ];
 
-export const RANK_LEVELS = ["INTERN", "FRESHER", "JUNIOR", "MIDDLE", "SENIOR", "LEADER", "MANAGER"] as const;
+export const RANK_LEVELS = [
+  "INTERN",
+  "FRESHER",
+  "JUNIOR",
+  "MIDDLE",
+  "SENIOR",
+  "LEADER",
+  "MANAGER",
+] as const;
 
 export const WORKING_TYPES = ["ONSITE", "REMOTE", "HYBRID"] as const;
 

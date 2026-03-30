@@ -3,9 +3,9 @@
  * Displays CV optimization tips and recommendations
  */
 
-import React from 'react';
-import { useCandidateTranslation } from '@/shared/hooks';
-import type { CVOptimizationTipsProps, OptimizationTip } from '../types';
+import React from "react";
+import { useCandidateTranslation } from "@/shared/hooks";
+import type { CVOptimizationTipsProps, OptimizationTip } from "../types";
 
 export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
   tips,
@@ -16,16 +16,16 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
   // Default tips if not provided
   const defaultTips: OptimizationTip[] = [
     {
-      id: 'add-keywords',
-      title: 'cv.management.tips.addKeywords',
-      description: 'cv.management.tips.addKeywordsDesc',
-      icon: 'label',
+      id: "add-keywords",
+      title: "cv.management.tips.addKeywords",
+      description: "cv.management.tips.addKeywordsDesc",
+      icon: "label",
     },
     {
-      id: 'tailor-roles',
-      title: 'cv.management.tips.tailorRoles',
-      description: 'cv.management.tips.tailorRolesDesc',
-      icon: 'target',
+      id: "tailor-roles",
+      title: "cv.management.tips.tailorRoles",
+      description: "cv.management.tips.tailorRolesDesc",
+      icon: "target",
     },
   ];
 
@@ -56,7 +56,7 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
           lightbulb
         </span>
         <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
-          {t('cv.management.tips.title')}
+          {t("cv.management.tips.title")}
         </h3>
       </div>
 
@@ -105,7 +105,7 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
       {displayTips.length > 0 && (
         <div className="pt-4 border-t border-surface-variant">
           <p className="text-xs text-slate-600 text-center">
-            Implement these tips to improve your CV match rate
+            {t("tips.optimizationTitle")}
           </p>
         </div>
       )}

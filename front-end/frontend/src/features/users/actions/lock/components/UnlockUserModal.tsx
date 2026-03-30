@@ -8,7 +8,9 @@ import {
   Mail,
   KeyRound,
 } from "lucide-react";
+
 import { useUsersTranslation } from "@/shared/hooks";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 export interface UnlockUserModalProps {
   isOpen: boolean;
@@ -43,6 +45,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
   onConfirm,
 }) => {
   const { t } = useUsersTranslation();
+  const { t: tCommon } = useAppTranslation();
   const [step, setStep] = useState<ModalStep>("form");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<UnlockResult | null>(null);
@@ -70,7 +73,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
       setStep("success");
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
+        error instanceof Error ? error.message : tCommon("common.unknownError");
 
       setResult({
         type: "error",
@@ -289,7 +292,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 disabled={loading}
                 className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition font-medium"
               >
-                {t("unlock.back")}
+                {t("buttons.back")}
               </button>
               <button
                 onClick={handleConfirmUnlock}
@@ -362,3 +365,4 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
 };
 
 export default UnlockUserModal;
+

@@ -81,11 +81,11 @@ export const useLogin = () => {
         return;
       }
 
-      throw new Error("Authentication failed.");
+      throw new Error(t("auth.messages.authenticationFailed"));
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Unable to sign in right now. Please try again."
+        t("auth.messages.unableToSignInRightNow")
       );
       let errorField: "email" | "password" | "general" = "general";
 
@@ -147,6 +147,7 @@ export const useLogin = () => {
     (field: keyof LoginFormData) => (value: string | boolean) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
+      // eslint-disable-next-line security/detect-object-injection
       if (field !== "rememberMe" && errors[field]) {
         setErrors((prev) => ({ ...prev, [field]: undefined }));
       }

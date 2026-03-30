@@ -337,36 +337,6 @@ INSERT INTO `commission` VALUES (1,2,'55555555-5555-5555-5555-555555555555',1500
 UNLOCK TABLES;
 
 --
--- Table structure for table `forum_category`
---
-
-DROP TABLE IF EXISTS `forum_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `forum_category` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `active` bit(1) NOT NULL,
-  `created_at` datetime(6) DEFAULT NULL,
-  `description` text,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `soft_deleted` bit(1) NOT NULL,
-  `updated_at` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK39vv5xmlh2hqdlh3g2ujja3od` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `forum_category`
---
-
-LOCK TABLES `forum_category` WRITE;
-/*!40000 ALTER TABLE `forum_category` DISABLE KEYS */;
-/*!40000 ALTER TABLE `forum_category` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `forum_comment`
 --
 
@@ -417,11 +387,12 @@ CREATE TABLE `forum_post` (
   `content` text,
   `status` enum('DRAFT','PUBLISHED','ARCHIVED') DEFAULT 'DRAFT',
   `created_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_post_author` (`author_account_id`),
   KEY `forum_post_job_id_fk` (`job_id`),
+  KEY `forum_post_forum_category_id_fk` (`forum_category_id`),
   CONSTRAINT `fk_post_author` FOREIGN KEY (`author_account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `forum_post_forum_category_id_fk` FOREIGN KEY (`forum_category_id`) REFERENCES `forum_category` (`id`),
   CONSTRAINT `forum_post_job_id_fk` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -432,7 +403,7 @@ CREATE TABLE `forum_post` (
 
 LOCK TABLES `forum_post` WRITE;
 /*!40000 ALTER TABLE `forum_post` DISABLE KEYS */;
-INSERT INTO `forum_post` VALUES (1,'22222222-2222-2222-2222-222222222222',1,'Looking for Backend Developers','Great opportunity for Java devs','PUBLISHED','2026-03-15 07:21:42',NULL),(2,'33333333-3333-3333-3333-333333333333',2,'ReactJS Hiring','Hiring ReactJS developers','PUBLISHED','2026-03-15 07:21:42',NULL),(3,'99100000-203f-11f1-95b5-0242ac110002',3,'FPT Hiring Java Backend Dev','Join FPT Software backend team','PUBLISHED','2026-03-15 17:16:31',NULL),(4,'99100001-203f-11f1-95b5-0242ac110002',4,'Tiki Hiring React Dev','Work on large e-commerce system','PUBLISHED','2026-03-15 17:16:31',NULL),(5,'99100002-203f-11f1-95b5-0242ac110002',5,'VNG Backend Position','Build backend for gaming platform','PUBLISHED','2026-03-15 17:16:31',NULL),(6,'99100003-203f-11f1-95b5-0242ac110002',6,'VNPT DevOps Job','Manage infrastructure systems','PUBLISHED','2026-03-15 17:16:31',NULL),(7,'99100004-203f-11f1-95b5-0242ac110002',7,'Viettel AI Recruitment','Join AI research team','PUBLISHED','2026-03-15 17:16:31',NULL),(8,'99100000-203f-11f1-95b5-0242ac110002',8,'Java Backend Developer','Great opportunity for Java devs','PUBLISHED','2026-03-15 17:16:31',NULL),(9,'99100001-203f-11f1-95b5-0242ac110002',9,'React Frontend Developer','Hiring ReactJS developers','PUBLISHED','2026-03-15 17:16:31',NULL),(10,'99100002-203f-11f1-95b5-0242ac110002',10,'Game Backend Engineer','Join FPT Software backend team','PUBLISHED','2026-03-15 17:16:31',NULL),(11,'99100003-203f-11f1-95b5-0242ac110002',11,'DevOps Engineer','Work on large e-commerce system','PUBLISHED','2026-03-15 17:16:31',NULL),(12,'99100004-203f-11f1-95b5-0242ac110002',12,'AI Engineer','Build backend for gaming platform','PUBLISHED','2026-03-15 17:16:31',NULL);
+INSERT INTO `forum_post` VALUES (1,'22222222-2222-2222-2222-222222222222',1,'Looking for Backend Developers','Great opportunity for Java devs','VISIBLE','2026-03-15 07:21:42'),(2,'33333333-3333-3333-3333-333333333333',2,'ReactJS Hiring','Hiring ReactJS developers','VISIBLE','2026-03-15 07:21:42'),(3,'99100000-203f-11f1-95b5-0242ac110002',3,'FPT Hiring Java Backend Dev','Join FPT Software backend team','VISIBLE','2026-03-15 17:16:31'),(4,'99100001-203f-11f1-95b5-0242ac110002',4,'Tiki Hiring React Dev','Work on large e-commerce system','VISIBLE','2026-03-15 17:16:31'),(5,'99100002-203f-11f1-95b5-0242ac110002',5,'VNG Backend Position','Build backend for gaming platform','VISIBLE','2026-03-15 17:16:31'),(6,'99100003-203f-11f1-95b5-0242ac110002',6,'VNPT DevOps Job','Manage infrastructure systems','VISIBLE','2026-03-15 17:16:31'),(7,'99100004-203f-11f1-95b5-0242ac110002',7,'Viettel AI Recruitment','Join AI research team','VISIBLE','2026-03-15 17:16:31'),(8,'99100000-203f-11f1-95b5-0242ac110002',8,'Java Backend Developer','Great opportunity for Java devs','VISIBLE','2026-03-15 17:16:31'),(9,'99100001-203f-11f1-95b5-0242ac110002',9,'React Frontend Developer','Hiring ReactJS developers','VISIBLE','2026-03-15 17:16:31'),(10,'99100002-203f-11f1-95b5-0242ac110002',10,'Game Backend Engineer','Join FPT Software backend team','VISIBLE','2026-03-15 17:16:31'),(11,'99100003-203f-11f1-95b5-0242ac110002',11,'DevOps Engineer','Work on large e-commerce system','VISIBLE','2026-03-15 17:16:31'),(12,'99100004-203f-11f1-95b5-0242ac110002',12,'AI Engineer','Build backend for gaming platform','VISIBLE','2026-03-15 17:16:31');
 /*!40000 ALTER TABLE `forum_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -708,4 +679,5 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-26 17:24:40
+-- Dump completed on 2026-03-16  0:42:00
+-- Dump completed on 2026-03-19 13:53:48

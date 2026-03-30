@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
-// ErrorBoundary not used here
+import { useJobsTranslation } from "@/shared/hooks";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -13,13 +13,22 @@ import type { JobFormValues, SkillOption } from "../types";
 import { JOB_FORM_DEFAULTS } from "../utils";
 
 export function JobEditPage() {
+  const { t } = useJobsTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [skills, setSkills] = useState<SkillOption[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const { control, register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm<JobFormValues>({
+  const {
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<JobFormValues>({
     defaultValues: {
       ...JOB_FORM_DEFAULTS,
       location: "",
@@ -32,7 +41,10 @@ export function JobEditPage() {
   useEffect(() => {
     let active = true;
     setLoading(true);
-    Promise.all([fetchSkills(), id ? getJobDetail(Number(id)) : Promise.resolve(null)])
+    Promise.all([
+      fetchSkills(),
+      id ? getJobDetail(Number(id)) : Promise.resolve(null),
+    ])
       .then(([skillsData, job]) => {
         if (!active) return;
         setSkills(skillsData || []);
@@ -61,7 +73,7 @@ export function JobEditPage() {
         }
       })
       .catch(() => {
-        toast.error("Unable to load job or skills.");
+        toast.error(t("edit.messages.unableToLoad"));
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -70,7 +82,7 @@ export function JobEditPage() {
     return () => {
       active = false;
     };
-  }, [id, reset]);
+  }, [id, reset, t]);
 
   const selectedSkillIds = watch("skillIds") ?? [];
 
@@ -80,35 +92,39 @@ export function JobEditPage() {
 
   const onSubmit = async (values: JobFormValues) => {
     if (values.skillIds.length === 0) {
-      toast.error("Please select at least one required skill.");
+      toast.error(t("edit.messages.pickAtLeastOneSkill"));
       return;
     }
 
-    if (!id) return toast.error("Invalid job id");
+    if (!id) return toast.error(t("edit.messages.invalidJobId"));
 
     setSubmitting(true);
     try {
       await updateJob(Number(id), values);
-      toast.success("Job updated successfully.");
+      toast.success(t("edit.messages.updatedSuccess"));
       navigate("/jobs/my");
     } catch (err) {
       console.error(err);
-      toast.error("Failed to update job.");
+      toast.error(t("edit.messages.failedToUpdate"));
     } finally {
       setSubmitting(false);
     }
   };
 
-  // grouping skills by category removed — not used in this page currently
-
-  if (loading) return <div className="p-8">Loading...</div>;
+  if (loading) return <div className="p-8">{t("edit.messages.loading")}</div>;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
-      <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">Edit job</p>
-        <h1 className="mt-3 text-3xl font-semibold leading-tight">Update an existing job posting</h1>
-        <p className="mt-4 max-w-3xl text-lg text-emerald-100">Adjust details and requirements; save to update the live posting.</p>
+      <div className="rounded-3xl bg-linear-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
+        <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+          {t("edit.messages.pageTitle")}
+        </p>
+        <h1 className="mt-3 text-3xl font-semibold leading-tight">
+          {t("edit.messages.heading")}
+        </h1>
+        <p className="mt-4 max-w-3xl text-lg text-emerald-100">
+          {t("edit.messages.subtitle")}
+        </p>
       </div>
 
       <form
@@ -117,32 +133,64 @@ export function JobEditPage() {
       >
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Job title</label>
-            <Input placeholder="Senior Backend Engineer" {...register("title", { required: "Title is required" })} />
-            {errors.title && <p className="text-sm text-destructive">{errors.title.message}</p>}
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.jobTitle")}
+            </label>
+            <Input
+              placeholder={t("edit.placeholders.jobTitle")}
+              {...register("title", {
+                required: t("edit.validation.titleRequired"),
+              })}
+            />
+            {errors.title && (
+              <p className="text-sm text-destructive">{errors.title.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Location</label>
-            <Input placeholder="City" {...register("location", { required: "Location is required" })} />
-            {errors.location && <p className="text-sm text-destructive">{errors.location.message}</p>}
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.location")}
+            </label>
+            <Input
+              placeholder={t("edit.placeholders.location")}
+              {...register("location", {
+                required: t("edit.validation.locationRequired"),
+              })}
+            />
+            {errors.location && (
+              <p className="text-sm text-destructive">
+                {errors.location.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Address detail</label>
-            <Input placeholder="Office address" {...register("addressDetail")} />
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.addressDetail")}
+            </label>
+            <Input
+              placeholder={t("edit.placeholders.addressDetail")}
+              {...register("addressDetail")}
+            />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Deadline</label>
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.deadline")}
+            </label>
             <Input type="date" {...register("deadline")} />
           </div>
         </section>
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Rank level</label>
-            <select className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900" {...register("rankLevel", { required: true })}>
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.rankLevel")}
+            </label>
+            <select
+              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              {...register("rankLevel", { required: true })}
+            >
               <option value="INTERN">Intern</option>
               <option value="FRESHER">Fresher</option>
               <option value="JUNIOR">Junior</option>
@@ -154,8 +202,13 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Working type</label>
-            <select className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900" {...register("workingType", { required: true })}>
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.workingType")}
+            </label>
+            <select
+              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              {...register("workingType", { required: true })}
+            >
               <option value="ONSITE">Onsite</option>
               <option value="REMOTE">Remote</option>
               <option value="HYBRID">Hybrid</option>
@@ -163,82 +216,170 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Experience (years)</label>
-            <Input type="number" min={0} step={0.5} {...register("experience", { valueAsNumber: true, required: true })} />
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.experience")}
+            </label>
+            <Input
+              type="number"
+              min={0}
+              step={0.5}
+              {...register("experience", {
+                valueAsNumber: true,
+                required: true,
+              })}
+            />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Quantity</label>
-            <Input type="number" min={1} {...register("quantity", { valueAsNumber: true, required: true })} />
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.quantity")}
+            </label>
+            <Input
+              type="number"
+              min={1}
+              {...register("quantity", { valueAsNumber: true, required: true })}
+            />
           </div>
         </section>
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Salary min (VND)</label>
-            <Input type="number" min={0} {...register("salaryMin", { valueAsNumber: true })} />
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.salaryMin")}
+            </label>
+            <Input
+              type="number"
+              min={0}
+              {...register("salaryMin", { valueAsNumber: true })}
+            />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Salary max (VND)</label>
-            <Input type="number" min={0} {...register("salaryMax", { valueAsNumber: true })} />
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.salaryMax")}
+            </label>
+            <Input
+              type="number"
+              min={0}
+              {...register("salaryMax", { valueAsNumber: true })}
+            />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Currency</label>
-            <select className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900" {...register("currency")}>
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.currency")}
+            </label>
+            <select
+              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              {...register("currency")}
+            >
               <option value="VND">VND</option>
               <option value="USD">USD</option>
             </select>
           </div>
           <div className="flex items-center gap-3 pt-8">
-            <input type="checkbox" id="negotiable" {...register("negotiable")} />
-            <label htmlFor="negotiable" className="text-sm text-slate-600">Salary negotiable</label>
+            <input
+              type="checkbox"
+              id="negotiable"
+              {...register("negotiable")}
+            />
+            <label htmlFor="negotiable" className="text-sm text-slate-600">
+              {t("edit.labels.salaryNegotiable")}
+            </label>
           </div>
         </section>
 
         <section className="grid gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Description</label>
-            <Controller control={control} name="description" render={({ field }) => (
-              <RichTextEditor value={field.value} onChange={field.onChange} placeholder="Describe the job position, company culture, and what makes this role special..." />
-            )} />
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.description")}
+            </label>
+            <Controller
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <RichTextEditor
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder={t("edit.placeholders.description")}
+                />
+              )}
+            />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Responsibilities</label>
-            <Controller control={control} name="responsibilities" render={({ field }) => (
-              <RichTextEditor value={field.value} onChange={field.onChange} placeholder="List the main tasks and responsibilities for this role" />
-            )} />
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.responsibilities")}
+            </label>
+            <Controller
+              control={control}
+              name="responsibilities"
+              render={({ field }) => (
+                <RichTextEditor
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder={t("edit.placeholders.responsibilities")}
+                />
+              )}
+            />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Requirements</label>
-            <Controller control={control} name="requirements" render={({ field }) => (
-              <RichTextEditor value={field.value} onChange={field.onChange} placeholder="Specify the skills, experience, and qualifications needed" />
-            )} />
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.requirements")}
+            </label>
+            <Controller
+              control={control}
+              name="requirements"
+              render={({ field }) => (
+                <RichTextEditor
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder={t("edit.placeholders.requirements")}
+                />
+              )}
+            />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Benefits</label>
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.benefits")}
+            </label>
             <Textarea rows={3} {...register("benefits")} />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">Working time</label>
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.workingTime")}
+            </label>
             <Input {...register("workingTime")} />
           </div>
         </section>
 
         <section className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-slate-500">Required skills</label>
-            {errors.skillIds && <span className="text-xs text-destructive">Please pick at least one skill</span>}
+            <label className="text-sm font-semibold text-slate-500">
+              {t("edit.labels.requiredSkills")}
+            </label>
+            {errors.skillIds && (
+              <span className="text-xs text-destructive">
+                {t("edit.messages.pickAtLeastOneSkill")}
+              </span>
+            )}
           </div>
-          <SkillMultiSelect skills={skills} selectedIds={selectedSkillIds} onChange={handleSkillChange} disabled={false} />
+          <SkillMultiSelect
+            skills={skills}
+            selectedIds={selectedSkillIds}
+            onChange={handleSkillChange}
+            disabled={false}
+          />
         </section>
 
         <div className="flex justify-end gap-3">
-          <Button type="button" variant="ghost" onClick={() => navigate(-1)}>Cancel</Button>
-          <Button type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Save changes'}</Button>
+          <Button type="button" variant="ghost" onClick={() => navigate(-1)}>
+            {t("edit.buttons.cancel")}
+          </Button>
+          <Button type="submit" disabled={submitting}>
+            {submitting ? t("edit.buttons.saving") : t("edit.buttons.save")}
+          </Button>
         </div>
       </form>
     </div>

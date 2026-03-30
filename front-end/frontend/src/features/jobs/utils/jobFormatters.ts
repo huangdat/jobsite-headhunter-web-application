@@ -47,7 +47,9 @@ export const createCurrencyFormatter = (
 /**
  * Format date to locale-specific date string
  */
-export const formatDeadlineDate = (deadline: string | null | undefined): string | null => {
+export const formatDeadlineDate = (
+  deadline: string | null | undefined
+): string | null => {
   if (!deadline) return null;
   const date = new Date(deadline);
   return date.toLocaleDateString();
@@ -57,7 +59,11 @@ export const formatDeadlineDate = (deadline: string | null | undefined): string 
  * Format salary with flexible currency support
  * Used in SavedJobsPage and other detail pages
  */
-export const formatSalaryRange = (salaryMin: number | null | undefined, salaryMax: number | null | undefined, currency: string = "VND"): string => {
+export const formatSalaryRange = (
+  salaryMin: number | null | undefined,
+  salaryMax: number | null | undefined,
+  currency: string = "VND"
+): string => {
   if (salaryMin == null || salaryMax == null) {
     return "Negotiable";
   }
@@ -69,7 +75,7 @@ export const formatSalaryRange = (salaryMin: number | null | undefined, salaryMa
         style: "currency",
         currency: currency || "USD",
         maximumFractionDigits: currency === "VND" ? 0 : 2,
-      },
+      }
     );
 
     return `${formatter.format(salaryMin)} - ${formatter.format(salaryMax)}`;

@@ -22,9 +22,11 @@ export function HeadhunterDetailsStep({ form }: HeadhunterDetailsStepProps) {
         <MdBusiness className="mt-0.5 shrink-0 text-base" />
         <span>
           {t("descriptions.taxCodeInfo")}
-          Your <strong>company name</strong> and{" "}
-          <strong>registered address</strong> will be looked up automatically
-          from your tax code via the MST registry.
+          Your <strong>
+            {t("pages.headhunterDetails.companyName")}
+          </strong> and{" "}
+          <strong>{t("pages.headhunterDetails.registeredAddress")}</strong>{" "}
+          {t("pages.headhunterDetails.registeredAddressHelp")}
         </span>
       </div>
 

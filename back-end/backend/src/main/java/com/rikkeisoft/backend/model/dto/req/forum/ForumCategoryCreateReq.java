@@ -36,6 +36,6 @@ public class ForumCategoryCreateReq {
      * Optional brief description of what this category covers.
      * May be {@code null} or empty. Maximum 500 characters.
      */
-    @Size(max = 500, message = "CATEGORY_DESCRIPTION_SIZE")
+    @Size(max = 500, message = "CATEGORY_DESCRIPTION_SIZE_CONSTRAINT")
     String description;
 }

@@ -1,5 +1,6 @@
 import { useMemo, type KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -12,6 +13,7 @@ interface JobCardProps {
 }
 
 export function JobCard({ job }: JobCardProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const deadlineLabel = useMemo(() => {
@@ -34,7 +36,7 @@ export function JobCard({ job }: JobCardProps) {
       onClick={handleNavigate}
       onKeyDown={handleKeyDown}
       className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none cursor-pointer"
-      aria-label={`View job ${job.title}`}
+      aria-label={t("list.viewJobLabel", { title: job.title })}
     >
       <div className="flex items-center justify-between gap-4">
         <div>
@@ -50,7 +52,10 @@ export function JobCard({ job }: JobCardProps) {
         </Badge>
       </div>
       <div className="mt-3 line-clamp-2 text-sm text-slate-600 dark:text-slate-400">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeSanitize]}
+        >
           {job.description ?? ""}
         </ReactMarkdown>
       </div>
@@ -63,7 +68,7 @@ export function JobCard({ job }: JobCardProps) {
         </span>
         {deadlineLabel && (
           <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-800 dark:bg-amber-900/30 dark:text-amber-100">
-            Apply before {deadlineLabel}
+            {t("list.applyBefore")} {deadlineLabel}
           </span>
         )}
       </div>
@@ -71,7 +76,9 @@ export function JobCard({ job }: JobCardProps) {
         <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
           #{job.jobCode}
         </span>
-        <span className="text-sm font-semibold text-emerald-600">View details →</span>
+        <span className="text-sm font-semibold text-emerald-600">
+          {t("list.viewDetails")} →
+        </span>
       </div>
     </div>
   );

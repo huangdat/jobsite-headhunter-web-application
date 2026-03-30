@@ -27,6 +27,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
     const k = 1024;
     const sizes = ["B", "KB", "MB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
+    // eslint-disable-next-line security/detect-object-injection
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
   };
 
@@ -177,10 +178,10 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                     {selectedFile.name}
                   </p>
                   <p className="text-xs text-red-700 font-semibold">
-                    {getFormattedSize(selectedFile.size)} •{" "}
+                    {selectedFile.size} •{" "}
                     {displayError === "validation.fileTooLarge"
-                      ? "Too large"
-                      : "Invalid format"}
+                      ? t("validation.fileTooLargeShort")
+                      : t("validation.invalidFileFormatShort")}
                   </p>
                 </div>
                 <button
@@ -224,8 +225,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 
             {/* Description */}
             <p className="text-sm text-slate-600 max-w-md mx-auto">
-              Drag and drop your professional CV here or click to browse files
-              from your computer.
+              {t("tips.uploadPlaceholder")}
             </p>
 
             {/* Actions */}
@@ -249,8 +249,8 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
               />
 
               <p className="text-xs text-slate-600">
-                {supportedFormats.map((f) => f.toUpperCase()).join(", ")} • Max{" "}
-                {getFormattedSize(maxFileSize)}
+                {supportedFormats.map((f) => f.toUpperCase()).join(", ")}{" "}
+                {t("upload.maxFileSizeLabel")} {getFormattedSize(maxFileSize)}
               </p>
             </div>
           </div>

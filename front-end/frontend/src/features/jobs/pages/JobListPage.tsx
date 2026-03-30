@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useJobsTranslation, useJobsQuery } from "@/shared/hooks";
 import { Button } from "@/components/ui/button";
-import { fetchJobs } from "../services/jobsApi";
-import type { JobFilterParams, JobListResponse, JobSummary } from "../types";
+import type { JobFilterParams, JobSummary } from "../types";
 import { FilterSidebar, JobCard } from "../components";
 import { INITIAL_PAGE_SIZE } from "../utils";
-// Local constants and UI implementations have been moved to shared components and utils.
-// This file now imports `FilterSidebar` and `JobCard` from the central components index.
 
 function SkeletonGrid() {
   return (
     <>
       {Array.from({ length: 6 }).map((_, index) => (
         <div
-          // eslint-disable-next-line react/no-array-index-key
           key={index}
           className="h-48 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-800"
         />
@@ -22,50 +19,24 @@ function SkeletonGrid() {
 }
 
 export function JobListPage() {
-  const [jobs, setJobs] = useState<JobSummary[]>([]);
-  const [meta, setMeta] = useState<Omit<JobListResponse, "data">>({
-    page: 1,
-    size: INITIAL_PAGE_SIZE,
-    totalElements: 0,
-    totalPages: 1,
-  });
+  const { t } = useJobsTranslation();
   const [filters, setFilters] = useState<JobFilterParams>({
     page: 1,
     size: INITIAL_PAGE_SIZE,
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let active = true;
-    setIsLoading(true);
-    setError(null);
+  // React Query handles caching, loading, and error states automatically
+  const { data: response, isLoading, error } = useJobsQuery(filters);
 
-    fetchJobs(filters)
-      .then((response) => {
-        if (!active) return;
-        setJobs(response.data);
-        setMeta({
-          page: response.page,
-          size: response.size,
-          totalElements: response.totalElements,
-          totalPages: response.totalPages,
-        });
-      })
-      .catch(() => {
-        if (!active) return;
-        setError("Unable to load jobs. Please try again later.");
-      })
-      .finally(() => {
-        if (active) {
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [filters]);
+  const jobs = response?.data ?? [];
+  const meta = response
+    ? {
+        page: response.page,
+        size: response.size,
+        totalElements: response.totalElements,
+        totalPages: response.totalPages,
+      }
+    : { page: 1, size: INITIAL_PAGE_SIZE, totalElements: 0, totalPages: 1 };
 
   const handlePageChange = (nextPage: number) => {
     setFilters((prev) => ({ ...prev, page: nextPage }));
@@ -75,16 +46,15 @@ export function JobListPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* Hero Section */}
       <div className="mx-auto max-w-7xl px-4 py-10">
-        <div className="rounded-3xl bg-gradient-to-br from-emerald-500 to-slate-900 p-10 text-white shadow-lg">
+        <div className="rounded-3xl bg-linear-to-br from-emerald-500 to-slate-900 p-10 text-white shadow-lg">
           <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-            Opportunities for everyone
+            {t("list.hero.subtitle")}
           </p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight">
-            Explore curated jobs that match your strengths.
+            {t("list.hero.title")}
           </h1>
           <p className="mt-4 max-w-3xl text-lg text-emerald-100">
-            Filter by keywords, preferred work style, and salary expectations. Save
-            your favorite roles or share them with friends.
+            {t("list.hero.description")}
           </p>
         </div>
       </div>
@@ -99,7 +69,7 @@ export function JobListPage() {
           <div className="lg:col-span-3">
             {error && (
               <div className="mb-6 rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-destructive">
-                {error}
+                {t("list.unableToLoad")}
               </div>
             )}
 
@@ -107,7 +77,7 @@ export function JobListPage() {
               {isLoading && <SkeletonGrid />}
               {!isLoading && jobs.length === 0 && (
                 <p className="col-span-full rounded-2xl border border-dashed border-slate-200 p-10 text-center text-slate-500">
-                  No jobs found with the selected filters.
+                  {t("list.noJobsFound")}
                 </p>
               )}
               {!isLoading &&
@@ -122,9 +92,7 @@ export function JobListPage() {
             {/* Pagination */}
             {meta.totalPages > 1 && !isLoading && (
               <div className="mt-8 flex items-center justify-between rounded-2xl border border-slate-100 bg-white/70 px-6 py-4 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                <span>
-                  Page {meta.page} of {meta.totalPages} — {meta.totalElements} jobs
-                </span>
+                <span>{t("list.pagination")}</span>
                 <div className="flex gap-3">
                   <Button
                     type="button"
@@ -132,7 +100,7 @@ export function JobListPage() {
                     disabled={meta.page === 1}
                     onClick={() => handlePageChange(meta.page - 1)}
                   >
-                    Previous
+                    {t("list.previousPage")}
                   </Button>
                   <Button
                     type="button"
@@ -140,7 +108,7 @@ export function JobListPage() {
                     disabled={meta.page === meta.totalPages}
                     onClick={() => handlePageChange(meta.page + 1)}
                   >
-                    Next
+                    {t("list.nextPage")}
                   </Button>
                 </div>
               </div>
@@ -151,3 +119,4 @@ export function JobListPage() {
     </div>
   );
 }
+

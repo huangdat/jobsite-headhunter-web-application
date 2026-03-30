@@ -10,14 +10,12 @@
     "signUp": "Đăng Ký",
     "postJob": "Đăng Tuyển",
     "profile": "HỒ SƠ",
-    "changePassword": "THAY ĐỔI MẬT KHẨU",
     "settings": "Cài Đặt",
     "logout": "Đăng Xuất",
     "savedJobs": "Công Việc Đã Lưu",
     "notifications": "Thông Báo",
     "dashboard": "Bảng Điều Khiển",
     "adminDashboard": "Bảng Điều Khiển Quản Trị",
-    "userManagement": "Quản Lý Người Dùng",
     "classification": "Phân Loại"
   },
   "hero": {
@@ -52,10 +50,6 @@
     "noFeaturedJobs": "Không tìm thấy công việc nổi bật",
     "noRecommendedJobs": "Không tìm thấy công việc được đề xuất",
     "noCompanies": "Không tìm thấy công ty nào"
-  },
-  "jobTypes": {
-    "fullTime": "TOÀN THỜI GIAN",
-    "remote": "LÀNG VIỆC TỪ XÃ"
   },
   "badges": {
     "new": "MỚI"

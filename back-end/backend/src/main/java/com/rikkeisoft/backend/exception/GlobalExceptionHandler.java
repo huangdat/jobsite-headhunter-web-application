@@ -45,6 +45,15 @@ public class GlobalExceptionHandler {
                 .body(buildAPIResponse(errorCode));
     }
 
+    @ExceptionHandler(value = Exception.class)
+    ResponseEntity<APIResponse<?>> handlingException(Exception e) {
+        log.error("Unhandled Exception: ", e);
+        ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
+        return ResponseEntity
+                .status(errorCode.getHttpStatus())
+                .body(buildAPIResponse(errorCode));
+    }
+
     /**
      * Handles authorization denied exceptions.
      *

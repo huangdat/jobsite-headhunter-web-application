@@ -6,7 +6,7 @@
 
 import { useState } from "react";
 import { useCommissionManagement } from "../hooks/useCommissionManagement";
-import { useTranslation } from "react-i18next";
+import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 
 /**
  * CommissionForm Component
@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
  * - Banking Information
  */
 export function CommissionForm() {
-  const { t } = useTranslation("commission");
+  const { t } = useCommissionTranslation();
   const {
     formData,
     saving,

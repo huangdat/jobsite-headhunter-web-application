@@ -89,7 +89,9 @@ export function ParticleBackground() {
       // --------- Draw Lines ---------
       for (let a = 0; a < particles.length; a++) {
         for (let b = a + 1; b < particles.length; b++) {
+          // eslint-disable-next-line security/detect-object-injection
           const dx = particles[a].x - particles[b].x;
+          // eslint-disable-next-line security/detect-object-injection
           const dy = particles[a].y - particles[b].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
@@ -97,7 +99,9 @@ export function ParticleBackground() {
             ctx.beginPath();
             ctx.strokeStyle = "rgba(163,230,53,0.15)";
             ctx.lineWidth = 1;
+            // eslint-disable-next-line security/detect-object-injection
             ctx.moveTo(particles[a].x, particles[a].y);
+            // eslint-disable-next-line security/detect-object-injection
             ctx.lineTo(particles[b].x, particles[b].y);
             ctx.stroke();
           }
@@ -135,6 +139,7 @@ export function ParticleBackground() {
           p.y < -20 ||
           p.y > canvas.height + 20
         ) {
+          // eslint-disable-next-line security/detect-object-injection
           particles[index] = createParticle();
         }
 

@@ -1,6 +1,20 @@
 import { apiClient } from "@/shared/utils/axios";
-import type { UserDetail } from "@/features/users/types/user.types";
-import { API_ENDPOINTS } from "@/features/users/constants";
+import type {
+  UserDetail,
+  UserStatus,
+  UserRole,
+} from "@/features/users/types/user.types";
+import { API_ENDPOINTS } from "@/lib/constants";
+
+/**
+ * Generic API response wrapper for backend responses
+ * @internal - All API responses follow this structure with a nested result property
+ */
+interface ApiResponse<T> {
+  result: T;
+  success: boolean;
+  message?: string;
+}
 
 /**
  * Backend response format (different from frontend interface)
@@ -28,39 +42,36 @@ export interface PagedResponse<T> {
  *
  * Mapping:
  * - Backend "ACTIVE" → Frontend "ACTIVE"
- * - Backend "SUSPENDED" → Frontend "LOCKED" (account is disabled/locked)
- * - Backend "PENDING" → Frontend "ACTIVE" (not yet verified but usable)
+ * - Backend "SUSPENDED" → Frontend "SUSPENDED" (account is disabled/locked)
+ * - Backend "PENDING" → Frontend "PENDING" (not yet verified)
  * - Backend "DELETED" → Should not appear in search results
  */
-const mapBackendStatus = (backendStatus: string): "ACTIVE" | "LOCKED" => {
-  const statusMap: Record<string, "ACTIVE" | "LOCKED"> = {
+const mapBackendStatus = (backendStatus: string): UserStatus => {
+  const statusMap: Record<string, UserStatus> = {
     ACTIVE: "ACTIVE",
-    PENDING: "ACTIVE", // Treat pending as active for display
-    SUSPENDED: "LOCKED", // Backend suspended = frontend locked
-    DELETED: "LOCKED", // Fallback for edge cases
+    PENDING: "PENDING",
+    SUSPENDED: "SUSPENDED",
+    DELETED: "DELETED",
   };
+  // eslint-disable-next-line security/detect-object-injection
   return statusMap[backendStatus] || "ACTIVE";
 };
 
 /**
- * Adapter: Transform backend UserDetail to frontend UserDetail
+ * Adapter: Transform backend user response to frontend UserDetail
  * @internal
  *
  * Handles:
  * - Status enum conversion (AccountStatus → UserStatus)
- * - Role array handling (backend returns Set<String>, frontend needs single role)
+ * - Role type casting (ensure UserRole type)
  */
-const adaptUserDetail = (backendUser: any): UserDetail => {
+const adaptUserDetail = (backendUser: UserDetail): UserDetail => {
   return {
     ...backendUser,
-    // Convert backend AccountStatus enum to frontend UserStatus
+    // Ensure status is properly mapped
     status: mapBackendStatus(backendUser.status),
-    // If backend returns multiple roles (Set<String>), take first one
-    // This assumes business logic: users can have multiple roles but we display primary
-    role:
-      Array.isArray(backendUser.roles) && backendUser.roles.length > 0
-        ? backendUser.roles[0]
-        : backendUser.role || "CANDIDATE",
+    // Ensure role is properly typed as UserRole
+    role: backendUser.role as UserRole,
   };
 };
 
@@ -74,7 +85,7 @@ const adaptUserDetail = (backendUser: any): UserDetail => {
  * Also adapts individual user objects within the response.
  */
 const adaptPagedResponse = (
-  backendResp: BackendPagedResponse<any>
+  backendResp: BackendPagedResponse<UserDetail>
 ): PagedResponse<UserDetail> => {
   return {
     items: backendResp.data.map(adaptUserDetail),
@@ -92,7 +103,9 @@ export const usersApi = {
    * This endpoint loads all users without pagination which is not scalable
    */
   getUsers: async (): Promise<UserDetail[]> => {
-    const res = await apiClient.get<any>(API_ENDPOINTS.USERS.GET_ALL);
+    const res = await apiClient.get<ApiResponse<UserDetail[]>>(
+      API_ENDPOINTS.USERS.GET_ALL
+    );
     return res.data.result;
   },
 
@@ -100,7 +113,9 @@ export const usersApi = {
    * Get user by ID
    */
   getUserById: async (userId: string): Promise<UserDetail> => {
-    const res = await apiClient.get<any>(API_ENDPOINTS.USERS.GET_BY_ID(userId));
+    const res = await apiClient.get<ApiResponse<UserDetail>>(
+      API_ENDPOINTS.USERS.GET_BY_ID.replace("{id}", userId)
+    );
     return res.data.result;
   },
 
@@ -121,7 +136,9 @@ export const usersApi = {
     company?: string;
     sort?: string;
   }): Promise<PagedResponse<UserDetail>> => {
-    const res = await apiClient.get<any>(API_ENDPOINTS.USERS.SEARCH, {
+    const res = await apiClient.get<
+      ApiResponse<BackendPagedResponse<UserDetail>>
+    >(API_ENDPOINTS.USERS.SEARCH, {
       params,
     });
     // Backend returns { data, totalElements, ... }
@@ -145,8 +162,8 @@ export const usersApi = {
     userId: string,
     status: "ACTIVE" | "SUSPENDED" | "DELETED" | "PENDING"
   ): Promise<UserDetail> => {
-    const res = await apiClient.put<any>(
-      API_ENDPOINTS.USERS.UPDATE_STATUS(userId),
+    const res = await apiClient.put<ApiResponse<UserDetail>>(
+      API_ENDPOINTS.USERS.UPDATE_STATUS.replace("{id}", userId),
       {
         status,
       }

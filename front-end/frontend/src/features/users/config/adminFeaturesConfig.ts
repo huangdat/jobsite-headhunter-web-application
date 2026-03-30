@@ -4,6 +4,8 @@
  * This file serves as a central registry for admin functionality
  */
 
+import { API_ENDPOINTS } from "@/lib/constants";
+
 export interface AdminFeature {
   id: string; // Feature identifier
   icon: string; // Material symbol icon name
@@ -25,9 +27,9 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     icon: "group",
     labelKey: "navigation.users",
     route: "/users/list",
-    apiEndpoint: "/api/account",
+    apiEndpoint: API_ENDPOINTS.USERS.GET_ALL,
     requiredRole: "admin",
-    description: "View and manage all users",
+    description: "adminFeatures.usersListDesc",
   },
 
   // Classification Feature
@@ -36,10 +38,9 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     icon: "category",
     labelKey: "navigation.classification",
     route: "/users/classification",
-    apiEndpoint: "/api/account/search",
+    apiEndpoint: API_ENDPOINTS.USERS.SEARCH,
     requiredRole: "admin",
-    description:
-      "View user distribution and classification by role, status, company, etc.",
+    description: "adminFeatures.userClassificationDesc",
   },
 
   // Logs / Audit Trail
@@ -49,7 +50,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     labelKey: "navigation.logs",
     route: "/admin/logs",
     requiredRole: "admin",
-    description: "View system activity and audit logs",
+    description: "adminFeatures.activityLogsDesc",
   },
 
   // Settings (placeholder for future)
@@ -59,7 +60,7 @@ export const ADMIN_FEATURES_CONFIG: Record<string, AdminFeature> = {
     labelKey: "navigation.settings",
     route: "/admin/settings",
     requiredRole: "superadmin",
-    description: "Manage system settings and configurations",
+    description: "adminFeatures.adminSettingsDesc",
   },
 };
 
@@ -90,6 +91,7 @@ export function hasAdminFeatureAccess(
   userRole: string | undefined,
   featureId: string
 ): boolean {
+  // eslint-disable-next-line security/detect-object-injection
   const feature = ADMIN_FEATURES_CONFIG[featureId];
   if (!feature) return false;
 

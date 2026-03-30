@@ -24,7 +24,7 @@ import java.util.Locale;
  * secured to require at minimum the {@code ADMIN} role; security configuration is applied
  * in the Spring Security configuration class.
  *
- * <p>Base URL: {@code /api/v1/forum/categories}
+ * <p>Base URL: {@code /api/forum/categories}
  *
  * <p>All response messages are resolved through the injected {@link MessageSource} using
  * the active request {@link Locale}, ensuring full i18n compliance with no hardcoded strings.
@@ -74,7 +74,7 @@ public class ForumCategoryController {
      * new name provided. Returns {@code 404 Not Found} if the category does not exist
      * or is soft-deleted.
      *
-     * <p>HTTP: {@code PUT /api/v1/forum/categories/{id}}
+     * <p>HTTP: {@code PATCH /api/v1/forum/categories/{id}}
      *
      * @param id     the surrogate primary key of the category to update.
      * @param req    the validated request body with the new {@code name} and optional
@@ -84,7 +84,7 @@ public class ForumCategoryController {
      *         with HTTP status {@code 200 OK} and the message resolved from key
      *         {@code "forum.category.updated"}.
      */
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public APIResponse<ForumCategoryResp> updateCategory(
             @PathVariable Long id,
             @Valid @RequestBody ForumCategoryUpdateReq req,

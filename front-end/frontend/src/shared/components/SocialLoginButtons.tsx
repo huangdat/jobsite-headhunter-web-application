@@ -35,7 +35,9 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
           className="cursor-pointer flex items-center justify-center gap-2"
         >
           <FcGoogle size={20} />
-          {loadingProvider === "google" ? t("auth.buttons.connecting") : t("auth.pages.social.google")}
+          {loadingProvider === "google"
+            ? t("buttons.connecting")
+            : t("pages.social.google")}
         </Button>
 
         {/* LinkedIn */}
@@ -47,7 +49,9 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
           className="cursor-pointer flex items-center justify-center gap-2"
         >
           <FaLinkedin className="text-linkedin" size={20} />
-          {loadingProvider === "linkedin" ? t("auth.buttons.connecting") : t("auth.pages.social.linkedin")}
+          {loadingProvider === "linkedin"
+            ? t("buttons.connecting")
+            : t("pages.social.linkedin")}
         </Button>
       </div>
     </div>

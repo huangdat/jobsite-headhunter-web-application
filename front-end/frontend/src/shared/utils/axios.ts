@@ -1,8 +1,8 @@
 import axios from "axios";
+import { API_CONFIG } from "@/lib/constants";
 
 export const apiClient = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/headhunt",
+  baseURL: API_CONFIG.BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },

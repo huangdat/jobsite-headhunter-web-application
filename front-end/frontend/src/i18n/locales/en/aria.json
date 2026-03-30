@@ -1,0 +1,13 @@
+{
+  "goBack": "go back",
+  "editProfile": "edit profile",
+  "fullName": "full name",
+  "email": "email",
+  "phone": "phone",
+  "company": "company",
+  "biography": "biography",
+  "selectGender": "select gender",
+  "uploadProfilePicture": "upload profile picture",
+  "uploadAvatar": "upload avatar",
+  "selectCompanyScale": "select company scale"
+}

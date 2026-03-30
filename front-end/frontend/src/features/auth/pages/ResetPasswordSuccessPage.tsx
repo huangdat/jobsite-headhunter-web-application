@@ -5,7 +5,7 @@ import { AuthLayout } from "@/shared/components";
 export function ResetPasswordSuccessPage() {
   const { t } = useAuthTranslation();
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: t("auth.pages.login") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <main className="max-w-5xl mx-auto px-4 pt-12">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}
@@ -19,7 +19,9 @@ export function ResetPasswordSuccessPage() {
 
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
                 {t("pages.resetPasswordSuccess.titleLeft")} <br />
-                <span className="text-brand-primary">{t("pages.resetPasswordSuccess.titleHighlight")}</span>
+                <span className="text-brand-primary">
+                  {t("pages.resetPasswordSuccess.titleHighlight")}
+                </span>
               </h1>
 
               <p className="text-gray-300 text-lg leading-relaxed max-w-sm">
@@ -58,7 +60,9 @@ export function ResetPasswordSuccessPage() {
                   </span>
                 </div>
               </div>
-              <h2 className="text-3xl font-bold mb-4">{t("pages.resetPasswordSuccess.title")}</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                {t("pages.resetPasswordSuccess.title")}
+              </h2>
               <p className="text-slate-500 dark:text-slate-400 text-lg mb-10 leading-relaxed">
                 {t("pages.resetPasswordSuccess.subtitle")}
               </p>

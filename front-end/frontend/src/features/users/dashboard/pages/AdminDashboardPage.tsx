@@ -50,7 +50,7 @@ export const AdminDashboardPage: React.FC = () => {
       {/* Header */}
       <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-          {t("classification.pageTitle")} - Admin
+          {t("classification.pageTitle")} - {t("admin.label")}
         </h1>
         <p className="text-slate-600 dark:text-slate-400 mt-1">
           {t("classification.description")}
@@ -94,7 +94,7 @@ export const AdminDashboardPage: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                      {t("statuses.active")}
+                      {t("statuses.ACTIVE")}
                     </p>
                     <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                       {stats.activeUsers}
@@ -111,7 +111,7 @@ export const AdminDashboardPage: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                      {t("statuses.suspended")}
+                      {t("statuses.SUSPENDED")}
                     </p>
                     <p className="text-3xl font-bold text-red-600 dark:text-red-400">
                       {stats.suspendedUsers}
@@ -128,7 +128,7 @@ export const AdminDashboardPage: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                      {t("statuses.pending")}
+                      {t("statuses.PENDING")}
                     </p>
                     <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
                       {stats.pendingUsers}
@@ -190,3 +190,4 @@ export const AdminDashboardPage: React.FC = () => {
 };
 
 export default AdminDashboardPage;
+

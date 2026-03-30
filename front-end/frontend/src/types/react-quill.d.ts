@@ -1,5 +1,5 @@
-declare module 'react-quill' {
-  import * as React from 'react';
+declare module "react-quill" {
+  import * as React from "react";
   interface ReactQuillProps {
     value?: any;
     onChange?: (content: any, delta?: any, source?: any, editor?: any) => void;

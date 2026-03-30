@@ -47,37 +47,37 @@ export function CandidateRegister({
   const { t } = useAuthTranslation();
   return (
     <>
-      <FormField label="Username" error={errors.username}>
+      <FormField label={t("labels.username")} error={errors.username}>
         <Input
           icon={<MdAccountCircle />}
-          placeholder={t("auth.placeholders.username")}
+          placeholder={t("placeholders.username")}
           value={formData.username}
           onChange={(e) => handleChange("username")(e.target.value)}
         />
       </FormField>
 
-      <FormField label="Full Name" error={errors.fullName}>
+      <FormField label={t("labels.fullName")} error={errors.fullName}>
         <Input
           icon={<MdPerson />}
-          placeholder={t("auth.placeholders.name")}
+          placeholder={t("placeholders.name")}
           value={formData.fullName}
           onChange={(e) => handleChange("fullName")(e.target.value)}
         />
       </FormField>
 
-      <FormField label="Email" error={errors.email}>
+      <FormField label={t("labels.email")} error={errors.email}>
         <Input
           icon={<MdOutlineMail />}
-          placeholder={t("auth.placeholders.email")}
+          placeholder={t("placeholders.email")}
           value={formData.email}
           onChange={(e) => handleChange("email")(e.target.value)}
         />
       </FormField>
 
-      <FormField label="Phone Number" error={errors.phone}>
+      <FormField label={t("labels.phoneNumber")} error={errors.phone}>
         <Input
           icon={<MdPhone />}
-          placeholder={t("auth.placeholders.phone")}
+          placeholder={t("placeholders.phone")}
           value={formData.phone}
           onChange={(e) => handleChange("phone")(e.target.value)}
         />
@@ -85,24 +85,26 @@ export function CandidateRegister({
 
       {/* GENDER + AVATAR */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label="Gender (Optional)">
+        <FormField label={t("labels.gender")}>
           <div className="relative">
             <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <select
               value={formData.gender || ""}
               onChange={(e) => handleChange("gender")(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label={t("auth.aria.selectGender")}
+              aria-label={t("aria.selectGender")}
             >
-              <option value="">Select Gender</option>
-              <option value="MALE">Male</option>
-              <option value="FEMALE">Female</option>
-              <option value="OTHER">Other</option>
+              <option value="">{t("selectOptions.selectGender")}</option>
+              <option value="MALE">{t("selectOptions.genders.male")}</option>
+              <option value="FEMALE">
+                {t("selectOptions.genders.female")}
+              </option>
+              <option value="OTHER">{t("selectOptions.genders.other")}</option>
             </select>
           </div>
         </FormField>
 
-        <FormField label="Profile Picture (Optional)">
+        <FormField label={t("labels.profilePicture")}>
           <div className="relative">
             <MdCameraAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10" />
             <input
@@ -113,7 +115,7 @@ export function CandidateRegister({
                 handleChange("avatar")(file || null);
               }}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              aria-label={t("auth.aria.uploadProfilePicture")}
+              aria-label={t("aria.uploadProfilePicture")}
             />
           </div>
         </FormField>
@@ -121,12 +123,12 @@ export function CandidateRegister({
 
       {/* PASSWORD + CONFIRM PASSWORD */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label="Password">
+        <FormField label={t("labels.password")}>
           <div className="relative">
             <Input
               icon={<MdLockOutline />}
               type={showPassword ? "text" : "password"}
-              placeholder={t("auth.placeholders.password")}
+              placeholder={t("placeholders.password")}
               value={formData.password}
               onChange={(e) => handleChange("password")(e.target.value)}
             />
@@ -141,12 +143,12 @@ export function CandidateRegister({
           </div>
         </FormField>
 
-        <FormField label="Confirm Password">
+        <FormField label={t("labels.confirmPassword")}>
           <div className="relative">
             <Input
               icon={<MdLockOutline />}
               type={showConfirmPassword ? "text" : "password"}
-              placeholder={t("auth.placeholders.confirmPassword")}
+              placeholder={t("placeholders.confirmPassword")}
               value={formData.confirmPassword}
               onChange={(e) => handleChange("confirmPassword")(e.target.value)}
             />
