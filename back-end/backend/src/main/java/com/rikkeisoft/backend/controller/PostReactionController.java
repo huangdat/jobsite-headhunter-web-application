@@ -10,23 +10,32 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.security.core.Authentication;
 import java.util.Locale;
 
 /**
  * REST Controller for managing LinkedIn-style reactions on
  * {@link com.rikkeisoft.backend.model.entity.ForumPost} entities.
  *
- * <p>Exposes a single toggle endpoint that handles creating, updating, and removing
+ * <p>
+ * Exposes a single toggle endpoint that handles creating, updating, and
+ * removing
  * a user's reaction on a post in one atomic operation. Requires authentication.
  *
- * <p><strong>Note:</strong> There is NO "Share" functionality. Only the eight
- * reaction types defined in {@link com.rikkeisoft.backend.enums.ReactionType} are supported.
+ * <p>
+ * <strong>Note:</strong> There is NO "Share" functionality. Only the eight
+ * reaction types defined in {@link com.rikkeisoft.backend.enums.ReactionType}
+ * are supported.
  *
- * <p>Base URL: {@code /api/forum/posts/reactions}
+ * <p>
+ * Base URL: {@code /api/forum/posts/reactions}
  *
- * <p>All response messages are resolved through the injected {@link MessageSource},
+ * <p>
+ * All response messages are resolved through the injected
+ * {@link MessageSource},
  * ensuring full i18n compliance with no hardcoded strings.
  */
 @RestController
@@ -39,35 +48,55 @@ public class PostReactionController {
     MessageSource messageSource;
 
     /**
-     * Toggles a LinkedIn-style reaction for the currently authenticated user on a specific post.
+     * Toggles a LinkedIn-style reaction for the currently authenticated user on a
+     * specific post.
      *
-     * <p>This single endpoint covers three scenarios in one call:
+     * <p>
+     * This single endpoint covers three scenarios in one call:
      * <ul>
-     *   <li><strong>No existing reaction</strong>: creates a new one → HTTP 200 + action CREATED.</li>
-     *   <li><strong>Same type submitted again</strong>: removes existing → HTTP 200 + action REMOVED.</li>
-     *   <li><strong>Different type submitted</strong>: updates existing → HTTP 200 + action UPDATED.</li>
+     * <li><strong>No existing reaction</strong>: creates a new one → HTTP 200 +
+     * action CREATED.</li>
+     * <li><strong>Same type submitted again</strong>: removes existing → HTTP 200 +
+     * action REMOVED.</li>
+     * <li><strong>Different type submitted</strong>: updates existing → HTTP 200 +
+     * action UPDATED.</li>
      * </ul>
      *
-     * <p>The response body includes the action taken, the currently active reaction type (or
-     * {@code null} if removed), and the updated per-type reaction count map — enabling the
+     * <p>
+     * The response body includes the action taken, the currently active reaction
+     * type (or
+     * {@code null} if removed), and the updated per-type reaction count map —
+     * enabling the
      * client to refresh the UI without a second API call.
      *
-     * <p>Returns {@code 404 Not Found} if the target post does not exist or is soft-deleted.
+     * <p>
+     * Returns {@code 404 Not Found} if the target post does not exist or is
+     * soft-deleted.
      * Requires the user to be authenticated (any role).
      *
-     * <p>HTTP: {@code POST /api/forum/posts/reactions/toggle}
+     * <p>
+     * HTTP: {@code POST /api/forum/posts/reactions/toggle}
      *
      * @param req    the validated request body containing {@code postId} and
-     *               {@code reactionType} (one of LIKE, HAHA, CLAP, FLOWER, LOVE, SAD, ANGRY, WOW).
+     *               {@code reactionType} (one of LIKE, HAHA, CLAP, FLOWER, LOVE,
+     *               SAD, ANGRY, WOW).
      * @param locale the request locale for i18n message resolution.
-     * @return a {@code 200 OK} {@link APIResponse} wrapping the {@link ReactionResp},
-     *         with the message resolved from key {@code "forum.post.reaction.toggled"}.
+     * @return a {@code 200 OK} {@link APIResponse} wrapping the
+     *         {@link ReactionResp},
+     *         with the message resolved from key
+     *         {@code "forum.post.reaction.toggled"}.
      */
+
     @PostMapping("/toggle")
+    @PreAuthorize("isAuthenticated()")
     public APIResponse<ReactionResp> togglePostReaction(
             @Valid @RequestBody PostReactionReq req,
             Locale locale) {
-        ReactionResp result = postReactionService.togglePostReaction(req);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+
+        ReactionResp result = postReactionService.togglePostReaction(req, userId);
+
         return APIResponse.<ReactionResp>builder()
                 .status(HttpStatus.OK)
                 .message(messageSource.getMessage("forum.post.reaction.toggled", null, locale))

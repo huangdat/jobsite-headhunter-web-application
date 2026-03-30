@@ -2,14 +2,19 @@ package com.rikkeisoft.backend.service.impl;
 
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.enums.PostStatus;
+import com.rikkeisoft.backend.enums.ReactionType;
 import com.rikkeisoft.backend.enums.Role;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.ForumPostMapper;
+import com.rikkeisoft.backend.model.dto.req.forum.PostReactionReq;
+import com.rikkeisoft.backend.model.dto.resp.forum.ReactionResp;
 import com.rikkeisoft.backend.model.dto.resp.forumpost.ForumPostResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.ForumPost;
+import com.rikkeisoft.backend.model.entity.PostReaction;
 import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.repository.ForumPostRepo;
+import com.rikkeisoft.backend.repository.PostReactionRepo;
 import com.rikkeisoft.backend.service.ForumPostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +24,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -30,6 +40,7 @@ public class ForumPostServiceImpl implements ForumPostService {
     ForumPostRepo forumPostRepo;
     AccountRepo accountRepo;
     ForumPostMapper forumPostMapper;
+    PostReactionRepo postReactionRepo;
 
     @Override
     @Transactional
@@ -72,4 +83,7 @@ public class ForumPostServiceImpl implements ForumPostService {
             throw new AppException(ErrorCode.FORBIDDEN);
         }
     }
+
+   
+
 }
