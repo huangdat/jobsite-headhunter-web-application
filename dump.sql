@@ -337,37 +337,6 @@ INSERT INTO `commission` VALUES (1,2,'55555555-5555-5555-5555-555555555555',1500
 UNLOCK TABLES;
 
 --
--- Table structure for table `forum_category`
---
-
-DROP TABLE IF EXISTS `forum_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `forum_category` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `active` bit(1) NOT NULL,
-  `created_at` datetime(6) DEFAULT NULL,
-  `description` text,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `soft_deleted` bit(1) NOT NULL,
-  `updated_at` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK39vv5xmlh2hqdlh3g2ujja3od` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `forum_category`
---
-
-LOCK TABLES `forum_category` WRITE;
-/*!40000 ALTER TABLE `forum_category` DISABLE KEYS */;
-INSERT INTO `forum_category` VALUES (1,_binary '','2026-03-27 09:33:03.000000','Chia sẻ kinh nghiệm và mẹo phỏng vấn IT','Kinh nghiệm phỏng vấn','kinh-nghiem-phong-van',_binary '\0','2026-03-27 09:33:03.000000'),(2,_binary '','2026-03-27 09:33:03.000000','Thảo luận về Java core, Spring Boot và backend','Lập trình Java','lap-trinh-java',_binary '\0','2026-03-27 09:33:03.000000'),(3,_binary '','2026-03-27 09:33:03.000000','HTML, CSS, JavaScript, React, Vue','Frontend Development','frontend-development',_binary '\0','2026-03-27 09:33:03.000000'),(4,_binary '','2026-03-27 09:33:03.000000','API, database, architecture, scalability','Backend Development','backend-development',_binary '\0','2026-03-27 09:33:03.000000'),(5,_binary '','2026-03-27 09:33:03.000000','CI/CD, Docker, Kubernetes, AWS, Azure','DevOps & Cloud','devops-cloud',_binary '\0','2026-03-27 09:33:03.000000'),(6,_binary '','2026-03-27 09:33:03.000000','MySQL, PostgreSQL, NoSQL, optimization','Database','database',_binary '\0','2026-03-27 09:33:03.000000'),(7,_binary '','2026-03-27 09:33:03.000000','Unit test, integration test, automation testing','Testing & QA','testing-qa',_binary '\0','2026-03-27 09:33:03.000000'),(8,_binary '','2026-03-27 09:33:03.000000','Định hướng nghề nghiệp và phát triển bản thân','Career Advice','career-advice',_binary '\0','2026-03-27 09:33:03.000000'),(9,_binary '','2026-03-27 09:33:03.000000','Review CV, portfolio và GitHub cá nhân','CV & Portfolio','cv-portfolio',_binary '\0','2026-03-27 09:33:03.000000'),(10,_binary '','2026-03-27 09:33:03.000000','Kinh nghiệm làm freelance và remote','Freelance & Remote','freelance-remote',_binary '\0','2026-03-27 09:33:03.000000'),(11,_binary '','2026-03-27 09:33:03.000000','Giải bài tập thuật toán và luyện coding interview','Thuật toán & Cấu trúc dữ liệu','dsa',_binary '\0','2026-03-27 09:33:03.000000'),(12,_binary '','2026-03-27 09:33:03.000000','Android, iOS, Flutter, React Native','Mobile Development','mobile-development',_binary '\0','2026-03-27 09:33:03.000000'),(13,_binary '','2026-03-27 09:33:03.000000','Machine learning, deep learning, data science','AI & Machine Learning','ai-machine-learning',_binary '\0','2026-03-27 09:33:03.000000'),(14,_binary '','2026-03-27 09:33:03.000000','Thảo luận chung về công nghệ và cuộc sống IT','Open Discussion','open-discussion',_binary '\0','2026-03-27 09:33:03.000000'),(15,_binary '','2026-03-27 09:33:03.000000','Hỏi đáp lỗi và cách debug trong lập trình','Bug & Debug','bug-debug',_binary '\0','2026-03-27 09:33:03.000000'),(16,_binary '\0','2026-03-27 09:33:03.000000','Unity, Unreal Engine và phát triển game','Game Development','game-development',_binary '\0','2026-03-27 09:33:03.000000'),(17,_binary '','2026-03-27 09:33:03.000000','Smart contract, crypto, Web3 development','Blockchain & Web3','blockchain-web3',_binary '\0','2026-03-27 09:33:03.000000'),(18,_binary '','2026-03-27 09:33:03.000000','Thiết kế hệ thống scalable và high-level design','System Design','system-design',_binary '\0','2026-03-27 09:33:03.000000'),(19,_binary '','2026-03-27 09:33:03.000000','Bảo mật ứng dụng, pentest, secure coding','Security','security',_binary '\0','2026-03-27 09:33:03.000000'),(20,_binary '\0','2026-03-27 09:33:03.000000','Danh mục đã ngừng sử dụng','Archived Category','archived-category',_binary '','2026-03-27 09:33:03.000000');
-/*!40000 ALTER TABLE `forum_category` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `forum_comment`
 --
 
@@ -418,8 +387,6 @@ CREATE TABLE `forum_post` (
   `content` text,
   `status` enum('DRAFT','PUBLISHED','ARCHIVED') DEFAULT 'DRAFT',
   `created_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `forum_category_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_post_author` (`author_account_id`),
   KEY `forum_post_job_id_fk` (`job_id`),
@@ -436,7 +403,7 @@ CREATE TABLE `forum_post` (
 
 LOCK TABLES `forum_post` WRITE;
 /*!40000 ALTER TABLE `forum_post` DISABLE KEYS */;
-INSERT INTO `forum_post` VALUES (1,'22222222-2222-2222-2222-222222222222',1,'Looking for Backend Developers','Great opportunity for Java devs','PUBLISHED','2026-03-15 07:21:42',NULL,1),(2,'33333333-3333-3333-3333-333333333333',2,'ReactJS Hiring','Hiring ReactJS developers','PUBLISHED','2026-03-15 07:21:42',NULL,1),(3,'99100000-203f-11f1-95b5-0242ac110002',3,'FPT Hiring Java Backend Dev','Join FPT Software backend team','PUBLISHED','2026-03-15 17:16:31',NULL,1),(4,'99100001-203f-11f1-95b5-0242ac110002',4,'Tiki Hiring React Dev','Work on large e-commerce system','PUBLISHED','2026-03-15 17:16:31',NULL,1),(5,'99100002-203f-11f1-95b5-0242ac110002',5,'VNG Backend Position','Build backend for gaming platform','PUBLISHED','2026-03-15 17:16:31',NULL,1),(6,'99100003-203f-11f1-95b5-0242ac110002',6,'VNPT DevOps Job','Manage infrastructure systems','PUBLISHED','2026-03-15 17:16:31',NULL,1),(7,'99100004-203f-11f1-95b5-0242ac110002',7,'Viettel AI Recruitment','Join AI research team','PUBLISHED','2026-03-15 17:16:31',NULL,1),(8,'99100000-203f-11f1-95b5-0242ac110002',8,'Java Backend Developer','Great opportunity for Java devs','PUBLISHED','2026-03-15 17:16:31',NULL,1),(9,'99100001-203f-11f1-95b5-0242ac110002',9,'React Frontend Developer','Hiring ReactJS developers','PUBLISHED','2026-03-15 17:16:31',NULL,1),(10,'99100002-203f-11f1-95b5-0242ac110002',10,'Game Backend Engineer','Join FPT Software backend team','PUBLISHED','2026-03-15 17:16:31',NULL,1),(11,'99100003-203f-11f1-95b5-0242ac110002',11,'DevOps Engineer','Work on large e-commerce system','PUBLISHED','2026-03-15 17:16:31',NULL,1),(12,'99100004-203f-11f1-95b5-0242ac110002',12,'AI Engineer','Build backend for gaming platform','PUBLISHED','2026-03-15 17:16:31',NULL,1);
+INSERT INTO `forum_post` VALUES (1,'22222222-2222-2222-2222-222222222222',1,'Looking for Backend Developers','Great opportunity for Java devs','VISIBLE','2026-03-15 07:21:42'),(2,'33333333-3333-3333-3333-333333333333',2,'ReactJS Hiring','Hiring ReactJS developers','VISIBLE','2026-03-15 07:21:42'),(3,'99100000-203f-11f1-95b5-0242ac110002',3,'FPT Hiring Java Backend Dev','Join FPT Software backend team','VISIBLE','2026-03-15 17:16:31'),(4,'99100001-203f-11f1-95b5-0242ac110002',4,'Tiki Hiring React Dev','Work on large e-commerce system','VISIBLE','2026-03-15 17:16:31'),(5,'99100002-203f-11f1-95b5-0242ac110002',5,'VNG Backend Position','Build backend for gaming platform','VISIBLE','2026-03-15 17:16:31'),(6,'99100003-203f-11f1-95b5-0242ac110002',6,'VNPT DevOps Job','Manage infrastructure systems','VISIBLE','2026-03-15 17:16:31'),(7,'99100004-203f-11f1-95b5-0242ac110002',7,'Viettel AI Recruitment','Join AI research team','VISIBLE','2026-03-15 17:16:31'),(8,'99100000-203f-11f1-95b5-0242ac110002',8,'Java Backend Developer','Great opportunity for Java devs','VISIBLE','2026-03-15 17:16:31'),(9,'99100001-203f-11f1-95b5-0242ac110002',9,'React Frontend Developer','Hiring ReactJS developers','VISIBLE','2026-03-15 17:16:31'),(10,'99100002-203f-11f1-95b5-0242ac110002',10,'Game Backend Engineer','Join FPT Software backend team','VISIBLE','2026-03-15 17:16:31'),(11,'99100003-203f-11f1-95b5-0242ac110002',11,'DevOps Engineer','Work on large e-commerce system','VISIBLE','2026-03-15 17:16:31'),(12,'99100004-203f-11f1-95b5-0242ac110002',12,'AI Engineer','Build backend for gaming platform','VISIBLE','2026-03-15 17:16:31');
 /*!40000 ALTER TABLE `forum_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -712,4 +679,5 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-27 16:49:58
+-- Dump completed on 2026-03-16  0:42:00
+-- Dump completed on 2026-03-19 13:53:48
