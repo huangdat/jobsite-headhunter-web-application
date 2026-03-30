@@ -56,7 +56,7 @@ public class PostReactionServiceImpl implements PostReactionService {
                 });
 
         if (post.getStatus() == null ||
-                !post.getStatus().name().equals("VISIBLE")) {
+                !post.getStatus().name().equals("PUBLISHED")) {
             log.warn("Post is not visible. PostId: {}, Status: {}",
                     req.getPostId(), post.getStatus());
             throw new AppException(ErrorCode.POST_NOT_FOUND);
