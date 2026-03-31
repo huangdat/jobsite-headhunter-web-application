@@ -8,6 +8,7 @@ import type {
   CVManagementState,
   PrivacyLevel,
   UseCVManagementReturn,
+  CVFile,
 } from "../types";
 import {
   uploadCVFile,
@@ -65,7 +66,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
         if (isActive) {
           setState((prev) => ({
             ...prev,
-            files: cvResponse.success ? cvResponse.data : [],
+            files: cvResponse.success ? cvResponse.data || [] : [],
             profile: {
               ...prev.profile,
               strength: strengthResponse.success
@@ -108,7 +109,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
 
       setState((prev) => ({
         ...prev,
-        files: cvResponse.success ? cvResponse.data : [],
+        files: cvResponse.success ? cvResponse.data || [] : [],
         profile: {
           ...prev.profile,
           strength: strengthResponse.success
@@ -166,16 +167,15 @@ export const useCVManagement = (): UseCVManagementReturn => {
       try {
         const response = await uploadCVFile(file);
 
-        if (response.success && response.file) {
+        if (response.success) {
+          // FIX LỖI: Gọi refreshData để đồng bộ mảng files chuẩn từ server (tránh lỗi lệch type)
+          await refreshData();
+
           setState((prev) => ({
             ...prev,
-            files: [response.file!, ...prev.files],
             isUploading: false,
             uploadProgress: 100,
           }));
-
-          // Refresh profile strength after successful upload
-          await refreshData();
         } else {
           setState((prev) => ({
             ...prev,
@@ -210,7 +210,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
       if (response.success) {
         setState((prev) => ({
           ...prev,
-          files: prev.files.filter((f) => f.id !== fileId),
+          files: prev.files.filter((f: CVFile) => f.id !== fileId),
           isLoading: false,
         }));
       } else {
@@ -273,7 +273,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
         // Update file active status
         setState((prev) => ({
           ...prev,
-          files: prev.files.map((f) => ({
+          files: prev.files.map((f: CVFile) => ({
             ...f,
             isActive: f.id === fileId,
           })),
@@ -360,7 +360,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
 };
 
 /**
- * Simplified hook for CV upload (if needed separately)
+ * Simplified hook for CV upload
  */
 export const useCVUpload = () => {
   const [isUploading, setIsUploading] = useState(false);

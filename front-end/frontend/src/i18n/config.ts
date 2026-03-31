@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-// Import English namespaces (21 consolidated files)
+// Import English namespaces (22 consolidated files)
 import enAria from "./locales/en/aria.json";
 import enAuth from "./locales/en/auth.json";
 import enBusiness from "./locales/en/business.json";
@@ -23,8 +23,9 @@ import enStatuses from "./locales/en/statuses.json";
 import enUi from "./locales/en/ui.json";
 import enUsers from "./locales/en/users.json";
 import enValidation from "./locales/en/validation.json";
+import enApplications from "./locales/en/applications.json";
 
-// Import Vietnamese namespaces (21 consolidated files)
+// Import Vietnamese namespaces (22 consolidated files)
 import viAria from "./locales/vi/aria.json";
 import viAuth from "./locales/vi/auth.json";
 import viBusiness from "./locales/vi/business.json";
@@ -46,12 +47,14 @@ import viStatuses from "./locales/vi/statuses.json";
 import viUi from "./locales/vi/ui.json";
 import viUsers from "./locales/vi/users.json";
 import viValidation from "./locales/vi/validation.json";
+import viApplications from "./locales/vi/applications.json";
 
 const resources = {
   en: {
     translation: {
       ...enCommon,
       ...enAria,
+      applications: enApplications,
       auth: enAuth,
       business: enBusiness,
       candidate: enCandidate,
@@ -72,11 +75,15 @@ const resources = {
       users: enUsers,
       validation: enValidation,
     },
+    candidate: enCandidate,
+    profile: enProfile,
+    cv: enCv,
   },
   vi: {
     translation: {
       ...viCommon,
       ...viAria,
+      applications: viApplications,
       auth: viAuth,
       business: viBusiness,
       candidate: viCandidate,
@@ -97,6 +104,9 @@ const resources = {
       users: viUsers,
       validation: viValidation,
     },
+    candidate: viCandidate,
+    profile: viProfile,
+    cv: viCv,
   },
 };
 

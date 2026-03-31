@@ -180,7 +180,16 @@ export function JobDetailPage() {
                 variant="primary"
                 size="lg"
                 className="flex-1 shadow-lg shadow-emerald-500/30"
-                onClick={() => navigate("/login")}
+                onClick={() => {
+                  if (isAuthenticated) {
+                    navigate(`/jobs/${job.id}/apply`);
+                  } else {
+                    toast.info(t("jobs.toast.signInRequired"));
+                    navigate("/login", {
+                      state: { from: `/jobs/${job.id}/apply` },
+                    });
+                  }
+                }}
               >
                 {t("detail.applyNow")}
               </Button>

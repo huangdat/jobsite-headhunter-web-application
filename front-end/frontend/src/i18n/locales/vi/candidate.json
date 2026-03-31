@@ -78,6 +78,9 @@
       "breadcrumb": "QUẢN LÝ CV",
       "title": "Quản Lý CV",
       "subtitle": "Quản lý các hồ sơ chuyên môn và tối ưu hóa sức mạnh hồ sơ của bạn",
+      "messages": {
+        "uploading": "Đang tải lên CV..."
+      },
       "empty": {
         "headline": "Chưa tải lên CV nào",
         "description": "Nâng cao sự hiện diện chuyên môn của bạn. Tải lên CV mới nhất để bắt đầu phù hợp với các vị trí lãnh đạo cao cấp.",
@@ -89,7 +92,7 @@
         "bannerDetail": "{{filename}} đã được lưu vào hộp lưu trữ hồ sơ an toàn của bạn.",
         "activeResumes": "CV Hoạt Động",
         "filesUsed": "{{current}} trên {{total}} tệp được sử dụng",
-        "addAnother": "Thêm phiên bản khác",
+        "addAnother": "Thay đổi CV",
         "browseFiles": "Chọn Tệp"
       },
       "error": {

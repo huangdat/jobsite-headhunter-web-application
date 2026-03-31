@@ -315,6 +315,11 @@
   "promotionCodes": "Promotion Codes",
   "recruitmentReport": "Recruitment Report",
   "supportInbox": "Support Inbox",
+  "jobs": {
+    "toast": {
+      "signInRequired": "Please sign in to apply for this job"
+    }
+  },
   "defaults": {
     "location": "Location",
     "workingTime": "Working Time"

@@ -10,7 +10,7 @@ export function RecommendedJobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null); //new
 
   useEffect(() => {
     const fetchJobs = async () => {

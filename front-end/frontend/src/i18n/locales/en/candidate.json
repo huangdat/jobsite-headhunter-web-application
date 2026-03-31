@@ -78,6 +78,9 @@
       "breadcrumb": "CV MANAGEMENT",
       "title": "CV Management",
       "subtitle": "Manage your professional resumes and optimize your profile strength",
+      "messages": {
+        "uploading": "Uploading CV..."
+      },
       "empty": {
         "headline": "No resumes uploaded yet",
         "description": "Elevate your executive presence. Upload your latest CV to start matching with premium leadership roles.",
@@ -89,7 +92,7 @@
         "bannerDetail": "{{filename}} has been saved to your secure profile vault.",
         "activeResumes": "Active Resumes",
         "filesUsed": "{{current}} of {{total}} files used",
-        "addAnother": "Add another version",
+        "addAnother": "Change CV",
         "browseFiles": "Browse Files"
       },
       "error": {

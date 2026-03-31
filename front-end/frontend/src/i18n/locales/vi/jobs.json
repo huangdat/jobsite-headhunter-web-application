@@ -315,6 +315,11 @@
   "promotionCodes": "[VI] Promotion Codes",
   "recruitmentReport": "[VI] Recruitment Report",
   "supportInbox": "[VI] Support Inbox",
+  "jobs": {
+    "toast": {
+      "signInRequired": "Vui lòng đăng nhập để nộp đơn xin việc này"
+    }
+  },
   "defaults": {
     "location": "defaults.location",
     "workingTime": "defaults.workingTime"
