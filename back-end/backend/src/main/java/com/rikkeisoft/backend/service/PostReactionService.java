@@ -41,5 +41,5 @@ public interface PostReactionService {
      *         ({@code CREATED}, {@code REMOVED}, or {@code UPDATED}), the currently active
      *         reaction type (or {@code null} if removed), and the updated aggregate reaction counts.
      */
-    ReactionResp togglePostReaction(PostReactionReq req);
+   ReactionResp togglePostReaction(PostReactionReq req, String userId);
 }

@@ -1,6 +1,10 @@
 import { apiClient } from "@/shared/utils/axios";
-import type { UserDetail } from "@/features/users/types/user.types";
-import { API_ENDPOINTS } from "@/features/users/constants";
+import type {
+  UserDetail,
+  UserStatus,
+  UserRole,
+} from "@/features/users/types/user.types";
+import { API_ENDPOINTS } from "@/lib/constants";
 
 /**
  * Generic API response wrapper for backend responses
@@ -38,45 +42,36 @@ export interface PagedResponse<T> {
  *
  * Mapping:
  * - Backend "ACTIVE" → Frontend "ACTIVE"
- * - Backend "SUSPENDED" → Frontend "LOCKED" (account is disabled/locked)
- * - Backend "PENDING" → Frontend "ACTIVE" (not yet verified but usable)
+ * - Backend "SUSPENDED" → Frontend "SUSPENDED" (account is disabled/locked)
+ * - Backend "PENDING" → Frontend "PENDING" (not yet verified)
  * - Backend "DELETED" → Should not appear in search results
  */
-const mapBackendStatus = (backendStatus: string): "ACTIVE" | "LOCKED" => {
-  const statusMap: Record<string, "ACTIVE" | "LOCKED"> = {
+const mapBackendStatus = (backendStatus: string): UserStatus => {
+  const statusMap: Record<string, UserStatus> = {
     ACTIVE: "ACTIVE",
-    PENDING: "ACTIVE", // Treat pending as active for display
-    SUSPENDED: "LOCKED", // Backend suspended = frontend locked
-    DELETED: "LOCKED", // Fallback for edge cases
+    PENDING: "PENDING",
+    SUSPENDED: "SUSPENDED",
+    DELETED: "DELETED",
   };
   // eslint-disable-next-line security/detect-object-injection
   return statusMap[backendStatus] || "ACTIVE";
 };
 
 /**
- * Adapter: Transform backend UserDetail to frontend UserDetail
+ * Adapter: Transform backend user response to frontend UserDetail
  * @internal
  *
  * Handles:
  * - Status enum conversion (AccountStatus → UserStatus)
- * - Role array handling (backend returns Set<String>, frontend needs single role)
+ * - Role type casting (ensure UserRole type)
  */
-const adaptUserDetail = (
-  backendUser: Omit<UserDetail, "status">
-): UserDetail => {
+const adaptUserDetail = (backendUser: UserDetail): UserDetail => {
   return {
     ...backendUser,
-    // Convert backend AccountStatus enum to frontend UserStatus
-    status: mapBackendStatus(backendUser.status as string),
-    // If backend returns multiple roles (Set<String>), take first one
-    // This assumes business logic: users can have multiple roles but we display primary
-    role:
-      Array.isArray((backendUser as Record<string, unknown>).roles) &&
-      ((backendUser as Record<string, unknown>).roles as unknown[]).length > 0
-        ? ((
-            (backendUser as Record<string, unknown>).roles as unknown[]
-          )[0] as string)
-        : backendUser.role || "CANDIDATE",
+    // Ensure status is properly mapped
+    status: mapBackendStatus(backendUser.status),
+    // Ensure role is properly typed as UserRole
+    role: backendUser.role as UserRole,
   };
 };
 

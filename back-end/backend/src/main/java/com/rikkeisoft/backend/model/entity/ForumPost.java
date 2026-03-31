@@ -24,7 +24,7 @@ public class ForumPost {
     Account author;
 
     @ManyToOne
-    @JoinColumn(name = "job_id", nullable = false)
+    @JoinColumn(name = "job_id", nullable = true )
     Job job;
 
     @Column(nullable = false)
@@ -35,8 +35,10 @@ public class ForumPost {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    PostStatus status = PostStatus.VISIBLE;
+    PostStatus status = PostStatus.DRAFT;
 
     LocalDateTime createdAt;
+
+    LocalDateTime deletedAt;
 
 }

@@ -18,22 +18,22 @@ const AccountInfoCard: React.FC<AccountInfoCardProps> = ({ user }) => {
     PENDING: {
       bg: "bg-yellow-100",
       text: "text-yellow-800",
-      label: t("statuses.pending"),
+      label: t("statuses.PENDING"),
     },
     ACTIVE: {
       bg: "bg-green-100",
       text: "text-green-800",
-      label: t("statuses.active"),
+      label: t("statuses.ACTIVE"),
     },
     SUSPENDED: {
       bg: "bg-red-100",
       text: "text-red-800",
-      label: t("statuses.suspended"),
+      label: t("statuses.SUSPENDED"),
     },
     DELETED: {
       bg: "bg-slate-100",
       text: "text-slate-800",
-      label: t("statuses.deleted"),
+      label: t("statuses.DELETED"),
     },
   };
 

@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { TrendingUp, CheckCircle2 } from "lucide-react";
 
 export interface BestPractice {
@@ -66,7 +66,7 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
   isLoading = false,
   className = "",
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
 
   if (isLoading) {
     return (
@@ -96,13 +96,10 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            {t("business.bestpractice.title", "Best Practices")}
+            {t("business.bestpractice.title")}
           </h3>
           <p className="text-xs text-slate-600">
-            {t(
-              "business.bestpractice.subtitle",
-              "Proven strategies for success"
-            )}
+            {t("business.bestpractice.subtitle")}
           </p>
         </div>
       </div>
@@ -116,12 +113,12 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
           >
             {/* Practice Title */}
             <h4 className="mb-2 font-semibold text-slate-900">
-              {t(practice.title, practice.title)}
+              {t(practice.title)}
             </h4>
 
             {/* Practice Description */}
             <p className="mb-3 text-sm text-slate-700">
-              {t(practice.description, practice.description)}
+              {t(practice.description)}
             </p>
 
             {/* Tips */}
@@ -133,7 +130,7 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
                     className="flex items-start gap-2 text-sm text-slate-700"
                   >
                     <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
-                    <span>{t(tip, tip)}</span>
+                    <span>{t(tip)}</span>
                   </li>
                 ))}
               </ul>
@@ -147,13 +144,10 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
         <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />
         <div>
           <p className="text-xs font-semibold text-emerald-900">
-            {t("business.bestpractice.follow_tips", "Follow these practices")}
+            {t("business.bestpractice.follow_tips")}
           </p>
           <p className="mt-1 text-xs text-emerald-800">
-            {t(
-              "business.bestpractice.follow_tips_desc",
-              "to establish trust with recruiters and maximize opportunities"
-            )}
+            {t("business.bestpractice.follow_tips_desc")}
           </p>
         </div>
       </div>
@@ -162,3 +156,4 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
 };
 
 export default CompanyBestPractices;
+

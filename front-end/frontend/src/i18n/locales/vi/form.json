@@ -1,0 +1,41 @@
+{
+  "validation": {
+    "fullNameRequired": "Yêu cầu họ và tên",
+    "phoneNumberRequired": "Yêu cầu số điện thoại",
+    "phoneNumberInvalid": "Số điện thoại không hợp lệ",
+    "bankNameRequired": "Yêu cầu tên ngân hàng",
+    "accountNumberRequired": "Yêu cầu số tài khoản",
+    "accountHolderNameRequired": "Yêu cầu tên chủ tài khoản"
+  },
+  "section": {
+    "personalInfo": "Thông tin cá nhân",
+    "personalInfoDesc": "Mô tả thông tin cá nhân",
+    "bankingInfo": "Thông tin ngân hàng",
+    "bankingInfoDesc": "Mô tả thông tin ngân hàng"
+  },
+  "label": {
+    "fullName": "Họ và tên",
+    "phoneNumber": "Số điện thoại",
+    "bankName": "Tên ngân hàng",
+    "accountNumber": "Số tài khoản",
+    "accountHolderName": "Tên chủ tài khoản",
+    "swiftCode": "Mã Swift"
+  },
+  "placeholder": {
+    "fullName": "Nhập họ và tên",
+    "phoneNumber": "Nhập số điện thoại",
+    "bankName": "Nhập tên ngân hàng",
+    "accountNumber": "Nhập số tài khoản",
+    "accountHolderName": "Nhập tên chủ tài khoản",
+    "swiftCode": "Nhập mã Swift"
+  },
+  "help": {
+    "swiftCode": "Mã Swift giúp xác định ngân hàng",
+    "autoSave": "Tự động lưu thông tin"
+  },
+  "register": {
+    "signIn": "Đăng nhập",
+    "joinNetwork": "Tham gia mạng lưới",
+    "professional": "Đăng ký chuyên nghiệp"
+  }
+}

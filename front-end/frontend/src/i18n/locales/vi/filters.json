@@ -1,0 +1,9 @@
+{
+  "filterRole": "Lọc theo vai trò",
+  "filterStatus": "Lọc theo trạng thái",
+  "filterUsers": "Lọc theo người dùng",
+  "filterAllRoles": "Lọc tất cả vai trò",
+  "filterAllStatus": "Lọc tất cả trạng thái",
+  "applyFilter": "Áp dụng bộ lọc",
+  "resetFilter": "Đặt lại bộ lọc"
+}

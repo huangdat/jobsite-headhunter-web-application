@@ -36,8 +36,7 @@
     "submitted": "Hồ sơ doanh nghiệp của bạn đã được gửi để xem xét."
   },
   "error": {
-    "validation": "Vui lòng sửa các lỗi dưới đây",
-    "submit_failed": "Không thể gửi hồ sơ. Vui lòng thử lại."
+    "validation": "Vui lòng sửa các lỗi dưới đây"
   },
   "verification": {
     "status": "Trạng Thái Xác Minh",
@@ -48,11 +47,15 @@
     "submitted": "Đã Gửi",
     "submitted_desc": "Hồ sơ của bạn đang chờ xem xét",
     "under_review": "Đang Xem Xét",
-    "under_review_desc": "Quản trị viên đang xem xét thông tin của bạn",
     "approved": "Đã Duyệt",
     "approved_desc": "Xác minh hồ sơ hoàn tất",
+    "approved_title": "Xác Minh Được Phê Duyệt",
+    "approved_message": "Chúc mừng! Hồ sơ doanh nghiệp của bạn đã được xác minh.",
     "rejected": "Bị Từ Chối",
-    "rejected_desc": "Hồ sơ của bạn cần được sửa đổi"
+    "rejected_desc": "Hồ sơ của bạn cần được sửa đổi",
+    "rejected_title": "Xác Minh Bị Từ Chối",
+    "in_progress": "Đang Xác Minh",
+    "title": "Xác minh"
   },
   "documents": {
     "title": "Tài Liệu Đã Gửi",
@@ -63,22 +66,43 @@
     "bank_statement": "Sao Kê Ngân Hàng",
     "other": "Tài Liệu Khác",
     "no_documents": "Chưa có tài liệu nào được tải lên",
-    "upload_label": "Tải Lên Tài Liệu",
-    "delete_confirm": "Bạn có chắc chắn muốn xóa tài liệu này?",
     "download": "Tải Xuống",
     "delete": "Xóa"
+  },
+  "document": {
+    "no_documents": "Chưa có tài liệu nào được tải lên",
+    "no_documents_desc": "Tải lên các tài liệu doanh nghiệp để xác minh công ty của bạn",
+    "submitted": "Tài Liệu Đã Gửi",
+    "submitted_desc": "Các tài liệu của bạn đang chờ xác minh",
+    "verified": "Đã Xác Minh",
+    "uploaded": "Đã Tải Lên",
+    "download": "Tải Xuống Tài Liệu",
+    "delete": "Xóa Tài Liệu",
+    "confirm": "Bạn có chắc chắn muốn xóa tài liệu này?",
+    "cancel": "Hủy",
+    "deleting": "Đang Xóa...",
+    "delete_error": "Không thể xóa tài liệu. Vui lòng thử lại."
   },
   "strength": {
     "title": "Độ Mạnh Hồ Sơ",
     "subtitle": "Hoàn thành hồ sơ của bạn để tối đa hóa khả năng hiển thị",
     "no_data": "Không có dữ liệu hồ sơ",
-    "completed_items": "Đã Hoàn Thành",
-    "total_items": "Tổng Mục",
-    "strengthen_profile": "Tăng Cường Hồ Sơ"
+    "complete": "Hồ Sơ Hoàn Chỉnh",
+    "of": "/ ",
+    "items": "mục",
+    "excellent": "Xuất Sắc",
+    "good": "Tốt",
+    "incomplete": "Chưa Hoàn Chỉnh",
+    "breakdown": "Chi Tiết Độ Mạnh",
+    "next_action": "Hành Động Tiếp Theo",
+    "updated": "Cập Nhật Lần Cuối"
   },
   "optimization": {
     "title": "Mẹo Tối Ưu Hóa",
     "subtitle": "Những cách đã chứng minh để cải thiện hồ sơ của bạn",
+    "start_here": "Bắt Đầu Từ Đây",
+    "additional": "Mẹo Bổ Sung",
+    "info": "Mẫu Vàng Để Thành Công",
     "complete_profile": "Hoàn Thành Hồ Sơ Của Bạn",
     "complete_profile_desc": "Điền vào tất cả các trường bắt buộc để cải thiện khả năng hiển thị hồ sơ",
     "add_document": "Thêm Tài Liệu Doanh Nghiệp",
@@ -86,11 +110,7 @@
     "verify_info": "Xác Minh Thông Tin",
     "verify_info_desc": "Đảm bảo tất cả thông tin chính xác và cập nhật",
     "add_photos": "Thêm Ảnh Chuyên Nghiệp",
-    "add_photos_desc": "Bao gồm ảnh công ty để cải thiện hồ sơ của bạn",
-    "high_priority": "Ưu Tiên Cao",
-    "medium_priority": "Ưu Tiên Trung Bình",
-    "low_priority": "Ưu Tiên Thấp",
-    "impact": "Tăng Tác Động"
+    "add_photos_desc": "Bao gồm ảnh công ty để cải thiện hồ sơ của bạn"
   },
   "bestpractice": {
     "title": "Những Quy Chuẩn Tốt Nhất",
@@ -113,15 +133,7 @@
     "tip_high_quality": "Gửi bản quét tài liệu chất lượng cao",
     "tip_organized": "Sắp xếp tài liệu theo danh mục"
   },
-  "error_messages": {
-    "network_error": "Lỗi mạng. Vui lòng kiểm tra kết nối của bạn.",
-    "invalid_input": "Vui lòng nhập thông tin hợp lệ",
-    "required_field": "Trường này là bắt buộc",
-    "invalid_email": "Vui lòng nhập email hợp lệ",
-    "invalid_phone": "Vui lòng nhập số điện thoại hợp lệ",
-    "invalid_tax_id": "Vui lòng nhập mã số thuế hợp lệ",
-    "invalid_website": "Vui lòng nhập URL trang web hợp lệ"
-  },
+  "failedToLoadProfile": "Không thể tải hồ sơ",
   "loading": {
     "profile": "Đang tải hồ sơ...",
     "documents": "Đang tải tài liệu...",
@@ -140,5 +152,10 @@
   },
   "state": {
     "loading": "Đang tải thông tin hồ sơ..."
+  },
+  "business": {
+    "verification": {
+      "title": "Xác minh"
+    }
   }
 }

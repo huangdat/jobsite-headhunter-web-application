@@ -1,0 +1,20 @@
+{
+  "username": "Ví dụ: alex.n",
+  "password": "Ví dụ: Mật khẩu",
+  "currentPassword": "Ví dụ: Mật khẩu hiện tại",
+  "newPassword": "Ví dụ: Mật khẩu mới",
+  "confirmPassword": "Ví dụ: Xác nhận mật khẩu",
+  "name": "Ví dụ: Tên",
+  "phone": "Ví dụ: Điện thoại",
+  "email": "Ví dụ: Email",
+  "companyName": "Ví dụ: Tên công ty",
+  "taxId": "Ví dụ: Mã số thuế",
+  "companyWebsite": "Ví dụ: Website công ty",
+  "commissionRate": "Ví dụ: Tỷ lệ hoa hồng",
+  "jobTitle": "Ví dụ: Tiêu đề công việc",
+  "experience": "Ví dụ: Kinh nghiệm",
+  "location": "Ví dụ: Vị trí",
+  "salaryMin": "Ví dụ: Lương tối thiểu",
+  "salaryMax": "Ví dụ: Lương tối đa",
+  "bio": "Ví dụ: Tiểu sử"
+}

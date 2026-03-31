@@ -80,7 +80,7 @@ public class JobQueryServiceImpl implements JobQueryService {
                 .experience(job.getExperience())
                 .salaryMin(job.getSalaryMin())
                 .salaryMax(job.getSalaryMax())
-                .negotiable(job.isNegotiable())
+                .negotiable(job.getNegotiable ())
                 .currency(job.getCurrency() != null ? job.getCurrency().name() : null)
                 .quantity(job.getQuantity())
                 .rankLevel(job.getRankLevel())

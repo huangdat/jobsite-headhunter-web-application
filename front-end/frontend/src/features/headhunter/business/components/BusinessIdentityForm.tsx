@@ -4,7 +4,7 @@
  */
 
 import React, { useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type { BusinessFormData } from "../types/business.types";
 import { COMPANY_SIZE_OPTIONS } from "../types/business.types";
 import { FormValidationError } from "./FormValidationErrors";
@@ -44,7 +44,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
   cancelButtonText = "business.form.cancel",
   onCancel,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
   const isDisabled = isLoading || isSubmitting || isReadOnly;
 
   // Memoize company size options

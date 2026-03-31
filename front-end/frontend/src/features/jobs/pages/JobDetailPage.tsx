@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useJobsTranslation, useJobDetailQuery } from "@/shared/hooks";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -9,61 +9,33 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
 import {
-  fetchJobDetail,
   fetchSavedJobs,
   removeSavedJob,
   saveJobPost,
 } from "../services/jobsApi";
-import type { JobDetail } from "../types";
 import { formatSalaryRange } from "../utils";
 
 export function JobDetailPage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const [job, setJob] = useState<JobDetail | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [isSaved, setIsSaved] = useState(false);
   const [isSaveLoading, setIsSaveLoading] = useState(false);
 
+  // Validate and parse job ID
+  const jobId = useMemo(() => {
+    if (!id) return null;
+    const parsed = Number(id);
+    return Number.isNaN(parsed) ? null : parsed;
+  }, [id]);
+
+  // React Query handles loading and error states automatically
+  const { data: job, isLoading, error } = useJobDetailQuery(jobId);
+
+  // Fetch saved jobs status when authenticated
   useEffect(() => {
-    if (!id) {
-      setError(t("detail.notFound"));
-      setIsLoading(false);
-      return;
-    }
-
-    const jobId = Number(id);
-    if (Number.isNaN(jobId)) {
-      setError(t("detail.notFound"));
-      setIsLoading(false);
-      return;
-    }
-
-    setIsLoading(true);
-    fetchJobDetail(jobId)
-      .then((data) => {
-        setJob(data);
-        setError(null);
-      })
-      .catch(() => {
-        setError(t("detail.unableToLoad"));
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [id, t]);
-
-  useEffect(() => {
-    if (!id || !isAuthenticated) {
-      setIsSaved(false);
-      return;
-    }
-
-    const jobId = Number(id);
-    if (Number.isNaN(jobId)) {
+    if (!jobId || !isAuthenticated || !job) {
       setIsSaved(false);
       return;
     }
@@ -83,7 +55,7 @@ export function JobDetailPage() {
     return () => {
       active = false;
     };
-  }, [id, isAuthenticated]);
+  }, [jobId, isAuthenticated, job]);
 
   if (isLoading) {
     return (
@@ -93,11 +65,11 @@ export function JobDetailPage() {
     );
   }
 
-  if (error || !job) {
+  if (error || !job || !jobId) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
         <p className="text-lg text-slate-500">
-          {error ?? t("detail.notFound")}
+          {error ? t("detail.unableToLoad") : t("detail.notFound")}
         </p>
         <Button
           variant="link"
@@ -330,7 +302,7 @@ export function JobDetailPage() {
             </div>
           </div>
 
-          <aside className="space-y-6 lg:sticky lg:top-24">
+          <aside className="space-y-6">
             <section className="rounded-3xl bg-white p-6 shadow-lg">
               <p className="text-sm uppercase tracking-wide text-slate-500">
                 {t("detail.companySection")}
@@ -382,6 +354,20 @@ export function JobDetailPage() {
                   </div>
                 ))}
               </dl>
+            </section>
+
+            <section className="rounded-3xl bg-white p-6 shadow-lg">
+              <p className="text-sm uppercase tracking-wide text-slate-500">Contact</p>
+              <p className="mt-2 text-lg font-semibold text-slate-900">{job.headhunterName ?? "Recruiter not available"}</p>
+              <p className="text-sm text-slate-500">{job.companyAddress ?? job.addressDetail}</p>
+              <Button
+                variant="primary"
+                size="lg"
+                className="mt-6 w-full justify-center shadow-lg shadow-slate-900/20"
+                onClick={() => navigate("/login")}
+              >
+                Send CV to recruiter
+              </Button>
             </section>
           </aside>
         </div>
