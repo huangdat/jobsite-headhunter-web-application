@@ -10,6 +10,7 @@ export interface CandidateProfile {
   email?: string;
   phone?: string;
   currentTitle: string;
+  cvUrl?: string;
   yearsOfExperience: number | null;
   currentStatus: CandidateAvailabilityStatus;
   expectedSalaryMin: number | null;
@@ -72,6 +73,7 @@ export const DEFAULT_PROFILE_VALUES: CandidateProfileFormValues = {
   email: "",
   phone: "",
   currentTitle: "",
+  cvUrl: "",
   yearsOfExperience: null,
   currentStatus: "OPEN_FOR_WORK",
   expectedSalaryMin: null,

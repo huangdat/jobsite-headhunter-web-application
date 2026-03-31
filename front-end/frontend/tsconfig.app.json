@@ -9,7 +9,23 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"] // Explicitly define the alias for TypeScript
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@types/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@services/*": ["./src/services/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@config/*": ["./src/config/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@store/*": ["./src/store/*"],
+      "@features/*": ["./src/features/*"]
     },
 
     "moduleResolution": "bundler",

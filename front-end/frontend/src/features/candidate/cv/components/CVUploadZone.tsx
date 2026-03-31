@@ -5,6 +5,7 @@
 
 import React, { useState, useCallback } from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { validateCVFile } from "../services/cvApi";
 import type { CVUploadZoneProps } from "../types";
 import { CVErrorBanner } from "./CVErrorBanner";
 
@@ -20,7 +21,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 }) => {
   const { t } = useCandidateTranslation();
   const [isDragging, setIsDragging] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); //new
   const [localError, setLocalError] = useState<string | null>(null);
 
   const getFormattedSize = (bytes: number) => {
@@ -33,22 +34,16 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 
   const validateFile = useCallback(
     (file: File): boolean => {
-      // Check file size
-      if (file.size > maxFileSize) {
-        setLocalError("validation.fileTooLarge");
+      const result = validateCVFile(
+        file,
+        maxFileSize,
+        supportedFormats as string[]
+      );
+      if (!result.valid) {
+        setLocalError(result.error ?? "");
         setSelectedFile(file);
         return false;
       }
-
-      // Check file format
-      const fileExtension = (file.name.split(".").pop()?.toLowerCase() ||
-        "") as string;
-      if (!supportedFormats.includes(fileExtension as never)) {
-        setLocalError("validation.invalidFileFormat");
-        setSelectedFile(file);
-        return false;
-      }
-
       return true;
     },
     [maxFileSize, supportedFormats]
@@ -159,14 +154,12 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                 </span>
               </div>
             </div>
-
             <h3 className="text-lg font-bold text-slate-900">
               {t("cv.management.error.banner")}
             </h3>
             <p className="text-sm text-slate-600">
               {t("cv.management.error.fileFormatInvalid")}
             </p>
-
             {/* File Preview with Error */}
             <div className="bg-red-50/10 border border-red-200/20 rounded-lg p-4 mx-auto max-w-sm mt-4">
               <div className="flex items-center gap-3">
@@ -178,6 +171,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                     {selectedFile.name}
                   </p>
                   <p className="text-xs text-red-700 font-semibold">
+                    {getFormattedSize(selectedFile.size)} • {displayError}
                     {selectedFile.size} •{" "}
                     {displayError === "validation.fileTooLarge"
                       ? t("validation.fileTooLargeShort")
@@ -195,8 +189,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                   </span>
                 </button>
               </div>
-            </div>
-
+            </div>{" "}
             {/* Retry Button */}
             <button
               onClick={handleBrowseClick}
@@ -261,4 +254,3 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 };
 
 export default CVUploadZone;
-

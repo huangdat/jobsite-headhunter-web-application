@@ -11,6 +11,7 @@ import enJobs from "./locales/en/jobs.json";
 import enCandidate from "./locales/en/candidate.json";
 import enBusiness from "./locales/en/business.json";
 import enCommission from "./locales/en/commission.json";
+import enApplications from "./locales/en/applications.json";
 import enAria from "./locales/en/aria.json";
 import enDescriptions from "./locales/en/descriptions.json";
 import enCheckboxLabels from "./locales/en/checkboxLabels.json";
@@ -63,6 +64,7 @@ import viJobs from "./locales/vi/jobs.json";
 import viCandidate from "./locales/vi/candidate.json";
 import viBusiness from "./locales/vi/business.json";
 import viCommission from "./locales/vi/commission.json";
+import viApplications from "./locales/vi/applications.json";
 import viAria from "./locales/vi/aria.json";
 import viDescriptions from "./locales/vi/descriptions.json";
 import viCheckboxLabels from "./locales/vi/checkboxLabels.json";
@@ -120,6 +122,7 @@ const resources = {
       candidate: enCandidate,
       business: enBusiness,
       commission: enCommission,
+      ...enApplications,
       badges: enBadges,
       benefits: enBenefits,
       breadcrumb: enBreadcrumb,
@@ -157,13 +160,17 @@ const resources = {
       validation: enValidation,
       warnings: enWarnings,
     },
+    candidate: enCandidate,
+    profile: enProfile,
+    cv: enCv,
   },
   vi: {
     translation: {
-      ...viCommon,
+      ...viCommon, //new
       ...viAria,
       ...viDescriptions,
       ...viCheckboxLabels,
+      ...viApplications,
       home: viHome,
       auth: viAuth,
       navigation: viNavigation,
@@ -209,6 +216,9 @@ const resources = {
       validation: viValidation,
       warnings: viWarnings,
     },
+    candidate: viCandidate,
+    profile: viProfile,
+    cv: viCv,
   },
 };
 

@@ -89,7 +89,7 @@
         "bannerDetail": "{{filename}} has been saved to your secure profile vault.",
         "activeResumes": "Active Resumes",
         "filesUsed": "{{current}} of {{total}} files used",
-        "addAnother": "Add another version",
+        "addAnother": "Change CV",
         "browseFiles": "Browse Files"
       },
       "error": {

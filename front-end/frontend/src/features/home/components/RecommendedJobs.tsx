@@ -5,11 +5,11 @@ import { getRecommendedJobs } from "@/shared/utils/jobService";
 import { MATCH_BADGE_COLORS, HOME_ICONS } from "../constants";
 
 export function RecommendedJobs() {
-  const { t } = useHomeTranslation();
+  const { t, currentLanguage } = useHomeTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null); //new
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -27,7 +27,7 @@ export function RecommendedJobs() {
     };
 
     fetchJobs();
-  }, [t]);
+  }, [currentLanguage?.code]);
   return (
     <section id="recommended" className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex justify-between items-center mb-8">
