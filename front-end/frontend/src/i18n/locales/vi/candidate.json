@@ -89,7 +89,7 @@
         "bannerDetail": "{{filename}} đã được lưu vào hộp lưu trữ hồ sơ an toàn của bạn.",
         "activeResumes": "CV Hoạt Động",
         "filesUsed": "{{current}} trên {{total}} tệp được sử dụng",
-        "addAnother": "Thêm phiên bản khác",
+        "addAnother": "Thay đổi CV",
         "browseFiles": "Chọn Tệp"
       },
       "error": {

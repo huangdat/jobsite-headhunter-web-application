@@ -1,10 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { useState } from "react";
+import { toast } from "sonner";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  RefreshCw,
+  Circle,
+  Lightbulb,
+  Info,
+  FileUp,
+} from "lucide-react"; // Import Lucide Icons
 import type {
   CandidateProfileFormValues,
   ProfileValidationErrors,
 } from "@/features/candidate/profile/types/profile.types";
 import { ProfessionalIdentity } from "@/features/candidate/profile/components/ProfessionalIdentity";
+import { profileApi } from "@/features/candidate/profile/services/profileApi";
 
 interface ProfileFormProps {
   values: CandidateProfileFormValues;
@@ -25,23 +38,12 @@ interface ProfileFormProps {
 
 const ProfileFormSkeleton = () => {
   return (
-    <div className="space-y-6">
-      <div className="h-24 animate-pulse rounded-2xl bg-slate-200" />
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
-        <div className="xl:col-span-8 space-y-4 rounded-2xl border border-slate-200 bg-white p-8">
-          <div className="h-8 w-1/3 animate-pulse rounded bg-slate-200" />
-          <div className="h-12 animate-pulse rounded bg-slate-100" />
-          <div className="grid grid-cols-2 gap-4">
-            <div className="h-12 animate-pulse rounded bg-slate-100" />
-            <div className="h-12 animate-pulse rounded bg-slate-100" />
-          </div>
-          <div className="h-36 animate-pulse rounded bg-slate-100" />
-        </div>
-        <div className="xl:col-span-4 space-y-4">
-          <div className="h-40 animate-pulse rounded-2xl bg-slate-200" />
-          <div className="h-40 animate-pulse rounded-2xl bg-slate-200" />
-          <div className="h-40 animate-pulse rounded-2xl bg-slate-200" />
-        </div>
+    <div className="space-y-6 animate-pulse">
+      <div className="h-2 overflow-hidden rounded-full bg-slate-200" />
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="h-4 w-1/3 rounded bg-slate-200 mb-4" />
+        <div className="h-3 w-2/3 rounded bg-slate-200 mb-6" />
+        <div className="h-9 w-28 rounded-lg bg-slate-200" />
       </div>
     </div>
   );
@@ -61,63 +63,64 @@ export function ProfileForm({
   onSave,
 }: ProfileFormProps) {
   const { t } = useCandidateTranslation();
+  const [isUploading, setIsUploading] = useState(false);
 
   if (loading) {
     return <ProfileFormSkeleton />;
   }
 
-  const hasValidationError = Object.keys(errors).length > 0;
+  const hasValidationError = Object.values(errors).some(Boolean);
+  const hasCV = !!values.cvUrl;
+
   const strengthWidthClass =
-    profileStrength >= 95
+    profileStrength >= 100
       ? "w-full"
-      : profileStrength >= 85
-        ? "w-10/12"
-        : profileStrength >= 70
-          ? "w-9/12"
-          : profileStrength >= 55
-            ? "w-7/12"
-            : profileStrength >= 40
-              ? "w-5/12"
-              : profileStrength >= 25
-                ? "w-3/12"
-                : "w-2/12";
+      : profileStrength >= 75
+        ? "w-9/12"
+        : profileStrength >= 50
+          ? "w-6/12"
+          : profileStrength >= 25
+            ? "w-3/12"
+            : "w-2/12";
 
   return (
     <div className="space-y-6">
-      {saveError ? (
+      {/* Alert Thông báo lỗi Save */}
+      {saveError && (
         <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
-          <span className="material-symbols-outlined text-lg!">report</span>
+          <AlertCircle className="h-5 w-5 mt-0.5" />
           <div>
             <p className="font-bold">{t("profile.alerts.saveErrorTitle")}</p>
             <p className="text-sm">{saveError}</p>
           </div>
         </div>
-      ) : null}
+      )}
 
-      {hasValidationError ? (
+      {/* Alert Lỗi Validation */}
+      {hasValidationError && (
         <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
-          <span className="material-symbols-outlined text-lg!">error</span>
+          <AlertCircle className="h-5 w-5 mt-0.5" />
           <div>
             <p className="font-bold">
               {t("profile.alerts.validationErrorTitle")}
             </p>
           </div>
         </div>
-      ) : null}
+      )}
 
-      {success ? (
+      {/* Alert Thành công khi Save Profile */}
+      {success && (
         <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-700">
-          <span className="material-symbols-outlined text-lg!">
-            check_circle
-          </span>
+          <CheckCircle2 className="h-5 w-5 mt-0.5" />
           <div>
             <p className="font-bold">{t("profile.alerts.saveSuccessTitle")}</p>
             <p className="text-sm">{t("profile.alerts.saveSuccessBody")}</p>
           </div>
         </div>
-      ) : null}
+      )}
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
+        {/* Main content */}
         <div className="xl:col-span-8">
           <ProfessionalIdentity
             values={values}
@@ -143,14 +146,21 @@ export function ProfileForm({
               className="h-11 w-auto px-8 text-sm"
               onClick={() => void onSave()}
             >
-              {saving
-                ? t("profile.actions.saving")
-                : t("profile.actions.saveChanges")}
+              {saving ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t("profile.actions.saving")}
+                </>
+              ) : (
+                t("profile.actions.saveChanges")
+              )}
             </Button>
           </div>
         </div>
 
+        {/* Sidebar */}
         <aside className="space-y-4 xl:col-span-4">
+          {/* Profile Strength */}
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
               <h3 className="text-sm font-black uppercase tracking-wide text-slate-600">
@@ -178,42 +188,113 @@ export function ProfileForm({
             </p>
           </div>
 
+          {/* CV Upload Box */}
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h3 className="mb-3 text-sm font-black uppercase tracking-wide text-slate-600">
-              {t("profile.sidebar.tipsTitle")}
-            </h3>
+            <div className="flex items-center gap-2 mb-2">
+              <FileUp className="h-4 w-4 text-slate-500" />
+              <h3 className="text-sm font-black uppercase tracking-wide text-slate-600">
+                {t("cv.management.title")}
+              </h3>
+            </div>
+            <p className="text-sm text-slate-600 mb-4">
+              {t("cv.management.empty.description")}
+            </p>
+
+            <input
+              id="profile-cv-input"
+              type="file"
+              accept=".pdf,.doc,.docx,.rtf"
+              className="hidden"
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                setIsUploading(true);
+
+                try {
+                  const url = await profileApi.uploadCV(file);
+                  if (url) {
+                    onFieldChange("cvUrl" as any, url as any);
+                    toast.success(t("cv.management.success.banner"));
+                  } else {
+                    toast.error(t("cv.management.error.banner"));
+                  }
+                } catch (err) {
+                  console.error("Upload error", err);
+                  toast.error(t("cv.management.error.banner"));
+                } finally {
+                  setIsUploading(false);
+                  (e.target as HTMLInputElement).value = "";
+                }
+              }}
+            />
+
+            <div className="flex items-center gap-3">
+              <Button
+                variant={hasCV ? "outline" : "primary"}
+                size="sm"
+                className={`h-10 px-6 font-bold cursor-pointer rounded-xl shadow-md transition-all active:scale-95 ${
+                  !hasCV
+                    ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                    : "border-emerald-600 text-emerald-600 hover:bg-emerald-50"
+                }`}
+                onClick={() =>
+                  document.getElementById("profile-cv-input")?.click()
+                }
+                disabled={isUploading}
+              >
+                {isUploading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {t("cv.management.messages.uploading")}
+                  </>
+                ) : hasCV ? (
+                  <>
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    {t("cv.management.success.addAnother")}
+                  </>
+                ) : (
+                  <>
+                    <FileUp className="mr-2 h-4 w-4" />
+                    {t("cv.management.empty.button")}
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+
+          {/* Profile Tips */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex items-center gap-2 mb-3">
+              <Lightbulb className="h-4 w-4 text-emerald-600" />
+              <h3 className="text-sm font-black uppercase tracking-wide text-slate-600">
+                {t("profile.sidebar.tipsTitle")}
+              </h3>
+            </div>
             <ul className="space-y-2 text-sm text-slate-600">
               <li className="flex gap-2">
-                <span className="material-symbols-outlined text-base! text-emerald-600">
-                  check_circle
-                </span>
+                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
                 {t("profile.sidebar.tipOne")}
               </li>
               <li className="flex gap-2">
-                <span className="material-symbols-outlined text-base! text-emerald-600">
-                  check_circle
-                </span>
+                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
                 {t("profile.sidebar.tipTwo")}
               </li>
               <li className="flex gap-2">
-                <span className="material-symbols-outlined text-base! text-slate-400">
-                  radio_button_unchecked
-                </span>
+                <Circle className="h-4 w-4 text-slate-400 shrink-0" />
                 {t("profile.sidebar.tipThree")}
               </li>
             </ul>
           </div>
 
+          {/* Insight Card */}
           <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-linear-to-br from-emerald-50 to-emerald-100 p-6 shadow-sm">
-            {/* Decorative Element */}
-            <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-emerald-200 opacity-20" />
-            <div className="absolute -bottom-4 -left-4 h-24 w-24 rounded-full bg-emerald-300 opacity-10" />
-
-            {/* Content */}
             <div className="relative z-10 space-y-2">
-              <p className="text-xs font-black uppercase tracking-widest text-emerald-700">
-                {t("profile.sidebar.insightEyebrow")}
-              </p>
+              <div className="flex items-center gap-2">
+                <Info className="h-4 w-4 text-emerald-700" />
+                <p className="text-xs font-black uppercase tracking-widest text-emerald-700">
+                  {t("profile.sidebar.insightEyebrow")}
+                </p>
+              </div>
               <p className="text-sm font-semibold leading-relaxed text-emerald-900">
                 {t("profile.sidebar.insightBody")}
               </p>

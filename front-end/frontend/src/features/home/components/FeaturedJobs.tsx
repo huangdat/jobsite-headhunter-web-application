@@ -6,10 +6,10 @@ import { getRandomLatestJobs } from "@/shared/utils/jobService";
 import { JOB_TYPE_COLORS } from "../constants";
 
 export function FeaturedJobs() {
-  const { t } = useHomeTranslation();
+  const { t, currentLanguage } = useHomeTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); //new
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -26,7 +26,7 @@ export function FeaturedJobs() {
     };
 
     fetchJobs();
-  }, [t]);
+  }, [currentLanguage?.code]);
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
       <h2 className="text-2xl font-bold mb-10">{t("featuredJobs.title")}</h2>
@@ -79,13 +79,12 @@ export function FeaturedJobs() {
           </div>
 
           <div className="text-center mt-12">
-            <Link
-              to="/jobs"
-              className="inline-block border px-6 py-3 rounded-xl hover:bg-gray-100 transition"
-            >
-              {t("featuredJobs.viewMore")}
-              dvddjvnzsdvnzsjk
-            </Link>
+              <Link
+                to="/jobs"
+                className="inline-block border px-6 py-3 rounded-xl hover:bg-gray-100 transition"
+              >
+                {t("featuredJobs.viewMore")}
+              </Link>
           </div>
         </>
       )}

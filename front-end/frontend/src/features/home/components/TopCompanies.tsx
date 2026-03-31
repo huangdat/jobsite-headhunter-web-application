@@ -7,7 +7,7 @@ import {
 import { COMPANY_LOGO_COLORS, HOME_SIZES } from "../constants";
 
 export function TopCompanies() {
-  const { t } = useHomeTranslation();
+  const { t, currentLanguage } = useHomeTranslation();
   const [companies, setCompanies] = useState<BusinessProfileResp[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export function TopCompanies() {
     };
 
     fetchCompanies();
-  }, [t]);
+  }, [currentLanguage?.code]); //new
 
   return (
     <section id="top-companies" className="bg-muted py-20">
