@@ -337,6 +337,37 @@ INSERT INTO `commission` VALUES (1,2,'55555555-5555-5555-5555-555555555555',1500
 UNLOCK TABLES;
 
 --
+-- Table structure for table `forum_category`
+--
+
+DROP TABLE IF EXISTS `forum_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `forum_category` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `active` bit(1) NOT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `description` text,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `soft_deleted` bit(1) NOT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK39vv5xmlh2hqdlh3g2ujja3od` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `forum_category`
+--
+
+LOCK TABLES `forum_category` WRITE;
+/*!40000 ALTER TABLE `forum_category` DISABLE KEYS */;
+INSERT INTO `forum_category` VALUES (1,_binary '','2026-03-27 09:33:03.000000','Chia sẻ kinh nghiệm và mẹo phỏng vấn IT','Kinh nghiệm phỏng vấn','kinh-nghiem-phong-van',_binary '\0','2026-03-27 09:33:03.000000'),(2,_binary '','2026-03-27 09:33:03.000000','Thảo luận về Java core, Spring Boot và backend','Lập trình Java','lap-trinh-java',_binary '\0','2026-03-27 09:33:03.000000'),(3,_binary '','2026-03-27 09:33:03.000000','HTML, CSS, JavaScript, React, Vue','Frontend Development','frontend-development',_binary '\0','2026-03-27 09:33:03.000000'),(4,_binary '','2026-03-27 09:33:03.000000','API, database, architecture, scalability','Backend Development','backend-development',_binary '\0','2026-03-27 09:33:03.000000'),(5,_binary '','2026-03-27 09:33:03.000000','CI/CD, Docker, Kubernetes, AWS, Azure','DevOps & Cloud','devops-cloud',_binary '\0','2026-03-27 09:33:03.000000'),(6,_binary '','2026-03-27 09:33:03.000000','MySQL, PostgreSQL, NoSQL, optimization','Database','database',_binary '\0','2026-03-27 09:33:03.000000'),(7,_binary '','2026-03-27 09:33:03.000000','Unit test, integration test, automation testing','Testing & QA','testing-qa',_binary '\0','2026-03-27 09:33:03.000000'),(8,_binary '','2026-03-27 09:33:03.000000','Định hướng nghề nghiệp và phát triển bản thân','Career Advice','career-advice',_binary '\0','2026-03-27 09:33:03.000000'),(9,_binary '','2026-03-27 09:33:03.000000','Review CV, portfolio và GitHub cá nhân','CV & Portfolio','cv-portfolio',_binary '\0','2026-03-27 09:33:03.000000'),(10,_binary '','2026-03-27 09:33:03.000000','Kinh nghiệm làm freelance và remote','Freelance & Remote','freelance-remote',_binary '\0','2026-03-27 09:33:03.000000'),(11,_binary '','2026-03-27 09:33:03.000000','Giải bài tập thuật toán và luyện coding interview','Thuật toán & Cấu trúc dữ liệu','dsa',_binary '\0','2026-03-27 09:33:03.000000'),(12,_binary '','2026-03-27 09:33:03.000000','Android, iOS, Flutter, React Native','Mobile Development','mobile-development',_binary '\0','2026-03-27 09:33:03.000000'),(13,_binary '','2026-03-27 09:33:03.000000','Machine learning, deep learning, data science','AI & Machine Learning','ai-machine-learning',_binary '\0','2026-03-27 09:33:03.000000'),(14,_binary '','2026-03-27 09:33:03.000000','Thảo luận chung về công nghệ và cuộc sống IT','Open Discussion','open-discussion',_binary '\0','2026-03-27 09:33:03.000000'),(15,_binary '','2026-03-27 09:33:03.000000','Hỏi đáp lỗi và cách debug trong lập trình','Bug & Debug','bug-debug',_binary '\0','2026-03-27 09:33:03.000000'),(16,_binary '\0','2026-03-27 09:33:03.000000','Unity, Unreal Engine và phát triển game','Game Development','game-development',_binary '\0','2026-03-27 09:33:03.000000'),(17,_binary '','2026-03-27 09:33:03.000000','Smart contract, crypto, Web3 development','Blockchain & Web3','blockchain-web3',_binary '\0','2026-03-27 09:33:03.000000'),(18,_binary '','2026-03-27 09:33:03.000000','Thiết kế hệ thống scalable và high-level design','System Design','system-design',_binary '\0','2026-03-27 09:33:03.000000'),(19,_binary '','2026-03-27 09:33:03.000000','Bảo mật ứng dụng, pentest, secure coding','Security','security',_binary '\0','2026-03-27 09:33:03.000000'),(20,_binary '\0','2026-03-27 09:33:03.000000','Danh mục đã ngừng sử dụng','Archived Category','archived-category',_binary '','2026-03-27 09:33:03.000000');
+/*!40000 ALTER TABLE `forum_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `forum_comment`
 --
 
@@ -387,6 +418,8 @@ CREATE TABLE `forum_post` (
   `content` text,
   `status` enum('DRAFT','PUBLISHED','ARCHIVED') DEFAULT 'DRAFT',
   `created_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `forum_category_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_post_author` (`author_account_id`),
   KEY `forum_post_job_id_fk` (`job_id`),
@@ -403,7 +436,7 @@ CREATE TABLE `forum_post` (
 
 LOCK TABLES `forum_post` WRITE;
 /*!40000 ALTER TABLE `forum_post` DISABLE KEYS */;
-INSERT INTO `forum_post` VALUES (1,'22222222-2222-2222-2222-222222222222',1,'Looking for Backend Developers','Great opportunity for Java devs','VISIBLE','2026-03-15 07:21:42'),(2,'33333333-3333-3333-3333-333333333333',2,'ReactJS Hiring','Hiring ReactJS developers','VISIBLE','2026-03-15 07:21:42'),(3,'99100000-203f-11f1-95b5-0242ac110002',3,'FPT Hiring Java Backend Dev','Join FPT Software backend team','VISIBLE','2026-03-15 17:16:31'),(4,'99100001-203f-11f1-95b5-0242ac110002',4,'Tiki Hiring React Dev','Work on large e-commerce system','VISIBLE','2026-03-15 17:16:31'),(5,'99100002-203f-11f1-95b5-0242ac110002',5,'VNG Backend Position','Build backend for gaming platform','VISIBLE','2026-03-15 17:16:31'),(6,'99100003-203f-11f1-95b5-0242ac110002',6,'VNPT DevOps Job','Manage infrastructure systems','VISIBLE','2026-03-15 17:16:31'),(7,'99100004-203f-11f1-95b5-0242ac110002',7,'Viettel AI Recruitment','Join AI research team','VISIBLE','2026-03-15 17:16:31'),(8,'99100000-203f-11f1-95b5-0242ac110002',8,'Java Backend Developer','Great opportunity for Java devs','VISIBLE','2026-03-15 17:16:31'),(9,'99100001-203f-11f1-95b5-0242ac110002',9,'React Frontend Developer','Hiring ReactJS developers','VISIBLE','2026-03-15 17:16:31'),(10,'99100002-203f-11f1-95b5-0242ac110002',10,'Game Backend Engineer','Join FPT Software backend team','VISIBLE','2026-03-15 17:16:31'),(11,'99100003-203f-11f1-95b5-0242ac110002',11,'DevOps Engineer','Work on large e-commerce system','VISIBLE','2026-03-15 17:16:31'),(12,'99100004-203f-11f1-95b5-0242ac110002',12,'AI Engineer','Build backend for gaming platform','VISIBLE','2026-03-15 17:16:31');
+INSERT INTO `forum_post` VALUES (1,'22222222-2222-2222-2222-222222222222',1,'Looking for Backend Developers','Great opportunity for Java devs','PUBLISHED','2026-03-15 07:21:42',NULL,1),(2,'33333333-3333-3333-3333-333333333333',2,'ReactJS Hiring','Hiring ReactJS developers','PUBLISHED','2026-03-15 07:21:42',NULL,1),(3,'99100000-203f-11f1-95b5-0242ac110002',3,'FPT Hiring Java Backend Dev','Join FPT Software backend team','PUBLISHED','2026-03-15 17:16:31',NULL,1),(4,'99100001-203f-11f1-95b5-0242ac110002',4,'Tiki Hiring React Dev','Work on large e-commerce system','PUBLISHED','2026-03-15 17:16:31',NULL,1),(5,'99100002-203f-11f1-95b5-0242ac110002',5,'VNG Backend Position','Build backend for gaming platform','PUBLISHED','2026-03-15 17:16:31',NULL,1),(6,'99100003-203f-11f1-95b5-0242ac110002',6,'VNPT DevOps Job','Manage infrastructure systems','PUBLISHED','2026-03-15 17:16:31',NULL,1),(7,'99100004-203f-11f1-95b5-0242ac110002',7,'Viettel AI Recruitment','Join AI research team','PUBLISHED','2026-03-15 17:16:31',NULL,1),(8,'99100000-203f-11f1-95b5-0242ac110002',8,'Java Backend Developer','Great opportunity for Java devs','PUBLISHED','2026-03-15 17:16:31',NULL,1),(9,'99100001-203f-11f1-95b5-0242ac110002',9,'React Frontend Developer','Hiring ReactJS developers','PUBLISHED','2026-03-15 17:16:31',NULL,1),(10,'99100002-203f-11f1-95b5-0242ac110002',10,'Game Backend Engineer','Join FPT Software backend team','PUBLISHED','2026-03-15 17:16:31',NULL,1),(11,'99100003-203f-11f1-95b5-0242ac110002',11,'DevOps Engineer','Work on large e-commerce system','PUBLISHED','2026-03-15 17:16:31',NULL,1),(12,'99100004-203f-11f1-95b5-0242ac110002',12,'AI Engineer','Build backend for gaming platform','PUBLISHED','2026-03-15 17:16:31',NULL,1);
 /*!40000 ALTER TABLE `forum_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -566,7 +599,7 @@ CREATE TABLE `otp_token` (
   PRIMARY KEY (`id`),
   KEY `fk_otp_token_account` (`account_id`),
   CONSTRAINT `fk_otp_token_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -575,7 +608,7 @@ CREATE TABLE `otp_token` (
 
 LOCK TABLES `otp_token` WRITE;
 /*!40000 ALTER TABLE `otp_token` DISABLE KEYS */;
-INSERT INTO `otp_token` VALUES (6,NULL,'hoangdat060504@gmail.com','511488','SIGN_UP',_binary '\0','2026-03-02 06:19:52.713778','2026-03-02 06:24:52.713778',0),(7,NULL,'datnhce180797@fpt.edu.vn','556948','SIGN_UP',_binary '\0','2026-03-02 06:20:55.118364','2026-03-02 06:25:55.118364',0),(8,NULL,'datnhce180797@fpt.edu.vn','573850','SIGN_UP',_binary '\0','2026-03-02 06:22:45.023540','2026-03-02 06:27:45.023540',0),(9,NULL,'datnhce180797@fpt.edu.vn','424510','SIGN_UP',_binary '\0','2026-03-02 06:32:52.658686','2026-03-02 06:37:52.658686',0),(10,NULL,'datnhce180797@fpt.edu.vn','727758','SIGN_UP',_binary '\0','2026-03-02 06:43:03.249780','2026-03-02 06:48:03.249780',0),(11,NULL,'datnhce180797@fpt.edu.vn','279824','SIGN_UP',_binary '','2026-03-02 06:56:29.535230','2026-03-02 07:01:29.535230',0),(12,NULL,'datnhce180797@fpt.edu.vn','849334','SIGN_UP',_binary '','2026-03-02 08:18:11.954330','2026-03-02 08:23:11.954330',0),(13,NULL,'datnhce180797@fpt.edu.vn','988410','SIGN_UP',_binary '\0','2026-03-02 08:41:30.769353','2026-03-02 08:46:30.769353',0),(14,NULL,'datnhce180797@fpt.edu.vn','913896','SIGN_UP',_binary '','2026-03-03 08:35:13.877729','2026-03-03 08:40:13.877729',0),(15,NULL,'datnhce180797@fpt.edu.vn','583858','SIGN_UP',_binary '\0','2026-03-04 09:37:17.081743','2026-03-04 09:42:17.081743',0),(16,'22222222-2222-2222-2222-222222222222','cuongct.ce190026@gmail.com','547703','FORGOT_PASSWORD',_binary '','2026-03-04 09:42:51.906586','2026-03-04 09:47:51.906586',0),(17,NULL,'datnhce180797@fpt.edu.vn','250629','SIGN_UP',_binary '\0','2026-03-05 07:37:26.030146','2026-03-05 07:42:26.030146',0),(18,NULL,'datnh.work@gmail.com','079747','SIGN_UP',_binary '\0','2026-03-17 06:36:13.574936','2026-03-17 06:41:13.574936',0);
+INSERT INTO `otp_token` VALUES (6,NULL,'hoangdat060504@gmail.com','511488','SIGN_UP',_binary '\0','2026-03-02 06:19:52.713778','2026-03-02 06:24:52.713778',0),(7,NULL,'datnhce180797@fpt.edu.vn','556948','SIGN_UP',_binary '\0','2026-03-02 06:20:55.118364','2026-03-02 06:25:55.118364',0),(8,NULL,'datnhce180797@fpt.edu.vn','573850','SIGN_UP',_binary '\0','2026-03-02 06:22:45.023540','2026-03-02 06:27:45.023540',0),(9,NULL,'datnhce180797@fpt.edu.vn','424510','SIGN_UP',_binary '\0','2026-03-02 06:32:52.658686','2026-03-02 06:37:52.658686',0),(10,NULL,'datnhce180797@fpt.edu.vn','727758','SIGN_UP',_binary '\0','2026-03-02 06:43:03.249780','2026-03-02 06:48:03.249780',0),(11,NULL,'datnhce180797@fpt.edu.vn','279824','SIGN_UP',_binary '','2026-03-02 06:56:29.535230','2026-03-02 07:01:29.535230',0),(12,NULL,'datnhce180797@fpt.edu.vn','849334','SIGN_UP',_binary '','2026-03-02 08:18:11.954330','2026-03-02 08:23:11.954330',0),(13,NULL,'datnhce180797@fpt.edu.vn','988410','SIGN_UP',_binary '\0','2026-03-02 08:41:30.769353','2026-03-02 08:46:30.769353',0),(14,NULL,'datnhce180797@fpt.edu.vn','913896','SIGN_UP',_binary '','2026-03-03 08:35:13.877729','2026-03-03 08:40:13.877729',0),(15,NULL,'datnhce180797@fpt.edu.vn','583858','SIGN_UP',_binary '\0','2026-03-04 09:37:17.081743','2026-03-04 09:42:17.081743',0),(16,'22222222-2222-2222-2222-222222222222','cuongct.ce190026@gmail.com','547703','FORGOT_PASSWORD',_binary '','2026-03-04 09:42:51.906586','2026-03-04 09:47:51.906586',0),(17,NULL,'datnhce180797@fpt.edu.vn','250629','SIGN_UP',_binary '\0','2026-03-05 07:37:26.030146','2026-03-05 07:42:26.030146',0),(18,NULL,'datnh.work@gmail.com','079747','SIGN_UP',_binary '\0','2026-03-17 06:36:13.574936','2026-03-17 06:41:13.574936',0),(19,NULL,'datnh.work@gmail.com','255857','SIGN_UP',_binary '\0','2026-03-29 05:25:37.344073','2026-03-29 05:30:37.344073',0);
 /*!40000 ALTER TABLE `otp_token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -679,5 +712,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-16  0:42:00
--- Dump completed on 2026-03-19 13:53:48
+-- Dump completed on 2026-03-31 13:18:07
