@@ -1,4 +1,9 @@
 {
+  "register": {
+    "signIn": "Đăng nhập",
+    "joinNetwork": "Tham gia mạng lưới",
+    "professional": "Đăng ký chuyên nghiệp"
+  },
   "validation": {
     "fullNameRequired": "Yêu cầu họ và tên",
     "phoneNumberRequired": "Yêu cầu số điện thoại",
@@ -32,10 +37,5 @@
   "help": {
     "swiftCode": "Mã Swift giúp xác định ngân hàng",
     "autoSave": "Tự động lưu thông tin"
-  },
-  "register": {
-    "signIn": "Đăng nhập",
-    "joinNetwork": "Tham gia mạng lưới",
-    "professional": "Đăng ký chuyên nghiệp"
   }
 }

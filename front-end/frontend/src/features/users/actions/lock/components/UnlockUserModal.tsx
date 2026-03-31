@@ -9,8 +9,7 @@ import {
   KeyRound,
 } from "lucide-react";
 
-import { useUsersTranslation } from "@/shared/hooks";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useUnlockTranslation, useCommonTranslation } from "@/shared/hooks";
 
 export interface UnlockUserModalProps {
   isOpen: boolean;
@@ -44,8 +43,8 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
   onClose,
   onConfirm,
 }) => {
-  const { t } = useUsersTranslation();
-  const { t: tCommon } = useAppTranslation();
+  const { t } = useUnlockTranslation();
+  const { t: tCommon } = useCommonTranslation();
   const [step, setStep] = useState<ModalStep>("form");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<UnlockResult | null>(null);
@@ -73,7 +72,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
       setStep("success");
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : tCommon("common.unknownError");
+        error instanceof Error ? error.message : tCommon("unknownError");
 
       setResult({
         type: "error",
@@ -109,16 +108,16 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <Unlock className="w-8 h-8 text-green-600" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("unlock.title")}
+                {t("title")}
               </h2>
             </div>
 
             <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-6">
               <p className="text-green-900 dark:text-green-200 font-medium">
-                {t("unlock.description")}
+                {t("description")}
               </p>
               <p className="text-green-800 dark:text-green-300 text-sm mt-2">
-                {t("unlock.userInfo")}:{" "}
+                {t("userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
             </div>
@@ -129,7 +128,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
               {/* Divider */}
               <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
                 <p className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
-                  {t("unlock.notificationSettings")}
+                  {t("notificationSettings")}
                 </p>
 
                 {/* Send Email Checkbox */}
@@ -144,10 +143,10 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                   <label htmlFor="sendEmail" className="flex-1 cursor-pointer">
                     <p className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
                       <Mail className="w-4 h-4" />
-                      {t("unlock.sendEmailLabel")}
+                      {t("sendEmailLabel")}
                     </p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      {t("unlock.sendEmailDescription")}
+                      {t("sendEmailDescription")}
                     </p>
                   </label>
                 </div>
@@ -167,10 +166,10 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                   >
                     <p className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
                       <KeyRound className="w-4 h-4" />
-                      {t("unlock.requirePasswordChangeLabel")}
+                      {t("requirePasswordChangeLabel")}
                     </p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      {t("unlock.requirePasswordChangeDescription")}
+                      {t("requirePasswordChangeDescription")}
                     </p>
                   </label>
                 </div>
@@ -179,8 +178,8 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
               {/* Security Notice */}
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                 <p className="text-xs text-blue-900 dark:text-blue-200">
-                  <strong>{t("unlock.securityNotice")}:</strong>{" "}
-                  {t("unlock.securityNoticeDescription")}
+                  <strong>{t("securityNotice")}:</strong>{" "}
+                  {t("securityNoticeDescription")}
                 </p>
               </div>
 
@@ -191,13 +190,13 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                   onClick={handleClose}
                   className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
                 >
-                  {t("unlock.cancel")}
+                  {t("cancel")}
                 </button>
                 <button
                   type="submit"
                   className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
                 >
-                  {t("unlock.next")}
+                  {t("next")}
                 </button>
               </div>
             </form>
@@ -210,13 +209,13 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <AlertTriangle className="w-8 h-8 text-orange-600" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("unlock.confirmTitle")}
+                {t("confirmTitle")}
               </h2>
             </div>
 
             <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-6">
               <p className="text-orange-900 dark:text-orange-200 font-medium">
-                {t("unlock.confirmMessage")}
+                {t("confirmMessage")}
               </p>
             </div>
 
@@ -225,7 +224,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("unlock.affectedUser")}
+                    {t("affectedUser")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {userName}
@@ -233,7 +232,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("unlock.userId")}
+                    {t("userId")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {userId}
@@ -241,7 +240,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 </div>
                 <div className="col-span-2">
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("unlock.reason")}
+                    {t("reason")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {reason}
@@ -249,7 +248,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("unlock.timestamp")}
+                    {t("timestamp")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {new Date().toLocaleString()}
@@ -263,11 +262,11 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                     type="checkbox"
                     checked={sendEmail}
                     readOnly
-                    aria-label={t("unlock.sendEmail")}
+                    aria-label={t("sendEmail")}
                     className="w-4 h-4"
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {t("unlock.sendEmail")}
+                    {t("sendEmail")}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -275,11 +274,11 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                     type="checkbox"
                     checked={requirePasswordChange}
                     readOnly
-                    aria-label={t("unlock.requirePasswordChange")}
+                    aria-label={t("requirePasswordChange")}
                     className="w-4 h-4"
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {t("unlock.requirePasswordChange")}
+                    {t("requirePasswordChange")}
                   </span>
                 </div>
               </div>
@@ -300,7 +299,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:bg-green-400 transition font-medium flex items-center gap-2"
               >
                 {loading && <Loader className="w-4 h-4 animate-spin" />}
-                {loading ? t("unlock.processing") : t("unlock.confirmAction")}
+                {loading ? t("processing") : t("confirmAction")}
               </button>
             </div>
           </div>
@@ -311,20 +310,20 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
           <div className="p-8 text-center">
             <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              {t("unlock.successTitle")}
+              {t("successTitle")}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-2">
-              {t("unlock.successMessage")}
+              {t("successMessage")}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-500 mb-6">
-              {t("unlock.successDescription")}
+              {t("successDescription")}
             </p>
 
             <button
               onClick={handleClose}
               className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
             >
-              {t("unlock.close")}
+              {t("close")}
             </button>
           </div>
         )}
@@ -334,13 +333,13 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
           <div className="p-8 text-center">
             <XCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              {t("unlock.errorTitle")}
+              {t("errorTitle")}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               {result.message}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-500 mb-6">
-              {t("unlock.errorDescription")}
+              {t("errorDescription")}
             </p>
 
             <div className="flex gap-3 justify-center">
@@ -348,13 +347,13 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                 onClick={() => setStep("form")}
                 className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
               >
-                {t("unlock.tryAgain")}
+                {t("tryAgain")}
               </button>
               <button
                 onClick={handleClose}
                 className="px-6 py-2 rounded-lg bg-gray-700 dark:bg-gray-600 text-white hover:bg-gray-800 dark:hover:bg-gray-700 transition font-medium"
               >
-                {t("unlock.close")}
+                {t("close")}
               </button>
             </div>
           </div>
@@ -365,4 +364,3 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
 };
 
 export default UnlockUserModal;
-

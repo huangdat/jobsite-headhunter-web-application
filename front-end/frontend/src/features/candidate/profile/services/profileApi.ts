@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "@/lib/constants";
 import { apiClient } from "@/shared/utils/axios";
+import { cachedApiCall } from "@/shared/utils/apiCache";
 import type { ApiResponse } from "@/features/auth/types";
 import type {
   CandidateProfile,
@@ -27,11 +28,16 @@ const mapProfileResponse = (payload: unknown): CandidateProfile => {
 
 export const profileApi = {
   getProfile: async (): Promise<CandidateProfile> => {
-    const response = await apiClient.get<ApiResponse<CandidateProfile>>(
-      API_ENDPOINTS.ACCOUNT.GET_PROFILE
+    return cachedApiCall(
+      "candidate-profile",
+      async () => {
+        const response = await apiClient.get<ApiResponse<CandidateProfile>>(
+          API_ENDPOINTS.ACCOUNT.GET_PROFILE
+        );
+        return mapProfileResponse(response.data?.result);
+      },
+      { ttl: 300000 } // Cache for 5 minutes
     );
-
-    return mapProfileResponse(response.data?.result);
   },
 
   updateProfile: async (

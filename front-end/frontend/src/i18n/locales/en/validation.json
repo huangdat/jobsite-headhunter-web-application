@@ -41,6 +41,7 @@
   },
   "enterAllDigits": "Enter all digits",
   "invalidOtp": "Invalid OTP",
+  "otpCodeRequired": "OTP code is required",
   "currentPasswordRequired": "Current password is required",
   "newPasswordRequired": "New password is required",
   "passwordBetween8and16": "Password must be between 8 and 16 characters",

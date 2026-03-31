@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuthTranslation } from "@/shared/hooks";
+import { useAuthTranslation, usePagesTranslation } from "@/shared/hooks";
 import {
   sendOtpSignup,
   verifyOtpSignup,
@@ -21,6 +21,7 @@ interface LocationState {
 
 export function OTPVerificationPage() {
   const { t } = useAuthTranslation();
+  const { t: tPages } = usePagesTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState | undefined;
@@ -210,10 +211,10 @@ export function OTPVerificationPage() {
       <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-800">
-            {t("pages.otpVerification.title")}
+            {tPages("otpVerification.title")}
           </h1>
           <p className="text-slate-600 mt-2">
-            {t("pages.otpVerification.subtitle")}
+            {tPages("otpVerification.subtitle")}
           </p>
         </div>
 
@@ -240,7 +241,7 @@ export function OTPVerificationPage() {
                 onPaste={handlePaste}
                 className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 rounded-lg focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition-all"
                 autoFocus={index === 0}
-                aria-label={t("pages.otpVerification.otpDigit", {
+                aria-label={tPages("otpVerification.otpDigit", {
                   digit: index + 1,
                 })}
               />
@@ -257,7 +258,7 @@ export function OTPVerificationPage() {
                 timeLeft <= 60 ? "text-red-600 font-semibold" : "text-slate-600"
               }
             >
-              {t("pages.otpVerification.codeExpiresIn")} {formatTime(timeLeft)}
+              {tPages("otpVerification.codeExpiresIn")} {formatTime(timeLeft)}
             </span>
           </div>
 
@@ -295,12 +296,12 @@ export function OTPVerificationPage() {
           >
             {isLoading || otp.join("").length === 6
               ? t("buttons.connecting")
-              : t("pages.otpVerification.verifyEmail")}
+              : tPages("otpVerification.verifyEmail")}
           </Button>
 
           <div className="text-center">
             <p className="text-sm text-slate-600 mb-2">
-              {t("pages.otpVerification.didNotReceiveCode")}
+              {tPages("otpVerification.didNotReceiveCode")}
             </p>
             <button
               onClick={handleResend}
@@ -309,11 +310,11 @@ export function OTPVerificationPage() {
             >
               {isResending
                 ? t("buttons.sendingOtp")
-                : t("pages.otpVerification.resendCode")}
+                : tPages("otpVerification.resendCode")}
             </button>
             {timeLeft > 240 && (
               <p className="text-xs text-slate-500 mt-1">
-                {t("pages.otpVerification.availableIn")}{" "}
+                {tPages("otpVerification.availableIn")}{" "}
                 {formatTime(timeLeft - 240)}
               </p>
             )}

@@ -1,3 +1,8 @@
 {
-  "copyright": "Bản quyền"
+  "copyright": "Bản quyền",
+  "home": {
+    "footer": {
+      "copyright": "home.footer.copyright"
+    }
+  }
 }

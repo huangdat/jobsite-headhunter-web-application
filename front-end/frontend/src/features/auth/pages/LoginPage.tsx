@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
-import { useAuthTranslation } from "@/shared/hooks";
+import { useAuthTranslation, usePagesTranslation } from "@/shared/hooks";
 import { AnimatedCheckbox } from "@/features/auth/components/AnimatedCheckbox";
 import { useLogin } from "@/features/auth/hooks";
 import {
@@ -52,6 +52,7 @@ const clearOAuthCallbackParams = () => {
 
 export function LoginPage() {
   const { t } = useAuthTranslation();
+  const { t: tPages } = usePagesTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, isInitializing, signIn } = useAuth();
@@ -281,25 +282,25 @@ export function LoginPage() {
   }, [isAuthenticated, isInitializing, navigate]);
 
   return (
-    <AuthLayout ctaButton={{ to: "/select-role", label: t("pages.signup") }}>
+    <AuthLayout ctaButton={{ to: "/select-role", label: tPages("signup") }}>
       <div className="w-full max-w-5xl min-h-150 bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
-            {t("pages.login.heroTitlePart1")} <br />
-            {t("pages.login.heroTitlePart2")}
+            {tPages("login.heroTitlePart1")} <br />
+            {tPages("login.heroTitlePart2")}
           </h1>
 
-          <p className="text-gray-300 mt-6">{t("pages.login.heroSubtitle")}</p>
+          <p className="text-gray-300 mt-6">{tPages("login.heroSubtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10">
           <h2 className="text-3xl font-bold mb-2">
-            {t("pages.login.welcomeBack")}
+            {tPages("login.welcomeBack")}
           </h2>
 
-          <p className="text-gray-500 mb-8">{t("pages.login.subtitle")}</p>
+          <p className="text-gray-500 mb-8">{tPages("login.subtitle")}</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -351,11 +352,11 @@ export function LoginPage() {
               <AnimatedCheckbox
                 checked={formData.rememberMe ?? false}
                 onChange={(value: boolean) => handleChange("rememberMe")(value)}
-                label={t("pages.login.rememberMe")}
+                label={tPages("login.rememberMe")}
               />
 
               <Link to="/forgot-password" className="text-lime-500">
-                {t("pages.login.forgotPasswordLink")}
+                {tPages("login.forgotPasswordLink")}
               </Link>
             </div>
 
@@ -368,14 +369,14 @@ export function LoginPage() {
               className="w-full flex justify-center gap-2 cursor-pointer"
             >
               <HiOutlineArrowRight />
-              {isLoading ? t("pages.login.signingIn") : t("buttons.signIn")}
+              {isLoading ? tPages("login.signingIn") : t("buttons.signIn")}
             </Button>
 
             {/* DIVIDER */}
             <div className="flex items-center gap-4 my-6">
               <div className="flex-1 h-px bg-slate-200"></div>
               <span className="text-sm text-gray-400">
-                {t("pages.login.orContinueWith")}
+                {tPages("login.orContinueWith")}
               </span>
               <div className="flex-1 h-px bg-slate-200"></div>
             </div>
@@ -391,10 +392,10 @@ export function LoginPage() {
             {/* REGISTER LINK */}
             <div className="text-center mt-6 text-sm">
               <span className="text-slate-500">
-                {t("pages.login.noAccount")}{" "}
+                {tPages("login.noAccount")}{" "}
               </span>
               <Link to="/select-role" className="text-lime-500 hover:underline">
-                {t("pages.login.registerLink")}
+                {tPages("login.registerLink")}
               </Link>
             </div>
           </form>

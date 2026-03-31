@@ -357,9 +357,15 @@ export function JobDetailPage() {
             </section>
 
             <section className="rounded-3xl bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-wide text-slate-500">Contact</p>
-              <p className="mt-2 text-lg font-semibold text-slate-900">{job.headhunterName ?? "Recruiter not available"}</p>
-              <p className="text-sm text-slate-500">{job.companyAddress ?? job.addressDetail}</p>
+              <p className="text-sm uppercase tracking-wide text-slate-500">
+                Contact
+              </p>
+              <p className="mt-2 text-lg font-semibold text-slate-900">
+                {job.headhunterName ?? "Recruiter not available"}
+              </p>
+              <p className="text-sm text-slate-500">
+                {job.companyAddress ?? job.addressDetail}
+              </p>
               <Button
                 variant="primary"
                 size="lg"

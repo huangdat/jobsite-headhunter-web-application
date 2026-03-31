@@ -43,19 +43,19 @@
     "status_desc": "Track your profile verification progress",
     "PENDING": "Pending",
     "APPROVED": "Approved",
+    "approved": "Approved",
     "REJECTED": "Rejected",
     "submitted": "Submitted",
     "submitted_desc": "Your profile is waiting for review",
     "under_review": "Under Review",
-    "approved": "Approved",
     "approved_desc": "Profile verification complete",
     "approved_title": "Verification Approved",
     "approved_message": "Congratulations! Your business profile has been verified.",
-    "rejected": "Rejected",
     "rejected_desc": "Your profile needs modifications",
     "rejected_title": "Verification Rejected",
     "in_progress": "Verification in Progress",
-    "title": "Business verification title"
+    "title": "Business verification title",
+    "${currentStatus}": "[business.verification.${currentStatus}]"
   },
   "documents": {
     "title": "Submitted Documents",
@@ -152,10 +152,5 @@
   },
   "state": {
     "loading": "Loading profile information..."
-  },
-  "business": {
-    "verification": {
-      "title": "Business verification title"
-    }
   }
 }

@@ -1,33 +1,14 @@
 {
   "error": "Lỗi",
-  "success": "Thành công",
+  "success": {
+    "profileUpdated": "Hồ sơ đã được cập nhật thành công"
+  },
   "cancel": "Hủy",
   "delete": "Xóa",
   "dismiss": "Đóng",
   "id_token": "id_token",
   "breadcrumb": {
     "home": "Trang chủ"
-  },
-  "common": {
-    "loading": "Common Đang tải...",
-    "adminUserTitle": "Quản trị viên",
-    "appVersion": "Phiên bản 2.4.0",
-    "permanentDelete": "Xóa vĩnh viễn",
-    "appName": "JobSite",
-    "allRightsReserved": "Bản quyền © 2026. Tất cả quyền được bảo lưu",
-    "section": {
-      "account": "Tài Khoản"
-    },
-    "exampleEmail": "alex.n@referral.io",
-    "languages": {
-      "en": "English",
-      "vi": "Tiếng Việt"
-    },
-    "enterDetailsDescription": "Nhập mô tả chi tiết",
-    "failedToFetchUsers": "Common failed to fetch Người dùngs",
-    "tryAgain": "Common Thử lại",
-    "noDataAvailable": "Common Không có dữ liệu available",
-    "unknownError": "Đã xảy ra lỗi không xác định"
   },
   "messages": {
     "signedInSuccess": "Đã đăng nhập thành công.",
@@ -40,6 +21,190 @@
     "failedToLoadUsers": "Không thể tải danh sách người dùng",
     "noPermissionAccess": "Bạn không có quyền truy cập tính năng phân loại.",
     "sessionExpiredLoginAgain": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.",
-    "myJobs": "Công việc của tôi"
-  }
+    "myJobs": "Công việc của tôi",
+    "errorLoadJobs": "messages.errorLoadJobs",
+    "loadingJobs": "messages.loadingJobs",
+    "noFeaturedJobs": "messages.noFeaturedJobs",
+    "noRecommendedJobs": "messages.noRecommendedJobs",
+    "errorLoadCompanies": "messages.errorLoadCompanies",
+    "loadingCompanies": "messages.loadingCompanies",
+    "noCompanies": "messages.noCompanies"
+  },
+  "section": {
+    "benefits": "section.benefits",
+    "benefitsDescription": "section.benefitsDescription",
+    "howItWorks": "section.howItWorks",
+    "faq": "section.faq",
+    "account": "Tài Khoản"
+  },
+  "fields": {
+    "userInfo": "fields.userInfo"
+  },
+  "buttons": {
+    "back": "buttons.back",
+    "cancel": "buttons.cancel",
+    "next": "buttons.next",
+    "connecting": "[VI] Connecting"
+  },
+  "statuses": {
+    "${user": {
+      "status": {
+        "toLowerCase()}": "statuses.${user.status.toLowerCase()}"
+      }
+    },
+    "${status": {
+      "toLowerCase()}": "statuses.${status.toLowerCase()}"
+    },
+    "ACTIVE": "statuses.ACTIVE",
+    "SUSPENDED": "statuses.SUSPENDED",
+    "PENDING": "statuses.PENDING",
+    "DELETED": "statuses.DELETED",
+    "${value": {
+      "toLowerCase()}": "statuses.${value.toLowerCase()}"
+    }
+  },
+  "checkboxLabels": {
+    "openForWork": "Sẵn sàng nhận việc"
+  },
+  "columns": {
+    "user": "Người dùng",
+    "role": "Vai trò",
+    "status": "Trạng thái",
+    "company": "Công ty",
+    "actions": "Hành động"
+  },
+  "descriptions": {
+    "headhunterDetails": "Chi tiết Headhunter",
+    "taxCodeInfo": "Thông tin mã số thuế",
+    "collaboratorDetails": "Chi tiết cộng tác viên",
+    "commissionRateTip": "Mẹo tỷ lệ hoa hồng",
+    "collaboratorInfo": "Thông tin cộng tác viên",
+    "candidateDetails": "Chi tiết ứng viên"
+  },
+  "errors": {
+    "title": "Lỗi",
+    "editorFailedToLoad": "Trình chỉnh sửa không thể tải"
+  },
+  "filters": {
+    "filterRole": "Lọc theo vai trò",
+    "filterStatus": "Lọc theo trạng thái",
+    "filterUsers": "Lọc theo người dùng",
+    "filterAllRoles": "Lọc tất cả vai trò",
+    "filterAllStatus": "Lọc tất cả trạng thái",
+    "applyFilter": "Áp dụng bộ lọc",
+    "resetFilter": "Đặt lại bộ lọc"
+  },
+  "labels": {
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "fullName": "Họ và tên",
+    "phoneNumber": "Số điện thoại",
+    "gender": "Giới tính",
+    "profilePicture": "Ảnh hồ sơ",
+    "workEmail": "Email công việc",
+    "companyName": "Tên công ty",
+    "taxCode": "Mã số thuế",
+    "avatar": "Ảnh đại diện",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "companyWebsite": "Website công ty",
+    "companyScale": "Quy mô công ty",
+    "commissionRate": "Tỷ lệ hoa hồng",
+    "currentJobTitle": "Tiêu đề công việc",
+    "yearsOfExperience": "Kinh nghiệm",
+    "city": "Thành phố",
+    "expectedSalaryMin": "Lương tối thiểu",
+    "expectedSalaryMax": "Lương tối đa",
+    "bio": "Tiểu sử",
+    "jobSearchStatus": "Trạng thái tìm việc",
+    "email": "Email"
+  },
+  "navigation": {
+    "profile": "Hồ Sơ",
+    "settings": "Cài Đặt",
+    "logout": "Đăng Xuất",
+    "login": "Đăng Nhập",
+    "signUp": "Đăng Ký",
+    "postJob": "Đăng Bài Tuyển Dụng",
+    "dashboard": "Bảng Điều Khiển",
+    "adminDashboard": "Bảng Điều Khiển Quản Trị",
+    "jobs": "Công Việc",
+    "referrals": "Giới Thiệu",
+    "applications": "Hồ Sơ Ứng Tuyển",
+    "savedJobs": "Công Việc Đã Lưu",
+    "notifications": "Thông Báo",
+    "logs": "Nhật Ký",
+    "users": "Người dùng",
+    "classification": "Phân loại",
+    "featuredJobs": "[VI] Featured Jobs",
+    "recommended": "[VI] Recommended",
+    "topCompanies": "[VI] Top Companies"
+  },
+  "placeholders": {
+    "username": "Ví dụ: alex.n",
+    "password": "Ví dụ: Mật khẩu",
+    "currentPassword": "Ví dụ: Mật khẩu hiện tại",
+    "newPassword": "Ví dụ: Mật khẩu mới",
+    "confirmPassword": "Ví dụ: Xác nhận mật khẩu",
+    "name": "Ví dụ: Tên",
+    "phone": "Ví dụ: Điện thoại",
+    "email": "Ví dụ: Email",
+    "companyName": "Ví dụ: Tên công ty",
+    "taxId": "Ví dụ: Mã số thuế",
+    "companyWebsite": "Ví dụ: Website công ty",
+    "commissionRate": "Ví dụ: Tỷ lệ hoa hồng",
+    "jobTitle": "Ví dụ: Tiêu đề công việc",
+    "experience": "Ví dụ: Kinh nghiệm",
+    "location": "Ví dụ: Vị trí",
+    "salaryMin": "Ví dụ: Lương tối thiểu",
+    "salaryMax": "Ví dụ: Lương tối đa",
+    "bio": "Ví dụ: Tiểu sử"
+  },
+  "selectOptions": {
+    "selectGender": "Chọn giới tính",
+    "genders": {
+      "male": "Nam",
+      "female": "Nữ",
+      "other": "Khác"
+    },
+    "selectCompanyScale": "Chọn quy mô công ty",
+    "companyScaleOptions": {
+      "0": {
+        "label": "Quy mô công ty 0"
+      },
+      "1": {
+        "label": "Quy mô công ty 1"
+      },
+      "2": {
+        "label": "Quy mô công ty 2"
+      },
+      "3": {
+        "label": "Quy mô công ty 3"
+      },
+      "4": {
+        "label": "Quy mô công ty 4"
+      }
+    }
+  },
+  "warnings": {
+    "adminWarning": "Cảnh báo quản trị viên",
+    "adminWarningDesc": "Mô tả cảnh báo quản trị viên"
+  },
+  "sendingOtp": "common.sendingOtp",
+  "sendOtp": "common.sendOtp",
+  "loading": "Common Đang tải...",
+  "adminUserTitle": "Quản trị viên",
+  "appVersion": "Phiên bản 2.4.0",
+  "permanentDelete": "Xóa vĩnh viễn",
+  "appName": "JobSite",
+  "allRightsReserved": "Bản quyền © 2026. Tất cả quyền được bảo lưu",
+  "exampleEmail": "alex.n@referral.io",
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt"
+  },
+  "enterDetailsDescription": "Nhập mô tả chi tiết",
+  "failedToFetchUsers": "Common failed to fetch Người dùngs",
+  "tryAgain": "Common Thử lại",
+  "noDataAvailable": "Common Không có dữ liệu available",
+  "unknownError": "Đã xảy ra lỗi không xác định"
 }
