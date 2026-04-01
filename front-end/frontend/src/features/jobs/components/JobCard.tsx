@@ -1,12 +1,15 @@
 import { useMemo, type KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import { Badge } from "@/components/ui/badge";
 import type { JobSummary } from "../types";
 import { formatSalary, formatDeadlineDate } from "../utils";
+import { getJobDetail } from "../services/jobsApi";
+import { jobKeys } from "@/shared/utils/queryKeys";
 
 interface JobCardProps {
   job: JobSummary & { negotiable?: boolean };
@@ -15,6 +18,7 @@ interface JobCardProps {
 export function JobCard({ job }: JobCardProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const deadlineLabel = useMemo(() => {
     return formatDeadlineDate(job.deadline);
@@ -29,12 +33,22 @@ export function JobCard({ job }: JobCardProps) {
     }
   };
 
+  // P2-7: Prefetch job detail on hover for instant navigation
+  const handleMouseEnter = () => {
+    queryClient.prefetchQuery({
+      queryKey: jobKeys.detail(job.id),
+      queryFn: () => getJobDetail(job.id),
+      staleTime: 1000 * 60 * 10, // Match SEMI_STATIC_DATA_CONFIG
+    });
+  };
+
   return (
     <div
       role="button"
       tabIndex={0}
       onClick={handleNavigate}
       onKeyDown={handleKeyDown}
+      onMouseEnter={handleMouseEnter}
       className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none cursor-pointer"
       aria-label={t("list.viewJobLabel", { title: job.title })}
     >
