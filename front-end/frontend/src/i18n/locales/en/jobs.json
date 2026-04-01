@@ -252,7 +252,8 @@
     "setNewDeadlineTitle": "Set new deadline",
     "setNewDeadlineDescription": "Choose a new deadline to re-open this job.",
     "cancelButton": "Cancel",
-    "confirmButton": "Confirm"
+    "confirmButton": "Confirm",
+    "viewCandidates": "View Candidates"
   },
   "saved": {
     "pageTitle": "Saved jobs",
