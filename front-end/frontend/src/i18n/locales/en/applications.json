@@ -1,8 +1,19 @@
 {
-  "common.processing": "Processing...",
-  "common.success": "Success",
-  "common.error": "Error",
-  "common.loading": "Loading...",
+  "common.total": "Total",
+  "common.appliedAt": "Applied at",
+  "common.page": "Page",
+  "common.of": "of",
+  "common.previous": "Previous",
+  "common.next": "Next",
+  "common.browseJobs": "Browse Jobs",
+  "common.back": "Back",
+  "common.contactInfo": "Contact Information",
+  "common.reject": "Reject",
+  "common.viewCV": "View CV",
+  "common.actions": "Actions",
+  "common.error": "An error occurred, please try again",
+  "common.notFound": "Not found",
+  "common.view": "View",
 
   "applications.title": "Application Management",
   "applications.myApplications": "My Applications",
@@ -88,5 +99,14 @@
   "applications.validation.locationRequired": "Location is required for offline interviews.",
   "applications.validation.cvFileRequired": "CV file is required.",
   "applications.validation.cvFileFormatInvalid": "Only PDF, DOC, DOCX files are allowed.",
-  "applications.validation.cvFileSizeExceeded": "File size must not exceed 5MB."
+  "applications.validation.cvFileSizeExceeded": "File size must not exceed 5MB.",
+  "headhunter.loadingApplicants": "Loading applicants...",
+  "headhunter.candidatesList": "Candidates List",
+  "headhunter.noApplicantsYet": "No applicants yet",
+
+  "columns.candidate": "CANDIDATE",
+  "columns.status": "STATUS",
+  "columns.actions": "ACTIONS",
+
+  "actions.viewDetails": "View Details"
 }

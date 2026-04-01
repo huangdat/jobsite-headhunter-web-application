@@ -63,9 +63,7 @@ export function JobManagePage() {
           toast.success(t("messages.jobClosed"));
         },
         onError: (err: Error) => {
-          toast.error(
-            getErrorMessage(err, t("messages.failedToCloseJob"))
-          );
+          toast.error(getErrorMessage(err, t("messages.failedToCloseJob")));
         },
       }
     );
@@ -117,8 +115,7 @@ export function JobManagePage() {
     });
   };
 
-  if (isLoading)
-    return <div className="p-8">{t("manage.loadingJobs")}</div>;
+  if (isLoading) return <div className="p-8">{t("manage.loadingJobs")}</div>;
 
   return (
     <div className="p-6">
@@ -169,6 +166,17 @@ export function JobManagePage() {
                       onClick={() => handleEdit(job.id)}
                     >
                       {t("manage.editButton")}
+                    </Button>
+
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="border-blue-500 text-blue-600 hover:bg-blue-50"
+                      onClick={() =>
+                        navigate(`/headhunter/jobs/${job.id}/applications`)
+                      }
+                    >
+                      {t("manage.viewCandidates")}
                     </Button>
                     <div
                       className="inline-flex rounded-md shadow-sm"
@@ -256,4 +264,3 @@ export function JobManagePage() {
 }
 
 export default JobManagePage;
-

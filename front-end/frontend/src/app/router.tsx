@@ -46,6 +46,7 @@ import { BusinessProfilePage } from "@/features/headhunter/business/pages";
 
 // PROF-04: Collaborator Commission
 import { CommissionProfilePage } from "@/features/collaborator/commission/pages";
+import { JobPipelinePage } from "@/features/applications/pages/JobPipelinePage";
 
 // PROF-05: Admin Verification (add when ready)
 // import { VerificationPage } from "@/features/users/verification/pages";
@@ -327,6 +328,15 @@ export function AppRouter() {
         element={
           <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
             <ApplicationListPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/headhunter/jobs/:jobId/applications"
+        element={
+          <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+            <JobPipelinePage />
           </ProtectedRoute>
         }
       />
