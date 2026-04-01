@@ -79,10 +79,10 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
           </div>
           <div>
             <h3 className="text-lg font-semibold text-slate-900">
-              {t("business.form.company_identity")}
+              {t("form.company_identity")}
             </h3>
             <p className="text-sm text-slate-600">
-              {t("business.form.company_identity_desc")}
+              {t("form.company_identity_desc")}
             </p>
           </div>
         </div>
@@ -98,7 +98,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               htmlFor="companyName"
               className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
             >
-              {t("business.form.company_name")}
+              {t("form.company_name")}
             </label>
             <input
               id="companyName"
@@ -107,7 +107,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               onChange={(e) => onFieldChange("companyName", e.target.value)}
               onBlur={(e) => onFieldBlur("companyName", e.target.value)}
               disabled={isDisabled}
-              placeholder={t("business.form.company_name_placeholder")}
+              placeholder={t("form.company_name_placeholder")}
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.companyName && touchedFields.has("companyName")
                   ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
@@ -129,7 +129,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               htmlFor="companySize"
               className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
             >
-              {t("business.form.company_size")}
+              {t("form.company_size")}
             </label>
             <select
               id="companySize"
@@ -143,7 +143,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
                   : "border-slate-300 bg-white text-slate-900 focus:border-emerald-500 focus:ring-emerald-500"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
             >
-              <option value="">-- {t("business.form.select_size")} --</option>
+              <option value="">-- {t("form.select_size")} --</option>
               {companySizeOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
@@ -164,7 +164,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               htmlFor="address"
               className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
             >
-              {t("business.form.headquarters_address")}
+              {t("form.headquarters_address")}
             </label>
             <input
               id="address"
@@ -175,7 +175,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               }
               onBlur={(e) => onFieldBlur("headquartersAddress", e.target.value)}
               disabled={isDisabled}
-              placeholder={t("business.form.address_placeholder")}
+              placeholder={t("form.address_placeholder")}
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.headquartersAddress &&
                 touchedFields.has("headquartersAddress")
@@ -201,7 +201,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               htmlFor="taxId"
               className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
             >
-              {t("business.form.tax_id")}
+              {t("form.tax_id")}
             </label>
             <input
               id="taxId"
@@ -210,7 +210,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               onChange={(e) => onFieldChange("taxId", e.target.value)}
               onBlur={(e) => onFieldBlur("taxId", e.target.value)}
               disabled={isDisabled}
-              placeholder={t("business.form.tax_id_placeholder")}
+              placeholder={t("form.tax_id_placeholder")}
               pattern="[0-9]{10,13}"
               maxLength={13}
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
@@ -234,7 +234,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               htmlFor="website"
               className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
             >
-              {t("business.form.website")}
+              {t("form.website")}
             </label>
             <input
               id="website"
@@ -243,7 +243,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               onChange={(e) => onFieldChange("website", e.target.value)}
               onBlur={(e) => onFieldBlur("website", e.target.value)}
               disabled={isDisabled}
-              placeholder={t("business.form.website_placeholder")}
+              placeholder={t("form.website_placeholder")}
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.website && touchedFields.has("website")
                   ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
@@ -275,7 +275,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
           {isSubmitting && (
             <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
           )}
-          {isSubmitting ? t("business.form.submitting") : t(submitButtonText)}
+          {isSubmitting ? t("form.submitting") : t(submitButtonText)}
         </button>
 
         {onCancel && (

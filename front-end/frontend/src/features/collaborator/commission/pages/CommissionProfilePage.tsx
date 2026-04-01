@@ -5,8 +5,7 @@
  */
 
 import React from "react";
-import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useCommissionTranslation, useCommonTranslation } from "@/shared/hooks";
 import {
   CommissionForm,
   CommissionStats,
@@ -23,7 +22,7 @@ import { useCommissionManagement } from "../hooks/useCommissionManagement";
  */
 export function CommissionProfilePage() {
   const { t: commissionT } = useCommissionTranslation();
-  const { t: tCommon } = useAppTranslation();
+  const { t: tCommon } = useCommonTranslation();
 
   const { stats, requestPayout, loading } = useCommissionManagement();
 
@@ -37,7 +36,7 @@ export function CommissionProfilePage() {
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-          <p className="text-slate-600">{tCommon("common.loading")}</p>
+          <p className="text-slate-600">{tCommon("loading")}</p>
         </div>
       </div>
     );

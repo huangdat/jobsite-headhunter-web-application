@@ -12,12 +12,12 @@ spring:
   datasource:
     url: "jdbc:mysql://localhost:${MYSQL_PORT:3306}/headhunt"
     username: root
-    password: ${MYSQL_ROOT_PASSWORD:"password"}
+    password: root
   mail:
     host: smtp.gmail.com
     port: 587
-    username: datnh.work@gmail.com
-    password: ttbl wjzq blsg ebar
+    username: jobsiteheadhunt.forwork@gmail.com
+    password: drvb uema xawo sjvj
     properties:
       mail:
         smtp:
@@ -42,15 +42,15 @@ server:
     context-path: /headhunt
 
 jwt:
-  signerKey: RikkeisoftHCMcity9998hIrNT3QZjFzSdzZ3YvFWhQyoV4HnOrMbcsrIKMgHMlV
+  signerKey: ${JWT_SIGNER_KEY:RikkeisoftHCMcity9998hIrNT3QZjFzSdzZ3YvFWhQyoV4HnOrMbcsrIKMgHMlV}
 
 google:
-  client-id: ""
-  client-secret: ""
+  client-id: ${GOOGLE_CLIENT_ID:""}
+  client-secret: ${GOOGLE_CLIENT_SECRET:""}
 
 linkedin:
-  client-id: ""
-  client-secret: ""
+  client-id: ${LINKEDIN_CLIENT_ID:""}
+  client-secret: ${LINKEDIN_CLIENT_SECRET:""}
 
 springdoc:
   api-docs:
@@ -77,5 +77,5 @@ logging:
 
 azure:
   storage:
-    connection-string: "DefaultEndpointsProtocol=https;AccountName=headhunterstorage;AccountKey=J5wBrVeufVXHdxnrBWSIKSE8Q8SnJ4onHA+NZW58mXJWUvn/4TcljiAGeQQh2EE9qjZUWUql36GF+AStVmQeJA==;EndpointSuffix=core.windows.net"
-    container-name: "uploads"
+    connection-string: "${AZURE_STORAGE_CONNECTION_STRING:DefaultEndpointsProtocol=https;AccountName=headhunterstorage;AccountKey=J5wBrVeufVXHdxnrBWSIKSE8Q8SnJ4onHA+NZW58mXJWUvn/4TcljiAGeQQh2EE9qjZUWUql36GF+AStVmQeJA==;EndpointSuffix=core.windows.net}"
+    container-name: ${AZURE_STORAGE_CONTAINER_NAME:uploads}

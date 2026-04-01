@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useAppTranslation } from "@/shared/hooks";
+import { useHomeTranslation, useCommonTranslation } from "@/shared/hooks";
 import { useAuth } from "@/features/auth/context/useAuth";
 import {
   getAdminFeatures,
@@ -11,7 +11,8 @@ interface AdminLayoutProps {
 }
 
 export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const { t } = useAppTranslation();
+  const { t: tNav } = useHomeTranslation();
+  const { t: tCommon } = useCommonTranslation();
   const { user } = useAuth();
 
   /**
@@ -64,7 +65,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           >
             <span className="material-symbols-outlined">dashboard</span>
             <span className="font-medium text-sm">
-              {t("navigation.dashboard")}
+              {tNav("navigation.dashboard")}
             </span>
           </a>
 
@@ -78,10 +79,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                   ? "bg-green-500 text-white"
                   : "text-slate-400 hover:bg-white/5 hover:text-white"
               }`}
-              title={feature.description ? t(feature.description) : undefined}
+              title={
+                feature.description ? tNav(feature.description) : undefined
+              }
             >
               <span className="material-symbols-outlined">{feature.icon}</span>
-              <span className="font-medium text-sm">{t(feature.labelKey)}</span>
+              <span className="font-medium text-sm">
+                {tNav(feature.labelKey)}
+              </span>
             </a>
           ))}
         </nav>
@@ -94,10 +99,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             </div>
             <div className="overflow-hidden">
               <p className="text-xs font-bold truncate text-white">
-                {t("common.adminUserTitle")}
+                {tCommon("adminUserTitle")}
               </p>
               <p className="text-[10px] text-slate-400">
-                {t("common.appVersion")}
+                {tCommon("appVersion")}
               </p>
             </div>
           </div>

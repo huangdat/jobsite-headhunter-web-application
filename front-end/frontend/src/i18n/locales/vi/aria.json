@@ -1,13 +1,13 @@
 {
-  "goBack": "Quay lại",
-  "editProfile": "Chỉnh sửa hồ sơ",
+  "selectGender": "Chọn giới tính",
+  "uploadProfilePicture": "Tải lên ảnh hồ sơ",
+  "selectCompanyScale": "Chọn quy mô công ty",
+  "uploadAvatar": "Tải lên avatar",
   "fullName": "Họ và tên",
   "email": "Email",
   "phone": "Điện thoại",
   "company": "Công ty",
   "biography": "Tiểu sử",
-  "selectGender": "Chọn giới tính",
-  "uploadProfilePicture": "Tải lên ảnh hồ sơ",
-  "uploadAvatar": "Tải lên avatar",
-  "selectCompanyScale": "Chọn quy mô công ty"
+  "goBack": "Quay lại",
+  "editProfile": "Chỉnh sửa hồ sơ"
 }

@@ -56,6 +56,7 @@ export const useJobFilters = (
   useEffect(() => {
     const nextLocation = filters.location ?? "";
     if (nextLocation !== location) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocation(nextLocation);
     }
   }, [filters.location, location]);

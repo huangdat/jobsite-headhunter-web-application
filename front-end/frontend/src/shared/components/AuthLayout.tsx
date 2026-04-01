@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { Logo } from "./Logo";
 import { cn } from "@/lib/utils";
-import { useAppTranslation } from "@/shared/hooks";
+import { usePagesTranslation } from "@/shared/hooks";
+import { APP_CONFIG } from "@/shared/constants";
 
 interface NavLink {
   to: string;
@@ -32,11 +32,10 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
   navLinks = [],
   ctaButton: ctaButtonProp,
 }) => {
-  const { t: tAuth } = useTranslation("auth");
-  const { t: tCommon } = useAppTranslation();
+  const { t: tPages } = usePagesTranslation();
   const ctaButton = ctaButtonProp || {
     to: "/select-role",
-    label: tAuth("pages.signup"),
+    label: tPages("signup"),
   };
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
@@ -76,8 +75,8 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       {showFooter && (
         <footer className="mt-12 text-center pb-8">
           <p className="text-xs text-slate-400">
-            © {new Date().getFullYear()} {tCommon("common.appName")}.{" "}
-            {tCommon("common.allRightsReserved")}
+            © {new Date().getFullYear()} {APP_CONFIG.name}.{" "}
+            {APP_CONFIG.copyright}
           </p>
         </footer>
       )}

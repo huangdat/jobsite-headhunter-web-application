@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "@/features/auth/context/useAuth";
 
 import {
   LoginPage,
@@ -11,7 +10,8 @@ import {
   ResetPasswordSuccessPage,
   ChangePasswordPage,
 } from "@/features/auth/pages";
-import { HomePage } from "@/features/home/pages/HomePage";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { HomePage } from "@/features/home/pages/HomePage"; //new
 import { UserListPage } from "@/features/users/list";
 import { UserClassificationPage } from "@/features/users/classification";
 import { AdminDashboardPage } from "@/features/users/dashboard/pages";
@@ -29,6 +29,11 @@ import { JobsHubPage } from "@/features/headhunter/pages/JobsHubPage";
 import { MainLayout } from "@/shared/layouts/MainLayout";
 import { AdminOnlyRoute } from "@/features/auth/components/AdminOnlyRoute";
 import { UserDetailPage } from "@/features/users/detail";
+
+import { ApplyJobPage } from "@/features/applications/pages/ApplyJobPage";
+import { MyApplicationsPage } from "@/features/applications/pages/MyApplicationsPage";
+import { ApplicationListPage } from "@/features/applications/pages/ApplicationListPage";
+import { ApplicationDetailPage } from "@/features/applications/pages/ApplicationDetailPage";
 
 // PROF-01: Candidate Profile
 import { ProfileEditPage } from "@/features/candidate/profile/pages/ProfileEditPage";
@@ -291,6 +296,48 @@ export function AppRouter() {
               <UserDetailPage />
             </AdminLayout>
           </AdminOnlyRoute>
+        }
+      />
+
+      {/* ==================== APPLICATIONS ROUTES (EPIC 5) ==================== */}
+
+      {/* APPL-01: Candidate Apply for Job */}
+      <Route
+        path="/jobs/:jobId/apply"
+        element={
+          <ProtectedRoute allowedRoles={["CANDIDATE"]}>
+            <ApplyJobPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* APPL-07: Candidate My Applications */}
+      <Route
+        path="/my-applications"
+        element={
+          <ProtectedRoute allowedRoles={["CANDIDATE"]}>
+            <MyApplicationsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* APPL-02: Headhunter Applications List */}
+      <Route
+        path="/headhunter/applications"
+        element={
+          <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+            <ApplicationListPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* APPL-03, APPL-04, APPL-05: Headhunter Application Detail */}
+      <Route
+        path="/headhunter/applications/:id"
+        element={
+          <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+            <ApplicationDetailPage />
+          </ProtectedRoute>
         }
       />
 

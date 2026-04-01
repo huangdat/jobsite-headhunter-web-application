@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "@/lib/constants";
 import { apiClient } from "@/shared/utils/axios";
+import { cachedApiCall } from "@/shared/utils/apiCache";
 import type { ApiResponse } from "@/features/auth/types";
 import type {
   CandidateProfile,
@@ -21,27 +22,89 @@ const mapProfileResponse = (payload: unknown): CandidateProfile => {
     expectedSalaryMax: raw.expectedSalaryMax ?? null,
     bio: raw.bio ?? "",
     city: raw.city ?? "",
+    cvUrl: raw.cvUrl ?? "",
     openForWork: raw.openForWork ?? true,
   };
 };
 
 export const profileApi = {
   getProfile: async (): Promise<CandidateProfile> => {
-    const response = await apiClient.get<ApiResponse<CandidateProfile>>(
-      API_ENDPOINTS.ACCOUNT.GET_PROFILE
+    return cachedApiCall(
+      "candidate-profile",
+      async () => {
+        const response = await apiClient.get<ApiResponse<CandidateProfile>>(
+          API_ENDPOINTS.ACCOUNT.GET_PROFILE
+        );
+        return mapProfileResponse(response.data?.result);
+      },
+      { ttl: 300000 } // Cache for 5 minutes
     );
-
-    return mapProfileResponse(response.data?.result);
   },
 
   updateProfile: async (
     payload: CandidateProfilePayload
   ): Promise<CandidateProfile> => {
+    // Sanitize payload: coerce text fields to trimmed strings and
+    // ensure numeric fields are numbers or null (not empty strings)
+    const sanitized: Record<string, string | number | boolean | null> = {};
+
+    if (payload.currentTitle !== undefined) {
+      sanitized.currentTitle = String(payload.currentTitle ?? "").trim();
+    }
+
+    if (payload.bio !== undefined) {
+      sanitized.bio = String(payload.bio ?? "").trim();
+    }
+
+    if (payload.city !== undefined) {
+      sanitized.city = String(payload.city ?? "").trim();
+    }
+
+    if (payload.yearsOfExperience !== undefined) {
+      const v = payload.yearsOfExperience as unknown;
+      sanitized.yearsOfExperience = v === "" || v === null ? null : Number(v);
+    }
+
+    if (payload.expectedSalaryMin !== undefined) {
+      const v = payload.expectedSalaryMin as unknown;
+      sanitized.expectedSalaryMin = v === "" || v === null ? null : Number(v);
+    }
+
+    if (payload.expectedSalaryMax !== undefined) {
+      const v = payload.expectedSalaryMax as unknown;
+      sanitized.expectedSalaryMax = v === "" || v === null ? null : Number(v);
+    }
+
+    if (payload.openForWork !== undefined) {
+      sanitized.openForWork = payload.openForWork;
+    }
+
     const response = await apiClient.put<ApiResponse<CandidateProfile>>(
       API_ENDPOINTS.ACCOUNT.UPDATE_PROFILE,
-      payload
+      sanitized
     );
 
     return mapProfileResponse(response.data?.result);
+  },
+  // Upload CV: send multipart/form-data to backend controller /api/cv/MyCv
+  uploadCV: async (file: File): Promise<string> => {
+    const form = new FormData();
+    form.append("cvFile", file);
+
+    // Use the controller endpoint that expects a ModelAttribute with 'cvFile'
+    const response = await apiClient.put<ApiResponse<{ cvUrl: string }>>(
+      API_ENDPOINTS.CANDIDATE.CV_UPLOAD,
+      form,
+      // do not force JSON Content-Type; let axios set multipart boundary
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
+
+    return response.data?.result?.cvUrl ?? "";
+  },
+  fetchCVs: async (): Promise<Array<{ id: string; cvUrl: string }>> => {
+    const response = await apiClient.get<
+      ApiResponse<Array<{ id: string; cvUrl: string }>>
+    >(API_ENDPOINTS.CANDIDATE.CV_LIST);
+    return response.data?.result || [];
   },
 };
