@@ -3,6 +3,14 @@
   "common.success": "Thành công",
   "common.error": "Lỗi",
   "common.loading": "Đang tải...",
+  "common.back": "Quay lại",
+  "common.contactInfo": "Thông tin liên hệ",
+  "common.reject": "Từ chối",
+  "common.viewCV": "Xem CV",
+  "common.actions": "Thao tác",
+  "common.view": "Xem",
+  "common.appliedAt": "Ngày nộp",
+  "common.notFound": "Không tìm thấy dữ liệu",
 
   "applications.title": "Quản lý ứng tuyển",
   "applications.myApplications": "Việc làm đã ứng tuyển",
@@ -88,5 +96,14 @@
   "applications.validation.locationRequired": "Địa điểm là bắt buộc cho phỏng vấn trực tiếp.",
   "applications.validation.cvFileRequired": "Tệp CV là bắt buộc.",
   "applications.validation.cvFileFormatInvalid": "Chỉ cho phép tệp PDF, DOC, DOCX.",
-  "applications.validation.cvFileSizeExceeded": "Kích thước tệp không được vượt quá 5MB."
+  "applications.validation.cvFileSizeExceeded": "Kích thước tệp không được vượt quá 5MB.",
+  "headhunter.loadingApplicants": "Đang tải danh sách ứng viên...",
+  "headhunter.candidatesList": "Danh sách Ứng viên",
+  "headhunter.noApplicantsYet": "Chưa có ứng viên nào ứng tuyển",
+
+  "columns.candidate": "ỨNG VIÊN",
+  "columns.status": "TRẠNG THÁI",
+  "columns.actions": "THAO TÁC",
+
+  "actions.viewDetails": "Xem chi tiết"
 }

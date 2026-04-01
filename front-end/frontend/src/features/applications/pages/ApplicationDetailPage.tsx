@@ -129,7 +129,7 @@ export const ApplicationDetailPage: React.FC = () => {
       <div className="container mx-auto max-w-3xl">
         {/* Back Button */}
         <Button variant="outline" className="mb-6" onClick={() => navigate(-1)}>
-          ← {t("common.back")}
+          {t("common.back")}
         </Button>
 
         {/* Header */}
@@ -246,9 +246,12 @@ export const ApplicationDetailPage: React.FC = () => {
         <Card className="p-6">
           <h2 className="text-lg font-semibold mb-4">{t("common.actions")}</h2>
           <div className="flex flex-wrap gap-3">
-            {application.status === "APPLIED" && (
+            {(application.status as string) === "SUBMITTED" && (
               <>
-                <Button onClick={handleApproveApplication} className="flex-1">
+                <Button
+                  onClick={handleApproveApplication}
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                >
                   {t("applications.status.screening")}
                 </Button>
                 <Button
@@ -261,7 +264,7 @@ export const ApplicationDetailPage: React.FC = () => {
               </>
             )}
 
-            {application.status === "SCREENING" && (
+            {(application.status as string) === "HEADHUNTER_ACCEPTED" && (
               <>
                 <Button
                   onClick={() => setShowInterviewModal(true)}

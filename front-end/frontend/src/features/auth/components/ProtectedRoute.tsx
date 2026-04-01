@@ -15,14 +15,16 @@ export function ProtectedRoute({
   const location = useLocation();
   const { isAuthenticated, isInitializing, user } = useAuth();
 
-  // Not logged in → redirect to login
-  if (!isAuthenticated && !isInitializing) {
+  if (isInitializing) {
+    return null;
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 
   if (allowedRoles && allowedRoles.length > 0) {
     const role = (user?.role ?? "").toString().toLowerCase();
-
     const allowed = allowedRoles.map((r) => r.toString().toLowerCase());
 
     if (!allowed.includes(role)) {
