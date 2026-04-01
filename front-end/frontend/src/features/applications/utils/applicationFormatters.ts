@@ -14,7 +14,7 @@ export const formatApplicationStatus = (
   status: ApplicationStatus,
   t: (key: string) => string
 ): string => {
-  const labelKey = APPLICATION_STATUS_LABELS[status as ApplicationStatus];
+  const labelKey = APPLICATION_STATUS_LABELS[status];
   return t(labelKey);
 };
 
@@ -28,7 +28,7 @@ export const formatInterviewType = (
   type: InterviewType,
   t: (key: string) => string
 ): string => {
-  const labelKey = INTERVIEW_TYPE_LABELS[type as InterviewType];
+  const labelKey = INTERVIEW_TYPE_LABELS[type];
   return t(labelKey);
 };
 

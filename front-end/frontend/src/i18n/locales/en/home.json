@@ -1,6 +1,6 @@
 {
-  "searchKeywords": "Search Keywords",
-  "searchLocation": "Search Location",
+  "searchKeywords": "Keywords, job title, company...",
+  "searchLocation": "Location or 'Remote'...",
   "navigation": {
     "recommended": "Recommended",
     "topCompanies": "Top Companies",
@@ -16,30 +16,28 @@
     "notifications": "Notifications",
     "dashboard": "Dashboard",
     "adminDashboard": "Admin Dashboard",
-    "classification": "Classification",
-    "jobs": "Jobs",
-    "referrals": "Referrals"
+    "classification": "Classification"
   },
   "hero": {
-    "title": "Title",
-    "highlight": "Highlight",
-    "description": "Description"
+    "title": "Find Your Next",
+    "highlight": "Opportunity",
+    "description": "Explore 50,000+ hand-picked jobs from top-tier companies and take your career to the next level."
   },
   "searchBar": {
-    "search": "Search"
+    "search": "SEARCH"
   },
   "featuredJobs": {
-    "title": "Title",
-    "viewMore": "View More"
+    "title": "Featured Jobs",
+    "viewMore": "VIEW MORE JOBS →"
   },
   "recommendedJobs": {
-    "title": "Title",
-    "description": "Description"
+    "title": "Recommended for you",
+    "description": "Based on your profile and skills"
   },
   "topCompanies": {
-    "title": "Title",
-    "openJobs": "Open Jobs",
-    "viewCompany": "View Company"
+    "title": "Top Companies",
+    "openJobs": "12 Open Jobs",
+    "viewCompany": "View Company →"
   },
   "footer": {
     "copyright": "© {year} JobSite. All rights reserved."
@@ -54,24 +52,6 @@
     "noCompanies": "No companies found"
   },
   "badges": {
-    "new": "New"
-  },
-  "howItWorks": {
-    "step1": {
-      "title": "How it works step1 title",
-      "description": "How it works step1 description"
-    },
-    "step2": {
-      "title": "How it works step2 title",
-      "description": "How it works step2 description"
-    },
-    "step3": {
-      "title": "How it works step3 title",
-      "description": "How it works step3 description"
-    },
-    "step4": {
-      "title": "How it works step4 title",
-      "description": "How it works step4 description"
-    }
+    "new": "NEW"
   }
 }

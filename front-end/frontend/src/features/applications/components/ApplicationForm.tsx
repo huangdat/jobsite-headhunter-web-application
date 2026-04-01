@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -10,8 +10,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useForm, useWatch } from "react-hook-form";
-import { yupResolver as yupResolverLib } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { CVSelector } from "./CVSelector";
@@ -23,7 +23,7 @@ interface ApplicationFormProps {
   defaultValues?: Partial<ApplicationFormData>;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
+// ✅ Schema factory để có thể dùng i18n messages
 export const createValidationSchema = (t: (key: string) => string) => {
   return yup.object().shape({
     cvSnapshotUrl: yup
@@ -41,9 +41,9 @@ export const createValidationSchema = (t: (key: string) => string) => {
       .string()
       .required(t("applications.validation.phoneRequired"))
       .min(9, t("applications.validation.phoneInvalid")),
-    coverLetter: yup.string().optional().default(""),
-    salaryExpectation: yup.string().optional().default(""),
-  }) as yup.ObjectSchema<ApplicationFormData>;
+    coverLetter: yup.string().nullable(),
+    salaryExpectation: yup.string().nullable(),
+  });
 };
 
 export const ApplicationForm: React.FC<ApplicationFormProps> = ({
@@ -53,10 +53,11 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
 }) => {
   const { t } = useAppTranslation();
 
+  // ✅ Dynamic schema với i18n
   const validationSchema = createValidationSchema(t);
 
   const form = useForm<ApplicationFormData>({
-    resolver: yupResolverLib(validationSchema),
+    resolver: yupResolver(validationSchema) as any,
     defaultValues: defaultValues || {
       fullName: "",
       email: "",
@@ -67,12 +68,6 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     },
   });
 
-  // Use useWatch hook instead of form.watch() to avoid React Compiler issues
-  const selectedCvUrl = useWatch({
-    control: form.control,
-    name: "cvSnapshotUrl",
-  });
-
   useEffect(() => {
     if (defaultValues) form.reset(defaultValues);
   }, [defaultValues, form]);
@@ -80,14 +75,14 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   /**
    * Xử lý khi CVSelector báo đã lấy được CV thành công
    */
-  const handleCVSelect = (_cvId: string, cvUrl: string) => {
+  const handleCVSelect = (cvId: string, cvUrl: string) => {
     // Chúng ta lưu cvUrl vào form để gửi lên server
     form.setValue("cvSnapshotUrl", cvUrl, { shouldValidate: true });
   };
 
-  const handleFormSubmit = async (data: ApplicationFormData) => {
+  const handleFormSubmit = (data: ApplicationFormData) => {
     // Vì chỉ dùng CV có sẵn nên data gửi đi là JSON thuần, không cần FormData
-    await onSubmit(data);
+    onSubmit(data);
   };
 
   return (
@@ -100,7 +95,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
         <FormItem>
           <CVSelector
             onCVSelect={handleCVSelect}
-            selectedId={selectedCvUrl}
+            selectedId={form.watch("cvSnapshotUrl")}
             error={form.formState.errors.cvSnapshotUrl?.message}
           />
         </FormItem>
@@ -192,7 +187,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                   }
                   rows={4}
                   {...field}
-                  value={field.value ?? ""}
+                  value={field.value || ""}
                   className="rounded-xl resize-none"
                 />
               </FormControl>
@@ -217,7 +212,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                     "e.g., 15000000"
                   }
                   {...field}
-                  value={field.value ?? ""}
+                  value={field.value || ""}
                   className="rounded-xl h-11"
                 />
               </FormControl>

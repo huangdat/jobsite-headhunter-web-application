@@ -25,7 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
-import { yupResolver as yupResolverLib } from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { InterviewType } from "../types";
@@ -38,34 +38,22 @@ interface InterviewScheduleModalProps {
   isLoading?: boolean;
 }
 
-const getValidationSchema = (t: (key: string) => string) => {
-  const schema = yup.object().shape({
-    interviewType: yup
-      .string()
-      .required(t("applications.validation.interviewTypeRequired")),
-    scheduledAt: yup
-      .string()
-      .required(t("applications.validation.scheduledAtRequired")),
-    durationMinutes: yup
-      .number()
-      .required(t("applications.validation.durationRequired"))
-      .positive(),
-    meetingLink: yup.string().when("interviewType", {
-      is: InterviewType.ONLINE,
-      then: (baseSchema) =>
-        baseSchema.required(t("applications.validation.meetingLinkRequired")),
-      otherwise: (baseSchema) => baseSchema.optional().nullable(),
-    }),
-    location: yup.string().when("interviewType", {
-      is: InterviewType.OFFLINE,
-      then: (baseSchema) =>
-        baseSchema.required(t("applications.validation.locationRequired")),
-      otherwise: (baseSchema) => baseSchema.optional().nullable(),
-    }),
-    notes: yup.string().optional().nullable(),
-  });
-  return schema as yup.ObjectSchema<InterviewScheduleFormData>;
-};
+const validationSchema = yup.object().shape({
+  interviewType: yup.string().required("Interview type is required"),
+  scheduledAt: yup.string().required("Date and time is required"),
+  durationMinutes: yup.number().required("Duration is required").positive(),
+  meetingLink: yup.string().when("interviewType", {
+    is: InterviewType.ONLINE,
+    then: (schema) => schema.required("Meeting link is required"),
+    otherwise: (schema) => schema.optional(),
+  }),
+  location: yup.string().when("interviewType", {
+    is: InterviewType.OFFLINE,
+    then: (schema) => schema.required("Location is required"),
+    otherwise: (schema) => schema.optional(),
+  }),
+  notes: yup.string().optional(),
+});
 
 export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
   isOpen,
@@ -79,7 +67,7 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
   >();
 
   const form = useForm<InterviewScheduleFormData>({
-    resolver: yupResolverLib(getValidationSchema(t)),
+    resolver: yupResolver(validationSchema) as any,
     defaultValues: {
       interviewType: undefined,
       scheduledAt: "",
@@ -90,9 +78,7 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
     },
   });
 
-  const handleSubmit = async (
-    data: InterviewScheduleFormData
-  ): Promise<void> => {
+  const handleSubmit = async (data: InterviewScheduleFormData) => {
     await onSubmit(data);
     form.reset();
     onClose();
@@ -122,7 +108,7 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
                   <FormLabel>{t("applications.interview.type")}</FormLabel>
                   <Select
                     value={field.value}
-                    onValueChange={(val: string) => {
+                    onValueChange={(val) => {
                       field.onChange(val);
                       setInterviewType(val as InterviewType);
                     }}
@@ -190,7 +176,7 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={t("applications.placeholders.meetingLink")}
+                        placeholder="https://meet.google.com/..."
                         {...field}
                       />
                     </FormControl>
@@ -210,10 +196,7 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
                       {t("applications.interview.location")}
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder={t("applications.placeholders.location")}
-                        {...field}
-                      />
+                      <Input placeholder="Office address..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

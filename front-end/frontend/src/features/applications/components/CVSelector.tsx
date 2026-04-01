@@ -1,9 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { formatUploadDate } from "@/features/candidate/cv/services/cvApi";
 import { fetchMyCurrentCV } from "@/features/applications/services/applicationsApi";
-import { FileText, Loader, AlertCircle } from "lucide-react";
-import type { Application } from "../types";
+import {
+  FileText,
+  Loader,
+  AlertCircle,
+  Calendar,
+  Download,
+} from "lucide-react";
 
 interface CVSelectorProps {
   onCVSelect: (cvId: string, cvUrl: string) => void;
@@ -17,10 +23,8 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
   error,
 }) => {
   const { t } = useAppTranslation();
-  const [myCv, setMyCv] = useState<Application | null>(null);
+  const [myCv, setMyCv] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleCVSelect = useCallback(onCVSelect, [onCVSelect]);
 
   useEffect(() => {
     const loadDefaultCV = async () => {
@@ -29,7 +33,7 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
         const data = await fetchMyCurrentCV();
         if (data) {
           setMyCv(data);
-          handleCVSelect(String(data.id), data.cvSnapshotUrl);
+          onCVSelect(String(data.id), data.cvUrl);
         }
       } catch (err) {
         console.error("Failed to load CV profile", err);
@@ -38,9 +42,9 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
       }
     };
     loadDefaultCV();
-  }, [handleCVSelect]);
+  }, []);
 
-  // Format filename
+  // ✅ Format filename
   const formatFileName = (url: string) => {
     if (!url) return "My_Resume.pdf";
     const fileName = url.split("/").pop() || "";
@@ -67,8 +71,7 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
         <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
           <div
             className={`relative flex items-center justify-between rounded-2xl border-2 p-4 transition-all duration-300 ${
-              selectedId === String(myCv.id) ||
-              selectedId === myCv.cvSnapshotUrl
+              selectedId === String(myCv.id) || selectedId === myCv.cvUrl
                 ? "border-emerald-500 bg-emerald-50/50 shadow-md ring-1 ring-emerald-500/20"
                 : "border-slate-100 bg-white"
             }`}
@@ -79,7 +82,7 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
               </div>
               <div className="overflow-hidden">
                 <h4 className="text-sm font-bold text-slate-900 truncate">
-                  {formatFileName(myCv.cvSnapshotUrl)}
+                  {formatFileName(myCv.cvUrl)}
                 </h4>
               </div>
             </div>

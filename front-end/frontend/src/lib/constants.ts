@@ -27,6 +27,7 @@ export const API_ENDPOINTS = {
   // Auth
   AUTH: {
     LOGIN: "/api/auth/login",
+    REGISTER: "/api/auth/register",
     LOGOUT: "/api/auth/logout",
     VALIDATE_TOKEN: "/api/auth/token-validate",
     SOCIAL_CONFIG: "/api/auth/social-config",
@@ -49,8 +50,8 @@ export const API_ENDPOINTS = {
     SIGNUP_CANDIDATE: "/api/account/signup-candidate",
     SIGNUP_HEADHUNTER: "/api/account/signup-headhunter",
     SIGNUP_COLLABORATOR: "/api/account/signup-collaborator",
-    GET_PROFILE: "/api/account/myInfo",
-    UPDATE_PROFILE: "/api/account/myInfo",
+    GET_PROFILE: "/api/account/profile",
+    UPDATE_PROFILE: "/api/account/profile",
     CHANGE_PASSWORD: "/api/account/changeMyPassword",
   },
 
@@ -122,15 +123,15 @@ export const API_ENDPOINTS = {
     CV_MAKE_ACTIVE: "/api/cv/{id}/make-active",
     PROFILE_STRENGTH: "/api/candidate/profile/strength",
     PRIVACY_SETTINGS: "/api/candidate/profile/privacy",
-    APPLY_JOB: "/api/jobs/{jobId}/applications",
-    GET_MY_APPLICATIONS: "/api/candidates/me/applications",
+    APPLY_JOB: "/api/applications",
+    GET_MY_APPLICATIONS: "/api/applications/my",
   },
 
   // Headhunter
   HEADHUNTER: {
-    GET_JOB_APPLICATIONS: "/api/headhunter/jobs/{jobId}/applications",
-    GET_APPLICATION_DETAIL: "/api/headhunter/applications/{id}",
-    UPDATE_APPLICATION_STATUS: "/api/headhunter/applications/{id}/status",
+    GET_JOB_APPLICATIONS: "/api/jobs/{jobId}/applications",
+    GET_APPLICATION_DETAIL: "/api/applications/{id}",
+    UPDATE_APPLICATION_STATUS: "/api/applications/{id}/status",
     SCHEDULE_INTERVIEW: "/api/interviews",
   },
 

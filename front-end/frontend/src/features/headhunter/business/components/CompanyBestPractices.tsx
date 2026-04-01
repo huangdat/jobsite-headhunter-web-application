@@ -96,10 +96,10 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            {t("bestpractice.title")}
+            {t("business.bestpractice.title")}
           </h3>
           <p className="text-xs text-slate-600">
-            {t("bestpractice.subtitle")}
+            {t("business.bestpractice.subtitle")}
           </p>
         </div>
       </div>
@@ -144,10 +144,10 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
         <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />
         <div>
           <p className="text-xs font-semibold text-emerald-900">
-            {t("bestpractice.follow_tips")}
+            {t("business.bestpractice.follow_tips")}
           </p>
           <p className="mt-1 text-xs text-emerald-800">
-            {t("bestpractice.follow_tips_desc")}
+            {t("business.bestpractice.follow_tips_desc")}
           </p>
         </div>
       </div>

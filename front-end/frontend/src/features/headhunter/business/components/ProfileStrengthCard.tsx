@@ -89,7 +89,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
         className={`rounded-lg border border-slate-200 bg-white p-6 ${className}`}
       >
         <p className="text-center text-sm text-slate-600">
-          {t("strength.no_data")}
+          {t("business.strength.no_data")}
         </p>
       </div>
     );
@@ -107,10 +107,10 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
       {/* Header */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-slate-900">
-          {t("strength.title")}
+          {t("business.strength.title")}
         </h3>
         <p className="mt-1 text-sm text-slate-600">
-          {t("strength.subtitle")}
+          {t("business.strength.subtitle")}
         </p>
       </div>
 
@@ -146,7 +146,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
               {Math.round(strengthData.percentage)}%
             </span>
             <span className="text-xs text-slate-600">
-              {t("strength.complete")}
+              {t("business.strength.complete")}
             </span>
           </div>
         </div>
@@ -155,15 +155,15 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
         <div className="flex-1">
           <div className={`rounded-lg ${strengthBgColor} p-3`}>
             <p className="text-sm font-semibold text-slate-900">
-              {completedItems} {t("strength.of")} {totalItems}{" "}
-              {t("strength.items")}
+              {completedItems} {t("business.strength.of")} {totalItems}{" "}
+              {t("business.strength.items")}
             </p>
             <p className="mt-1 text-xs text-slate-700">
               {strengthData.percentage >= 80
-                ? t("strength.excellent")
+                ? t("business.strength.excellent")
                 : strengthData.percentage >= 60
-                  ? t("strength.good")
-                  : t("strength.incomplete")}
+                  ? t("business.strength.good")
+                  : t("business.strength.incomplete")}
             </p>
           </div>
         </div>
@@ -172,7 +172,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
       {/* Strength Items */}
       <div className="space-y-3 py-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-700">
-          {t("strength.breakdown")}
+          {t("business.strength.breakdown")}
         </p>
 
         {strengthData.items.map((item: StrengthItem) => (
@@ -209,7 +209,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
           <AlertCircle className="h-5 w-5 shrink-0 text-blue-600" />
           <div>
             <p className="text-sm font-semibold text-blue-900">
-              {t("strength.next_action")}
+              {t("business.strength.next_action")}
             </p>
             <p className="mt-1 text-sm text-blue-800">
               {t(strengthData.nextAction)}
@@ -221,7 +221,7 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
       {/* Last Updated */}
       {strengthData.lastUpdatedAt && (
         <p className="mt-4 text-xs text-slate-500">
-          {t("strength.updated")}:{" "}
+          {t("business.strength.updated")}:{" "}
           {new Date(strengthData.lastUpdatedAt).toLocaleDateString()}
         </p>
       )}

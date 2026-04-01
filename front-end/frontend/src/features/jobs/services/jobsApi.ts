@@ -1,7 +1,6 @@
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
 import { extractResult } from "@/shared/api/responseAdapter";
-import { cachedApiCall } from "@/shared/utils/apiCache";
 import {
   appendString,
   appendNumber,
@@ -18,63 +17,39 @@ import type {
 import type { ApiResponse } from "@/features/auth/types/api.types";
 
 export const fetchSkills = async () => {
-  return cachedApiCall(
-    "jobs-skills",
-    async () => {
-      const res = await apiClient.get<
-        ApiResponse<import("../types").SkillOption[]>
-      >(API_ENDPOINTS.JOBS.GET_SKILLS);
-      return extractResult(res);
-    },
-    { ttl: 600000 } // Cache for 10 minutes (static data)
-  );
+  const res = await apiClient.get<
+    ApiResponse<import("../types").SkillOption[]>
+  >(API_ENDPOINTS.JOBS.GET_SKILLS);
+  return extractResult(res);
 };
 
 export const getJobs = async (params: JobFilterParams) => {
-  return cachedApiCall(
-    `jobs-list-${JSON.stringify(params)}`,
-    async () => {
-      const res = await apiClient.get<ApiResponse<JobListResponse>>(
-        API_ENDPOINTS.JOBS.GET_LIST,
-        {
-          params,
-        }
-      );
-      return extractResult(res);
-    },
-    { ttl: 180000 } // Cache for 3 minutes (volatile search results)
+  const res = await apiClient.get<ApiResponse<JobListResponse>>(
+    API_ENDPOINTS.JOBS.GET_LIST,
+    {
+      params,
+    }
   );
+  return extractResult(res);
 };
 
 export const getMyJobs = async (page = 1, size = 10) => {
-  return cachedApiCall(
-    `my-jobs-${page}-${size}`,
-    async () => {
-      console.log(`[API] Calling getMyJobs with page=${page}, size=${size}`);
-      const res = await apiClient.get<ApiResponse<JobListResponse>>(
-        API_ENDPOINTS.JOBS.GET_MY_JOBS,
-        {
-          params: { page, size },
-        }
-      );
-      console.log(`[API] getMyJobs response:`, res.data);
-      return extractResult(res);
-    },
-    { ttl: 300000 } // Cache for 5 minutes (personalized data)
+  console.log(`[API] Calling getMyJobs with page=${page}, size=${size}`);
+  const res = await apiClient.get<ApiResponse<JobListResponse>>(
+    API_ENDPOINTS.JOBS.GET_MY_JOBS,
+    {
+      params: { page, size },
+    }
   );
+  console.log(`[API] getMyJobs response:`, res.data);
+  return extractResult(res);
 };
 
 export const getJobDetail = async (id: number) => {
-  return cachedApiCall(
-    `job-detail-${id}`,
-    async () => {
-      const res = await apiClient.get<ApiResponse<JobDetail>>(
-        API_ENDPOINTS.JOBS.GET_BY_ID.replace("{id}", String(id))
-      );
-      return extractResult(res);
-    },
-    { ttl: 300000 } // Cache for 5 minutes
+  const res = await apiClient.get<ApiResponse<JobDetail>>(
+    API_ENDPOINTS.JOBS.GET_BY_ID.replace("{id}", String(id))
   );
+  return extractResult(res);
 };
 
 // Create job: multipart/form-data (may include image file)
@@ -205,16 +180,10 @@ export const removeSavedJob = async (jobId: number) => {
 };
 
 export const fetchSavedJobs = async () => {
-  return cachedApiCall(
-    "saved-jobs",
-    async () => {
-      const res = await apiClient.get<
-        ApiResponse<import("../types").SavedJob[]>
-      >(API_ENDPOINTS.JOBS.GET_SAVED);
-      return extractResult(res);
-    },
-    { ttl: 300000 } // Cache for 5 minutes
+  const res = await apiClient.get<ApiResponse<import("../types").SavedJob[]>>(
+    API_ENDPOINTS.JOBS.GET_SAVED
   );
+  return extractResult(res);
 };
 
 export default {

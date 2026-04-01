@@ -1,12 +1,5 @@
 import { apiClient } from "@/shared/utils/axios";
-import type {
-  Application,
-  ApiResponse,
-  PaginatedResponse,
-  ApplicationFormData,
-  InterviewScheduleFormData,
-  Interview,
-} from "../types";
+import type { Application, ApiResponse, PaginatedResponse } from "../types";
 
 /**
  * APPL-01: Submit Application
@@ -14,7 +7,7 @@ import type {
  */
 export const submitApplication = async (
   jobId: number,
-  data: ApplicationFormData | FormData
+  data: any
 ): Promise<Application> => {
   const isFormData = data instanceof FormData;
 
@@ -42,7 +35,7 @@ export const submitApplication = async (
  */
 export const getApplicationsForJob = async (
   jobId: number,
-  params?: Record<string, unknown>
+  params?: any
 ): Promise<PaginatedResponse<Application>> => {
   const response = await apiClient.get<
     ApiResponse<PaginatedResponse<Application>>
@@ -54,7 +47,7 @@ export const getApplicationsForJob = async (
  * APPL-02: Get All Applications (Headhunter)
  */
 export const getHeadhunterApplications = async (
-  params?: Record<string, unknown>
+  params?: any
 ): Promise<PaginatedResponse<Application>> => {
   const response = await apiClient.get<
     ApiResponse<PaginatedResponse<Application>>
@@ -94,15 +87,12 @@ export const updateApplicationStatus = async (
  */
 export const createInterview = async (
   applicationId: number,
-  data: InterviewScheduleFormData
-): Promise<Interview> => {
-  const response = await apiClient.post<ApiResponse<Interview>>(
-    `/api/interviews`,
-    {
-      applicationId,
-      ...data,
-    }
-  );
+  data: any
+): Promise<any> => {
+  const response = await apiClient.post<ApiResponse<any>>(`/api/interviews`, {
+    applicationId,
+    ...data,
+  });
   return response.data.result;
 };
 
@@ -111,9 +101,9 @@ export const createInterview = async (
  */
 export const updateInterview = async (
   applicationId: number,
-  data: InterviewScheduleFormData
-): Promise<Interview> => {
-  const response = await apiClient.patch<ApiResponse<Interview>>(
+  data: any
+): Promise<any> => {
+  const response = await apiClient.patch<ApiResponse<any>>(
     `/api/headhunter/applications/${applicationId}/interview`,
     data
   );
@@ -124,7 +114,7 @@ export const updateInterview = async (
  * APPL-07: Get Candidate Applications
  */
 export const getCandidateApplications = async (
-  params?: Record<string, unknown>
+  params?: any
 ): Promise<PaginatedResponse<Application>> => {
   const response = await apiClient.get<
     ApiResponse<PaginatedResponse<Application>>
@@ -157,10 +147,9 @@ export const getApplicationById = async (id: number): Promise<Application> => {
 /**
  * Fetch current user's CV from profile
  */
-export const fetchMyCurrentCV = async (): Promise<Application | null> => {
+export const fetchMyCurrentCV = async (): Promise<any> => {
   try {
-    const response =
-      await apiClient.get<ApiResponse<Application>>(`/api/cv/myCv`);
+    const response = await apiClient.get<ApiResponse<any>>(`/api/cv/myCv`);
     return response.data.result;
   } catch (error) {
     console.error("Error fetching current CV:", error);

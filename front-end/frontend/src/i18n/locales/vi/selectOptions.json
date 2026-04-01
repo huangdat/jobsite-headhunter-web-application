@@ -1,0 +1,26 @@
+{
+  "selectGender": "Chọn giới tính",
+  "genders": {
+    "male": "Nam",
+    "female": "Nữ",
+    "other": "Khác"
+  },
+  "selectCompanyScale": "Chọn quy mô công ty",
+  "companyScaleOptions": {
+    "0": {
+      "label": "Quy mô công ty 0"
+    },
+    "1": {
+      "label": "Quy mô công ty 1"
+    },
+    "2": {
+      "label": "Quy mô công ty 2"
+    },
+    "3": {
+      "label": "Quy mô công ty 3"
+    },
+    "4": {
+      "label": "Quy mô công ty 4"
+    }
+  }
+}

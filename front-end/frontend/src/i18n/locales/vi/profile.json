@@ -1,47 +1,47 @@
 {
   "page": {
-    "subtitleSaving": "[VI] Subtitle Saving",
-    "subtitleSuccess": "[VI] Subtitle Success",
-    "subtitleDefault": "[VI] Subtitle Default",
-    "eyebrow": "[VI] Eyebrow",
-    "title": "[VI] Title"
+    "subtitleSaving": "Đang lưu hồ sơ của bạn",
+    "subtitleSuccess": "Hồ sơ đã được lưu thành công",
+    "subtitleDefault": "Hồ sơ của bạn",
+    "eyebrow": "Hồ sơ",
+    "title": "Hồ sơ của bạn"
   },
   "alerts": {
-    "saveErrorTitle": "[VI] Save Error Title",
-    "validationErrorTitle": "[VI] Validation Error Title",
-    "saveSuccessTitle": "[VI] Save Success Title",
-    "saveSuccessBody": "[VI] Save Success Body"
+    "saveErrorTitle": "Lỗi khi lưu hồ sơ",
+    "validationErrorTitle": "Lỗi xác thực hồ sơ",
+    "saveSuccessTitle": "Lưu hồ sơ thành công",
+    "saveSuccessBody": "Hồ sơ của bạn đã được lưu thành công"
   },
   "actions": {
-    "discardChanges": "[VI] Discard Changes",
-    "saving": "[VI] Saving",
-    "saveChanges": "[VI] Save Changes"
+    "discardChanges": "Hủy thay đổi",
+    "saving": "Đang lưu...",
+    "saveChanges": "Lưu thay đổi"
   },
   "sidebar": {
-    "strengthTitle": "[VI] Strength Title",
-    "strengthHint": "[VI] Strength Hint",
-    "tipsTitle": "[VI] Tips Title",
-    "tipOne": "[VI] Tip One",
-    "tipTwo": "[VI] Tip Two",
-    "tipThree": "[VI] Tip Three",
-    "insightEyebrow": "[VI] Insight Eyebrow",
-    "insightBody": "[VI] Insight Body"
+    "strengthTitle": "Mức độ mạnh của hồ sơ",
+    "strengthHint": "Gợi ý về mức độ mạnh của hồ sơ",
+    "tipsTitle": "Mẹo hồ sơ",
+    "tipOne": "Mẹo 1",
+    "tipTwo": "Mẹo 2",
+    "tipThree": "Mẹo 3",
+    "insightEyebrow": "Thông tin chi tiết",
+    "insightBody": "Hồ sơ sidebar insight body"
   },
   "form": {
-    "sectionTitle": "[VI] Section Title",
-    "sectionSubtitle": "[VI] Section Subtitle",
-    "openForWork": "[VI] Open For Work",
-    "fullName": "[VI] Full Name",
-    "jobTitle": "[VI] Job Title",
-    "currentTitlePlaceholder": "[VI] Current Title Placeholder",
-    "currentStatus": "[VI] Current Status",
-    "currentStatusAria": "[VI] Current Status Aria",
-    "yearsOfExperience": "[VI] Years Of Experience",
-    "city": "[VI] City",
-    "cityPlaceholder": "[VI] City Placeholder",
-    "salaryMin": "[VI] Salary Min",
-    "salaryMax": "[VI] Salary Max",
-    "professionalBio": "[VI] Professional Bio",
-    "bioPlaceholder": "[VI] Bio Placeholder"
+    "sectionTitle": "Thông tin cơ bản",
+    "sectionSubtitle": "Cập nhật thông tin hồ sơ của bạn",
+    "openForWork": "Sẵn sàng làm việc",
+    "fullName": "Họ và tên",
+    "jobTitle": "Chức danh công việc",
+    "currentTitlePlaceholder": "Chức danh hiện tại",
+    "currentStatus": "Tình trạng hiện tại",
+    "currentStatusAria": "Tình trạng hiện tại",
+    "yearsOfExperience": "Số năm kinh nghiệm",
+    "city": "Thành phố",
+    "cityPlaceholder": "Thành phố bạn đang sinh sống",
+    "salaryMin": "Lương tối thiểu",
+    "salaryMax": "Lương tối đa",
+    "professionalBio": "Hồ sơ bio chuyên nghiệp",
+    "bioPlaceholder": "Sở thích của bạn"
   }
 }

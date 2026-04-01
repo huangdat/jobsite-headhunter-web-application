@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
-import {
-  useDeleteTranslation,
-  useLockTranslation,
-  useUnlockTranslation,
-  useUsersTranslation,
-} from "@/shared/hooks";
+import { useUsersTranslation } from "@/shared/hooks";
 import { useUserDetail } from "@/features/users/detail/hooks/useUserDetail";
 import { userMapper } from "@/features/users/utils/userMapper";
 import { useDeleteUser } from "@/features/users/actions/delete/hooks";
@@ -54,9 +49,6 @@ interface LoginSession {
 
 const UserDetailPage: React.FC = () => {
   const { t } = useUsersTranslation();
-  const { t: tDelete } = useDeleteTranslation();
-  const { t: tLock } = useLockTranslation();
-  const { t: tUnlock } = useUnlockTranslation();
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const {
@@ -126,8 +118,7 @@ const UserDetailPage: React.FC = () => {
     logoutCurrentSession: boolean;
   }) => {
     if (!userId || !user) {
-      // eslint-disable-next-line custom/no-hardcoded-strings
-      showToast(TOAST_ERROR, tLock("errorGeneral"));
+      showToast(TOAST_ERROR, t("lock.errorGeneral"));
       return;
     }
 
@@ -138,14 +129,13 @@ const UserDetailPage: React.FC = () => {
         ...lockData,
       });
 
-      showToast(TOAST_SUCCESS, tLock("successLockUser"));
+      showToast(TOAST_SUCCESS, t("lock.successLockUser"));
       setIsLockModalOpen(false);
 
       // Refresh user data
       setTimeout(() => window.location.reload(), REDIRECT_DELAY.MEDIUM);
     } catch {
-      // eslint-disable-next-line custom/no-hardcoded-strings
-      showToast(TOAST_ERROR, tLock("errorGeneral"));
+      showToast(TOAST_ERROR, t("lock.errorGeneral"));
     }
   };
 
@@ -155,8 +145,7 @@ const UserDetailPage: React.FC = () => {
     requirePasswordChange: boolean;
   }) => {
     if (!userId || !user) {
-      // eslint-disable-next-line custom/no-hardcoded-strings
-      showToast(TOAST_ERROR, tUnlock("errorGeneral"));
+      showToast(TOAST_ERROR, t("unlock.errorGeneral"));
       return;
     }
 
@@ -167,14 +156,13 @@ const UserDetailPage: React.FC = () => {
         ...unlockData,
       });
 
-      showToast(TOAST_SUCCESS, tUnlock("successUnlockUser"));
+      showToast(TOAST_SUCCESS, t("unlock.successUnlockUser"));
       setIsUnlockModalOpen(false);
 
       // Refresh user data
       setTimeout(() => window.location.reload(), REDIRECT_DELAY.MEDIUM);
     } catch {
-      // eslint-disable-next-line custom/no-hardcoded-strings
-      showToast(TOAST_ERROR, tUnlock("errorGeneral"));
+      showToast(TOAST_ERROR, t("unlock.errorGeneral"));
     }
   };
 
@@ -191,16 +179,14 @@ const UserDetailPage: React.FC = () => {
     reason?: string
   ) => {
     if (!userId || !user) {
-      // eslint-disable-next-line custom/no-hardcoded-strings
-      showToast(TOAST_ERROR, tDelete("errorGeneral"));
+      showToast(TOAST_ERROR, t("delete.errorGeneral"));
       return;
     }
 
     try {
       if (deleteType === "soft") {
         if (!reason) {
-          // eslint-disable-next-line custom/no-hardcoded-strings
-          showToast(TOAST_ERROR, tDelete("errorReasonRequired"));
+          showToast(TOAST_ERROR, t("delete.errorReasonRequired"));
           return;
         }
         await softDelete({ userId, reason });
@@ -212,15 +198,14 @@ const UserDetailPage: React.FC = () => {
       showToast(
         TOAST_SUCCESS,
         deleteType === "soft"
-          ? tDelete("successSoftDelete") // eslint-disable-line custom/no-hardcoded-strings
-          : tDelete("successHardDelete") // eslint-disable-line custom/no-hardcoded-strings
+          ? t("delete.successSoftDelete")
+          : t("delete.successHardDelete")
       );
 
       // Redirect after deletion
       setTimeout(() => navigate(ROUTES.USERS_LIST), REDIRECT_DELAY.MEDIUM);
     } catch {
-      // eslint-disable-next-line custom/no-hardcoded-strings
-      showToast(TOAST_ERROR, tDelete("errorGeneral"));
+      showToast(TOAST_ERROR, t("delete.errorGeneral"));
     }
   };
 
@@ -419,21 +404,17 @@ const UserDetailPage: React.FC = () => {
           lockReasons={[
             {
               value: "suspicious_activity",
-              // eslint-disable-next-line custom/no-hardcoded-strings
-              label: tLock("reasonSuspiciousActivity"),
+              label: t("lock.reasonSuspiciousActivity"),
             },
             {
               value: "policy_violation",
-              // eslint-disable-next-line custom/no-hardcoded-strings
-              label: tLock("reasonPolicyViolation"),
+              label: t("lock.reasonPolicyViolation"),
             },
             {
               value: "account_compromise",
-              // eslint-disable-next-line custom/no-hardcoded-strings
-              label: tLock("reasonAccountCompromise"),
+              label: t("lock.reasonAccountCompromise"),
             },
-            // eslint-disable-next-line custom/no-hardcoded-strings
-            { value: "other", label: tLock("reasonOther") },
+            { value: "other", label: t("lock.reasonOther") },
           ]}
           onClose={() => setIsLockModalOpen(false)}
           onConfirm={handleLockConfirm}

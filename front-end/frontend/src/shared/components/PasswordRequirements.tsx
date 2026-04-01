@@ -1,5 +1,5 @@
 import React from "react";
-import { usePagesTranslation } from "@/shared/hooks";
+import { useTranslation } from "react-i18next";
 
 interface PasswordRequirement {
   met: boolean;
@@ -19,25 +19,25 @@ export const PasswordRequirements: React.FC<PasswordRequirementsProps> = ({
   hasLowerCase,
   hasNumber,
 }) => {
-  const { t } = usePagesTranslation();
+  const { t } = useTranslation();
 
   const requirements: PasswordRequirement[] = [
-    { met: minLength, label: t("passwordRequirements.minLength") },
+    { met: minLength, label: t("pages.passwordRequirements.minLength") },
     {
       met: hasUpperCase,
-      label: t("passwordRequirements.uppercase"),
+      label: t("pages.passwordRequirements.uppercase"),
     },
     {
       met: hasLowerCase,
-      label: t("passwordRequirements.lowercase"),
+      label: t("pages.passwordRequirements.lowercase"),
     },
-    { met: hasNumber, label: t("passwordRequirements.number") },
+    { met: hasNumber, label: t("pages.passwordRequirements.number") },
   ];
 
   return (
     <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-800">
       <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-        {t("passwordRequirements.title")}
+        {t("pages.passwordRequirements.title")}
       </h4>
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {requirements.map((requirement, index) => (

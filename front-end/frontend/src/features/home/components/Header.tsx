@@ -2,17 +2,11 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineHandshake } from "react-icons/md";
 import { useAuth } from "@/features/auth/context/useAuth";
-import {
-  useHomeTranslation,
-  useCommonTranslation,
-  useMessagesTranslation,
-} from "@/shared/hooks";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Navbar } from "./Navbar";
 
 export function Header() {
-  const { t: tNav } = useHomeTranslation();
-  const { t: tCommon } = useCommonTranslation();
-  const { t: tMessages } = useMessagesTranslation();
+  const { t } = useAppTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, signOut, user } = useAuth();
   const userInitial = useMemo(
@@ -82,19 +76,19 @@ export function Header() {
                 to="/login"
                 className="text-sm font-medium hover:text-emerald-600 transition"
               >
-                {tNav("navigation.login")}
+                {t("navigation.login")}
               </Link>
               <Link
                 to="/select-role"
                 className="bg-brand-primary text-black px-6 py-2 rounded-full text-sm font-semibold hover:bg-brand-hover transition"
               >
-                {tNav("navigation.signUp")}
+                {t("navigation.signUp")}
               </Link>
               <Link
                 to="/register/headhunter"
                 className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition"
               >
-                {tNav("navigation.postJob")}
+                {t("navigation.postJob")}
               </Link>
             </>
           ) : (
@@ -120,7 +114,7 @@ export function Header() {
                       <span
                         className={`inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium ${roleBadgeClass}`}
                       >
-                        {user?.role ? tCommon(`roles.${normalizedRole}`) : ""}
+                        {user?.role ? t(`roles.${normalizedRole}`) : ""}
                       </span>
                     </div>
                   </div>
@@ -138,7 +132,7 @@ export function Header() {
                           className="w-full text-left px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 transition cursor-pointer flex items-center gap-2"
                         >
                           <span>👨‍💼</span>
-                          {tNav("navigation.adminDashboard")}
+                          {t("navigation.adminDashboard")}
                         </button>
                         <div className="my-1 border-b border-border" />
                       </>
@@ -150,7 +144,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {tNav("navigation.profile")}
+                      {t("navigation.profile")}
                     </button>
                     {user?.role?.toLowerCase() === "headhunter" ? (
                       <>
@@ -161,7 +155,7 @@ export function Header() {
                           }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
-                          {tMessages("myJobs")}
+                          {t("messages.myJobs")}
                         </button>
                         <button
                           onClick={() => {
@@ -182,7 +176,7 @@ export function Header() {
                           }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
-                          {tNav("navigation.applications")}
+                          {t("navigation.applications")}
                         </button>
                         <button
                           onClick={() => {
@@ -191,7 +185,7 @@ export function Header() {
                           }}
                           className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
-                          {tNav("navigation.savedJobs")}
+                          {t("navigation.savedJobs")}
                         </button>
                       </>
                     )}
@@ -202,7 +196,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {tNav("navigation.applications")}
+                      {t("navigation.applications")}
                     </button>
                     <button
                       onClick={() => {
@@ -211,7 +205,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {tNav("navigation.savedJobs")}
+                      {t("navigation.savedJobs")}
                     </button>
                   </div>
 
@@ -223,7 +217,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {tNav("navigation.settings")}
+                      {t("navigation.settings")}
                     </button>
                     <button
                       onClick={() => {
@@ -232,7 +226,7 @@ export function Header() {
                       }}
                       className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {tNav("navigation.notifications")}
+                      {t("navigation.notifications")}
                     </button>
                   </div>
 
@@ -241,7 +235,7 @@ export function Header() {
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-slate-50 transition cursor-pointer"
                     >
-                      {tNav("navigation.logout")}
+                      {t("navigation.logout")}
                     </button>
                   </div>
                 </div>
@@ -253,3 +247,4 @@ export function Header() {
     </header>
   );
 }
+

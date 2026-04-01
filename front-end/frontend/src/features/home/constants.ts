@@ -23,15 +23,6 @@ export const JOB_TYPE_COLORS = {
   },
 } as const;
 
-// Job type labels - Display names for working types
-// No need to add to i18n JSON files - hardcoded for simplicity
-export const JOB_TYPE_LABELS: Record<string, string> = {
-  "full-time": "Full-time",
-  remote: "Remote",
-  onsite: "On-site",
-  hybrid: "Hybrid",
-};
-
 // Match badge colors
 export const MATCH_BADGE_COLORS = {
   bg: "bg-green-100",

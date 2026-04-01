@@ -6,34 +6,25 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { ApplicationCard, ApplicationFilters } from "../components";
 import { useApplications, useApplicationFilters } from "../hooks";
+import type { ApplicationStatus } from "../types";
 
 interface ApplicationListPageProps {
   jobId?: number;
 }
 
-export const ApplicationListPage: React.FC<ApplicationListPageProps> = ({
-  jobId,
-}) => {
+export const ApplicationListPage: React.FC<ApplicationListPageProps> = ({ jobId }) => {
   const navigate = useNavigate();
   const { t } = useAppTranslation();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_selectedApplicationId, _setSelectedApplicationId] = useState<
-    number | null
-  >(null);
+  const [selectedApplicationId, setSelectedApplicationId] = useState<number | null>(null);
 
-  const {
-    applications,
-    isLoading,
-    pagination,
-    handlePageChange,
-    handleFilter,
-  } = useApplications({
-    jobId,
-    isCandidateView: false,
-    autoFetch: true,
-  });
+  const { applications, isLoading, pagination, handlePageChange, handleFilter } =
+    useApplications({
+      jobId,
+      isCandidateView: false,
+      autoFetch: true,
+    });
 
-  const { handleStatusChange, handleKeywordChange, resetFilters } =
+  const { filters, handleStatusChange, handleKeywordChange, resetFilters } =
     useApplicationFilters({
       onFilterChange: handleFilter,
     });

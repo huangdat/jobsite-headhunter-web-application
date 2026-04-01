@@ -1,0 +1,26 @@
+{
+  "quickPayout": {
+    "title": "Benefits quick payout title",
+    "description": "Benefits quick payout description"
+  },
+  "highRate": {
+    "title": "Benefits high rate title",
+    "description": "Benefits high rate description"
+  },
+  "support": {
+    "title": "Benefits support title",
+    "description": "Benefits support description"
+  },
+  "transparent": {
+    "title": "Benefits transparent title",
+    "description": "Benefits transparent description"
+  },
+  "noLimit": {
+    "title": "Benefits no limit title",
+    "description": "Benefits no limit description"
+  },
+  "tools": {
+    "title": "Benefits tools title",
+    "description": "Benefits tools description"
+  }
+}

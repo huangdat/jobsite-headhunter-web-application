@@ -6,7 +6,6 @@
 
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
-import { cachedApiCall } from "@/shared/utils/apiCache";
 import type {
   BusinessProfile,
   SubmittedDocument,
@@ -61,16 +60,10 @@ export const submitProfile = async (
  * GET /api/business/profile/status
  */
 export const getProfileStatus = async (): Promise<GetProfileStatusResponse> => {
-  return cachedApiCall(
-    "business-profile-status",
-    async () => {
-      const response = await apiClient.get<
-        ApiResponse<GetProfileStatusResponse>
-      >(API_ENDPOINTS.BUSINESS.GET_STATUS);
-      return response.data.result;
-    },
-    { ttl: 300000 } // Cache for 5 minutes
+  const response = await apiClient.get<ApiResponse<GetProfileStatusResponse>>(
+    API_ENDPOINTS.BUSINESS.GET_STATUS
   );
+  return response.data.result;
 };
 
 /**
@@ -78,16 +71,10 @@ export const getProfileStatus = async (): Promise<GetProfileStatusResponse> => {
  * GET /api/business/profile/strength
  */
 export const getProfileStrength = async (): Promise<ProfileStrengthData> => {
-  return cachedApiCall(
-    "business-profile-strength",
-    async () => {
-      const response = await apiClient.get<ApiResponse<ProfileStrengthData>>(
-        API_ENDPOINTS.BUSINESS.GET_STRENGTH
-      );
-      return response.data.result;
-    },
-    { ttl: 600000 } // Cache for 10 minutes (static data)
+  const response = await apiClient.get<ApiResponse<ProfileStrengthData>>(
+    API_ENDPOINTS.BUSINESS.GET_STRENGTH
   );
+  return response.data.result;
 };
 
 /**
@@ -109,16 +96,10 @@ export const validateField = async (
  * GET /api/business/profile/verification-steps
  */
 export const getVerificationSteps = async (): Promise<VerificationStep[]> => {
-  return cachedApiCall(
-    "business-verification-steps",
-    async () => {
-      const response = await apiClient.get<ApiResponse<VerificationStep[]>>(
-        API_ENDPOINTS.BUSINESS.GET_VERIFICATION_STEPS
-      );
-      return response.data.result;
-    },
-    { ttl: 600000 } // Cache for 10 minutes (static data)
+  const response = await apiClient.get<ApiResponse<VerificationStep[]>>(
+    API_ENDPOINTS.BUSINESS.GET_VERIFICATION_STEPS
   );
+  return response.data.result;
 };
 
 /**
@@ -126,16 +107,10 @@ export const getVerificationSteps = async (): Promise<VerificationStep[]> => {
  * GET /api/business/profile/documents
  */
 export const getSubmittedDocuments = async (): Promise<SubmittedDocument[]> => {
-  return cachedApiCall(
-    "business-submitted-documents",
-    async () => {
-      const response = await apiClient.get<ApiResponse<SubmittedDocument[]>>(
-        API_ENDPOINTS.BUSINESS.GET_DOCUMENTS
-      );
-      return response.data.result;
-    },
-    { ttl: 300000 } // Cache for 5 minutes
+  const response = await apiClient.get<ApiResponse<SubmittedDocument[]>>(
+    API_ENDPOINTS.BUSINESS.GET_DOCUMENTS
   );
+  return response.data.result;
 };
 
 /**
