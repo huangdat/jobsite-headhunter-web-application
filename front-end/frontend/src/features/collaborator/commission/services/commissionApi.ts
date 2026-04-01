@@ -7,6 +7,7 @@
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
 import { extractResult } from "@/shared/api/responseAdapter";
+import { cachedApiCall } from "@/shared/utils/apiCache";
 import type { ApiResponse } from "@/features/auth/types/api.types";
 import type {
   CommissionProfile,
@@ -19,10 +20,16 @@ export const commissionApi = {
    * Fetch current collaborator's commission profile
    */
   async getCommissionProfile(): Promise<CommissionProfile> {
-    const response = await apiClient.get<ApiResponse<CommissionProfile>>(
-      API_ENDPOINTS.COLLABORATOR.GET_COMMISSION_PROFILE
+    return cachedApiCall(
+      "commission-profile",
+      async () => {
+        const response = await apiClient.get<ApiResponse<CommissionProfile>>(
+          API_ENDPOINTS.COLLABORATOR.GET_COMMISSION_PROFILE
+        );
+        return extractResult(response);
+      },
+      { ttl: 300000 } // Cache for 5 minutes
     );
-    return extractResult(response);
   },
 
   /**
@@ -42,10 +49,16 @@ export const commissionApi = {
    * Fetch commission statistics
    */
   async getCommissionStats(): Promise<CommissionStats> {
-    const response = await apiClient.get<ApiResponse<CommissionStats>>(
-      API_ENDPOINTS.COLLABORATOR.GET_COMMISSION_STATS
+    return cachedApiCall(
+      "commission-stats",
+      async () => {
+        const response = await apiClient.get<ApiResponse<CommissionStats>>(
+          API_ENDPOINTS.COLLABORATOR.GET_COMMISSION_STATS
+        );
+        return extractResult(response);
+      },
+      { ttl: 300000 } // Cache for 5 minutes
     );
-    return extractResult(response);
   },
 
   /**

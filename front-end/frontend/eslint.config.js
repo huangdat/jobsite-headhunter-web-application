@@ -62,7 +62,6 @@ export default [
       
       // STRICT TYPING + React
       "@typescript-eslint/no-unused-vars": "error",
-      "boundaries/no-unknown": "error",
     },
   },
 

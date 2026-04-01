@@ -1,4 +1,9 @@
 {
+  "register": {
+    "signIn": "Form register sign in",
+    "joinNetwork": "Form register join network",
+    "professional": "Form register professional"
+  },
   "validation": {
     "fullNameRequired": "Form validation full name required",
     "phoneNumberRequired": "Form validation phone number required",
@@ -32,10 +37,5 @@
   "help": {
     "swiftCode": "Form help swift code",
     "autoSave": "Form help auto save"
-  },
-  "register": {
-    "signIn": "Form register sign in",
-    "joinNetwork": "Form register join network",
-    "professional": "Form register professional"
   }
 }

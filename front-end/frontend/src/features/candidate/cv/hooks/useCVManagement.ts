@@ -8,6 +8,7 @@ import type {
   CVManagementState,
   PrivacyLevel,
   UseCVManagementReturn,
+  CVFile,
 } from "../types";
 import {
   uploadCVFile,
@@ -65,15 +66,11 @@ export const useCVManagement = (): UseCVManagementReturn => {
         if (isActive) {
           setState((prev) => ({
             ...prev,
-            // Sửa lỗi: Bóc tách trường result từ data của ApiResponse
-            files: cvResponse.success
-              ? (cvResponse as any).data?.result || []
-              : [],
+            files: cvResponse.success && cvResponse.data ? cvResponse.data : [],
             profile: {
               ...prev.profile,
               strength: strengthResponse.success
-                ? (strengthResponse as any).data?.result ||
-                  strengthResponse.data
+                ? strengthResponse.data
                 : prev.profile.strength,
             },
             isLoading: false,
@@ -112,11 +109,11 @@ export const useCVManagement = (): UseCVManagementReturn => {
 
       setState((prev) => ({
         ...prev,
-        files: cvResponse.success ? (cvResponse as any).data?.result || [] : [],
+        files: cvResponse.success && cvResponse.data ? cvResponse.data : [],
         profile: {
           ...prev.profile,
           strength: strengthResponse.success
-            ? (strengthResponse as any).data?.result || strengthResponse.data
+            ? strengthResponse.data
             : prev.profile.strength,
         },
         isLoading: false,
@@ -213,7 +210,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
       if (response.success) {
         setState((prev) => ({
           ...prev,
-          files: prev.files.filter((f: any) => f.id !== fileId),
+          files: prev.files.filter((f: CVFile) => f.id !== fileId),
           isLoading: false,
         }));
       } else {
@@ -276,7 +273,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
         // Update file active status
         setState((prev) => ({
           ...prev,
-          files: prev.files.map((f: any) => ({
+          files: prev.files.map((f: CVFile) => ({
             ...f,
             isActive: f.id === fileId,
           })),

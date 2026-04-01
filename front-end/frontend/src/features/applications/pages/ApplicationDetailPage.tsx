@@ -55,7 +55,7 @@ export const ApplicationDetailPage: React.FC = () => {
         setIsLoading(true);
         const data = await getApplicationDetail(applicationId);
         setApplication(data);
-      } catch (error) {
+      } catch {
         toast.error(t("common.error"));
         navigate("/headhunter/applications");
       } finally {
@@ -77,7 +77,7 @@ export const ApplicationDetailPage: React.FC = () => {
       );
       setApplication(updated);
       toast.success(t("applications.success.reviewed"));
-    } catch (error) {
+    } catch {
       toast.error(t("common.error"));
     }
   };
@@ -88,7 +88,7 @@ export const ApplicationDetailPage: React.FC = () => {
       const updated = await updateApplicationStatus(application.id, "REJECTED");
       setApplication(updated);
       toast.success(t("applications.success.rejected"));
-    } catch (error) {
+    } catch {
       toast.error(t("common.error"));
     }
   };
@@ -99,7 +99,7 @@ export const ApplicationDetailPage: React.FC = () => {
       const updated = await updateApplicationStatus(application.id, "PASSED");
       setApplication(updated);
       toast.success(t("applications.success.hired"));
-    } catch (error) {
+    } catch {
       toast.error(t("common.error"));
     }
   };

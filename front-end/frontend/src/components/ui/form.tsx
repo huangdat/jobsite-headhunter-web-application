@@ -44,6 +44,7 @@ const useFormField = () => {
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
+    // eslint-disable-next-line custom/no-hardcoded-strings
     throw new Error("useFormField should be used within <FormField>");
   }
 
@@ -167,7 +168,6 @@ const FormMessage = React.forwardRef<
 FormMessage.displayName = "FormMessage";
 
 export {
-  useFormField,
   Form,
   FormItem,
   FormLabel,

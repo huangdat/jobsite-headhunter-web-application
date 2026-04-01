@@ -130,10 +130,10 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            {t("business.optimization.title")}
+            {t("optimization.title")}
           </h3>
           <p className="text-xs text-slate-600">
-            {t("business.optimization.subtitle")}
+            {t("optimization.subtitle")}
           </p>
         </div>
       </div>
@@ -144,7 +144,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
         {highPriorityTips.length > 0 && (
           <>
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-700">
-              {t("business.optimization.start_here")}
+              {t("optimization.start_here")}
             </p>
             {highPriorityTips.slice(0, 2).map((tip) => (
               <div
@@ -185,7 +185,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
         {otherTips.length > 0 && (
           <>
             <p className="mb-2 mt-4 text-xs font-semibold uppercase tracking-wide text-slate-700">
-              {t("business.optimization.additional")}
+              {t("optimization.additional")}
             </p>
             {otherTips.slice(0, 2).map((tip) => (
               <div
@@ -212,7 +212,7 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
       {/* Info Box */}
       <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
         <p className="text-xs font-medium text-blue-900">
-          💡 {t("business.optimization.info")}
+          💡 {t("optimization.info")}
         </p>
       </div>
     </div>

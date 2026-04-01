@@ -41,6 +41,7 @@
   },
   "enterAllDigits": "Nhập tất cả các chữ số",
   "invalidOtp": "OTP không hợp lệ",
+  "otpCodeRequired": "Mã OTP bắt buộc",
   "currentPasswordRequired": "Mật khẩu hiện tại bắt buộc",
   "newPasswordRequired": "Mật khẩu mới bắt buộc",
   "passwordBetween8and16": "Mật khẩu phải có độ dài từ 8 đến 16 ký tự",

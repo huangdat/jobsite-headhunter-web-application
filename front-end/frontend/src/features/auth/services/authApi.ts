@@ -1,5 +1,6 @@
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
+import { cachedApiCall } from "@/shared/utils/apiCache";
 import type {
   ApiResponse,
   LoginRequest,
@@ -32,12 +33,17 @@ export const login = async (data: LoginRequest) => {
 };
 
 export const validateToken = async (data: ValidateTokenRequest) => {
-  const res = await apiClient.post<ApiResponse<ValidateTokenResult>>(
-    API_ENDPOINTS.AUTH.VALIDATE_TOKEN,
-    data
+  return cachedApiCall(
+    `validate-token-${data.token}`,
+    async () => {
+      const res = await apiClient.post<ApiResponse<ValidateTokenResult>>(
+        API_ENDPOINTS.AUTH.VALIDATE_TOKEN,
+        data
+      );
+      return res.data.result;
+    },
+    { ttl: 60000 } // Cache for 1 minute
   );
-
-  return res.data.result;
 };
 
 export const logout = async (data: LogoutRequest) => {

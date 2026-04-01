@@ -1,9 +1,0 @@
-{
-  "filterRole": "By role",
-  "filterStatus": "By status",
-  "filterUsers": "By users",
-  "filterAllRoles": "By all roles",
-  "filterAllStatus": "By all status",
-  "applyFilter": "Apply filter",
-  "resetFilter": "Reset filter"
-}

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
-import { useAuthTranslation } from "@/shared/hooks";
+import { useAuthTranslation, usePagesTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import type {
   RegistrationUserRole,
@@ -39,25 +39,22 @@ const isValidRole = (role: string): role is RegistrationUserRole => {
   );
 };
 
-const getRoleConfig = (role: RegistrationUserRole) => {
+const getRoleConfig = (
+  role: RegistrationUserRole,
+  pagesT: ReturnType<typeof usePagesTranslation>["t"]
+) => {
   const configs = {
     candidate: {
-      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
-        t("pages.register.candidate.title"),
-      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
-        t("pages.register.candidate.subtitle"),
+      title: pagesT("register.candidate.title"),
+      subtitle: pagesT("register.candidate.subtitle"),
     },
     collaborator: {
-      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
-        t("pages.register.collaborator.title"),
-      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
-        t("pages.register.collaborator.subtitle"),
+      title: pagesT("register.collaborator.title"),
+      subtitle: pagesT("register.collaborator.subtitle"),
     },
     headhunter: {
-      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
-        t("pages.register.headhunter.title"),
-      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
-        t("pages.register.headhunter.subtitle"),
+      title: pagesT("register.headhunter.title"),
+      subtitle: pagesT("register.headhunter.subtitle"),
     },
   };
   // eslint-disable-next-line security/detect-object-injection
@@ -66,11 +63,12 @@ const getRoleConfig = (role: RegistrationUserRole) => {
 
 export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
   const { t } = useAuthTranslation();
+  const { t: pagesT } = usePagesTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing } = useAuth();
 
   const userRole: RegistrationUserRole = isValidRole(role) ? role : "candidate";
-  const config = getRoleConfig(userRole);
+  const config = getRoleConfig(userRole, pagesT);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
@@ -319,13 +317,13 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
             <br />
             Network
           </h1>
-          <p className="text-gray-300 mt-1">{t("pages.register.subtitle")}</p>
+          <p className="text-gray-300 mt-1">{pagesT("register.subtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-6">
-          <h2 className="text-3xl font-bold">{config.title(t)}</h2>
-          <p className="text-gray-500 mb-3">{config.subtitle(t)}</p>
+          <h2 className="text-3xl font-bold">{config.title}</h2>
+          <p className="text-gray-500 mb-3">{config.subtitle}</p>
 
           <StepIndicator steps={steps} currentStep={currentStep} />
 
@@ -405,12 +403,12 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-3">
-            {t("pages.register.haveAccount")}{" "}
+            {pagesT("register.haveAccount")}{" "}
             <Link
               to="/login"
               className="text-lime-500 font-semibold hover:underline"
             >
-              {t("pages.register.signIn")}
+              {pagesT("register.signIn")}
             </Link>
           </p>
         </div>

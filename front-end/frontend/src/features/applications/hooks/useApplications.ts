@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from "react";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { toast } from "sonner";
 import type {
   Application,
@@ -20,7 +19,6 @@ interface UseApplicationsOptions {
 
 export const useApplications = (options: UseApplicationsOptions = {}) => {
   const { jobId, isCandidateView = false, autoFetch = true } = options;
-  const { t } = useAppTranslation();
 
   const [applications, setApplications] = useState<Application[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,13 +39,14 @@ export const useApplications = (options: UseApplicationsOptions = {}) => {
       setError(null);
       try {
         let response: PaginatedResponse<Application>;
+        const apiParams = params as Record<string, unknown> | undefined;
 
         if (isCandidateView) {
-          response = await getCandidateApplications(params);
+          response = await getCandidateApplications(apiParams);
         } else if (jobId) {
-          response = await getApplicationsForJob(jobId, params);
+          response = await getApplicationsForJob(jobId, apiParams);
         } else {
-          response = await getHeadhunterApplications(params);
+          response = await getHeadhunterApplications(apiParams);
         }
 
         setApplications(response.content);

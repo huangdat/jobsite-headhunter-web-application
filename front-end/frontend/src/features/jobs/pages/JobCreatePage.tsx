@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useJobsTranslation } from "@/shared/hooks";
+import { useJobsTranslation, useValidationTranslation } from "@/shared/hooks";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 
 export function JobCreatePage() {
   const { t } = useJobsTranslation();
+  const { t: validationT } = useValidationTranslation();
   const navigate = useNavigate();
   const [skills, setSkills] = useState<SkillOption[]>([]);
   const [isLoadingSkills, setIsLoadingSkills] = useState(true);
@@ -43,7 +44,7 @@ export function JobCreatePage() {
         setSkills(data);
       })
       .catch(() => {
-        toast.error(t("validation.unableToLoadSkills"));
+        toast.error(validationT("unableToLoadSkills"));
       })
       .finally(() => {
         if (active) {
@@ -79,18 +80,18 @@ export function JobCreatePage() {
     }
 
     if ((values.quantity ?? 0) <= 0) {
-      toast.error(t("validation.quantityPositive"));
+      toast.error(validationT("quantityPositive"));
       return;
     }
 
     const todayStr = new Date().toISOString().slice(0, 10);
     if (values.deadline && values.deadline < todayStr) {
-      toast.error(t("validation.dateInFuture"));
+      toast.error(validationT("dateInFuture"));
       return;
     }
 
     if (!values.skillIds || values.skillIds.length === 0) {
-      toast.error(t("validation.skillRequired"));
+      toast.error(validationT("skillRequired"));
       return;
     }
 
@@ -104,17 +105,17 @@ export function JobCreatePage() {
       strip(values.responsibilities).length < 50 ||
       strip(values.requirements).length < 50
     ) {
-      toast.error(t("validation.minCharacters"));
+      toast.error(validationT("minCharacters"));
       return;
     }
 
     if (!values.negotiable) {
       if ((values.salaryMin ?? 0) < 0 || (values.salaryMax ?? 0) < 0) {
-        toast.error(t("validation.salaryNegative"));
+        toast.error(validationT("salaryNegative"));
         return;
       }
       if ((values.salaryMin ?? 0) > (values.salaryMax ?? 0)) {
-        toast.error(t("validation.salaryOrder"));
+        toast.error(validationT("salaryOrder"));
         return;
       }
     }

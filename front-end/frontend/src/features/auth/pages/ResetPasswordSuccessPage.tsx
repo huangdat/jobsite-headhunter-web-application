@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { useAuthTranslation } from "@/shared/hooks";
+import { useAuthTranslation, usePagesTranslation } from "@/shared/hooks";
 import { AuthLayout } from "@/shared/components";
 
 export function ResetPasswordSuccessPage() {
   const { t } = useAuthTranslation();
+  const { t: tPages } = usePagesTranslation();
   return (
     <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <main className="max-w-5xl mx-auto px-4 pt-12">
@@ -18,14 +19,14 @@ export function ResetPasswordSuccessPage() {
               </div>
 
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-                {t("pages.resetPasswordSuccess.titleLeft")} <br />
+                {tPages("resetPasswordSuccess.titleLeft")} <br />
                 <span className="text-brand-primary">
-                  {t("pages.resetPasswordSuccess.titleHighlight")}
+                  {tPages("resetPasswordSuccess.titleHighlight")}
                 </span>
               </h1>
 
               <p className="text-gray-300 text-lg leading-relaxed max-w-sm">
-                {t("pages.resetPasswordSuccess.subtitleLeft")}
+                {tPages("resetPasswordSuccess.subtitleLeft")}
               </p>
 
               <div className="mt-12 space-y-4">
@@ -34,7 +35,7 @@ export function ResetPasswordSuccessPage() {
                     check_circle
                   </span>
                   <span className="text-sm text-slate-300">
-                    {t("pages.resetPasswordSuccess.checkItem1")}
+                    {tPages("resetPasswordSuccess.checkItem1")}
                   </span>
                 </div>
 
@@ -43,7 +44,7 @@ export function ResetPasswordSuccessPage() {
                     shield
                   </span>
                   <span className="text-sm text-slate-300">
-                    {t("pages.resetPasswordSuccess.checkItem2")}
+                    {tPages("resetPasswordSuccess.checkItem2")}
                   </span>
                 </div>
               </div>
@@ -61,17 +62,17 @@ export function ResetPasswordSuccessPage() {
                 </div>
               </div>
               <h2 className="text-3xl font-bold mb-4">
-                {t("pages.resetPasswordSuccess.title")}
+                {tPages("resetPasswordSuccess.title")}
               </h2>
               <p className="text-slate-500 dark:text-slate-400 text-lg mb-10 leading-relaxed">
-                {t("pages.resetPasswordSuccess.subtitle")}
+                {tPages("resetPasswordSuccess.subtitle")}
               </p>
               <Link
                 to="/login"
                 className="success-button-gradient w-full py-4 text-black font-bold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 mb-8"
               >
                 <span className="material-symbols-outlined text-xl">login</span>
-                {t("pages.resetPasswordSuccess.signInButton")}
+                {tPages("resetPasswordSuccess.signInButton")}
               </Link>
             </div>
           </div>

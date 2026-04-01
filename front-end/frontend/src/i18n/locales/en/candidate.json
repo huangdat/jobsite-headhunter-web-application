@@ -78,6 +78,9 @@
       "breadcrumb": "CV MANAGEMENT",
       "title": "CV Management",
       "subtitle": "Manage your professional resumes and optimize your profile strength",
+      "messages": {
+        "uploading": "Uploading CV..."
+      },
       "empty": {
         "headline": "No resumes uploaded yet",
         "description": "Elevate your executive presence. Upload your latest CV to start matching with premium leadership roles.",
@@ -168,26 +171,6 @@
   },
   "messages": {
     "uploading": "Uploading..."
-  },
-  "candidate": {
-    "tips": {
-      "profileStrengthHint": "Candidate tips profile strength hint",
-      "auditGuide": "Candidate tips audit guide",
-      "reviewGuide": "Candidate tips review guide",
-      "uploadPlaceholder": "Candidate tips upload placeholder",
-      "optimizationTitle": "Candidate tips optimization title",
-      "privacyTip1": "Candidate tips privacy tip1",
-      "privacyTip2": "Candidate tips privacy tip2",
-      "privacyTip3": "Candidate tips privacy tip3",
-      "bestPracticeTip1": "Candidate tips best practice tip1",
-      "bestPracticeTip2": "Candidate tips best practice tip2",
-      "bestPracticeTip3": "Candidate tips best practice tip3"
-    },
-    "validation": {
-      "fileTooLargeShort": "Candidate validation file too large short",
-      "invalidFileFormatShort": "Candidate validation invalid file format short",
-      "deleteExistingToUpload": "Candidate validation delete existing to upload"
-    }
   },
   "tips": {
     "profileStrengthHint": "Candidate tips profile strength hint",

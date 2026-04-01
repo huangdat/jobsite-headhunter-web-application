@@ -1,8 +1,8 @@
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useHomeTranslation } from "@/shared/hooks";
 import { useAuth } from "@/features/auth/context/useAuth";
 
 export function Navbar() {
-  const { t } = useAppTranslation();
+  const { t } = useHomeTranslation();
   const { user } = useAuth();
 
   // hide public nav links for headhunters (case-insensitive)
@@ -33,4 +33,3 @@ export function Navbar() {
     </nav>
   );
 }
-

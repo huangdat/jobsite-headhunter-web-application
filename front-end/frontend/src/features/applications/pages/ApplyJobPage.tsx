@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { ApplicationForm } from "../components/ApplicationForm";
@@ -9,9 +9,8 @@ export const ApplyJobPage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
   const { t } = useAppTranslation();
-  const [jobTitle, setJobTitle] = useState<string>("Job Position");
-
   const jobIdNum = jobId ? parseInt(jobId, 10) : 0;
+  const [jobTitle] = useState<string>("Software Engineer");
 
   // 1. Hook useApplicationForm bây giờ chỉ cần quan tâm handleSubmit
   const { isSubmitting, handleSubmit } = useApplicationForm({
@@ -21,12 +20,7 @@ export const ApplyJobPage: React.FC = () => {
     },
   });
 
-  // Mock job title - sau này bạn có thể gọi API fetchJobDetail ở đây
-  useEffect(() => {
-    if (jobId) {
-      setJobTitle("Software Engineer");
-    }
-  }, [jobId]);
+  // TODO: Fetch actual job title from API when implementing full feature
 
   return (
     <div className="min-h-screen bg-slate-50 py-12">

@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "@/lib/constants";
 import { apiClient } from "@/shared/utils/axios";
+import { cachedApiCall } from "@/shared/utils/apiCache";
 import type { ApiResponse } from "@/features/auth/types";
 import type {
   CandidateProfile,
@@ -28,11 +29,16 @@ const mapProfileResponse = (payload: unknown): CandidateProfile => {
 
 export const profileApi = {
   getProfile: async (): Promise<CandidateProfile> => {
-    const response = await apiClient.get<ApiResponse<CandidateProfile>>(
-      API_ENDPOINTS.ACCOUNT.GET_PROFILE
+    return cachedApiCall(
+      "candidate-profile",
+      async () => {
+        const response = await apiClient.get<ApiResponse<CandidateProfile>>(
+          API_ENDPOINTS.ACCOUNT.GET_PROFILE
+        );
+        return mapProfileResponse(response.data?.result);
+      },
+      { ttl: 300000 } // Cache for 5 minutes
     );
-
-    return mapProfileResponse(response.data?.result);
   },
 
   updateProfile: async (
@@ -40,7 +46,7 @@ export const profileApi = {
   ): Promise<CandidateProfile> => {
     // Sanitize payload: coerce text fields to trimmed strings and
     // ensure numeric fields are numbers or null (not empty strings)
-    const sanitized: Record<string, any> = {};
+    const sanitized: Record<string, string | number | boolean | null> = {};
 
     if (payload.currentTitle !== undefined) {
       sanitized.currentTitle = String(payload.currentTitle ?? "").trim();
@@ -55,17 +61,17 @@ export const profileApi = {
     }
 
     if (payload.yearsOfExperience !== undefined) {
-      const v = payload.yearsOfExperience as any;
+      const v = payload.yearsOfExperience as unknown;
       sanitized.yearsOfExperience = v === "" || v === null ? null : Number(v);
     }
 
     if (payload.expectedSalaryMin !== undefined) {
-      const v = payload.expectedSalaryMin as any;
+      const v = payload.expectedSalaryMin as unknown;
       sanitized.expectedSalaryMin = v === "" || v === null ? null : Number(v);
     }
 
     if (payload.expectedSalaryMax !== undefined) {
-      const v = payload.expectedSalaryMax as any;
+      const v = payload.expectedSalaryMax as unknown;
       sanitized.expectedSalaryMax = v === "" || v === null ? null : Number(v);
     }
 
@@ -86,8 +92,8 @@ export const profileApi = {
     form.append("cvFile", file);
 
     // Use the controller endpoint that expects a ModelAttribute with 'cvFile'
-    const response = await apiClient.put<ApiResponse<any>>(
-      "/api/cv/MyCv",
+    const response = await apiClient.put<ApiResponse<{ cvUrl: string }>>(
+      API_ENDPOINTS.CANDIDATE.CV_UPLOAD,
       form,
       // do not force JSON Content-Type; let axios set multipart boundary
       { headers: { "Content-Type": "multipart/form-data" } }
@@ -95,8 +101,10 @@ export const profileApi = {
 
     return response.data?.result?.cvUrl ?? "";
   },
-  fetchCVs: async (): Promise<any[]> => {
-    const response = await apiClient.get<ApiResponse<any>>("/api/cv");
+  fetchCVs: async (): Promise<Array<{ id: string; cvUrl: string }>> => {
+    const response = await apiClient.get<
+      ApiResponse<Array<{ id: string; cvUrl: string }>>
+    >(API_ENDPOINTS.CANDIDATE.CV_LIST);
     return response.data?.result || [];
   },
 };
