@@ -66,7 +66,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
         if (isActive) {
           setState((prev) => ({
             ...prev,
-            files: cvResponse.success ? cvResponse.data || [] : [],
+            files: cvResponse.success && cvResponse.data ? cvResponse.data : [],
             profile: {
               ...prev.profile,
               strength: strengthResponse.success
@@ -109,7 +109,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
 
       setState((prev) => ({
         ...prev,
-        files: cvResponse.success ? cvResponse.data || [] : [],
+        files: cvResponse.success && cvResponse.data ? cvResponse.data : [],
         profile: {
           ...prev.profile,
           strength: strengthResponse.success

@@ -4,8 +4,6 @@
  */
 
 import { apiClient } from "@/shared/utils/axios";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import axios from "axios";
 import type {
   CVFile,
   CVUploadResponse,
@@ -27,7 +25,7 @@ export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
     formData.append("cvFile", file);
 
     const response = await apiClient.put<CVUploadResponse>( // Dùng apiClient để có Token
-      API_ENDPOINTS.CV_UPLOAD,
+      API_ENDPOINTS.CANDIDATE.CV_UPLOAD,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -96,7 +94,7 @@ export const downloadCVFile = async (
 ): Promise<CVDownloadResponse> => {
   try {
     const response = await apiClient.get<CVDownloadResponse>(
-      API_ENDPOINTS.CV_DOWNLOAD(id)
+      API_ENDPOINTS.CANDIDATE.CV_DOWNLOAD.replace("{id}", id)
     );
     return response.data;
   } catch (error) {
@@ -114,7 +112,7 @@ export const downloadCVFile = async (
 export const deleteCVFile = async (id: string): Promise<CVDeleteResponse> => {
   try {
     const response = await apiClient.delete<CVDeleteResponse>(
-      API_ENDPOINTS.CV_DELETE(id)
+      API_ENDPOINTS.CANDIDATE.CV_DELETE.replace("{id}", id)
     );
     return response.data;
   } catch (error) {
@@ -132,7 +130,7 @@ export const deleteCVFile = async (id: string): Promise<CVDeleteResponse> => {
 export const makeCVActive = async (id: string): Promise<CVUploadResponse> => {
   try {
     const response = await apiClient.patch<CVUploadResponse>(
-      API_ENDPOINTS.CV_MAKE_ACTIVE(id)
+      API_ENDPOINTS.CANDIDATE.CV_MAKE_ACTIVE.replace("{id}", id)
     );
     return response.data;
   } catch (error) {
@@ -185,7 +183,7 @@ export const updatePrivacySettings = async (
 ): Promise<CVUploadResponse> => {
   try {
     const response = await apiClient.patch<CVUploadResponse>(
-      API_ENDPOINTS.PRIVACY_SETTINGS,
+      API_ENDPOINTS.CANDIDATE.PRIVACY_SETTINGS,
       { level }
     );
     return response.data;

@@ -18,11 +18,8 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cvFile, setCvFile] = useState<File | null>(null);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [existingCvId, setExistingCvId] = useState<string | null>(null);
+  const [, setCvFile] = useState<File | null>(null);
+  const [, setExistingCvId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<Partial<ApplicationFormData>>({
     fullName: "",
@@ -126,8 +123,8 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
         const error = err instanceof Error ? err : new Error(String(err));
         console.error("❌ Submit Error:", error.message);
         const errorMsg =
-          (err as Record<string, unknown>)?.response?.data?.message ||
-          error.message;
+          (err as { response?: { data?: { message?: string } } })?.response
+            ?.data?.message || error.message;
         toast.error(errorMsg);
       } finally {
         setIsSubmitting(false);

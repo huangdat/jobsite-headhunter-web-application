@@ -14,6 +14,7 @@ export const ApplicationStatusBadge: React.FC<ApplicationStatusBadgeProps> = ({
 }) => {
   const { t } = useAppTranslation();
   const label = formatApplicationStatus(status, t);
+  // eslint-disable-next-line security/detect-object-injection
   const color = APPLICATION_STATUS_COLORS[status];
 
   return <Badge className={`${color} ${className}`}>{label}</Badge>;

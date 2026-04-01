@@ -15,6 +15,7 @@ import {
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { toast } from "sonner";
 import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
+import { APP_CONFIG } from "@/shared/constants";
 
 export function ChangePasswordPage() {
   const { t } = useAuthTranslation();
@@ -143,7 +144,7 @@ export function ChangePasswordPage() {
             </span>
           </div>
           <h2 className="text-xl font-bold tracking-tight text-white">
-            {tCommon("appName")}
+            {APP_CONFIG.name}
           </h2>
           <button
             onClick={() => navigate("/dashboard")}

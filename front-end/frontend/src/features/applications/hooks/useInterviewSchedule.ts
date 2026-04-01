@@ -37,6 +37,7 @@ export const useInterviewSchedule = (options: UseInterviewScheduleOptions) => {
   /**
    * Handle form field change
    */
+  /* eslint-disable security/detect-object-injection */
   const handleFieldChange = useCallback(
     (field: keyof InterviewScheduleFormData, value: string | number) => {
       setFormData((prev) => ({
@@ -54,6 +55,7 @@ export const useInterviewSchedule = (options: UseInterviewScheduleOptions) => {
     },
     [errors]
   );
+  /* eslint-enable security/detect-object-injection */
 
   /**
    * Submit interview schedule

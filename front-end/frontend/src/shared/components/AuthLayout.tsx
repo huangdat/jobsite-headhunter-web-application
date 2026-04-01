@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "./Logo";
 import { cn } from "@/lib/utils";
-import { useCommonTranslation, usePagesTranslation } from "@/shared/hooks";
+import { usePagesTranslation } from "@/shared/hooks";
+import { APP_CONFIG } from "@/shared/constants";
 
 interface NavLink {
   to: string;
@@ -32,7 +33,6 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
   ctaButton: ctaButtonProp,
 }) => {
   const { t: tPages } = usePagesTranslation();
-  const { t: tCommon } = useCommonTranslation();
   const ctaButton = ctaButtonProp || {
     to: "/select-role",
     label: tPages("signup"),
@@ -75,8 +75,8 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       {showFooter && (
         <footer className="mt-12 text-center pb-8">
           <p className="text-xs text-slate-400">
-            © {new Date().getFullYear()} {tCommon("appName")}.{" "}
-            {tCommon("allRightsReserved")}
+            © {new Date().getFullYear()} {APP_CONFIG.name}.{" "}
+            {APP_CONFIG.copyright}
           </p>
         </footer>
       )}

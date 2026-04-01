@@ -48,6 +48,7 @@ GREP_VERIFIED_CLEANUP_REPORT.txt
 confirmed-unused-keys.txt
 NATIVE_VERIFIED_CLEANUP_REPORT.txt
 native-confirmed-unused-keys.txt
+i18n-lint-report.txt
 CLEANUP_LOG.txt
 
 # i18n development & verification scripts - local only

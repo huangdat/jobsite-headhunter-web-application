@@ -262,8 +262,8 @@ fileResults.forEach((result) => {
 // Find unused keys
 const unusedKeys = findUnusedKeys(allKeys, fileResults);
 
-// Generate TXT report
-let txtReport = `i18n LINT REPORT
+// Generate TXT report with DETAILED information
+let txtReport = `i18n LINT REPORT - DETAILED
 Generated: ${new Date().toISOString()}
 ${"=".repeat(80)}
 
@@ -309,7 +309,7 @@ if (unusedKeys.length > 0) {
   txtReport += `✅ NO UNUSED KEYS\n\n`;
 }
 
-// Summary
+// Detailed summary in TXT file
 txtReport += `${"=".repeat(80)}\n`;
 txtReport += `SUMMARY\n`;
 txtReport += `${"=".repeat(80)}\n`;
@@ -321,9 +321,12 @@ txtReport += `Total Issues: ${totalMissing + unusedKeys.length}\n`;
 const txtPath = path.join(projectRoot, "i18n-lint-report.txt");
 fs.writeFileSync(txtPath, txtReport);
 
-// Console output
-console.log(txtReport);
-console.log(`\n📄 Report saved to: i18n-lint-report.txt\n`);
+// Console output - ONLY SUMMARY
+console.log(`\n📊 i18n Lint Summary:\n`);
+console.log(`  Missing Keys: ${totalMissing}`);
+console.log(`  Unused Keys: ${unusedKeys.length}`);
+console.log(`  Total Issues: ${totalMissing + unusedKeys.length}\n`);
+console.log(`📄 Details saved to: i18n-lint-report.txt\n`);
 
 // Exit with error code if missing keys found (blocks commits)
 if (totalMissing > 0) {
