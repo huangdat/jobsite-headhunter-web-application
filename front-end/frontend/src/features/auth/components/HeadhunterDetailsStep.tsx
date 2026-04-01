@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
-import { useAuthTranslation } from "@/shared/hooks";
+import { useAuthTranslation, usePagesTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdBusiness, MdReceipt, MdLanguage, MdGroups } from "react-icons/md";
 import type { RegisterFormData } from "@/features/auth/types";
@@ -11,6 +11,7 @@ interface HeadhunterDetailsStepProps {
 
 export function HeadhunterDetailsStep({ form }: HeadhunterDetailsStepProps) {
   const { t } = useAuthTranslation();
+  const { t: pagesT } = usePagesTranslation();
   const { register } = form;
   return (
     <div className="space-y-6">
@@ -23,10 +24,10 @@ export function HeadhunterDetailsStep({ form }: HeadhunterDetailsStepProps) {
         <span>
           {t("descriptions.taxCodeInfo")}
           Your <strong>
-            {t("pages.headhunterDetails.companyName")}
+            {pagesT("headhunterDetails.companyName")}
           </strong> and{" "}
-          <strong>{t("pages.headhunterDetails.registeredAddress")}</strong>{" "}
-          {t("pages.headhunterDetails.registeredAddressHelp")}
+          <strong>{pagesT("headhunterDetails.registeredAddress")}</strong>{" "}
+          {pagesT("headhunterDetails.registeredAddressHelp")}
         </span>
       </div>
 

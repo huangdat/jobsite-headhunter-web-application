@@ -20,7 +20,6 @@ export function ProtectedRoute({
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 
-  // Check role if provided
   if (allowedRoles && allowedRoles.length > 0) {
     const role = (user?.role ?? "").toString().toLowerCase();
 

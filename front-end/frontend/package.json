@@ -6,14 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "npm run lint:eslint && npm run audit:i18n",
+    "lint": "npm run lint:eslint && npm run lint:i18n",
     "lint:eslint": "eslint .",
+    "lint:i18n": "node scripts/i18n-lint.mjs",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "preview": "vite preview",
-    "audit:i18n": "node scripts/audit-i18n-v2-smart.js",
+    "audit:i18n": "node scripts/i18n-lint.mjs",
     "audit:structure": "node scripts/analyze-structure.js",
-    "audit:all": "node scripts/run-all-audits.js"
+    "audit:all": "node scripts/run-all-audits.js",
+    "audit:full": "node scripts/comprehensive-audit.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
@@ -22,6 +24,8 @@
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
     "@tailwindcss/vite": "^4.1.18",

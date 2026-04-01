@@ -1,4 +1,5 @@
 import { apiClient } from "@/shared/utils/axios";
+import { cachedApiCall } from "@/shared/utils/apiCache";
 import type {
   UserDetail,
   UserStatus,
@@ -103,20 +104,32 @@ export const usersApi = {
    * This endpoint loads all users without pagination which is not scalable
    */
   getUsers: async (): Promise<UserDetail[]> => {
-    const res = await apiClient.get<ApiResponse<UserDetail[]>>(
-      API_ENDPOINTS.USERS.GET_ALL
+    return cachedApiCall(
+      "users-all",
+      async () => {
+        const res = await apiClient.get<ApiResponse<UserDetail[]>>(
+          API_ENDPOINTS.USERS.GET_ALL
+        );
+        return res.data.result;
+      },
+      { ttl: 600000 } // Cache for 10 minutes
     );
-    return res.data.result;
   },
 
   /**
    * Get user by ID
    */
   getUserById: async (userId: string): Promise<UserDetail> => {
-    const res = await apiClient.get<ApiResponse<UserDetail>>(
-      API_ENDPOINTS.USERS.GET_BY_ID.replace("{id}", userId)
+    return cachedApiCall(
+      `user-${userId}`,
+      async () => {
+        const res = await apiClient.get<ApiResponse<UserDetail>>(
+          API_ENDPOINTS.USERS.GET_BY_ID.replace("{id}", userId)
+        );
+        return res.data.result;
+      },
+      { ttl: 600000 } // Cache for 10 minutes
     );
-    return res.data.result;
   },
 
   /**
@@ -136,14 +149,20 @@ export const usersApi = {
     company?: string;
     sort?: string;
   }): Promise<PagedResponse<UserDetail>> => {
-    const res = await apiClient.get<
-      ApiResponse<BackendPagedResponse<UserDetail>>
-    >(API_ENDPOINTS.USERS.SEARCH, {
-      params,
-    });
-    // Backend returns { data, totalElements, ... }
-    // Frontend expects { items, total, ... }
-    return adaptPagedResponse(res.data.result);
+    return cachedApiCall(
+      `users-search-${JSON.stringify(params)}`,
+      async () => {
+        const res = await apiClient.get<
+          ApiResponse<BackendPagedResponse<UserDetail>>
+        >(API_ENDPOINTS.USERS.SEARCH, {
+          params,
+        });
+        // Backend returns { data, totalElements, ... }
+        // Frontend expects { items, total, ... }
+        return adaptPagedResponse(res.data.result);
+      },
+      { ttl: 180000 } // Cache for 3 minutes (search results)
+    );
   },
 
   /**

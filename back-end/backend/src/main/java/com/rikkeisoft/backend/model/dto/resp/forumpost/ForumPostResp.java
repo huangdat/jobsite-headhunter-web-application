@@ -20,4 +20,5 @@ public class ForumPostResp {
     String content;
     PostStatus status;
     LocalDateTime createdAt;
+    LocalDateTime deletedAt;
 }

@@ -6,14 +6,22 @@ import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
 import type { ChangePasswordFormData } from "@/features/auth/types";
 import { changePassword } from "@/features/auth/services/authApi";
-import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
+import {
+  useAuthTranslation,
+  useCommonTranslation,
+  useHomeTranslation,
+  usePagesTranslation,
+} from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { toast } from "sonner";
 import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
+import { APP_CONFIG } from "@/shared/constants";
 
 export function ChangePasswordPage() {
   const { t } = useAuthTranslation();
-  const { t: tApp } = useAppTranslation();
+  const { t: tPages } = usePagesTranslation();
+  const { t: tCommon } = useCommonTranslation();
+  const { t: tNav } = useHomeTranslation();
   const navigate = useNavigate();
 
   const [showPasswords, setShowPasswords] = useState({
@@ -136,7 +144,7 @@ export function ChangePasswordPage() {
             </span>
           </div>
           <h2 className="text-xl font-bold tracking-tight text-white">
-            {tApp("common.appName")}
+            {APP_CONFIG.name}
           </h2>
           <button
             onClick={() => navigate("/dashboard")}
@@ -145,7 +153,7 @@ export function ChangePasswordPage() {
             <span className="material-symbols-outlined text-brand-primary">
               dashboard
             </span>
-            <span className="font-medium">{tApp("navigation.dashboard")}</span>
+            <span className="font-medium">{tNav("navigation.dashboard")}</span>
           </button>
           <button
             onClick={() => navigate("/jobs")}
@@ -154,7 +162,7 @@ export function ChangePasswordPage() {
             <span className="material-symbols-outlined text-brand-primary">
               work
             </span>
-            <span className="font-medium">{tApp("navigation.jobs")}</span>
+            <span className="font-medium">{tNav("navigation.jobs")}</span>
           </button>
           <button
             onClick={() => navigate("/referrals")}
@@ -163,18 +171,18 @@ export function ChangePasswordPage() {
             <span className="material-symbols-outlined text-brand-primary">
               group_add
             </span>
-            <span className="font-medium">{tApp("navigation.referrals")}</span>
+            <span className="font-medium">{tNav("navigation.referrals")}</span>
           </button>
 
           <div className="pt-4 pb-2 px-4 text-xs font-semibold text-white/40 uppercase tracking-wider">
-            {tApp("common.section.account")}
+            {tCommon("section.account")}
           </div>
           <button
             onClick={() => navigate("/settings")}
             className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary transition-colors border border-brand-primary/20 cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined">settings</span>
-            <span className="font-medium">{tApp("navigation.settings")}</span>
+            <span className="font-medium">{tNav("navigation.settings")}</span>
           </button>
         </div>
 
@@ -183,10 +191,10 @@ export function ChangePasswordPage() {
             <div className="w-10 h-10 rounded-full bg-brand-primary/20 border border-brand-primary/30 bg-cover bg-center"></div>
             <div className="grow overflow-hidden">
               <p className="text-sm font-semibold truncate">
-                {tApp("common.currentUserName")}
+                {tCommon("currentUserName")}
               </p>
               <p className="text-xs text-white/50 truncate">
-                {tApp("common.exampleEmail")}
+                {tCommon("exampleEmail")}
               </p>
             </div>
           </div>
@@ -198,12 +206,12 @@ export function ChangePasswordPage() {
         {/* Header */}
         <header className="h-16 border-b border-slate-100 flex items-center justify-between px-8 bg-white sticky top-0 z-10">
           <div className="flex items-center gap-2 text-slate-500 text-sm">
-            <span>{tApp("navigation.settings")}</span>
+            <span>{tNav("navigation.settings")}</span>
             <span className="material-symbols-outlined text-xs">
               chevron_right
             </span>
             <span className="text-slate-900 font-medium">
-              {t("pages.changePassword.securitySectionLabel")}
+              {tPages("changePassword.securitySectionLabel")}
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -221,10 +229,10 @@ export function ChangePasswordPage() {
           <div className="w-full">
             <div className="mb-10">
               <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
-                {t("pages.changePassword.title")}
+                {tPages("changePassword.title")}
               </h1>
               <p className="text-slate-500 max-w-3xl">
-                {t("pages.changePassword.subtitle")}
+                {tPages("changePassword.subtitle")}
               </p>
             </div>
 
@@ -232,7 +240,7 @@ export function ChangePasswordPage() {
               {/* Form */}
               <form onSubmit={handleFormSubmit(onSubmit)} className="space-y-8">
                 <FormField
-                  label={t("pages.changePassword.currentPasswordLabel")}
+                  label={tPages("changePassword.currentPasswordLabel")}
                   error={errors.currentPassword?.message}
                 >
                   <Input
@@ -255,7 +263,7 @@ export function ChangePasswordPage() {
                 </FormField>
 
                 <FormField
-                  label={t("pages.changePassword.newPasswordLabel")}
+                  label={tPages("changePassword.newPasswordLabel")}
                   error={errors.newPassword?.message}
                 >
                   <Input
@@ -276,7 +284,7 @@ export function ChangePasswordPage() {
                 </FormField>
 
                 <FormField
-                  label={t("pages.changePassword.confirmPasswordLabel")}
+                  label={tPages("changePassword.confirmPasswordLabel")}
                   error={errors.confirmPassword?.message}
                 >
                   <Input
@@ -309,8 +317,8 @@ export function ChangePasswordPage() {
                     }`}
                   >
                     {isSubmitting
-                      ? t("common.loading")
-                      : t("pages.changePassword.submitButton")}
+                      ? t("loading")
+                      : tPages("changePassword.submitButton")}
                   </button>
                   <button
                     type="button"
@@ -318,7 +326,7 @@ export function ChangePasswordPage() {
                     disabled={isSubmitting}
                     className="flex-1 h-12 bg-transparent text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition-all border border-slate-200"
                   >
-                    {t("pages.changePassword.cancelButton")}
+                    {tPages("changePassword.cancelButton")}
                   </button>
                 </div>
               </form>
@@ -326,26 +334,26 @@ export function ChangePasswordPage() {
               {/* Password Requirements */}
               <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 h-fit max-w-md">
                 <h3 className="text-sm font-bold text-slate-800 mb-6 uppercase tracking-wider">
-                  {t("pages.changePassword.passwordRequirementsTitle")}
+                  {tPages("changePassword.passwordRequirementsTitle")}
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("pages.changePassword.requirement1")}</span>
+                    <span>{tPages("changePassword.requirement1")}</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm text-slash-600">
+                    <span className="material-symbols-outlined text-brand-primary text-xl">
+                      check_circle
+                    </span>
+                    <span>{tPages("changePassword.requirement2")}</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("pages.changePassword.requirement2")}</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="material-symbols-outlined text-brand-primary text-xl">
-                      check_circle
-                    </span>
-                    <span>{t("pages.changePassword.requirement3")}</span>
+                    <span>{tPages("changePassword.requirement3")}</span>
                   </li>
                 </ul>
               </div>

@@ -5,6 +5,7 @@
 
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
+import { cachedApiCall } from "@/shared/utils/apiCache";
 import type { ApiResponse } from "@/features/auth/types/api.types";
 
 /**
@@ -118,20 +119,24 @@ export const getMyApplications = async (params?: {
   direction?: "ASC" | "DESC";
   status?: ApplicationStatusType;
 }): Promise<ApplicationsListResponse> => {
-  const response = await apiClient.get<ApiResponse<ApplicationsListResponse>>(
-    API_ENDPOINTS.CANDIDATE.GET_MY_APPLICATIONS,
-    {
-      params: {
-        page: params?.page ?? 0,
-        size: params?.size ?? 10,
-        ...(params?.sortBy && { sortBy: params.sortBy }),
-        ...(params?.direction && { direction: params.direction }),
-        ...(params?.status && { status: params.status }),
-      },
-    }
+  return cachedApiCall(
+    `my-applications-${JSON.stringify(params || {})}`,
+    async () => {
+      const response = await apiClient.get<
+        ApiResponse<ApplicationsListResponse>
+      >(API_ENDPOINTS.CANDIDATE.GET_MY_APPLICATIONS, {
+        params: {
+          page: params?.page ?? 0,
+          size: params?.size ?? 10,
+          ...(params?.sortBy && { sortBy: params.sortBy }),
+          ...(params?.direction && { direction: params.direction }),
+          ...(params?.status && { status: params.status }),
+        },
+      });
+      return response.data.result;
+    },
+    { ttl: 300000 } // Cache for 5 minutes (personalized data)
   );
-
-  return response.data.result;
 };
 
 /**

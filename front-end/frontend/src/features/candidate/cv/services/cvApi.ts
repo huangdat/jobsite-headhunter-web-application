@@ -3,6 +3,7 @@
  * Handles all API calls for CV management feature
  */
 
+import { apiClient } from "@/shared/utils/axios";
 import type {
   CVFile,
   CVUploadResponse,
@@ -12,8 +13,8 @@ import type {
   ProfileStrengthResponse,
   PrivacyLevel,
 } from "../types";
-import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
+import { cachedApiCall } from "@/shared/utils/apiCache";
 
 /**
  * Upload a new CV file
@@ -21,29 +22,20 @@ import { API_ENDPOINTS } from "@/lib/constants";
 export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
   try {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("cvFile", file);
 
-    const response = await apiClient.post<CVUploadResponse>(
+    const response = await apiClient.put<CVUploadResponse>( // Dùng apiClient để có Token
       API_ENDPOINTS.CANDIDATE.CV_UPLOAD,
       formData,
       {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: { "Content-Type": "multipart/form-data" },
       }
     );
 
     return response.data;
   } catch (error) {
     console.error("Error uploading CV:", error);
-    return {
-      success: false,
-      message: "messages.uploadFailed",
-      error: {
-        code: "UPLOAD_FAILED",
-        message: "messages.uploadFailed",
-      },
-    };
+    return { success: false, message: "messages.uploadFailed" };
   }
 };
 
@@ -51,35 +43,47 @@ export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
  * Fetch list of user's CVs
  */
 export const fetchCVList = async (): Promise<CVListResponse> => {
-  try {
-    const response = await apiClient.get<CVListResponse>(
-      API_ENDPOINTS.CANDIDATE.CV_LIST
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching CV list:", error);
-    return {
-      success: false,
-      data: [],
-      total: 0,
-      limit: 5,
-    };
-  }
+  return cachedApiCall(
+    "cv-list",
+    async () => {
+      try {
+        const response = await apiClient.get<CVListResponse>(
+          API_ENDPOINTS.CANDIDATE.CV_LIST
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching CV list:", error);
+        return {
+          success: false,
+          data: [],
+          total: 0,
+          limit: 5,
+        };
+      }
+    },
+    { ttl: 300000 } // Cache for 5 minutes
+  );
 };
 
 /**
  * Get single CV details
  */
 export const fetchCVDetail = async (id: string): Promise<CVFile | null> => {
-  try {
-    const response = await apiClient.get<CVFile>(
-      API_ENDPOINTS.CANDIDATE.CV_DETAIL.replace("{id}", id)
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching CV detail:", error);
-    return null;
-  }
+  return cachedApiCall(
+    `cv-detail-${id}`,
+    async () => {
+      try {
+        const response = await apiClient.get<CVFile>(
+          API_ENDPOINTS.CANDIDATE.CV_DETAIL.replace("{id}", id)
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching CV detail:", error);
+        return null;
+      }
+    },
+    { ttl: 300000 } // Cache for 5 minutes
+  );
 };
 
 /**
@@ -147,22 +151,28 @@ export const makeCVActive = async (id: string): Promise<CVUploadResponse> => {
  */
 export const fetchProfileStrength =
   async (): Promise<ProfileStrengthResponse> => {
-    try {
-      const response = await apiClient.get<ProfileStrengthResponse>(
-        API_ENDPOINTS.CANDIDATE.PROFILE_STRENGTH
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching profile strength:", error);
-      return {
-        success: false,
-        data: {
-          percentage: 0,
-          items: [],
-          lastUpdated: new Date(),
-        },
-      };
-    }
+    return cachedApiCall(
+      "profile-strength",
+      async () => {
+        try {
+          const response = await apiClient.get<ProfileStrengthResponse>(
+            API_ENDPOINTS.CANDIDATE.PROFILE_STRENGTH
+          );
+          return response.data;
+        } catch (error) {
+          console.error("Error fetching profile strength:", error);
+          return {
+            success: false,
+            data: {
+              percentage: 0,
+              items: [],
+              lastUpdated: new Date(),
+            },
+          };
+        }
+      },
+      { ttl: 300000 } // Cache for 5 minutes
+    );
   };
 
 /**
@@ -205,7 +215,7 @@ export const validateCVFile = (
   if (file.size > maxSizeBytes) {
     return {
       valid: false,
-      error: "validation.fileTooLarge",
+      error: `Dung lượng tối đa: ${formatFileSize(maxSizeBytes)}`,
     };
   }
 
@@ -214,7 +224,7 @@ export const validateCVFile = (
   if (!fileExtension || !allowedFormats.includes(fileExtension)) {
     return {
       valid: false,
-      error: "validation.invalidFileFormat",
+      error: "Định dạng file không hợp lệ. Vui lòng chọn PDF/DOC/DOCX/RTF",
     };
   }
 
@@ -251,6 +261,7 @@ export const formatUploadDate = (date: Date): string => {
   }
 
   if (diffDays === 1) {
+    //new
     return "Yesterday";
   }
 

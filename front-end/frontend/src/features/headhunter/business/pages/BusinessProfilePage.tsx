@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useBusinessTranslation } from "@/shared/hooks";
 import type { VerificationStatus as VerificationStatusType } from "../types/business.types";
 import { useBusinessVerification } from "../hooks/useBusinessVerification";
 import {
@@ -19,7 +19,7 @@ import {
  * States: form-filling → submitted → error
  */
 export const BusinessProfilePage: React.FC = () => {
-  const { t } = useAppTranslation();
+  const { t } = useBusinessTranslation();
   const {
     // Profile state
     formData,
@@ -89,12 +89,10 @@ export const BusinessProfilePage: React.FC = () => {
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           {/* Breadcrumbs */}
           <nav className="mb-4 flex items-center gap-2 text-sm">
-            <span className="text-gray-500">
-              {t("business.breadcrumb.business")}
-            </span>
+            <span className="text-gray-500">{t("breadcrumb.business")}</span>
             <span className="text-gray-300">{">"}</span>
             <span className="font-medium text-gray-900">
-              {t("business.breadcrumb.profile")}
+              {t("breadcrumb.profile")}
             </span>
           </nav>
 
@@ -102,24 +100,22 @@ export const BusinessProfilePage: React.FC = () => {
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                {t("business.page.title")}
+                {t("page.title")}
               </h1>
-              <p className="mt-2 text-gray-600">
-                {t("business.page.description")}
-              </p>
+              <p className="mt-2 text-gray-600">{t("page.description")}</p>
             </div>
             <div className="flex gap-3">
               <button
                 type="button"
                 className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
               >
-                {t("business.button.documentation")}
+                {t("button.documentation")}
               </button>
               <button
                 type="button"
                 className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
               >
-                {t("business.button.preview")}
+                {t("button.preview")}
               </button>
             </div>
           </div>
@@ -155,10 +151,10 @@ export const BusinessProfilePage: React.FC = () => {
                 <div className="rounded-lg border border-slate-200 bg-white p-6">
                   <div className="mb-6">
                     <h2 className="text-xl font-semibold text-slate-900">
-                      {t("business.form.title")}
+                      {t("form.title")}
                     </h2>
                     <p className="mt-1 text-sm text-slate-600">
-                      {t("business.form.subtitle")}
+                      {t("form.subtitle")}
                     </p>
                   </div>
 
@@ -180,7 +176,7 @@ export const BusinessProfilePage: React.FC = () => {
                 verificationSteps.length > 0 && (
                   <div className="rounded-lg border border-slate-200 bg-white p-6">
                     <h2 className="mb-6 text-xl font-semibold text-slate-900">
-                      {t("business.verification.title")}
+                      {t("verification.title")}
                     </h2>
                     <VerificationStatus
                       currentStatus={currentVerificationStatus}
@@ -192,7 +188,7 @@ export const BusinessProfilePage: React.FC = () => {
               {hasDocuments && documents && (
                 <div className="rounded-lg border border-slate-200 bg-white p-6">
                   <h2 className="mb-6 text-xl font-semibold text-slate-900">
-                    {t("business.documents.title")}
+                    {t("documents.title")}
                   </h2>
                   <SubmittedDocuments documents={documents} />
                 </div>
@@ -205,10 +201,10 @@ export const BusinessProfilePage: React.FC = () => {
                   <div className="flex items-start justify-between">
                     <div>
                       <h3 className="font-semibold text-slate-900">
-                        {t("business.privacy.title")}
+                        {t("privacy.title")}
                       </h3>
                       <p className="mt-2 text-sm text-slate-600">
-                        {t("business.privacy.description")}
+                        {t("privacy.description")}
                       </p>
                     </div>
                   </div>
@@ -216,7 +212,7 @@ export const BusinessProfilePage: React.FC = () => {
                     type="button"
                     className="mt-4 text-sm font-medium text-emerald-600 transition-colors hover:text-emerald-700"
                   >
-                    {t("business.action.configure")} →
+                    {t("action.configure")} →
                   </button>
                 </div>
 
@@ -239,17 +235,15 @@ export const BusinessProfilePage: React.FC = () => {
 
               {/* Premium Services Card */}
               <div className="rounded-lg border border-gray-200 bg-linear-to-b from-gray-900 to-gray-800 p-6 text-white">
-                <h3 className="text-lg font-semibold">
-                  {t("business.premium.title")}
-                </h3>
+                <h3 className="text-lg font-semibold">{t("premium.title")}</h3>
                 <p className="mt-2 text-sm text-gray-300">
-                  {t("business.premium.description")}
+                  {t("premium.description")}
                 </p>
                 <button
                   type="button"
                   className="mt-4 w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
                 >
-                  {t("business.button.upgrade")}
+                  {t("button.upgrade")}
                 </button>
               </div>
 
@@ -259,7 +253,7 @@ export const BusinessProfilePage: React.FC = () => {
                   <div className="flex flex-col items-center gap-2">
                     <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-green-600" />
                     <p className="text-sm text-gray-600">
-                      {t("business.state.loading")}
+                      {t("state.loading")}
                     </p>
                   </div>
                 </div>

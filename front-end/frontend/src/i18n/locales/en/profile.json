@@ -1,47 +1,47 @@
 {
   "page": {
-    "subtitleSaving": "Subtitle saving",
-    "subtitleSuccess": "Subtitle success",
-    "subtitleDefault": "Subtitle default",
+    "subtitleSaving": "Subtitle Saving",
+    "subtitleSuccess": "Subtitle Success",
+    "subtitleDefault": "Subtitle Default",
     "eyebrow": "Eyebrow",
     "title": "Title"
   },
   "alerts": {
-    "saveErrorTitle": "Save error title",
-    "validationErrorTitle": "Validation error title",
-    "saveSuccessTitle": "Save success title",
-    "saveSuccessBody": "Save success body"
+    "saveErrorTitle": "Save Error Title",
+    "validationErrorTitle": "Validation Error Title",
+    "saveSuccessTitle": "Save Success Title",
+    "saveSuccessBody": "Save Success Body"
   },
   "actions": {
-    "discardChanges": "Discard changes",
+    "discardChanges": "Discard Changes",
     "saving": "Saving",
-    "saveChanges": "Save changes"
+    "saveChanges": "Save Changes"
   },
   "sidebar": {
-    "strengthTitle": "Strength title",
-    "strengthHint": "Strength hint",
-    "tipsTitle": "Tips title",
-    "tipOne": "Tip one",
-    "tipTwo": "Tip two",
-    "tipThree": "Tip three",
-    "insightEyebrow": "Insight eyebrow",
-    "insightBody": "Insight body"
+    "strengthTitle": "Strength Title",
+    "strengthHint": "Strength Hint",
+    "tipsTitle": "Tips Title",
+    "tipOne": "Tip One",
+    "tipTwo": "Tip Two",
+    "tipThree": "Tip Three",
+    "insightEyebrow": "Insight Eyebrow",
+    "insightBody": "Insight Body"
   },
   "form": {
-    "sectionTitle": "Section title",
-    "sectionSubtitle": "Section subtitle",
-    "openForWork": "Open for work",
-    "fullName": "Full name",
-    "jobTitle": "Job title",
-    "currentTitlePlaceholder": "Current title placeholder",
-    "currentStatus": "Current status",
-    "currentStatusAria": "Current status aria",
-    "yearsOfExperience": "Years of experience",
+    "sectionTitle": "Section Title",
+    "sectionSubtitle": "Section Subtitle",
+    "openForWork": "Open For Work",
+    "fullName": "Full Name",
+    "jobTitle": "Job Title",
+    "currentTitlePlaceholder": "Current Title Placeholder",
+    "currentStatus": "Current Status",
+    "currentStatusAria": "Current Status Aria",
+    "yearsOfExperience": "Years Of Experience",
     "city": "City",
-    "cityPlaceholder": "City placeholder",
-    "salaryMin": "Salary min",
-    "salaryMax": "Salary max",
-    "professionalBio": "Professional bio",
-    "bioPlaceholder": "Bio placeholder"
+    "cityPlaceholder": "City Placeholder",
+    "salaryMin": "Salary Min",
+    "salaryMax": "Salary Max",
+    "professionalBio": "Professional Bio",
+    "bioPlaceholder": "Bio Placeholder"
   }
 }
