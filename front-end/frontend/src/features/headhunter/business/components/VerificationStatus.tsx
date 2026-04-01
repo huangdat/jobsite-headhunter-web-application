@@ -91,13 +91,13 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
   const defaultSteps: VerificationStep[] = [
     {
       status: "PENDING",
-      label: t("business.verification.submitted"),
-      description: t("business.verification.submitted_desc"),
+      label: t("verification.submitted"),
+      description: t("verification.submitted_desc"),
     },
     {
       status: "APPROVED",
-      label: t("business.verification.approved"),
-      description: t("business.verification.approved_desc"),
+      label: t("verification.approved"),
+      description: t("verification.approved_desc"),
     },
   ];
 
@@ -110,10 +110,10 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            {t("business.verification.status")}
+            {t("verification.status")}
           </h3>
           <p className="text-sm text-slate-600">
-            {t("business.verification.status_desc")}
+            {t("verification.status_desc")}
           </p>
         </div>
         <span
@@ -176,7 +176,7 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
                         <span className="absolute inline-flex h-full w-full animate-pulse rounded-full bg-amber-600"></span>
                         <span className="inline-flex h-2 w-2 rounded-full bg-amber-600"></span>
                       </span>
-                      {t("business.verification.in_progress")}
+                      {t("verification.in_progress")}
                     </span>
                   )}
                 </div>
@@ -219,10 +219,10 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
           </svg>
           <div className="flex-1">
             <p className="font-semibold text-red-900">
-              {t("business.verification.rejected_title")}
+              {t("verification.rejected_title")}
             </p>
             <p className="mt-1 text-sm text-red-800">
-              {t("business.verification.rejected_desc")}
+              {t("verification.rejected_desc")}
             </p>
           </div>
         </div>
@@ -233,10 +233,10 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
           <CheckCircle2 className="h-6 w-6 shrink-0 text-emerald-600" />
           <div className="flex-1">
             <p className="font-semibold text-emerald-900">
-              {t("business.verification.approved_title")}
+              {t("verification.approved_title")}
             </p>
             <p className="mt-1 text-sm text-emerald-800">
-              {t("business.verification.approved_message")}
+              {t("verification.approved_message")}
             </p>
           </div>
         </div>

@@ -14,6 +14,7 @@
     "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} jobs",
     "filters": {
       "keywordPlaceholder": "Job title or skill",
+      "locationPlaceholder": "City or 'Remote'",
       "workingType": "Working Type",
       "allTypes": "All types",
       "rankLevel": "Rank Level",
@@ -299,13 +300,6 @@
     "salaryNegative": "Salary cannot be negative",
     "salaryOrder": "Salary min cannot be greater than salary max"
   },
-  "jobs": {
-    "list": {
-      "filters": {
-        "salaryVND": "Jobs list filters salary v n d"
-      }
-    }
-  },
   "accountSettings": "Account Settings",
   "activityLog": "Activity Log",
   "applicantPageInfo": "Applicants",
@@ -320,5 +314,14 @@
   "profileTitle": "Profile",
   "promotionCodes": "Promotion Codes",
   "recruitmentReport": "Recruitment Report",
-  "supportInbox": "Support Inbox"
+  "supportInbox": "Support Inbox",
+  "jobs": {
+    "toast": {
+      "signInRequired": "Please sign in to apply for this job"
+    }
+  },
+  "defaults": {
+    "location": "Location",
+    "workingTime": "Working Time"
+  }
 }

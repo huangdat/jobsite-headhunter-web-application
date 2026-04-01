@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import type { Job } from "../types";
-import { useHomeTranslation } from "@/shared/hooks";
+import { useHomeTranslation, useMessagesTranslation } from "@/shared/hooks";
 import { getRecommendedJobs } from "@/shared/utils/jobService";
 import { MATCH_BADGE_COLORS, HOME_ICONS } from "../constants";
 
 export function RecommendedJobs() {
   const { t } = useHomeTranslation();
+  const { t: tMsg } = useMessagesTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null); //new
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -20,14 +21,14 @@ export function RecommendedJobs() {
         setInfoMessage(data.message || null);
       } catch (err) {
         console.error("Failed to fetch recommended jobs:", err);
-        setError(t("messages.errorLoadJobs"));
+        setError(tMsg("errorLoadJobs"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchJobs();
-  }, [t]);
+  }, [tMsg]);
   return (
     <section id="recommended" className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex justify-between items-center mb-8">
@@ -44,7 +45,7 @@ export function RecommendedJobs() {
 
       {loading && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.loadingJobs")}</p>
+          <p className="text-gray-500">{tMsg("loadingJobs")}</p>
         </div>
       )}
 
@@ -62,7 +63,7 @@ export function RecommendedJobs() {
 
       {!loading && !error && jobs.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.noRecommendedJobs")}</p>
+          <p className="text-gray-500">{tMsg("noRecommendedJobs")}</p>
         </div>
       )}
 

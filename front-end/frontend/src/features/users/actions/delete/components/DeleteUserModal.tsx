@@ -8,8 +8,7 @@ import {
   Loader,
 } from "lucide-react";
 
-import { useUsersTranslation } from "@/shared/hooks";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useDeleteTranslation, useCommonTranslation } from "@/shared/hooks";
 
 interface RelatedDataCount {
   applications?: number;
@@ -58,8 +57,8 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   onClose,
   onConfirm,
 }) => {
-  const { t } = useUsersTranslation();
-  const { t: tCommon } = useAppTranslation();
+  const { t } = useDeleteTranslation();
+  const { t: tCommon } = useCommonTranslation();
   const [step, setStep] = useState<ModalStep>("choice");
   const [selectedType, setSelectedType] = useState<"soft" | "hard" | null>(
     null
@@ -108,7 +107,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
       });
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : tCommon("common.unknownError");
+        error instanceof Error ? error.message : tCommon("unknownError");
 
       // Check if it's a conflict error (AC2 - 409)
       if (
@@ -158,17 +157,13 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
               <AlertTriangle className="w-8 h-8 text-red-600" />
-              <h2 className="text-2xl font-bold text-gray-900">
-                {t("delete.title")}
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-900">{t("title")}</h2>
             </div>
 
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-              <p className="text-red-900 font-medium">
-                {t("delete.selectMethod")}
-              </p>
+              <p className="text-red-900 font-medium">{t("selectMethod")}</p>
               <p className="text-red-800 text-sm mt-2">
-                {t("fields.userInfo")}:{" "}
+                {tCommon("fields.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
             </div>
@@ -177,20 +172,20 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             {hasRelatedData && (
               <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
                 <p className="font-semibold text-orange-900 mb-3">
-                  {t("delete.relatedDataWarning")}
+                  {t("relatedDataWarning")}
                 </p>
                 <ul className="space-y-2 text-orange-800 text-sm">
                   {applications > 0 && (
                     <li className="flex items-center gap-2">
                       <span className="w-2 h-2 bg-orange-600 rounded-full" />
-                      {t("delete.applicationsCount")}:{" "}
+                      {t("applicationsCount")}:{" "}
                       <span className="font-semibold">{applications}</span>
                     </li>
                   )}
                   {jobs > 0 && (
                     <li className="flex items-center gap-2">
                       <span className="w-2 h-2 bg-orange-600 rounded-full" />
-                      {t("delete.jobsCount")}:{" "}
+                      {t("jobsCount")}:{" "}
                       <span className="font-semibold">{jobs}</span>
                     </li>
                   )}
@@ -215,30 +210,28 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   checked={selectedType === "soft"}
                   onChange={() => {}}
                   className="mt-1"
-                  aria-label={t("delete.softDeleteOptionAriaLabel")}
+                  aria-label={t("softDeleteOptionAriaLabel")}
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <Lock className="w-5 h-5 text-blue-600" />
                     <h3 className="font-semibold text-gray-900">
-                      {t("delete.softDeleteTitle")}
+                      {t("softDeleteTitle")}
                     </h3>
                   </div>
-                  <p className="text-gray-600 text-sm">
-                    {t("delete.softDeleteDesc")}
-                  </p>
+                  <p className="text-gray-600 text-sm">{t("softDeleteDesc")}</p>
                   <ul className="mt-3 space-y-1 text-sm text-gray-600">
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-600" />
-                      {t("delete.softDeleteBenefit1")}
+                      {t("softDeleteBenefit1")}
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-600" />
-                      {t("delete.softDeleteBenefit2")}
+                      {t("softDeleteBenefit2")}
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-600" />
-                      {t("delete.softDeleteBenefit3")}
+                      {t("softDeleteBenefit3")}
                     </li>
                   </ul>
                 </div>
@@ -269,27 +262,21 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   onChange={() => {}}
                   disabled={hasRelatedData}
                   className="mt-1"
-                  aria-label={t("delete.hardDeleteOptionAriaLabel")}
+                  aria-label={t("hardDeleteOptionAriaLabel")}
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <Trash2 className="w-5 h-5 text-red-600" />
                     <h3 className="font-semibold text-gray-900">
-                      {t("delete.hardDeleteTitle")}
+                      {t("hardDeleteTitle")}
                     </h3>
                   </div>
-                  <p className="text-gray-600 text-sm">
-                    {t("delete.hardDeleteDesc")}
-                  </p>
+                  <p className="text-gray-600 text-sm">{t("hardDeleteDesc")}</p>
 
                   {hasRelatedData && (
                     <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded text-yellow-800 text-sm">
-                      <p className="font-medium">
-                        {t("delete.hardDeleteDisabled")}
-                      </p>
-                      <p className="mt-1">
-                        {t("delete.usesSoftDeleteInstead")}
-                      </p>
+                      <p className="font-medium">{t("hardDeleteDisabled")}</p>
+                      <p className="mt-1">{t("usesSoftDeleteInstead")}</p>
                     </div>
                   )}
 
@@ -297,11 +284,11 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                     <ul className="mt-3 space-y-1 text-sm text-gray-600">
                       <li className="flex items-center gap-2 text-red-600">
                         <AlertTriangle className="w-4 h-4" />
-                        {t("delete.hardDeleteWarning1")}
+                        {t("hardDeleteWarning1")}
                       </li>
                       <li className="flex items-center gap-2 text-red-600">
                         <AlertTriangle className="w-4 h-4" />
-                        {t("delete.hardDeleteWarning2")}
+                        {t("hardDeleteWarning2")}
                       </li>
                     </ul>
                   )}
@@ -315,14 +302,14 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 onClick={handleClose}
                 className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
               >
-                {t("buttons.cancel")}
+                {tCommon("buttons.cancel")}
               </button>
               <button
                 onClick={() => setStep("confirmation")}
                 disabled={!selectedType}
                 className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
               >
-                {t("buttons.next")}
+                {tCommon("buttons.next")}
               </button>
             </div>
           </div>
@@ -334,16 +321,16 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <Lock className="w-8 h-8 text-blue-600" />
               <h2 className="text-2xl font-bold text-gray-900">
-                {t("delete.softDeleteReasonTitle")}
+                {t("softDeleteReasonTitle")}
               </h2>
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <p className="text-blue-900 font-medium">
-                {t("delete.softDeleteReasonDesc")}
+                {t("softDeleteReasonDesc")}
               </p>
               <p className="text-blue-800 text-sm mt-2">
-                {t("fields.userInfo")}:{" "}
+                {tCommon("fields.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
             </div>
@@ -351,21 +338,18 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             <form onSubmit={handleReasonSubmit}>
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  {t("delete.reasonLabel")}{" "}
-                  <span className="text-red-600">*</span>
+                  {t("reasonLabel")} <span className="text-red-600">*</span>
                 </label>
                 <textarea
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  placeholder={t("delete.reasonPlaceholder")}
+                  placeholder={t("reasonPlaceholder")}
                   required
                   rows={4}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  aria-label={t("delete.reasonLabel")}
+                  aria-label={t("reasonLabel")}
                 />
-                <p className="text-xs text-gray-600 mt-1">
-                  {t("delete.reasonHint")}
-                </p>
+                <p className="text-xs text-gray-600 mt-1">{t("reasonHint")}</p>
               </div>
 
               <div className="flex gap-3 justify-end">
@@ -378,14 +362,14 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   }}
                   className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
                 >
-                  {t("delete.back")}
+                  {t("back")}
                 </button>
                 <button
                   type="submit"
                   disabled={reason.trim() === ""}
                   className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
                 >
-                  {t("buttons.next")}
+                  {tCommon("buttons.next")}
                 </button>
               </div>
             </form>
@@ -398,44 +382,38 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <AlertTriangle className="w-8 h-8 text-orange-600" />
               <h2 className="text-2xl font-bold text-gray-900">
-                {t("delete.confirmTitle")}
+                {t("confirmTitle")}
               </h2>
             </div>
 
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
               <p className="text-orange-900 font-medium">
                 {selectedType === "soft"
-                  ? t("delete.confirmSoftDelete")
-                  : t("delete.confirmHardDelete")}
+                  ? t("confirmSoftDelete")
+                  : t("confirmHardDelete")}
               </p>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-4 mb-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-gray-600">
-                    {t("delete.affectedUser")}
-                  </p>
+                  <p className="text-sm text-gray-600">{t("affectedUser")}</p>
                   <p className="font-semibold text-gray-900">{userName}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">{t("delete.userId")}</p>
+                  <p className="text-sm text-gray-600">{t("userId")}</p>
                   <p className="font-semibold text-gray-900">{userId}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">
-                    {t("delete.deleteMethod")}
-                  </p>
+                  <p className="text-sm text-gray-600">{t("deleteMethod")}</p>
                   <p className="font-semibold text-gray-900">
                     {selectedType === "soft"
-                      ? t("delete.softDelete")
-                      : t("delete.hardDelete")}
+                      ? t("softDelete")
+                      : t("hardDelete")}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">
-                    {t("delete.timestamp")}
-                  </p>
+                  <p className="text-sm text-gray-600">{t("timestamp")}</p>
                   <p className="font-semibold text-gray-900">
                     {new Date().toLocaleString()}
                   </p>
@@ -450,7 +428,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 disabled={loading}
                 className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 transition font-medium"
               >
-                {t("delete.back")}
+                {t("back")}
               </button>
               <button
                 onClick={handleConfirmDelete}
@@ -462,7 +440,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 }`}
               >
                 {loading && <Loader className="w-4 h-4 animate-spin" />}
-                {loading ? t("delete.processing") : t("delete.confirmAction")}
+                {loading ? t("processing") : t("confirmAction")}
               </button>
             </div>
           </div>
@@ -474,20 +452,20 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               {selectedType === "soft"
-                ? t("delete.successSoftDelete")
-                : t("delete.successHardDelete")}
+                ? t("successSoftDelete")
+                : t("successHardDelete")}
             </h2>
             <p className="text-gray-600 mb-6">
               {selectedType === "soft"
-                ? t("delete.successSoftMessage")
-                : t("delete.successHardMessage")}
+                ? t("successSoftMessage")
+                : t("successHardMessage")}
             </p>
 
             <button
               onClick={handleClose}
               className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
             >
-              {t("delete.close")}
+              {t("close")}
             </button>
           </div>
         )}
@@ -497,25 +475,23 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
           <div className="p-8 text-center">
             <XCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              {t("delete.errorTitle")}
+              {t("errorTitle")}
             </h2>
             <p className="text-gray-600 mb-4">{result.message}</p>
-            <p className="text-sm text-gray-500 mb-6">
-              {t("delete.contactSupport")}
-            </p>
+            <p className="text-sm text-gray-500 mb-6">{t("contactSupport")}</p>
 
             <div className="flex gap-3 justify-center">
               <button
                 onClick={() => setStep("choice")}
                 className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
               >
-                {t("delete.tryAgain")}
+                {t("tryAgain")}
               </button>
               <button
                 onClick={handleClose}
                 className="px-6 py-2 rounded-lg bg-gray-700 text-white hover:bg-gray-800 transition font-medium"
               >
-                {t("delete.close")}
+                {t("close")}
               </button>
             </div>
           </div>
@@ -527,32 +503,32 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <AlertTriangle className="w-8 h-8 text-orange-600" />
               <h2 className="text-2xl font-bold text-gray-900">
-                {t("delete.conflictTitle")}
+                {t("conflictTitle")}
               </h2>
             </div>
 
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
               <p className="text-orange-900 font-medium">
-                {t("delete.conflictMessage")}
+                {t("conflictMessage")}
               </p>
             </div>
 
             <div className="mb-6">
               <p className="font-semibold text-gray-900 mb-3">
-                {t("delete.relatedDataFound")}
+                {t("relatedDataFound")}
               </p>
               <ul className="space-y-2 text-gray-600">
                 {applications > 0 && (
                   <li className="flex items-center gap-2">
                     <span className="w-2 h-2 bg-red-600 rounded-full" />
-                    {t("delete.applicationsCount")}:{" "}
+                    {t("applicationsCount")}:{" "}
                     <span className="font-semibold">{applications}</span>
                   </li>
                 )}
                 {jobs > 0 && (
                   <li className="flex items-center gap-2">
                     <span className="w-2 h-2 bg-red-600 rounded-full" />
-                    {t("delete.jobsCount")}:{" "}
+                    {t("jobsCount")}:{" "}
                     <span className="font-semibold">{jobs}</span>
                   </li>
                 )}
@@ -560,9 +536,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <p className="text-blue-900 text-sm">
-                {t("delete.conflictResolution")}
-              </p>
+              <p className="text-blue-900 text-sm">{t("conflictResolution")}</p>
             </div>
 
             <div className="flex gap-3 justify-end">
@@ -570,7 +544,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 onClick={handleClose}
                 className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
               >
-                {t("delete.close")}
+                {t("close")}
               </button>
               <button
                 onClick={() => {
@@ -579,7 +553,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 }}
                 className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
               >
-                {t("delete.useSoftDelete")}
+                {t("useSoftDelete")}
               </button>
             </div>
           </div>
@@ -590,4 +564,3 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 };
 
 export default DeleteUserModal;
-

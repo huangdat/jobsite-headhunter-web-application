@@ -1,6 +1,6 @@
 {
-  "searchKeywords": "Từ khóa, vị trí công việc, công ty...",
-  "searchLocation": "Vị trí hoặc 'Làm việc từ xa'...",
+  "searchKeywords": "home.searchKeywords",
+  "searchLocation": "home.searchLocation",
   "navigation": {
     "recommended": "Được Đề Nghị",
     "topCompanies": "Công Ty Hàng Đầu",
@@ -19,25 +19,25 @@
     "classification": "Phân Loại"
   },
   "hero": {
-    "title": "Tìm Cơ Hội",
-    "highlight": "Tiếp Theo của Bạn",
-    "description": "Khám phá hơn 50.000+ công việc được chọn lọc từ các công ty hàng đầu và đưa sự nghiệp của bạn lên một tầm cao mới."
+    "title": "home.hero.title",
+    "highlight": "home.hero.highlight",
+    "description": "home.hero.description"
   },
   "searchBar": {
-    "search": "TÌM KIẾM"
+    "search": "home.searchBar.search"
   },
   "featuredJobs": {
-    "title": "Công Việc Nổi Bật",
-    "viewMore": "XEM THÊM CÔNG VIỆC →"
+    "title": "home.featuredJobs.title",
+    "viewMore": "featuredJobs.viewMore"
   },
   "recommendedJobs": {
-    "title": "Được Đề Nghị cho Bạn",
-    "description": "Dựa trên hồ sơ và kỹ năng của bạn"
+    "title": "home.recommendedJobs.title",
+    "description": "home.recommendedJobs.description"
   },
   "topCompanies": {
-    "title": "Công Ty Hàng Đầu",
-    "openJobs": "12 Vị Trí Tuyển Dụng",
-    "viewCompany": "Xem Công Ty →"
+    "title": "home.topCompanies.title",
+    "openJobs": "topCompanies.openJobs",
+    "viewCompany": "topCompanies.viewCompany"
   },
   "footer": {
     "copyright": "© {year} JobSite. Tất cả quyền được bảo lưu."
@@ -52,6 +52,24 @@
     "noCompanies": "Không tìm thấy công ty nào"
   },
   "badges": {
-    "new": "MỚI"
+    "new": "badges.new"
+  },
+  "howItWorks": {
+    "step1": {
+      "title": "Tiêu đề",
+      "description": "Mô tả"
+    },
+    "step2": {
+      "title": "Tiêu đề",
+      "description": "Mô tả"
+    },
+    "step3": {
+      "title": "Tiêu đề",
+      "description": "Mô tả"
+    },
+    "step4": {
+      "title": "Tiêu đề",
+      "description": "Mô tả"
+    }
   }
 }

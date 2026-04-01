@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as DialogRadix from "@radix-ui/react-dialog";
-import { useTranslation } from "react-i18next";
+import { useDialogsTranslation } from "@/shared/hooks";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,9 @@ function DialogPortal({
   return <DialogRadix.Portal data-slot="dialog-portal" {...props} />;
 }
 
-function DialogClose({ ...props }: React.ComponentProps<typeof DialogRadix.Close>) {
+function DialogClose({
+  ...props
+}: React.ComponentProps<typeof DialogRadix.Close>) {
   return <DialogRadix.Close data-slot="dialog-close" {...props} />;
 }
 
@@ -97,7 +99,7 @@ function DialogFooter({
 }: React.ComponentProps<"div"> & {
   showCloseButton?: boolean;
 }) {
-  const { t } = useTranslation();
+  const { t } = useDialogsTranslation();
   return (
     <div
       data-slot="dialog-footer"
@@ -110,7 +112,7 @@ function DialogFooter({
       {children}
       {showCloseButton && (
         <DialogRadix.Close asChild>
-          <Button variant="outline">{t("dialogs.closeDialog")}</Button>
+          <Button variant="outline">{t("closeDialog")}</Button>
         </DialogRadix.Close>
       )}
     </div>

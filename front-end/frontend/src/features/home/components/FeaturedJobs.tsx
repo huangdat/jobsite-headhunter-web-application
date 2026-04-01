@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Job } from "../types";
-import { useHomeTranslation } from "@/shared/hooks";
+import { useHomeTranslation, useMessagesTranslation } from "@/shared/hooks";
 import { getRandomLatestJobs } from "@/shared/utils/jobService";
-import { JOB_TYPE_COLORS } from "../constants";
+import { JOB_TYPE_COLORS, JOB_TYPE_LABELS } from "../constants";
 
 export function FeaturedJobs() {
   const { t } = useHomeTranslation();
+  const { t: tMsg } = useMessagesTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); //new
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -19,21 +20,21 @@ export function FeaturedJobs() {
         setJobs(data.jobs || []);
       } catch (err) {
         console.error("Failed to fetch featured jobs:", err);
-        setError(t("messages.errorLoadJobs"));
+        setError(tMsg("errorLoadJobs"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchJobs();
-  }, [t]);
+  }, [tMsg]);
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
       <h2 className="text-2xl font-bold mb-10">{t("featuredJobs.title")}</h2>
 
       {loading && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.loadingJobs")}</p>
+          <p className="text-gray-500">{tMsg("loadingJobs")}</p>
         </div>
       )}
 
@@ -45,7 +46,7 @@ export function FeaturedJobs() {
 
       {!loading && !error && jobs.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.noFeaturedJobs")}</p>
+          <p className="text-gray-500">{tMsg("noFeaturedJobs")}</p>
         </div>
       )}
 
@@ -65,7 +66,8 @@ export function FeaturedJobs() {
                     <span
                       className={`${JOB_TYPE_COLORS[job.workingType as keyof typeof JOB_TYPE_COLORS]?.bg} ${JOB_TYPE_COLORS[job.workingType as keyof typeof JOB_TYPE_COLORS]?.text} px-2 py-1 rounded`}
                     >
-                      {t(`jobTypes.${job.workingType.toLowerCase()}`)}
+                      {JOB_TYPE_LABELS[job.workingType.toLowerCase()] ||
+                        job.workingType}
                     </span>
                   )}
                 </div>
@@ -84,7 +86,6 @@ export function FeaturedJobs() {
               className="inline-block border px-6 py-3 rounded-xl hover:bg-gray-100 transition"
             >
               {t("featuredJobs.viewMore")}
-              dvddjvnzsdvnzsjk
             </Link>
           </div>
         </>

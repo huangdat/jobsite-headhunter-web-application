@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
-import { useAuthTranslation } from "@/shared/hooks";
+import { useAuthTranslation, usePagesTranslation } from "@/shared/hooks";
 import type { RegistrationUserRole } from "@/features/auth/types";
 
 import { MdPersonSearch, MdGroups, MdWorkHistory } from "react-icons/md";
@@ -17,6 +17,7 @@ interface RoleOption {
 
 export function SelectRolePage() {
   const { t } = useAuthTranslation();
+  const { t: tPages } = usePagesTranslation();
   const [selectedRole, setSelectedRole] = useState<RegistrationUserRole | null>(
     null
   );
@@ -26,20 +27,20 @@ export function SelectRolePage() {
     {
       value: "candidate",
       icon: <MdPersonSearch />,
-      titleKey: "pages.selectRole.roles.candidate",
-      descKey: "pages.selectRole.roles.candidateDesc",
+      titleKey: "selectRole.roles.candidate",
+      descKey: "selectRole.roles.candidateDesc",
     },
     {
       value: "collaborator",
       icon: <MdGroups />,
-      titleKey: "pages.selectRole.roles.collaborator",
-      descKey: "pages.selectRole.roles.collaboratorDesc",
+      titleKey: "selectRole.roles.collaborator",
+      descKey: "selectRole.roles.collaboratorDesc",
     },
     {
       value: "headhunter",
       icon: <MdWorkHistory />,
-      titleKey: "pages.selectRole.roles.headhunter",
-      descKey: "pages.selectRole.roles.headhunterDesc",
+      titleKey: "selectRole.roles.headhunter",
+      descKey: "selectRole.roles.headhunterDesc",
     },
   ];
 
@@ -56,23 +57,23 @@ export function SelectRolePage() {
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
-            {t("pages.selectRole.title")} <br />
+            {tPages("selectRole.title")} <br />
             <span className="text-lime-400">
-              {t("pages.selectRole.titleHighlight")}
+              {tPages("selectRole.titleHighlight")}
             </span>
           </h1>
 
-          <p className="text-gray-300 mt-6">{t("pages.selectRole.subtitle")}</p>
+          <p className="text-gray-300 mt-6">{tPages("selectRole.subtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10 flex flex-col justify-center">
           <h2 className="text-3xl font-bold mb-2">
-            {t("pages.selectRole.pageTitle")}
+            {tPages("selectRole.pageTitle")}
           </h2>
 
           <p className="text-gray-500 mb-8">
-            {t("pages.selectRole.pageSubtitle")}
+            {tPages("selectRole.pageSubtitle")}
           </p>
 
           <form
@@ -123,12 +124,12 @@ export function SelectRolePage() {
               className={`w-full flex justify-center gap-2 mt-6 
       ${selectedRole ? "cursor-pointer" : "opacity-60"}`}
             >
-              {t("pages.selectRole.continue")}
+              {tPages("selectRole.continue")}
               <HiOutlineArrowRight />
             </Button>
 
             <p className="text-center text-sm text-slate-500 mt-4">
-              {t("pages.selectRole.alreadyHaveAccount")}{" "}
+              {tPages("selectRole.alreadyHaveAccount")}{" "}
               <Link to="/login" className="text-lime-500 font-medium">
                 {t("buttons.signIn")}
               </Link>

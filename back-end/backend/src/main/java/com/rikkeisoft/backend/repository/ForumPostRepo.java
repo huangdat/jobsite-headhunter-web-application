@@ -1,6 +1,7 @@
 package com.rikkeisoft.backend.repository;
 
 import com.rikkeisoft.backend.enums.PostStatus;
+import com.rikkeisoft.backend.model.entity.ForumCategory;
 import com.rikkeisoft.backend.model.entity.ForumPost;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,9 @@ import java.util.List;
 
 @Repository
 public interface ForumPostRepo extends JpaRepository<ForumPost, Long> {
+    boolean findForumPostByForumCategory(ForumCategory forumCategory);
+
+    boolean existsByForumCategory(ForumCategory forumCategory);
 
     // List<ForumPost> findByAuthorId(String authorId);
     //

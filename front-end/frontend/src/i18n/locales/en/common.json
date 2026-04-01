@@ -1,33 +1,27 @@
 {
   "error": "Error",
-  "success": "Success",
+  "success": {
+    "profileUpdated": "Profile updated"
+  },
   "cancel": "Cancel",
   "delete": "Delete",
   "dismiss": "Dismiss",
   "id_token": "id_token",
+  "view": "View",
+  "code": "Code",
+  "status": "Status",
+  "close": "Close",
+  "notFound": "Not Found",
+  "back": "Back",
+  "appliedAt": "Applied At",
+  "contactInfo": "Contact Information",
+  "viewCV": "View CV",
+  "actions": "Actions",
+  "reject": "Reject",
+  "total": "Total",
+  "loading": "Common loading",
   "breadcrumb": {
     "home": "Home"
-  },
-  "common": {
-    "loading": "Common loading",
-    "adminUserTitle": "Admin User",
-    "appVersion": "v2.4.0 Release",
-    "permanentDelete": "Permanent Delete",
-    "appName": "JobSite",
-    "allRightsReserved": "All rights reserved © 2026",
-    "section": {
-      "account": "Account"
-    },
-    "exampleEmail": "alex.n@referral.io",
-    "languages": {
-      "en": "English",
-      "vi": "Tiếng Việt"
-    },
-    "enterDetailsDescription": "Common enter details description",
-    "failedToFetchUsers": "Common failed to fetch users",
-    "tryAgain": "Common try again",
-    "noDataAvailable": "Common no data available",
-    "unknownError": "Unknown error occurred"
   },
   "messages": {
     "signedInSuccess": "Signed in successfully.",
@@ -40,6 +34,74 @@
     "failedToLoadUsers": "Failed to load users",
     "noPermissionAccess": "You do not have permission to access the classification feature.",
     "sessionExpiredLoginAgain": "Your session has expired. Please login again.",
-    "myJobs": "My jobs"
+    "myJobs": "My jobs",
+    "errorLoadJobs": "[messages.errorLoadJobs]",
+    "loadingJobs": "[messages.loadingJobs]",
+    "noFeaturedJobs": "[messages.noFeaturedJobs]",
+    "noRecommendedJobs": "[messages.noRecommendedJobs]",
+    "errorLoadCompanies": "[messages.errorLoadCompanies]",
+    "loadingCompanies": "[messages.loadingCompanies]",
+    "noCompanies": "[messages.noCompanies]"
+  },
+  "section": {
+    "benefits": "[section.benefits]",
+    "benefitsDescription": "[section.benefitsDescription]",
+    "howItWorks": "[section.howItWorks]",
+    "faq": "[section.faq]",
+    "account": "Account"
+  },
+  "fields": {
+    "userInfo": "[fields.userInfo]"
+  },
+  "buttons": {
+    "back": "[buttons.back]",
+    "cancel": "Cancel",
+    "next": "Next",
+    "connecting": "Connecting"
+  },
+  "statuses": {
+    "${user": {
+      "status": {
+        "toLowerCase()}": "[statuses.${user.status.toLowerCase()}]"
+      }
+    },
+    "${status": {
+      "toLowerCase()}": "[statuses.${status.toLowerCase()}]"
+    },
+    "ACTIVE": "[statuses.ACTIVE]",
+    "SUSPENDED": "[statuses.SUSPENDED]",
+    "PENDING": "[statuses.PENDING]",
+    "DELETED": "[statuses.DELETED]",
+    "${value": {
+      "toLowerCase()}": "[statuses.${value.toLowerCase()}]"
+    }
+  },
+  "warnings": {
+    "adminWarning": "Admin warning",
+    "adminWarningDesc": "Admin warning description"
+  },
+  "roles": {
+    "candidate": "Candidate",
+    "headhunter": "Headhunter",
+    "collaborator": "Collaborator",
+    "admin": "Admin"
+  },
+  "enterDetailsDescription": "Common enter details description",
+  "failedToFetchUsers": "Common failed to fetch users",
+  "tryAgain": "Common try again",
+  "noDataAvailable": "Common no data available",
+  "unknownError": "Unknown error occurred",
+  "sendingOtp": "Sending Otp",
+  "sendOtp": "Send Otp",
+  "adminUserTitle": "Admin User",
+  "appVersion": "v2.4.0 Release",
+  "permanentDelete": "Permanent Delete",
+  "appName": "JobSite",
+  "allRightsReserved": "All rights reserved © 2026",
+  "currentUserName": "John Doe",
+  "exampleEmail": "alex.n@referral.io",
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt"
   }
 }
