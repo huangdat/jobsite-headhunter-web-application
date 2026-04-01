@@ -10,6 +10,7 @@ import com.rikkeisoft.backend.model.dto.req.forum.ForumCategoryUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.forum.ForumCategoryResp;
 import com.rikkeisoft.backend.model.entity.ForumCategory;
 import com.rikkeisoft.backend.repository.ForumCategoryRepo;
+import com.rikkeisoft.backend.repository.ForumPostRepo;
 import com.rikkeisoft.backend.service.ForumCategoryService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -45,8 +46,8 @@ import java.time.LocalDateTime;
 public class ForumCategoryServiceImpl implements ForumCategoryService {
 
     ForumCategoryRepo forumCategoryRepo;
-    MessageSource messageSource;
     ForumCategoryMapper forumCategoryMapper;
+    ForumPostRepo forumPostRepo;
 
     /**
      * {@inheritDoc}
@@ -78,8 +79,7 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
                 .updatedAt(LocalDateTime.now())
                 .build();
         ForumCategory savedForumCategory = forumCategoryRepo.save(newForumCategory);
-        ForumCategoryResp forumCategoryResp = forumCategoryMapper.toForumCategoryResp(savedForumCategory);
-        return forumCategoryResp;
+        return forumCategoryMapper.toForumCategoryResp(savedForumCategory);
     }
 
     /**
@@ -111,19 +111,21 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
     /**
      * {@inheritDoc}
      *
-     * <p>Implementation steps:
-     * <ol>
-     *   <li>Load the category; throw {@code CATEGORY_NOT_FOUND} if absent or already soft-deleted.</li>
-     *   <li>Set {@code softDeleted = true} and {@code updatedAt} to now.</li>
-     *   <li>Persist the entity.</li>
-     * </ol>
-     *
      * @param categoryId the surrogate primary key of the category to soft-delete.
      */
     @Override
     @Transactional
+    @PreAuthorize(SecurityConstants.ADMIN)
     public void deleteCategory(Long categoryId) {
-        // stub — no return value
+        ForumCategory forumCategory = forumCategoryRepo.findById(categoryId).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        if(forumCategory.isSoftDeleted()){
+            throw new AppException(ErrorCode.CATEGORY_NOT_FOUND);
+        }
+        if(forumPostRepo.existsByForumCategory(forumCategory)){
+            throw new AppException(ErrorCode.CATEGORY_NOT_EMPTY);
+        }
+        forumCategory.setSoftDeleted(true);
+        forumCategory.setUpdatedAt(LocalDateTime.now());
     }
 
     /**
@@ -145,6 +147,9 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
     @PreAuthorize(SecurityConstants.ADMIN)
     public ForumCategoryResp toggleCategoryStatus(Long categoryId) {
         ForumCategory forumCategory = forumCategoryRepo.findById(categoryId).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        if(forumCategory.isSoftDeleted()){
+            throw new AppException(ErrorCode.CATEGORY_NOT_FOUND);
+        }
         forumCategory.setActive(!forumCategory.isActive());
         return forumCategoryMapper.toForumCategoryResp(forumCategory);
     }

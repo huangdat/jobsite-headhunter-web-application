@@ -151,6 +151,7 @@ public enum ErrorCode {
     CATEGORY_NAME_REQUIRED(HttpStatus.BAD_REQUEST, "error.category_name_required"),
     CATEGORY_NAME_SIZE(HttpStatus.BAD_REQUEST, "error.category_name_size_constraint"),
     CATEGORY_DESCRIPTION_SIZE_CONSTRAINT(HttpStatus.BAD_REQUEST, "error.category_description_size_constraint"),
+    CATEGORY_NOT_EMPTY(HttpStatus.BAD_REQUEST, "error.category_not_empty"),
 
     // Forum Post module
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "error.post.not.found"),
