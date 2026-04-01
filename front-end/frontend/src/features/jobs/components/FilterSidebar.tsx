@@ -1,6 +1,6 @@
+import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useJobsTranslation } from "@/shared/hooks";
 import type { JobFilterParams } from "../types";
 import {
   EXPERIENCE_PRESETS,
@@ -16,7 +16,7 @@ interface FilterSidebarProps {
 }
 
 export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
-  const { t } = useJobsTranslation();
+  const { t } = useTranslation();
   const {
     keyword,
     location,
@@ -53,13 +53,11 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
 
       {/* Location Filter */}
       <div>
-        <h3 className="mb-3 font-semibold text-slate-900 dark:text-white">
-          Location
-        </h3>
+        <h3 className="mb-3 font-semibold text-slate-900 dark:text-white">Location</h3>
         <Input
           value={location}
           onChange={(e) => handleLocationChange(e.target.value)}
-          placeholder={t("list.filters.locationPlaceholder")}
+          placeholder="City or 'Remote'"
           className="text-sm"
         />
       </div>
@@ -235,3 +233,5 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
     </aside>
   );
 }
+
+

@@ -10,11 +10,7 @@ import {
   PasswordRequirements,
 } from "@/shared/components";
 import { verifyAndResetPassword } from "@/features/auth/services/authApi";
-import {
-  useAuthTranslation,
-  useCommonTranslation,
-  usePagesTranslation,
-} from "@/shared/hooks";
+import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { toast } from "sonner";
 import type { OtpSendResp } from "@/features/auth/types";
@@ -30,8 +26,7 @@ interface ResetPasswordFormData {
 
 export function ResetPasswordPage() {
   const { t: tAuth } = useAuthTranslation();
-  const { t: tPages } = usePagesTranslation();
-  const { t: tCommon } = useCommonTranslation();
+  const { t: tApp } = useAppTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const otpData = location.state as OtpSendResp | null;
@@ -119,17 +114,17 @@ export function ResetPasswordPage() {
   };
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: tAuth("buttons.signIn") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: tAuth("pages.login") }}>
       <main className="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-0">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}
           <div className="md:w-5/12 bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-8 flex flex-col justify-center">
             <h1 className="text-5xl font-bold leading-tight">
-              {tPages("resetPassword.title")}
+              {tAuth("pages.resetPassword.title")}
             </h1>
 
             <p className="text-gray-300 mt-6">
-              {tPages("resetPassword.subtitle")}
+              {tAuth("pages.resetPassword.subtitle")}
             </p>
           </div>
 
@@ -137,21 +132,21 @@ export function ResetPasswordPage() {
           <div className="md:w-7/12 p-8 md:p-8 bg-white dark:bg-slate-900">
             <div className="max-w-2xl mx-auto">
               <h2 className="text-3xl font-bold mb-2">
-                {tPages("resetPassword.formTitle")}
+                {tAuth("pages.resetPassword.formTitle")}
               </h2>
               <p className="text-slate-500 dark:text-slate-400 mb-2">
-                {tPages("resetPassword.instruction")}{" "}
+                {tAuth("pages.resetPassword.instruction")}{" "}
                 <span className="font-semibold text-lime-500">
                   {otpData?.email}
                 </span>
               </p>
               <p className="text-slate-500 dark:text-slate-400 mb-3">
-                {tPages("resetPassword.instruction2")}
+                {tAuth("pages.resetPassword.instruction2")}
               </p>
 
               <form onSubmit={handleFormSubmit(onSubmit)} className="space-y-4">
                 <FormField
-                  label={tPages("resetPassword.otpLabel")}
+                  label={tAuth("pages.resetPassword.otpLabel")}
                   error={errors.otp?.message}
                 >
                   <Input
@@ -166,7 +161,7 @@ export function ResetPasswordPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
-                    label={tAuth("password")}
+                    label={tApp("password")}
                     error={errors.password?.message}
                   >
                     <Input
@@ -192,7 +187,7 @@ export function ResetPasswordPage() {
                   </FormField>
 
                   <FormField
-                    label={tPages("resetPassword.confirmPasswordLabel")}
+                    label={tAuth("pages.resetPassword.confirmPasswordLabel")}
                     error={errors.confirmPassword?.message}
                   >
                     <Input
@@ -235,8 +230,8 @@ export function ResetPasswordPage() {
                   className="w-full flex justify-center gap-2 cursor-pointer"
                 >
                   {isSubmitting
-                    ? tCommon("loading")
-                    : tPages("resetPassword.submitButton")}
+                    ? tApp("common.loading")
+                    : tAuth("pages.resetPassword.submitButton")}
                 </Button>
               </form>
 
@@ -248,7 +243,7 @@ export function ResetPasswordPage() {
                   <span className="material-symbols-outlined text-lg">
                     arrow_back
                   </span>
-                  {tPages("resetPassword.backButton")}
+                  {tAuth("pages.resetPassword.backButton")}
                 </Link>
               </div>
             </div>

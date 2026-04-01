@@ -5,7 +5,6 @@
 
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
-import { cachedApiCall } from "@/shared/utils/apiCache";
 import type { ApiResponse } from "@/features/auth/types/api.types";
 
 /**
@@ -80,29 +79,22 @@ export const getJobPipeline = async (
     keyword?: string;
   }
 ): Promise<ApplicationsPageResponse> => {
-  return cachedApiCall(
-    `job-pipeline-${jobId}-${JSON.stringify(params || {})}`,
-    async () => {
-      const response = await apiClient.get<
-        ApiResponse<ApplicationsPageResponse>
-      >(
-        API_ENDPOINTS.HEADHUNTER.GET_JOB_APPLICATIONS.replace(
-          "{jobId}",
-          String(jobId)
-        ),
-        {
-          params: {
-            page: params?.page ?? 0,
-            size: params?.size ?? 10,
-            ...(params?.status && { status: params.status }),
-            ...(params?.keyword && { keyword: params.keyword }),
-          },
-        }
-      );
-      return response.data.result;
-    },
-    { ttl: 180000 } // Cache for 3 minutes (volatile pipeline data)
+  const response = await apiClient.get<ApiResponse<ApplicationsPageResponse>>(
+    API_ENDPOINTS.HEADHUNTER.GET_JOB_APPLICATIONS.replace(
+      "{jobId}",
+      String(jobId)
+    ),
+    {
+      params: {
+        page: params?.page ?? 0,
+        size: params?.size ?? 10,
+        ...(params?.status && { status: params.status }),
+        ...(params?.keyword && { keyword: params.keyword }),
+      },
+    }
   );
+
+  return response.data.result;
 };
 
 /**
@@ -112,19 +104,14 @@ export const getJobPipeline = async (
 export const getApplicationDetail = async (
   applicationId: number
 ): Promise<ApplicationDetails> => {
-  return cachedApiCall(
-    `application-detail-${applicationId}`,
-    async () => {
-      const response = await apiClient.get<ApiResponse<ApplicationDetails>>(
-        API_ENDPOINTS.HEADHUNTER.GET_APPLICATION_DETAIL.replace(
-          "{id}",
-          String(applicationId)
-        )
-      );
-      return response.data.result;
-    },
-    { ttl: 300000 } // Cache for 5 minutes
+  const response = await apiClient.get<ApiResponse<ApplicationDetails>>(
+    API_ENDPOINTS.HEADHUNTER.GET_APPLICATION_DETAIL.replace(
+      "{id}",
+      String(applicationId)
+    )
   );
+
+  return response.data.result;
 };
 
 /**

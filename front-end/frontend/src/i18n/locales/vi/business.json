@@ -1,34 +1,34 @@
 {
   "breadcrumb": {
-    "business": "business.breadcrumb.business",
-    "profile": "business.breadcrumb.profile"
+    "business": "Doanh Nghiệp",
+    "profile": "Hồ Sơ"
   },
   "page": {
-    "title": "business.page.title",
-    "description": "business.page.description"
+    "title": "Hồ Sơ Doanh Nghiệp",
+    "description": "Quản lý thông tin doanh nghiệp của bạn và xác minh chi tiết công ty"
   },
   "button": {
-    "documentation": "business.button.documentation",
-    "preview": "business.button.preview",
-    "upgrade": "business.button.upgrade"
+    "documentation": "Tài Liệu",
+    "preview": "Xem Trước Hồ Sơ",
+    "upgrade": "Nâng Cấp Lên Premium"
   },
   "form": {
-    "title": "business.form.title",
-    "subtitle": "business.form.subtitle",
-    "company_identity": "business.form.company_identity",
-    "company_identity_desc": "business.form.company_identity_desc",
-    "company_name": "business.form.company_name",
-    "company_name_placeholder": "business.form.company_name_placeholder",
-    "company_size": "business.form.company_size",
-    "select_size": "business.form.select_size",
-    "headquarters_address": "business.form.headquarters_address",
-    "address_placeholder": "business.form.address_placeholder",
-    "tax_id": "business.form.tax_id",
-    "tax_id_placeholder": "business.form.tax_id_placeholder",
-    "website": "business.form.website",
-    "website_placeholder": "business.form.website_placeholder",
+    "title": "Thông Tin Công Ty",
+    "subtitle": "Cập nhật chi tiết doanh nghiệp của bạn dưới đây",
+    "company_identity": "Nhận Diện Công Ty",
+    "company_identity_desc": "Nhập thông tin công ty cơ bản của bạn",
+    "company_name": "Tên Công Ty",
+    "company_name_placeholder": "Nhập tên công ty của bạn",
+    "company_size": "Quy Mô Công Ty",
+    "select_size": "Chọn quy mô công ty",
+    "headquarters_address": "Địa Chỉ Trụ Sở",
+    "address_placeholder": "Nhập địa chỉ trụ sở của bạn",
+    "tax_id": "Mã Số Thuế",
+    "tax_id_placeholder": "Nhập mã số thuế của bạn",
+    "website": "Website",
+    "website_placeholder": "https://www.example.com",
     "submit": "Gửi Hồ Sơ",
-    "submitting": "business.form.submitting",
+    "submitting": "Đang Gửi...",
     "cancel": "Hủy"
   },
   "success": {
@@ -39,26 +39,26 @@
     "validation": "Vui lòng sửa các lỗi dưới đây"
   },
   "verification": {
-    "status": "business.verification.status",
-    "status_desc": "business.verification.status_desc",
+    "status": "Trạng Thái Xác Minh",
+    "status_desc": "Theo dõi tiến độ xác minh hồ sơ của bạn",
     "PENDING": "Đang Chờ",
     "APPROVED": "Đã Duyệt",
-    "approved": "Đã Duyệt",
     "REJECTED": "Bị Từ Chối",
-    "submitted": "business.verification.submitted",
-    "submitted_desc": "business.verification.submitted_desc",
+    "submitted": "Đã Gửi",
+    "submitted_desc": "Hồ sơ của bạn đang chờ xem xét",
     "under_review": "Đang Xem Xét",
-    "approved_desc": "business.verification.approved_desc",
-    "approved_title": "business.verification.approved_title",
-    "approved_message": "business.verification.approved_message",
-    "rejected_desc": "business.verification.rejected_desc",
-    "rejected_title": "business.verification.rejected_title",
-    "in_progress": "business.verification.in_progress",
-    "title": "Xác minh",
-    "${currentStatus}": "business.verification.${currentStatus}"
+    "approved": "Đã Duyệt",
+    "approved_desc": "Xác minh hồ sơ hoàn tất",
+    "approved_title": "Xác Minh Được Phê Duyệt",
+    "approved_message": "Chúc mừng! Hồ sơ doanh nghiệp của bạn đã được xác minh.",
+    "rejected": "Bị Từ Chối",
+    "rejected_desc": "Hồ sơ của bạn cần được sửa đổi",
+    "rejected_title": "Xác Minh Bị Từ Chối",
+    "in_progress": "Đang Xác Minh",
+    "title": "Xác minh"
   },
   "documents": {
-    "title": "business.documents.title",
+    "title": "Tài Liệu Đã Gửi",
     "subtitle": "Các tài liệu xác minh doanh nghiệp mà bạn đã tải lên",
     "tax_certificate": "Giấy Chứng Nhận Thuế",
     "business_license": "Giấy Phép Kinh Doanh",
@@ -70,39 +70,39 @@
     "delete": "Xóa"
   },
   "document": {
-    "no_documents": "business.document.no_documents",
-    "no_documents_desc": "business.document.no_documents_desc",
-    "submitted": "business.document.submitted",
-    "submitted_desc": "business.document.submitted_desc",
-    "verified": "business.document.verified",
-    "uploaded": "business.document.uploaded",
-    "download": "business.document.download",
-    "delete": "business.document.delete",
-    "confirm": "business.document.confirm",
-    "cancel": "business.document.cancel",
-    "deleting": "business.document.deleting",
-    "delete_error": "business.document.delete_error"
+    "no_documents": "Chưa có tài liệu nào được tải lên",
+    "no_documents_desc": "Tải lên các tài liệu doanh nghiệp để xác minh công ty của bạn",
+    "submitted": "Tài Liệu Đã Gửi",
+    "submitted_desc": "Các tài liệu của bạn đang chờ xác minh",
+    "verified": "Đã Xác Minh",
+    "uploaded": "Đã Tải Lên",
+    "download": "Tải Xuống Tài Liệu",
+    "delete": "Xóa Tài Liệu",
+    "confirm": "Bạn có chắc chắn muốn xóa tài liệu này?",
+    "cancel": "Hủy",
+    "deleting": "Đang Xóa...",
+    "delete_error": "Không thể xóa tài liệu. Vui lòng thử lại."
   },
   "strength": {
-    "title": "business.strength.title",
-    "subtitle": "business.strength.subtitle",
-    "no_data": "business.strength.no_data",
-    "complete": "business.strength.complete",
-    "of": "business.strength.of",
-    "items": "business.strength.items",
-    "excellent": "business.strength.excellent",
-    "good": "business.strength.good",
-    "incomplete": "business.strength.incomplete",
-    "breakdown": "business.strength.breakdown",
-    "next_action": "business.strength.next_action",
-    "updated": "business.strength.updated"
+    "title": "Độ Mạnh Hồ Sơ",
+    "subtitle": "Hoàn thành hồ sơ của bạn để tối đa hóa khả năng hiển thị",
+    "no_data": "Không có dữ liệu hồ sơ",
+    "complete": "Hồ Sơ Hoàn Chỉnh",
+    "of": "/ ",
+    "items": "mục",
+    "excellent": "Xuất Sắc",
+    "good": "Tốt",
+    "incomplete": "Chưa Hoàn Chỉnh",
+    "breakdown": "Chi Tiết Độ Mạnh",
+    "next_action": "Hành Động Tiếp Theo",
+    "updated": "Cập Nhật Lần Cuối"
   },
   "optimization": {
-    "title": "business.optimization.title",
-    "subtitle": "business.optimization.subtitle",
-    "start_here": "business.optimization.start_here",
-    "additional": "business.optimization.additional",
-    "info": "business.optimization.info",
+    "title": "Mẹo Tối Ưu Hóa",
+    "subtitle": "Những cách đã chứng minh để cải thiện hồ sơ của bạn",
+    "start_here": "Bắt Đầu Từ Đây",
+    "additional": "Mẹo Bổ Sung",
+    "info": "Mẫu Vàng Để Thành Công",
     "complete_profile": "Hoàn Thành Hồ Sơ Của Bạn",
     "complete_profile_desc": "Điền vào tất cả các trường bắt buộc để cải thiện khả năng hiển thị hồ sơ",
     "add_document": "Thêm Tài Liệu Doanh Nghiệp",
@@ -113,16 +113,16 @@
     "add_photos_desc": "Bao gồm ảnh công ty để cải thiện hồ sơ của bạn"
   },
   "bestpractice": {
-    "title": "business.bestpractice.title",
-    "subtitle": "business.bestpractice.subtitle",
+    "title": "Những Quy Chuẩn Tốt Nhất",
+    "subtitle": "Những chiến lược đã được chứng minh để thành công",
     "profile_accuracy": "Độ Chính Xác Hồ Sơ",
     "profile_accuracy_desc": "Giữ cho thông tin của bạn chính xác và hiện tại",
     "timely_response": "Phản Hồi Kịp Thời",
     "timely_response_desc": "Phản hồi nhanh chóng các yêu cầu từ các nhà tuyển dụng",
     "document_ready": "Chuẩn Bị Tài Liệu",
     "document_ready_desc": "Tổ chức các tài liệu doanh nghiệp quan trọng",
-    "follow_tips": "business.bestpractice.follow_tips",
-    "follow_tips_desc": "business.bestpractice.follow_tips_desc",
+    "follow_tips": "Tuân Thủ Những Quy Chuẩn Này",
+    "follow_tips_desc": "để xây dựng lòng tin với các nhà tuyển dụng và tối đa hóa cơ hội",
     "tip_accurate_info": "Duy trì thông tin chính xác và cập nhật",
     "tip_update_regular": "Cập nhật hồ sơ của bạn thường xuyên",
     "tip_professional_photos": "Sử dụng ảnh chuyên nghiệp chất lượng cao",
@@ -140,17 +140,22 @@
     "verification": "Đang tải trạng thái xác minh..."
   },
   "privacy": {
-    "title": "business.privacy.title",
-    "description": "business.privacy.description"
+    "title": "Cài Đặt Quyền Riêng Tư",
+    "description": "Kiểm soát ai có thể xem hồ sơ doanh nghiệp của bạn"
   },
   "action": {
-    "configure": "business.action.configure"
+    "configure": "Cấu Hình"
   },
   "premium": {
-    "title": "business.premium.title",
-    "description": "business.premium.description"
+    "title": "Dịch Vụ Premium",
+    "description": "Mở khóa các tính năng nâng cao để tăng khả năng hiển thị"
   },
   "state": {
-    "loading": "business.state.loading"
+    "loading": "Đang tải thông tin hồ sơ..."
+  },
+  "business": {
+    "verification": {
+      "title": "Xác minh"
+    }
   }
 }

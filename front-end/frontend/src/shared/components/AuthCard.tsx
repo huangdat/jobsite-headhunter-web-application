@@ -1,6 +1,6 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
-import { useAuthTranslation } from "@/shared/hooks";
 
 interface AuthCardProps {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
   className,
   variant = "default",
 }) => {
-  const { t } = useAuthTranslation();
+  const { t } = useTranslation("auth");
   return (
     <div
       className={cn(
@@ -44,7 +44,9 @@ export const AuthCard: React.FC<AuthCardProps> = ({
         {subtitle && (
           <>
             <h2 className="text-3xl font-bold mb-2">{subtitle}</h2>
-            <p className="text-gray-500 mb-8">{t("enterDetailsDescription")}</p>
+            <p className="text-gray-500 mb-8">
+              {t("common.enterDetailsDescription")}
+            </p>
           </>
         )}
         {children}

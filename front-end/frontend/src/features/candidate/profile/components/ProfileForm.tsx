@@ -213,8 +213,7 @@ export function ProfileForm({
                 try {
                   const url = await profileApi.uploadCV(file);
                   if (url) {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    onFieldChange("cvUrl" as any, url);
+                    onFieldChange("cvUrl" as any, url as any);
                     toast.success(t("cv.management.success.banner"));
                   } else {
                     toast.error(t("cv.management.error.banner"));

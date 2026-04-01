@@ -81,11 +81,11 @@ export const useLogin = () => {
         return;
       }
 
-      throw new Error(t("messages.authenticationFailed"));
+      throw new Error(t("auth.messages.authenticationFailed"));
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        t("messages.unableToSignInRightNow")
+        t("auth.messages.unableToSignInRightNow")
       );
       let errorField: "email" | "password" | "general" = "general";
 

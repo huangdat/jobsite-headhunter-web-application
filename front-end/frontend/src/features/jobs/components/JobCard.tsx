@@ -1,7 +1,7 @@
 import { useMemo, type KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
-import { useJobsTranslation } from "@/shared/hooks";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,7 @@ interface JobCardProps {
 }
 
 export function JobCard({ job }: JobCardProps) {
-  const { t } = useJobsTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const deadlineLabel = useMemo(() => {

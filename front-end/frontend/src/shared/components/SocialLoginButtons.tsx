@@ -1,6 +1,6 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FcGoogle } from "react-icons/fc";
-import { useAuthTranslation, usePagesTranslation } from "@/shared/hooks";
 import { FaLinkedin } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 
@@ -21,8 +21,7 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
   loadingProvider = null,
   className,
 }) => {
-  const { t } = useAuthTranslation();
-  const { t: tPages } = usePagesTranslation();
+  const { t } = useTranslation();
 
   return (
     <div className={className}>
@@ -38,7 +37,7 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
           <FcGoogle size={20} />
           {loadingProvider === "google"
             ? t("buttons.connecting")
-            : tPages("social.google")}
+            : t("pages.social.google")}
         </Button>
 
         {/* LinkedIn */}
@@ -52,7 +51,7 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
           <FaLinkedin className="text-linkedin" size={20} />
           {loadingProvider === "linkedin"
             ? t("buttons.connecting")
-            : tPages("social.linkedin")}
+            : t("pages.social.linkedin")}
         </Button>
       </div>
     </div>

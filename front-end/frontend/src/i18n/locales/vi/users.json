@@ -24,34 +24,20 @@
     "biography": "Tiểu sử người dùng"
   },
   "list": {
-    "pageTitle": "Tiêu đề trang",
+    "pageTitle": "Quản lý Người dùng",
     "documentation": "Tài liệu",
-    "addUserButton": "Thêm người dùng",
+    "addUserButton": "Thêm Người dùng Mới",
     "filterButton": "Bộ lọc",
-    "groupByLabel": "Nhóm theo nhãn",
-    "groupByNone": "Không nhóm",
-    "groupByRole": "Nhóm theo vai trò",
-    "groupByStatus": "Nhóm theo trạng thái",
-    "groupByCompany": "Nhóm theo công ty",
-    "noResults": "Không có kết quả",
-    "searchPlaceholder": "Tìm kiếm",
+    "groupByLabel": "Nhóm theo:",
+    "groupByNone": "Không",
+    "groupByRole": "Vai trò",
+    "groupByStatus": "Trạng thái",
+    "groupByCompany": "Công ty",
+    "noResults": "Không tìm thấy bản ghi",
+    "searchPlaceholder": "Tìm kiếm theo tên, email hoặc tên đăng nhập...",
     "clearAllFilters": "Xóa tất cả bộ lọc",
-    "rowsPerPage": "Số hàng mỗi trang",
-    "paginationInfo": "Thông tin phân trang",
-    "applyBefore": "[VI] Apply before",
-    "filters": {
-      "allLevels": "[VI] All Levels",
-      "allTypes": "[VI] All Types",
-      "applyCustomRange": "[VI] Apply Custom Range",
-      "clearAllFilters": "[VI] Clear All Filters",
-      "fromMillion": "[VI] From (Million VND)",
-      "keywordPlaceholder": "[VI] Search keywords...",
-      "rankLevel": "[VI] Rank Level",
-      "salaryVND": "[VI] Salary (VND)",
-      "toMillion": "[VI] To (Million VND)",
-      "workingType": "[VI] Working Type"
-    },
-    "viewDetails": "[VI] View Details"
+    "rowsPerPage": "Dòng mỗi trang:",
+    "paginationInfo": "Hiển thị {{startItem}}-{{endItem}} của {{totalItems}} người dùng"
   },
   "user": {
     "list": {
@@ -275,23 +261,23 @@
     "errorGeneral": "Lỗi xảy ra trong quá trình xóa"
   },
   "classification": {
-    "pageTitle": "Tiêu đề trang",
-    "description": "Mô tả",
-    "groupBy": "Nhóm theo",
-    "totalUsers": "Tổng số người dùng",
-    "activeRate": "Tỷ lệ hoạt động",
-    "classificationName": "Tên phân loại",
+    "pageTitle": "Phân loại Người dùng",
+    "description": "Tổng quan phân bố người dùng hệ thống theo vai trò tổ chức",
+    "groupBy": "Phân loại theo",
+    "totalUsers": "Tổng Người dùng",
+    "activeRate": "Tỷ lệ Hoạt động",
+    "classificationName": "Tên Phân loại",
     "count": "Số lượng",
     "distribution": "Phân bố",
     "status": "Trạng thái",
-    "expandAll": "Mở rộng tất cả",
-    "collapseAll": "Thu gọn tất cả",
-    "userDistributionTrend": "Xu hướng phân bố người dùng",
-    "systemHealth": "Tình trạng hệ thống",
+    "expandAll": "Mở rộng Tất cả",
+    "collapseAll": "Thu gọn Tất cả",
+    "userDistributionTrend": "Xu hướng Phân bố Người dùng",
+    "systemHealth": "Sức khỏe Hệ thống Trung bình",
     "summary": "Tóm tắt",
-    "totalGroups": "Tổng số nhóm",
-    "activeUsers": "Người dùng hoạt động",
-    "inactiveUsers": "Người dùng không hoạt động",
+    "totalGroups": "Tổng Nhóm",
+    "activeUsers": "Người dùng Hoạt động",
+    "inactiveUsers": "Người dùng Không hoạt động",
     "groupByRole": "Phân loại theo Vai trò",
     "groupByStatus": "Phân loại theo Trạng thái",
     "groupByCompany": "Phân loại theo Công ty",
@@ -324,10 +310,10 @@
     "error": {
       "permissionDenied": "Quyền Truy Cập Bị Từ Chối"
     },
-    "quickNavigation": "Điều hướng nhanh",
-    "userManagementTitle": "Tiêu đề quản lý người dùng",
-    "userManagementDesc": "Mô tả quản lý người dùng",
-    "classificationTitle": "Tiêu đề phân loại",
-    "classificationDesc": "Mô tả phân loại"
+    "quickNavigation": "Quick Navigation",
+    "userManagementTitle": "User Management",
+    "userManagementDesc": "Manage all users and permissions",
+    "classificationTitle": "Classification",
+    "classificationDesc": "View user distribution and stats"
   }
 }

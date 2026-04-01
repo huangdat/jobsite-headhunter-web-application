@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { toast } from "sonner";
 import type { InterviewScheduleFormData, Interview } from "../types";
-import { createInterview } from "../services/applicationsApi";
+import { createInterview, updateInterview } from "../services/applicationsApi";
 import { validateInterviewScheduleForm } from "../utils";
 
 interface UseInterviewScheduleOptions {
@@ -37,7 +37,6 @@ export const useInterviewSchedule = (options: UseInterviewScheduleOptions) => {
   /**
    * Handle form field change
    */
-  /* eslint-disable security/detect-object-injection */
   const handleFieldChange = useCallback(
     (field: keyof InterviewScheduleFormData, value: string | number) => {
       setFormData((prev) => ({
@@ -55,7 +54,6 @@ export const useInterviewSchedule = (options: UseInterviewScheduleOptions) => {
     },
     [errors]
   );
-  /* eslint-enable security/detect-object-injection */
 
   /**
    * Submit interview schedule

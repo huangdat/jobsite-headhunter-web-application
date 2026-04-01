@@ -4,11 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout } from "@/shared/components";
-import {
-  useAuthTranslation,
-  usePagesTranslation,
-  useValidationTranslation,
-} from "@/shared/hooks";
+import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import type { ForgotPasswordFormData } from "@/features/auth/types";
 import { sendOtpForgotPassword } from "@/features/auth/services/authApi";
@@ -18,15 +14,14 @@ import { MdOutlineMail } from "react-icons/md";
 
 export function ForgotPasswordPage() {
   const { t: tAuth } = useAuthTranslation();
-  const { t: tPages } = usePagesTranslation();
-  const { t: tValidation } = useValidationTranslation();
+  const { t: tApp } = useAppTranslation();
   const navigate = useNavigate();
 
   const schema = yup.object().shape({
     email: yup
       .string()
-      .required(tValidation("fields.emailRequired"))
-      .email(tValidation("fields.emailInvalid")),
+      .required(tApp("validation.emailRequired"))
+      .email(tApp("validation.invalidEmail")),
   });
 
   const form = useAppForm<ForgotPasswordFormData>({
@@ -66,7 +61,7 @@ export function ForgotPasswordPage() {
 
   return (
     <AuthLayout
-      ctaButton={{ to: "/login", label: tAuth("buttons.signIn") }}
+      ctaButton={{ to: "/login", label: tAuth("pages.login") }}
       className="overflow-x-hidden"
     >
       <main className="max-w-5xl mx-auto px-4 py-8">
@@ -74,43 +69,43 @@ export function ForgotPasswordPage() {
           {/* LEFT PANEL */}
           <div className="md:w-5/12 bg-linear-to-br from-dark-panel-from to-dark-panel-to p-10 text-white">
             <h1 className="text-4xl font-bold mb-6">
-              {tPages("forgotPassword.title")} <br />
+              {tAuth("pages.forgotPassword.title")} <br />
               <span className="text-brand-primary">
-                {tPages("forgotPassword.titleHighlight")}
+                {tAuth("pages.forgotPassword.titleHighlight")}
               </span>
             </h1>
 
             <p className="text-slate-400 mb-10">
-              {tPages("forgotPassword.subtitle")}
+              {tAuth("pages.forgotPassword.subtitle")}
             </p>
 
             <div className="flex items-center gap-3 mb-4">
               <span className="material-symbols-outlined text-brand-primary">
                 lock_reset
               </span>
-              <span>{tPages("forgotPassword.feature1")}</span>
+              <span>{tAuth("pages.forgotPassword.feature1")}</span>
             </div>
 
             <div className="flex items-center gap-3 mb-4">
               <span className="material-symbols-outlined text-brand-primary">
                 verified_user
               </span>
-              <span>{tPages("forgotPassword.feature2")}</span>
+              <span>{tAuth("pages.forgotPassword.feature2")}</span>
             </div>
           </div>
 
           {/* RIGHT PANEL */}
           <div className="md:w-7/12 p-10">
             <h2 className="text-3xl font-bold mb-2">
-              {tPages("forgotPassword.formTitle")}
+              {tAuth("pages.forgotPassword.formTitle")}
             </h2>
 
             <p className="text-slate-500 mb-8">
-              {tPages("forgotPassword.formSubtitle")}
+              {tAuth("pages.forgotPassword.formSubtitle")}
             </p>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              <FormField label={tPages("forgotPassword.emailLabel")}>
+              <FormField label={tAuth("pages.forgotPassword.emailLabel")}>
                 <Input
                   icon={<MdOutlineMail />}
                   type="email"
@@ -126,18 +121,18 @@ export function ForgotPasswordPage() {
                 className="cursor-pointer"
               >
                 {isSubmitting
-                  ? tAuth("buttons.sendingOtp")
-                  : tAuth("buttons.sendOtp")}
+                  ? tAuth("common.sendingOtp")
+                  : tAuth("common.sendOtp")}
               </Button>
             </form>
 
             <p className="text-center text-sm text-slate-500 mt-8">
-              {tPages("forgotPassword.rememberPassword")}{" "}
+              {tAuth("pages.forgotPassword.rememberPassword")}{" "}
               <Link
                 to="/login"
                 className="text-lime-500 font-bold hover:underline"
               >
-                {tPages("forgotPassword.signInLink")}
+                {tAuth("pages.forgotPassword.signInLink")}
               </Link>
             </p>
           </div>

@@ -14,7 +14,6 @@
     "paginationInfo": "Hiển thị {{startItem}}-{{endItem}} của {{totalItems}} công việc",
     "filters": {
       "keywordPlaceholder": "Chức danh công việc hoặc kỹ năng",
-      "locationPlaceholder": "Thành phố hoặc 'Remote'",
       "workingType": "Loại Làm việc",
       "allTypes": "Tất cả loại",
       "rankLevel": "Cấp độ",
@@ -300,6 +299,13 @@
     "salaryNegative": "Lương không thể âm",
     "salaryOrder": "Lương tối thiểu không thể lớn hơn lương tối đa"
   },
+  "jobs": {
+    "list": {
+      "filters": {
+        "salaryVND": "Jobs list Bộ lọcs salary v n d"
+      }
+    }
+  },
   "accountSettings": "[VI] Account Settings",
   "activityLog": "[VI] Activity Log",
   "applicantPageInfo": "[VI] Applicants",
@@ -314,14 +320,5 @@
   "profileTitle": "[VI] Profile",
   "promotionCodes": "[VI] Promotion Codes",
   "recruitmentReport": "[VI] Recruitment Report",
-  "supportInbox": "[VI] Support Inbox",
-  "jobs": {
-    "toast": {
-      "signInRequired": "Vui lòng đăng nhập để nộp đơn xin việc này"
-    }
-  },
-  "defaults": {
-    "location": "defaults.location",
-    "workingTime": "defaults.workingTime"
-  }
+  "supportInbox": "[VI] Support Inbox"
 }

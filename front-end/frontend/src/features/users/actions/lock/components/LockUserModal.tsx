@@ -10,7 +10,8 @@ import {
   LogOut,
 } from "lucide-react";
 
-import { useLockTranslation, useCommonTranslation } from "@/shared/hooks";
+import { useUsersTranslation } from "@/shared/hooks";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 interface LockReasonOption {
   value: string;
@@ -63,8 +64,8 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
   onClose,
   onConfirm,
 }) => {
-  const { t } = useLockTranslation();
-  const { t: tCommon } = useCommonTranslation();
+  const { t } = useUsersTranslation();
+  const { t: tCommon } = useAppTranslation();
   const [step, setStep] = useState<ModalStep>("form");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<LockResult | null>(null);
@@ -113,7 +114,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
       setStep("success");
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : tCommon("unknownError");
+        error instanceof Error ? error.message : tCommon("common.unknownError");
 
       // Check for permission errors (AC3)
       if (
@@ -169,16 +170,16 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <Lock className="w-8 h-8 text-amber-600" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("title")}
+                {t("lock.title")}
               </h2>
             </div>
 
             <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
               <p className="text-amber-900 dark:text-amber-200 font-medium">
-                {t("selectReason")} *
+                {t("lock.selectReason")} *
               </p>
               <p className="text-amber-800 dark:text-amber-300 text-sm mt-2">
-                {tCommon("fields.userInfo")}:{" "}
+                {t("fields.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
             </div>
@@ -187,16 +188,17 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               {/* Lock Reason - Required */}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  {t("reasonLabel")} <span className="text-red-600">*</span>
+                  {t("lock.reasonLabel")}{" "}
+                  <span className="text-red-600">*</span>
                 </label>
                 <select
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   required
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition"
-                  aria-label={t("reasonLabel")}
+                  aria-label={t("lock.reasonLabel")}
                 >
-                  <option value="">{t("selectReasonPlaceholder")}</option>
+                  <option value="">{t("lock.selectReasonPlaceholder")}</option>
                   {lockReasons.map((opt) => (
                     <option key={opt.value} value={opt.value}>
                       {opt.label}
@@ -209,9 +211,9 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               <div>
                 <label className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  {t("autoUnlockDateLabel")}
+                  {t("lock.autoUnlockDateLabel")}
                   <span className="text-xs text-gray-500 dark:text-gray-400">
-                    ({t("optional")})
+                    ({t("lock.optional")})
                   </span>
                 </label>
                 <input
@@ -219,19 +221,19 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   value={autoUnlockDate}
                   onChange={(e) => setAutoUnlockDate(e.target.value)}
                   min={new Date().toISOString().slice(0, 16)}
-                  placeholder={t("autoUnlockDatePlaceholder")}
-                  aria-label={t("autoUnlockDateLabel")}
+                  placeholder={t("lock.autoUnlockDatePlaceholder")}
+                  aria-label={t("lock.autoUnlockDateLabel")}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition"
                 />
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {t("autoUnlockDateHint")}
+                  {t("lock.autoUnlockDateHint")}
                 </p>
               </div>
 
               {/* Divider */}
               <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
                 <p className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
-                  {t("notificationSettings")}
+                  {t("lock.notificationSettings")}
                 </p>
 
                 {/* Send Email Checkbox */}
@@ -242,15 +244,15 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     checked={sendEmail}
                     onChange={(e) => setSendEmail(e.target.checked)}
                     className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 cursor-pointer"
-                    aria-label={t("sendEmailLabel")}
+                    aria-label={t("lock.sendEmailLabel")}
                   />
                   <label htmlFor="sendEmail" className="flex-1 cursor-pointer">
                     <p className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
                       <Mail className="w-4 h-4" />
-                      {t("sendEmailLabel")}
+                      {t("lock.sendEmailLabel")}
                     </p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      {t("sendEmailDescription")}
+                      {t("lock.sendEmailDescription")}
                     </p>
                   </label>
                 </div>
@@ -263,7 +265,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     checked={logoutCurrentSession}
                     onChange={(e) => setLogoutCurrentSession(e.target.checked)}
                     className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 cursor-pointer"
-                    aria-label={t("logoutSessionLabel")}
+                    aria-label={t("lock.logoutSessionLabel")}
                   />
                   <label
                     htmlFor="logoutCurrentSession"
@@ -271,10 +273,10 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   >
                     <p className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
                       <LogOut className="w-4 h-4" />
-                      {t("logoutSessionLabel")}
+                      {t("lock.logoutSessionLabel")}
                     </p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      {t("logoutSessionDescription")}
+                      {t("lock.logoutSessionDescription")}
                     </p>
                   </label>
                 </div>
@@ -287,14 +289,14 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   onClick={handleClose}
                   className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
                 >
-                  {tCommon("buttons.cancel")}
+                  {t("buttons.cancel")}
                 </button>
                 <button
                   type="submit"
                   disabled={!canProceed}
                   className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
                 >
-                  {tCommon("buttons.next")}
+                  {t("buttons.next")}
                 </button>
               </div>
             </form>
@@ -307,16 +309,16 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <Lock className="w-8 h-8 text-blue-600" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("otherReasonTitle")}
+                {t("lock.otherReasonTitle")}
               </h2>
             </div>
 
             <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
               <p className="text-blue-900 dark:text-blue-200 font-medium">
-                {t("otherReasonDesc")}
+                {t("lock.otherReasonDesc")}
               </p>
               <p className="text-blue-800 dark:text-blue-300 text-sm mt-2">
-                {t("userInfo")}:{" "}
+                {t("lock.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
             </div>
@@ -324,19 +326,20 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
             <form onSubmit={handleOtherReasonSubmit}>
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  {t("reasonLabel")} <span className="text-red-600">*</span>
+                  {t("lock.reasonLabel")}{" "}
+                  <span className="text-red-600">*</span>
                 </label>
                 <textarea
                   value={otherReasonText}
                   onChange={(e) => setOtherReasonText(e.target.value)}
-                  placeholder={t("otherReasonPlaceholder")}
+                  placeholder={t("lock.otherReasonPlaceholder")}
                   required
                   rows={4}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  aria-label={t("reasonLabel")}
+                  aria-label={t("lock.reasonLabel")}
                 />
                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-                  {t("otherReasonHint")}
+                  {t("lock.otherReasonHint")}
                 </p>
               </div>
 
@@ -350,14 +353,14 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   }}
                   className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
                 >
-                  {t("back")}
+                  {t("lock.back")}
                 </button>
                 <button
                   type="submit"
                   disabled={otherReasonText.trim() === ""}
                   className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
                 >
-                  {tCommon("buttons.next")}
+                  {t("buttons.next")}
                 </button>
               </div>
             </form>
@@ -370,13 +373,13 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
             <div className="flex items-center gap-3 mb-6">
               <AlertTriangle className="w-8 h-8 text-orange-600" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("confirmTitle")}
+                {t("lock.confirmTitle")}
               </h2>
             </div>
 
             <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-6">
               <p className="text-orange-900 dark:text-orange-200 font-medium">
-                {t("confirmMessage")}
+                {t("lock.confirmMessage")}
               </p>
             </div>
 
@@ -385,7 +388,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("affectedUser")}
+                    {t("lock.affectedUser")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {userName}
@@ -393,7 +396,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("userId")}
+                    {t("lock.userId")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {userId}
@@ -401,7 +404,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("reason")}
+                    {t("lock.reason")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {lockReasons.find((r) => r.value === reason)?.label ||
@@ -410,7 +413,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("timestamp")}
+                    {t("lock.timestamp")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {new Date().toLocaleString()}
@@ -421,7 +424,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               {autoUnlockDate && (
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {t("autoUnlockDate")}
+                    {t("lock.autoUnlockDate")}
                   </p>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     {new Date(autoUnlockDate).toLocaleString()}
@@ -435,11 +438,11 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     type="checkbox"
                     checked={sendEmail}
                     readOnly
-                    aria-label={t("sendEmail")}
+                    aria-label={t("lock.sendEmail")}
                     className="w-4 h-4"
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {t("sendEmail")}
+                    {t("lock.sendEmail")}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -447,11 +450,11 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     type="checkbox"
                     checked={logoutCurrentSession}
                     readOnly
-                    aria-label={t("logoutSession")}
+                    aria-label={t("lock.logoutSession")}
                     className="w-4 h-4"
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {t("logoutSession")}
+                    {t("lock.logoutSession")}
                   </span>
                 </div>
               </div>
@@ -464,7 +467,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 disabled={loading}
                 className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition font-medium"
               >
-                {t("back")}
+                {t("lock.back")}
               </button>
               <button
                 onClick={handleConfirmLock}
@@ -472,7 +475,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-700 disabled:bg-amber-400 transition font-medium flex items-center gap-2"
               >
                 {loading && <Loader className="w-4 h-4 animate-spin" />}
-                {loading ? t("processing") : t("confirmAction")}
+                {loading ? t("lock.processing") : t("lock.confirmAction")}
               </button>
             </div>
           </div>
@@ -483,20 +486,20 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
           <div className="p-8 text-center">
             <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              {t("successTitle")}
+              {t("lock.successTitle")}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-2">
-              {t("successMessage")}
+              {t("lock.successMessage")}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-500 mb-6">
-              {t("successDescription")}
+              {t("lock.successDescription")}
             </p>
 
             <button
               onClick={handleClose}
               className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
             >
-              {t("close")}
+              {t("lock.close")}
             </button>
           </div>
         )}
@@ -506,13 +509,13 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
           <div className="p-8 text-center">
             <XCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              {t("errorTitle")}
+              {t("lock.errorTitle")}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               {result.message}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-500 mb-6">
-              {t("errorDescription")}
+              {t("lock.errorDescription")}
             </p>
 
             <div className="flex gap-3 justify-center">
@@ -520,13 +523,13 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 onClick={() => setStep("form")}
                 className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
               >
-                {t("tryAgain")}
+                {t("lock.tryAgain")}
               </button>
               <button
                 onClick={handleClose}
                 className="px-6 py-2 rounded-lg bg-gray-700 dark:bg-gray-600 text-white hover:bg-gray-800 dark:hover:bg-gray-700 transition font-medium"
               >
-                {t("close")}
+                {t("lock.close")}
               </button>
             </div>
           </div>
@@ -538,20 +541,20 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
             <AlertTriangle className="w-16 h-16 text-red-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {result.errorCode === "CANNOT_LOCK_YOURSELF"
-                ? t("errorCannotLockYourself")
-                : t("errorInsufficientPermission")}
+                ? t("lock.errorCannotLockYourself")
+                : t("lock.errorInsufficientPermission")}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
               {result.errorCode === "CANNOT_LOCK_YOURSELF"
-                ? t("errorCannotLockYourselfDescription")
-                : t("errorInsufficientPermissionDescription")}
+                ? t("lock.errorCannotLockYourselfDescription")
+                : t("lock.errorInsufficientPermissionDescription")}
             </p>
 
             <button
               onClick={handleClose}
               className="px-6 py-2 rounded-lg bg-gray-700 dark:bg-gray-600 text-white hover:bg-gray-800 dark:hover:bg-gray-700 transition font-medium"
             >
-              {t("close")}
+              {t("lock.close")}
             </button>
           </div>
         )}
@@ -561,3 +564,4 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
 };
 
 export default LockUserModal;
+

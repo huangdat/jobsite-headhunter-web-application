@@ -1,6 +1,6 @@
-import { useMessagesTranslation } from "@/shared/hooks";
+import { useTranslation } from "react-i18next";
 
 export function ErrorMessage() {
-  const { t } = useMessagesTranslation();
+  const { t } = useTranslation();
   return <>{t("errors.editorFailedToLoad")}</>;
 }

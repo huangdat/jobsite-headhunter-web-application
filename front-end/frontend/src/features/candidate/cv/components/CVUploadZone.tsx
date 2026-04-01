@@ -174,8 +174,8 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                     {getFormattedSize(selectedFile.size)} • {displayError}
                     {selectedFile.size} •{" "}
                     {displayError === "validation.fileTooLarge"
-                      ? t("cv.management.validation.fileTooLargeShort")
-                      : t("cv.management.validation.invalidFileFormatShort")}
+                      ? t("validation.fileTooLargeShort")
+                      : t("validation.invalidFileFormatShort")}
                   </p>
                 </div>
                 <button

@@ -81,37 +81,5 @@
     "companyName": "Tên công ty",
     "registeredAddress": "Địa chỉ đăng ký",
     "registeredAddressHelp": "Hướng dẫn địa chỉ đăng ký"
-  },
-  "forgotPassword": {
-    "title": "pages.forgotPassword.title",
-    "titleHighlight": "pages.forgotPassword.titleHighlight",
-    "subtitle": "pages.forgotPassword.subtitle",
-    "feature1": "pages.forgotPassword.feature1",
-    "feature2": "pages.forgotPassword.feature2",
-    "formTitle": "pages.forgotPassword.formTitle",
-    "formSubtitle": "pages.forgotPassword.formSubtitle",
-    "emailLabel": "pages.forgotPassword.emailLabel",
-    "rememberPassword": "pages.forgotPassword.rememberPassword",
-    "signInLink": "pages.forgotPassword.signInLink"
-  },
-  "resetPassword": {
-    "title": "Bảo Mật Tài Khoản Của Bạn.",
-    "subtitle": "Nhập OTP được gửi đến email của bạn và tạo mật khẩu mạnh mới để giữ tài khoản của bạn an toàn.",
-    "formTitle": "Đặt Mật Khẩu Mới",
-    "instruction": "Nhập mã OTP được gửi đến",
-    "instruction2": "Sau đó tạo mật khẩu mạnh mới cho tài khoản của bạn.",
-    "otpLabel": "Mã OTP",
-    "confirmPasswordLabel": "Xác Nhận Mật Khẩu",
-    "submitButton": "Cập Nhật Mật Khẩu",
-    "backButton": "Quay Lại Đăng Nhập"
-  },
-  "otpVerification": {
-    "title": "Xác Minh Email Của Bạn",
-    "subtitle": "Nhập mã xác minh được gửi đến địa chỉ email của bạn.",
-    "codeExpiresIn": "Mã hết hạn sau",
-    "verifyEmail": "Xác Minh Email",
-    "didNotReceiveCode": "Chưa nhận được mã?",
-    "resendCode": "Gửi Lại Mã",
-    "availableIn": "Có sẵn trong"
   }
 }

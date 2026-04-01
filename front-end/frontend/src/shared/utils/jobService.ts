@@ -1,7 +1,6 @@
 import { apiClient } from "./axios";
 import { API_ENDPOINTS } from "@/lib/constants";
 import type { Job } from "@/features/home/types";
-import { cachedApiCall } from "./apiCache";
 
 export interface JobResp {
   id: number;
@@ -19,7 +18,7 @@ export interface JobResp {
   createdAt: string;
   headhunterId: string;
   headhunterName: string;
-  matchScore?: number; // Optional - may not be provided by backend
+  matchScore?: number;
 }
 
 export interface RecommendationResp {
@@ -45,44 +44,32 @@ function mapJobRespToJob(jobResp: JobResp): Job {
     salary,
     location: jobResp.city || "Unknown Location",
     workingType: jobResp.workingType,
-    // Safe handling: Show "New" if matchScore is not available
     match:
       jobResp.matchScore !== undefined && jobResp.matchScore !== null
         ? `${jobResp.matchScore}%`
-        : "New",
+        : undefined,
   };
 }
 
 /**
  * Fetch recommended jobs for the current user
- * Uses caching to prevent repeated API calls (5 min cache)
  */
 export async function getRecommendedJobs(): Promise<{
   jobs: Job[];
   message?: string;
   fallbackApplied?: boolean;
 }> {
-  const cacheKey = "jobs:recommended";
-
   try {
-    const result = await cachedApiCall(
-      cacheKey,
-      async () => {
-        const response = await apiClient.get<{ result: RecommendationResp }>(
-          API_ENDPOINTS.JOBS.GET_RECOMMENDED
-        );
-        const data = response.data.result;
-        const mappedJobs = data.jobs.map(mapJobRespToJob);
-        return {
-          jobs: mappedJobs,
-          message: data.message,
-          fallbackApplied: data.fallbackApplied,
-        };
-      },
-      { ttl: 5 * 60 * 1000 } // 5 minutes cache
+    const response = await apiClient.get<{ result: RecommendationResp }>(
+      API_ENDPOINTS.JOBS.GET_RECOMMENDED
     );
-
-    return result;
+    const data = response.data.result;
+    const mappedJobs = data.jobs.map(mapJobRespToJob);
+    return {
+      jobs: mappedJobs,
+      message: data.message,
+      fallbackApplied: data.fallbackApplied,
+    };
   } catch (error: unknown) {
     // If access forbidden (e.g., non-candidate), fallback to random latest jobs
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -108,26 +95,15 @@ export async function getRecommendedJobs(): Promise<{
 
 /**
  * Fetch random latest jobs (featured jobs)
- * Uses caching to prevent repeated API calls (3 min cache)
  */
 export async function getRandomLatestJobs(): Promise<{ jobs: Job[] }> {
-  const cacheKey = "jobs:random-latest";
-
   try {
-    const result = await cachedApiCall(
-      cacheKey,
-      async () => {
-        const response = await apiClient.get<{ result: RecommendationResp }>(
-          API_ENDPOINTS.JOBS.GET_RANDOM_LATEST
-        );
-        const data = response.data.result;
-        const mappedJobs = data.jobs.map(mapJobRespToJob);
-        return { jobs: mappedJobs };
-      },
-      { ttl: 3 * 60 * 1000 } // 3 minutes cache
+    const response = await apiClient.get<{ result: RecommendationResp }>(
+      API_ENDPOINTS.JOBS.GET_RANDOM_LATEST
     );
-
-    return result;
+    const data = response.data.result;
+    const mappedJobs = data.jobs.map(mapJobRespToJob);
+    return { jobs: mappedJobs };
   } catch (error) {
     console.error("Error fetching latest jobs:", error);
     throw error;

@@ -5,10 +5,8 @@
 
 import React, { useEffect } from "react";
 import { CheckCircle, X } from "lucide-react";
-import {
-  useBusinessTranslation,
-  useCommonTranslation,
-} from "@/shared/hooks/useFeatureTranslation";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 export interface SuccessBannerProps {
   message?: string;
@@ -37,7 +35,7 @@ export const SuccessBanner: React.FC<SuccessBannerProps> = ({
   action,
 }) => {
   const { t } = useBusinessTranslation();
-  const { t: tCommon } = useCommonTranslation();
+  const { t: tApp } = useAppTranslation();
   const [visible, setVisible] = React.useState(true);
 
   // Auto-hide if duration set
@@ -95,7 +93,7 @@ export const SuccessBanner: React.FC<SuccessBannerProps> = ({
         <button
           onClick={handleDismiss}
           className="shrink-0 text-emerald-400 hover:text-emerald-600 transition-colors"
-          aria-label={tCommon("dismiss")}
+          aria-label={tApp("dismiss")}
         >
           <X className="h-5 w-5" />
         </button>

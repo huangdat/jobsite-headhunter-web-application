@@ -1,5 +1,4 @@
 import { ApplicationStatus, InterviewType } from "../types";
-import { API_ENDPOINTS } from "@/lib/constants";
 
 // Status Labels (dùng cho UI display)
 export const APPLICATION_STATUS_LABELS: Record<ApplicationStatus, string> = {
@@ -50,14 +49,14 @@ export const ALLOWED_STATUS_TRANSITIONS: Record<
 export const APPLICATIONS_PAGE_SIZE = 10;
 export const APPLICATIONS_PAGE_OPTIONS = [10, 20, 50];
 
-// API endpoints - Using API_ENDPOINTS from constants
+// API endpoints (base endpoints, full paths sẽ được construct ở service)
 export const APPLICATION_ENDPOINTS = {
-  APPLY_JOB: API_ENDPOINTS.CANDIDATE.APPLY_JOB,
-  GET_HEADHUNTER_APPLICATIONS: API_ENDPOINTS.HEADHUNTER.GET_JOB_APPLICATIONS,
-  GET_APPLICATION_DETAIL: API_ENDPOINTS.HEADHUNTER.GET_APPLICATION_DETAIL,
-  UPDATE_APPLICATION_STATUS: API_ENDPOINTS.HEADHUNTER.UPDATE_APPLICATION_STATUS,
-  CREATE_INTERVIEW: API_ENDPOINTS.INTERVIEW.SCHEDULE,
-  GET_CANDIDATE_APPLICATIONS: API_ENDPOINTS.CANDIDATE.GET_MY_APPLICATIONS,
+  APPLY_JOB: "/api/jobs/:jobId/applications",
+  GET_HEADHUNTER_APPLICATIONS: "/api/headhunter/jobs/:jobId/applications",
+  GET_APPLICATION_DETAIL: "/api/headhunter/applications/:id",
+  UPDATE_APPLICATION_STATUS: "/api/headhunter/applications/:id/status",
+  CREATE_INTERVIEW: "/api/interviews",
+  GET_CANDIDATE_APPLICATIONS: "/api/candidates/me/applications",
 } as const;
 
 // Validation rules

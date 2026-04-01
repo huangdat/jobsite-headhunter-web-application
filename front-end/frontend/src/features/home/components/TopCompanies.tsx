@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useHomeTranslation, useMessagesTranslation } from "@/shared/hooks";
+import { useHomeTranslation } from "@/shared/hooks";
 import {
   getTop10Companies,
   type BusinessProfileResp,
@@ -7,8 +7,7 @@ import {
 import { COMPANY_LOGO_COLORS, HOME_SIZES } from "../constants";
 
 export function TopCompanies() {
-  const { t } = useHomeTranslation();
-  const { t: tMsg } = useMessagesTranslation();
+  const { t, currentLanguage } = useHomeTranslation();
   const [companies, setCompanies] = useState<BusinessProfileResp[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,14 +20,14 @@ export function TopCompanies() {
         setCompanies(data);
       } catch (err) {
         console.error("Failed to fetch companies:", err);
-        setError(tMsg("errorLoadCompanies"));
+        setError(t("messages.errorLoadCompanies"));
       } finally {
         setLoading(false);
       }
     };
 
     fetchCompanies();
-  }, [tMsg]);
+  }, [currentLanguage?.code]); //new
 
   return (
     <section id="top-companies" className="bg-muted py-20">
@@ -37,7 +36,7 @@ export function TopCompanies() {
 
         {loading && (
           <div className="text-center py-12">
-            <p className="text-slate-600">{tMsg("loadingCompanies")}</p>
+            <p className="text-slate-600">{t("messages.loadingCompanies")}</p>
           </div>
         )}
 
@@ -49,7 +48,7 @@ export function TopCompanies() {
 
         {!loading && !error && companies.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500">{tMsg("noCompanies")}</p>
+            <p className="text-gray-500">{t("messages.noCompanies")}</p>
           </div>
         )}
 

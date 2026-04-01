@@ -81,37 +81,5 @@
     "companyName": "Headhunter details company name",
     "registeredAddress": "Headhunter details registered address",
     "registeredAddressHelp": "Headhunter details registered address help"
-  },
-  "forgotPassword": {
-    "title": "Title",
-    "titleHighlight": "Title Highlight",
-    "subtitle": "Subtitle",
-    "feature1": "Feature1",
-    "feature2": "Feature2",
-    "formTitle": "Form Title",
-    "formSubtitle": "Form Subtitle",
-    "emailLabel": "Email Label",
-    "rememberPassword": "Remember Password",
-    "signInLink": "Sign In Link"
-  },
-  "resetPassword": {
-    "title": "Secure Your Account.",
-    "subtitle": "Enter the OTP sent to your email and create a new strong password to keep your account safe.",
-    "formTitle": "Set New Password",
-    "instruction": "Enter the OTP code sent to",
-    "instruction2": "Then create a new, strong password for your account.",
-    "otpLabel": "OTP Code",
-    "confirmPasswordLabel": "Confirm Password",
-    "submitButton": "Update Password",
-    "backButton": "Back to Login"
-  },
-  "otpVerification": {
-    "title": "Verify Your Email",
-    "subtitle": "Enter the verification code sent to your email address.",
-    "codeExpiresIn": "Code expires in",
-    "verifyEmail": "Verify Email",
-    "didNotReceiveCode": "Didn't receive the code?",
-    "resendCode": "Resend Code",
-    "availableIn": "Available in"
   }
 }

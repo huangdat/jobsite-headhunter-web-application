@@ -3,7 +3,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { InterviewDetailModal, ApplicationStatusBadge } from "../components";
+import {
+  ApplicationCard,
+  InterviewDetailModal,
+  ApplicationStatusBadge,
+} from "../components";
 import { useApplications } from "../hooks";
 import type { Interview } from "../types";
 

@@ -6,16 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "npm run lint:eslint && npm run lint:i18n",
+    "lint": "npm run lint:eslint && npm run audit:i18n",
     "lint:eslint": "eslint .",
-    "lint:i18n": "node scripts/i18n-lint.mjs",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "preview": "vite preview",
-    "audit:i18n": "node scripts/i18n-lint.mjs",
+    "audit:i18n": "node scripts/audit-i18n-v2-smart.js",
     "audit:structure": "node scripts/analyze-structure.js",
-    "audit:all": "node scripts/run-all-audits.js",
-    "audit:full": "node scripts/comprehensive-audit.mjs"
+    "audit:all": "node scripts/run-all-audits.js"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
