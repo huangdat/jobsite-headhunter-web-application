@@ -61,7 +61,7 @@ public class ForumPostController {
 
     @GetMapping("/{id}")
     public APIResponse<ForumPostDetailResp> getPostDetail(
-            @PathVariable @Positive(message = "ID bài viết phải lớn hơn 0") Long id) {
+            @PathVariable @Positive(message = "The post ID must be greater than 0.") Long id) {
 
         ForumPostDetailResp postDetail = forumPostService.getPostDetail(id);
 
