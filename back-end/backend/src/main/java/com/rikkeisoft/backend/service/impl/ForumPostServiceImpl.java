@@ -1,34 +1,32 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.rikkeisoft.backend.component.Translator;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.enums.PostStatus;
-import com.rikkeisoft.backend.enums.ReactionType;
 import com.rikkeisoft.backend.enums.Role;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.ForumPostMapper;
-import com.rikkeisoft.backend.model.dto.req.forum.PostReactionReq;
-import com.rikkeisoft.backend.model.dto.resp.forum.ReactionResp;
+import com.rikkeisoft.backend.model.dto.req.forumpost.AuthorDto;
+import com.rikkeisoft.backend.model.dto.req.forumpost.ForumPostDetailResp;
+import com.rikkeisoft.backend.model.dto.req.forumpost.JobBasicDto;
 import com.rikkeisoft.backend.model.dto.resp.forumpost.ForumPostResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.ForumPost;
-import com.rikkeisoft.backend.model.entity.PostReaction;
 import com.rikkeisoft.backend.repository.AccountRepo;
+import com.rikkeisoft.backend.repository.ForumCommentRepo;
 import com.rikkeisoft.backend.repository.ForumPostRepo;
-import com.rikkeisoft.backend.repository.PostReactionRepo;
 import com.rikkeisoft.backend.service.ForumPostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,11 +36,11 @@ import java.util.Set;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ForumPostServiceImpl implements ForumPostService {
 
-    ForumPostRepo forumPostRepo;
-    AccountRepo accountRepo;
-    ForumPostMapper forumPostMapper;
-    PostReactionRepo postReactionRepo;
-
+    private final ForumPostRepo forumPostRepo;
+    private final AccountRepo accountRepo;
+    private final ForumPostMapper forumPostMapper;
+    private final ForumCommentRepo forumCommentRepo;
+    private final Translator translator;
     /**
      * Valid status transitions:
      * - ADMIN: can set any status freely
@@ -122,6 +120,79 @@ public class ForumPostServiceImpl implements ForumPostService {
         }
     }
 
+    @Override
+    @Transactional
+    public ForumPostDetailResp getPostDetail(Long postId) {
+        ForumPost post = forumPostRepo.findById(postId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
 
+        if (post.getStatus() == PostStatus.ARCHIVED || post.getStatus() == PostStatus.DRAFT) {
+            throw new AppException(ErrorCode.POST_NOT_FOUND);
+        }
+
+        // long commentCount = forumCommentRepo.countByPost_IdAndDeletedFalse(postId);
+
+        String sanitizedContent = sanitizeHtmlContent(post.getContent());
+
+        AuthorDto authorDto = buildAuthorDto(post);
+
+        JobBasicDto jobDto = buildJobDto(post);
+
+        ForumPostDetailResp response = ForumPostDetailResp.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(sanitizedContent)
+                .authorInfo(authorDto)
+                .createdAt(post.getCreatedAt())
+                // .commentCount(commentCount)
+                .status(post.getStatus())
+                .job(jobDto)
+                .build();
+
+        log.info("Post detail viewed: postId={}", postId);
+
+        return response;
+    }
+
+    private String sanitizeHtmlContent(String content) {
+        if (content == null || content.trim().isEmpty()) {
+            return translator.toLocale("post.content.empty");
+        }
+
+        return Jsoup.clean(content,
+                Safelist.basic()
+                        .addTags("h1", "h2", "h3", "h4", "h5", "h6", "img")
+                        .addAttributes("a", "href", "title")
+                        .addAttributes("img", "src", "alt", "title"));
+    }
+
+    private AuthorDto buildAuthorDto(ForumPost post) {
+        if (post.getAuthor() == null) {
+            return AuthorDto.builder()
+                    .id("SYSTEM")
+                    .username("Admin")
+                    .fullName("Admin")
+                    .imageUrl(null)
+                    .build();
+        }
+
+        return AuthorDto.builder()
+                .id(post.getAuthor().getId())
+                .username(post.getAuthor().getUsername())
+                .fullName(post.getAuthor().getFullName() != null ? post.getAuthor().getFullName() : "Unknown")
+                .imageUrl(post.getAuthor().getImageUrl())
+                .build();
+    }
+
+    private JobBasicDto buildJobDto(ForumPost post) {
+        if (post.getJob() == null) {
+            return null;
+        }
+
+        return JobBasicDto.builder()
+                .id(post.getJob().getId())
+                .title(post.getJob().getTitle())
+                .build();
+    }
 
 }
