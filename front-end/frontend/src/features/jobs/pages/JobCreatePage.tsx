@@ -11,6 +11,7 @@ import { createJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
+import { ChevronLeft } from "lucide-react";
 
 export function JobCreatePage() {
   const { t } = useJobsTranslation();
@@ -68,7 +69,6 @@ export function JobCreatePage() {
     const stripMarkdown = (s = "") =>
       s
         .replace(/<[^>]*>/g, "")
-        // eslint-disable-next-line no-useless-escape
         .replace(/[*_~`>#\-\[\(\)!]/g, "")
         .replace(/\s+/g, " ")
         .trim();
@@ -97,7 +97,6 @@ export function JobCreatePage() {
     const strip = (s = "") =>
       s
         .replace(/<[^>]*>/g, "")
-        // eslint-disable-next-line no-useless-escape
         .replace(/[*_~`>#\-\[\(\)!]/g, "")
         .trim();
     if (
@@ -122,7 +121,6 @@ export function JobCreatePage() {
     setIsSubmitting(true);
     try {
       const res = await createJob(values as JobFormValues);
-      console.log("Job creation response:", res);
       if (res) {
         toast.success(t("messages.jobCreatedSuccess"));
         reset({
@@ -150,11 +148,9 @@ export function JobCreatePage() {
           navigate("/headhunter/jobs");
         }, 500);
       } else {
-        console.error("Unexpected response:", res);
         toast.error(t("create.messages.failedToCreate"));
       }
     } catch (error) {
-      console.error("Job creation error:", error);
       toast.error(t("create.messages.failedToCreate"));
     } finally {
       setIsSubmitting(false);
@@ -162,9 +158,33 @@ export function JobCreatePage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10">
+    <div className="mx-auto max-w-5xl px-6 py-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 border-b border-slate-100 pb-8">
+        <div>
+          <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
+            {t("create.messages.publishJob")}
+          </h2>
+          <div className="flex items-center gap-3 mt-4">
+            <span className="h-1.5 w-12 bg-lime-400 rounded-full"></span>
+            <p className="text-slate-500 font-bold italic text-sm">
+              {t("create.messages.subtitle")}
+            </p>
+          </div>
+        </div>
+
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => navigate("/home")}
+          className="rounded-xl border-slate-200 hover:border-lime-400 hover:bg-lime-50 font-bold px-6 h-12 flex gap-2 transition-all cursor-pointer"
+        >
+          <ChevronLeft size={18} className="text-lime-600" />
+          {t("detail.backToJobs")}
+        </Button>
+      </div>
+
       <form
-        className="mt-10 space-y-8 rounded-3xl border border-slate-100 bg-white/80 p-8 shadow-lg dark:border-slate-800 dark:bg-slate-900/70"
+        className="mt-10 space-y-8 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg dark:border-slate-800 dark:bg-slate-900/70"
         onSubmit={handleSubmit(onSubmit)}
       >
         <section className="grid gap-6 md:grid-cols-2">
@@ -360,7 +380,6 @@ export function JobCreatePage() {
                 validate: (v) => {
                   const stripped = (v || "")
                     .replace(/<[^>]*>/g, "")
-                    // eslint-disable-next-line no-useless-escape
                     .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
                     .trim();
                   return (
@@ -395,7 +414,6 @@ export function JobCreatePage() {
                 validate: (v) => {
                   const stripped = (v || "")
                     .replace(/<[^>]*>/g, "")
-                    // eslint-disable-next-line no-useless-escape
                     .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
                     .trim();
                   return (
@@ -463,14 +481,29 @@ export function JobCreatePage() {
           <Input type="file" accept="image/*" {...register("postImage")} />
         </section>
 
-        <div className="flex justify-end gap-3">
-          <Button type="button" variant="ghost" onClick={() => reset()}>
-            Clear
+        <div className="flex justify-end items-center gap-3 pt-6">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => reset()}
+            className="rounded-xl font-bold text-slate-400 hover:text-red-500 hover:bg-red-50 h-11 px-6 cursor-pointer transition-colors"
+          >
+            {t("edit.buttons.cancel") || "Clear"}
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting
-              ? t("create.messages.publishingJob")
-              : t("create.messages.publishJob")}
+
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-lime-400 hover:bg-lime-500 text-black font-bold h-11 px-8 rounded-xl shadow-sm shadow-lime-400/20 transition-all active:scale-95 border-none cursor-pointer"
+          >
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                {t("create.messages.publishingJob")}
+              </div>
+            ) : (
+              t("create.messages.publishJob")
+            )}
           </Button>
         </div>
       </form>
