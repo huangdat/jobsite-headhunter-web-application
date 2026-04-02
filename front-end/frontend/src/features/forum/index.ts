@@ -12,7 +12,7 @@ export { PostManagementPage } from "./admin/posts/pages/PostManagementPage";
 export { PostList } from "./admin/posts/components/PostList";
 
 // Public - List
-export { NewsListPage } from "./public/list/pages/NewsListPage";
+export { PostListPage } from "./public/list/pages/PostListPage";
 
 // Public - Detail
 export { PostDetailPage } from "./public/detail/pages/PostDetailPage";

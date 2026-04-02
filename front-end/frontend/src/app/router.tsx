@@ -49,7 +49,8 @@ import { CommissionProfilePage } from "@/features/collaborator/commission/pages"
 import { JobPipelinePage } from "@/features/applications/pages/JobPipelinePage";
 
 // EPIC 7: Forum Features
-import { NewsListPage } from "@/features/forum/public/list/pages/NewsListPage";
+import { PostListPage } from "@/features/forum/public/list/pages/PostListPage";
+import { PostDetailPage } from "@/features/forum/public/detail/pages/PostDetailPage";
 import { PostManagementPage } from "@/features/forum/admin/posts/pages/PostManagementPage";
 import { CategoryManagementPage } from "@/features/forum/admin/categories/pages/CategoryManagementPage";
 import { ForumAdminLayout } from "@/shared/layouts/ForumAdminLayout";
@@ -197,7 +198,8 @@ export function AppRouter() {
             </ProtectedRoute>
           }
         />
-        <Route path="/news" element={<NewsListPage />} />
+        <Route path="/forum-posts" element={<PostListPage />} />
+        <Route path="/forum-posts/:id" element={<PostDetailPage />} />
       </Route>
       <Route
         path="/home"
