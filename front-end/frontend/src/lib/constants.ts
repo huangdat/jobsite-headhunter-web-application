@@ -161,6 +161,7 @@ export const API_ENDPOINTS = {
       UPDATE: "/api/forum/posts/{id}",
       DELETE: "/api/forum/posts/{id}",
     },
+    UPLOAD_IMAGE: "/api/forum/upload-image",
   },
 };
 
