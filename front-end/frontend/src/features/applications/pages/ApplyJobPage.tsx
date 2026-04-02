@@ -11,7 +11,7 @@ export const ApplyJobPage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
   const { t } = useAppTranslation();
-  const [jobTitle, setJobTitle] = useState<string>("Job Position");
+  const jobTitle = jobId ? "Software Engineer" : "Job Position";
   const [defaultValues, setDefaultValues] = useState<
     Partial<ApplicationFormData> | undefined
   >(undefined);
@@ -26,12 +26,7 @@ export const ApplyJobPage: React.FC = () => {
     },
   });
 
-  // Mock job title - sau này bạn có thể gọi API fetchJobDetail ở đây
-  useEffect(() => {
-    if (jobId) {
-      setJobTitle("Software Engineer");
-    }
-  }, [jobId]);
+  // Mock job title - derived from jobId for now (no synchronous setState in effect)
 
   useEffect(() => {
     let isActive = true;

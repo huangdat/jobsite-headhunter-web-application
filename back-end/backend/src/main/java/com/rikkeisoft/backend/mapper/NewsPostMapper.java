@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface NewsPostMapper {
 
-    @Mapping(source = "category.id", target = "categoryId")
-    @Mapping(source = "category.name", target = "categoryName")
+    @Mapping(source = "forumCategory.id", target = "categoryId")
+    @Mapping(source = "forumCategory.name", target = "categoryName")
     NewsPostResp toNewsPostResp(ForumPost post);
 }

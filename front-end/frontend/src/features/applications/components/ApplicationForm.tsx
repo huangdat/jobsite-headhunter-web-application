@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -12,8 +12,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { createValidationSchema } from "../utils/validation";
+import type { Resolver } from "react-hook-form";
 import { CVSelector } from "./CVSelector";
 import type { ApplicationFormData } from "../types";
 
@@ -57,7 +58,9 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   const validationSchema = createValidationSchema(t);
 
   const form = useForm<ApplicationFormData>({
-    resolver: yupResolver(validationSchema) as any,
+    resolver: (yupResolver(validationSchema) as unknown) as Resolver<
+      ApplicationFormData
+    >,
     defaultValues: defaultValues || {
       fullName: "",
       email: "",

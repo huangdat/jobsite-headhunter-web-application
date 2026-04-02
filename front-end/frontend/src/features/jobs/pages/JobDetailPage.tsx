@@ -225,7 +225,10 @@ export function JobDetailPage() {
                     }
                     navigate(`/jobs/${job.id}/apply`);
                   } else {
-                    toast.info("Please sign in to apply for this job");
+                    toast.info(
+                      tApp("messages.pleaseSignInToApply") ||
+                        tApp("messages.pleaseSignInToSaveJobs")
+                    );
                     navigate("/login", {
                       state: { from: `/jobs/${job.id}/apply` },
                     });

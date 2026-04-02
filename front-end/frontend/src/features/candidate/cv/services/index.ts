@@ -3,6 +3,7 @@
  * Kết nối các hàm cũ với logic mới từ CV API
  */
 import { apiClient } from "@/shared/utils/axios";
+import { API_ENDPOINTS } from "@/lib/constants";
 import type { CVFile, FileFormat } from "../types";
 
 type CandidateCvResp = {
@@ -36,7 +37,7 @@ const mapCandidateCvToFile = (cv: CandidateCvResp): CVFile => {
 export const fetchCVList = async () => {
   try {
     const response = await apiClient.get<{ result?: CandidateCvResp }>(
-      "/api/cv/myCv"
+      API_ENDPOINTS.CANDIDATE.CV_LIST
     );
     const cv = response.data?.result;
     const files = cv ? [mapCandidateCvToFile(cv)] : [];
@@ -52,7 +53,7 @@ export const uploadCVFile = async (file: File) => {
     form.append("cvFile", file);
 
     const response = await apiClient.put<{ result?: CandidateCvResp }>(
-      "/api/cv/MyCv",
+      API_ENDPOINTS.CANDIDATE.CV_UPLOAD,
       form,
       { headers: { "Content-Type": "multipart/form-data" } }
     );

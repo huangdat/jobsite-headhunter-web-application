@@ -41,16 +41,16 @@ public class NewsServiceImpl implements NewsService {
         ensureContentNotEmpty(req.getContent());
 
         ForumPost post = ForumPost.builder()
-                .author(author)
-                .category(category)
-                .title(req.getTitle().trim())
-                .shortDescription(trimToNull(req.getShortDescription()))
-                .imageUrl(trimToNull(req.getImageUrl()))
-                .content(req.getContent())
-                .status(req.getStatus() == null ? PostStatus.DRAFT : req.getStatus())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+            .author(author)
+            .forumCategory(category)
+            .title(req.getTitle().trim())
+            .shortDescription(trimToNull(req.getShortDescription()))
+            .imageUrl(trimToNull(req.getImageUrl()))
+            .content(req.getContent())
+            .status(req.getStatus() == null ? PostStatus.DRAFT : req.getStatus())
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
 
         ForumPost saved = forumPostRepo.save(post);
         return newsPostMapper.toNewsPostResp(saved);
@@ -67,13 +67,14 @@ public class NewsServiceImpl implements NewsService {
         post.setShortDescription(trimToNull(req.getShortDescription()));
         post.setImageUrl(trimToNull(req.getImageUrl()));
         post.setContent(req.getContent());
-        post.setCategory(category);
+        post.setForumCategory(category);
         if (req.getStatus() != null) {
             post.setStatus(req.getStatus());
         }
         post.setUpdatedAt(LocalDateTime.now());
 
-        return newsPostMapper.toNewsPostResp(post);
+        ForumPost saved = forumPostRepo.save(post);
+        return newsPostMapper.toNewsPostResp(saved);
     }
 
     @Override
