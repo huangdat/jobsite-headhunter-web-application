@@ -86,17 +86,18 @@ public interface ForumCategoryService {
     ForumCategoryResp toggleCategoryStatus(Long categoryId);
 
     /**
-     * Searches for non-deleted categories whose {@code name} contains the given keyword,
-     * with pagination support.
+     * Searches for non-deleted categories whose {@code name} or {@code slug} contains
+     * the given keyword (case-insensitive), with pagination and sorting support.
      *
      * <p>If {@code keyword} is {@code null} or empty, all non-deleted categories are returned
-     * in the paginated result. Results are ordered by {@code name} ascending by default.
+     * in the paginated result.
      *
-     * @param keyword  the search term to match against category names; may be {@code null} or
-     *                 empty to retrieve all categories.
-     * @param page     the zero-indexed page number to retrieve.
-     * @param size     the number of records per page (e.g., 10, 20).
-     * @return a {@link Page} of {@link ForumCategoryResp} DTOs matching the search criteria.
+     * @param keyword   the search term to match against category name or slug.
+     * @param page      the zero-indexed page number.
+     * @param size      the number of records per page.
+     * @param sortBy    the field to sort by (e.g., name, createdAt, updatedAt).
+     * @param direction the sort direction (asc, desc).
+     * @return a {@link Page} of {@link ForumCategoryResp} DTOs.
      */
-    Page<ForumCategoryResp> searchCategories(String keyword, int page, int size);
+    Page<ForumCategoryResp> searchCategories(String keyword, int page, int size, String sortBy, String direction);
 }

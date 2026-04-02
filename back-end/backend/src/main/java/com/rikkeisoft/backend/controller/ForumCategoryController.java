@@ -158,23 +158,27 @@ public class ForumCategoryController {
      * Accessible to authenticated users; publicly accessible categories may also be filtered
      * by the client using the {@code active} field in the response.
      *
-     * <p>HTTP: {@code GET /api/v1/forum/categories?keyword=&page=0&size=10}
+     * <p>HTTP: {@code GET /api/v1/forum/categories?keyword=&page=0&size=10&sortBy=name&direction=asc}
      *
-     * @param keyword the search term matched against category names; defaults to empty
-     *                string (all categories) if not provided.
-     * @param page    the zero-indexed page number to retrieve; defaults to {@code 0}.
-     * @param size    the number of records per page; defaults to {@code 10}.
-     * @param locale  the request locale for i18n message resolution.
+     * @param keyword   the search term matched against category names; defaults to empty
+     *                  string (all categories) if not provided.
+     * @param page      the zero-indexed page number to retrieve; defaults to {@code 0}.
+     * @param size      the number of records per page; defaults to {@code 10}.
+     * @param sortBy    the field to sort result by; defaults to {@code name}.
+     * @param direction the sort direction; defaults to {@code asc}.
+     * @param locale    the request locale for i18n message resolution.
      * @return an {@link APIResponse} wrapping a {@link Page} of {@link ForumCategoryResp} DTOs,
      *         with the message resolved from key {@code "forum.category.search.success"}.
      */
-    @GetMapping
+    @GetMapping("/search")
     public APIResponse<Page<ForumCategoryResp>> searchCategories(
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction,
             Locale locale) {
-        Page<ForumCategoryResp> result = forumCategoryService.searchCategories(keyword, page, size);
+        Page<ForumCategoryResp> result = forumCategoryService.searchCategories(keyword, page, size, sortBy, direction);
         return APIResponse.<Page<ForumCategoryResp>>builder()
                 .status(HttpStatus.OK)
                 .message(messageSource.getMessage("forum.category.search.success", null, locale))
