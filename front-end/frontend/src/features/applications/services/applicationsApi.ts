@@ -147,6 +147,21 @@ export const getApplicationById = async (id: number): Promise<Application> => {
 /**
  * Fetch current user's CV from profile
  */
+export const fetchMyApplications = async (params: any = {}): Promise<any> => {
+  try {
+    const response = await apiClient.get<ApiResponse<any>>(
+      `/api/candidates/me/applications`,
+      {
+        params: params,
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("Error fetching my applications:", error);
+    throw error;
+  }
+};
+
 export const fetchMyCurrentCV = async (): Promise<any> => {
   try {
     const response = await apiClient.get<ApiResponse<any>>(`/api/cv/myCv`);
@@ -156,3 +171,5 @@ export const fetchMyCurrentCV = async (): Promise<any> => {
     return null;
   }
 };
+
+

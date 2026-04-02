@@ -55,9 +55,4 @@ public interface ForumCategoryRepo extends JpaRepository<ForumCategory, Long> {
      * @return {@code true} if a non-deleted category with this slug exists; {@code false} otherwise.
      */
     boolean existsBySlugAndSoftDeletedFalse(String slug);
-
-    /**
-     * Find by id only if not soft-deleted.
-     */
-    Optional<ForumCategory> findByIdAndSoftDeletedFalse(Long id);
 }

@@ -11,6 +11,7 @@ import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { getJobDetail, updateJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 import { JOB_FORM_DEFAULTS } from "../utils";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function JobEditPage() {
   const { t } = useJobsTranslation();
@@ -19,6 +20,7 @@ export function JobEditPage() {
   const [skills, setSkills] = useState<SkillOption[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const queryClient = useQueryClient();
 
   const {
     control,
@@ -82,7 +84,7 @@ export function JobEditPage() {
     return () => {
       active = false;
     };
-  }, [id, reset, t]);
+  }, [id]);
 
   const selectedSkillIds = watch("skillIds") ?? [];
 
@@ -101,8 +103,15 @@ export function JobEditPage() {
     setSubmitting(true);
     try {
       await updateJob(Number(id), values);
+
+      await queryClient.invalidateQueries({ queryKey: ["my-jobs"] });
+      await queryClient.invalidateQueries({ queryKey: ["job-detail", id] });
+
       toast.success(t("edit.messages.updatedSuccess"));
-      navigate("/jobs/my");
+
+      setTimeout(() => {
+        navigate("/headhunter/jobs");
+      }, 500);
     } catch (err) {
       console.error(err);
       toast.error(t("edit.messages.failedToUpdate"));

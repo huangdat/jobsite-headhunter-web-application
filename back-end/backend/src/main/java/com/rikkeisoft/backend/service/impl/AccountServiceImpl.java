@@ -458,12 +458,9 @@ public class AccountServiceImpl implements AccountService {
         // create CandidateCv for candidate account if the role is CANDIDATE (field cv_url can be null at this point, but will be set later)
         CandidateCv candidateCv = CandidateCv.builder()
                 .candidate(account)
-            .cvUrl("")
-            .isVisible(true)
+                .cvUrl(null)
                 .createdAt(LocalDateTime.now())
                 .build();
-
-        candidateCvRepo.save(candidateCv);
 
         return accountMapper.toAccountResp(account);
     }

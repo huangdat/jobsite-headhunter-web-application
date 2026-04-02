@@ -11,6 +11,12 @@ export function Navbar() {
   return (
     <nav className="hidden md:flex items-center gap-8">
       <a
+        href="/jobs"
+        className="text-sm font-medium hover:text-emerald-600 transition"
+      >
+        {t("navigation.jobs")}
+      </a>
+      <a
         href="#recommended"
         className="text-sm font-medium hover:text-lime-800 transition"
       >
@@ -33,4 +39,3 @@ export function Navbar() {
     </nav>
   );
 }
-

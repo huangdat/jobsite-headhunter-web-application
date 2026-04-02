@@ -30,7 +30,7 @@ export function TopCompanies() {
   }, [currentLanguage?.code]); //new
 
   return (
-    <section id="top-companies" className="bg-muted py-20">
+    <section id="top-companies" className="bg-slate-50 py-20">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-2xl font-bold mb-12">{t("topCompanies.title")}</h2>
 
