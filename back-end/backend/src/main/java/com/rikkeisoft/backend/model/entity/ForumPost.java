@@ -43,6 +43,4 @@ public class ForumPost {
     @JoinColumn(name = "forum_category_id", nullable = false)
     ForumCategory forumCategory;
     LocalDateTime deletedAt;
-
->>>>>>> back-end/backend/src/main/java/com/rikkeisoft/backend/model/entity/ForumPost.java
 }
