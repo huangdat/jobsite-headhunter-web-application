@@ -1,8 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { usersApi } from "@/features/users/services/usersApi";
+import {
+  DYNAMIC_DATA_CONFIG,
+  SEMI_STATIC_DATA_CONFIG,
+} from "@/shared/config/cacheConfig";
+import { userKeys } from "@/shared/utils/queryKeys";
 
 /**
  * Search users with pagination and filtering
+ * Cache Strategy: DYNAMIC_DATA (2 min stale, 10 min cache)
+ * Rationale: User list changes as admins manage accounts
  */
 export const useUsersQuery = (
   page: number = 1,
@@ -12,19 +19,23 @@ export const useUsersQuery = (
   status?: string
 ) => {
   return useQuery({
-    queryKey: ["users", { page, size, keyword, role, status }],
+    queryKey: userKeys.list({ page, size, keyword, role, status }),
     queryFn: () => usersApi.searchUsers({ page, size, keyword, role, status }),
+    ...DYNAMIC_DATA_CONFIG,
   });
 };
 
 /**
  * Fetch single user by ID
+ * Cache Strategy: SEMI_STATIC_DATA (10 min stale, 30 min cache)
+ * Rationale: User details update occasionally
  */
 export const useUserDetailQuery = (userId: string | null) => {
   return useQuery({
-    queryKey: ["users", "detail", userId],
+    queryKey: userKeys.detail(userId!),
     queryFn: () => usersApi.getUserById(userId!),
     enabled: userId !== null,
+    ...SEMI_STATIC_DATA_CONFIG,
   });
 };
 
@@ -43,8 +54,8 @@ export const useUpdateUserStatusMutation = () => {
       status: "ACTIVE" | "SUSPENDED" | "DELETED" | "PENDING";
     }) => usersApi.updateUserStatus(userId, status),
     onSuccess: (_, { userId }) => {
-      queryClient.invalidateQueries({ queryKey: ["users", "detail", userId] });
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(userId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.all });
     },
   });
 };
@@ -58,7 +69,7 @@ export const useSoftDeleteUserMutation = () => {
   return useMutation({
     mutationFn: (userId: string) => usersApi.softDeleteUser(userId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: userKeys.all });
     },
   });
 };

@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useJobsTranslation, useJobsQuery } from "@/shared/hooks";
 import { Button } from "@/components/ui/button";
 import type { JobFilterParams, JobSummary } from "../types";
 import { FilterSidebar, JobCard } from "../components";
 import { INITIAL_PAGE_SIZE } from "../utils";
+import { getJobs } from "../services/jobsApi";
+import { jobKeys } from "@/shared/utils/queryKeys";
 
 function SkeletonGrid() {
   return (
@@ -20,6 +23,7 @@ function SkeletonGrid() {
 
 export function JobListPage() {
   const { t } = useJobsTranslation();
+  const queryClient = useQueryClient();
   const [filters, setFilters] = useState<JobFilterParams>({
     page: 1,
     size: INITIAL_PAGE_SIZE,
@@ -41,6 +45,18 @@ export function JobListPage() {
   const handlePageChange = (nextPage: number) => {
     setFilters((prev) => ({ ...prev, page: nextPage }));
   };
+
+  // P2-8: Prefetch next page for instant pagination
+  useEffect(() => {
+    if (!isLoading && meta.page < meta.totalPages) {
+      const nextPageFilters = { ...filters, page: meta.page + 1 };
+      queryClient.prefetchQuery({
+        queryKey: jobKeys.list(nextPageFilters),
+        queryFn: () => getJobs(nextPageFilters),
+        staleTime: 1000 * 60 * 2, // Match DYNAMIC_DATA_CONFIG
+      });
+    }
+  }, [filters, meta.page, meta.totalPages, isLoading, queryClient]);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -119,4 +135,3 @@ export function JobListPage() {
     </div>
   );
 }
-

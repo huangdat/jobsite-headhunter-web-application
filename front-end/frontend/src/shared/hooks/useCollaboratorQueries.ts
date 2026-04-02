@@ -1,24 +1,35 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { commissionApi } from "@/features/collaborator/commission/services/commissionApi";
 import type { CommissionFormData } from "@/features/collaborator/commission/types/commission.types";
+import {
+  SEMI_STATIC_DATA_CONFIG,
+  DYNAMIC_DATA_CONFIG,
+} from "@/shared/config/cacheConfig";
+import { collaboratorKeys } from "@/shared/utils/queryKeys";
 
 /**
  * Fetch collaborator commission profile
+ * Cache Strategy: SEMI_STATIC_DATA (10 min stale, 30 min cache)
+ * Rationale: Commission profile settings update occasionally
  */
 export const useCommissionProfileQuery = () => {
   return useQuery({
-    queryKey: ["collaborator", "commission", "profile"],
+    queryKey: collaboratorKeys.commissionProfile(),
     queryFn: () => commissionApi.getCommissionProfile(),
+    ...SEMI_STATIC_DATA_CONFIG,
   });
 };
 
 /**
  * Fetch collaborator commission statistics
+ * Cache Strategy: DYNAMIC_DATA (2 min stale, 10 min cache)
+ * Rationale: Stats change as new referrals/commissions are processed
  */
 export const useCommissionStatsQuery = () => {
   return useQuery({
-    queryKey: ["collaborator", "commission", "stats"],
+    queryKey: collaboratorKeys.commissionStats(),
     queryFn: () => commissionApi.getCommissionStats(),
+    ...DYNAMIC_DATA_CONFIG,
   });
 };
 
@@ -33,7 +44,7 @@ export const useUpdateCommissionProfileMutation = () => {
       commissionApi.updateCommissionProfile(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["collaborator", "commission", "profile"],
+        queryKey: collaboratorKeys.commissionProfile(),
       });
     },
   });
@@ -64,7 +75,7 @@ export const useRequestPayoutMutation = () => {
     mutationFn: (amount: number) => commissionApi.requestPayout(amount),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["collaborator", "commission", "stats"],
+        queryKey: collaboratorKeys.commissionStats(),
       });
     },
   });
