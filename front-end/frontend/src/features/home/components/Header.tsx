@@ -54,6 +54,7 @@ export function Header({ onMenuClick }: HeaderProps) {
         <div className="flex items-center gap-4">
           {isHeadhunter && (
             <button
+              aria-label={t("navigation.openMenu") || "Open menu"}
               onClick={onMenuClick}
               className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-2xl text-slate-700 cursor-pointer"
             >

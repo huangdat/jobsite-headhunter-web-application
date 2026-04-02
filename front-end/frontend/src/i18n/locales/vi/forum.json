@@ -1,0 +1,74 @@
+{
+  "forum": {
+    "categories": {
+      "title": "Quản lý Danh mục",
+      "description": "Định cấu hình và quản lý kiến trúc thảo luận của bạn. Sử dụng các công cụ ưu tiên cao để chuyển đổi khả năng hiển thị hoặc tối ưu hóa cấu trúc nội dung."
+    },
+    "search": {
+      "placeholder": "Tìm kiếm danh mục..."
+    },
+    "table": {
+      "name": "Tên Danh mục",
+      "slug": "Slug",
+      "postsCount": "Bài viết",
+      "status": "Trạng thái",
+      "createdDate": "Ngày tạo",
+      "actions": "Hành động"
+    },
+    "actions": {
+      "createNew": "Tạo mới",
+      "createCategory": "Tạo danh mục",
+      "deleteCategory": "Xóa Danh mục",
+      "deleteConfirm": "Xóa",
+      "cancel": "Hủy",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "toggle": "Chuyển đổi",
+      "creating": "Đang tạo...",
+      "deleting": "Đang xóa...",
+      "updating": "Đang cập nhật..."
+    },
+    "fields": {
+      "categoryName": "Tên Danh mục",
+      "categoryNamePlaceholder": "Tên danh mục",
+      "slug": "Slug"
+    },
+    "placeholders": {
+      "categoryName": "Ví dụ: Hỗ trợ Kỹ thuật",
+      "slug": "ho-tro-ky-thuat",
+      "searchPosts": "Tìm kiếm bài viết..."
+    },
+    "labels": {
+      "selectCategory": "Chọn một danh mục"
+    },
+    "help": {
+      "slugAutoGenerate": "Tự động tạo từ tên danh mục. Bạn có thể chỉnh sửa theo cách thủ công.",
+      "slugReadOnly": "Đường dẫn danh mục không thể thay đổi sau khi tạo"
+    },
+    "messages": {
+      "addNewCategory": "Thêm một khu vực thảo luận mới vào nền tảng.",
+      "deleteConfirm": "Bạn có chắc chắn muốn xóa danh mục này không?",
+      "deleteWarning": "Hành động này không thể được hoàn tác. Danh mục này sẽ bị xóa mềm.",
+      "createSuccess": "Tạo danh mục thành công",
+      "createFailed": "Không thể tạo danh mục",
+      "updateSuccess": "Cập nhật thành công",
+      "updateFailed": "Không thể cập nhật",
+      "deleteSuccess": "Xóa thành công",
+      "deleteFailed": "Không thể xóa",
+      "activateSuccess": "Kích hoạt thành công",
+      "deactivateSuccess": "Vô hiệu hóa thành công",
+      "toggleFailed": "Không thể cập nhật trạng thái",
+      "categoryNotFound": "Không tìm thấy danh mục",
+      "noCategories": "Chưa có danh mục nào",
+      "noResults": "Không tìm thấy danh mục nào"
+    },
+    "validation": {
+      "nameRequired": "Tên danh mục là bắt buộc",
+      "slugRequired": "Slug là bắt buộc",
+      "slugExists": "Slug đã tồn tại"
+    },
+    "pagination": {
+      "showing": "Hiển thị {{start}}-{{end}} trong {{total}}"
+    }
+  }
+}

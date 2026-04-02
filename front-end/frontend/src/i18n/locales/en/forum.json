@@ -1,0 +1,74 @@
+{
+  "forum": {
+    "categories": {
+      "title": "Category Management",
+      "description": "Configure and manage your discussion architecture. Use the high-priority tools to toggle visibility or refine content structures."
+    },
+    "search": {
+      "placeholder": "Search categories..."
+    },
+    "table": {
+      "name": "Category Name",
+      "slug": "Slug",
+      "postsCount": "Posts",
+      "status": "Status",
+      "createdDate": "Created",
+      "actions": "Actions"
+    },
+    "actions": {
+      "createNew": "Create New",
+      "createCategory": "Create Category",
+      "deleteCategory": "Delete Category",
+      "deleteConfirm": "Delete",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "toggle": "Toggle",
+      "creating": "Creating...",
+      "deleting": "Deleting...",
+      "updating": "Updating..."
+    },
+    "fields": {
+      "categoryName": "Category Name",
+      "categoryNamePlaceholder": "Category name",
+      "slug": "Slug"
+    },
+    "placeholders": {
+      "categoryName": "e.g. Technical Support",
+      "slug": "technical-support",
+      "searchPosts": "Search posts..."
+    },
+    "labels": {
+      "selectCategory": "Select a category"
+    },
+    "help": {
+      "slugAutoGenerate": "Auto-generates from category name. You can edit it manually.",
+      "slugReadOnly": "The category path cannot be changed after creation"
+    },
+    "messages": {
+      "addNewCategory": "Add a new discussion area to the platform.",
+      "deleteConfirm": "Are you sure you want to delete this category?",
+      "deleteWarning": "This action cannot be undone. This category will be soft-deleted.",
+      "createSuccess": "Category created successfully",
+      "createFailed": "Failed to create category",
+      "updateSuccess": "Updated successfully",
+      "updateFailed": "Failed to update",
+      "deleteSuccess": "Deleted successfully",
+      "deleteFailed": "Failed to delete",
+      "activateSuccess": "Activated successfully",
+      "deactivateSuccess": "Deactivated successfully",
+      "toggleFailed": "Failed to update status",
+      "categoryNotFound": "Category not found",
+      "noCategories": "No categories yet",
+      "noResults": "No categories found"
+    },
+    "validation": {
+      "nameRequired": "Category name is required",
+      "slugRequired": "Slug is required",
+      "slugExists": "Slug already exists"
+    },
+    "pagination": {
+      "showing": "Showing {{start}}-{{end}} of {{total}}"
+    }
+  }
+}

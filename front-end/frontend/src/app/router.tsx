@@ -48,6 +48,11 @@ import { BusinessProfilePage } from "@/features/headhunter/business/pages";
 import { CommissionProfilePage } from "@/features/collaborator/commission/pages";
 import { JobPipelinePage } from "@/features/applications/pages/JobPipelinePage";
 
+// EPIC 7: Forum Features
+import { NewsListPage } from "@/features/forum/public/list/pages/NewsListPage";
+import { PostManagementPage } from "@/features/forum/admin/posts/pages/PostManagementPage";
+import { CategoryManagementPage } from "@/features/forum/admin/categories/pages/CategoryManagementPage";
+
 // PROF-05: Admin Verification (add when ready)
 // import { VerificationPage } from "@/features/users/verification/pages";
 
@@ -191,6 +196,7 @@ export function AppRouter() {
             </ProtectedRoute>
           }
         />
+        <Route path="/news" element={<NewsListPage />} />
       </Route>
       <Route
         path="/home"
@@ -300,6 +306,28 @@ export function AppRouter() {
         }
       />
 
+      {/* EPIC 7: Forum Management */}
+      <Route
+        path="/admin/forum/categories"
+        element={
+          <AdminOnlyRoute>
+            <AdminLayout>
+              <CategoryManagementPage />
+            </AdminLayout>
+          </AdminOnlyRoute>
+        }
+      />
+      <Route
+        path="/admin/forum/posts"
+        element={
+          <AdminOnlyRoute>
+            <AdminLayout>
+              <PostManagementPage />
+            </AdminLayout>
+          </AdminOnlyRoute>
+        }
+      />
+
       {/* ==================== APPLICATIONS ROUTES (EPIC 5) ==================== */}
 
       {/* APPL-01: Candidate Apply for Job */}
@@ -362,6 +390,8 @@ export function AppRouter() {
           </AdminOnlyRoute>
         }
       /> */}
+
+      {/* ==================== PUBLIC FORUM ROUTES (EPIC 7) ==================== */}
 
       {/* Keep old routes for backward compatibility */}
       <Route

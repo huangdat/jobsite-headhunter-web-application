@@ -201,6 +201,7 @@ export function ProfileForm({
             </p>
 
             <input
+              aria-label={t("cv.management.empty.button") || "Upload CV"}
               id="profile-cv-input"
               type="file"
               accept=".pdf,.doc,.docx,.rtf"
@@ -213,7 +214,7 @@ export function ProfileForm({
                 try {
                   const url = await profileApi.uploadCV(file);
                   if (url) {
-                    onFieldChange("cvUrl" as any, url as any);
+                    onFieldChange("cvUrl" as const, url);
                     toast.success(t("cv.management.success.banner"));
                   } else {
                     toast.error(t("cv.management.error.banner"));
