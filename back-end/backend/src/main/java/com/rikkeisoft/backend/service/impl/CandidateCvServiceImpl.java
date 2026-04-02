@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -75,7 +76,12 @@ public class CandidateCvServiceImpl implements CandidateCvService {
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
         // Find the candidate CV associated with the account
         var candidateCv = candidateCvRepo.findByCandidate_Id(account.getId())
-                .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
+            .orElseGet(() -> candidateCvRepo.save(CandidateCv.builder()
+                .candidate(account)
+                .cvUrl("")
+                .isVisible(true)
+                .createdAt(LocalDateTime.now())
+                .build()));
 
         // Use centralized mapper to avoid exposing/serializing entity graph directly
         return candidateCvMapper.toCandidateCvResp(candidateCv);
@@ -93,7 +99,12 @@ public class CandidateCvServiceImpl implements CandidateCvService {
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
         // Find the candidate CV associated with the account
         var candidateCv = candidateCvRepo.findByCandidate_Id(account.getId())
-                .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
+            .orElseGet(() -> CandidateCv.builder()
+                .candidate(account)
+                .cvUrl("")
+                .isVisible(true)
+                .createdAt(LocalDateTime.now())
+                .build());
 
         // Update the candidate CV with the new information from the request
         if (req.getCvFile() != null) {
@@ -118,7 +129,12 @@ public class CandidateCvServiceImpl implements CandidateCvService {
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
         // Find the candidate CV associated with the account
         var candidateCv = candidateCvRepo.findByCandidate_Id(account.getId())
-                .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
+            .orElseGet(() -> CandidateCv.builder()
+                .candidate(account)
+                .cvUrl("")
+                .isVisible(true)
+                .createdAt(LocalDateTime.now())
+                .build());
 
         // Update the visibility of the candidate CV
         candidateCv.setIsVisible(visibility);

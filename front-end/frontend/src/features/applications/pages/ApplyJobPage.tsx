@@ -4,12 +4,17 @@ import { Card } from "@/components/ui/card";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { ApplicationForm } from "../components/ApplicationForm";
 import { useApplicationForm } from "../hooks/useApplicationForm";
+import type { ApplicationFormData } from "../types";
+import { profileApi } from "@/features/candidate/profile/services/profileApi";
 
 export const ApplyJobPage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
   const { t } = useAppTranslation();
   const [jobTitle, setJobTitle] = useState<string>("Job Position");
+  const [defaultValues, setDefaultValues] = useState<
+    Partial<ApplicationFormData> | undefined
+  >(undefined);
 
   const jobIdNum = jobId ? parseInt(jobId, 10) : 0;
 
@@ -27,6 +32,31 @@ export const ApplyJobPage: React.FC = () => {
       setJobTitle("Software Engineer");
     }
   }, [jobId]);
+
+  useEffect(() => {
+    let isActive = true;
+
+    const loadProfile = async () => {
+      try {
+        const profile = await profileApi.getProfile();
+        if (!isActive) return;
+
+        setDefaultValues({
+          fullName: profile.fullName || "",
+          email: profile.email || "",
+          phone: profile.phone || "",
+        });
+      } catch (error) {
+        console.error("Failed to load profile for application form", error);
+      }
+    };
+
+    loadProfile();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50 py-12">
@@ -47,6 +77,7 @@ export const ApplyJobPage: React.FC = () => {
           <ApplicationForm
             onSubmit={handleSubmit}
             isLoading={isSubmitting}
+            defaultValues={defaultValues}
             // onCVUpload đã bị xóa vì ApplicationForm không còn nhận prop này nữa
           />
         </Card>

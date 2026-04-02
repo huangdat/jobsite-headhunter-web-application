@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useJobsTranslation, useJobDetailQuery } from "@/shared/hooks";
+import { useAppTranslation, useJobsTranslation, useJobDetailQuery } from "@/shared/hooks";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -13,15 +13,19 @@ import {
   removeSavedJob,
   saveJobPost,
 } from "../services/jobsApi";
+import { getCandidateApplications } from "@/features/applications/services/applicationsApi";
 import { formatSalaryRange } from "../utils";
 
 export function JobDetailPage() {
   const { t } = useJobsTranslation();
+  const { t: tApp } = useAppTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [isSaveLoading, setIsSaveLoading] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const [isApplyLoading, setIsApplyLoading] = useState(false);
 
   // Validate and parse job ID
   const jobId = useMemo(() => {
@@ -49,6 +53,39 @@ export function JobDetailPage() {
       .catch(() => {
         if (active) {
           setIsSaved(false);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [jobId, isAuthenticated, job]);
+
+  useEffect(() => {
+    if (!jobId || !isAuthenticated || !job) {
+      setIsApplied(false);
+      return;
+    }
+
+    let active = true;
+    setIsApplyLoading(true);
+
+    getCandidateApplications({ page: 0, size: 100 })
+      .then((applications) => {
+        if (!active) return;
+        setIsApplied(
+          applications.content?.some((application) => application.jobId === jobId) ??
+            false
+        );
+      })
+      .catch(() => {
+        if (active) {
+          setIsApplied(false);
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setIsApplyLoading(false);
         }
       });
 
@@ -182,6 +219,10 @@ export function JobDetailPage() {
                 className="flex-1 shadow-lg shadow-emerald-500/30"
                 onClick={() => {
                   if (isAuthenticated) {
+                    if (isApplied) {
+                      toast.info(tApp("applications.error.alreadyApplied"));
+                      return;
+                    }
                     navigate(`/jobs/${job.id}/apply`);
                   } else {
                     toast.info("Please sign in to apply for this job");
@@ -190,8 +231,9 @@ export function JobDetailPage() {
                     });
                   }
                 }}
+                disabled={isApplyLoading || isApplied}
               >
-                {t("detail.applyNow")}
+                {isApplied ? tApp("applications.status.applied") : t("detail.applyNow")}
               </Button>
               <Button
                 variant="outline"
