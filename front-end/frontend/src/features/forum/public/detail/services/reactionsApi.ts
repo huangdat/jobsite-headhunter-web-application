@@ -3,49 +3,64 @@
  * FOR-12: Handles HTTP requests for post reactions
  */
 
-// import { apiClient } from "@/shared/utils/axios";
+import { apiClient } from "@/shared/utils/axios";
+import { API_ENDPOINTS } from "@/lib/constants";
+import { extractResult } from "@/shared/api/responseAdapter";
+import type { ApiResponse } from "@/features/auth/types/api.types";
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
+export type ReactionType = "LIKE" | "LOVE" | "ANGRY" | "SAD" | "WOW" | "LAUGH";
+
+export interface ReactionCount {
+  LIKE: number;
+  LOVE: number;
+  ANGRY: number;
+  SAD: number;
+  WOW: number;
+  LAUGH: number;
+}
+
+export interface UserReaction {
+  postId: number;
+  type: ReactionType;
+  createdAt: string;
+}
+
+export interface PostReactionsResponse {
+  counts: ReactionCount;
+  userReaction: UserReaction | null;
+}
+
+/**
+ * FOR-12: Fetch reactions for a post
+ * GET /api/forum/posts/{postId}/reactions
+ */
 export const reactionsApi = {
-  /**
-   * Fetch reactions for a post
-   */
-  getReactions: async (_postId: string) => {
-    // TODO: Implement API call
-    return {
-      data: {
-        like: 0,
-        love: 0,
-        celebrate: 0,
-      },
-    };
+  getPostReactions: async (postId: number) => {
+    const res = await apiClient.get<ApiResponse<PostReactionsResponse>>(
+      `${API_ENDPOINTS.FORUM.POSTS.GET_LIST}/${postId}/reactions`
+    );
+    return extractResult(res);
   },
 
   /**
-   * Add reaction to a post
+   * FOR-12 AC2/AC3: Set reaction (add or update)
+   * POST /api/forum/posts/{postId}/reactions
    */
-  addReaction: async (
-    _postId: string,
-    _type: "like" | "love" | "celebrate"
-  ) => {
-    // TODO: Implement API call
-    return { success: true };
+  setPostReaction: async (postId: number, type: ReactionType) => {
+    const res = await apiClient.post<ApiResponse<UserReaction>>(
+      `${API_ENDPOINTS.FORUM.POSTS.GET_LIST}/${postId}/reactions`,
+      { type }
+    );
+    return extractResult(res);
   },
 
   /**
-   * Remove reaction from a post
+   * FOR-12 AC4: Remove reaction
+   * DELETE /api/forum/posts/{postId}/reactions
    */
-  removeReaction: async (_postId: string) => {
-    // TODO: Implement API call
-    return { success: true };
-  },
-
-  /**
-   * Get user's reaction for a post
-   */
-  getUserReaction: async (_postId: string) => {
-    // TODO: Implement API call
-    return { data: null };
+  removePostReaction: async (postId: number) => {
+    await apiClient.delete(
+      `${API_ENDPOINTS.FORUM.POSTS.GET_LIST}/${postId}/reactions`
+    );
   },
 };
-/* eslint-enable @typescript-eslint/no-unused-vars */
