@@ -143,6 +143,25 @@ export const API_ENDPOINTS = {
     UPDATE: "/api/interviews/{id}",
     CANCEL: "/api/interviews/{id}/cancel",
   },
+
+  // Forum Categories
+  FORUM: {
+    CATEGORIES: {
+      GET_LIST: "/api/forum/categories",
+      GET_BY_ID: "/api/forum/categories/{id}",
+      CREATE: "/api/forum/categories",
+      UPDATE: "/api/forum/categories/{id}",
+      DELETE: "/api/forum/categories/{id}",
+      TOGGLE_STATUS: "/api/forum/categories/{id}/toggle-status",
+    },
+    POSTS: {
+      GET_LIST: "/api/forum/posts",
+      GET_BY_ID: "/api/forum/posts/{id}",
+      CREATE: "/api/forum/posts",
+      UPDATE: "/api/forum/posts/{id}",
+      DELETE: "/api/forum/posts/{id}",
+    },
+  },
 };
 
 // Feature Flags

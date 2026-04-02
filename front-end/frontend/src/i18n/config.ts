@@ -53,6 +53,7 @@ import enTopCompanies from "./locales/en/topCompanies.json";
 import enUpload from "./locales/en/upload.json";
 import enValidation from "./locales/en/validation.json";
 import enWarnings from "./locales/en/warnings.json";
+import enForum from "./locales/en/forum.json";
 
 // Import Vietnamese namespaces
 import viCommon from "./locales/vi/common.json";
@@ -106,6 +107,7 @@ import viTopCompanies from "./locales/vi/topCompanies.json";
 import viUpload from "./locales/vi/upload.json";
 import viValidation from "./locales/vi/validation.json";
 import viWarnings from "./locales/vi/warnings.json";
+import viForum from "./locales/vi/forum.json";
 
 const resources = {
   en: {
@@ -159,6 +161,7 @@ const resources = {
       upload: enUpload,
       validation: enValidation,
       warnings: enWarnings,
+      forum: enForum,
     },
     candidate: enCandidate,
     profile: enProfile,
@@ -215,6 +218,7 @@ const resources = {
       upload: viUpload,
       validation: viValidation,
       warnings: viWarnings,
+      forum: viForum,
     },
     candidate: viCandidate,
     profile: viProfile,
