@@ -1,4 +1,29 @@
 {
+  "jobs": {
+    "common": {
+      "total": "Total"
+    },
+    "jobPostings": "Job Postings",
+    "postNewJob": "Post New Job",
+    "candidates": "Candidates",
+    "status": {
+      "applied": "Applied",
+      "screening": "Screening",
+      "interview": "Interview",
+      "passed": "Hired",
+      "rejected": "Rejected"
+    }
+  },
+
+  "common": {
+    "total": "Total",
+    "appliedAt": "Applied at",
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "browseJobs": "Browse Jobs"
+  },
   "listTabLabel": "List",
   "list": {
     "pageTitle": "Job Management",
@@ -187,6 +212,7 @@
       "requirementsMinLength": "Requirements must be at least 10 characters"
     },
     "messages": {
+      "subtitle": "Fill in the details to attract the best candidates for your team",
       "failedToCreate": "Failed to create job",
       "publishingJob": "Publishing job",
       "publishJob": "Publish Job",
@@ -198,21 +224,6 @@
       "ONSITE": "On-site",
       "REMOTE": "Remote",
       "HYBRID": "Hybrid"
-    }
-  },
-  "filterPresets": {
-    "experienceOptions": {
-      "all": "All"
-    },
-    "salaryOptions": {
-      "all": "All",
-      "negotiable": "Negotiable"
-    }
-  },
-  "auth": {
-    "defaults": {
-      "location": "Not specified",
-      "workingTime": "Not specified"
     }
   },
   "messages": {
@@ -234,7 +245,9 @@
     "confidentialCompany": "Confidential company"
   },
   "manage": {
-    "pageTitle": "My Job Posts",
+    "pageTitle": "Manage Postings",
+    "viewCandidates": "Review Applicants",
+    "setNewDeadlineTitle": "Re-activate Job Posting",
     "createNewButton": "Create new",
     "noJobsYet": "No jobs yet.",
     "loadingJobs": "Loading jobs...",
@@ -249,46 +262,16 @@
     "unhideButton": "Unhide",
     "currentlyHidden": "Currently hidden — click to unhide",
     "currentlyVisible": "Currently visible — click to hide",
-    "setNewDeadlineTitle": "Set new deadline",
     "setNewDeadlineDescription": "Choose a new deadline to re-open this job.",
     "cancelButton": "Cancel",
-    "confirmButton": "Confirm",
-    "viewCandidates": "View Candidates"
-  },
-  "saved": {
-    "pageTitle": "Saved jobs",
-    "breadcrumb": "Jobs / Saved jobs",
-    "description": "Keep track of roles you want to revisit. Remove ones you no longer need.",
-    "noSavedJobs": "No saved jobs yet",
-    "emptyStateHint": "Tap \"Save job\" on any posting to keep it here for quick access.",
-    "browseJobsButton": "Browse jobs",
-    "viewJobButton": "View job",
-    "removeButton": "Remove",
-    "removingButton": "Removing...",
-    "confidentialCompany": "Confidential company",
-    "postedText": "Posted",
-    "recentlyPosted": "Recently",
-    "unableToLoadSavedJobs": "Unable to load saved jobs. Please try again later.",
-    "jobRemovedSuccess": "Job removed from saved list.",
-    "unableToRemoveJob": "Unable to remove job. Please try again.",
-    "tryAgainButton": "Try again"
+    "confirmButton": "Confirm"
   },
   "headhunter": {
-    "profileTitle": "Recruiter",
-    "jobPostings": "Job postings",
-    "manageCv": "Manage CV",
-    "recruitmentReport": "Recruitment Report",
-    "myServices": "My services",
-    "promotionCodes": "Promotion codes",
-    "orderTracking": "Order tracking",
-    "activityLog": "Activity log",
-    "accountSettings": "Account Settings",
-    "supportInbox": "Support inbox",
-    "postNewJob": "Post new job",
-    "list": "List",
-    "candidates": "Candidates",
+    "home": "Home",
+    "roleLabel": "Headhunter Panel",
+    "postNewJob": "Post New Job",
+    "approveApplications": "Manage Postings",
     "loadingApplicants": "Loading applicants...",
-    "applicantPageInfo": "This page will list applicants for your jobs.",
     "noApplicantsYet": "No applicants yet."
   },
   "validation": {
@@ -299,27 +282,5 @@
     "minCharacters": "Responsibilities/Requirements must be at least 50 characters",
     "salaryNegative": "Salary cannot be negative",
     "salaryOrder": "Salary min cannot be greater than salary max"
-  },
-  "jobs": {
-    "list": {
-      "filters": {
-        "salaryVND": "Jobs list filters salary v n d"
-      }
-    }
-  },
-  "accountSettings": "Account Settings",
-  "activityLog": "Activity Log",
-  "applicantPageInfo": "Applicants",
-  "candidates": "Candidates",
-  "jobPostings": "Job Postings",
-  "loadingApplicants": "Loading applicants...",
-  "manageCv": "Manage CV",
-  "myServices": "My Services",
-  "noApplicantsYet": "No applicants yet",
-  "orderTracking": "Order Tracking",
-  "postNewJob": "Post New Job",
-  "profileTitle": "Profile",
-  "promotionCodes": "Promotion Codes",
-  "recruitmentReport": "Recruitment Report",
-  "supportInbox": "Support Inbox"
+  }
 }

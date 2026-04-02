@@ -221,7 +221,6 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
           )}
         />
 
-        {/* Nút Submit */}
         <div className="flex gap-3 pt-6">
           <Button
             type="submit"

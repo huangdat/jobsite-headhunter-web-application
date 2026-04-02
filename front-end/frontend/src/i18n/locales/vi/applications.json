@@ -17,7 +17,7 @@
   "applications.pipeline": "Pipeline tuyển dụng",
 
   "applications.status.applied": "Đã nộp đơn",
-  "applications.status.screening": "Đang xem xét",
+  "applications.status.screening": "Duyệt hồ sơ",
   "applications.status.interview": "Phỏng vấn",
   "applications.status.passed": "Đã tuyển",
   "applications.status.rejected": "Loại",
@@ -71,6 +71,9 @@
   "applications.error.invalidTime": "Thời gian phỏng vấn phải là một thời điểm trong tương lai",
   "applications.error.requiredMeetingLink": "Vui lòng cung cấp link phòng họp trực tuyến",
   "applications.error.requiredLocation": "Vui lòng nhập địa chỉ cụ thể",
+  "applications.subtitle": "Theo dõi và quản lý các cơ hội nghề nghiệp của bạn",
+  "applications.candidateView": "Chế độ ứng viên",
+  "applications.inProgress": "Đang xử lý",
 
   "applications.success.applied": "Nộp hồ sơ thành công",
   "applications.success.reviewed": "Duyệt hồ sơ thành công",
@@ -105,5 +108,8 @@
   "columns.status": "TRẠNG THÁI",
   "columns.actions": "THAO TÁC",
 
-  "actions.viewDetails": "Xem chi tiết"
+  "actions.viewDetails": "Xem chi tiết",
+  "headhunter.jobIdLabel": "Mã tin đăng: #{{id}}",
+  "headhunter.candidatesCount": "{{count}} ứng viên",
+  "applications.status.submitted": "Đã ứng tuyển"
 }
