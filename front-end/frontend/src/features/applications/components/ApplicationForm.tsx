@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -12,8 +12,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { createValidationSchema } from "../utils/validation";
+import type { Resolver } from "react-hook-form";
 import { CVSelector } from "./CVSelector";
 import type { ApplicationFormData } from "../types";
 
@@ -22,29 +23,6 @@ interface ApplicationFormProps {
   isLoading?: boolean;
   defaultValues?: Partial<ApplicationFormData>;
 }
-
-// ✅ Schema factory để có thể dùng i18n messages
-export const createValidationSchema = (t: (key: string) => string) => {
-  return yup.object().shape({
-    cvSnapshotUrl: yup
-      .string()
-      .required(t("applications.validation.cvRequired")),
-    fullName: yup
-      .string()
-      .required(t("applications.validation.fullNameRequired"))
-      .min(2, t("applications.validation.fullNameMinLength")),
-    email: yup
-      .string()
-      .email(t("applications.validation.emailInvalid"))
-      .required(t("applications.validation.emailRequired")),
-    phone: yup
-      .string()
-      .required(t("applications.validation.phoneRequired"))
-      .min(9, t("applications.validation.phoneInvalid")),
-    coverLetter: yup.string().nullable(),
-    salaryExpectation: yup.string().nullable(),
-  });
-};
 
 export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   onSubmit,
@@ -57,7 +35,9 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   const validationSchema = createValidationSchema(t);
 
   const form = useForm<ApplicationFormData>({
-    resolver: yupResolver(validationSchema) as any,
+    resolver: (yupResolver(validationSchema) as unknown) as Resolver<
+      ApplicationFormData
+    >,
     defaultValues: defaultValues || {
       fullName: "",
       email: "",
@@ -69,7 +49,12 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   });
 
   useEffect(() => {
-    if (defaultValues) form.reset(defaultValues);
+    if (defaultValues) {
+      form.reset({
+        ...form.getValues(),
+        ...defaultValues,
+      });
+    }
   }, [defaultValues, form]);
 
   /**

@@ -241,15 +241,19 @@ export const ApplicationDetailPage: React.FC = () => {
         )}
 
         <div className="flex flex-wrap gap-4 pt-4">
-          {(application.status as string) === "SUBMITTED" && (
+          {/* 1. Khi hồ sơ mới nộp (APPLIED) -> Cho phép Duyệt (SCREENING) hoặc Từ chối */}
+          {application.status === "APPLIED" && (
             <>
               <Button
                 onClick={() =>
-                  handleStatusUpdate("ACCEPT", "applications.success.reviewed")
+                  handleStatusUpdate(
+                    "SCREENING",
+                    "applications.success.reviewed"
+                  )
                 }
                 className="flex-1 bg-lime-400 hover:bg-lime-500 text-white font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
               >
-                {t("applications.status.screening")}
+                {t("common.approve") || "Approve"}
               </Button>
               <Button
                 variant="outline"
@@ -266,7 +270,8 @@ export const ApplicationDetailPage: React.FC = () => {
             </>
           )}
 
-          {(application.status as string) === "HEADHUNTER_ACCEPTED" && (
+          {/* 2. Khi hồ sơ đang ở bước Duyệt (SCREENING) -> Cho phép đặt lịch Phỏng vấn (INTERVIEW) hoặc Cho qua luôn (PASSED) */}
+          {application.status === "SCREENING" && (
             <>
               <Button
                 onClick={() => setShowInterviewModal(true)}
@@ -289,6 +294,7 @@ export const ApplicationDetailPage: React.FC = () => {
             </>
           )}
 
+          {/* 3. Khi đang ở bước Phỏng vấn (INTERVIEW) -> Cho phép đánh dấu Trúng tuyển (PASSED) */}
           {application.status === "INTERVIEW" && (
             <>
               <Button

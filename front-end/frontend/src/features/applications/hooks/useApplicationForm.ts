@@ -18,10 +18,7 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [cvFile, setCvFile] = useState<File | null>(null);
-
-  // ✅ Thêm state này để nhận biết khi chọn CV từ Profile
-  const [existingCvId, setExistingCvId] = useState<string | null>(null);
+  // Local file handling (kept minimal; we store filename in formData.cvSnapshotUrl)
 
   const [formData, setFormData] = useState<Partial<ApplicationFormData>>({
     fullName: "",
@@ -66,12 +63,10 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
         const cvError = validateCVFile(fileOrId);
         if (cvError) {
           setErrors((prev) => ({ ...prev, cvSnapshotUrl: cvError }));
-          toast.error(t(cvError as any)); // Dùng t() cho key validation
+          toast.error(t(String(cvError)));
           return;
         }
 
-        setCvFile(fileOrId);
-        setExistingCvId(null);
         setFormData((prev) => ({
           ...prev,
           cvSnapshotUrl: fileOrId.name,
@@ -101,22 +96,20 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
 
       setIsSubmitting(true);
       try {
-        // 🚀 THAY ĐỔI QUAN TRỌNG: Không dùng FormData nữa, dùng Object JSON thuần
-        const payload = {
-          jobId: jobId,
-          fullName: String(data.fullName || "").trim(),
-          email: String(data.email || "").trim(),
-          phone: String(data.phone || "").trim(),
-          coverLetter: String(data.coverLetter || "").trim(),
-          // Đảm bảo salaryExpectation gửi đi đúng định dạng Backend cần (thường là string hoặc number)
-          salaryExpectation: String(data.salaryExpectation || "0"),
-          // Gửi trực tiếp link CV đã chọn từ Profile
-          cvSnapshotUrl: data.cvSnapshotUrl,
-        };
+        // Backend expects @ModelAttribute, so send multipart/form-data
+        const payload = new FormData();
+        payload.append("jobId", String(jobId));
+        payload.append("fullName", String(data.fullName || "").trim());
+        payload.append("email", String(data.email || "").trim());
+        payload.append("phone", String(data.phone || "").trim());
+        payload.append("coverLetter", String(data.coverLetter || "").trim());
+        payload.append(
+          "salaryExpectation",
+          String(data.salaryExpectation || "0")
+        );
 
-        console.log("📤 Submitting JSON Payload to Job:", jobId, payload);
+        console.log("📤 Submitting FormData to Job:", jobId);
 
-        // Gọi API nộp đơn (submitApplication lúc này sẽ gửi JSON)
         await submitApplication(jobId, payload);
 
         toast.success(t("applications.success.applied"));
@@ -126,10 +119,13 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
         } else {
           navigate("/my-applications");
         }
-      } catch (err: any) {
-        console.error("❌ Submit Error:", err.response?.data || err.message);
-        // Ưu tiên hiển thị message từ Backend trả về
-        const errorMsg = err.response?.data?.message || err.message;
+      } catch (err) {
+        // Prefer structured backend message when available
+        type AxiosLike = { response?: { data?: { message?: string } } };
+        const maybe = err as AxiosLike;
+        const errorMsg =
+          maybe.response?.data?.message || (err instanceof Error ? err.message : String(err));
+        console.error("❌ Submit Error:", errorMsg);
         toast.error(errorMsg);
       } finally {
         setIsSubmitting(false);
