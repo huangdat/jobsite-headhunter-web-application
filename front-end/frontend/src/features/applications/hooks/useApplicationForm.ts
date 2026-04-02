@@ -18,10 +18,7 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [cvFile, setCvFile] = useState<File | null>(null);
-
-  // ✅ Thêm state này để nhận biết khi chọn CV từ Profile
-  const [existingCvId, setExistingCvId] = useState<string | null>(null);
+  // Local file handling (kept minimal; we store filename in formData.cvSnapshotUrl)
 
   const [formData, setFormData] = useState<Partial<ApplicationFormData>>({
     fullName: "",
@@ -66,12 +63,10 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
         const cvError = validateCVFile(fileOrId);
         if (cvError) {
           setErrors((prev) => ({ ...prev, cvSnapshotUrl: cvError }));
-          toast.error(t(cvError as any)); // Dùng t() cho key validation
+          toast.error(t(String(cvError)));
           return;
         }
 
-        setCvFile(fileOrId);
-        setExistingCvId(null);
         setFormData((prev) => ({
           ...prev,
           cvSnapshotUrl: fileOrId.name,
@@ -124,10 +119,13 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
         } else {
           navigate("/my-applications");
         }
-      } catch (err: any) {
-        console.error("❌ Submit Error:", err.response?.data || err.message);
-        // Ưu tiên hiển thị message từ Backend trả về
-        const errorMsg = err.response?.data?.message || err.message;
+      } catch (err) {
+        // Prefer structured backend message when available
+        type AxiosLike = { response?: { data?: { message?: string } } };
+        const maybe = err as AxiosLike;
+        const errorMsg =
+          maybe.response?.data?.message || (err instanceof Error ? err.message : String(err));
+        console.error("❌ Submit Error:", errorMsg);
         toast.error(errorMsg);
       } finally {
         setIsSubmitting(false);

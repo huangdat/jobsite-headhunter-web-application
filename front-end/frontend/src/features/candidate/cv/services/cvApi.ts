@@ -4,7 +4,6 @@
  */
 
 import { apiClient } from "@/shared/utils/axios";
-import axios from "axios";
 import type {
   CVFile,
   FileFormat,
@@ -32,8 +31,9 @@ const API_ENDPOINTS = {
 
 const SUPPORTED_FORMATS: FileFormat[] = ["pdf", "doc", "docx", "rtf"];
 
-const mapCandidateCvToFile = (cv: any): CVFile => {
-  const url = cv?.cvUrl ?? "";
+const mapCandidateCvToFile = (cv: unknown): CVFile => {
+  const candidate = (cv as { cvUrl?: string; id?: unknown; createdAt?: string | Date } ) || {};
+  const url = candidate.cvUrl ?? "";
   const filename = url.split("/").pop() || "resume";
   const ext = filename.split(".").pop()?.toLowerCase() ?? "";
   const format = SUPPORTED_FORMATS.includes(ext as FileFormat)
@@ -41,11 +41,11 @@ const mapCandidateCvToFile = (cv: any): CVFile => {
     : "pdf";
 
   return {
-    id: String(cv?.id ?? filename),
+    id: String(candidate.id ?? filename),
     filename,
     fileSize: 0,
     format,
-    uploadedAt: cv?.createdAt ? new Date(cv.createdAt) : new Date(),
+    uploadedAt: candidate.createdAt ? new Date(candidate.createdAt as string) : new Date(),
     status: "success",
     isActive: true,
   };
@@ -59,7 +59,7 @@ export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
     const formData = new FormData();
     formData.append("cvFile", file);
 
-    const response = await apiClient.put<{ result?: any }>(
+    const response = await apiClient.put<{ result?: unknown }>(
       API_ENDPOINTS.CV_UPLOAD,
       formData,
       {
@@ -67,7 +67,7 @@ export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
       }
     );
 
-    const cv = response.data?.result;
+    const cv = response.data?.result as unknown;
     return {
       success: true,
       message: "messages.uploadSuccess",
@@ -84,8 +84,8 @@ export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
  */
 export const fetchCVList = async (): Promise<CVListResponse> => {
   try {
-    const response = await apiClient.get<{ result?: any }>(API_ENDPOINTS.CV_LIST);
-    const cv = response.data?.result;
+    const response = await apiClient.get<{ result?: unknown }>(API_ENDPOINTS.CV_LIST);
+    const cv = response.data?.result as unknown;
     return {
       success: true,
       data: cv ? [mapCandidateCvToFile(cv)] : [],

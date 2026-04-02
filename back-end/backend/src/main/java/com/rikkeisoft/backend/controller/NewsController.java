@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/api/news")
-@PreAuthorize(SecurityConstants.ADMIN)
 public class NewsController {
 
     static long MAX_IMAGE_BYTES = 5L * 1024 * 1024;
@@ -32,6 +31,7 @@ public class NewsController {
     UploadService uploadService;
 
     @PostMapping("/upload-image")
+    @PreAuthorize(SecurityConstants.ADMIN)
     public APIResponse<UploadImageResp> uploadImage(@RequestParam("file") MultipartFile file) {
         validateImage(file);
         String url = uploadService.uploadFile(file);
@@ -43,6 +43,7 @@ public class NewsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize(SecurityConstants.ADMIN)
     public APIResponse<NewsPostResp> createNews(@Valid @RequestBody NewsPostCreateReq req) {
         NewsPostResp result = newsService.createNews(req);
         return APIResponse.<NewsPostResp>builder()
@@ -51,8 +52,9 @@ public class NewsController {
                 .build();
     }
 
-    @PutMapping("/{id}")
-    public APIResponse<NewsPostResp> updateNews(
+        @PutMapping("/{id}")
+        @PreAuthorize(SecurityConstants.ADMIN)
+        public APIResponse<NewsPostResp> updateNews(
             @PathVariable Long id,
             @Valid @RequestBody NewsPostUpdateReq req) {
         NewsPostResp result = newsService.updateNews(id, req);

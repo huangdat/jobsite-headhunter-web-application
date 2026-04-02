@@ -33,15 +33,23 @@ public class ForumPost {
     @Column(columnDefinition = "TEXT")
     String content;
 
+    @Column(columnDefinition = "TEXT")
+    String shortDescription;
+
+    String imageUrl;
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     PostStatus status = PostStatus.DRAFT;
 
     LocalDateTime createdAt;
 
+    LocalDateTime updatedAt;
+
     @ManyToOne
     @JoinColumn(name = "forum_category_id", nullable = false)
     ForumCategory forumCategory;
     LocalDateTime deletedAt;
+
 
 }

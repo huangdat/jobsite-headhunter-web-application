@@ -158,6 +158,12 @@ public enum ErrorCode {
     POST_ALREADY_DELETED(HttpStatus.BAD_REQUEST, "error.post.already.deleted"),
     POST_FORBIDDEN(HttpStatus.FORBIDDEN, "error.post.forbidden"),
 
+    // News module
+    NEWS_NOT_FOUND(HttpStatus.NOT_FOUND, "error.news_not_found"),
+    NEWS_CONTENT_REQUIRED(HttpStatus.BAD_REQUEST, "error.news_content_required"),
+    NEWS_IMAGE_INVALID(HttpStatus.BAD_REQUEST, "error.news_image_invalid"),
+    NEWS_IMAGE_TOO_LARGE(HttpStatus.BAD_REQUEST, "error.news_image_too_large"),
+
     // Forum Comment module
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "error.comment.not.found"),
     COMMENT_DELETED(HttpStatus.BAD_REQUEST, "error.comment.deleted"),
