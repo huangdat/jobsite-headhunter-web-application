@@ -69,7 +69,12 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   });
 
   useEffect(() => {
-    if (defaultValues) form.reset(defaultValues);
+    if (defaultValues) {
+      form.reset({
+        ...form.getValues(),
+        ...defaultValues,
+      });
+    }
   }, [defaultValues, form]);
 
   /**
