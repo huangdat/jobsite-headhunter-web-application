@@ -4,6 +4,85 @@
       "title": "Category Management",
       "description": "Configure and manage your discussion architecture. Use the high-priority tools to toggle visibility or refine content structures."
     },
+    "posts": {
+      "title": "Post Management",
+      "description": "Create, edit, and publish articles. Manage post status and organize content by categories.",
+      "fields": {
+        "title": "Post Title",
+        "description": "Short Description",
+        "category": "Category",
+        "image": "Featured Image",
+        "content": "Post Content",
+        "status": "Status"
+      },
+      "validations": {
+        "titleRequired": "Title is required",
+        "titleMax200": "Title must not exceed 200 characters",
+        "categoryRequired": "Please select a category",
+        "contentRequired": "Post content is required",
+        "imageSizeMax": "Image must not exceed 5MB",
+        "imageFormatInvalid": "Supported formats: JPG, PNG, GIF, WebP"
+      },
+      "status": {
+        "draft": "Draft",
+        "published": "Published",
+        "archived": "Archived"
+      },
+      "actions": {
+        "createNew": "Create New Post",
+        "save": "Save Post",
+        "update": "Update Post",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "publish": "Publish",
+        "search": "Search posts..."
+      },
+      "messages": {
+        "createSuccess": "Post created successfully!",
+        "updateSuccess": "Post updated successfully!",
+        "deleteSuccess": "Post deleted successfully!",
+        "deleteConfirm": "Are you sure you want to delete this post?",
+        "deleteNotFound": "Post does not exist or has been deleted",
+        "deleteError": "Failed to delete post. Please try again.",
+        "createError": "Failed to create post. Please try again.",
+        "updateError": "Failed to update post. Please try again.",
+        "noData": "No posts found"
+      },
+      "modals": {
+        "createTitle": "Create New Post",
+        "createDescription": "Create a new article or news for the forum",
+        "editTitle": "Edit Post",
+        "editDescription": "Update the post information",
+        "deleteTitle": "Delete Post",
+        "deleteMessage": "Both the post and all associated comments will be deleted."
+      },
+      "placeholders": {
+        "description": "Brief summary for preview...",
+        "selectCategory": "Select a category...",
+        "content": "Write your post content here...",
+        "postTitle": "e.g. Important Announcement"
+      },
+      "labels": {
+        "selectCategory": "Select a category"
+      },
+      "images": {
+        "altPreview": "Preview",
+        "altCurrent": "Current",
+        "altNewPreview": "New preview"
+      },
+      "imageErrors": {
+        "uploadError": "An error occurred while uploading image"
+      }
+    },
+    "sidebar": {
+      "categories": "Categories",
+      "posts": "Posts",
+      "comments": "Comments",
+      "management": "Forum Management",
+      "description": "Manage discussion content",
+      "tip": "Tip: Use keyboard shortcuts for faster navigation"
+    },
     "search": {
       "placeholder": "Search categories..."
     },

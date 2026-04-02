@@ -4,6 +4,85 @@
       "title": "Quản lý Danh mục",
       "description": "Định cấu hình và quản lý kiến trúc thảo luận của bạn. Sử dụng các công cụ ưu tiên cao để chuyển đổi khả năng hiển thị hoặc tối ưu hóa cấu trúc nội dung."
     },
+    "posts": {
+      "title": "Quản lý Bài viết",
+      "description": "Tạo, chỉnh sửa và xuất bản bài viết. Quản lý trạng thái bài viết và tổ chức nội dung theo danh mục.",
+      "fields": {
+        "title": "Tiêu đề Bài viết",
+        "description": "Mô tả ngắn",
+        "category": "Danh mục",
+        "image": "Ảnh đại diện",
+        "content": "Nội dung Bài viết",
+        "status": "Trạng thái"
+      },
+      "validations": {
+        "titleRequired": "Tiêu đề không được để trống",
+        "titleMax200": "Tiêu đề không được vượt quá 200 ký tự",
+        "categoryRequired": "Vui lòng chọn danh mục",
+        "contentRequired": "Nội dung bài viết không được để trống",
+        "imageSizeMax": "Ảnh không được vượt quá 5MB",
+        "imageFormatInvalid": "Định dạng hỗ trợ: JPG, PNG, GIF, WebP"
+      },
+      "status": {
+        "draft": "Nháp",
+        "published": "Đã xuất bản",
+        "archived": "Lưu trữ"
+      },
+      "actions": {
+        "createNew": "Tạo Bài viết Mới",
+        "save": "Lưu Bài viết",
+        "update": "Cập nhật Bài viết",
+        "delete": "Xóa",
+        "cancel": "Hủy",
+        "edit": "Chỉnh sửa",
+        "publish": "Xuất bản",
+        "search": "Tìm kiếm bài viết..."
+      },
+      "messages": {
+        "createSuccess": "Bài viết đã được tạo thành công!",
+        "updateSuccess": "Bài viết đã được cập nhật thành công!",
+        "deleteSuccess": "Bài viết đã được xóa thành công!",
+        "deleteConfirm": "Bạn có chắc muốn xóa bài viết này?",
+        "deleteNotFound": "Bài viết không tồn tại hoặc đã được xóa",
+        "deleteError": "Lỗi khi xóa bài viết. Vui lòng thử lại.",
+        "createError": "Lỗi khi tạo bài viết. Vui lòng thử lại.",
+        "updateError": "Lỗi khi cập nhật bài viết. Vui lòng thử lại.",
+        "noData": "Không tìm thấy bài viết nào"
+      },
+      "modals": {
+        "createTitle": "Tạo Bài viết Mới",
+        "createDescription": "Tạo một bài viết hoặc bản tin mới cho diễn đàn",
+        "editTitle": "Chỉnh sửa Bài viết",
+        "editDescription": "Cập nhật thông tin bài viết",
+        "deleteTitle": "Xóa Bài viết",
+        "deleteMessage": "Cả bài viết và tất cả bình luận liên quan sẽ bị xóa."
+      },
+      "placeholders": {
+        "description": "Tóm tắt ngắn gọn cho xem trước...",
+        "selectCategory": "Chọn một danh mục...",
+        "content": "Viết nội dung bài viết của bạn ở đây...",
+        "postTitle": "Ví dụ: Thông báo quan trọng"
+      },
+      "labels": {
+        "selectCategory": "Chọn một danh mục"
+      },
+      "images": {
+        "altPreview": "Xem trước",
+        "altCurrent": "Hiện tại",
+        "altNewPreview": "Xem trước mới"
+      },
+      "imageErrors": {
+        "uploadError": "Lỗi khi tải lên hình ảnh"
+      }
+    },
+    "sidebar": {
+      "categories": "Danh mục",
+      "posts": "Bài viết",
+      "comments": "Bình luận",
+      "management": "Quản lý Diễn đàn",
+      "description": "Quản lý nội dung thảo luận",
+      "tip": "Mẹo: Sử dụng phím tắt để điều hướng nhanh hơn"
+    },
     "search": {
       "placeholder": "Tìm kiếm danh mục..."
     },

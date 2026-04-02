@@ -52,6 +52,7 @@ import { JobPipelinePage } from "@/features/applications/pages/JobPipelinePage";
 import { NewsListPage } from "@/features/forum/public/list/pages/NewsListPage";
 import { PostManagementPage } from "@/features/forum/admin/posts/pages/PostManagementPage";
 import { CategoryManagementPage } from "@/features/forum/admin/categories/pages/CategoryManagementPage";
+import { ForumAdminLayout } from "@/shared/layouts/ForumAdminLayout";
 
 // PROF-05: Admin Verification (add when ready)
 // import { VerificationPage } from "@/features/users/verification/pages";
@@ -308,25 +309,16 @@ export function AppRouter() {
 
       {/* EPIC 7: Forum Management */}
       <Route
-        path="/admin/forum/categories"
+        path="/admin/forum"
         element={
           <AdminOnlyRoute>
-            <AdminLayout>
-              <CategoryManagementPage />
-            </AdminLayout>
+            <ForumAdminLayout />
           </AdminOnlyRoute>
         }
-      />
-      <Route
-        path="/admin/forum/posts"
-        element={
-          <AdminOnlyRoute>
-            <AdminLayout>
-              <PostManagementPage />
-            </AdminLayout>
-          </AdminOnlyRoute>
-        }
-      />
+      >
+        <Route path="categories" element={<CategoryManagementPage />} />
+        <Route path="posts" element={<PostManagementPage />} />
+      </Route>
 
       {/* ==================== APPLICATIONS ROUTES (EPIC 5) ==================== */}
 
