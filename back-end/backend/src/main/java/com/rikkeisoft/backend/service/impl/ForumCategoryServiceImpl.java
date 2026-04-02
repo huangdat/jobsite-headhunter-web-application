@@ -3,6 +3,7 @@ package com.rikkeisoft.backend.service.impl;
 import com.github.slugify.Slugify;
 import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
+import com.rikkeisoft.backend.enums.ForumCategorySortField;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.ForumCategoryMapper;
 import com.rikkeisoft.backend.model.dto.req.forum.ForumCategoryCreateReq;
@@ -16,8 +17,12 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+
+import com.rikkeisoft.backend.enums.SortDirection;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -159,20 +164,36 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      *
      * <p>Implementation steps:
      * <ol>
-     *   <li>Build a {@link org.springframework.data.domain.PageRequest} from {@code page} and {@code size}.</li>
+     *   <li>Build a {@link org.springframework.data.domain.PageRequest} from {@code page}, {@code size}, {@code sortBy}, and {@code direction}.</li>
      *   <li>Delegate to {@link ForumCategoryRepo#searchByKeyword(String, org.springframework.data.domain.Pageable)}.</li>
      *   <li>Map each entity in the page to a {@link ForumCategoryResp} and return the mapped page.</li>
      * </ol>
      *
-     * @param keyword the search term; may be {@code null} to retrieve all.
-     * @param page    zero-indexed page number.
-     * @param size    records per page.
-     * @return a paginated result of category response DTOs, or {@code null} (stub).
+     * @param keyword   the search term; may be {@code null} to retrieve all.
+     * @param page      zero-indexed page number.
+     * @param size      records per page.
+     * @param sortBy    the field to sort by; allowed values: {@code name} (default),
+ *                  {@code createdAt}, {@code updatedAt}.
+     * @param direction the sort direction; allowed values: {@code asc} (default), {@code desc}.
+     * @return a paginated result of category response DTOs.
      */
     @Override
-    public Page<ForumCategoryResp> searchCategories(String keyword, int page, int size) {
-        return null;
+    public Page<ForumCategoryResp> searchCategories(
+            String keyword, int page, int size, String sortBy, String direction) {
+
+        // Validate & resolve — throws AppException(400) for bad values
+        ForumCategorySortField sortField = ForumCategorySortField.fromString(sortBy);
+        SortDirection sortDirection = SortDirection.fromString(direction);
+
+        PageRequest pageRequest = PageRequest.of(
+                page, size,
+                Sort.by(sortDirection.getSpringDirection(), sortField.getFieldName()));
+
+        return forumCategoryRepo
+                .searchByKeyword(keyword, pageRequest)
+                .map(forumCategoryMapper::toForumCategoryResp);
     }
+
 
     /**
      * Utility method that transliterates a Vietnamese {@code name} string into a

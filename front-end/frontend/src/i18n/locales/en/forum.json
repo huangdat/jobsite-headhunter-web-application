@@ -35,7 +35,11 @@
     },
     "placeholders": {
       "categoryName": "e.g. Technical Support",
-      "slug": "technical-support"
+      "slug": "technical-support",
+      "searchPosts": "Search posts..."
+    },
+    "labels": {
+      "selectCategory": "Select a category"
     },
     "help": {
       "slugAutoGenerate": "Auto-generates from category name. You can edit it manually.",

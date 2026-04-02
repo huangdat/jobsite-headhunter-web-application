@@ -35,7 +35,11 @@
     },
     "placeholders": {
       "categoryName": "Ví dụ: Hỗ trợ Kỹ thuật",
-      "slug": "ho-tro-ky-thuat"
+      "slug": "ho-tro-ky-thuat",
+      "searchPosts": "Tìm kiếm bài viết..."
+    },
+    "labels": {
+      "selectCategory": "Chọn một danh mục"
     },
     "help": {
       "slugAutoGenerate": "Tự động tạo từ tên danh mục. Bạn có thể chỉnh sửa theo cách thủ công.",

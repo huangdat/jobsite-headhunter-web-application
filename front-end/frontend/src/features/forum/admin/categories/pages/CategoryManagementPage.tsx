@@ -13,7 +13,7 @@ export function CategoryManagementPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-Bold">
+        <h1 className="text-3xl font-bold">
           {t("forum.categories.title") || "Category Management"}
         </h1>
         <p className="text-slate-600 mt-2">

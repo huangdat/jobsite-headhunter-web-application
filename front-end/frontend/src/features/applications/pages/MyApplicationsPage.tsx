@@ -208,7 +208,7 @@ export const MyApplicationsPage: React.FC = () => {
 
       {/* DETAIL MODAL */}
       {viewingApp && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
           <Card className="w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <div className="p-6 pb-2 flex justify-between items-start border-b border-slate-100">
               <div>
@@ -220,6 +220,7 @@ export const MyApplicationsPage: React.FC = () => {
                 </p>
               </div>
               <button
+                aria-label={t("actions.close") || "Close"}
                 onClick={() => setViewingApp(null)}
                 className="p-2 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-full transition-colors cursor-pointer"
               >

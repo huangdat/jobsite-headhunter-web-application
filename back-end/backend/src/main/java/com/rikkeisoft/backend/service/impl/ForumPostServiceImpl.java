@@ -1,11 +1,29 @@
 package com.rikkeisoft.backend.service.impl;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.rikkeisoft.backend.component.Translator;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.enums.PostStatus;
 import com.rikkeisoft.backend.enums.Role;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.ForumPostMapper;
+import com.rikkeisoft.backend.model.dto.PagedResponse;
 import com.rikkeisoft.backend.model.dto.req.forumpost.AuthorDto;
 import com.rikkeisoft.backend.model.dto.req.forumpost.ForumPostDetailResp;
 import com.rikkeisoft.backend.model.dto.req.forumpost.JobBasicDto;
@@ -16,19 +34,12 @@ import com.rikkeisoft.backend.repository.AccountRepo;
 import com.rikkeisoft.backend.repository.ForumCommentRepo;
 import com.rikkeisoft.backend.repository.ForumPostRepo;
 import com.rikkeisoft.backend.service.ForumPostService;
+
+import jakarta.persistence.criteria.Predicate;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Safelist;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -193,6 +204,53 @@ public class ForumPostServiceImpl implements ForumPostService {
                 .id(post.getJob().getId())
                 .title(post.getJob().getTitle())
                 .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PagedResponse<ForumPostResp> searchPosts(String keyword, Long categoryId, Pageable pageable) {
+        Specification<ForumPost> spec = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            predicates.add(cb.equal(root.get("status"), PostStatus.PUBLISHED));
+            predicates.add(cb.isNull(root.get("deletedAt")));
+            if (keyword != null && !keyword.isBlank()) {
+                String pattern = "%" + keyword.toLowerCase() + "%";
+                predicates.add(cb.or(
+                        cb.like(cb.lower(root.get("title")), pattern),
+                        cb.like(cb.lower(root.get("content")), pattern)));
+            }
+            if (categoryId != null) {
+                predicates.add(cb.equal(root.get("forumCategory").get("id"), categoryId));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        Page<ForumPost> page = forumPostRepo.findAll(spec, pageable);
+
+        List<ForumPostResp> data = page.getContent().stream()
+                .map(forumPostMapper::toForumPostResp)
+                .collect(Collectors.toList());
+
+        return PagedResponse.<ForumPostResp>builder()
+                .data(data)
+                .page(page.getNumber())
+                .size(page.getSize())
+                .totalElements(page.getTotalElements())
+                .totalPages(page.getTotalPages())
+                .build();
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public List<ForumPostResp> getFeaturedPosts(int limit) {
+        List<ForumPost> featuredPosts = forumPostRepo.findFeaturedPosts(
+                LocalDateTime.now(),
+                PageRequest.of(0, limit));
+
+        return featuredPosts.stream()
+                .map(forumPostMapper::toForumPostResp)
+                .collect(Collectors.toList());
     }
 
 }
