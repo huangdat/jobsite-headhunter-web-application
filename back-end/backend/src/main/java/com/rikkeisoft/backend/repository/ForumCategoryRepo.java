@@ -21,17 +21,38 @@ import java.util.Optional;
 public interface ForumCategoryRepo extends JpaRepository<ForumCategory, Long> {
 
     /**
-     * Searches for non-deleted categories whose {@code name} contains the given
-     * keyword (case-insensitive), with pagination support.
+     * Searches for non-deleted categories whose {@code name} or {@code slug} contains
+     * the given keyword (case-insensitive), with pagination and sorting support.
      *
-     * <p>Used by the admin category search endpoint ({@code GET /api/v1/forum/categories}).
+     * <p>Used by the admin category search endpoint ({@code GET /api/forum/categories/search}).
      *
-     * @param keyword  the search term to match against the category name; may be an empty
-     *                 string to return all non-deleted categories.
-     * @param pageable pagination and sorting parameters (page index, page size, sort field).
+     * @param keyword   the search term to match against the category name or slug;
+     *                  may be an empty string to return all non-deleted categories.
+     * @param pageable  pagination and sorting parameters (page index, page size, sort field).
      * @return a {@link Page} of {@link ForumCategory} entities matching the criteria.
      */
-    @Query("SELECT f FROM ForumCategory f WHERE f.name LIKE %:keyword%")
+    @Query(value = """
+            SELECT * FROM forum_category
+            WHERE soft_deleted = false
+            AND (
+              :keyword IS NULL OR :keyword = ''
+              OR REGEXP_LIKE(name, CONCAT('(^|[^a-zA-Z])', :keyword, '($|[^a-zA-Z])'), 'i')
+              OR REGEXP_LIKE(slug, CONCAT('(^|[^a-zA-Z])', :keyword, '($|[^a-zA-Z])'), 'i')
+            )
+            """, countQuery = """
+            SELECT COUNT(*) FROM forum_category
+            WHERE soft_deleted = false
+            AND (
+              :keyword IS NULL OR :keyword = ''
+              OR REGEXP_LIKE(name, CONCAT('(^|[^a-zA-Z])', :keyword, '($|[^a-zA-Z])'), 'i')
+              OR REGEXP_LIKE(slug, CONCAT('(^|[^a-zA-Z])', :keyword, '($|[^a-zA-Z])'), 'i')
+            )
+            """, nativeQuery = true)
+    /*
+     * Why countQuery? When using nativeQuery = true with Page<>, Spring Data needs
+     * a separate COUNT(*) query to calculate totalElements and totalPages. Without
+     * it, Spring tries to auto-derive it and often fails or generates wrong SQL.
+     */
     Page<ForumCategory> searchByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     /**

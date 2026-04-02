@@ -50,6 +50,4 @@ public class ForumPost {
     @JoinColumn(name = "forum_category_id", nullable = false)
     ForumCategory forumCategory;
     LocalDateTime deletedAt;
-
-
 }
