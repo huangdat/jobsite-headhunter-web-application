@@ -1,5 +1,5 @@
 {
-  "listTabLabel": "[VI] List",
+  "listTabLabel": "Danh sách",
   "list": {
     "pageTitle": "Quản lý Công việc",
     "documentation": "Tài liệu",
@@ -24,7 +24,7 @@
       "toMillion": "Đến (triệu)",
       "applyCustomRange": "Áp dụng khoảng tùy chỉnh",
       "clearAllFilters": "Xóa tất cả bộ lọc",
-      "salaryVND": "Jobs list Bộ lọcs salary v n d"
+      "salaryVND": "Lương danh sách công việc (VND)"
     },
     "viewDetails": "Xem chi tiết →",
     "noJobsFound": "Không tìm thấy công việc nào với các bộ lọc được chọn.",
@@ -79,22 +79,22 @@
     "postedOn": "Đăng vào",
     "applyNow": "Ứng tuyển ngay",
     "saveJob": "Lưu công việc",
-    "jobDetailsSection": "Job details",
-    "jobCodeLabel": "Job code:",
-    "companySection": "Company",
-    "salary": "Salary",
-    "salaryNegotiable": "Negotiable",
-    "salaryOpen": "Open",
-    "responsibilities": "Responsibilities",
-    "requiredSkills": "Required skills",
-    "notAvailable": "Not available",
-    "saving": "Saving...",
-    "saved": "Saved",
-    "generalInfoSection": "General info",
-    "rank": "Rank",
-    "sizeLabel": "Size",
+    "jobDetailsSection": "Chi tiết công việc",
+    "jobCodeLabel": "Mã công việc:",
+    "companySection": "Thông tin công ty",
+    "salary": "Mức lương",
+    "salaryNegotiable": "Thương lượng",
+    "salaryOpen": "Mở",
+    "responsibilities": "Trách nhiệm",
+    "requiredSkills": "Kỹ năng cần thiết",
+    "notAvailable": "Không có sẵn",
+    "saving": "Đang lưu...",
+    "saved": " Đã lưu",
+    "generalInfoSection": "Thông tin chung",
+    "rank": "Cấp bậc",
+    "sizeLabel": "Quy mô",
     "websiteLabel": "Website",
-    "headcount": "Headcount"
+    "headcount": "Số lượng tuyển"
   },
   "edit": {
     "labels": {
@@ -187,6 +187,7 @@
       "requirementsMinLength": "Yêu cầu phải có ít nhất 10 ký tự"
     },
     "messages": {
+      "subtitle": "Điền đầy đủ thông tin để thu hút những ứng viên tiềm năng nhất",
       "failedToCreate": "Tạo thất bại",
       "publishingJob": "Đang xuất bản công việc",
       "publishJob": "Xuất bản công việc",
@@ -198,21 +199,6 @@
       "ONSITE": "Tại văn phòng",
       "REMOTE": "Làm việc từ xa",
       "HYBRID": "Kết hợp"
-    }
-  },
-  "filterPresets": {
-    "experienceOptions": {
-      "all": "Tất cả"
-    },
-    "salaryOptions": {
-      "all": "Tất cả",
-      "negotiable": "Thương lượng"
-    }
-  },
-  "auth": {
-    "defaults": {
-      "location": "Chưa xác định",
-      "workingTime": "Chưa xác định"
     }
   },
   "messages": {
@@ -231,10 +217,10 @@
     "jobRemovedFromSaved": "Công việc đã được xóa khỏi danh sách đã lưu.",
     "jobSaved": "Công việc đã được lưu.",
     "unableToUpdateSavedJobs": "Không thể cập nhật công việc đã lưu. Vui lòng thử lại.",
-    "confidentialCompany": "Công ty bí mật"
+    "confidentialCompany": "Công ty bảo mật"
   },
   "manage": {
-    "pageTitle": "Các Công Việc Của Tôi",
+    "pageTitle": "Quản lý tin đăng",
     "createNewButton": "Tạo mới",
     "noJobsYet": "Chưa có công việc nào.",
     "loadingJobs": "Đang tải công việc...",
@@ -252,43 +238,17 @@
     "setNewDeadlineTitle": "Đặt hạn chót mới",
     "setNewDeadlineDescription": "Chọn một hạn chót mới để mở lại công việc này.",
     "cancelButton": "Hủy",
-    "confirmButton": "Xác nhận"
-  },
-  "saved": {
-    "pageTitle": "Công việc đã lưu",
-    "breadcrumb": "Công việc / Công việc đã lưu",
-    "description": "Theo dõi các vai trò bạn muốn xem lại. Xóa những cái bạn không còn cần.",
-    "noSavedJobs": "Chưa có công việc đã lưu nào",
-    "emptyStateHint": "Nhấp vào \"Lưu công việc\" trên bất kỳ bài đăng nào để giữ nó ở đây để truy cập nhanh.",
-    "browseJobsButton": "Duyệt công việc",
-    "viewJobButton": "Xem công việc",
-    "removeButton": "Xóa",
-    "removingButton": "Đang xóa...",
-    "confidentialCompany": "Công ty bảo mật",
-    "postedText": "Đã đăng",
-    "recentlyPosted": "Gần đây",
-    "unableToLoadSavedJobs": "Không thể tải công việc đã lưu. Vui lòng thử lại sau.",
-    "jobRemovedSuccess": "Công việc đã bị xóa khỏi danh sách đã lưu.",
-    "unableToRemoveJob": "Không thể xóa công việc. Vui lòng thử lại.",
-    "tryAgainButton": "Thử lại"
+    "confirmButton": "Xác nhận",
+    "viewCandidates": "Xem ứng viên"
   },
   "headhunter": {
-    "profileTitle": "Nhà tuyển dụng",
-    "jobPostings": "Tin tuyển dụng",
-    "manageCv": "Quản lý CV",
-    "recruitmentReport": "Báo cáo tuyển dụng",
-    "myServices": "Dịch vụ của tôi",
-    "promotionCodes": "Mã ưu đãi",
-    "orderTracking": "Theo dõi đơn hàng",
-    "activityLog": "Lịch sử hoạt động",
-    "accountSettings": "Cài đặt tài khoản",
-    "supportInbox": "Hộp thư hỗ trợ",
-    "postNewJob": "Đăng tin mới",
-    "list": "Danh sách",
-    "candidates": "Ứng viên",
+    "home": "Trang chủ",
+    "roleLabel": "Bảng Điều Khiển Nhà Tuyển Dụng",
+    "postNewJob": "Đăng Tin Mới",
+    "approveApplications": "Quản lý tin đăng",
     "loadingApplicants": "Đang tải ứng viên...",
-    "applicantPageInfo": "Trang này sẽ liệt kê những ứng viên cho công việc của bạn.",
-    "noApplicantsYet": "Chưa có ứng viên nào."
+    "noApplicantsYet": "Chưa có ứng viên nào.",
+    "footer_copyright": "© 2026 Nền tảng JobSite"
   },
   "validation": {
     "quantityPositive": "Số lượng phải lớn hơn 0",
@@ -298,27 +258,5 @@
     "minCharacters": "Trách nhiệm/Yêu cầu phải có ít nhất 50 ký tự",
     "salaryNegative": "Lương không thể âm",
     "salaryOrder": "Lương tối thiểu không thể lớn hơn lương tối đa"
-  },
-  "jobs": {
-    "list": {
-      "filters": {
-        "salaryVND": "Jobs list Bộ lọcs salary v n d"
-      }
-    }
-  },
-  "accountSettings": "[VI] Account Settings",
-  "activityLog": "[VI] Activity Log",
-  "applicantPageInfo": "[VI] Applicants",
-  "candidates": "[VI] Candidates",
-  "jobPostings": "[VI] Job Postings",
-  "loadingApplicants": "[VI] Loading applicants...",
-  "manageCv": "[VI] Manage CV",
-  "myServices": "[VI] My Services",
-  "noApplicantsYet": "[VI] No applicants yet",
-  "orderTracking": "[VI] Order Tracking",
-  "postNewJob": "[VI] Post New Job",
-  "profileTitle": "[VI] Profile",
-  "promotionCodes": "[VI] Promotion Codes",
-  "recruitmentReport": "[VI] Recruitment Report",
-  "supportInbox": "[VI] Support Inbox"
+  }
 }

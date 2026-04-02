@@ -20,7 +20,7 @@
   "applications.pipeline": "Recruitment Pipeline",
 
   "applications.status.applied": "Applied",
-  "applications.status.screening": "Screening",
+  "applications.status.screening": "Approve",
   "applications.status.interview": "Interview",
   "applications.status.passed": "Hired",
   "applications.status.rejected": "Rejected",
@@ -80,6 +80,9 @@
   "applications.success.rejected": "Application rejected successfully",
   "applications.success.interviewScheduled": "Interview scheduled successfully",
   "applications.success.hired": "Candidate hired successfully",
+  "applications.subtitle": "Track and manage your career opportunities",
+  "applications.candidateView": "Candidate View",
+  "applications.inProgress": "In Progress",
 
   "applications.validation.cvRequired": "Please select or upload a CV.",
   "applications.validation.fullNameRequired": "Full name is required.",
@@ -108,5 +111,8 @@
   "columns.status": "STATUS",
   "columns.actions": "ACTIONS",
 
-  "actions.viewDetails": "View Details"
+  "actions.viewDetails": "View Details",
+  "headhunter.jobIdLabel": "Job ID: #{{id}}",
+  "headhunter.candidatesCount": "{{count}} candidates",
+  "applications.status.submitted": "Applied"
 }

@@ -16,7 +16,7 @@
 
 // API Base URLs
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_URL || "http://localhost:8081/headhunt",
+  BASE_URL: import.meta.env.VITE_API_URL || "http://localhost:8080/headhunt",
   TIMEOUT: 15000,
   RETRY_COUNT: 3,
   RETRY_DELAY: 1000,
@@ -50,8 +50,8 @@ export const API_ENDPOINTS = {
     SIGNUP_CANDIDATE: "/api/account/signup-candidate",
     SIGNUP_HEADHUNTER: "/api/account/signup-headhunter",
     SIGNUP_COLLABORATOR: "/api/account/signup-collaborator",
-    GET_PROFILE: "/api/account/profile",
-    UPDATE_PROFILE: "/api/account/profile",
+    GET_PROFILE: "/api/account/myInfo",
+    UPDATE_PROFILE: "/api/account/myInfo",
     CHANGE_PASSWORD: "/api/account/changeMyPassword",
   },
 

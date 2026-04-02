@@ -4,9 +4,9 @@
  */
 
 import { apiClient } from "@/shared/utils/axios";
-import axios from "axios";
 import type {
   CVFile,
+  FileFormat,
   CVUploadResponse,
   CVListResponse,
   CVDeleteResponse,
@@ -20,14 +20,36 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 const API_ENDPOINTS = {
   CV_UPLOAD: `${API_BASE_URL}/cv/MyCv`,
-  CV_LIST: `${API_BASE_URL}/api/cv`,
-  CV_DETAIL: (id: string) => `${API_BASE_URL}/api/cv/${id}`,
-  CV_DOWNLOAD: (id: string) => `${API_BASE_URL}/api/cv/${id}/download`,
-  CV_DELETE: (id: string) => `${API_BASE_URL}/api/cv/${id}`,
-  CV_MAKE_ACTIVE: (id: string) => `${API_BASE_URL}/api/cv/${id}/make-active`,
+  CV_LIST: `${API_BASE_URL}/cv/myCv`,
+  CV_DETAIL: (id: string) => `${API_BASE_URL}/cv/${id}`,
+  CV_DOWNLOAD: (id: string) => `${API_BASE_URL}/cv/${id}/download`,
+  CV_DELETE: (id: string) => `${API_BASE_URL}/cv/${id}`,
+  CV_MAKE_ACTIVE: (id: string) => `${API_BASE_URL}/cv/${id}/make-active`,
   PROFILE_STRENGTH: `${API_BASE_URL}/candidate/profile/strength`,
   PRIVACY_SETTINGS: `${API_BASE_URL}/candidate/profile/privacy`,
 } as const;
+
+const SUPPORTED_FORMATS: FileFormat[] = ["pdf", "doc", "docx", "rtf"];
+
+const mapCandidateCvToFile = (cv: unknown): CVFile => {
+  const candidate = (cv as { cvUrl?: string; id?: unknown; createdAt?: string | Date } ) || {};
+  const url = candidate.cvUrl ?? "";
+  const filename = url.split("/").pop() || "resume";
+  const ext = filename.split(".").pop()?.toLowerCase() ?? "";
+  const format = SUPPORTED_FORMATS.includes(ext as FileFormat)
+    ? (ext as FileFormat)
+    : "pdf";
+
+  return {
+    id: String(candidate.id ?? filename),
+    filename,
+    fileSize: 0,
+    format,
+    uploadedAt: candidate.createdAt ? new Date(candidate.createdAt as string) : new Date(),
+    status: "success",
+    isActive: true,
+  };
+};
 
 /**
  * Upload a new CV file
@@ -37,7 +59,7 @@ export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
     const formData = new FormData();
     formData.append("cvFile", file);
 
-    const response = await apiClient.put<CVUploadResponse>( // Dùng apiClient để có Token
+    const response = await apiClient.put<{ result?: unknown }>(
       API_ENDPOINTS.CV_UPLOAD,
       formData,
       {
@@ -45,7 +67,12 @@ export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
       }
     );
 
-    return response.data;
+    const cv = response.data?.result as unknown;
+    return {
+      success: true,
+      message: "messages.uploadSuccess",
+      file: cv ? mapCandidateCvToFile(cv) : undefined,
+    };
   } catch (error) {
     console.error("Error uploading CV:", error);
     return { success: false, message: "messages.uploadFailed" };
@@ -57,9 +84,14 @@ export const uploadCVFile = async (file: File): Promise<CVUploadResponse> => {
  */
 export const fetchCVList = async (): Promise<CVListResponse> => {
   try {
-    // Gọi thẳng API_ENDPOINTS.CV_LIST vì object ở trên đã để phẳng
-    const response = await apiClient.get<CVListResponse>(API_ENDPOINTS.CV_LIST);
-    return response.data;
+    const response = await apiClient.get<{ result?: unknown }>(API_ENDPOINTS.CV_LIST);
+    const cv = response.data?.result as unknown;
+    return {
+      success: true,
+      data: cv ? [mapCandidateCvToFile(cv)] : [],
+      total: cv ? 1 : 0,
+      limit: 5,
+    };
   } catch (error) {
     console.error("Error fetching CV list:", error);
     return { success: false, data: [], total: 0, limit: 5 };
@@ -145,22 +177,14 @@ export const makeCVActive = async (id: string): Promise<CVUploadResponse> => {
  */
 export const fetchProfileStrength =
   async (): Promise<ProfileStrengthResponse> => {
-    try {
-      const response = await apiClient.get<ProfileStrengthResponse>(
-        API_ENDPOINTS.PROFILE_STRENGTH
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching profile strength:", error);
-      return {
-        success: false,
-        data: {
-          percentage: 0,
-          items: [],
-          lastUpdated: new Date(),
-        },
-      };
-    }
+    return {
+      success: true,
+      data: {
+        percentage: 0,
+        items: [],
+        lastUpdated: new Date(),
+      },
+    };
   };
 
 /**

@@ -7,7 +7,6 @@ import { useAuth } from "@/features/auth/context/useAuth";
 export function MainLayout() {
   const { user } = useAuth();
 
-  // Render a specific layout for headhunters (case-insensitive check)
   if (user?.role?.toLowerCase() === "headhunter") {
     return <HeadhunterLayout />;
   }
