@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiClient } from "@/shared/utils/axios";
+import { handleError } from "@/shared/api/errorHandler";
 import type { Application, ApiResponse, PaginatedResponse } from "../types";
 
 /**
@@ -9,25 +11,33 @@ export const submitApplication = async (
   jobId: number,
   data: any
 ): Promise<Application> => {
-  const isFormData = data instanceof FormData;
+  try {
+    const isFormData = data instanceof FormData;
 
-  const response = await apiClient.post<ApiResponse<Application>>(
-    `/api/jobs/${jobId}/applications`,
-    data,
-    isFormData
-      ? {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      : {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-  );
+    const response = await apiClient.post<ApiResponse<Application>>(
+      `/api/jobs/${jobId}/applications`,
+      data,
+      isFormData
+        ? {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        : {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+    );
 
-  return response.data.result;
+    return response.data.result;
+  } catch (error) {
+    handleError(error, {
+      service: "applications",
+      action: "submitApplication",
+    });
+    throw error;
+  }
 };
 
 /**
@@ -151,13 +161,14 @@ export const fetchMyApplications = async (params: any = {}): Promise<any> => {
   try {
     const response = await apiClient.get<ApiResponse<any>>(
       `/api/candidates/me/applications`,
-      {
-        params: params,
-      }
+      { params }
     );
     return response.data.result;
   } catch (error) {
-    console.error("Error fetching my applications:", error);
+    handleError(error, {
+      service: "applications",
+      action: "fetchMyApplications",
+    });
     throw error;
   }
 };
@@ -167,9 +178,11 @@ export const fetchMyCurrentCV = async (): Promise<any> => {
     const response = await apiClient.get<ApiResponse<any>>(`/api/cv/myCv`);
     return response.data.result;
   } catch (error) {
-    console.error("Error fetching current CV:", error);
+    handleError(error, {
+      service: "cv",
+      action: "fetchMyCurrentCV",
+      silent: true,
+    });
     return null;
   }
 };
-
-
