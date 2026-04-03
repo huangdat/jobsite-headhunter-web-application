@@ -11,7 +11,8 @@ import {
   Lightbulb,
   Info,
   FileUp,
-} from "lucide-react"; // Import Lucide Icons
+  FileText, // Import thêm icon để hiển thị file CV
+} from "lucide-react";
 import type {
   CandidateProfileFormValues,
   ProfileValidationErrors,
@@ -188,17 +189,48 @@ export function ProfileForm({
             </p>
           </div>
 
-          {/* CV Upload Box */}
+          {/* CV Management Box */}
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-4">
               <FileUp className="h-4 w-4 text-slate-500" />
               <h3 className="text-sm font-black uppercase tracking-wide text-slate-600">
                 {t("cv.management.title")}
               </h3>
             </div>
-            <p className="text-sm text-slate-600 mb-4">
-              {t("cv.management.empty.description")}
-            </p>
+
+            {hasCV ? (
+              <div className="mb-6 p-4 rounded-2xl border border-emerald-100 bg-emerald-50/40 flex items-center justify-between group transition-all">
+                <div className="flex items-center gap-3 overflow-hidden">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                    <FileText size={24} />
+                  </div>
+                  <div className="overflow-hidden">
+                    <p className="text-sm font-bold text-slate-700 truncate">
+                      {values.cvUrl
+                        ? decodeURIComponent(
+                            values.cvUrl.split("/").pop()?.split("?")[0] || ""
+                          )
+                        : values.fullName
+                          ? `${values.fullName}_CV.pdf`
+                          : "My_Resume.pdf"}
+                    </p>
+                    <a
+                      href={values.cvUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:underline flex items-center gap-1 mt-0.5"
+                    >
+                      {t("common.view") || "View Document"}
+                    </a>
+                  </div>
+                </div>
+                <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
+              </div>
+            ) : (
+              <p className="text-sm text-slate-600 mb-6 italic">
+                {t("cv.management.empty.description")}
+              </p>
+            )}
 
             <input
               aria-label={t("cv.management.empty.button") || "Upload CV"}
@@ -215,6 +247,8 @@ export function ProfileForm({
                   const url = await profileApi.uploadCV(file);
                   if (url) {
                     onFieldChange("cvUrl" as const, url);
+                    // Tự động lưu vào Profile sau khi upload thành công
+                    await onSave();
                     toast.success(t("cv.management.success.banner"));
                   } else {
                     toast.error(t("cv.management.error.banner"));
@@ -233,7 +267,7 @@ export function ProfileForm({
               <Button
                 variant={hasCV ? "outline" : "primary"}
                 size="sm"
-                className={`h-10 px-6 font-bold cursor-pointer rounded-xl shadow-md transition-all active:scale-95 ${
+                className={`h-11 px-6 font-bold cursor-pointer rounded-xl shadow-md transition-all active:scale-95 flex-1 ${
                   !hasCV
                     ? "bg-emerald-600 hover:bg-emerald-700 text-white"
                     : "border-emerald-600 text-emerald-600 hover:bg-emerald-50"
