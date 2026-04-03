@@ -24,7 +24,7 @@ export function PostManagementPage() {
           t("forum.posts.description") ||
           "Create, edit, and publish articles. Manage post status and organize content by categories."
         }
-        action={
+        actions={
           <Button
             onClick={() => setIsCreateModalOpen(true)}
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700"

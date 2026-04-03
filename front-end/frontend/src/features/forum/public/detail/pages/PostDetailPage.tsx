@@ -12,7 +12,6 @@ import { RelatedPosts } from "../components/RelatedPosts";
 import { useTranslation } from "react-i18next";
 import { PageContainer } from "@/shared/components/layout";
 import { PageSkeleton, ErrorState } from "@/shared/components/states";
-import { FileQuestion } from "lucide-react";
 
 export function PostDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -28,14 +27,12 @@ export function PostDetailPage() {
       <PageContainer variant="white" maxWidth="4xl">
         <ErrorState
           variant="page"
-          icon={FileQuestion}
           title={t("forum.detail.notFound") || "Không tìm thấy bài viết"}
           message={
             t("forum.detail.notFoundMessage") ||
             "Bài viết bạn tìm kiếm không tồn tại hoặc đã bị xóa."
           }
           onRetry={() => navigate("/forum-posts")}
-          retryLabel={t("forum.actions.backToList") || "Quay lại danh sách"}
         />
       </PageContainer>
     );

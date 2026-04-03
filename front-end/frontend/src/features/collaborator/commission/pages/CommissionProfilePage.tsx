@@ -6,7 +6,6 @@
 
 import React from "react";
 import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import {
   CommissionForm,
   CommissionStats,
@@ -25,7 +24,6 @@ import { PageSkeleton } from "@/shared/components/states";
  */
 export function CommissionProfilePage() {
   const { t: commissionT } = useCommissionTranslation();
-  const { t: tCommon } = useAppTranslation();
 
   const { stats, requestPayout, loading } = useCommissionManagement();
 
@@ -48,10 +46,6 @@ export function CommissionProfilePage() {
         variant="bordered"
         title={commissionT("page.title")}
         description={commissionT("page.subtitle")}
-        breadcrumbs={[
-          { label: tCommon("breadcrumb.home"), href: "/" },
-          { label: commissionT("breadcrumb.commission") },
-        ]}
       />
 
       {/* Main Content */}

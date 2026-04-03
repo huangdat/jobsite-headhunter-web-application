@@ -59,7 +59,6 @@ export function SavedJobsPage() {
           variant="card"
           title={t("saved.unableToLoadSavedJobs")}
           onRetry={() => window.location.reload()}
-          retryLabel={t("saved.tryAgainButton")}
         />
       );
     }
@@ -70,11 +69,8 @@ export function SavedJobsPage() {
           icon={Bookmark}
           title={t("saved.noSavedJobs")}
           description={t("saved.emptyStateHint")}
-          action={
-            <Button className="mt-6" onClick={() => navigate("/jobs")}>
-              {t("saved.browseJobsButton")}
-            </Button>
-          }
+          actionLabel={t("saved.browseJobsButton")}
+          onAction={() => navigate("/jobs")}
         />
       );
     }
@@ -145,7 +141,6 @@ export function SavedJobsPage() {
         variant="default"
         title={t("saved.pageTitle")}
         description={t("saved.description")}
-        breadcrumbs={[{ label: t("saved.breadcrumb") }]}
       />
 
       {renderContent()}
