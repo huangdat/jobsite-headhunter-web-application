@@ -30,6 +30,7 @@ public enum ErrorCode {
 
     // Custom error codes for Account module
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, "error.account_not_found"),
+    CANDIDATE_PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "error.candidate_profile_not_found"),
     NO_ACCOUNTS_STORED(HttpStatus.NOT_FOUND, "error.no_accounts_stored"),
     USER_EXISTED(HttpStatus.CONFLICT, "error.user_existed"),
     EMAIL_EXISTED(HttpStatus.CONFLICT, "error.email_existed"),

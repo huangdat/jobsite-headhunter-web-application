@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.controller.interview;
 
+import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.req.interview.InterviewCreateReq;
 import com.rikkeisoft.backend.model.dto.resp.interview.InterviewResp;
 import com.rikkeisoft.backend.service.InterviewService;
@@ -25,8 +26,11 @@ public class InterviewController {
 
     // API: Invite for interview (create new schedule)
     @PostMapping
-    public ResponseEntity<InterviewResp> scheduleInterview(@Valid @RequestBody InterviewCreateReq request) {
+    public ResponseEntity<APIResponse<InterviewResp>> scheduleInterview(@Valid @RequestBody InterviewCreateReq request) {
         InterviewResp response = interviewService.scheduleInterview(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(APIResponse.<InterviewResp>builder()
+                .status(HttpStatus.CREATED)
+                .result(response)
+                .build());
     }
 }

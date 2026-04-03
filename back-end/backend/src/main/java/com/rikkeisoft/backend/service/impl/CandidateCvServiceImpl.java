@@ -91,9 +91,13 @@ public class CandidateCvServiceImpl implements CandidateCvService {
         // Find the account associated with the username
         var account = accountRepo.findByUsername(contextName)
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
-        // Find the candidate CV associated with the account
+        // Find the candidate CV associated with the account, or create it on first upload
         var candidateCv = candidateCvRepo.findByCandidate_Id(account.getId())
-                .orElseThrow(() -> new AppException(ErrorCode.CV_NOT_FOUND));
+                .orElseGet(() -> CandidateCv.builder()
+                        .candidate(account)
+                        .isVisible(true)
+                        .createdAt(java.time.LocalDateTime.now())
+                        .build());
 
         // Update the candidate CV with the new information from the request
         if (req.getCvFile() != null) {
