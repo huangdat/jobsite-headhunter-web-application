@@ -55,12 +55,12 @@ const validationSchema = yup.object().shape({
   notes: yup.string().optional(),
 });
 
-export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
+export const InterviewScheduleModal = ({
   isOpen,
   onClose,
   onSubmit,
   isLoading = false,
-}) => {
+}: InterviewScheduleModalProps) => {
   const { t } = useAppTranslation();
   const [interviewType, setInterviewType] = useState<
     InterviewType | undefined
@@ -69,7 +69,7 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
   const form = useForm<InterviewScheduleFormData>({
     resolver: yupResolver(validationSchema) as any,
     defaultValues: {
-      interviewType: undefined,
+      interviewType: "" as any,
       scheduledAt: "",
       durationMinutes: 30,
       meetingLink: "",
@@ -79,9 +79,13 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
   });
 
   const handleSubmit = async (data: InterviewScheduleFormData) => {
-    await onSubmit(data);
-    form.reset();
-    onClose();
+    try {
+      await onSubmit(data);
+      form.reset();
+      onClose();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -99,7 +103,6 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-4"
           >
-            {/* Interview Type */}
             <FormField
               control={form.control}
               name="interviewType"
@@ -107,7 +110,7 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
                 <FormItem>
                   <FormLabel>{t("applications.interview.type")}</FormLabel>
                   <Select
-                    value={field.value}
+                    value={field.value || ""}
                     onValueChange={(val) => {
                       field.onChange(val);
                       setInterviewType(val as InterviewType);
@@ -132,7 +135,6 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
               )}
             />
 
-            {/* Scheduled At */}
             <FormField
               control={form.control}
               name="scheduledAt"
@@ -149,7 +151,6 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
               )}
             />
 
-            {/* Duration */}
             <FormField
               control={form.control}
               name="durationMinutes"
@@ -164,7 +165,6 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
               )}
             />
 
-            {/* Meeting Link or Location */}
             {interviewType === InterviewType.ONLINE && (
               <FormField
                 control={form.control}
@@ -204,7 +204,6 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
               />
             )}
 
-            {/* Notes */}
             <FormField
               control={form.control}
               name="notes"
@@ -219,7 +218,6 @@ export const InterviewScheduleModal: React.FC<InterviewScheduleModalProps> = ({
               )}
             />
 
-            {/* Submit */}
             <div className="flex gap-2 pt-4">
               <Button type="submit" disabled={isLoading} className="flex-1">
                 {isLoading

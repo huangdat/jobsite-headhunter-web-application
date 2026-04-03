@@ -39,6 +39,7 @@ export interface CandidateProfilePayload {
   bio?: string;
   city?: string;
   openForWork?: boolean;
+  cvUrl?: string; // Đảm bảo trường này tồn tại
 }
 
 export interface UseProfileUpdateReturn {
