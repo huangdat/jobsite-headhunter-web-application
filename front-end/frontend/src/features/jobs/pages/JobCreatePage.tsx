@@ -6,7 +6,7 @@ import { useJobsTranslation } from "@/shared/hooks";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { RichTextEditor } from "@/components/RichTextEditor";
+import { RichTextEditor } from "@/components/RichTextEditor.lazy";
 import { createJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
@@ -69,7 +69,7 @@ export function JobCreatePage() {
     const stripMarkdown = (s = "") =>
       s
         .replace(/<[^>]*>/g, "")
-        .replace(/[*_~`>#\-\[\(\)!]/g, "")
+        .replace(/[*_~`>#\-[()!]/g, "")
         .replace(/\s+/g, " ")
         .trim();
 
@@ -97,7 +97,7 @@ export function JobCreatePage() {
     const strip = (s = "") =>
       s
         .replace(/<[^>]*>/g, "")
-        .replace(/[*_~`>#\-\[\(\)!]/g, "")
+        .replace(/[*_~`>#\-[()!]/g, "")
         .trim();
     if (
       strip(values.responsibilities).length < 50 ||
@@ -150,7 +150,7 @@ export function JobCreatePage() {
       } else {
         toast.error(t("create.messages.failedToCreate"));
       }
-    } catch (error) {
+    } catch {
       toast.error(t("create.messages.failedToCreate"));
     } finally {
       setIsSubmitting(false);
@@ -380,7 +380,7 @@ export function JobCreatePage() {
                 validate: (v) => {
                   const stripped = (v || "")
                     .replace(/<[^>]*>/g, "")
-                    .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
+                    .replace(/[*_~`>#\-[]()!]/g, "")
                     .trim();
                   return (
                     (v && stripped.length >= 50) ||
@@ -414,7 +414,7 @@ export function JobCreatePage() {
                 validate: (v) => {
                   const stripped = (v || "")
                     .replace(/<[^>]*>/g, "")
-                    .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
+                    .replace(/[*_~`>#\-[]()!]/g, "")
                     .trim();
                   return (
                     (v && stripped.length >= 50) ||

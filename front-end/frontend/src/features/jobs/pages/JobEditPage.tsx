@@ -6,7 +6,7 @@ import { useJobsTranslation } from "@/shared/hooks";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { RichTextEditor } from "@/components/RichTextEditor";
+import { RichTextEditor } from "@/components/RichTextEditor.lazy";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { getJobDetail, updateJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
@@ -84,7 +84,7 @@ export function JobEditPage() {
     return () => {
       active = false;
     };
-  }, [id]);
+  }, [id, reset, t]);
 
   const selectedSkillIds = watch("skillIds") ?? [];
 

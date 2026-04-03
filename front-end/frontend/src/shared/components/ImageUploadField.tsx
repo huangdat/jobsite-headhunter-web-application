@@ -21,7 +21,7 @@
  * ```
  */
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, memo } from "react";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -75,7 +75,7 @@ export interface ImageUploadFieldProps {
   };
 }
 
-export function ImageUploadField({
+export const ImageUploadField = memo(function ImageUploadField({
   preview,
   onChange,
   onRemove,
@@ -206,4 +206,6 @@ export function ImageUploadField({
       {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   );
-}
+});
+
+ImageUploadField.displayName = "ImageUploadField";
