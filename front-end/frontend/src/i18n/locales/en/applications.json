@@ -14,6 +14,9 @@
   "common.error": "An error occurred, please try again",
   "common.notFound": "Not found",
   "common.view": "View",
+  "common.approve": "Approve",
+  "common.loading": "Loading...",
+  "common.cancel": "Cancel",
 
   "applications.title": "Application Management",
   "applications.myApplications": "My Applications",
