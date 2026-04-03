@@ -99,9 +99,7 @@ export const ApplicationDetailPage: React.FC = () => {
       if (updated) setApplication(updated);
       toast.success(t(successKey));
     } catch (error) {
-      toast.error(
-        "Backend lỗi DB, nhưng UI đã được chuyển trạng thái để test!"
-      );
+      toast.error(t("applications.error.updateStatus") || t("common.error"));
     }
   };
 
@@ -252,7 +250,7 @@ export const ApplicationDetailPage: React.FC = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="font-bold text-xs text-lime-600 uppercase tracking-widest"
+                      className="font-bold text-xs cursor-pointer text-lime-600 uppercase tracking-widest hover:bg-transparent hover:text-lime-600 p-0"
                     >
                       {t("common.view")}
                     </Button>
