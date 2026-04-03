@@ -3,7 +3,7 @@
  * Used when no data is available
  */
 
-import React from "react";
+import React, { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Inbox, Search, FileX, AlertCircle } from "lucide-react";
 
@@ -52,7 +52,7 @@ const variantConfig = {
  * />
  * ```
  */
-export const EmptyState: React.FC<EmptyStateProps> = ({
+export const EmptyState = memo<EmptyStateProps>(function EmptyState({
   variant = "default",
   title,
   description,
@@ -60,7 +60,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   actionLabel,
   onAction,
   className = "",
-}) => {
+}) {
   // eslint-disable-next-line security/detect-object-injection
   const config = variantConfig[variant];
   const Icon = CustomIcon || config.icon;
@@ -90,4 +90,6 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       )}
     </div>
   );
-};
+});
+
+EmptyState.displayName = "EmptyState";

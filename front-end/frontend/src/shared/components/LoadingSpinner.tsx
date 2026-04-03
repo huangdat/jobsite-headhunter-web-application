@@ -3,7 +3,7 @@
  * Consistent loading indicator across the application
  */
 
-import React from "react";
+import { memo } from "react";
 
 export interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
@@ -33,31 +33,35 @@ const sizeClasses = {
  * <LoadingSpinner fullScreen text="Processing..." />
  * ```
  */
-export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
-  size = "md",
-  text,
-  fullScreen = false,
-  className = "",
-}) => {
-  const spinner = (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <div
-        className={`animate-spin rounded-full border-slate-300 border-t-slate-600 ${
-          // eslint-disable-next-line security/detect-object-injection
-          sizeClasses[size]
-        }`}
-      ></div>
-      {text && <span className="text-sm text-slate-600">{text}</span>}
-    </div>
-  );
-
-  if (fullScreen) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
-        {spinner}
+export const LoadingSpinner = memo<LoadingSpinnerProps>(
+  function LoadingSpinner({
+    size = "md",
+    text,
+    fullScreen = false,
+    className = "",
+  }) {
+    const spinner = (
+      <div className={`flex items-center gap-3 ${className}`}>
+        <div
+          className={`animate-spin rounded-full border-slate-300 border-t-slate-600 ${
+            // eslint-disable-next-line security/detect-object-injection
+            sizeClasses[size]
+          }`}
+        ></div>
+        {text && <span className="text-sm text-slate-600">{text}</span>}
       </div>
     );
-  }
 
-  return spinner;
-};
+    if (fullScreen) {
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+          {spinner}
+        </div>
+      );
+    }
+
+    return spinner;
+  }
+);
+
+LoadingSpinner.displayName = "LoadingSpinner";
