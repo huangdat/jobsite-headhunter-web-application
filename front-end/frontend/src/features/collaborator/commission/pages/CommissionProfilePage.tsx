@@ -56,30 +56,30 @@ export function CommissionProfilePage() {
 
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Main Form Section (8 columns) */}
-          <div className="lg:col-span-8">
-            <div className="bg-white rounded-lg shadow">
-              <div className="p-8">
-                <CommissionForm />
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar Section (4 columns) */}
-          <div className="lg:col-span-4">
-            <div className="bg-white rounded-lg shadow p-6 sticky top-24">
-              <h2 className="text-lg font-semibold text-slate-900 mb-4">
-                {commissionT("section.earnings")}
-              </h2>
-              <CommissionStats stats={stats} onRequestPayout={requestPayout} />
+        {/* Main Form Section (8 columns) */}
+        <div className="lg:col-span-8">
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-8">
+              <CommissionForm />
             </div>
           </div>
         </div>
 
-        {/* Benefits Section - Full Width */}
-        <div className="mt-12 bg-white dark:bg-gray-900 rounded-lg shadow p-8">
-          <CommissionBenefits />
+        {/* Sidebar Section (4 columns) */}
+        <div className="lg:col-span-4">
+          <div className="bg-white rounded-lg shadow p-6 sticky top-24">
+            <h2 className="text-lg font-semibold text-slate-900 mb-4">
+              {commissionT("section.earnings")}
+            </h2>
+            <CommissionStats stats={stats} onRequestPayout={requestPayout} />
+          </div>
         </div>
-      </PageContainer>
+      </div>
+
+      {/* Benefits Section - Full Width */}
+      <div className="mt-12 bg-white dark:bg-gray-900 rounded-lg shadow p-8">
+        <CommissionBenefits />
+      </div>
+    </PageContainer>
   );
 }
