@@ -1,26 +1,26 @@
-import { cn } from '@/lib/utils';
-import { type ReactNode } from 'react';
+import { cn } from "@/lib/utils";
+import { type ReactNode } from "react";
 
 interface FormLayoutProps {
   children: ReactNode;
   columns?: 1 | 2 | 3;
-  spacing?: 'sm' | 'md' | 'lg';
+  spacing?: "sm" | "md" | "lg";
   className?: string;
 }
 
 /**
  * FormLayout - Responsive grid layout for forms
- * 
+ *
  * Replaces inconsistent form layouts:
  * - JobCreatePage: multi-column grid with gap-6
  * - ApplicationForm: single column with gap-4
  * - ProfileEditPage: mixed grid layouts
- * 
+ *
  * Features:
  * - Responsive column counts (stacks on mobile)
  * - Consistent spacing scale
  * - Easy to read form structure
- * 
+ *
  * @example
  * ```tsx
  * <FormLayout columns={2} spacing="md">
@@ -30,25 +30,27 @@ interface FormLayoutProps {
  * </FormLayout>
  * ```
  */
-export function FormLayout({ 
-  children, 
+export function FormLayout({
+  children,
   columns = 1,
-  spacing = 'md',
-  className 
+  spacing = "md",
+  className,
 }: FormLayoutProps) {
   return (
-    <div className={cn(
-      "grid",
-      // Columns
-      columns === 1 && "grid-cols-1",
-      columns === 2 && "grid-cols-1 md:grid-cols-2",
-      columns === 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
-      // Spacing
-      spacing === 'sm' && "gap-4",
-      spacing === 'md' && "gap-6",
-      spacing === 'lg' && "gap-8",
-      className
-    )}>
+    <div
+      className={cn(
+        "grid",
+        // Columns
+        columns === 1 && "grid-cols-1",
+        columns === 2 && "grid-cols-1 md:grid-cols-2",
+        columns === 3 && "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+        // Spacing
+        spacing === "sm" && "gap-4",
+        spacing === "md" && "gap-6",
+        spacing === "lg" && "gap-8",
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -63,20 +65,20 @@ interface FormSectionProps {
 
 /**
  * FormSection - Logical grouping of form fields
- * 
+ *
  * Use to separate different sections of a large form:
  * - Basic Information
  * - Contact Details
  * - Preferences
- * 
+ *
  * Features:
  * - Optional section title & description
  * - Border separator for visual hierarchy
  * - Consistent spacing
- * 
+ *
  * @example
  * ```tsx
- * <FormSection 
+ * <FormSection
  *   title="Basic Information"
  *   description="Tell us about yourself"
  * >
@@ -87,11 +89,11 @@ interface FormSectionProps {
  * </FormSection>
  * ```
  */
-export function FormSection({ 
-  title, 
-  description, 
+export function FormSection({
+  title,
+  description,
   children,
-  className 
+  className,
 }: FormSectionProps) {
   return (
     <div className={cn("space-y-4", className)}>
