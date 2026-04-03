@@ -35,13 +35,49 @@
     "closedDescription": "Vị trí đã đóng",
     "draftDescription": "Đang soạn thảo"
   },
-  "common": {
-    "loading": "Đang tải...",
-    "retry": "Thử lại",
-    "noData": "Không có dữ liệu",
-    "noChange": "Không thay đổi",
-    "failedToLoad": "Tải dữ liệu thất bại"
+  "headhunter": {
+    "dashboard": {
+      "title": "Dashboard Headhunter",
+      "subtitle": "Hiệu suất Cá nhân & Thống kê",
+      "totalJobs": "Tổng Công việc",
+      "activeApplications": "Ứng tuyển Hoạt động",
+      "timeToHire": "Thời gian Tuyển dụng Trung bình",
+      "conversionRate": "Tỷ lệ Chuyển đổi",
+      "hiringFunnel": "Phễu Tuyển dụng",
+      "hiringFunnelEmpty": "Chưa có dữ liệu ứng tuyển cho công việc này",
+      "upcomingInterviews": "Phỏng vấn Sắp tới",
+      "noUpcomingInterviews": "Chưa có phỏng vấn nào",
+      "pendingCandidates": "Ứng viên Chờ Duyệt",
+      "noPendingCandidates": "Không có ứng viên chờ duyệt",
+      "filter": {
+        "jobFilter": "Lọc theo Công việc",
+        "allJobs": "Tất cả Công việc",
+        "jobPlaceholder": "Chọn công việc"
+      },
+      "interviewDetails": {
+        "candidate": "Ứng viên",
+        "job": "Công việc",
+        "time": "Giờ",
+        "location": "Địa điểm",
+        "type": "Loại Phỏng vấn"
+      },
+      "candidateDetails": {
+        "submitted": "Gửi",
+        "status": "Trạng thái",
+        "pending": "Chờ Duyệt",
+        "rejected": "Từ chối",
+        "approved": "Phê duyệt"
+      },
+      "emptyStateJobFilter": "Chưa có dữ liệu ứng tuyển cho công việc này. Tiếp tục theo dõi!",
+      "refresh": "Làm mới",
+      "days": "ngày"
+    }
   },
+  "loading": "Đang tải...",
+  "retry": "Thử lại",
+  "noData": "Không có dữ liệu",
+  "noChange": "Không thay đổi",
+  "failedToLoad": "Tải dữ liệu thất bại",
   "error": {
     "failedToLoad": "Lỗi khi tải dữ liệu"
   }
