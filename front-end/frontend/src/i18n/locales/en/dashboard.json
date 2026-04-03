@@ -35,13 +35,49 @@
     "closedDescription": "Closed positions",
     "draftDescription": "Work in progress"
   },
-  "common": {
-    "loading": "Loading...",
-    "retry": "Retry",
-    "noData": "No data available",
-    "noChange": "No change",
-    "failedToLoad": "Failed to load data"
+  "headhunter": {
+    "dashboard": {
+      "title": "Headhunter Dashboard",
+      "subtitle": "Personal Performance & Metrics",
+      "totalJobs": "Total Jobs",
+      "activeApplications": "Active Applications",
+      "timeToHire": "Avg Time-to-Hire",
+      "conversionRate": "Conversion Rate",
+      "hiringFunnel": "Hiring Funnel",
+      "hiringFunnelEmpty": "No application data for selected job",
+      "upcomingInterviews": "Upcoming Interviews",
+      "noUpcomingInterviews": "No interviews scheduled",
+      "pendingCandidates": "Pending Candidates",
+      "noPendingCandidates": "No candidates awaiting review",
+      "filter": {
+        "jobFilter": "Filter by Job",
+        "allJobs": "All Jobs",
+        "jobPlaceholder": "Select a job"
+      },
+      "interviewDetails": {
+        "candidate": "Candidate",
+        "job": "Job",
+        "time": "Time",
+        "location": "Location",
+        "type": "Interview Type"
+      },
+      "candidateDetails": {
+        "submitted": "Submitted",
+        "status": "Status",
+        "pending": "Pending Review",
+        "rejected": "Rejected",
+        "approved": "Approved"
+      },
+      "emptyStateJobFilter": "No application data for this job. Keep tracking!",
+      "refresh": "Refresh",
+      "days": "days"
+    }
   },
+  "loading": "Loading...",
+  "retry": "Retry",
+  "noData": "No data available",
+  "noChange": "No change",
+  "failedToLoad": "Failed to load data",
   "error": {
     "failedToLoad": "Error loading dashboard"
   }

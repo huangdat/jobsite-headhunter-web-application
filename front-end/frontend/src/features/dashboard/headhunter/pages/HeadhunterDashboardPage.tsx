@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useHeadhunterDashboard } from "../hooks/useHeadhunterDashboard";
 import { DashboardSkeleton } from "../../shared/components/DashboardSkeleton";
 import { PerformanceKPIs } from "../components/PerformanceKPIs";
@@ -11,8 +12,13 @@ import type { DashboardFilterOptions } from "../../types";
 /**
  * HeadhunterDashboardPage
  * Dashboard cho Headhunter (DASH-03: Hiệu suất cá nhân)
+ * AC1: Data isolation - chỉ hiển thị data của jobs do user này sở hữu
+ * AC2: Upcoming action items - Lịch phỏng vấn + danh sách ứng viên chờ duyệt
+ * AC3: Empty state - khi job filter chưa có applications
+ * AC4: Loading state - skeleton screens
  */
 export const HeadhunterDashboardPage: React.FC = () => {
+  const { t } = useTranslation("dashboard");
   const [filters, setFilters] = useState<DashboardFilterOptions>({});
 
   // TODO: Get headhunterId from current user context
@@ -34,83 +40,111 @@ export const HeadhunterDashboardPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="p-6 bg-red-50 border border-red-200 rounded-lg">
-        <h2 className="text-red-800 font-semibold">Error loading dashboard</h2>
-        <p className="text-red-600 text-sm mt-1">{error}</p>
-        <button
-          onClick={refetch}
-          className="mt-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-        >
-          Retry
-        </button>
-      </div>
+      <main className="flex-1 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950">
+        <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-xl max-w-md">
+          <h2 className="text-red-800 dark:text-red-400 font-semibold">
+            {t("error.failedToLoad", "Error loading dashboard")}
+          </h2>
+          <p className="text-red-600 dark:text-red-300 text-sm mt-1">{error}</p>
+          <button
+            onClick={refetch}
+            className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+          >
+            {t("common.retry", "Retry")}
+          </button>
+        </div>
+      </main>
     );
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <main className="flex-1 flex flex-col overflow-hidden bg-slate-50 dark:bg-slate-950">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Headhunter Dashboard
-          </h1>
-          <p className="text-gray-600 mt-1">Personal Performance & Metrics</p>
+      <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+              {t("headhunter.dashboard.title", "Headhunter Dashboard")}
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 mt-1">
+              {t(
+                "headhunter.dashboard.subtitle",
+                "Personal Performance & Metrics"
+              )}
+            </p>
+          </div>
+          <button
+            onClick={refetch}
+            disabled={isLoading}
+            className="px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {isLoading
+              ? t("common.loading", "Loading...")
+              : t("headhunter.dashboard.refresh", "Refresh")}
+          </button>
         </div>
-        <button
-          onClick={refetch}
-          disabled={isLoading}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-        >
-          {isLoading ? "Loading..." : "Refresh"}
-        </button>
       </div>
 
-      {/* Filter */}
-      <section className="bg-white rounded-lg shadow p-4">
-        <JobDashboardFilter
-          onFilterChange={handleFilterChange}
-          isLoading={isLoading}
-        />
-      </section>
+      {/* Content */}
+      <div className="flex-1 overflow-auto px-6 py-6 space-y-6">
+        {/* Job Filter - AC3 ready with empty state handling */}
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+          <JobDashboardFilter
+            onFilterChange={handleFilterChange}
+            isLoading={isLoading}
+          />
+        </div>
 
-      {/* Performance KPIs */}
-      <section>
+        {/* Performance KPIs */}
         {isLoading ? (
-          <DashboardSkeleton count={4} />
+          <DashboardSkeleton count={4} height="h-32" />
         ) : (
-          <PerformanceKPIs data={kpis} isLoading={isLoading} />
+          kpis && <PerformanceKPIs data={kpis} isLoading={isLoading} />
         )}
-      </section>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Hiring Funnel (wider section) */}
-        <div className="lg:col-span-2">
-          {isLoading ? (
-            <DashboardSkeleton count={1} />
-          ) : (
-            <HiringFunnel data={hiringFunnel} />
-          )}
-        </div>
+        {/* Main Content Grid: Hiring Funnel (left) + Action Items (right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Hiring Funnel - Wider section */}
+          <div className="lg:col-span-2">
+            {isLoading ? (
+              <DashboardSkeleton count={1} height="h-80" />
+            ) : hiringFunnel && hiringFunnel.length > 0 ? (
+              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                <HiringFunnel data={hiringFunnel} />
+              </div>
+            ) : (
+              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm text-center">
+                <div className="py-12">
+                  <p className="text-4xl mb-4">📊</p>
+                  <p className="text-slate-600 dark:text-slate-400 font-medium">
+                    {t(
+                      "headhunter.dashboard.emptyStateJobFilter",
+                      "No application data for this job. Keep tracking!"
+                    )}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
 
-        {/* Right Sidebar */}
-        <div className="space-y-6">
-          {/* Upcoming Interviews */}
-          {isLoading ? (
-            <DashboardSkeleton count={1} />
-          ) : (
-            <UpcomingInterviews data={upcomingInterviews} />
-          )}
+          {/* Right Sidebar: Upcoming Interviews & Pending Candidates - AC2 */}
+          <div className="space-y-6">
+            {/* Upcoming Interviews - AC2: Show full details */}
+            {isLoading ? (
+              <DashboardSkeleton count={1} height="h-64" />
+            ) : (
+              <UpcomingInterviews data={upcomingInterviews} />
+            )}
 
-          {/* Pending Candidates */}
-          {isLoading ? (
-            <DashboardSkeleton count={1} />
-          ) : (
-            <PendingCandidates data={pendingCandidates} />
-          )}
+            {/* Pending Candidates - AC2: Action items */}
+            {isLoading ? (
+              <DashboardSkeleton count={1} height="h-64" />
+            ) : (
+              <PendingCandidates data={pendingCandidates} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
