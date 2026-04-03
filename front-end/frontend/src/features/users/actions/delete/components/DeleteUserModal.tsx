@@ -10,6 +10,7 @@ import {
 
 import { useUsersTranslation } from "@/shared/hooks";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useAuthUser } from "@/shared/hooks/useAuthUser";
 
 interface RelatedDataCount {
   applications?: number;
@@ -60,6 +61,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 }) => {
   const { t } = useUsersTranslation();
   const { t: tCommon } = useAppTranslation();
+  const { userId: currentUserId } = useAuthUser();
   const [step, setStep] = useState<ModalStep>("choice");
   const [selectedType, setSelectedType] = useState<"soft" | "hard" | null>(
     null
@@ -100,7 +102,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
       // Log audit (AC4)
       console.log("Audit Log: Delete action", {
-        adminId: localStorage.getItem("userId"),
+        adminId: currentUserId,
         timestamp: new Date().toISOString(),
         targetUserId: userId,
         deleteType: selectedType,
@@ -590,4 +592,3 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 };
 
 export default DeleteUserModal;
-

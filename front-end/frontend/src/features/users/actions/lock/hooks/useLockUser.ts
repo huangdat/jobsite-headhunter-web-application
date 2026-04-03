@@ -1,7 +1,8 @@
 import { usersApi } from "@/features/users/services/usersApi";
 import { useState } from "react";
-import { STORAGE_KEYS, AUDIT_LOG_ACTIONS } from "@/features/users/constants";
+import { AUDIT_LOG_ACTIONS } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
+import { useAuthUser } from "@/shared/hooks/useAuthUser";
 
 interface LockUserOptions {
   userId: string;
@@ -31,6 +32,7 @@ interface LockErrorResponse {
 
 export const useLockUser = () => {
   const { t } = useUsersTranslation();
+  const { userId: currentUserId } = useAuthUser();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,7 +56,6 @@ export const useLockUser = () => {
 
     try {
       // Check permission constraints (AC3)
-      const currentUserId = localStorage.getItem(STORAGE_KEYS.USER_ID);
       if (currentUserId === userId) {
         const errorMsg = t("lock.errorCannotLockYourself");
         setError(errorMsg);
