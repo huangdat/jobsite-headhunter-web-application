@@ -1,9 +1,11 @@
 /**
  * API Error Handler Utility
  * Provides consistent error handling and normalization across API services
+ * Enhanced with toast notifications and structured logging
  */
 
 import type { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export interface ApiErrorDetails {
   message: string;
@@ -157,3 +159,87 @@ export class ApiError extends Error implements ApiErrorDetails {
 export const throwIfError = (error: unknown): never => {
   throw normalizeApiError(error);
 };
+
+/**
+ * Error context for logging and tracking
+ */
+export interface ErrorContext {
+  service?: string;
+  action?: string;
+  userId?: string;
+  silent?: boolean; // Don't show toast
+}
+
+/**
+ * Log error to console (development) or monitoring service (production)
+ */
+export function logError(error: ApiErrorDetails, context?: ErrorContext): void {
+  const logData = {
+    ...error,
+    context,
+    timestamp: new Date().toISOString(),
+  };
+
+  if (import.meta.env.DEV) {
+    console.error("🚨 [ErrorHandler]", logData);
+  } else {
+    // TODO: Send to monitoring service (Sentry, DataDog, etc.)
+    // For production, we can add error reporting here
+  }
+}
+
+/**
+ * Show error toast to user based on error type
+ */
+export function showErrorToast(error: ApiErrorDetails): void {
+  const toastConfig = {
+    duration: 4000,
+  };
+
+  if (error.isNetworkError) {
+    toast.error(error.message, {
+      ...toastConfig,
+      description: "Check your internet connection",
+    });
+  } else if (error.status === 401) {
+    toast.error("Session expired", {
+      ...toastConfig,
+      description: "Please login again",
+    });
+  } else if (error.status === 403) {
+    toast.error("Access denied", {
+      ...toastConfig,
+      description: "Contact admin for access",
+    });
+  } else if (error.isClientError) {
+    toast.warning(error.message, toastConfig);
+  } else if (error.isServerError) {
+    toast.error("Server error", {
+      ...toastConfig,
+      description: "Please try again later",
+    });
+  } else {
+    toast.error(error.message, toastConfig);
+  }
+}
+
+/**
+ * Main error handler - use this everywhere
+ * Combines normalization + logging + toast
+ */
+export function handleError(
+  error: unknown,
+  context?: ErrorContext
+): ApiErrorDetails & Error {
+  const normalized = normalizeApiError(error);
+
+  // Log error
+  logError(normalized, context);
+
+  // Show toast unless silent
+  if (!context?.silent) {
+    showErrorToast(normalized);
+  }
+
+  return normalized;
+}
