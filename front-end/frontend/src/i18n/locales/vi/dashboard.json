@@ -1,0 +1,48 @@
+{
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Thống kê và Tổng quan Hệ thống",
+      "totalUsers": "Tổng Người dùng",
+      "totalJobs": "Tổng Công việc",
+      "applications": "Lượt Ứng tuyển",
+      "activeHeadhunters": "Headhunters Hoạt động",
+      "activeCandidates": "Ứng viên Hoạt động",
+      "userRoleDistribution": "Phân bổ Vai trò Người dùng",
+      "jobStatusStatistics": "Thống kê Trạng thái Công việc",
+      "jobStatusNote": "Lưu ý: Người dùng Headhunter chỉ xem công việc của mình; Admin xem tất cả công việc.",
+      "filter": {
+        "timeRange": "Lọc theo Khoảng Thời gian",
+        "from": "Từ",
+        "to": "Đến",
+        "apply": "Áp dụng",
+        "fromPlaceholder": "Từ ngày",
+        "toPlaceholder": "Đến ngày"
+      }
+    }
+  },
+  "roles": {
+    "ADMIN": "Quản trị viên",
+    "CANDIDATE": "Ứng viên",
+    "HEADHUNTER": "Headhunter",
+    "COLLABORATOR": "Cộng tác viên"
+  },
+  "jobStatus": {
+    "OPEN": "Đang mở",
+    "CLOSED": "Đã đóng",
+    "DRAFT": "Nháp",
+    "openDescription": "Đang tuyển dụng",
+    "closedDescription": "Vị trí đã đóng",
+    "draftDescription": "Đang soạn thảo"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "retry": "Thử lại",
+    "noData": "Không có dữ liệu",
+    "noChange": "Không thay đổi",
+    "failedToLoad": "Tải dữ liệu thất bại"
+  },
+  "error": {
+    "failedToLoad": "Lỗi khi tải dữ liệu"
+  }
+}
