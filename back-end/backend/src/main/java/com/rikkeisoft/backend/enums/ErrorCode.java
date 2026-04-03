@@ -136,6 +136,7 @@ public enum ErrorCode {
     INTERVIEW_TIME_FUTURE(HttpStatus.BAD_REQUEST, "error.interview_time_future"),
     INTERVIEW_LINK_REQUIRED(HttpStatus.BAD_REQUEST, "error.interview_link_required"),
     INTERVIEW_LOCATION_REQUIRED(HttpStatus.BAD_REQUEST, "error.interview_location_required"),
+    INTERVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "error.interview_not_found"),
 
     // Custom error codes for candidate CV module
     CV_NOT_FOUND(HttpStatus.NOT_FOUND, "error.cv_not_found"),

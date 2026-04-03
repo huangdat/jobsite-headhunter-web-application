@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -54,6 +55,22 @@ public class InterviewServiceImpl implements InterviewService {
         }
 
         return interviewMapper.toResponse(savedInterview);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public InterviewResp getInterviewById(Long id) {
+        Interview interview = interviewRepo.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.INTERVIEW_NOT_FOUND));
+        return interviewMapper.toResponse(interview);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<InterviewResp> getInterviewsByApplicationId(Long applicationId) {
+        return interviewRepo.findByApplicationId(applicationId).stream()
+                .map(interviewMapper::toResponse)
+                .toList();
     }
 
     private String generateInterviewCode(Long applicationId) {

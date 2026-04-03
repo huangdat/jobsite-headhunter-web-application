@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * REST Controller managing interview endpoints.
  * Allows headhunters to schedule and manage interviews for candidates.
@@ -32,5 +34,19 @@ public class InterviewController {
                 .status(HttpStatus.CREATED)
                 .result(response)
                 .build());
+    }
+
+    @GetMapping("/{id}")
+    public APIResponse<InterviewResp> getInterviewById(@PathVariable Long id) {
+        return APIResponse.<InterviewResp>builder()
+                .result(interviewService.getInterviewById(id))
+                .build();
+    }
+
+    @GetMapping("/application/{applicationId}")
+    public APIResponse<List<InterviewResp>> getInterviewsByApplicationId(@PathVariable Long applicationId) {
+        return APIResponse.<List<InterviewResp>>builder()
+                .result(interviewService.getInterviewsByApplicationId(applicationId))
+                .build();
     }
 }
