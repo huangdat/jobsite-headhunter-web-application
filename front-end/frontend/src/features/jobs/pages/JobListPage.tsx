@@ -74,9 +74,7 @@ export function JobListPage() {
         {/* Jobs Grid */}
         <div className="lg:col-span-3">
           {/* Loading State */}
-          {isLoading && (
-            <PageSkeleton variant="grid" columns={2} count={6} />
-          )}
+          {isLoading && <PageSkeleton variant="grid" columns={2} count={6} />}
 
           {/* Empty State */}
           {!isLoading && jobs.length === 0 && !error && (
