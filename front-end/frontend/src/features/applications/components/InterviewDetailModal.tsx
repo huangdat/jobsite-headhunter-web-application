@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,6 +11,15 @@ import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { formatInterviewType, formatDate, formatDuration } from "../utils";
 import type { Interview, InterviewType } from "../types";
+import {
+  Video,
+  MapPin,
+  Clock,
+  Calendar,
+  FileText,
+  Link as LinkIcon,
+  Hash,
+} from "lucide-react";
 
 interface InterviewDetailModalProps {
   isOpen: boolean;
@@ -25,97 +36,148 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
 
   if (!interview) return null;
 
+  // Hàm helper để render màu cho Badge status
+  const getStatusVariant = (status: string) => {
+    switch (status) {
+      case "SCHEDULED":
+        return "bg-blue-100 text-blue-700 hover:bg-blue-100 border-none";
+      case "COMPLETED":
+        return "bg-green-100 text-green-700 hover:bg-green-100 border-none";
+      case "CANCELLED":
+        return "bg-red-100 text-red-700 hover:bg-red-100 border-none";
+      default:
+        return "secondary";
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
-        <DialogHeader>
-          <DialogTitle>{t("applications.interview.title")}</DialogTitle>
+      <DialogContent
+        className="max-w-md rounded-3xl p-0 overflow-hidden 
+      border-none shadow-2xl [&>button]:top-7 [&>button]:right-6 [&>button]:text-black 
+      [&>button]:hover:bg-transparent [&>button]:focus:ring-0 [&>button]:outline-none [&>button]:bg-transparent 
+      [&>button]:cursor-pointer"
+      >
+        <DialogHeader className="bg-lime-400 p-6">
+          <DialogTitle className="text-black font-black text-xl flex items-center gap-2">
+            <Calendar size={24} />
+            {t("applications.interview.title")}
+          </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
-          {/* Interview Code */}
-          <div>
-            <label className="text-sm font-medium text-gray-600">
-              {t("common.code")}
-            </label>
-            <p className="font-mono text-sm mt-1">{interview.interviewCode}</p>
+        <div className="p-6 space-y-6">
+          {/* Status & Code */}
+          <div className="flex justify-between items-start">
+            <div className="space-y-1">
+              <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest flex items-center gap-1">
+                <Hash size={12} /> {t("common.code")}
+              </p>
+              <p className="font-mono text-sm font-bold text-slate-700 bg-slate-100 px-2 py-1 rounded-md">
+                {interview.interviewCode}
+              </p>
+            </div>
+            <Badge
+              className={`rounded-full px-3 py-1 font-bold ${getStatusVariant(interview.status)}`}
+            >
+              {interview.status}
+            </Badge>
           </div>
 
-          {/* Interview Type */}
-          <div>
-            <label className="text-sm font-medium text-gray-600">
-              {t("applications.interview.type")}
-            </label>
-            <p className="mt-1">
-              {formatInterviewType(interview.interviewType as InterviewType, t)}
-            </p>
+          <div className="grid grid-cols-2 gap-4">
+            {/* Interview Type */}
+            <div className="space-y-1">
+              <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
+                {t("applications.interview.type")}
+              </p>
+              <p className="font-bold text-slate-800 flex items-center gap-2">
+                {interview.interviewType === "ONLINE" ? (
+                  <Video size={16} className="text-blue-500" />
+                ) : (
+                  <MapPin size={16} className="text-orange-500" />
+                )}
+                {formatInterviewType(
+                  interview.interviewType as InterviewType,
+                  t
+                )}
+              </p>
+            </div>
+
+            {/* Duration */}
+            <div className="space-y-1">
+              <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
+                {t("applications.interview.duration")}
+              </p>
+              <p className="font-bold text-slate-800 flex items-center gap-2">
+                <Clock size={16} className="text-lime-600" />
+                {formatDuration(interview.durationMinutes)}
+              </p>
+            </div>
           </div>
 
           {/* Scheduled At */}
-          <div>
-            <label className="text-sm font-medium text-gray-600">
+          <div className="space-y-1 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
               {t("applications.interview.scheduledAt")}
-            </label>
-            <p className="mt-1">
+            </p>
+            <p className="font-bold text-slate-900 text-lg">
               {formatDate(interview.scheduledAt, i18n.language)}
             </p>
           </div>
 
-          {/* Duration */}
-          <div>
-            <label className="text-sm font-medium text-gray-600">
-              {t("applications.interview.duration")}
-            </label>
-            <p className="mt-1">{formatDuration(interview.durationMinutes)}</p>
-          </div>
-
           {/* Meeting Link or Location */}
           {interview.meetingLink && (
-            <div>
-              <label className="text-sm font-medium text-gray-600">
+            <div className="space-y-2">
+              <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
                 {t("applications.interview.meetingLink")}
-              </label>
-              <Button variant="link" className="p-0 h-auto mt-1" asChild>
+              </p>
+              <Button
+                variant="outline"
+                className="w-full justify-start gap-2 border-lime-200 bg-lime-50 hover:bg-lime-100 hover:border-lime-300 text-lime-700 rounded-xl transition-all"
+                asChild
+              >
                 <a
                   href={interview.meetingLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {interview.meetingLink}
+                  <Video size={18} />
+                  <span className="truncate">{interview.meetingLink}</span>
+                  <LinkIcon size={14} className="ml-auto opacity-50" />
                 </a>
               </Button>
             </div>
           )}
 
           {interview.location && (
-            <div>
-              <label className="text-sm font-medium text-gray-600">
+            <div className="space-y-1">
+              <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
                 {t("applications.interview.location")}
-              </label>
-              <p className="mt-1">{interview.location}</p>
+              </p>
+              <p className="text-sm font-medium text-slate-700 flex items-start gap-2 italic">
+                <MapPin size={16} className="text-red-500 shrink-0 mt-0.5" />
+                {interview.location}
+              </p>
             </div>
           )}
 
           {/* Notes */}
           {interview.notes && (
-            <div>
-              <label className="text-sm font-medium text-gray-600">
-                {t("applications.interview.notes")}
-              </label>
-              <p className="mt-1 text-sm text-gray-700">{interview.notes}</p>
+            <div className="space-y-2">
+              <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest flex items-center gap-1">
+                <FileText size={12} /> {t("applications.interview.notes")}
+              </p>
+              <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4">
+                <p className="text-sm text-amber-900 leading-relaxed italic">
+                  "{interview.notes}"
+                </p>
+              </div>
             </div>
           )}
 
-          {/* Status */}
-          <div>
-            <label className="text-sm font-medium text-gray-600">
-              {t("common.status")}
-            </label>
-            <Badge className="mt-1">{interview.status}</Badge>
-          </div>
-
-          {/* Close Button */}
-          <Button onClick={onClose} className="w-full mt-4">
+          <Button
+            onClick={onClose}
+            className="w-full bg-slate-900 hover:bg-black text-white cursor-pointer font-bold py-6 rounded-2xl shadow-lg transition-all active:scale-[0.98]"
+          >
             {t("common.close")}
           </Button>
         </div>

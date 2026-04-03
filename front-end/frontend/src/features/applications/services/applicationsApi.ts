@@ -186,3 +186,47 @@ export const fetchMyCurrentCV = async (): Promise<any> => {
     return null;
   }
 };
+
+export const getInterviewByApplicationId = async (
+  applicationId: number
+): Promise<any> => {
+  try {
+    const response = await apiClient.get<ApiResponse<any>>(
+      `/api/interviews/application/${applicationId}`
+    );
+    return response.data.result;
+  } catch (error) {
+    handleError(error, {
+      service: "interviews",
+      action: "getInterviewByApplicationId",
+    });
+    throw error;
+  }
+};
+
+export const getInterviewById = async (id: number): Promise<any> => {
+  try {
+    const response = await apiClient.get<ApiResponse<any>>(
+      `/api/interviews/${id}`
+    );
+    return response.data.result;
+  } catch (error) {
+    handleError(error, {
+      service: "interviews",
+      action: "getInterviewById",
+    });
+    throw error;
+  }
+};
+
+export const cancelApplication = async (id: number): Promise<void> => {
+  try {
+    await apiClient.delete(`/api/applications/${id}`); // Hoặc dùng PATCH tùy Backend
+  } catch (error) {
+    handleError(error, {
+      service: "applications",
+      action: "cancelApplication",
+    });
+    throw error;
+  }
+};
