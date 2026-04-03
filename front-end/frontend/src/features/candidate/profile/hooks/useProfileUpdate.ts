@@ -144,13 +144,13 @@ export const useProfileUpdate = (): UseProfileUpdateReturn => {
     setSaving(true);
 
     try {
-      const updated = await profileApi.updateProfile(
-        toProfilePayload(sanitized)
-      );
-      const normalized = sanitizeProfileDraft(toFormValues(updated));
+      // Gọi API update
+      await profileApi.updateProfile(toProfilePayload(sanitized));
 
-      setProfile(normalized);
-      setDraft(normalized);
+      // Lấy chính dữ liệu vừa gửi đi để làm dữ liệu gốc mới (Single Source of Truth)
+      // Không phụ thuộc vào response trả về từ backend để tránh bị reset form
+      setProfile(sanitized);
+      setDraft(sanitized);
       setErrors({});
       setSuccess(true);
 

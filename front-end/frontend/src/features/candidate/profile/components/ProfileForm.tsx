@@ -247,9 +247,11 @@ export function ProfileForm({
                   const url = await profileApi.uploadCV(file);
                   if (url) {
                     onFieldChange("cvUrl" as const, url);
-                    // Tự động lưu vào Profile sau khi upload thành công
-                    await onSave();
-                    toast.success(t("cv.management.success.banner"));
+
+                    toast.success(
+                      t("cv.management.success.banner") ||
+                        "Upload temporary success. Please save!"
+                    );
                   } else {
                     toast.error(t("cv.management.error.banner"));
                   }
