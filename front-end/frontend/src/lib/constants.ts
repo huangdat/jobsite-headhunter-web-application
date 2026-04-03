@@ -115,8 +115,8 @@ export const API_ENDPOINTS = {
 
   // Candidate
   CANDIDATE: {
-    CV_UPLOAD: "/api/cv",
-    CV_LIST: "/api/cv",
+    CV_UPLOAD: "/api/cv/MyCv",
+    CV_LIST: "/api/cv/myCv",
     CV_DETAIL: "/api/cv/{id}",
     CV_DOWNLOAD: "/api/cv/{id}/download",
     CV_DELETE: "/api/cv/{id}",

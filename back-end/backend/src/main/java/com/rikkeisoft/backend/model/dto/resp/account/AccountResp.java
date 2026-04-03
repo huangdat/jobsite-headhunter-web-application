@@ -22,6 +22,13 @@ public class AccountResp {
     String phone;
     String imageUrl;
     Gender gender;
+    String currentTitle;
+    Float yearsOfExperience;
+    Double expectedSalaryMin;
+    Double expectedSalaryMax;
+    String bio;
+    String city;
+    Boolean openForWork;
     AuthProvider authProvider;
     AccountStatus status;
     Set<String> roles;

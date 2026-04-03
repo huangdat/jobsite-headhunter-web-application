@@ -61,6 +61,7 @@ public class HeadhunterApplicationController {
     // PATCH /applications/{id}/interview - Schedule interview
     @PatchMapping("/applications/{id}/interview")
     public APIResponse<InterviewResp> scheduleInterview(@PathVariable Long id, @RequestBody InterviewCreateReq req) {
+        req.setApplicationId(id);
         return APIResponse.<InterviewResp>builder()
                 .result(interviewService.scheduleInterview(req))
                 .build();

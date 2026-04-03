@@ -184,6 +184,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @Transactional
     public ApplicationDetailResp updateStatus(Long applicationId, ApplicationStatusUpdateReq req) {
         Account currentAccount = accountService.getCurrentAccount();
         Application application = applicationRepo.findById(applicationId)
@@ -193,7 +194,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         validateStatusTransition(application.getStatus(), req.getStatus());
 
         application.setStatus(req.getStatus());
-        applicationRepo.save(application);
+        applicationRepo.saveAndFlush(application);
 
         sendStatusUpdateEmail(application, req.getStatus());
 
