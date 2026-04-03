@@ -1,0 +1,48 @@
+{
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "System Statistics & Overview",
+      "totalUsers": "Total Users",
+      "totalJobs": "Total Jobs",
+      "applications": "Applications",
+      "activeHeadhunters": "Active Headhunters",
+      "activeCandidates": "Active Candidates",
+      "userRoleDistribution": "User Role Distribution",
+      "jobStatusStatistics": "Job Status Statistics",
+      "jobStatusNote": "Note: Headhunter users see only their own jobs; Admins see all jobs.",
+      "filter": {
+        "timeRange": "Filter by Date Range",
+        "from": "From",
+        "to": "To",
+        "apply": "Apply",
+        "fromPlaceholder": "From date",
+        "toPlaceholder": "To date"
+      }
+    }
+  },
+  "roles": {
+    "ADMIN": "Admin",
+    "CANDIDATE": "Candidate",
+    "HEADHUNTER": "Headhunter",
+    "COLLABORATOR": "Collaborator"
+  },
+  "jobStatus": {
+    "OPEN": "Open",
+    "CLOSED": "Closed",
+    "DRAFT": "Draft",
+    "openDescription": "Active listings",
+    "closedDescription": "Closed positions",
+    "draftDescription": "Work in progress"
+  },
+  "common": {
+    "loading": "Loading...",
+    "retry": "Retry",
+    "noData": "No data available",
+    "noChange": "No change",
+    "failedToLoad": "Failed to load data"
+  },
+  "error": {
+    "failedToLoad": "Error loading dashboard"
+  }
+}

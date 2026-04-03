@@ -9,8 +9,9 @@ interface SystemOverviewCardsProps {
 }
 
 /**
- * SystemOverviewCards - DASH-07
+ * SystemOverviewCards
  * Các chỉ số tổng quát toàn hệ thống
+ * Displays key metrics: Total Users, Jobs, Applications, Active Headhunters, Active Candidates
  */
 export const SystemOverviewCards: React.FC<SystemOverviewCardsProps> = ({
   data,
@@ -20,47 +21,73 @@ export const SystemOverviewCards: React.FC<SystemOverviewCardsProps> = ({
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-32 bg-gray-200 rounded-lg animate-pulse" />
+          <div
+            key={i}
+            className="h-32 bg-slate-200 dark:bg-slate-700 rounded-lg animate-pulse"
+          />
         ))}
       </div>
     );
   }
 
   if (!data) {
-    return <p className="text-gray-500">{t("common.noData")}</p>;
+    return (
+      <p className="text-slate-500 dark:text-slate-400">
+        {t("common.noData", "No data available")}
+      </p>
+    );
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      {/* Total Users Card */}
       <StatCard
-        title={t("admin.totalUsers")}
+        title={t("admin.dashboard.totalUsers", "Total Users")}
         value={data.totalUsers}
+        icon="👥"
+        color="blue"
         trend="up"
         trendValue="+12%"
       />
+
+      {/* Total Jobs Card */}
       <StatCard
-        title={t("admin.totalJobs")}
+        title={t("admin.dashboard.totalJobs", "Total Jobs")}
         value={data.totalJobs}
+        icon="💼"
+        color="emerald"
         trend="up"
         trendValue="+8%"
       />
+
+      {/* Applications Card */}
       <StatCard
-        title={t("admin.applications")}
+        title={t("admin.dashboard.applications", "Applications")}
         value={data.totalApplications}
+        icon="📋"
+        color="purple"
         trend="up"
         trendValue="+15%"
       />
+
+      {/* Active Headhunters Card */}
       <StatCard
-        title={t("admin.activeHeadhunters")}
+        title={t("admin.dashboard.activeHeadhunters", "Active Headhunters")}
         value={data.activeHeadhunters}
+        icon="🎯"
+        color="yellow"
         trend="neutral"
-        trendValue={t("common.noChange")}
+        trendValue={t("common.noChange", "No change")}
       />
+
+      {/* Active Candidates Card */}
       <StatCard
-        title={t("admin.activeCandidates")}
+        title={t("admin.dashboard.activeCandidates", "Active Candidates")}
         value={data.activeCandidates}
+        icon="🔍"
+        color="red"
         trend="down"
         trendValue="-5%"
       />

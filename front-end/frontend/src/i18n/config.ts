@@ -54,6 +54,7 @@ import enUpload from "./locales/en/upload.json";
 import enValidation from "./locales/en/validation.json";
 import enWarnings from "./locales/en/warnings.json";
 import enForum from "./locales/en/forum.json";
+import enDashboard from "./locales/en/dashboard.json";
 
 // Import Vietnamese namespaces
 import viCommon from "./locales/vi/common.json";
@@ -108,6 +109,7 @@ import viUpload from "./locales/vi/upload.json";
 import viValidation from "./locales/vi/validation.json";
 import viWarnings from "./locales/vi/warnings.json";
 import viForum from "./locales/vi/forum.json";
+import viDashboard from "./locales/vi/dashboard.json";
 
 const resources = {
   en: {
@@ -162,6 +164,7 @@ const resources = {
       validation: enValidation,
       warnings: enWarnings,
       forum: enForum,
+      dashboard: enDashboard,
     },
     candidate: enCandidate,
     profile: enProfile,
@@ -219,6 +222,7 @@ const resources = {
       validation: viValidation,
       warnings: viWarnings,
       forum: viForum,
+      dashboard: viDashboard,
     },
     candidate: viCandidate,
     profile: viProfile,
