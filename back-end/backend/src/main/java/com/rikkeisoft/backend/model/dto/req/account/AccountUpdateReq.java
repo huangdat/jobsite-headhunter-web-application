@@ -24,4 +24,12 @@ public class AccountUpdateReq {
     MultipartFile avatar;
     @Pattern(regexp = "MALE|FEMALE|OTHER", message = "GENDER_INVALID")
     Gender gender;
+
+    String currentTitle;
+    Float yearsOfExperience;
+    Double expectedSalaryMin;
+    Double expectedSalaryMax;
+    String bio;
+    String city;
+    Boolean openForWork;
 }
