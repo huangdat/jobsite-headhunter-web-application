@@ -6,6 +6,7 @@
 
 import type { ForumPost } from "@/features/forum/admin/posts/types";
 import { useTranslation } from "react-i18next";
+import { Display, SmallText } from "@/shared/components/typography/Typography";
 
 interface PostMetadataProps {
   post: ForumPost;
@@ -17,7 +18,7 @@ export function PostMetadata({ post }: PostMetadataProps) {
   return (
     <div className="mb-8">
       {/* Breadcrumb */}
-      <div className="text-sm text-slate-600 mb-4">
+      <SmallText variant="muted" className="mb-4 block">
         <a href="/" className="hover:text-brand-primary">
           {t("forum.breadcrumb.home") || "TRANG CHỦ"}
         </a>
@@ -27,39 +28,39 @@ export function PostMetadata({ post }: PostMetadataProps) {
         </a>
         {" > "}
         <span className="text-slate-900">{post.categoryName || "Tin tức"}</span>
-      </div>
+      </SmallText>
 
       {/* Title */}
-      <h1 className="text-4xl font-bold text-slate-900 mb-4">{post.title}</h1>
+      <Display className="mb-4">{post.title}</Display>
 
       {/* Metadata Row */}
-      <div className="flex items-center gap-6 text-sm text-slate-600">
+      <div className="flex items-center gap-6">
         {/* Author */}
         <div className="flex items-center gap-2">
           <span className="text-lg">👤</span>
-          <span>
+          <SmallText variant="muted">
             {post.createdByName || t("forum.default.author") || "Admin"}
-          </span>
+          </SmallText>
         </div>
 
         {/* Date */}
         <div className="flex items-center gap-2">
           <span className="text-lg">📅</span>
-          <span>
+          <SmallText variant="muted">
             {new Date(post.createdAt).toLocaleDateString("vi-VN", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
-          </span>
+          </SmallText>
         </div>
 
         {/* View Count - AC4: Fallback to 0 */}
         <div className="flex items-center gap-2">
           <span className="text-lg">👁️</span>
-          <span>
+          <SmallText variant="muted">
             {post.viewCount ?? 0} {t("forum.detail.views") || "lượt xem"}
-          </span>
+          </SmallText>
         </div>
 
         {/* Category Badge */}
