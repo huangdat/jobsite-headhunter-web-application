@@ -60,7 +60,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   /**
    * Xử lý khi CVSelector báo đã lấy được CV thành công
    */
-  const handleCVSelect = (cvId: string, cvUrl: string) => {
+  const handleCVSelect = (_cvId: string, cvUrl: string) => {
     // Chúng ta lưu cvUrl vào form để gửi lên server
     form.setValue("cvSnapshotUrl", cvUrl, { shouldValidate: true });
   };

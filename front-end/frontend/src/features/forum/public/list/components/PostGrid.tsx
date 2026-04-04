@@ -84,9 +84,11 @@ export function PostGrid() {
             </SubsectionTitle>
 
             {/* Description */}
-            <SmallText variant="muted" className="line-clamp-2 mb-4" as="p">
-              {post.description || post.content?.substring(0, 100)}
-            </SmallText>
+            <p className="mb-4">
+              <SmallText variant="muted" className="line-clamp-2">
+                {post.description || post.content?.substring(0, 100)}
+              </SmallText>
+            </p>
 
             {/* Meta Info */}
             <div className="flex items-center justify-between">

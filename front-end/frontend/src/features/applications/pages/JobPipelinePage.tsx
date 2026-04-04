@@ -7,7 +7,12 @@ import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Button } from "@/components/ui/button";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { ChevronLeft } from "lucide-react";
-import { MetaText } from "@/shared/components/typography/Typography";
+import {
+  MetaText,
+  Caption,
+  SubsectionTitle,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export const JobPipelinePage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -56,7 +61,7 @@ export const JobPipelinePage: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => navigate(-1)}
-            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary hover:bg-brand-primary/10 dark:hover:bg-slate-800 font-bold px-5 flex gap-2 cursor-pointer transition-all"
+            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary hover:bg-brand-primary/10 dark:hover:bg-slate-800 px-5 flex gap-2 cursor-pointer transition-all"
           >
             <ChevronLeft size={18} />
             {t("common.back")}
@@ -88,11 +93,10 @@ export const JobPipelinePage: React.FC = () => {
           <tbody className="divide-y divide-slate-50 dark:divide-slate-700">
             {applications.length === 0 ? (
               <tr>
-                <td
-                  colSpan={5}
-                  className="p-12 text-center text-slate-400 dark:text-slate-500 font-medium italic"
-                >
-                  {t("headhunter.noApplicantsYet")}
+                <td colSpan={5} className="p-12 text-center">
+                  <Caption className="italic">
+                    {t("headhunter.noApplicantsYet")}
+                  </Caption>
                 </td>
               </tr>
             ) : (
@@ -101,11 +105,15 @@ export const JobPipelinePage: React.FC = () => {
                   key={app.id}
                   className="hover:bg-brand-primary/5 dark:hover:bg-slate-700/30 transition-colors"
                 >
-                  <td className="p-5 font-bold text-slate-800 dark:text-white">
-                    {app.fullName}
+                  <td className="p-5">
+                    <SubsectionTitle className="text-base font-semibold">
+                      {app.fullName}
+                    </SubsectionTitle>
                   </td>
-                  <td className="p-5 text-slate-500 dark:text-slate-400 font-medium">
-                    {app.email}
+                  <td className="p-5">
+                    <SmallText variant="muted" weight="medium">
+                      {app.email}
+                    </SmallText>
                   </td>
                   <td className="p-5 text-slate-500 dark:text-slate-400">
                     {new Date(app.appliedAt).toLocaleDateString()}

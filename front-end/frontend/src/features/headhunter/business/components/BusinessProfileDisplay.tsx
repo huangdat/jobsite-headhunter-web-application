@@ -175,7 +175,7 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
       <div className="relative overflow-hidden rounded-2xl bg-blue-50 p-6 border border-blue-200">
         <div className="flex gap-3">
           <svg
-            className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5"
+            className="w-5 h-5 text-blue-600 shrink-0 mt-0.5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

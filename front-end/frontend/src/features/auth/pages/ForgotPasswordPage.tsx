@@ -9,6 +9,12 @@ import { useAppForm } from "@/shared/hooks/useAppForm";
 import type { ForgotPasswordFormData } from "@/features/auth/types";
 import { sendOtpForgotPassword } from "@/features/auth/services/authApi";
 import { toast } from "sonner";
+import {
+  Display,
+  PageTitle,
+  BodyText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 import { MdOutlineMail } from "react-icons/md";
 
@@ -68,16 +74,16 @@ export function ForgotPasswordPage() {
         <div className="w-full bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* LEFT PANEL */}
           <div className="md:w-5/12 bg-linear-to-br from-dark-panel-from to-dark-panel-to p-10 text-white">
-            <h1 className="text-4xl font-bold mb-6">
+            <Display size="sm" className="mb-6 text-white">
               {tAuth("pages.forgotPassword.title")} <br />
               <span className="text-brand-primary">
                 {tAuth("pages.forgotPassword.titleHighlight")}
               </span>
-            </h1>
+            </Display>
 
-            <p className="text-slate-400 mb-10">
+            <BodyText variant="muted" className="mb-10 text-slate-400">
               {tAuth("pages.forgotPassword.subtitle")}
-            </p>
+            </BodyText>
 
             <div className="flex items-center gap-3 mb-4">
               <span className="material-symbols-outlined text-brand-primary">
@@ -96,13 +102,13 @@ export function ForgotPasswordPage() {
 
           {/* RIGHT PANEL */}
           <div className="md:w-7/12 p-10">
-            <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
+            <PageTitle className="mb-2 text-3xl">
               {tAuth("pages.forgotPassword.formTitle")}
-            </h2>
+            </PageTitle>
 
-            <p className="text-slate-500 dark:text-slate-400 mb-8">
+            <BodyText variant="muted" className="mb-8">
               {tAuth("pages.forgotPassword.formSubtitle")}
-            </p>
+            </BodyText>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <FormField label={tAuth("pages.forgotPassword.emailLabel")}>
@@ -126,11 +132,13 @@ export function ForgotPasswordPage() {
               </Button>
             </form>
 
-            <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8">
-              {tAuth("pages.forgotPassword.rememberPassword")}{" "}
+            <p className="text-center mt-8">
+              <SmallText variant="muted" className="block mb-1">
+                {tAuth("pages.forgotPassword.rememberPassword")}{" "}
+              </SmallText>
               <Link
                 to="/login"
-                className="text-brand-primary font-bold hover:underline"
+                className="text-brand-primary font-medium hover:underline"
               >
                 {tAuth("pages.forgotPassword.signInLink")}
               </Link>
