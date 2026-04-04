@@ -123,7 +123,7 @@ export function ResetPasswordPage() {
               {tAuth("pages.resetPassword.title")}
             </h1>
 
-            <p className="text-gray-300 mt-6">
+            <p className="text-slate-300 mt-6">
               {tAuth("pages.resetPassword.subtitle")}
             </p>
           </div>
@@ -131,12 +131,12 @@ export function ResetPasswordPage() {
           {/* Right Panel - Form */}
           <div className="md:w-7/12 p-8 md:p-8 bg-white dark:bg-slate-900">
             <div className="max-w-2xl mx-auto">
-              <h2 className="text-3xl font-bold mb-2">
+              <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
                 {tAuth("pages.resetPassword.formTitle")}
               </h2>
               <p className="text-slate-500 dark:text-slate-400 mb-2">
                 {tAuth("pages.resetPassword.instruction")}{" "}
-                <span className="font-semibold text-lime-500">
+                <span className="font-semibold text-brand-primary">
                   {otpData?.email}
                 </span>
               </p>
@@ -174,7 +174,7 @@ export function ResetPasswordPage() {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="cursor-pointer text-slate-400 hover:text-slate-600"
+                          className="cursor-pointer text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
                         >
                           {showPassword ? (
                             <AiOutlineEyeInvisible />
@@ -202,7 +202,7 @@ export function ResetPasswordPage() {
                           onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
                           }
-                          className="cursor-pointer text-slate-400 hover:text-slate-600"
+                          className="cursor-pointer text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
                         >
                           {showConfirmPassword ? (
                             <AiOutlineEyeInvisible />
@@ -238,7 +238,7 @@ export function ResetPasswordPage() {
               <div className="mt-4 text-center">
                 <Link
                   to="/login"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-lime-900 transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 dark:text-slate-500 hover:text-brand-primary dark:hover:text-brand-primary transition-colors"
                 >
                   <span className="material-symbols-outlined text-lg">
                     arrow_back

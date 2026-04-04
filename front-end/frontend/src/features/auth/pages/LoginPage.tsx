@@ -282,7 +282,7 @@ export function LoginPage() {
 
   return (
     <AuthLayout ctaButton={{ to: "/select-role", label: t("pages.signup") }}>
-      <div className="w-full max-w-5xl min-h-150 bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
+      <div className="w-full max-w-5xl min-h-150 bg-white dark:bg-slate-900 rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
@@ -290,16 +290,18 @@ export function LoginPage() {
             {t("pages.login.heroTitlePart2")}
           </h1>
 
-          <p className="text-gray-300 mt-6">{t("pages.login.heroSubtitle")}</p>
+          <p className="text-slate-300 mt-6">{t("pages.login.heroSubtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10">
-          <h2 className="text-3xl font-bold mb-2">
+          <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
             {t("pages.login.welcomeBack")}
           </h2>
 
-          <p className="text-gray-500 mb-8">{t("pages.login.subtitle")}</p>
+          <p className="text-slate-500 dark:text-slate-400 mb-8">
+            {t("pages.login.subtitle")}
+          </p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -354,7 +356,10 @@ export function LoginPage() {
                 label={t("pages.login.rememberMe")}
               />
 
-              <Link to="/forgot-password" className="text-lime-500">
+              <Link
+                to="/forgot-password"
+                className="text-brand-primary hover:underline"
+              >
                 {t("pages.login.forgotPasswordLink")}
               </Link>
             </div>
@@ -373,11 +378,11 @@ export function LoginPage() {
 
             {/* DIVIDER */}
             <div className="flex items-center gap-4 my-6">
-              <div className="flex-1 h-px bg-slate-200"></div>
-              <span className="text-sm text-gray-400">
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+              <span className="text-sm text-slate-400 dark:text-slate-500">
                 {t("pages.login.orContinueWith")}
               </span>
-              <div className="flex-1 h-px bg-slate-200"></div>
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
             </div>
 
             {/* SOCIAL LOGIN */}
@@ -390,10 +395,13 @@ export function LoginPage() {
             />
             {/* REGISTER LINK */}
             <div className="text-center mt-6 text-sm">
-              <span className="text-slate-500">
+              <span className="text-slate-500 dark:text-slate-400">
                 {t("pages.login.noAccount")}{" "}
               </span>
-              <Link to="/select-role" className="text-lime-500 hover:underline">
+              <Link
+                to="/select-role"
+                className="text-brand-primary hover:underline"
+              >
                 {t("pages.login.registerLink")}
               </Link>
             </div>

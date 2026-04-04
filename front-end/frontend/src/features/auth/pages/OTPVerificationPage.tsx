@@ -207,19 +207,19 @@ export function OTPVerificationPage() {
 
   return (
     <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
-      <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8">
+      <div className="w-full max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800">
+          <h1 className="text-3xl font-bold text-slate-800 dark:text-white">
             {t("pages.otpVerification.title")}
           </h1>
-          <p className="text-slate-600 mt-2">
+          <p className="text-slate-600 dark:text-slate-400 mt-2">
             {t("pages.otpVerification.subtitle")}
           </p>
         </div>
 
         <div className="space-y-6">
-          <div className="flex items-center justify-center gap-2 text-sm text-slate-600">
-            <MdOutlineMail className="text-emerald-600" size={18} />
+          <div className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+            <MdOutlineMail className="text-brand-primary" size={18} />
             <span className="font-medium">{state.email}</span>
           </div>
 
@@ -238,7 +238,7 @@ export function OTPVerificationPage() {
                 onChange={(e) => handleOtpChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 onPaste={handlePaste}
-                className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 rounded-lg focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200 transition-all"
+                className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-emerald-200 dark:focus:ring-emerald-800 transition-all dark:bg-slate-800 dark:text-white"
                 autoFocus={index === 0}
                 aria-label={t("pages.otpVerification.otpDigit", {
                   digit: index + 1,
@@ -249,12 +249,18 @@ export function OTPVerificationPage() {
 
           <div className="flex items-center justify-center gap-2 text-sm">
             <MdTimer
-              className={timeLeft <= 60 ? "text-red-600" : "text-slate-500"}
+              className={
+                timeLeft <= 60
+                  ? "text-red-600"
+                  : "text-slate-500 dark:text-slate-400"
+              }
               size={18}
             />
             <span
               className={
-                timeLeft <= 60 ? "text-red-600 font-semibold" : "text-slate-600"
+                timeLeft <= 60
+                  ? "text-red-600 font-semibold"
+                  : "text-slate-600 dark:text-slate-400"
               }
             >
               {t("pages.otpVerification.codeExpiresIn")} {formatTime(timeLeft)}
