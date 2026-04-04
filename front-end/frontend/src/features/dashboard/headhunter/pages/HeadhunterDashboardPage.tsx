@@ -8,6 +8,7 @@ import { UpcomingInterviews } from "../components/UpcomingInterviews";
 import { PendingCandidates } from "../components/PendingCandidates";
 import { JobDashboardFilter } from "../components/JobDashboardFilter";
 import type { DashboardFilterOptions } from "../../types";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 
 /**
  * HeadhunterDashboardPage
@@ -40,53 +41,50 @@ export const HeadhunterDashboardPage: React.FC = () => {
 
   if (error) {
     return (
-      <main className="flex-1 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950">
-        <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-xl max-w-md">
-          <h2 className="text-red-800 dark:text-red-400 font-semibold">
-            {t("error.failedToLoad", "Error loading dashboard")}
-          </h2>
-          <p className="text-red-600 dark:text-red-300 text-sm mt-1">{error}</p>
-          <button
-            onClick={refetch}
-            className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-          >
-            {t("common.retry", "Retry")}
-          </button>
+      <PageContainer variant="white" maxWidth="5xl">
+        <div className="flex items-center justify-center min-h-100">
+          <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-xl max-w-md">
+            <h2 className="text-red-800 dark:text-red-400 font-semibold">
+              {t("error.failedToLoad", "Error loading dashboard")}
+            </h2>
+            <p className="text-red-600 dark:text-red-300 text-sm mt-1">
+              {error}
+            </p>
+            <button
+              onClick={refetch}
+              className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+            >
+              {t("common.retry", "Retry")}
+            </button>
+          </div>
         </div>
-      </main>
+      </PageContainer>
     );
   }
 
   return (
-    <main className="flex-1 flex flex-col overflow-hidden bg-slate-50 dark:bg-slate-950">
-      {/* Header */}
-      <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-              {t("headhunter.dashboard.title", "Headhunter Dashboard")}
-            </h1>
-            <p className="text-slate-600 dark:text-slate-400 mt-1">
-              {t(
-                "headhunter.dashboard.subtitle",
-                "Personal Performance & Metrics"
-              )}
-            </p>
-          </div>
+    <PageContainer variant="default" maxWidth="7xl">
+      <PageHeader
+        variant="bordered"
+        title={t("headhunter.dashboard.title", "Headhunter Dashboard")}
+        description={t(
+          "headhunter.dashboard.subtitle",
+          "Personal Performance & Metrics"
+        )}
+        actions={
           <button
             onClick={refetch}
             disabled={isLoading}
-            className="px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-4 py-2 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors dark:bg-brand-primary dark:hover:bg-brand-primary/90"
           >
             {isLoading
               ? t("common.loading", "Loading...")
               : t("headhunter.dashboard.refresh", "Refresh")}
           </button>
-        </div>
-      </div>
+        }
+      />
 
-      {/* Content */}
-      <div className="flex-1 overflow-auto px-6 py-6 space-y-6">
+      <div className="space-y-6">
         {/* Job Filter - AC3 ready with empty state handling */}
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
           <JobDashboardFilter
@@ -145,6 +143,6 @@ export const HeadhunterDashboardPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </main>
+    </PageContainer>
   );
 };
