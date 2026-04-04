@@ -135,6 +135,14 @@ export const changePassword = async (data: ChangePasswordFormData) => {
   return res.data.result;
 };
 
+export const getMyInfo = async (): Promise<AccountResp> => {
+  const res = await apiClient.get<ApiResponse<AccountResp>>(
+    API_ENDPOINTS.ACCOUNT.GET_PROFILE
+  );
+
+  return res.data.result;
+};
+
 // OTP Functions
 export const sendOtpSignup = async (data: SendOtpRequest) => {
   const res = await apiClient.post<ApiResponse<OtpSendResp>>(

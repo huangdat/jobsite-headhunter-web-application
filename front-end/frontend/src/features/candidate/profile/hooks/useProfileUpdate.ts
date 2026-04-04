@@ -50,8 +50,17 @@ export const useProfileUpdate = (): UseProfileUpdateReturn => {
     setFetchError(null);
 
     try {
-      const response = await profileApi.getProfile();
-      const normalized = sanitizeProfileDraft(toFormValues(response));
+      const [response, cvUrl] = await Promise.all([
+        profileApi.getProfile(),
+        profileApi.getCurrentCvUrl(),
+      ]);
+
+      const normalized = sanitizeProfileDraft(
+        toFormValues({
+          ...response,
+          cvUrl,
+        })
+      );
 
       setProfile(normalized);
       setDraft(normalized);
@@ -144,11 +153,8 @@ export const useProfileUpdate = (): UseProfileUpdateReturn => {
     setSaving(true);
 
     try {
-      // Gọi API update
       await profileApi.updateProfile(toProfilePayload(sanitized));
 
-      // Lấy chính dữ liệu vừa gửi đi để làm dữ liệu gốc mới (Single Source of Truth)
-      // Không phụ thuộc vào response trả về từ backend để tránh bị reset form
       setProfile(sanitized);
       setDraft(sanitized);
       setErrors({});

@@ -29,6 +29,7 @@ public class AccountResp {
     String bio;
     String city;
     Boolean openForWork;
+    Long businessProfileId;
     AuthProvider authProvider;
     AccountStatus status;
     Set<String> roles;

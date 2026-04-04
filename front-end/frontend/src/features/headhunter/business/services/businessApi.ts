@@ -1,33 +1,47 @@
 /**
  * Business Profile API Service (Read-only Version)
- * Handles fetching business profile data from GET /api/business-profile
+ * Fetches the current headhunter's business profile by businessProfileId.
  */
 
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
-import type { BusinessProfile } from "../types/business.types";
+import { getMyInfo } from "@/features/auth/services/authApi";
 import type { ApiResponse } from "@/features/auth/types/api.types";
+import type { BusinessProfile } from "../types/business.types";
 
-/**
- * Get Business Profile Details
- * GET /api/business-profile
- * Returns array of profiles, we take the first element (headhunter's assigned business)
- */
-export const getBusinessProfile = async (): Promise<BusinessProfile> => {
-  const response = await apiClient.get<ApiResponse<BusinessProfile[]>>(
-    API_ENDPOINTS.BUSINESS_PROFILE.GET_ALL
+export const getBusinessProfileById = async (
+  id: number
+): Promise<BusinessProfile> => {
+  const response = await apiClient.get<ApiResponse<BusinessProfile>>(
+    API_ENDPOINTS.BUSINESS_PROFILE.GET_BY_ID.replace("{id}", String(id))
   );
 
-  if (!response.data.result || response.data.result.length === 0) {
+  if (!response.data.result) {
     throw new Error("No business profile found");
   }
 
-  return response.data.result[0];
+  return response.data.result;
+};
+
+/**
+ * Get the current headhunter's assigned business profile.
+ * Uses /api/account/myInfo to read businessProfileId first, then loads that company.
+ */
+export const getBusinessProfile = async (): Promise<BusinessProfile> => {
+  const account = await getMyInfo();
+  const businessProfileId = account.businessProfileId;
+
+  if (!businessProfileId) {
+    throw new Error("No business profile found");
+  }
+
+  return getBusinessProfileById(businessProfileId);
 };
 
 // Export as namespace for backward compatibility
 export const businessApi = {
   getBusinessProfile,
+  getBusinessProfileById,
 };
 
 export default businessApi;
