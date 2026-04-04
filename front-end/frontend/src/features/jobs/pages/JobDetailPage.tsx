@@ -1,13 +1,18 @@
 import { useState, useMemo, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useAppTranslation, useJobsTranslation, useJobDetailQuery } from "@/shared/hooks";
+import {
+  useAppTranslation,
+  useJobsTranslation,
+  useJobDetailQuery,
+} from "@/shared/hooks";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
+import { PageContainer } from "@/shared/components/layout";
 import {
   fetchSavedJobs,
   removeSavedJob,
@@ -74,8 +79,9 @@ export function JobDetailPage() {
       .then((applications) => {
         if (!active) return;
         setIsApplied(
-          applications.content?.some((application) => application.jobId === jobId) ??
-            false
+          applications.content?.some(
+            (application) => application.jobId === jobId
+          ) ?? false
         );
       })
       .catch(() => {
@@ -96,26 +102,28 @@ export function JobDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-5xl px-4 py-20">
-        <div className="h-52 animate-pulse rounded-3xl bg-slate-100" />
-      </div>
+      <PageContainer variant="default" maxWidth="5xl">
+        <div className="h-52 animate-pulse rounded-3xl bg-slate-100 dark:bg-slate-800" />
+      </PageContainer>
     );
   }
 
   if (error || !job || !jobId) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-        <p className="text-lg text-slate-500">
-          {error ? t("detail.unableToLoad") : t("detail.notFound")}
-        </p>
-        <Button
-          variant="link"
-          className="mt-4"
-          onClick={() => navigate("/jobs")}
-        >
-          {t("detail.backToListings")}
-        </Button>
-      </div>
+      <PageContainer variant="default" maxWidth="4xl">
+        <div className="text-center py-10">
+          <p className="text-lg text-slate-500 dark:text-slate-400">
+            {error ? t("detail.unableToLoad") : t("detail.notFound")}
+          </p>
+          <Button
+            variant="link"
+            className="mt-4"
+            onClick={() => navigate("/jobs")}
+          >
+            {t("detail.backToListings")}
+          </Button>
+        </div>
+      </PageContainer>
     );
   }
 
@@ -173,259 +181,270 @@ export function JobDetailPage() {
   };
 
   return (
-    <div className="bg-slate-50 pb-16 pt-10">
-      <div className="mx-auto max-w-6xl space-y-8 px-4">
-        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
-          <button
-            className="hover:text-emerald-600"
-            onClick={() => navigate("/jobs")}
-          >
-            {t("list.pageTitle")}
-          </button>
-          <span>/</span>
-          <span className="text-slate-800">{job.title}</span>
-        </div>
+    <PageContainer variant="default" maxWidth="6xl">
+      <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+        <button
+          className="hover:text-brand-primary dark:hover:text-brand-primary"
+          onClick={() => navigate("/jobs")}
+        >
+          {t("list.pageTitle")}
+        </button>
+        <span>/</span>
+        <span className="text-slate-800 dark:text-slate-200">{job.title}</span>
+      </div>
 
-        <div className="mt-4">
-          <Button
-            variant="outline"
-            size="lg"
-            className="px-4 py-2 rounded-lg"
-            onClick={() => navigate("/jobs")}
-          >
-            {t("detail.backToJobs")}
-          </Button>
-        </div>
+      <div className="mt-4">
+        <Button
+          variant="outline"
+          size="lg"
+          className="px-4 py-2 rounded-lg"
+          onClick={() => navigate("/jobs")}
+        >
+          {t("detail.backToJobs")}
+        </Button>
+      </div>
 
-        <div className="rounded-3xl bg-white p-8 shadow-xl">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
-                {job.companyName ?? t("messages.confidentialCompany")}
-              </p>
-              <h1 className="mt-2 text-3xl font-bold text-slate-900">
-                {job.title}
-              </h1>
-              <div className="mt-4 flex flex-wrap gap-3 text-sm">
-                <Badge variant="secondary">{job.workingType}</Badge>
-                <Badge variant="secondary">{job.rankLevel}</Badge>
-                <Badge variant="secondary">{job.location}</Badge>
-              </div>
+      <div className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-8 shadow-xl dark:shadow-slate-900/30 mt-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-brand-primary">
+              {job.companyName ?? t("messages.confidentialCompany")}
+            </p>
+            <h1 className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
+              {job.title}
+            </h1>
+            <div className="mt-4 flex flex-wrap gap-3 text-sm">
+              <Badge variant="secondary">{job.workingType}</Badge>
+              <Badge variant="secondary">{job.rankLevel}</Badge>
+              <Badge variant="secondary">{job.location}</Badge>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Button
-                variant="primary"
-                size="lg"
-                className="flex-1 shadow-lg shadow-emerald-500/30"
-                onClick={() => {
-                  if (isAuthenticated) {
-                    if (isApplied) {
-                      toast.info(tApp("applications.error.alreadyApplied"));
-                      return;
-                    }
-                    navigate(`/jobs/${job.id}/apply`);
-                  } else {
-                    toast.info(
-                      tApp("messages.pleaseSignInToApply") ||
-                        tApp("messages.pleaseSignInToSaveJobs")
-                    );
-                    navigate("/login", {
-                      state: { from: `/jobs/${job.id}/apply` },
-                    });
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button
+              variant="primary"
+              size="lg"
+              className="flex-1 shadow-lg shadow-brand-primary/30"
+              onClick={() => {
+                if (isAuthenticated) {
+                  if (isApplied) {
+                    toast.info(tApp("applications.error.alreadyApplied"));
+                    return;
                   }
-                }}
-                disabled={isApplyLoading || isApplied}
-              >
-                {isApplied ? tApp("applications.status.applied") : t("detail.applyNow")}
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className={`flex-1 border-2 ${
-                  isSaved
-                    ? "border-emerald-300 bg-emerald-50 text-emerald-700"
-                    : "border-slate-200"
-                }`}
-                onClick={handleToggleSaved}
-                disabled={isSaveLoading}
-              >
-                {isSaveLoading
-                  ? t("detail.saving")
-                  : isSaved
-                    ? t("detail.saved")
-                    : t("detail.saveJob")}
-              </Button>
-            </div>
-          </div>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {overviewItems.map((item) => (
-              <div key={item.label} className="rounded-2xl bg-slate-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  {item.label}
-                </p>
-                <p className="mt-2 text-lg font-semibold text-slate-900">
-                  {item.value}
-                </p>
-              </div>
-            ))}
+                  navigate(`/jobs/${job.id}/apply`);
+                } else {
+                  toast.info(
+                    tApp("messages.pleaseSignInToApply") ||
+                      tApp("messages.pleaseSignInToSaveJobs")
+                  );
+                  navigate("/login", {
+                    state: { from: `/jobs/${job.id}/apply` },
+                  });
+                }
+              }}
+              disabled={isApplyLoading || isApplied}
+            >
+              {isApplied
+                ? tApp("applications.status.applied")
+                : t("detail.applyNow")}
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className={`flex-1 border-2 ${
+                isSaved
+                  ? "border-brand-primary/30 bg-brand-primary/10 text-brand-primary"
+                  : "border-slate-200 dark:border-slate-700"
+              }`}
+              onClick={handleToggleSaved}
+              disabled={isSaveLoading}
+            >
+              {isSaveLoading
+                ? t("detail.saving")
+                : isSaved
+                  ? t("detail.saved")
+                  : t("detail.saveJob")}
+            </Button>
           </div>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
-          <div className="rounded-3xl bg-white p-8 shadow-lg">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 className="text-xl font-semibold text-slate-900">
-                {t("detail.jobDetailsSection")}
-              </h2>
-              <p className="text-sm text-emerald-600">
-                {t("detail.jobCodeLabel")} {job.jobCode}
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {overviewItems.map((item) => (
+            <div
+              key={item.label}
+              className="rounded-2xl bg-slate-50 dark:bg-slate-700/50 p-4"
+            >
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                {item.label}
+              </p>
+              <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-white">
+                {item.value}
               </p>
             </div>
-            <div className="mt-4 text-slate-600">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeSanitize]}
-              >
-                {job.description ?? ""}
-              </ReactMarkdown>
-            </div>
-
-            <div className="mt-8 space-y-8">
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900">
-                  {t("detail.responsibilities")}
-                </h3>
-                <div className="mt-3 whitespace-pre-line text-slate-600">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeSanitize]}
-                  >
-                    {job.responsibilities ?? ""}
-                  </ReactMarkdown>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900">
-                  {t("detail.requirements")}
-                </h3>
-                <div className="mt-3 whitespace-pre-line text-slate-600">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeSanitize]}
-                  >
-                    {job.requirements ?? ""}
-                  </ReactMarkdown>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900">
-                  {t("detail.benefits")}
-                </h3>
-                <div className="mt-3 whitespace-pre-line text-slate-600">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeSanitize]}
-                  >
-                    {job.benefits ?? ""}
-                  </ReactMarkdown>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900">
-                  {t("detail.requiredSkills")}
-                </h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {job.skills?.length ? (
-                    job.skills.map((skill) => (
-                      <span
-                        key={skill.id}
-                        className="rounded-full bg-emerald-50 px-4 py-1 text-sm font-medium text-emerald-700"
-                      >
-                        {skill.name}
-                      </span>
-                    ))
-                  ) : (
-                    <p className="text-slate-500">{t("detail.notAvailable")}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <aside className="space-y-6">
-            <section className="rounded-3xl bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-wide text-slate-500">
-                {t("detail.companySection")}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold text-slate-900">
-                {job.companyName ?? t("messages.confidentialCompany")}
-              </h3>
-              <p className="mt-1 text-sm text-slate-500">
-                {job.companyAddress ?? job.addressDetail}
-              </p>
-              <dl className="mt-4 space-y-3 text-sm text-slate-600">
-                {job.companySize && (
-                  <div className="flex justify-between">
-                    <dt>{t("detail.sizeLabel")}</dt>
-                    <dd className="font-semibold text-slate-900">
-                      {job.companySize}
-                    </dd>
-                  </div>
-                )}
-                {job.companyWebsite && (
-                  <div className="flex justify-between">
-                    <dt>{t("detail.websiteLabel")}</dt>
-                    <dd>
-                      <a
-                        href={job.companyWebsite}
-                        className="font-semibold text-emerald-600"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {job.companyWebsite}
-                      </a>
-                    </dd>
-                  </div>
-                )}
-              </dl>
-            </section>
-
-            <section className="rounded-3xl bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-wide text-slate-500">
-                {t("detail.generalInfoSection")}
-              </p>
-              <dl className="mt-4 space-y-3 text-sm text-slate-600">
-                {generalInfo.map((item) => (
-                  <div key={item.label} className="flex justify-between">
-                    <dt>{item.label}</dt>
-                    <dd className="font-semibold text-slate-900">
-                      {item.value || t("detail.notAvailable")}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
-            <section className="rounded-3xl bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-wide text-slate-500">Contact</p>
-              <p className="mt-2 text-lg font-semibold text-slate-900">{job.headhunterName ?? "Recruiter not available"}</p>
-              <p className="text-sm text-slate-500">{job.companyAddress ?? job.addressDetail}</p>
-              <Button
-                variant="primary"
-                size="lg"
-                className="mt-6 w-full justify-center shadow-lg shadow-slate-900/20"
-                onClick={() => navigate("/login")}
-              >
-                Send CV to recruiter
-              </Button>
-            </section>
-          </aside>
+          ))}
         </div>
       </div>
-    </div>
+
+      <div className="grid gap-8 lg:grid-cols-[2fr_1fr] mt-8">
+        <div className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-8 shadow-lg dark:shadow-slate-900/30">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
+              {t("detail.jobDetailsSection")}
+            </h2>
+            <p className="text-sm text-brand-primary">
+              {t("detail.jobCodeLabel")} {job.jobCode}
+            </p>
+          </div>
+          <div className="mt-4 text-slate-600 dark:text-slate-300">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeSanitize]}
+            >
+              {job.description ?? ""}
+            </ReactMarkdown>
+          </div>
+
+          <div className="mt-8 space-y-8">
+            <div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                {t("detail.responsibilities")}
+              </h3>
+              <div className="mt-3 whitespace-pre-line text-slate-600 dark:text-slate-300">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeSanitize]}
+                >
+                  {job.responsibilities ?? ""}
+                </ReactMarkdown>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                {t("detail.requirements")}
+              </h3>
+              <div className="mt-3 whitespace-pre-line text-slate-600 dark:text-slate-300">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeSanitize]}
+                >
+                  {job.requirements ?? ""}
+                </ReactMarkdown>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                {t("detail.benefits")}
+              </h3>
+              <div className="mt-3 whitespace-pre-line text-slate-600 dark:text-slate-300">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeSanitize]}
+                >
+                  {job.benefits ?? ""}
+                </ReactMarkdown>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                {t("detail.requiredSkills")}
+              </h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {job.skills?.length ? (
+                  job.skills.map((skill) => (
+                    <span
+                      key={skill.id}
+                      className="rounded-full bg-brand-primary/10 px-4 py-1 text-sm font-medium text-brand-primary"
+                    >
+                      {skill.name}
+                    </span>
+                  ))
+                ) : (
+                  <p className="text-slate-500 dark:text-slate-400">
+                    {t("detail.notAvailable")}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside className="space-y-6">
+          <section className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-6 shadow-lg dark:shadow-slate-900/30">
+            <p className="text-sm uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              {t("detail.companySection")}
+            </p>
+            <h3 className="mt-2 text-xl font-semibold text-slate-900 dark:text-white">
+              {job.companyName ?? t("messages.confidentialCompany")}
+            </h3>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+              {job.companyAddress ?? job.addressDetail}
+            </p>
+            <dl className="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+              {job.companySize && (
+                <div className="flex justify-between">
+                  <dt>{t("detail.sizeLabel")}</dt>
+                  <dd className="font-semibold text-slate-900 dark:text-white">
+                    {job.companySize}
+                  </dd>
+                </div>
+              )}
+              {job.companyWebsite && (
+                <div className="flex justify-between">
+                  <dt>{t("detail.websiteLabel")}</dt>
+                  <dd>
+                    <a
+                      href={job.companyWebsite}
+                      className="font-semibold text-brand-primary hover:underline"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {job.companyWebsite}
+                    </a>
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </section>
+
+          <section className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-6 shadow-lg dark:shadow-slate-900/30">
+            <p className="text-sm uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              {t("detail.generalInfoSection")}
+            </p>
+            <dl className="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+              {generalInfo.map((item) => (
+                <div key={item.label} className="flex justify-between">
+                  <dt>{item.label}</dt>
+                  <dd className="font-semibold text-slate-900 dark:text-white">
+                    {item.value || t("detail.notAvailable")}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
+          <section className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-6 shadow-lg dark:shadow-slate-900/30">
+            <p className="text-sm uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Contact
+            </p>
+            <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-white">
+              {job.headhunterName ?? "Recruiter not available"}
+            </p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              {job.companyAddress ?? job.addressDetail}
+            </p>
+            <Button
+              variant="primary"
+              size="lg"
+              className="mt-6 w-full justify-center shadow-lg shadow-brand-primary/30"
+              onClick={() => navigate("/login")}
+            >
+              Send CV to recruiter
+            </Button>
+          </section>
+        </aside>
+      </div>
+    </PageContainer>
   );
 }
