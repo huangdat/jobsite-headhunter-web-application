@@ -1,7 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import {
+  SubsectionTitle,
+  SmallText,
+  Caption,
+} from "@/shared/components/typography/Typography";
 import {
   formatDate,
   formatApplicationStatus,
@@ -30,22 +34,26 @@ export const ApplicationCard: React.FC<ApplicationCardProps> = ({
     <Card className="p-4 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <h3 className="font-semibold text-lg">{application.jobTitle}</h3>
-          <p className="text-sm text-gray-600 mt-1">{application.fullName}</p>
+          <SubsectionTitle className="text-lg">
+            {application.jobTitle}
+          </SubsectionTitle>
+          <SmallText variant="muted" className="mt-1">
+            {application.fullName}
+          </SmallText>
           {application.email && (
-            <p className="text-sm text-gray-500">{application.email}</p>
+            <SmallText variant="muted">{application.email}</SmallText>
           )}
           <div className="mt-3 flex items-center gap-2">
             <Badge className={statusColor}>{statusLabel}</Badge>
-            <span className="text-xs text-gray-500">
+            <Caption>
               {formatDate(application.appliedAt, i18n.language)}
-            </span>
+            </Caption>
           </div>
           {application.salaryExpectation && (
-            <p className="text-sm text-gray-600 mt-2">
+            <SmallText variant="muted" className="mt-2">
               {t("applications.form.salaryExpectation")}:{" "}
               {application.salaryExpectation}
-            </p>
+            </SmallText>
           )}
         </div>
 

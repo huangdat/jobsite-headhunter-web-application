@@ -1,17 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -28,6 +22,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import {
+  MetaText,
+  Caption,
+  Display,
+} from "@/shared/components/typography/Typography";
 import { InterviewType } from "../types";
 import type { InterviewScheduleFormData } from "../types";
 import { Calendar, Clock, Video, MapPin, FileText, X } from "lucide-react";
@@ -99,19 +98,18 @@ export const InterviewScheduleModal = ({
     }
   };
 
-  const labelStyle =
-    "text-[11px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-1.5";
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       {/* SỬA CHỖ NÀY: Ép sm:max-w-[700px] và w-full để đè default của Shadcn */}
       <DialogContent className="sm:max-w-175 w-[95vw] rounded-[2rem] p-0 overflow-hidden border-none shadow-2xl [&>button]:hidden">
         <DialogHeader className="bg-brand-primary p-6 px-8">
           <div className="flex justify-between items-center">
-            <DialogTitle className="text-black font-black text-2xl flex items-center gap-3">
+            <div className="flex items-center gap-3">
               <Calendar size={28} />
-              {t("applications.interview.title") || "Schedule Interview"}
-            </DialogTitle>
+              <Display size="sm" className="text-black">
+                {t("applications.interview.title") || "Schedule Interview"}
+              </Display>
+            </div>
             <button
               aria-label={t("common.close")}
               onClick={onClose}
@@ -133,11 +131,12 @@ export const InterviewScheduleModal = ({
                 name="interviewType"
                 render={({ field }) => (
                   <FormItem className="w-1/2 pr-4">
-                    {" "}
-                    {/* Chỉnh lại để ko chiếm full chiều ngang */}
-                    <FormLabel className={labelStyle}>
+                    <MetaText
+                      as="div"
+                      className="flex items-center gap-2 mb-1.5"
+                    >
                       <Video size={14} /> {t("applications.interview.type")}
-                    </FormLabel>
+                    </MetaText>
                     <Select
                       value={field.value || ""}
                       onValueChange={(val) => {
@@ -146,7 +145,7 @@ export const InterviewScheduleModal = ({
                       }}
                     >
                       <FormControl>
-                        <SelectTrigger className="rounded-xl border-slate-100 bg-slate-50 h-11 font-bold focus:ring-lime-400 px-4">
+                        <SelectTrigger className="rounded-xl border-slate-100 bg-slate-50 h-11 focus:ring-lime-400 px-4">
                           <SelectValue
                             placeholder={t("applications.interview.selectType")}
                           />
@@ -155,19 +154,23 @@ export const InterviewScheduleModal = ({
                       <SelectContent className="rounded-xl border-slate-100 shadow-xl p-1">
                         <SelectItem
                           value={InterviewType.ONLINE}
-                          className="font-bold cursor-pointer rounded-lg py-2"
+                          className="cursor-pointer rounded-lg py-2"
                         >
                           {t("applications.interview.typeOnline")}
                         </SelectItem>
                         <SelectItem
                           value={InterviewType.OFFLINE}
-                          className="font-bold cursor-pointer rounded-lg py-2"
+                          className="cursor-pointer rounded-lg py-2"
                         >
                           {t("applications.interview.typeOffline")}
                         </SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormMessage className="text-[10px] font-bold text-red-500 uppercase italic" />
+                    <FormMessage>
+                      <Caption variant="error" className="uppercase italic">
+                        {form.formState.errors.interviewType?.message}
+                      </Caption>
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -178,18 +181,25 @@ export const InterviewScheduleModal = ({
                   name="scheduledAt"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className={labelStyle}>
-                        <Calendar size={14} />{" "}
+                      <MetaText
+                        as="div"
+                        className="flex items-center gap-2 mb-1.5"
+                      >
+                        <Calendar size={14} />
                         {t("applications.interview.scheduledAt")}
-                      </FormLabel>
+                      </MetaText>
                       <FormControl>
                         <Input
                           type="datetime-local"
-                          className="rounded-xl border-slate-100 bg-slate-50 h-11 font-bold focus-visible:ring-lime-400 px-4"
+                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-lime-400 px-4"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] font-bold text-red-500 uppercase italic" />
+                      <FormMessage>
+                        <Caption variant="error" className="uppercase italic">
+                          {form.formState.errors.scheduledAt?.message}
+                        </Caption>
+                      </FormMessage>
                     </FormItem>
                   )}
                 />
@@ -199,18 +209,25 @@ export const InterviewScheduleModal = ({
                   name="durationMinutes"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className={labelStyle}>
-                        <Clock size={14} />{" "}
+                      <MetaText
+                        as="div"
+                        className="flex items-center gap-2 mb-1.5"
+                      >
+                        <Clock size={14} />
                         {t("applications.interview.duration")}
-                      </FormLabel>
+                      </MetaText>
                       <FormControl>
                         <Input
                           type="number"
-                          className="rounded-xl border-slate-100 bg-slate-50 h-11 font-bold focus-visible:ring-lime-400 px-4"
+                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-lime-400 px-4"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] font-bold text-red-500 uppercase italic" />
+                      <FormMessage>
+                        <Caption variant="error" className="uppercase italic">
+                          {form.formState.errors.durationMinutes?.message}
+                        </Caption>
+                      </FormMessage>
                     </FormItem>
                   )}
                 />
@@ -222,20 +239,27 @@ export const InterviewScheduleModal = ({
                   name="meetingLink"
                   render={({ field }) => (
                     <FormItem className="animate-in fade-in slide-in-from-top-1 duration-300">
-                      <FormLabel className={labelStyle}>
-                        <Video size={14} />{" "}
+                      <MetaText
+                        as="div"
+                        className="flex items-center gap-2 mb-1.5"
+                      >
+                        <Video size={14} />
                         {t("applications.interview.meetingLink")}
-                      </FormLabel>
+                      </MetaText>
                       <FormControl>
                         <Input
                           placeholder={t(
                             "applications.interview.meetingLinkPlaceholder"
                           )}
-                          className="rounded-xl border-slate-100 bg-slate-50 h-11 font-bold focus-visible:ring-lime-400 px-4"
+                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-lime-400 px-4"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] font-bold text-red-500 uppercase italic" />
+                      <FormMessage>
+                        <Caption variant="error" className="uppercase italic">
+                          {form.formState.errors.meetingLink?.message}
+                        </Caption>
+                      </FormMessage>
                     </FormItem>
                   )}
                 />
@@ -247,20 +271,27 @@ export const InterviewScheduleModal = ({
                   name="location"
                   render={({ field }) => (
                     <FormItem className="animate-in fade-in slide-in-from-top-1 duration-300">
-                      <FormLabel className={labelStyle}>
-                        <MapPin size={14} />{" "}
+                      <MetaText
+                        as="div"
+                        className="flex items-center gap-2 mb-1.5"
+                      >
+                        <MapPin size={14} />
                         {t("applications.interview.location")}
-                      </FormLabel>
+                      </MetaText>
                       <FormControl>
                         <Input
                           placeholder={t(
                             "applications.interview.locationPlaceholder"
                           )}
-                          className="rounded-xl border-slate-100 bg-slate-50 h-11 font-bold focus-visible:ring-lime-400 px-4"
+                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-lime-400 px-4"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] font-bold text-red-500 uppercase italic" />
+                      <FormMessage>
+                        <Caption variant="error" className="uppercase italic">
+                          {form.formState.errors.location?.message}
+                        </Caption>
+                      </FormMessage>
                     </FormItem>
                   )}
                 />
@@ -271,17 +302,24 @@ export const InterviewScheduleModal = ({
                 name="notes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className={labelStyle}>
+                    <MetaText
+                      as="div"
+                      className="flex items-center gap-2 mb-1.5"
+                    >
                       <FileText size={14} /> {t("applications.interview.notes")}
-                    </FormLabel>
+                    </MetaText>
                     <FormControl>
                       <Textarea
                         rows={3}
-                        className="rounded-xl border-slate-100 bg-slate-50 font-medium italic focus-visible:ring-lime-400 resize-none p-4"
+                        className="rounded-xl border-slate-100 bg-slate-50 focus-visible:ring-lime-400 resize-none p-4"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-[10px] font-bold text-red-500 uppercase italic" />
+                    <FormMessage>
+                      <Caption variant="error" className="uppercase italic">
+                        {form.formState.errors.notes?.message}
+                      </Caption>
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -291,7 +329,7 @@ export const InterviewScheduleModal = ({
                   variant="ghost"
                   type="button"
                   onClick={onClose}
-                  className="px-8 border-none hover:bg-red-50 font-bold h-12 rounded-xl transition-all text-xs uppercase tracking-widest text-red-500 hover:text-red-600 cursor-pointer"
+                  className="px-8 border-none hover:bg-red-50 h-12 rounded-xl transition-all text-xs uppercase tracking-widest text-red-500 hover:text-red-600 cursor-pointer"
                 >
                   {t("common.cancel")}
                 </Button>
