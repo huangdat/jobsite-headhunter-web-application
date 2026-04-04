@@ -46,4 +46,6 @@ public interface ApplicationRepo extends JpaRepository<Application, Long> {
 
     Page<Application> findByCandidate_IdAndStatus(String candidateId, ApplicationStatus status, Pageable pageable);
 
+    boolean existsByIdAndJob_Headhunter_Id(Long applicationId, String headhunterId);
+
 }

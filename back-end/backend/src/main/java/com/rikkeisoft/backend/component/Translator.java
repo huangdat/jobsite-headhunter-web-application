@@ -18,4 +18,8 @@ public class Translator {
         // Fetches message based on specific LocaleContext (set by Spring automatically)
         return messageSource.getMessage(msgCode, null, LocaleContextHolder.getLocale());
     }
+
+    public String toLocale(String msgCode, Object... args) {
+        return messageSource.getMessage(msgCode, args, LocaleContextHolder.getLocale());
+    }
 }
