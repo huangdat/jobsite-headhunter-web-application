@@ -115,24 +115,24 @@ export const API_ENDPOINTS = {
 
   // Candidate
   CANDIDATE: {
-    CV_UPLOAD: "/api/cv/MyCv",
+    CV_UPLOAD: "/api/cv",
     CV_LIST: "/api/cv/myCv",
     CV_DETAIL: "/api/cv/{id}",
     CV_DOWNLOAD: "/api/cv/{id}/download",
     CV_DELETE: "/api/cv/{id}",
-    CV_MAKE_ACTIVE: "/api/cv/{id}/make-active",
+    CV_MAKE_ACTIVE: "/api/cv/MyCv",
     PROFILE_STRENGTH: "/api/candidate/profile/strength",
     PRIVACY_SETTINGS: "/api/candidate/profile/privacy",
-    APPLY_JOB: "/api/applications",
-    GET_MY_APPLICATIONS: "/api/applications/my",
+    APPLY_JOB: "/api/jobs/{jobId}/applications",
+    GET_MY_APPLICATIONS: "/api/candidates/me/applications",
   },
 
   // Headhunter
   HEADHUNTER: {
-    GET_JOB_APPLICATIONS: "/api/jobs/{jobId}/applications",
-    GET_APPLICATION_DETAIL: "/api/applications/{id}",
-    UPDATE_APPLICATION_STATUS: "/api/applications/{id}/status",
-    SCHEDULE_INTERVIEW: "/api/interviews",
+    GET_JOB_APPLICATIONS: "/api/headhunter/jobs/{jobId}/applications",
+    GET_APPLICATION_DETAIL: "/api/headhunter/applications/{id}",
+    UPDATE_APPLICATION_STATUS: "/api/headhunter/applications/{id}/status",
+    SCHEDULE_INTERVIEW: "/api/headhunter/applications/{id}/interview",
   },
 
   // Interview

@@ -32,7 +32,8 @@ export function TopCompanies() {
     };
 
     fetchCompanies();
-  }, [currentLanguage?.code, t]); //new
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentLanguage?.code]);
 
   return (
     <section id="top-companies" className="bg-slate-50 py-20">
