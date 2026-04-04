@@ -12,6 +12,12 @@ import type { RegisterFormData } from "@/features/auth/types";
 import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 import { AuthLayout } from "@/shared/components";
 import { Button } from "@/components/ui/button";
+import {
+  SectionTitle,
+  BodyText,
+  SmallText,
+  Caption,
+} from "@/shared/components/typography/Typography";
 
 interface LocationState {
   accountId: string;
@@ -209,18 +215,16 @@ export function OTPVerificationPage() {
     <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <div className="w-full max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 dark:text-white">
-            {t("pages.otpVerification.title")}
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-2">
+          <SectionTitle>{t("pages.otpVerification.title")}</SectionTitle>
+          <BodyText variant="muted" className="mt-2">
             {t("pages.otpVerification.subtitle")}
-          </p>
+          </BodyText>
         </div>
 
         <div className="space-y-6">
-          <div className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+          <div className="flex items-center justify-center gap-2">
             <MdOutlineMail className="text-brand-primary" size={18} />
-            <span className="font-medium">{state.email}</span>
+            <SmallText weight="medium">{state.email}</SmallText>
           </div>
 
           <div className="flex justify-center gap-2">
@@ -307,9 +311,9 @@ export function OTPVerificationPage() {
           </Button>
 
           <div className="text-center">
-            <p className="text-sm text-slate-600 mb-2">
+            <SmallText variant="muted" className="mb-2">
               {t("pages.otpVerification.didNotReceiveCode")}
-            </p>
+            </SmallText>
             <button
               onClick={handleResend}
               disabled={isLoading || isResending || timeLeft > 240}
@@ -320,10 +324,10 @@ export function OTPVerificationPage() {
                 : t("pages.otpVerification.resendCode")}
             </button>
             {timeLeft > 240 && (
-              <p className="text-xs text-slate-500 mt-1">
+              <Caption className="mt-1">
                 {t("pages.otpVerification.availableIn")}{" "}
                 {formatTime(timeLeft - 240)}
-              </p>
+              </Caption>
             )}
           </div>
 
