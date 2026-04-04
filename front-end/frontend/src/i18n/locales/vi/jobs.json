@@ -248,6 +248,8 @@
     "approveApplications": "Quản lý tin đăng",
     "loadingApplicants": "Đang tải ứng viên...",
     "noApplicantsYet": "Chưa có ứng viên nào.",
+    "applicantPageInfo": "Xem và quản lý các ứng viên đã ứng tuyển vào các công việc của bạn",
+    "refresh": "Làm mới",
     "footer_copyright": "© 2026 Nền tảng JobSite"
   },
   "validation": {
