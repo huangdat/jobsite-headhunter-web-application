@@ -5,6 +5,11 @@ import {
   useSavedJobsQuery,
   useRemoveSavedJobMutation,
 } from "@/shared/hooks";
+import {
+  SmallText,
+  MetaText,
+  SubsectionTitle,
+} from "@/shared/components/typography/Typography";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -83,30 +88,28 @@ export function SavedJobsPage() {
             className="flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between"
           >
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-brand-primary">
+              <MetaText className="text-brand-primary">
                 {job.companyName ?? t("saved.confidentialCompany")}
-              </p>
-              <h3 className="mt-1 text-lg font-semibold text-slate-900">
-                {job.title}
-              </h3>
-              <div className="mt-2 flex flex-wrap gap-3 text-sm text-slate-500">
-                <span>{job.location}</span>
-                <span>
+              </MetaText>
+              <SubsectionTitle className="mt-1">{job.title}</SubsectionTitle>
+              <div className="mt-2 flex flex-wrap gap-3">
+                <SmallText variant="muted">{job.location}</SmallText>
+                <SmallText variant="muted">
                   {t("saved.postedText")}{" "}
                   {job.postedDate
                     ? new Date(job.postedDate).toLocaleDateString("en-US")
                     : t("saved.recentlyPosted")}
-                </span>
+                </SmallText>
               </div>
-              <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+              <div className="mt-3 flex flex-wrap items-center gap-3">
                 <Badge variant="secondary">{job.status}</Badge>
-                <span className="font-semibold text-slate-900">
+                <SmallText weight="bold" className="text-slate-900">
                   {formatSalaryRange(
                     job.salaryMin,
                     job.salaryMax,
                     job.currency
                   )}
-                </span>
+                </SmallText>
               </div>
             </div>
 

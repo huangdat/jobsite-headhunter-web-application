@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
+import { Display, SmallText } from "@/shared/components/typography/Typography";
 import { useCompanyDetail } from "../hooks/useCompanyDetail";
 import { CompanyHeader } from "../components/CompanyHeader";
 import { CompanyAbout } from "../components/CompanyAbout";
@@ -17,9 +18,9 @@ export function CompanyDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-slate-500 font-medium animate-pulse">
+        <SmallText variant="muted" weight="bold" className="animate-pulse">
           {t("business.state.loading")}
-        </p>
+        </SmallText>
       </div>
     );
   }
@@ -27,14 +28,16 @@ export function CompanyDetailPage() {
   if (error || !company) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <p className="text-red-500 font-bold text-lg">
+        <Display className="text-red-500">
           {error || t("business.strength.no_data")}
-        </p>
+        </Display>
         <button
           onClick={() => navigate(-1)}
-          className="px-6 py-2 bg-slate-900 hover:bg-slate-800 rounded-xl text-white font-bold transition cursor-pointer"
+          className="px-6 py-2 bg-slate-900 hover:bg-slate-800 rounded-xl text-white transition cursor-pointer"
         >
-          {t("business.form.back")}
+          <SmallText weight="bold" className="text-white">
+            {t("business.form.back")}
+          </SmallText>
         </button>
       </div>
     );
@@ -45,10 +48,12 @@ export function CompanyDetailPage() {
       <div className="max-w-4xl mx-auto px-4">
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 text-sm font-bold text-slate-500 hover:text-brand-primary transition cursor-pointer flex items-center gap-2 group"
+          className="mb-6 text-slate-500 hover:text-brand-primary transition cursor-pointer flex items-center gap-2 group"
         >
           <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          {t("business.form.back")}
+          <SmallText weight="bold" className="text-inherit">
+            {t("business.form.back")}
+          </SmallText>
         </button>
 
         <CompanyHeader company={company} />

@@ -4,6 +4,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
+import {
+  Display,
+  SmallText,
+  MetaText,
+} from "@/shared/components/typography/Typography";
 import type { ChangePasswordFormData } from "@/features/auth/types";
 import { changePassword } from "@/features/auth/services/authApi";
 import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
@@ -166,8 +171,8 @@ export function ChangePasswordPage() {
             <span className="font-medium">{tApp("navigation.referrals")}</span>
           </button>
 
-          <div className="pt-4 pb-2 px-4 text-xs font-semibold text-white/40 uppercase tracking-wider">
-            {tApp("common.section.account")}
+          <div className="pt-4 pb-2 px-4 uppercase tracking-wider">
+            <MetaText>{tApp("common.section.account")}</MetaText>
           </div>
           <button
             onClick={() => navigate("/settings")}
@@ -182,12 +187,12 @@ export function ChangePasswordPage() {
           <div className="flex items-center gap-3 p-2">
             <div className="w-10 h-10 rounded-full bg-brand-primary/20 border border-brand-primary/30 bg-cover bg-center"></div>
             <div className="grow overflow-hidden">
-              <p className="text-sm font-semibold truncate">
+              <SmallText weight="bold" className="text-white truncate">
                 {tApp("common.currentUserName")}
-              </p>
-              <p className="text-xs text-white/50 truncate">
+              </SmallText>
+              <SmallText variant="muted" className="text-white/50 truncate">
                 {tApp("common.exampleEmail")}
-              </p>
+              </SmallText>
             </div>
           </div>
         </div>
@@ -220,12 +225,12 @@ export function ChangePasswordPage() {
         <div className="flex-1 w-full py-12 px-12">
           <div className="w-full">
             <div className="mb-10">
-              <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
+              <Display className="mb-2">
                 {t("pages.changePassword.title")}
-              </h1>
-              <p className="text-slate-500 dark:text-slate-400 max-w-3xl">
+              </Display>
+              <SmallText variant="muted" className="max-w-3xl">
                 {t("pages.changePassword.subtitle")}
-              </p>
+              </SmallText>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -302,50 +307,60 @@ export function ChangePasswordPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`flex-1 h-12 font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
+                    className={`flex-1 h-12 rounded-xl transition-all flex items-center justify-center gap-2 ${
                       !isSubmitting
                         ? "bg-brand-primary text-slate-900 hover:bg-brand-hover"
                         : "bg-slate-200 text-slate-400 cursor-not-allowed"
                     }`}
                   >
-                    {isSubmitting
-                      ? t("common.loading")
-                      : t("pages.changePassword.submitButton")}
+                    <MetaText>
+                      {isSubmitting
+                        ? t("common.loading")
+                        : t("pages.changePassword.submitButton")}
+                    </MetaText>
                   </button>
                   <button
                     type="button"
                     onClick={handleCancel}
                     disabled={isSubmitting}
-                    className="flex-1 h-12 bg-transparent text-slate-600 dark:text-slate-400 font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700"
+                    className="flex-1 h-12 bg-transparent text-slate-600 dark:text-slate-400 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700"
                   >
-                    {t("pages.changePassword.cancelButton")}
+                    <MetaText>
+                      {t("pages.changePassword.cancelButton")}
+                    </MetaText>
                   </button>
                 </div>
               </form>
 
               {/* Password Requirements */}
               <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 h-fit max-w-md">
-                <h3 className="text-sm font-bold text-slate-800 dark:text-white mb-6 uppercase tracking-wider">
+                <MetaText className="mb-6">
                   {t("pages.changePassword.passwordRequirementsTitle")}
-                </h3>
+                </MetaText>
                 <ul className="space-y-4">
-                  <li className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("pages.changePassword.requirement1")}</span>
+                    <SmallText>
+                      {t("pages.changePassword.requirement1")}
+                    </SmallText>
                   </li>
-                  <li className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("pages.changePassword.requirement2")}</span>
+                    <SmallText>
+                      {t("pages.changePassword.requirement2")}
+                    </SmallText>
                   </li>
-                  <li className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("pages.changePassword.requirement3")}</span>
+                    <SmallText>
+                      {t("pages.changePassword.requirement3")}
+                    </SmallText>
                   </li>
                 </ul>
               </div>

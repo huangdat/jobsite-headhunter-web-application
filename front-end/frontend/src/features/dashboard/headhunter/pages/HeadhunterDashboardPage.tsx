@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { SmallText } from "@/shared/components/typography/Typography";
 import { useHeadhunterDashboard } from "../hooks/useHeadhunterDashboard";
 import { DashboardSkeleton } from "../../shared/components/DashboardSkeleton";
 import { PerformanceKPIs } from "../components/PerformanceKPIs";
@@ -44,12 +45,15 @@ export const HeadhunterDashboardPage: React.FC = () => {
       <PageContainer variant="white" maxWidth="5xl">
         <div className="flex items-center justify-center min-h-100">
           <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-xl max-w-md">
-            <h2 className="text-red-800 dark:text-red-400 font-semibold">
+            <SmallText weight="bold" className="text-red-800 dark:text-red-400">
               {t("error.failedToLoad", "Error loading dashboard")}
-            </h2>
-            <p className="text-red-600 dark:text-red-300 text-sm mt-1">
+            </SmallText>
+            <SmallText
+              variant="muted"
+              className="text-red-600 dark:text-red-300 mt-1"
+            >
               {error}
-            </p>
+            </SmallText>
             <button
               onClick={refetch}
               className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
@@ -75,11 +79,13 @@ export const HeadhunterDashboardPage: React.FC = () => {
           <button
             onClick={refetch}
             disabled={isLoading}
-            className="px-4 py-2 bg-brand-primary text-white rounded-lg font-medium hover:bg-brand-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors dark:bg-brand-primary dark:hover:bg-brand-primary/90"
+            className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors dark:bg-brand-primary dark:hover:bg-brand-primary/90"
           >
-            {isLoading
-              ? t("common.loading", "Loading...")
-              : t("headhunter.dashboard.refresh", "Refresh")}
+            <SmallText weight="bold" className="text-white">
+              {isLoading
+                ? t("common.loading", "Loading...")
+                : t("headhunter.dashboard.refresh", "Refresh")}
+            </SmallText>
           </button>
         }
       />
