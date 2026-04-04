@@ -1,6 +1,7 @@
 import { ParticleBackground } from "./ParticleBackground";
 import { SearchBar } from "./SearchBar";
 import { useHomeTranslation } from "@/shared/hooks";
+import { Display, BodyText } from "@/shared/components/typography/Typography";
 
 export function HeroSection() {
   const { t } = useHomeTranslation();
@@ -14,14 +15,14 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-        <h1 className="text-5xl font-bold leading-tight text-slate-900">
+        <Display>
           {t("hero.title")}{" "}
           <span className="text-emerald-600">{t("hero.highlight")}</span>
-        </h1>
+        </Display>
 
-        <p className="mt-6 text-lg text-slate-900 max-w-2xl mx-auto">
+        <BodyText className="mt-6 max-w-2xl mx-auto">
           {t("hero.description")}
-        </p>
+        </BodyText>
 
         <SearchBar />
       </div>

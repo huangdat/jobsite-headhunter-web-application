@@ -13,7 +13,10 @@ import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 import { ChevronLeft } from "lucide-react";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { LabelText, SmallText } from "@/shared/components/typography/Typography";
+import {
+  LabelText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export function JobCreatePage() {
   const { t } = useJobsTranslation();
@@ -194,7 +197,9 @@ export function JobCreatePage() {
               })}
             />
             {errors.title && (
-              <SmallText className="text-destructive">{errors.title.message}</SmallText>
+              <SmallText className="text-destructive">
+                {errors.title.message}
+              </SmallText>
             )}
           </div>
           <div className="space-y-2">
