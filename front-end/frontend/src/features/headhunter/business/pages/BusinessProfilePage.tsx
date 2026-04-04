@@ -95,7 +95,7 @@ export const BusinessProfilePage: React.FC = () => {
         <SmallText variant="muted">
           {t("business.breadcrumb.business")}
         </SmallText>
-        <span className="text-gray-300 dark:text-gray-600">{">"}  </span>
+        <span className="text-gray-300 dark:text-gray-600">{">"} </span>
         <SmallText weight="bold" className="text-gray-900 dark:text-gray-100">
           {t("business.breadcrumb.profile")}
         </SmallText>
@@ -104,9 +104,7 @@ export const BusinessProfilePage: React.FC = () => {
       {/* Header Section */}
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <Display>
-            {t("business.page.title")}
-          </Display>
+          <Display>{t("business.page.title")}</Display>
           <SmallText variant="muted" className="mt-2">
             {t("business.page.description")}
           </SmallText>
@@ -133,10 +131,7 @@ export const BusinessProfilePage: React.FC = () => {
       {/* Error Banner */}
       {hasError && (
         <div className="mb-6">
-          <ErrorBanner
-            message={errorMessage || ""}
-            onDismiss={clearMessages}
-          />
+          <ErrorBanner message={errorMessage || ""} onDismiss={clearMessages} />
         </div>
       )}
 
@@ -149,130 +144,128 @@ export const BusinessProfilePage: React.FC = () => {
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-12 gap-8">
-          {/* Main Content (8 columns) */}
-          <div className="col-span-12 lg:col-span-8">
-            <div className="space-y-8">
-              {/* Company Identity Form - Show in default or error state */}
-              {!isSubmitted || hasError ? (
-                <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <div className="mb-6">
-                    <SubsectionTitle>
-                      {t("business.form.title")}
-                    </SubsectionTitle>
-                    <SmallText variant="muted" className="mt-1">
-                      {t("business.form.subtitle")}
-                    </SmallText>
-                  </div>
-
-                  <BusinessIdentityForm
-                    formData={formData}
-                    errors={formErrors}
-                    touchedFields={touchedFields}
-                    isSubmitting={isSubmitting}
-                    onFieldChange={handleFieldChange}
-                    onFieldBlur={handleFieldBlur}
-                    onSubmit={handleSubmit}
-                  />
+        {/* Main Content (8 columns) */}
+        <div className="col-span-12 lg:col-span-8">
+          <div className="space-y-8">
+            {/* Company Identity Form - Show in default or error state */}
+            {!isSubmitted || hasError ? (
+              <div className="rounded-lg border border-slate-200 bg-white p-6">
+                <div className="mb-6">
+                  <SubsectionTitle>{t("business.form.title")}</SubsectionTitle>
+                  <SmallText variant="muted" className="mt-1">
+                    {t("business.form.subtitle")}
+                  </SmallText>
                 </div>
-              ) : null}
 
-              {/* Verification Timeline - Show in submitted state */}
-              {isSubmitted &&
-                verificationSteps &&
-                verificationSteps.length > 0 && (
-                  <div className="rounded-lg border border-slate-200 bg-white p-6">
-                    <SubsectionTitle className="mb-6">
-                      {t("business.verification.title")}
-                    </SubsectionTitle>
-                    <VerificationStatus
-                      currentStatus={currentVerificationStatus}
-                    />
-                  </div>
-                )}
+                <BusinessIdentityForm
+                  formData={formData}
+                  errors={formErrors}
+                  touchedFields={touchedFields}
+                  isSubmitting={isSubmitting}
+                  onFieldChange={handleFieldChange}
+                  onFieldBlur={handleFieldBlur}
+                  onSubmit={handleSubmit}
+                />
+              </div>
+            ) : null}
 
-              {/* Submitted Documents - Show when documents exist */}
-              {hasDocuments && documents && (
+            {/* Verification Timeline - Show in submitted state */}
+            {isSubmitted &&
+              verificationSteps &&
+              verificationSteps.length > 0 && (
                 <div className="rounded-lg border border-slate-200 bg-white p-6">
                   <SubsectionTitle className="mb-6">
-                    {t("business.documents.title")}
+                    {t("business.verification.title")}
                   </SubsectionTitle>
-                  <SubmittedDocuments documents={documents} />
+                  <VerificationStatus
+                    currentStatus={currentVerificationStatus}
+                  />
                 </div>
               )}
 
-              {/* Bottom Sections - Privacy & Best Practices */}
-              <div className="grid grid-cols-2 gap-6">
-                {/* Privacy Control Card */}
-                <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <SmallText weight="bold" className="text-slate-900">
-                        {t("business.privacy.title")}
-                      </SmallText>
-                      <SmallText variant="muted" className="mt-2">
-                        {t("business.privacy.description")}
-                      </SmallText>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="mt-4 text-emerald-600 transition-colors hover:text-emerald-700"
-                  >
-                    <SmallText weight="bold" className="text-inherit">
-                      {t("business.action.configure")} →
-                    </SmallText>
-                  </button>
-                </div>
-
-                {/* Best Practices Card */}
-                <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <CompanyBestPractices />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar (4 columns) */}
-          <div className="col-span-12 lg:col-span-4">
-            <div className="space-y-6">
-              {/* Profile Strength Card */}
-              <ProfileStrengthCard strengthData={profileStrength} />
-
-              {/* Optimization Tips Card */}
-              <OptimizationTips tips={[]} />
-
-              {/* Premium Services Card */}
-              <div className="rounded-lg border border-gray-200 bg-linear-to-b from-gray-900 to-gray-800 p-6 text-white">
-                <SubsectionTitle className="text-white">
-                  {t("business.premium.title")}
+            {/* Submitted Documents - Show when documents exist */}
+            {hasDocuments && documents && (
+              <div className="rounded-lg border border-slate-200 bg-white p-6">
+                <SubsectionTitle className="mb-6">
+                  {t("business.documents.title")}
                 </SubsectionTitle>
-                <SmallText variant="muted" className="mt-2 text-gray-300">
-                  {t("business.premium.description")}
-                </SmallText>
+                <SubmittedDocuments documents={documents} />
+              </div>
+            )}
+
+            {/* Bottom Sections - Privacy & Best Practices */}
+            <div className="grid grid-cols-2 gap-6">
+              {/* Privacy Control Card */}
+              <div className="rounded-lg border border-slate-200 bg-white p-6">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <SmallText weight="bold" className="text-slate-900">
+                      {t("business.privacy.title")}
+                    </SmallText>
+                    <SmallText variant="muted" className="mt-2">
+                      {t("business.privacy.description")}
+                    </SmallText>
+                  </div>
+                </div>
                 <button
                   type="button"
-                  className="mt-4 w-full rounded-lg bg-green-600 px-4 py-2.5 text-white transition-colors hover:bg-green-700"
+                  className="mt-4 text-emerald-600 transition-colors hover:text-emerald-700"
                 >
-                  <SmallText weight="medium" className="text-white">
-                    {t("business.button.upgrade")}
+                  <SmallText weight="bold" className="text-inherit">
+                    {t("business.action.configure")} →
                   </SmallText>
                 </button>
               </div>
 
-              {/* Loading State for Verification Check */}
-              {isLoading && (
-                <div className="flex items-center justify-center rounded-lg border border-gray-200 bg-white p-8">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-green-600" />
-                    <SmallText variant="muted">
-                      {t("business.state.loading")}
-                    </SmallText>
-                  </div>
-                </div>
-              )}
+              {/* Best Practices Card */}
+              <div className="rounded-lg border border-slate-200 bg-white p-6">
+                <CompanyBestPractices />
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Sidebar (4 columns) */}
+        <div className="col-span-12 lg:col-span-4">
+          <div className="space-y-6">
+            {/* Profile Strength Card */}
+            <ProfileStrengthCard strengthData={profileStrength} />
+
+            {/* Optimization Tips Card */}
+            <OptimizationTips tips={[]} />
+
+            {/* Premium Services Card */}
+            <div className="rounded-lg border border-gray-200 bg-linear-to-b from-gray-900 to-gray-800 p-6 text-white">
+              <SubsectionTitle className="text-white">
+                {t("business.premium.title")}
+              </SubsectionTitle>
+              <SmallText variant="muted" className="mt-2 text-gray-300">
+                {t("business.premium.description")}
+              </SmallText>
+              <button
+                type="button"
+                className="mt-4 w-full rounded-lg bg-green-600 px-4 py-2.5 text-white transition-colors hover:bg-green-700"
+              >
+                <SmallText weight="medium" className="text-white">
+                  {t("business.button.upgrade")}
+                </SmallText>
+              </button>
+            </div>
+
+            {/* Loading State for Verification Check */}
+            {isLoading && (
+              <div className="flex items-center justify-center rounded-lg border border-gray-200 bg-white p-8">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-green-600" />
+                  <SmallText variant="muted">
+                    {t("business.state.loading")}
+                  </SmallText>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </PageContainer>
   );
 };
