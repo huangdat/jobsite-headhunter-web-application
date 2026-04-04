@@ -6,6 +6,10 @@ import { UserRoleDistribution } from "../components/UserRoleDistribution";
 import { JobStatusStatsComponent } from "../components/JobStatusStats";
 import { SystemOverviewCards } from "../components/SystemOverviewCards";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import {
+  SectionTitle,
+  LabelText,
+} from "@/shared/components/typography/Typography";
 
 /**
  * AdminDashboardPage

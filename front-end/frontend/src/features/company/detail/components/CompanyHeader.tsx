@@ -11,7 +11,7 @@ export function CompanyHeader({ company }: Props) {
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-6">
-      <div className="h-40 bg-gradient-to-r from-lime-200 to-emerald-200 relative">
+      <div className="h-40 bg-linear-to-r from-lime-200 to-emerald-200 relative">
         <div className="absolute -bottom-10 left-8 w-24 h-24 bg-white rounded-2xl p-1.5 shadow-lg border border-slate-100">
           <div className="w-full h-full bg-slate-50 rounded-xl flex items-center justify-center text-3xl font-black text-slate-300 uppercase">
             {company.companyName?.charAt(0) || "C"}

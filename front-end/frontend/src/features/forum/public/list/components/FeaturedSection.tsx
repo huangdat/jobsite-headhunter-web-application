@@ -84,13 +84,9 @@ export function FeaturedSection() {
               </div>
               <div className="p-4 bg-white border border-slate-200">
                 <MetaText as="span">{post.categoryName}</MetaText>
-                <SmallText
-                  weight="semibold"
-                  className="block mt-1 line-clamp-2 group-hover:text-brand-primary"
-                  as="p"
-                >
-                  {post.title}
-                </SmallText>
+                <p className="mt-1 line-clamp-2 group-hover:text-brand-primary">
+                  <SmallText weight="semibold">{post.title}</SmallText>
+                </p>
                 <Caption className="mt-2">
                   {new Date(post.createdAt).toLocaleDateString()}
                 </Caption>
