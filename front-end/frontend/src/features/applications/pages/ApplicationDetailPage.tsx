@@ -128,7 +128,13 @@ export const ApplicationDetailPage: React.FC = () => {
       </PageContainer>
     );
 
-  const LabelWithIcon = ({ children, icon: Icon }: { children: React.ReactNode; icon?: React.ReactNode}) => (
+  const LabelWithIcon = ({
+    children,
+    icon: Icon,
+  }: {
+    children: React.ReactNode;
+    icon?: React.ReactNode;
+  }) => (
     <MetaText className="flex items-center gap-2 mb-1">
       {Icon}
       {children}
@@ -143,9 +149,7 @@ export const ApplicationDetailPage: React.FC = () => {
             <User size={28} />
           </div>
           <div>
-            <Display className="uppercase">
-              {application.fullName}
-            </Display>
+            <Display className="uppercase">{application.fullName}</Display>
             <SmallText variant="muted" weight="bold" className="italic mt-1">
               {application.jobTitle}
             </SmallText>
@@ -157,9 +161,7 @@ export const ApplicationDetailPage: React.FC = () => {
           className="rounded-xl border-gray-200 hover:border-brand-primary hover:bg-brand-primary/10 px-5 flex gap-2 cursor-pointer transition-all"
         >
           <ChevronLeft size={18} />
-          <SmallText weight="bold">
-            {t("common.back")}
-          </SmallText>
+          <SmallText weight="bold">{t("common.back")}</SmallText>
         </Button>
       </div>
 
@@ -217,9 +219,7 @@ export const ApplicationDetailPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <SmallText weight="bold">
-                    Open CV File
-                  </SmallText>
+                  <SmallText weight="bold">Open CV File</SmallText>
                 </a>
               </Button>
             ) : (
@@ -298,9 +298,7 @@ export const ApplicationDetailPage: React.FC = () => {
                 size="xl"
                 className="flex-1 cursor-pointer"
               >
-                <MetaText>
-                  {t("common.approve") || "Approve"}
-                </MetaText>
+                <MetaText>{t("common.approve") || "Approve"}</MetaText>
               </Button>
               <Button
                 variant="outline"
@@ -327,9 +325,7 @@ export const ApplicationDetailPage: React.FC = () => {
                 size="xl"
                 className="flex-1 cursor-pointer"
               >
-                <MetaText>
-                  {t("applications.interview.title")}
-                </MetaText>
+                <MetaText>{t("applications.interview.title")}</MetaText>
               </Button>
               <Button
                 variant="outline"
@@ -358,9 +354,7 @@ export const ApplicationDetailPage: React.FC = () => {
                 size="xl"
                 className="flex-1 cursor-pointer"
               >
-                <MetaText>
-                  {t("applications.status.passed")}
-                </MetaText>
+                <MetaText>{t("applications.status.passed")}</MetaText>
               </Button>
               <Button
                 variant="outline"
