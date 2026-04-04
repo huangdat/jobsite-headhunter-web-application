@@ -163,6 +163,16 @@ export const API_ENDPOINTS = {
     },
     UPLOAD_IMAGE: "/api/forum/upload-image",
   },
+
+  // Verification (Admin)
+  VERIFICATION: {
+    GET_LIST: "/api/admin/verifications",
+    GET_DETAIL: "/api/admin/verifications/{id}",
+    APPROVE: "/api/admin/verifications/{id}/approve",
+    REJECT: "/api/admin/verifications/{id}/reject",
+    GET_STATS: "/api/admin/verification-stats",
+    GET_EVENTS: "/api/admin/verification-events",
+  },
 };
 
 // Feature Flags
