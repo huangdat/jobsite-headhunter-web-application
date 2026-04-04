@@ -3,6 +3,11 @@ import { ProfileForm } from "@/features/candidate/profile/components/ProfileForm
 import { useProfileUpdate } from "@/features/candidate/profile/hooks/useProfileUpdate";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { PageContainer } from "@/shared/components/layout";
+import {
+  Display,
+  MetaText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export function ProfileEditPage() {
   const { t } = useCandidateTranslation();
@@ -23,13 +28,13 @@ export function ProfileEditPage() {
   return (
     <PageContainer variant="default" maxWidth="7xl">
       <div className="mb-6">
-        <p className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
-          {t("profile.page.eyebrow")}
-        </p>
-        <h1 className="mt-1 text-3xl font-black tracking-tight text-slate-900 dark:text-white md:text-4xl">
+        <MetaText>{t("profile.page.eyebrow")}</MetaText>
+        <Display size="md" className="mt-1 md:text-5xl">
           {t("profile.page.title")}
-        </h1>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>
+        </Display>
+        <SmallText variant="muted" className="mt-1">
+          {subtitle}
+        </SmallText>
       </div>
 
       <ProfileForm
