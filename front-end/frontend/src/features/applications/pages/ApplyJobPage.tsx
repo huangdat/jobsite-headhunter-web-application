@@ -62,7 +62,9 @@ export const ApplyJobPage: React.FC = () => {
         description={
           <>
             {t("applications.form.submit")}
-            <span className="text-emerald-600 ml-2 font-bold">{jobTitle}</span>
+            <span className="text-brand-primary ml-2 font-bold">
+              {jobTitle}
+            </span>
           </>
         }
       />

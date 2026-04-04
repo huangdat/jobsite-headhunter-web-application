@@ -62,9 +62,9 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
       {/* Section Header */}
       <div>
         <div className="mb-2 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-600">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-primary">
             <svg
-              className="h-6 w-6 text-white"
+              className="h-6 w-6 text-black"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -111,7 +111,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.companyName && touchedFields.has("companyName")
                   ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
-                  : "border-slate-300 bg-white text-slate-900 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
               required
             />
@@ -140,7 +140,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.companySize && touchedFields.has("companySize")
                   ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
-                  : "border-slate-300 bg-white text-slate-900 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
             >
               <option value="">-- {t("business.form.select_size")} --</option>
@@ -180,7 +180,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
                 errors.headquartersAddress &&
                 touchedFields.has("headquartersAddress")
                   ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
-                  : "border-slate-300 bg-white text-slate-900 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
               required
             />
@@ -216,7 +216,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.taxId && touchedFields.has("taxId")
                   ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
-                  : "border-slate-300 bg-white text-slate-900 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
               required
             />
@@ -247,7 +247,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.website && touchedFields.has("website")
                   ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
-                  : "border-slate-300 bg-white text-slate-900 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
               required
             />
@@ -269,7 +269,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
           className={`flex-1 rounded-lg cursor-pointer px-6 py-3 font-semibold text-white transition-colors ${
             isDisabled
               ? "cursor-not-allowed bg-slate-400"
-              : "bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800"
+              : "bg-brand-primary text-black hover:bg-brand-hover active:bg-brand-hover"
           }`}
         >
           {isSubmitting && (

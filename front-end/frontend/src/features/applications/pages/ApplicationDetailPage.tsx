@@ -127,7 +127,7 @@ export const ApplicationDetailPage: React.FC = () => {
     <PageContainer variant="white" maxWidth="4xl">
       <div className="flex justify-between items-end mb-8 border-b border-gray-100 dark:border-gray-800 pb-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-lime-400 flex items-center justify-center text-white">
+          <div className="w-14 h-14 rounded-2xl bg-brand-primary flex items-center justify-center text-black">
             <User size={28} />
           </div>
           <div>
@@ -142,7 +142,7 @@ export const ApplicationDetailPage: React.FC = () => {
         <Button
           variant="outline"
           onClick={() => navigate(-1)}
-          className="rounded-xl border-gray-200 hover:border-lime-400 hover:bg-lime-50 font-bold px-5 flex gap-2 cursor-pointer transition-all"
+          className="rounded-xl border-gray-200 hover:border-brand-primary hover:bg-brand-primary/10 font-bold px-5 flex gap-2 cursor-pointer transition-all"
         >
           <ChevronLeft size={18} />
           {t("common.back")}
@@ -167,7 +167,7 @@ export const ApplicationDetailPage: React.FC = () => {
             <label className={labelStyle}>
               <Wallet size={14} /> {t("applications.form.salaryExpectation")}
             </label>
-            <p className="font-bold text-lime-600">
+            <p className="font-bold text-brand-primary">
               {application.salaryExpectation || "---"}
             </p>
           </div>
@@ -195,7 +195,7 @@ export const ApplicationDetailPage: React.FC = () => {
             {application.cvSnapshotUrl ? (
               <Button
                 variant="outline"
-                className="rounded-xl border-gray-200 font-bold hover:border-lime-400 transition-all cursor-pointer w-full mt-2"
+                className="rounded-xl border-gray-200 font-bold hover:border-brand-primary transition-all cursor-pointer w-full mt-2"
                 asChild
               >
                 <a
@@ -234,7 +234,7 @@ export const ApplicationDetailPage: React.FC = () => {
                 return (
                   <div
                     key={interview.id || index}
-                    className="bg-white border border-gray-100 rounded-2xl p-5 flex items-center justify-between hover:border-lime-400 transition-all cursor-pointer"
+                    className="bg-white border border-gray-100 rounded-2xl p-5 flex items-center justify-between hover:border-brand-primary transition-all cursor-pointer"
                     onClick={() => {
                       setSelectedInterview(interview);
                       setShowInterviewDetail(true);
@@ -253,7 +253,7 @@ export const ApplicationDetailPage: React.FC = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="font-bold text-xs cursor-pointer text-lime-600 uppercase tracking-widest hover:bg-transparent hover:text-lime-600 p-0"
+                      className="font-bold text-xs cursor-pointer text-brand-primary uppercase tracking-widest hover:bg-transparent hover:text-brand-primary p-0"
                     >
                       {t("common.view")}
                     </Button>
@@ -274,7 +274,7 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.reviewed"
                   )
                 }
-                className="flex-1 bg-lime-400 hover:bg-lime-500 text-white font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                className="flex-1 bg-brand-primary hover:bg-brand-hover text-black font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
               >
                 {t("common.approve") || "Approve"}
               </Button>
@@ -297,7 +297,7 @@ export const ApplicationDetailPage: React.FC = () => {
             <>
               <Button
                 onClick={() => setShowInterviewModal(true)}
-                className="flex-1 bg-lime-400 hover:bg-lime-500 text-white font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                className="flex-1 bg-brand-primary hover:bg-brand-hover text-black font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
               >
                 {t("applications.interview.title")}
               </Button>
@@ -322,7 +322,7 @@ export const ApplicationDetailPage: React.FC = () => {
                 onClick={() =>
                   handleStatusUpdate("PASSED", "applications.success.hired")
                 }
-                className="flex-1 bg-lime-400 hover:bg-lime-500 text-white font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                className="flex-1 bg-brand-primary hover:bg-brand-hover text-black font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
               >
                 {t("applications.status.passed")}
               </Button>

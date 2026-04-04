@@ -52,7 +52,7 @@ export const UpcomingInterviews: React.FC<UpcomingInterviewsProps> = ({
         {data.map((interview) => (
           <div
             key={interview.id}
-            className="border-l-4 border-emerald-500 dark:border-emerald-400 pl-4 py-3 bg-emerald-50 dark:bg-emerald-950/20 rounded-r-lg"
+            className="border-l-4 border-brand-primary dark:border-brand-primary pl-4 py-3 bg-brand-primary/10 dark:bg-brand-primary/5 rounded-r-lg"
           >
             {/* Candidate Name */}
             <p className="font-semibold text-slate-900 dark:text-white text-sm">

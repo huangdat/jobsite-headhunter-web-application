@@ -173,7 +173,7 @@ export function JobManagePage() {
                       className={`flex items-center gap-1.5 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${
                         job.visible === false
                           ? "bg-slate-100 text-slate-500 border-slate-200"
-                          : "bg-lime-100 text-lime-700 border-lime-200"
+                          : "bg-brand-primary/20 text-brand-primary border-brand-primary/30 font-bold"
                       }`}
                     >
                       {job.visible === false ? (
@@ -191,7 +191,7 @@ export function JobManagePage() {
                       className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${
                         job.status === "CLOSED"
                           ? "bg-red-50 text-red-600 border-red-100"
-                          : "bg-emerald-50 text-emerald-600 border-emerald-100"
+                          : "bg-brand-primary/20 text-brand-primary border-brand-primary/30 font-bold"
                       }`}
                     >
                       {job.status}

@@ -53,12 +53,12 @@ export function RelatedPosts({ categoryId, excludeId }: RelatedPostsProps) {
             {/* Card Content */}
             <div className="p-4">
               {/* Category */}
-              <span className="text-xs font-medium text-emerald-600 uppercase">
+              <span className="text-xs font-medium text-brand-primary uppercase">
                 {post.categoryName}
               </span>
 
               {/* Title */}
-              <h3 className="font-semibold text-base mt-2 mb-2 line-clamp-2 hover:text-emerald-600">
+              <h3 className="font-semibold text-base mt-2 mb-2 line-clamp-2 hover:text-brand-primary">
                 {post.title}
               </h3>
 

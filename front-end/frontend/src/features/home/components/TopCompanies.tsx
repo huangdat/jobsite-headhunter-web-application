@@ -72,7 +72,7 @@ export function TopCompanies() {
                   {t("topCompanies.openJobs")}
                 </p>
 
-                <p className="text-lime-900 text-xs mt-2 transition group-hover:translate-x-1">
+                <p className="text-brand-primary text-xs mt-2 transition group-hover:translate-x-1 font-semibold">
                   {t("topCompanies.viewCompany")}
                 </p>
               </Link>

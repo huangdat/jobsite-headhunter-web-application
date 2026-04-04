@@ -55,7 +55,7 @@ export const JobPipelinePage: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => navigate(-1)}
-            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary hover:bg-lime-50 dark:hover:bg-slate-800 font-bold px-5 flex gap-2 cursor-pointer transition-all"
+            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary hover:bg-brand-primary/10 dark:hover:bg-slate-800 font-bold px-5 flex gap-2 cursor-pointer transition-all"
           >
             <ChevronLeft size={18} />
             {t("common.back")}
@@ -98,7 +98,7 @@ export const JobPipelinePage: React.FC = () => {
               applications.map((app) => (
                 <tr
                   key={app.id}
-                  className="hover:bg-lime-50/20 dark:hover:bg-slate-700/30 transition-colors"
+                  className="hover:bg-brand-primary/5 dark:hover:bg-slate-700/30 transition-colors"
                 >
                   <td className="p-5 font-bold text-slate-800 dark:text-white">
                     {app.fullName}
@@ -119,7 +119,7 @@ export const JobPipelinePage: React.FC = () => {
                       onClick={() =>
                         navigate(`/headhunter/applications/${app.id}`)
                       }
-                      className="px-4 py-2 bg-brand-primary text-black rounded-xl text-xs font-bold hover:bg-lime-400 hover:text-black transition-all cursor-pointer active:scale-95 dark:bg-brand-primary dark:hover:bg-lime-400"
+                      className="px-4 py-2 bg-brand-primary text-black rounded-xl text-xs font-bold hover:bg-brand-hover hover:text-black transition-all cursor-pointer active:scale-95 dark:bg-brand-primary dark:hover:bg-brand-hover"
                     >
                       {t("actions.viewDetails")}
                     </button>

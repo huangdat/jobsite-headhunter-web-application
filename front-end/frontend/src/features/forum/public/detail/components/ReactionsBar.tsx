@@ -82,7 +82,7 @@ export function ReactionsBar({ postId }: ReactionsBarProps) {
                 flex items-center gap-2 px-4 py-2 rounded-full transition
                 ${
                   isSelected
-                    ? "bg-emerald-100 text-emerald-700 ring-2 ring-emerald-500"
+                    ? "bg-brand-primary/20 text-brand-primary ring-2 ring-brand-primary font-bold"
                     : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                 }
               `}

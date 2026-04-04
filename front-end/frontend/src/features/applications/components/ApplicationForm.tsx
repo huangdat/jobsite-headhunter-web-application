@@ -35,9 +35,9 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   const validationSchema = createValidationSchema(t);
 
   const form = useForm<ApplicationFormData>({
-    resolver: (yupResolver(validationSchema) as unknown) as Resolver<
-      ApplicationFormData
-    >,
+    resolver: yupResolver(
+      validationSchema
+    ) as unknown as Resolver<ApplicationFormData>,
     defaultValues: defaultValues || {
       fullName: "",
       email: "",
@@ -210,7 +210,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
           <Button
             type="submit"
             disabled={isLoading}
-            className="flex-1 bg-emerald-600 hover:bg-emerald-700 cursor-pointer text-white font-bold h-12 rounded-xl shadow-lg shadow-emerald-200"
+            className="flex-1 bg-brand-primary hover:bg-brand-hover cursor-pointer text-black font-bold h-12 rounded-xl shadow-lg shadow-brand-primary/20"
           >
             {isLoading ? t("common.processing") : t("applications.form.submit")}
           </Button>

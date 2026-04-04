@@ -20,7 +20,7 @@ export function FeaturedSection() {
   if (isLoading) {
     return (
       <div className="h-96 rounded-xl bg-slate-100 flex items-center justify-center mb-8">
-        <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-brand-primary" />
       </div>
     );
   }
@@ -42,7 +42,7 @@ export function FeaturedSection() {
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <span className="inline-block bg-emerald-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                <span className="inline-block bg-brand-primary text-black px-3 py-1 rounded-full text-sm font-bold mb-3">
                   {mainFeatured.categoryName}
                 </span>
                 <h2 className="text-2xl font-bold mb-2 line-clamp-2">
@@ -73,10 +73,10 @@ export function FeaturedSection() {
                 />
               </div>
               <div className="p-4 bg-white border border-slate-200">
-                <span className="text-xs font-medium text-emerald-600 uppercase">
+                <span className="text-xs font-medium text-brand-primary uppercase">
                   {post.categoryName}
                 </span>
-                <h3 className="font-semibold text-sm mt-1 line-clamp-2 group-hover:text-emerald-600">
+                <h3 className="font-semibold text-sm mt-1 line-clamp-2 group-hover:text-brand-primary">
                   {post.title}
                 </h3>
                 <p className="text-xs text-gray-500 mt-2">

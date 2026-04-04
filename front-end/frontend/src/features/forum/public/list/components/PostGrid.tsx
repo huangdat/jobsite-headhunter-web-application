@@ -19,7 +19,7 @@ export function PostGrid() {
   if (isLoading) {
     return (
       <div className="py-12 text-center">
-        <Loader2 className="w-8 h-8 animate-spin text-emerald-600 mx-auto mb-3" />
+        <Loader2 className="w-8 h-8 animate-spin text-brand-primary mx-auto mb-3" />
         <p className="text-slate-600">
           {t("forum.list.loading") || "Đang tải tin tức..."}
         </p>
@@ -37,7 +37,7 @@ export function PostGrid() {
         </p>
         <button
           onClick={() => window.location.reload()}
-          className="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+          className="px-6 py-2 bg-brand-primary text-black rounded-lg hover:bg-brand-hover font-bold"
         >
           {t("forum.list.retry") || "Thử lại"}
         </button>
@@ -68,12 +68,12 @@ export function PostGrid() {
           {/* Card Content */}
           <div className="p-4">
             {/* Category Badge */}
-            <span className="text-xs font-medium text-emerald-600 uppercase">
+            <span className="text-xs font-medium text-brand-primary uppercase">
               {post.categoryName}
             </span>
 
             {/* Title */}
-            <h3 className="font-semibold text-base mt-2 mb-2 line-clamp-2 hover:text-emerald-600">
+            <h3 className="font-semibold text-base mt-2 mb-2 line-clamp-2 hover:text-brand-primary">
               {post.title}
             </h3>
 

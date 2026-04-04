@@ -58,7 +58,7 @@ export function SkillMultiSelect({
         disabled={disabled}
         className={cn(
           "w-full rounded-xl border border-input bg-white px-3 py-2 text-sm text-left shadow-inner",
-          "focus-visible:border-emerald-500 focus-visible:ring-4 focus-visible:ring-emerald-100",
+          "focus-visible:border-brand-primary focus-visible:ring-4 focus-visible:ring-brand-primary/20",
           "dark:bg-slate-900",
           disabled && "opacity-50 cursor-not-allowed"
         )}
@@ -85,7 +85,7 @@ export function SkillMultiSelect({
                   className={cn(
                     "flex items-center gap-2 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer",
                     selectedIds.includes(skill.id) &&
-                      "bg-emerald-50 dark:bg-slate-600"
+                      "bg-brand-primary/10 dark:bg-slate-600"
                   )}
                 >
                   <input

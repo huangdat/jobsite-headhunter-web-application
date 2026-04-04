@@ -18,11 +18,11 @@ export function PostMetadata({ post }: PostMetadataProps) {
     <div className="mb-8">
       {/* Breadcrumb */}
       <div className="text-sm text-slate-600 mb-4">
-        <a href="/" className="hover:text-emerald-600">
+        <a href="/" className="hover:text-brand-primary">
           {t("forum.breadcrumb.home") || "TRANG CHỦ"}
         </a>
         {" > "}
-        <a href="/news" className="hover:text-emerald-600">
+        <a href="/news" className="hover:text-brand-primary">
           {t("forum.breadcrumb.news") || "TIN TỨC"}
         </a>
         {" > "}
@@ -63,7 +63,7 @@ export function PostMetadata({ post }: PostMetadataProps) {
         </div>
 
         {/* Category Badge */}
-        <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium">
+        <span className="bg-brand-primary/10 text-brand-primary px-3 py-1 rounded-full text-xs font-bold border border-brand-primary/20">
           {post.categoryName || t("forum.default.category") || "Tin tức"}
         </span>
       </div>
