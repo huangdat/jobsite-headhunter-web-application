@@ -12,6 +12,7 @@ import type { JobFormValues, SkillOption } from "../types";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 import { ChevronLeft } from "lucide-react";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 
 export function JobCreatePage() {
   const { t } = useJobsTranslation();
@@ -158,38 +159,31 @@ export function JobCreatePage() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-12">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 border-b border-slate-100 pb-8">
-        <div>
-          <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">
-            {t("create.messages.publishJob")}
-          </h2>
-          <div className="flex items-center gap-3 mt-4">
-            <span className="h-1.5 w-12 bg-lime-400 rounded-full"></span>
-            <p className="text-slate-500 font-bold italic text-sm">
-              {t("create.messages.subtitle")}
-            </p>
-          </div>
-        </div>
-
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => navigate("/home")}
-          className="rounded-xl border-slate-200 hover:border-lime-400 hover:bg-lime-50 font-bold px-6 h-12 flex gap-2 transition-all cursor-pointer"
-        >
-          <ChevronLeft size={18} className="text-lime-600" />
-          {t("detail.backToJobs")}
-        </Button>
-      </div>
+    <PageContainer variant="white" maxWidth="5xl">
+      <PageHeader
+        variant="bordered"
+        title={t("create.messages.publishJob")}
+        description={t("create.messages.subtitle")}
+        actions={
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate("/home")}
+            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary dark:hover:border-brand-primary hover:bg-brand-primary/10 dark:hover:bg-brand-primary/10 font-bold px-6 h-12 flex gap-2 transition-all cursor-pointer"
+          >
+            <ChevronLeft size={18} className="text-brand-primary" />
+            {t("detail.backToJobs")}
+          </Button>
+        }
+      />
 
       <form
-        className="mt-10 space-y-8 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg dark:border-slate-800 dark:bg-slate-900/70"
+        className="mt-10 space-y-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 shadow-lg dark:shadow-slate-900/30"
         onSubmit={handleSubmit(onSubmit)}
       >
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.jobTitle")}
             </label>
             <Input
@@ -203,7 +197,7 @@ export function JobCreatePage() {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.location")}
             </label>
             <Input
@@ -219,7 +213,7 @@ export function JobCreatePage() {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.addressDetail")}
             </label>
             <Input
@@ -230,7 +224,7 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.deadline")}
             </label>
             <Input type="date" {...register("deadline", { required: true })} />
@@ -256,11 +250,11 @@ export function JobCreatePage() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.workingType")}
             </label>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("workingType", { required: true })}
             >
               <option value="ONSITE">Onsite</option>
@@ -269,7 +263,7 @@ export function JobCreatePage() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.experience")}
             </label>
             <Input
@@ -283,7 +277,7 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.quantity")}
             </label>
             <Input
@@ -296,7 +290,7 @@ export function JobCreatePage() {
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.salaryMin")}
             </label>
             <Input
@@ -309,7 +303,7 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.salaryMax")}
             </label>
             <Input
@@ -322,11 +316,11 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.currency")}
             </label>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("currency", { required: true })}
             >
               <option value="VND">VND</option>
@@ -339,7 +333,10 @@ export function JobCreatePage() {
               id="negotiable"
               {...register("negotiable")}
             />
-            <label htmlFor="negotiable" className="text-sm text-slate-600">
+            <label
+              htmlFor="negotiable"
+              className="text-sm text-slate-600 dark:text-slate-400"
+            >
               {t("create.labels.salaryNegotiable")}
             </label>
           </div>
@@ -347,7 +344,7 @@ export function JobCreatePage() {
 
         <section className="grid gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.description")}
             </label>
             <Controller
@@ -369,7 +366,7 @@ export function JobCreatePage() {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.responsibilities")}
             </label>
             <Controller
@@ -403,7 +400,7 @@ export function JobCreatePage() {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.requirements")}
             </label>
             <Controller
@@ -437,13 +434,13 @@ export function JobCreatePage() {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.benefits")}
             </label>
             <Textarea rows={3} {...register("benefits", { required: true })} />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.workingTime")}
             </label>
             <Input {...register("workingTime", { required: true })} />
@@ -452,7 +449,7 @@ export function JobCreatePage() {
 
         <section className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("create.labels.requiredSkills")}
             </label>
             {errors.skillIds && (
@@ -475,7 +472,7 @@ export function JobCreatePage() {
         </section>
 
         <section className="space-y-2">
-          <label className="text-sm font-semibold text-slate-500">
+          <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
             {t("create.labels.coverImage")}
           </label>
           <Input type="file" accept="image/*" {...register("postImage")} />
@@ -486,7 +483,7 @@ export function JobCreatePage() {
             type="button"
             variant="ghost"
             onClick={() => reset()}
-            className="rounded-xl font-bold text-slate-400 hover:text-red-500 hover:bg-red-50 h-11 px-6 cursor-pointer transition-colors"
+            className="rounded-xl font-bold text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-11 px-6 cursor-pointer transition-colors"
           >
             {t("edit.buttons.cancel") || "Clear"}
           </Button>
@@ -494,7 +491,7 @@ export function JobCreatePage() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-lime-400 hover:bg-lime-500 text-black font-bold h-11 px-8 rounded-xl shadow-sm shadow-lime-400/20 transition-all active:scale-95 border-none cursor-pointer"
+            className="bg-brand-primary hover:bg-brand-primary/90 text-white font-bold h-11 px-8 rounded-xl shadow-sm shadow-brand-primary/20 transition-all active:scale-95 border-none cursor-pointer"
           >
             {isSubmitting ? (
               <div className="flex items-center gap-2">
@@ -507,6 +504,6 @@ export function JobCreatePage() {
           </Button>
         </div>
       </form>
-    </div>
+    </PageContainer>
   );
 }
