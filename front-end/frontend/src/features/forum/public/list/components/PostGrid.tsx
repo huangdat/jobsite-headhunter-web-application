@@ -8,6 +8,7 @@
 import { MessageCircle, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { usePostList } from "../hooks/usePostList";
+import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 
 export function PostGrid() {
@@ -35,12 +36,12 @@ export function PostGrid() {
         <p className="text-lg text-slate-600 mb-4">
           {t("forum.list.noResults") || "Không tìm thấy tin tức nào"}
         </p>
-        <button
+        <Button
           onClick={() => window.location.reload()}
-          className="px-6 py-2 bg-brand-primary text-black rounded-lg hover:bg-brand-hover font-bold"
+          variant="brand-primary"
         >
           {t("forum.list.retry") || "Thử lại"}
-        </button>
+        </Button>
       </div>
     );
   }

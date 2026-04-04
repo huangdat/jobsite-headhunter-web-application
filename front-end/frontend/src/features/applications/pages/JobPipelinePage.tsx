@@ -119,7 +119,9 @@ export const JobPipelinePage: React.FC = () => {
                       onClick={() =>
                         navigate(`/headhunter/applications/${app.id}`)
                       }
-                      className="px-4 py-2 bg-brand-primary text-black rounded-xl text-xs font-bold hover:bg-brand-hover hover:text-black transition-all cursor-pointer active:scale-95 dark:bg-brand-primary dark:hover:bg-brand-hover"
+                      variant="brand-primary"
+                      size="sm"
+                      className="px-4 text-xs cursor-pointer"
                     >
                       {t("actions.viewDetails")}
                     </button>

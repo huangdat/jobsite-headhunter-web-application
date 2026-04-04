@@ -299,7 +299,9 @@ export const InterviewScheduleModal = ({
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="px-8 bg-brand-primary hover:bg-brand-hover text-black font-black h-12 rounded-xl transition-all active:scale-95 text-xs uppercase tracking-widest shadow-lg shadow-brand-primary/30 cursor-pointer"
+                  variant="brand-primary"
+                  size="xl"
+                  className="px-8 text-xs uppercase tracking-widest cursor-pointer"
                 >
                   {isLoading
                     ? t("common.loading")

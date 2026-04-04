@@ -162,7 +162,8 @@ export function CommissionStats({
       {onRequestPayout && stats.pendingCommissions > 0 && (
         <button
           onClick={() => onRequestPayout(stats.pendingCommissions)}
-          className="w-full px-4 py-3 bg-brand-primary hover:bg-brand-hover text-black font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+          variant="brand-primary"
+          className="w-full px-4 flex items-center justify-center gap-2"
         >
           <span className="material-symbols-outlined">account_balance</span>
           {t("button.requestPayout")}

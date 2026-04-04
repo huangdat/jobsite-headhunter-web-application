@@ -297,7 +297,9 @@ export function OTPVerificationPage() {
               otp.join("").length !== 6 ||
               otp.join("").length === 6
             }
-            className="w-full h-12 bg-brand-primary hover:bg-brand-hover text-black font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="brand-primary"
+            size="xl"
+            className="w-full"
           >
             {isLoading || otp.join("").length === 6
               ? t("buttons.connecting")

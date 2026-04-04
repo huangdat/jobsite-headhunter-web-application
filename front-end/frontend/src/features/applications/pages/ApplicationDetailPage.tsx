@@ -274,7 +274,9 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.reviewed"
                   )
                 }
-                className="flex-1 bg-brand-primary hover:bg-brand-hover text-black font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                variant="brand-primary"
+                size="xl"
+                className="flex-1 uppercase text-xs tracking-widest cursor-pointer"
               >
                 {t("common.approve") || "Approve"}
               </Button>
@@ -297,7 +299,9 @@ export const ApplicationDetailPage: React.FC = () => {
             <>
               <Button
                 onClick={() => setShowInterviewModal(true)}
-                className="flex-1 bg-brand-primary hover:bg-brand-hover text-black font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                variant="brand-primary"
+                size="xl"
+                className="flex-1 uppercase text-xs tracking-widest cursor-pointer"
               >
                 {t("applications.interview.title")}
               </Button>
@@ -322,7 +326,9 @@ export const ApplicationDetailPage: React.FC = () => {
                 onClick={() =>
                   handleStatusUpdate("PASSED", "applications.success.hired")
                 }
-                className="flex-1 bg-brand-primary hover:bg-brand-hover text-black font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                variant="brand-primary"
+                size="xl"
+                className="flex-1 uppercase text-xs tracking-widest cursor-pointer"
               >
                 {t("applications.status.passed")}
               </Button>
