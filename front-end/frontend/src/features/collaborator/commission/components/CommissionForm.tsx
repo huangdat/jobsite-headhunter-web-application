@@ -309,7 +309,8 @@ export function CommissionForm() {
         <button
           type="submit"
           disabled={saving}
-          className="flex items-center gap-2 px-6 py-2 bg-brand-primary hover:bg-brand-hover disabled:bg-slate-300 text-black font-medium rounded-lg transition-colors"
+          variant="brand-primary"
+          className="flex items-center gap-2 px-6"
         >
           {saving ? (
             <>

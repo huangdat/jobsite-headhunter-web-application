@@ -119,7 +119,8 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
             {t("applications.form.noCvDescription")}
           </p>
           <Button
-            className="mt-4 shadow-lg shadow-brand-primary/20 bg-brand-primary hover:bg-brand-hover text-black font-bold"
+            variant="brand-primary"
+            className="mt-4"
             onClick={() => window.open("/candidate/cv", "_blank")}
           >
             {t("applications.form.updateCvNow")}
