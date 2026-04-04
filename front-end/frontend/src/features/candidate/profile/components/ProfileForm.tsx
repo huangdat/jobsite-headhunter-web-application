@@ -268,8 +268,8 @@ export function ProfileForm({
                 size="sm"
                 className={`h-11 px-6 font-bold cursor-pointer rounded-xl shadow-md transition-all active:scale-95 flex-1 ${
                   !hasCV
-                    ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                    : "border-emerald-600 text-emerald-600 hover:bg-emerald-50"
+                    ? "bg-brand-primary hover:bg-brand-hover text-black"
+                    : "border-brand-primary text-brand-primary hover:bg-brand-primary/10"
                 }`}
                 onClick={() =>
                   document.getElementById("profile-cv-input")?.click()

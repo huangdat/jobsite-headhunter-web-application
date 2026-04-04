@@ -1,4 +1,3 @@
- 
 import React from "react";
 import {
   Dialog,
@@ -58,7 +57,7 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
       [&>button]:hover:bg-transparent [&>button]:focus:ring-0 [&>button]:outline-none [&>button]:bg-transparent 
       [&>button]:cursor-pointer"
       >
-        <DialogHeader className="bg-lime-400 p-6">
+        <DialogHeader className="bg-brand-primary p-6">
           <DialogTitle className="text-black font-black text-xl flex items-center gap-2">
             <Calendar size={24} />
             {t("applications.interview.title")}
@@ -108,7 +107,7 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
                 {t("applications.interview.duration")}
               </p>
               <p className="font-bold text-slate-800 flex items-center gap-2">
-                <Clock size={16} className="text-lime-600" />
+                <Clock size={16} className="text-brand-primary" />
                 {formatDuration(interview.durationMinutes)}
               </p>
             </div>
@@ -132,7 +131,7 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
               </p>
               <Button
                 variant="outline"
-                className="w-full justify-start gap-2 border-lime-200 bg-lime-50 hover:bg-lime-100 hover:border-lime-300 text-lime-700 rounded-xl transition-all"
+                className="w-full justify-start gap-2 border-brand-primary/20 bg-brand-primary/10 hover:bg-brand-primary/20 hover:border-brand-primary/30 text-slate-700 dark:text-slate-300 rounded-xl transition-all"
                 asChild
               >
                 <a

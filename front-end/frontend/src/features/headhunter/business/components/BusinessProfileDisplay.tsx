@@ -61,9 +61,9 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
       {/* Section Header */}
       <div>
         <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-600">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-primary">
             <svg
-              className="h-6 w-6 text-white"
+              className="h-6 w-6 text-black"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -119,7 +119,7 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
               href={profile.websiteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-base font-medium text-emerald-600 hover:text-emerald-700 break-all"
+              className="text-base font-medium text-brand-primary hover:text-brand-hover break-all"
             >
               {profile.websiteUrl}
             </a>

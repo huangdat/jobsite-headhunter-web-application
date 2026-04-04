@@ -83,7 +83,7 @@ export function SavedJobsPage() {
             className="flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between"
           >
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">
+              <p className="text-xs font-semibold uppercase tracking-wide text-brand-primary">
                 {job.companyName ?? t("saved.confidentialCompany")}
               </p>
               <h3 className="mt-1 text-lg font-semibold text-slate-900">

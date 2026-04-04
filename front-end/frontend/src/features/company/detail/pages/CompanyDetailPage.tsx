@@ -45,7 +45,7 @@ export function CompanyDetailPage() {
       <div className="max-w-4xl mx-auto px-4">
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 text-sm font-bold text-slate-500 hover:text-emerald-600 transition cursor-pointer flex items-center gap-2 group"
+          className="mb-6 text-sm font-bold text-slate-500 hover:text-brand-primary transition cursor-pointer flex items-center gap-2 group"
         >
           <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
           {t("business.form.back")}

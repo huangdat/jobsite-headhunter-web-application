@@ -90,7 +90,7 @@ export function PostPagination() {
                 px-3 py-2 rounded-lg transition
                 ${
                   page === pageNum
-                    ? "bg-emerald-600 text-white font-medium"
+                    ? "bg-brand-primary text-black font-bold"
                     : "hover:bg-slate-100 text-slate-700"
                 }
               `}

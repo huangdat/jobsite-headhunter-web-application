@@ -117,7 +117,7 @@ export function HeadhunterRegister({
             <select
               value={formData.gender || ""}
               onChange={(e) => handleChange("gender")(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary bg-white text-sm"
               aria-label={t("aria.selectGender")}
             >
               <option value="">{t("selectOptions.selectGender")}</option>
@@ -142,7 +142,7 @@ export function HeadhunterRegister({
               onChange={(e) =>
                 handleChange("avatar")(e.target.files?.[0] || null)
               }
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary bg-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-primary/20 file:text-black hover:file:bg-brand-primary/30"
               aria-label={t("aria.uploadAvatar")}
             />
           </div>

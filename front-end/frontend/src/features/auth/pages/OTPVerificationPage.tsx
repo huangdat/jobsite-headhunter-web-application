@@ -238,7 +238,7 @@ export function OTPVerificationPage() {
                 onChange={(e) => handleOtpChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 onPaste={handlePaste}
-                className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-emerald-200 dark:focus:ring-emerald-800 transition-all dark:bg-slate-800 dark:text-white"
+                className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:focus:ring-brand-primary/30 transition-all dark:bg-slate-800 dark:text-white"
                 autoFocus={index === 0}
                 aria-label={t("pages.otpVerification.otpDigit", {
                   digit: index + 1,
@@ -297,7 +297,7 @@ export function OTPVerificationPage() {
               otp.join("").length !== 6 ||
               otp.join("").length === 6
             }
-            className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full h-12 bg-brand-primary hover:bg-brand-hover text-black font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading || otp.join("").length === 6
               ? t("buttons.connecting")
@@ -311,7 +311,7 @@ export function OTPVerificationPage() {
             <button
               onClick={handleResend}
               disabled={isLoading || isResending || timeLeft > 240}
-              className="text-sm text-emerald-600 hover:text-emerald-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
+              className="text-sm text-brand-primary hover:text-brand-hover font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
               {isResending
                 ? t("buttons.sendingOtp")

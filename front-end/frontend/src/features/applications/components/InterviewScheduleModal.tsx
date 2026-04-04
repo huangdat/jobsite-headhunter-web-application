@@ -106,7 +106,7 @@ export const InterviewScheduleModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       {/* SỬA CHỖ NÀY: Ép sm:max-w-[700px] và w-full để đè default của Shadcn */}
       <DialogContent className="sm:max-w-175 w-[95vw] rounded-[2rem] p-0 overflow-hidden border-none shadow-2xl [&>button]:hidden">
-        <DialogHeader className="bg-lime-400 p-6 px-8">
+        <DialogHeader className="bg-brand-primary p-6 px-8">
           <div className="flex justify-between items-center">
             <DialogTitle className="text-black font-black text-2xl flex items-center gap-3">
               <Calendar size={28} />
@@ -299,7 +299,7 @@ export const InterviewScheduleModal = ({
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="px-8 bg-lime-400 hover:bg-lime-500 text-black font-black h-12 rounded-xl transition-all active:scale-95 text-xs uppercase tracking-widest shadow-lg shadow-lime-400/30 cursor-pointer"
+                  className="px-8 bg-brand-primary hover:bg-brand-hover text-black font-black h-12 rounded-xl transition-all active:scale-95 text-xs uppercase tracking-widest shadow-lg shadow-brand-primary/30 cursor-pointer"
                 >
                   {isLoading
                     ? t("common.loading")

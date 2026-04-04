@@ -237,7 +237,7 @@ export function JobCreatePage() {
               {t("create.labels.rankLevel")}
             </label>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20 dark:bg-slate-900"
               {...register("rankLevel", { required: true })}
             >
               <option value="INTERN">Intern</option>
