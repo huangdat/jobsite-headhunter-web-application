@@ -248,10 +248,7 @@ export function ProfileForm({
                   if (url) {
                     onFieldChange("cvUrl" as const, url);
 
-                    toast.success(
-                      t("cv.management.success.banner") ||
-                        "Upload temporary success. Please save!"
-                    );
+                    toast.success(t("cv.management.success.banner"));
                   } else {
                     toast.error(t("cv.management.error.banner"));
                   }

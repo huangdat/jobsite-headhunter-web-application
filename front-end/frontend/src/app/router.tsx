@@ -173,7 +173,7 @@ export function AppRouter() {
 
     if (isInitializing) return null;
 
-    if (!isAuthenticated) return <Navigate to="/jobs" replace />;
+    if (!isAuthenticated) return <Navigate to="/home" replace />;
 
     const role = user?.role ? user.role.toString().toLowerCase() : null;
     if (role === "headhunter")

@@ -11,6 +11,9 @@ public interface AccountMapper {
 
     default AccountResp toAccountResp(Account account, CandidateProfile candidateProfile) {
         AccountResp accountResp = toAccountResp(account);
+        if (account != null && account.getBusinessProfile() != null) {
+            accountResp.setBusinessProfileId(account.getBusinessProfile().getId());
+        }
         if (candidateProfile != null) {
             accountResp.setCurrentTitle(candidateProfile.getCurrentTitle());
             accountResp.setYearsOfExperience(candidateProfile.getYearsOfExperience());
