@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserClassification } from "@/features/users/classification/hooks/useUserClassification";
 import { UserClassificationOverview } from "@/features/users/classification/components/UserClassificationOverview";
 import { useUsersTranslation } from "@/shared/hooks";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 
 /**
  * User Classification Page component.
@@ -42,36 +43,27 @@ export const UserClassificationPage: React.FC = () => {
   }, [refetch]);
 
   return (
-    <main className="flex-1 flex flex-col overflow-y-auto">
-      {/* Content Area */}
-      <div className="p-8 max-w-7xl mx-auto w-full">
-        {/* Page Introduction */}
-        <div className="flex justify-between items-center mb-6 mt-2">
-          <div>
-            <h1 className="text-2xl font-bold mb-2">
-              {t("classification.pageTitle")}
-            </h1>
-            <p className="text-sm text-slate-500">
-              {t("classification.description")}
-            </p>
-          </div>
-        </div>
+    <PageContainer variant="default" maxWidth="7xl">
+      <PageHeader
+        variant="default"
+        title={t("classification.pageTitle")}
+        description={t("classification.description")}
+      />
 
-        {/* Classification Overview */}
-        <UserClassificationOverview
-          groups={groups}
-          overviewStats={overviewStats}
-          groupBy={groupBy}
-          onGroupByChange={setGroupBy}
-          onToggleGroup={toggleGroup}
-          onExpandAll={expandAll}
-          onCollapseAll={collapseAll}
-          onViewDetails={handleViewDetails}
-          loading={loading}
-          error={error}
-          onRetry={handleRetry}
-        />
-      </div>
-    </main>
+      {/* Classification Overview */}
+      <UserClassificationOverview
+        groups={groups}
+        overviewStats={overviewStats}
+        groupBy={groupBy}
+        onGroupByChange={setGroupBy}
+        onToggleGroup={toggleGroup}
+        onExpandAll={expandAll}
+        onCollapseAll={collapseAll}
+        onViewDetails={handleViewDetails}
+        loading={loading}
+        error={error}
+        onRetry={handleRetry}
+      />
+    </PageContainer>
   );
 };
