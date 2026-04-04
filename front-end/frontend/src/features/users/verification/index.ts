@@ -86,8 +86,8 @@ export {
 // export { ... } from "./components";
 
 // ============================================================================
-// PAGES (will be exported once created in Phase 2)
+// PAGES (Phase 2)
 // ============================================================================
 
-// export { VerificationListPage } from "./pages/VerificationListPage";
-// export { VerificationDetailPage } from "./pages/VerificationDetailPage";
+export { VerificationListPage } from "./pages/VerificationListPage";
+export { VerificationDetailPage } from "./pages/VerificationDetailPage";

@@ -167,6 +167,18 @@ const CategoryManagementPage = lazy(() =>
   )
 );
 
+// Verification (lazy - PROF-05)
+const VerificationListPage = lazy(() =>
+  import("@/features/users/verification/pages").then((m) => ({
+    default: m.VerificationListPage,
+  }))
+);
+const VerificationDetailPage = lazy(() =>
+  import("@/features/users/verification/pages").then((m) => ({
+    default: m.VerificationDetailPage,
+  }))
+);
+
 export function AppRouter() {
   function RoleRedirect() {
     const { isAuthenticated, isInitializing, user } = useAuth();
@@ -480,17 +492,27 @@ export function AppRouter() {
           }
         />
 
-        {/* PROF-05: Admin Verification (add when ready) */}
-        {/* <Route
-        path="/admin/verifications"
-        element={
-          <AdminOnlyRoute>
-            <AdminLayout>
-              <VerificationPage />
-            </AdminLayout>
-          </AdminOnlyRoute>
-        }
-      /> */}
+        {/* PROF-05: Admin Verification */}
+        <Route
+          path="/admin/verifications"
+          element={
+            <AdminOnlyRoute>
+              <AdminLayout>
+                <VerificationListPage />
+              </AdminLayout>
+            </AdminOnlyRoute>
+          }
+        />
+        <Route
+          path="/admin/verifications/:id"
+          element={
+            <AdminOnlyRoute>
+              <AdminLayout>
+                <VerificationDetailPage />
+              </AdminLayout>
+            </AdminOnlyRoute>
+          }
+        />
 
         {/* ==================== PUBLIC FORUM ROUTES (EPIC 7) ==================== */}
 
