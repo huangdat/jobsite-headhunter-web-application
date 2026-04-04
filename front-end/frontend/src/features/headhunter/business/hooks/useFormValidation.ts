@@ -105,7 +105,7 @@ export const useFormValidation = (options: UseFormValidationOptions = {}) => {
       return ERROR_MESSAGE_KEYS.companySize.required;
     }
 
-    const validSizes = ["50-100", "100-500", "500-1000", "1000+", "other"];
+    const validSizes = ["STARTUP", "SMALL", "MEDIUM", "LARGE"];
     if (!validSizes.includes(value)) {
       return ERROR_MESSAGE_KEYS.companySize.required;
     }

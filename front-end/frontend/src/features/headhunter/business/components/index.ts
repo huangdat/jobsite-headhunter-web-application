@@ -1,6 +1,10 @@
-// Banners
+// Banners & UI Status
 export { SuccessBanner } from "./SuccessBanner";
 export { ErrorBanner } from "./ErrorBanner";
+export { VerificationStatus } from "./VerificationStatus";
+
+// --- NEW: Read-only Display Component ---
+export { BusinessProfileDisplay } from "./BusinessProfileDisplay";
 
 // Form & Validation
 export {
@@ -9,16 +13,15 @@ export {
 } from "./FormValidationErrors";
 export { BusinessIdentityForm } from "./BusinessIdentityForm";
 
-// Status & Documents
-export { VerificationStatus } from "./VerificationStatus";
+// Documents
 export { SubmittedDocuments } from "./SubmittedDocuments";
 
-// Sidebar Components (Phase 3)
+// Sidebar Components
 export { ProfileStrengthCard } from "./ProfileStrengthCard";
 export { OptimizationTips } from "./OptimizationTips";
 export { CompanyBestPractices } from "./CompanyBestPractices";
 
-// Export types
+// --- Export types ---
 export type { VerificationStep } from "./VerificationStatus";
 export type { SubmittedDocumentsProps } from "./SubmittedDocuments";
 export type { ProfileStrengthCardProps } from "./ProfileStrengthCard";

@@ -27,6 +27,12 @@ const HomePage = lazy(() =>
     default: m.HomePage,
   }))
 );
+
+const CompanyDetailPage = lazy(() =>
+  import("@/features/company/detail/pages/CompanyDetailPage").then((m) => ({
+    default: m.CompanyDetailPage,
+  }))
+);
 const UserListPage = lazy(() =>
   import("@/features/users/list").then((m) => ({ default: m.UserListPage }))
 );
@@ -308,7 +314,7 @@ export function AppRouter() {
         />
 
         {/* PROF-06: Company Detail (public - add when ready) */}
-        {/* <Route path="/companies/:id" element={<CompanyDetailPage />} /> */}
+        <Route path="/companies/:id" element={<CompanyDetailPage />} />
 
         {/* ==================== CANDIDATE ROUTES ==================== */}
         {/* PROF-01: Candidate Profile */}

@@ -1,7 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
-import { useAppTranslation, useJobsTranslation, useJobDetailQuery } from "@/shared/hooks";
+import {
+  useAppTranslation,
+  useJobsTranslation,
+  useJobDetailQuery,
+} from "@/shared/hooks";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -74,8 +78,9 @@ export function JobDetailPage() {
       .then((applications) => {
         if (!active) return;
         setIsApplied(
-          applications.content?.some((application) => application.jobId === jobId) ??
-            false
+          applications.content?.some(
+            (application) => application.jobId === jobId
+          ) ?? false
         );
       })
       .catch(() => {
@@ -177,7 +182,7 @@ export function JobDetailPage() {
       <div className="mx-auto max-w-6xl space-y-8 px-4">
         <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
           <button
-            className="hover:text-emerald-600"
+            className="hover:text-emerald-600 cursor-pointer"
             onClick={() => navigate("/jobs")}
           >
             {t("list.pageTitle")}
@@ -190,7 +195,7 @@ export function JobDetailPage() {
           <Button
             variant="outline"
             size="lg"
-            className="px-4 py-2 rounded-lg"
+            className="px-4 py-2 rounded-lg cursor-pointer"
             onClick={() => navigate("/jobs")}
           >
             {t("detail.backToJobs")}
@@ -201,7 +206,12 @@ export function JobDetailPage() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
-                {job.companyName ?? t("messages.confidentialCompany")}
+                <Link
+                  to={`/companies/${(job as any).businessProfileId || (job as any).companyId}`}
+                  className="hover:underline cursor-pointer"
+                >
+                  {job.companyName ?? t("messages.confidentialCompany")}
+                </Link>
               </p>
               <h1 className="mt-2 text-3xl font-bold text-slate-900">
                 {job.title}
@@ -216,7 +226,7 @@ export function JobDetailPage() {
               <Button
                 variant="primary"
                 size="lg"
-                className="flex-1 shadow-lg shadow-emerald-500/30"
+                className="flex-1 shadow-lg shadow-emerald-500/30 cursor-pointer disabled:cursor-not-allowed"
                 onClick={() => {
                   if (isAuthenticated) {
                     if (isApplied) {
@@ -236,12 +246,14 @@ export function JobDetailPage() {
                 }}
                 disabled={isApplyLoading || isApplied}
               >
-                {isApplied ? tApp("applications.status.applied") : t("detail.applyNow")}
+                {isApplied
+                  ? tApp("applications.status.applied")
+                  : t("detail.applyNow")}
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className={`flex-1 border-2 ${
+                className={`flex-1 border-2 cursor-pointer disabled:cursor-not-allowed ${
                   isSaved
                     ? "border-emerald-300 bg-emerald-50 text-emerald-700"
                     : "border-slate-200"
@@ -362,7 +374,12 @@ export function JobDetailPage() {
                 {t("detail.companySection")}
               </p>
               <h3 className="mt-2 text-xl font-semibold text-slate-900">
-                {job.companyName ?? t("messages.confidentialCompany")}
+                <Link
+                  to={`/companies/${(job as any).businessProfileId || (job as any).companyId}`}
+                  className="hover:text-emerald-600 transition cursor-pointer"
+                >
+                  {job.companyName ?? t("messages.confidentialCompany")}
+                </Link>
               </h3>
               <p className="mt-1 text-sm text-slate-500">
                 {job.companyAddress ?? job.addressDetail}
@@ -409,23 +426,11 @@ export function JobDetailPage() {
                 ))}
               </dl>
             </section>
-
-            <section className="rounded-3xl bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-wide text-slate-500">Contact</p>
-              <p className="mt-2 text-lg font-semibold text-slate-900">{job.headhunterName ?? "Recruiter not available"}</p>
-              <p className="text-sm text-slate-500">{job.companyAddress ?? job.addressDetail}</p>
-              <Button
-                variant="primary"
-                size="lg"
-                className="mt-6 w-full justify-center shadow-lg shadow-slate-900/20"
-                onClick={() => navigate("/login")}
-              >
-                Send CV to recruiter
-              </Button>
-            </section>
           </aside>
         </div>
       </div>
     </div>
   );
 }
+
+export default JobDetailPage;

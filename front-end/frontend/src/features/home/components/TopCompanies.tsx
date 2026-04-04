@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHomeTranslation } from "@/shared/hooks";
+import { Link } from "react-router-dom";
 import {
   getTop10Companies,
   type BusinessProfileResp,
@@ -55,7 +56,11 @@ export function TopCompanies() {
         {!loading && !error && companies.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10">
             {companies.map((company) => (
-              <div key={company.id} className="group cursor-pointer">
+              <Link
+                to={`/companies/${company.id}`}
+                key={company.id}
+                className="group cursor-pointer block"
+              >
                 <div
                   className={`${HOME_SIZES.COMPANY_LOGO_WIDTH} ${HOME_SIZES.COMPANY_LOGO_HEIGHT} bg-linear-to-br ${COMPANY_LOGO_COLORS.gradientStart} ${COMPANY_LOGO_COLORS.gradientEnd} rounded-full mb-4`}
                 />
@@ -69,7 +74,7 @@ export function TopCompanies() {
                 <p className="text-lime-900 text-xs mt-2 transition group-hover:translate-x-1">
                   {t("topCompanies.viewCompany")}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         )}

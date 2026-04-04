@@ -91,7 +91,7 @@ export function JobCard({ job }: JobCardProps) {
           #{job.jobCode}
         </span>
         <span className="text-sm font-semibold text-emerald-600">
-          {t("list.viewDetails")} →
+          {t("list.viewDetails")}
         </span>
       </div>
     </div>

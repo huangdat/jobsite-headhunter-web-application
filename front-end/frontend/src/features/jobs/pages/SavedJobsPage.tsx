@@ -62,9 +62,7 @@ export function SavedJobsPage() {
     if (error) {
       return (
         <div className="rounded-3xl bg-white p-10 text-center shadow">
-          <p className="text-slate-600">
-            {t("saved.unableToLoadSavedJobs")}
-          </p>
+          <p className="text-slate-600">{t("saved.unableToLoadSavedJobs")}</p>
           <Button className="mt-4" onClick={() => window.location.reload()}>
             {t("saved.tryAgainButton")}
           </Button>
@@ -126,14 +124,14 @@ export function SavedJobsPage() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 variant="outline"
-                className="sm:min-w-[calc(140px)]"
+                className="sm:min-w-[calc(140px)] cursor-pointer"
                 onClick={() => navigate(`/jobs/${job.jobId}`)}
               >
                 {t("saved.viewJobButton")}
               </Button>
               <Button
                 variant="ghost"
-                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700"
+                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700 cursor-pointer"
                 onClick={() => handleRemove(job.jobId)}
                 disabled={removeJobMutation.isPending}
               >
@@ -166,4 +164,3 @@ export function SavedJobsPage() {
     </div>
   );
 }
-

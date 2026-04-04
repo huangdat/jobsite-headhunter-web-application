@@ -24,7 +24,7 @@ export interface UseBusinessVerificationOptions {
 const INITIAL_FORM_DATA: BusinessFormData = {
   companyName: "",
   taxId: "",
-  companySize: "SMALL",
+  companySize: "STARTUP", // Default to STARTUP, users can change
   website: "",
   headquartersAddress: "",
 };
@@ -189,34 +189,39 @@ export const useBusinessVerification = (
 
   /**
    * Polling for status updates
+   * TODO: Enable when backend endpoints are ready
    */
   useEffect(() => {
-    if (!autoFetchStatus || !profile) return;
+    // Polling disabled - backend endpoints not implemented yet
+    return;
 
-    const startPolling = () => {
-      pollTimeoutRef.current = setTimeout(() => {
-        fetchProfileStatus();
-        startPolling();
-      }, pollInterval);
-    };
-
-    startPolling();
-
-    return () => {
-      if (pollTimeoutRef.current) {
-        clearTimeout(pollTimeoutRef.current);
-      }
-    };
+    // Original polling logic (commented out):
+    // if (!autoFetchStatus || !profile) return;
+    // const startPolling = () => {
+    //   pollTimeoutRef.current = setTimeout(() => {
+    //     fetchProfileStatus();
+    //     startPolling();
+    //   }, pollInterval);
+    // };
+    // startPolling();
+    // return () => {
+    //   if (pollTimeoutRef.current) {
+    //     clearTimeout(pollTimeoutRef.current);
+    //   }
+    // };
   }, [autoFetchStatus, profile, pollInterval, fetchProfileStatus]);
 
   /**
-   * Initial fetch
+   * Initial fetch - only run once on mount
    */
   useEffect(() => {
     if (autoFetchStatus) {
-      fetchProfileStatus();
+      // TODO: Enable when backend endpoints are ready
+      // fetchProfileStatus();
     }
-  }, [autoFetchStatus, fetchProfileStatus]);
+    // Only run on mount - do not add fetchProfileStatus to dependencies
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoFetchStatus]);
 
   return {
     // Form data & validation
