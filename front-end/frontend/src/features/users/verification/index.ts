@@ -80,10 +80,17 @@ export {
 } from "./utils/verificationUtils";
 
 // ============================================================================
-// COMPONENTS (will be exported once created in Phase 3)
+// COMPONENTS (Phase 3)
 // ============================================================================
 
-// export { ... } from "./components";
+export { VerificationStatsCard } from "./components";
+export { VerificationQueueCard } from "./components";
+export { BusinessInfoCard, InfoRow } from "./components";
+export { BusinessDetailView } from "./components";
+export { ContactInfoCard } from "./components";
+export { DocumentsList } from "./components";
+export { VerificationChecklistCard } from "./components";
+export { ApprovalDetailsCard } from "./components";
 
 // ============================================================================
 // PAGES (Phase 2)
