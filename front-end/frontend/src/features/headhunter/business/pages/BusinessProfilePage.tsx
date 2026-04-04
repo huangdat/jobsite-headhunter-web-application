@@ -12,6 +12,7 @@ import {
   SuccessBanner,
   ErrorBanner,
 } from "../components";
+import { PageContainer } from "@/shared/components/layout";
 
 /**
  * Main page for business profile management and verification
@@ -83,70 +84,62 @@ export const BusinessProfilePage: React.FC = () => {
   const hasDocuments = documents && documents.length > 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Page Header */}
-      <div className="border-b border-gray-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          {/* Breadcrumbs */}
-          <nav className="mb-4 flex items-center gap-2 text-sm">
-            <span className="text-gray-500">
-              {t("business.breadcrumb.business")}
-            </span>
-            <span className="text-gray-300">{">"}</span>
-            <span className="font-medium text-gray-900">
-              {t("business.breadcrumb.profile")}
-            </span>
-          </nav>
+    <PageContainer variant="white" maxWidth="7xl">
+      {/* Breadcrumbs */}
+      <nav className="mb-6 flex items-center gap-2 text-sm">
+        <span className="text-gray-500 dark:text-gray-400">
+          {t("business.breadcrumb.business")}
+        </span>
+        <span className="text-gray-300 dark:text-gray-600">{">"}</span>
+        <span className="font-medium text-gray-900 dark:text-gray-100">
+          {t("business.breadcrumb.profile")}
+        </span>
+      </nav>
 
-          {/* Title Section */}
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                {t("business.page.title")}
-              </h1>
-              <p className="mt-2 text-gray-600">
-                {t("business.page.description")}
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
-              >
-                {t("business.button.documentation")}
-              </button>
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
-              >
-                {t("business.button.preview")}
-              </button>
-            </div>
-          </div>
+      {/* Header Section */}
+      <div className="mb-8 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            {t("business.page.title")}
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            {t("business.page.description")}
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <button
+            type="button"
+            className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+          >
+            {t("business.button.documentation")}
+          </button>
+          <button
+            type="button"
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+          >
+            {t("business.button.preview")}
+          </button>
         </div>
       </div>
+      {/* Error Banner */}
+      {hasError && (
+        <div className="mb-6">
+          <ErrorBanner
+            message={errorMessage || ""}
+            onDismiss={clearMessages}
+          />
+        </div>
+      )}
 
-      {/* Page Content */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {/* Error Banner */}
-        {hasError && (
-          <div className="mb-6">
-            <ErrorBanner
-              message={errorMessage || ""}
-              onDismiss={clearMessages}
-            />
-          </div>
-        )}
+      {/* Success Banner */}
+      {successMessage && (
+        <div className="mb-6">
+          <SuccessBanner message={successMessage} onDismiss={clearMessages} />
+        </div>
+      )}
 
-        {/* Success Banner */}
-        {successMessage && (
-          <div className="mb-6">
-            <SuccessBanner message={successMessage} onDismiss={clearMessages} />
-          </div>
-        )}
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-12 gap-8">
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-12 gap-8">
           {/* Main Content (8 columns) */}
           <div className="col-span-12 lg:col-span-8">
             <div className="space-y-8">
@@ -267,8 +260,7 @@ export const BusinessProfilePage: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    </PageContainer>
   );
 };
 
