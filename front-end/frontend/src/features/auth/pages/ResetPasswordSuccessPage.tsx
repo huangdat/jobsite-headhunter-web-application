@@ -74,10 +74,12 @@ export function ResetPasswordSuccessPage() {
               </BodyText>
               <Link
                 to="/login"
-                className="success-button-gradient w-full py-4 text-black font-bold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 mb-8"
+                className="success-button-gradient w-full py-4 text-black rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 mb-8"
               >
                 <span className="material-symbols-outlined text-xl">login</span>
-                {t("pages.resetPasswordSuccess.signInButton")}
+                <SmallText weight="bold" className="text-black">
+                  {t("pages.resetPasswordSuccess.signInButton")}
+                </SmallText>
               </Link>
             </div>
           </div>
