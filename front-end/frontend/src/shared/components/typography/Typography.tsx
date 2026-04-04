@@ -1,6 +1,37 @@
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
 
+interface DisplayProps {
+  children: ReactNode;
+  size?: "sm" | "md" | "lg";
+  className?: string;
+}
+
+/**
+ * Display - Hero/landing page headings
+ *
+ * Large display headings for maximum visual impact.
+ * Sizes:
+ * - sm: text-3xl, font-bold
+ * - md: text-4xl → md:text-5xl, font-bold
+ * - lg: text-5xl → md:text-6xl, font-bold
+ */
+export function Display({ children, size = "md", className }: DisplayProps) {
+  return (
+    <h1
+      className={cn(
+        "font-bold leading-tight text-slate-900 dark:text-white",
+        size === "sm" && "text-3xl",
+        size === "md" && "text-4xl md:text-5xl",
+        size === "lg" && "text-5xl md:text-6xl",
+        className
+      )}
+    >
+      {children}
+    </h1>
+  );
+}
+
 interface PageTitleProps {
   children: ReactNode;
   className?: string;
@@ -150,5 +181,102 @@ export function HelpText({ children, className }: HelpTextProps) {
     <p className={cn("text-sm text-slate-500 dark:text-slate-400", className)}>
       {children}
     </p>
+  );
+}
+
+interface MetaTextProps {
+  children: ReactNode;
+  as?: "span" | "p" | "div";
+  className?: string;
+}
+
+/**
+ * MetaText - Small metadata labels
+ *
+ * For category tags, timestamps, status labels.
+ * Default styling: text-xs, uppercase, tracking-widest, muted color
+ */
+export function MetaText({ children, as = "p", className }: MetaTextProps) {
+  const Component = as;
+  return (
+    <Component
+      className={cn(
+        "text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500",
+        className
+      )}
+    >
+      {children}
+    </Component>
+  );
+}
+
+interface CaptionProps {
+  children: ReactNode;
+  variant?: "default" | "error" | "success";
+  className?: string;
+}
+
+/**
+ * Caption - Small descriptive text
+ *
+ * For captions, small notes, helper text.
+ * Variants:
+ * - default: Muted text color
+ * - error: Red text for errors
+ * - success: Green text for success messages
+ */
+export function Caption({
+  children,
+  variant = "default",
+  className,
+}: CaptionProps) {
+  return (
+    <p
+      className={cn(
+        "text-xs",
+        variant === "default" && "text-slate-500 dark:text-slate-400",
+        variant === "error" && "text-red-600 dark:text-red-400",
+        variant === "success" && "text-emerald-600 dark:text-emerald-400",
+        className
+      )}
+    >
+      {children}
+    </p>
+  );
+}
+
+interface SmallTextProps {
+  children: ReactNode;
+  variant?: "normal" | "muted";
+  weight?: "normal" | "medium" | "semibold" | "bold";
+  className?: string;
+}
+
+/**
+ * SmallText - Small UI text
+ *
+ * For buttons, links, small UI elements.
+ * Size: text-sm
+ */
+export function SmallText({
+  children,
+  variant = "normal",
+  weight = "normal",
+  className,
+}: SmallTextProps) {
+  return (
+    <span
+      className={cn(
+        "text-sm",
+        variant === "normal" && "text-slate-700 dark:text-slate-300",
+        variant === "muted" && "text-slate-500 dark:text-slate-400",
+        weight === "medium" && "font-medium",
+        weight === "semibold" && "font-semibold",
+        weight === "bold" && "font-bold",
+        className
+      )}
+    >
+      {children}
+    </span>
   );
 }

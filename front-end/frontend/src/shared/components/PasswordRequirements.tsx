@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { MetaText, SmallText } from "./typography/Typography";
 
 interface PasswordRequirement {
   met: boolean;
@@ -36,15 +37,12 @@ export const PasswordRequirements: React.FC<PasswordRequirementsProps> = ({
 
   return (
     <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-800">
-      <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+      <MetaText className="mb-3">
         {t("pages.passwordRequirements.title")}
-      </h4>
+      </MetaText>
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {requirements.map((requirement, index) => (
-          <li
-            key={index}
-            className="flex items-center gap-2 text-sm text-slate-500"
-          >
+          <li key={index} className="flex items-center gap-2">
             <span
               className={`material-symbols-outlined text-lg ${
                 requirement.met ? "text-brand-primary" : "text-slate-300"
@@ -52,7 +50,7 @@ export const PasswordRequirements: React.FC<PasswordRequirementsProps> = ({
             >
               {requirement.met ? "check_circle" : "radio_button_unchecked"}
             </span>
-            {requirement.label}
+            <SmallText variant="muted">{requirement.label}</SmallText>
           </li>
         ))}
       </ul>

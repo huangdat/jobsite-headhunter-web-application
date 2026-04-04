@@ -7,6 +7,7 @@ import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Button } from "@/components/ui/button";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { ChevronLeft } from "lucide-react";
+import { MetaText } from "@/shared/components/typography/Typography";
 
 export const JobPipelinePage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -67,20 +68,20 @@ export const JobPipelinePage: React.FC = () => {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700">
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {t("columns.candidate")}
+              <th className="p-5">
+                <MetaText as="span">{t("columns.candidate")}</MetaText>
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {t("applications.form.email")}
+              <th className="p-5">
+                <MetaText as="span">{t("applications.form.email")}</MetaText>
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {t("common.appliedAt")}
+              <th className="p-5">
+                <MetaText as="span">{t("common.appliedAt")}</MetaText>
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {t("columns.status")}
+              <th className="p-5">
+                <MetaText as="span">{t("columns.status")}</MetaText>
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider text-right">
-                {t("columns.actions")}
+              <th className="p-5 text-right">
+                <MetaText as="span">{t("columns.actions")}</MetaText>
               </th>
             </tr>
           </thead>
@@ -110,21 +111,24 @@ export const JobPipelinePage: React.FC = () => {
                     {new Date(app.appliedAt).toLocaleDateString()}
                   </td>
                   <td className="p-5">
-                    <span className="px-3 py-1 bg-brand-primary/20 text-brand-primary rounded-full text-[10px] font-black uppercase tracking-tight">
+                    <MetaText
+                      as="span"
+                      className="px-3 py-1 bg-brand-primary/20 text-brand-primary rounded-full inline-block"
+                    >
                       {app.status}
-                    </span>
+                    </MetaText>
                   </td>
                   <td className="p-5 text-right">
-                    <button
+                    <Button
                       onClick={() =>
                         navigate(`/headhunter/applications/${app.id}`)
                       }
                       variant="brand-primary"
                       size="sm"
-                      className="px-4 text-xs cursor-pointer"
+                      className="cursor-pointer"
                     >
                       {t("actions.viewDetails")}
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))

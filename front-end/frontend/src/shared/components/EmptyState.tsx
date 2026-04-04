@@ -6,6 +6,7 @@
 import React, { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Inbox, Search, FileX, AlertCircle } from "lucide-react";
+import { SubsectionTitle, SmallText } from "./typography/Typography";
 
 export type EmptyStateVariant = "default" | "search" | "error" | "no-data";
 
@@ -75,12 +76,12 @@ export const EmptyState = memo<EmptyStateProps>(function EmptyState({
         <Icon className={`h-10 w-10 ${config.iconColor}`} />
       </div>
 
-      <h3 className="text-lg font-semibold text-slate-900 mb-2">{title}</h3>
+      <SubsectionTitle className="mb-2">{title}</SubsectionTitle>
 
       {description && (
-        <p className="text-sm text-slate-600 text-center max-w-md mb-6">
+        <SmallText variant="muted" className="text-center max-w-md mb-6">
           {description}
-        </p>
+        </SmallText>
       )}
 
       {actionLabel && onAction && (

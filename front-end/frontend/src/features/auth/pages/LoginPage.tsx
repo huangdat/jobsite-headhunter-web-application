@@ -15,6 +15,12 @@ import { toast } from "sonner";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 import type { LoginResult, SocialAuthResponse } from "@/features/auth/types";
+import {
+  Display,
+  SectionTitle,
+  BodyText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -285,23 +291,25 @@ export function LoginPage() {
       <div className="w-full max-w-5xl min-h-150 bg-white dark:bg-slate-900 rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
-          <h1 className="text-5xl font-bold leading-tight">
+          <Display size="md">
             {t("pages.login.heroTitlePart1")} <br />
             {t("pages.login.heroTitlePart2")}
-          </h1>
+          </Display>
 
-          <p className="text-slate-300 mt-6">{t("pages.login.heroSubtitle")}</p>
+          <BodyText className="text-slate-300 mt-6">
+            {t("pages.login.heroSubtitle")}
+          </BodyText>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10">
-          <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
+          <SectionTitle className="mb-2">
             {t("pages.login.welcomeBack")}
-          </h2>
+          </SectionTitle>
 
-          <p className="text-slate-500 dark:text-slate-400 mb-8">
+          <BodyText variant="muted" className="mb-8">
             {t("pages.login.subtitle")}
-          </p>
+          </BodyText>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -379,9 +387,9 @@ export function LoginPage() {
             {/* DIVIDER */}
             <div className="flex items-center gap-4 my-6">
               <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
-              <span className="text-sm text-slate-400 dark:text-slate-500">
+              <SmallText variant="muted">
                 {t("pages.login.orContinueWith")}
-              </span>
+              </SmallText>
               <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
             </div>
 
@@ -394,16 +402,16 @@ export function LoginPage() {
               loadingProvider={loadingProvider}
             />
             {/* REGISTER LINK */}
-            <div className="text-center mt-6 text-sm">
-              <span className="text-slate-500 dark:text-slate-400">
+            <div className="text-center mt-6">
+              <SmallText variant="muted">
                 {t("pages.login.noAccount")}{" "}
-              </span>
-              <Link
-                to="/select-role"
-                className="text-brand-primary hover:underline"
-              >
-                {t("pages.login.registerLink")}
-              </Link>
+                <Link
+                  to="/select-role"
+                  className="text-brand-primary hover:underline"
+                >
+                  {t("pages.login.registerLink")}
+                </Link>
+              </SmallText>
             </div>
           </form>
         </div>

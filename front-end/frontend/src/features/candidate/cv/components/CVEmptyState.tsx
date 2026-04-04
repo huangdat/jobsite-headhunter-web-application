@@ -6,6 +6,12 @@
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
 import type { CVEmptyStateProps } from "../types";
+import {
+  SectionTitle,
+  BodyText,
+  Caption,
+  MetaText,
+} from "@/shared/components/typography/Typography";
 
 export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
   const { t } = useCandidateTranslation();
@@ -25,12 +31,10 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 
         {/* Headline */}
         <div className="space-y-2">
-          <h2 className="text-2xl font-headline font-bold text-slate-900">
-            {t("cv.management.empty.headline")}
-          </h2>
-          <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+          <SectionTitle>{t("cv.management.empty.headline")}</SectionTitle>
+          <BodyText variant="muted" className="max-w-md mx-auto">
             {t("cv.management.empty.description")}
-          </p>
+          </BodyText>
         </div>
 
         {/* CTA Button */}
@@ -43,9 +47,7 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
         </button>
 
         {/* Supported Formats Info */}
-        <p className="text-xs text-slate-600 mt-6">
-          {t("cv.management.empty.supported")}
-        </p>
+        <Caption>{t("cv.management.empty.supported")}</Caption>
       </div>
 
       {/* Bottom Info Section - 2 Columns */}
@@ -56,24 +58,20 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
             <span className="material-symbols-outlined text-emerald-600 text-lg fill">
               security
             </span>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
+            <MetaText as="span">
               {t("cv.management.bestPractices.privacyTitle")}
-            </h3>
+            </MetaText>
           </div>
 
-          <p className="text-sm text-slate-600 leading-relaxed">
-            {t("tips.privacyTip1")}
-          </p>
+          <BodyText variant="muted">{t("tips.privacyTip1")}</BodyText>
 
-          <ul className="space-y-2 text-xs text-slate-600">
-            {([] as string[])?.map(
-              (item: string, index: number) => (
-                <li key={index} className="flex gap-2">
-                  <span className="text-emerald-600 shrink-0">→</span>
-                  <span>{item}</span>
-                </li>
-              )
-            )}
+          <ul className="space-y-2">
+            {([] as string[])?.map((item: string, index: number) => (
+              <li key={index} className="flex gap-2">
+                <span className="text-emerald-600 shrink-0 text-sm">→</span>
+                <Caption>{item}</Caption>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -83,19 +81,23 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
             <span className="material-symbols-outlined text-emerald-600 text-lg fill">
               verified_user
             </span>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
+            <MetaText as="span">
               {t("cv.management.bestPractices.practicesTitle")}
-            </h3>
+            </MetaText>
           </div>
 
-          <ul className="space-y-2 text-xs text-slate-600">
+          <ul className="space-y-2">
             <li className="flex gap-2">
-              <span className="text-emerald-600 font-bold shrink-0">•</span>
-              <span>{t("tips.privacyTip2")}</span>
+              <span className="text-emerald-600 font-bold shrink-0 text-sm">
+                •
+              </span>
+              <Caption>{t("tips.privacyTip2")}</Caption>
             </li>
             <li className="flex gap-2">
-              <span className="text-emerald-600 font-bold shrink-0">•</span>
-              <span>{t("tips.privacyTip3")}</span>
+              <span className="text-emerald-600 font-bold shrink-0 text-sm">
+                •
+              </span>
+              <Caption>{t("tips.privacyTip3")}</Caption>
             </li>
           </ul>
         </div>
@@ -105,5 +107,3 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 };
 
 export default CVEmptyState;
-
-
