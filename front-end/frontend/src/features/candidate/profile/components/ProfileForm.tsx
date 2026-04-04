@@ -220,7 +220,7 @@ export function ProfileForm({
                       rel="noopener noreferrer"
                       className="text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:underline flex items-center gap-1 mt-0.5"
                     >
-                      {t("common.view") || "View Document"}
+                      {t("cv.management.fileList.actions.view")}
                     </a>
                   </div>
                 </div>
@@ -282,7 +282,7 @@ export function ProfileForm({
                 {isUploading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t("cv.management.messages.uploading")}
+                    {t("candidate.cv.management.messages.uploading")}
                   </>
                 ) : hasCV ? (
                   <>

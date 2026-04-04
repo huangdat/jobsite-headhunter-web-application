@@ -170,6 +170,16 @@
     "uploading": "Uploading..."
   },
   "candidate": {
+    "common": {
+      "view": "View Document"
+    },
+    "cv": {
+      "management": {
+        "messages": {
+          "uploading": "Uploading..."
+        }
+      }
+    },
     "tips": {
       "profileStrengthHint": "Candidate tips profile strength hint",
       "auditGuide": "Candidate tips audit guide",
