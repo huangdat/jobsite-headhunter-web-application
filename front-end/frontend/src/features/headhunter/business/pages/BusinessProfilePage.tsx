@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo } from "react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import {
+  Display,
+  SubsectionTitle,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 import type { VerificationStatus as VerificationStatusType } from "../types/business.types";
 import { useBusinessVerification } from "../hooks/useBusinessVerification";
 import {
@@ -86,38 +91,42 @@ export const BusinessProfilePage: React.FC = () => {
   return (
     <PageContainer variant="white" maxWidth="7xl">
       {/* Breadcrumbs */}
-      <nav className="mb-6 flex items-center gap-2 text-sm">
-        <span className="text-gray-500 dark:text-gray-400">
+      <nav className="mb-6 flex items-center gap-2">
+        <SmallText variant="muted">
           {t("business.breadcrumb.business")}
-        </span>
-        <span className="text-gray-300 dark:text-gray-600">{">"}</span>
-        <span className="font-medium text-gray-900 dark:text-gray-100">
+        </SmallText>
+        <span className="text-gray-300 dark:text-gray-600">{">"}  </span>
+        <SmallText weight="bold" className="text-gray-900 dark:text-gray-100">
           {t("business.breadcrumb.profile")}
-        </span>
+        </SmallText>
       </nav>
 
       {/* Header Section */}
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          <Display>
             {t("business.page.title")}
-          </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          </Display>
+          <SmallText variant="muted" className="mt-2">
             {t("business.page.description")}
-          </p>
+          </SmallText>
         </div>
         <div className="flex gap-3">
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+            className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
           >
-            {t("business.button.documentation")}
+            <SmallText weight="medium">
+              {t("business.button.documentation")}
+            </SmallText>
           </button>
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 text-white transition-colors hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
           >
-            {t("business.button.preview")}
+            <SmallText weight="medium" className="text-white">
+              {t("business.button.preview")}
+            </SmallText>
           </button>
         </div>
       </div>
@@ -147,12 +156,12 @@ export const BusinessProfilePage: React.FC = () => {
               {!isSubmitted || hasError ? (
                 <div className="rounded-lg border border-slate-200 bg-white p-6">
                   <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-slate-900">
+                    <SubsectionTitle>
                       {t("business.form.title")}
-                    </h2>
-                    <p className="mt-1 text-sm text-slate-600">
+                    </SubsectionTitle>
+                    <SmallText variant="muted" className="mt-1">
                       {t("business.form.subtitle")}
-                    </p>
+                    </SmallText>
                   </div>
 
                   <BusinessIdentityForm
@@ -172,9 +181,9 @@ export const BusinessProfilePage: React.FC = () => {
                 verificationSteps &&
                 verificationSteps.length > 0 && (
                   <div className="rounded-lg border border-slate-200 bg-white p-6">
-                    <h2 className="mb-6 text-xl font-semibold text-slate-900">
+                    <SubsectionTitle className="mb-6">
                       {t("business.verification.title")}
-                    </h2>
+                    </SubsectionTitle>
                     <VerificationStatus
                       currentStatus={currentVerificationStatus}
                     />
@@ -184,9 +193,9 @@ export const BusinessProfilePage: React.FC = () => {
               {/* Submitted Documents - Show when documents exist */}
               {hasDocuments && documents && (
                 <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <h2 className="mb-6 text-xl font-semibold text-slate-900">
+                  <SubsectionTitle className="mb-6">
                     {t("business.documents.title")}
-                  </h2>
+                  </SubsectionTitle>
                   <SubmittedDocuments documents={documents} />
                 </div>
               )}
@@ -197,19 +206,21 @@ export const BusinessProfilePage: React.FC = () => {
                 <div className="rounded-lg border border-slate-200 bg-white p-6">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="font-semibold text-slate-900">
+                      <SmallText weight="bold" className="text-slate-900">
                         {t("business.privacy.title")}
-                      </h3>
-                      <p className="mt-2 text-sm text-slate-600">
+                      </SmallText>
+                      <SmallText variant="muted" className="mt-2">
                         {t("business.privacy.description")}
-                      </p>
+                      </SmallText>
                     </div>
                   </div>
                   <button
                     type="button"
-                    className="mt-4 text-sm font-medium text-emerald-600 transition-colors hover:text-emerald-700"
+                    className="mt-4 text-emerald-600 transition-colors hover:text-emerald-700"
                   >
-                    {t("business.action.configure")} →
+                    <SmallText weight="bold" className="text-inherit">
+                      {t("business.action.configure")} →
+                    </SmallText>
                   </button>
                 </div>
 
@@ -232,17 +243,19 @@ export const BusinessProfilePage: React.FC = () => {
 
               {/* Premium Services Card */}
               <div className="rounded-lg border border-gray-200 bg-linear-to-b from-gray-900 to-gray-800 p-6 text-white">
-                <h3 className="text-lg font-semibold">
+                <SubsectionTitle className="text-white">
                   {t("business.premium.title")}
-                </h3>
-                <p className="mt-2 text-sm text-gray-300">
+                </SubsectionTitle>
+                <SmallText variant="muted" className="mt-2 text-gray-300">
                   {t("business.premium.description")}
-                </p>
+                </SmallText>
                 <button
                   type="button"
-                  className="mt-4 w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
+                  className="mt-4 w-full rounded-lg bg-green-600 px-4 py-2.5 text-white transition-colors hover:bg-green-700"
                 >
-                  {t("business.button.upgrade")}
+                  <SmallText weight="medium" className="text-white">
+                    {t("business.button.upgrade")}
+                  </SmallText>
                 </button>
               </div>
 
@@ -251,9 +264,9 @@ export const BusinessProfilePage: React.FC = () => {
                 <div className="flex items-center justify-center rounded-lg border border-gray-200 bg-white p-8">
                   <div className="flex flex-col items-center gap-2">
                     <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-green-600" />
-                    <p className="text-sm text-gray-600">
+                    <SmallText variant="muted">
                       {t("business.state.loading")}
-                    </p>
+                    </SmallText>
                   </div>
                 </div>
               )}
