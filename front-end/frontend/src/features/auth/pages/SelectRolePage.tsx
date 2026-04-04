@@ -52,26 +52,26 @@ export function SelectRolePage() {
 
   return (
     <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
-      <div className="w-full max-w-5xl min-h-[calc(600px)] bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
+      <div className="w-full max-w-5xl min-h-[calc(600px)] bg-white dark:bg-slate-900 rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
             {t("pages.selectRole.title")} <br />
-            <span className="text-lime-400">
+            <span className="text-brand-primary">
               {t("pages.selectRole.titleHighlight")}
             </span>
           </h1>
 
-          <p className="text-gray-300 mt-6">{t("pages.selectRole.subtitle")}</p>
+          <p className="text-slate-300 mt-6">{t("pages.selectRole.subtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10 flex flex-col justify-center">
-          <h2 className="text-3xl font-bold mb-2">
+          <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
             {t("pages.selectRole.pageTitle")}
           </h2>
 
-          <p className="text-gray-500 mb-8">
+          <p className="text-slate-500 dark:text-slate-400 mb-8">
             {t("pages.selectRole.pageSubtitle")}
           </p>
 
@@ -92,7 +92,7 @@ export function SelectRolePage() {
         ${
           selectedRole === option.value
             ? "border-brand-primary bg-brand-primary/10"
-            : "border-slate-200 hover:border-slate-400"
+            : "border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500"
         }`}
               >
                 <input
@@ -104,13 +104,13 @@ export function SelectRolePage() {
                   onChange={() => setSelectedRole(option.value)}
                 />
 
-                <div className="text-2xl text-slate-700">{option.icon}</div>
+                <div className="text-2xl text-slate-700 dark:text-slate-300">{option.icon}</div>
 
                 <div>
-                  <h3 className="font-semibold text-lg">
+                  <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
                     {t(option.titleKey)}
                   </h3>
-                  <p className="text-sm text-slate-500">{t(option.descKey)}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t(option.descKey)}</p>
                 </div>
               </label>
             ))}
@@ -127,9 +127,9 @@ export function SelectRolePage() {
               <HiOutlineArrowRight />
             </Button>
 
-            <p className="text-center text-sm text-slate-500 mt-4">
+            <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-4">
               {t("pages.selectRole.alreadyHaveAccount")}{" "}
-              <Link to="/login" className="text-lime-500 font-medium">
+              <Link to="/login" className="text-brand-primary font-medium hover:underline">
                 {t("buttons.signIn")}
               </Link>
             </p>
