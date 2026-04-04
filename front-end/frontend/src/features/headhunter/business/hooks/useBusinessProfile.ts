@@ -19,11 +19,15 @@ export const useBusinessProfile = () => {
     try {
       const profileData = await businessApi.getBusinessProfile();
       setProfile(profileData);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error fetching business profile:", error);
+      const err = error as {
+        response?: { data?: { message?: string } };
+        message?: string;
+      };
       setErrorMessage(
-        error.response?.data?.message ||
-          error.message ||
+        err.response?.data?.message ||
+          err.message ||
           "business.error.failed_to_load"
       );
     } finally {

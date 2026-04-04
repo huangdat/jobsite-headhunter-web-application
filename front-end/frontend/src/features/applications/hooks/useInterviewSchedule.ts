@@ -53,7 +53,7 @@ export const useInterviewSchedule = (options: UseInterviewScheduleOptions) => {
         if (onSuccess) {
           onSuccess(interview);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         const errorMsg = err?.message || t("common.error");
         toast.error(errorMsg);
       } finally {

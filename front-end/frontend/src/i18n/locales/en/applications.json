@@ -71,12 +71,15 @@
 
   "applications.interview.title": "Schedule Interview",
   "applications.interview.type": "Interview Type",
+  "applications.interview.selectType": "Select type...",
   "applications.interview.typeOnline": "Online",
   "applications.interview.typeOffline": "Offline",
   "applications.interview.scheduledAt": "Date & Time",
   "applications.interview.duration": "Duration (minutes)",
   "applications.interview.meetingLink": "Meeting Link",
+  "applications.interview.meetingLinkPlaceholder": "https://meet.google.com/...",
   "applications.interview.location": "Location",
+  "applications.interview.locationPlaceholder": "Office address...",
   "applications.interview.notes": "Notes",
   "applications.interview.save": "Save and Send Invitation",
 

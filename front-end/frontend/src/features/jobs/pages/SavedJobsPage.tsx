@@ -6,6 +6,13 @@ import {
   useRemoveSavedJobMutation,
 } from "@/shared/hooks";
 import { useAuth } from "@/features/auth/context/useAuth";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { formatSalaryRange } from "../utils";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { EmptyState } from "@/shared/components/EmptyState";
+import { Bookmark } from "lucide-react";
 
 // Helper function to extract error message from API errors
 const getErrorMessage = (err: Error, fallback: string): string => {
@@ -14,10 +21,6 @@ const getErrorMessage = (err: Error, fallback: string): string => {
   };
   return apiError?.response?.data?.message || err?.message || fallback;
 };
-
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { formatSalaryRange } from "../utils";
 
 export function SavedJobsPage() {
   const { t } = useJobsTranslation();
@@ -47,42 +50,28 @@ export function SavedJobsPage() {
 
   const renderContent = () => {
     if (isLoading) {
-      return (
-        <div className="space-y-4">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div
-              key={index}
-              className="h-32 animate-pulse rounded-3xl bg-white"
-            />
-          ))}
-        </div>
-      );
+      return <PageSkeleton variant="list" count={3} />;
     }
 
     if (error) {
       return (
-        <div className="rounded-3xl bg-white p-10 text-center shadow">
-          <p className="text-slate-600">{t("saved.unableToLoadSavedJobs")}</p>
-          <Button className="mt-4" onClick={() => window.location.reload()}>
-            {t("saved.tryAgainButton")}
-          </Button>
-        </div>
+        <ErrorState
+          variant="card"
+          title={t("saved.unableToLoadSavedJobs")}
+          onRetry={() => window.location.reload()}
+        />
       );
     }
 
     if (jobs.length === 0) {
       return (
-        <div className="rounded-3xl bg-white p-10 text-center shadow">
-          <p className="text-lg font-semibold text-slate-900">
-            {t("saved.noSavedJobs")}
-          </p>
-          <p className="mt-2 text-sm text-slate-500">
-            {t("saved.emptyStateHint")}
-          </p>
-          <Button className="mt-6" onClick={() => navigate("/jobs")}>
-            {t("saved.browseJobsButton")}
-          </Button>
-        </div>
+        <EmptyState
+          icon={Bookmark}
+          title={t("saved.noSavedJobs")}
+          description={t("saved.emptyStateHint")}
+          actionLabel={t("saved.browseJobsButton")}
+          onAction={() => navigate("/jobs")}
+        />
       );
     }
 
@@ -124,14 +113,14 @@ export function SavedJobsPage() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 variant="outline"
-                className="sm:min-w-[calc(140px)] cursor-pointer"
+                className="sm:min-w-[calc(140px)]"
                 onClick={() => navigate(`/jobs/${job.jobId}`)}
               >
                 {t("saved.viewJobButton")}
               </Button>
               <Button
                 variant="ghost"
-                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700 cursor-pointer"
+                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700"
                 onClick={() => handleRemove(job.jobId)}
                 disabled={removeJobMutation.isPending}
               >
@@ -147,20 +136,14 @@ export function SavedJobsPage() {
   };
 
   return (
-    <div className="bg-slate-50 pb-16 pt-10">
-      <div className="mx-auto max-w-6xl space-y-6 px-4">
-        <div>
-          <p className="text-sm text-slate-500">{t("saved.breadcrumb")}</p>
-          <h1 className="mt-1 text-3xl font-bold text-slate-900">
-            {t("saved.pageTitle")}
-          </h1>
-          <p className="mt-2 text-sm text-slate-500">
-            {t("saved.description")}
-          </p>
-        </div>
+    <PageContainer variant="white">
+      <PageHeader
+        variant="default"
+        title={t("saved.pageTitle")}
+        description={t("saved.description")}
+      />
 
-        {renderContent()}
-      </div>
-    </div>
+      {renderContent()}
+    </PageContainer>
   );
 }

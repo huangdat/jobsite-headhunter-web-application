@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
 import { useJobsTranslation } from "@/shared/hooks";
-import { jobKeys } from "@/shared/utils/queryKeys";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,7 @@ import { getJobDetail, updateJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 import { JOB_FORM_DEFAULTS } from "../utils";
 import { useQueryClient } from "@tanstack/react-query";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 
 export function JobEditPage() {
   const { t } = useJobsTranslation();
@@ -44,20 +44,15 @@ export function JobEditPage() {
   useEffect(() => {
     let active = true;
     setLoading(true);
-
-    const loadInitialData = async () => {
-      try {
-        const [skillsData, job] = await Promise.all([
-          fetchSkills(),
-          id ? getJobDetail(Number(id)) : Promise.resolve(null),
-        ]);
-
+    Promise.all([
+      fetchSkills(),
+      id ? getJobDetail(Number(id)) : Promise.resolve(null),
+    ])
+      .then(([skillsData, job]) => {
         if (!active) return;
-
         setSkills(skillsData || []);
-
         if (job) {
-          // Reset form với dữ liệu từ API
+          // map job detail to form
           reset({
             title: job.title,
             description: job.description ?? "",
@@ -72,29 +67,25 @@ export function JobEditPage() {
             currency: job.currency ?? "VND",
             quantity: job.quantity ?? 1,
             deadline: job.deadline ?? "",
-            skillIds: (job.skills || []).map((s: any) => s.id),
+            skillIds: (job.skills || []).map((s) => s.id),
             responsibilities: job.responsibilities ?? "",
             requirements: job.requirements ?? "",
             benefits: job.benefits ?? "",
             workingTime: job.workingTime ?? "",
           });
         }
-      } catch (err) {
-        if (active) {
-          toast.error(t("edit.messages.unableToLoad"));
-        }
-      } finally {
+      })
+      .catch(() => {
+        toast.error(t("edit.messages.unableToLoad"));
+      })
+      .finally(() => {
         if (active) setLoading(false);
-      }
-    };
-
-    loadInitialData();
+      });
 
     return () => {
       active = false;
     };
-    // QUAN TRỌNG: Chỉ phụ thuộc vào id để tránh vòng lặp vô tận
-  }, [id]);
+  }, [id, reset, t]);
 
   const selectedSkillIds = watch("skillIds") ?? [];
 
@@ -114,17 +105,14 @@ export function JobEditPage() {
     try {
       await updateJob(Number(id), values);
 
-      // Refetch queries with matching keys
-      await Promise.all([
-        queryClient.refetchQueries({ queryKey: jobKeys.myJobs() }),
-        queryClient.refetchQueries({ queryKey: jobKeys.detail(Number(id)) }),
-      ]);
+      await queryClient.invalidateQueries({ queryKey: ["my-jobs"] });
+      await queryClient.invalidateQueries({ queryKey: ["job-detail", id] });
 
       toast.success(t("edit.messages.updatedSuccess"));
 
-      // Navigate after refetch completes
-      window.scrollTo(0, 0);
-      navigate("/headhunter/jobs");
+      setTimeout(() => {
+        navigate("/headhunter/jobs");
+      }, 500);
     } catch (err) {
       console.error(err);
       toast.error(t("edit.messages.failedToUpdate"));
@@ -133,29 +121,32 @@ export function JobEditPage() {
     }
   };
 
-  if (loading) return <div className="p-8">{t("edit.messages.loading")}</div>;
+  if (loading)
+    return (
+      <PageContainer variant="white" maxWidth="5xl">
+        <div className="flex justify-center items-center min-h-100">
+          <p className="text-slate-500 dark:text-slate-400 font-medium animate-pulse">
+            {t("edit.messages.loading")}
+          </p>
+        </div>
+      </PageContainer>
+    );
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10">
-      <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-          {t("edit.messages.pageTitle")}
-        </p>
-        <h1 className="mt-3 text-3xl font-semibold leading-tight">
-          {t("edit.messages.heading")}
-        </h1>
-        <p className="mt-4 max-w-3xl text-lg text-emerald-100">
-          {t("edit.messages.subtitle")}
-        </p>
-      </div>
+    <PageContainer variant="white" maxWidth="5xl">
+      <PageHeader
+        variant="gradient"
+        title={t("edit.messages.heading")}
+        description={t("edit.messages.subtitle")}
+      />
 
       <form
-        className="mt-10 space-y-8 rounded-3xl border border-slate-100 bg-white/80 p-8 shadow-lg dark:border-slate-800 dark:bg-slate-900/70"
+        className="mt-10 space-y-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 shadow-lg dark:shadow-slate-900/30"
         onSubmit={handleSubmit(onSubmit)}
       >
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.jobTitle")}
             </label>
             <Input
@@ -170,7 +161,7 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.location")}
             </label>
             <Input
@@ -187,7 +178,7 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.addressDetail")}
             </label>
             <Input
@@ -197,7 +188,7 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.deadline")}
             </label>
             <Input type="date" {...register("deadline")} />
@@ -224,11 +215,11 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.workingType")}
             </label>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("workingType", { required: true })}
             >
               <option value="ONSITE">Onsite</option>
@@ -238,7 +229,7 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.experience")}
             </label>
             <Input
@@ -253,7 +244,7 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.quantity")}
             </label>
             <Input
@@ -266,7 +257,7 @@ export function JobEditPage() {
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.salaryMin")}
             </label>
             <Input
@@ -276,7 +267,7 @@ export function JobEditPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.salaryMax")}
             </label>
             <Input
@@ -286,11 +277,11 @@ export function JobEditPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.currency")}
             </label>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("currency")}
             >
               <option value="VND">VND</option>
@@ -303,7 +294,10 @@ export function JobEditPage() {
               id="negotiable"
               {...register("negotiable")}
             />
-            <label htmlFor="negotiable" className="text-sm text-slate-600">
+            <label
+              htmlFor="negotiable"
+              className="text-sm text-slate-600 dark:text-slate-400"
+            >
               {t("edit.labels.salaryNegotiable")}
             </label>
           </div>
@@ -311,7 +305,7 @@ export function JobEditPage() {
 
         <section className="grid gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.description")}
             </label>
             <Controller
@@ -328,7 +322,7 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.responsibilities")}
             </label>
             <Controller
@@ -345,7 +339,7 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.requirements")}
             </label>
             <Controller
@@ -362,14 +356,14 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.benefits")}
             </label>
             <Textarea rows={3} {...register("benefits")} />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.workingTime")}
             </label>
             <Input {...register("workingTime")} />
@@ -378,7 +372,7 @@ export function JobEditPage() {
 
         <section className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-slate-500">
+            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
               {t("edit.labels.requiredSkills")}
             </label>
             {errors.skillIds && (
@@ -395,33 +389,16 @@ export function JobEditPage() {
           />
         </section>
 
-        <div className="flex justify-end gap-3 mt-12 border-t border-slate-100 pt-8 dark:border-slate-800">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => navigate(-1)}
-            className="px-6 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors cursor-pointer"
-          >
+        <div className="flex justify-end gap-3">
+          <Button type="button" variant="ghost" onClick={() => navigate(-1)}>
             {t("edit.buttons.cancel")}
           </Button>
-
-          <Button
-            type="submit"
-            disabled={submitting}
-            className="px-8 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 shadow-emerald-500/30 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {submitting ? (
-              <span className="flex items-center gap-2">
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                {t("edit.buttons.saving")}
-              </span>
-            ) : (
-              t("edit.buttons.save")
-            )}
+          <Button type="submit" disabled={submitting}>
+            {submitting ? t("edit.buttons.saving") : t("edit.buttons.save")}
           </Button>
         </div>
       </form>
-    </div>
+    </PageContainer>
   );
 }
 

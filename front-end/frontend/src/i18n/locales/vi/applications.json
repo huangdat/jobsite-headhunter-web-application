@@ -53,12 +53,15 @@
 
   "applications.interview.title": "Mời phỏng vấn",
   "applications.interview.type": "Hình thức",
+  "applications.interview.selectType": "Chọn hình thức...",
   "applications.interview.typeOnline": "Trực tuyến",
   "applications.interview.typeOffline": "Trực tiếp",
   "applications.interview.scheduledAt": "Thời gian",
   "applications.interview.duration": "Thời lượng (phút)",
   "applications.interview.meetingLink": "Link họp",
+  "applications.interview.meetingLinkPlaceholder": "https://meet.google.com/...",
   "applications.interview.location": "Địa điểm",
+  "applications.interview.locationPlaceholder": "Địa chỉ văn phòng...",
   "applications.interview.notes": "Ghi chú",
   "applications.interview.save": "Lưu và Gửi lời mời",
 

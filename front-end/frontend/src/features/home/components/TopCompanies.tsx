@@ -28,6 +28,7 @@ export function TopCompanies() {
     };
 
     fetchCompanies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLanguage?.code]); //new
 
   return (

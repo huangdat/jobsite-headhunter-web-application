@@ -96,11 +96,11 @@ export function ForgotPasswordPage() {
 
           {/* RIGHT PANEL */}
           <div className="md:w-7/12 p-10">
-            <h2 className="text-3xl font-bold mb-2">
+            <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
               {tAuth("pages.forgotPassword.formTitle")}
             </h2>
 
-            <p className="text-slate-500 mb-8">
+            <p className="text-slate-500 dark:text-slate-400 mb-8">
               {tAuth("pages.forgotPassword.formSubtitle")}
             </p>
 
@@ -126,11 +126,11 @@ export function ForgotPasswordPage() {
               </Button>
             </form>
 
-            <p className="text-center text-sm text-slate-500 mt-8">
+            <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8">
               {tAuth("pages.forgotPassword.rememberPassword")}{" "}
               <Link
                 to="/login"
-                className="text-lime-500 font-bold hover:underline"
+                className="text-brand-primary font-bold hover:underline"
               >
                 {tAuth("pages.forgotPassword.signInLink")}
               </Link>

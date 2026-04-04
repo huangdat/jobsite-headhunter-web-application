@@ -126,9 +126,9 @@ export function ChangePasswordPage() {
   };
 
   return (
-    <div className="relative flex h-screen w-full overflow-hidden bg-slate-50">
+    <div className="relative flex h-screen w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
       {/* Sidebar */}
-      <aside className="w-80 bg-slate-900 text-white flex flex-col border-r border-white/10 shrink-0">
+      <aside className="w-80 bg-slate-900 dark:bg-slate-950 text-white flex flex-col border-r border-white/10 shrink-0">
         <div className="p-6 flex items-center gap-3">
           <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-slate-900">
             <span className="material-symbols-outlined font-bold">
@@ -194,23 +194,23 @@ export function ChangePasswordPage() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col bg-white overflow-y-auto">
+      <main className="flex-1 flex flex-col bg-white dark:bg-slate-900 overflow-y-auto">
         {/* Header */}
-        <header className="h-16 border-b border-slate-100 flex items-center justify-between px-8 bg-white sticky top-0 z-10">
-          <div className="flex items-center gap-2 text-slate-500 text-sm">
+        <header className="h-16 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between px-8 bg-white dark:bg-slate-900 sticky top-0 z-10">
+          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
             <span>{tApp("navigation.settings")}</span>
             <span className="material-symbols-outlined text-xs">
               chevron_right
             </span>
-            <span className="text-slate-900 font-medium">
+            <span className="text-slate-900 dark:text-white font-medium">
               {t("pages.changePassword.securitySectionLabel")}
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="p-2 text-slate-400 hover:text-slate-600">
+            <button className="p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
               <span className="material-symbols-outlined">notifications</span>
             </button>
-            <button className="p-2 text-slate-400 hover:text-slate-600">
+            <button className="p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
               <span className="material-symbols-outlined">help_outline</span>
             </button>
           </div>
@@ -220,10 +220,10 @@ export function ChangePasswordPage() {
         <div className="flex-1 w-full py-12 px-12">
           <div className="w-full">
             <div className="mb-10">
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
+              <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
                 {t("pages.changePassword.title")}
               </h1>
-              <p className="text-slate-500 max-w-3xl">
+              <p className="text-slate-500 dark:text-slate-400 max-w-3xl">
                 {t("pages.changePassword.subtitle")}
               </p>
             </div>
@@ -244,7 +244,7 @@ export function ChangePasswordPage() {
                       <button
                         type="button"
                         onClick={() => togglePasswordVisibility("current")}
-                        className="material-symbols-outlined text-slate-400 hover:text-slate-600"
+                        className="material-symbols-outlined text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
                       >
                         {showPasswords.current
                           ? "visibility"
@@ -267,7 +267,7 @@ export function ChangePasswordPage() {
                       <button
                         type="button"
                         onClick={() => togglePasswordVisibility("new")}
-                        className="material-symbols-outlined text-slate-400 hover:text-slate-600"
+                        className="material-symbols-outlined text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
                       >
                         {showPasswords.new ? "visibility" : "visibility_off"}
                       </button>
@@ -288,7 +288,7 @@ export function ChangePasswordPage() {
                       <button
                         type="button"
                         onClick={() => togglePasswordVisibility("confirm")}
-                        className="material-symbols-outlined text-slate-400 hover:text-slate-600"
+                        className="material-symbols-outlined text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
                       >
                         {showPasswords.confirm
                           ? "visibility"
@@ -316,7 +316,7 @@ export function ChangePasswordPage() {
                     type="button"
                     onClick={handleCancel}
                     disabled={isSubmitting}
-                    className="flex-1 h-12 bg-transparent text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition-all border border-slate-200"
+                    className="flex-1 h-12 bg-transparent text-slate-600 dark:text-slate-400 font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700"
                   >
                     {t("pages.changePassword.cancelButton")}
                   </button>
@@ -324,24 +324,24 @@ export function ChangePasswordPage() {
               </form>
 
               {/* Password Requirements */}
-              <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 h-fit max-w-md">
-                <h3 className="text-sm font-bold text-slate-800 mb-6 uppercase tracking-wider">
+              <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 h-fit max-w-md">
+                <h3 className="text-sm font-bold text-slate-800 dark:text-white mb-6 uppercase tracking-wider">
                   {t("pages.changePassword.passwordRequirementsTitle")}
                 </h3>
                 <ul className="space-y-4">
-                  <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <li className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
                     <span>{t("pages.changePassword.requirement1")}</span>
                   </li>
-                  <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <li className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
                     <span>{t("pages.changePassword.requirement2")}</span>
                   </li>
-                  <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <li className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>

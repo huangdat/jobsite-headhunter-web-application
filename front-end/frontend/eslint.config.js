@@ -82,10 +82,12 @@ export default [
   {
     files: [
       "src/shared/utils/**", "src/shared/services/**", "src/hooks/**",
-      "**/*.test.ts", "**/*.spec.ts", "**/*.stories.tsx", "**/*.e2e.ts"
+      "**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx", "**/*.stories.tsx", "**/*.e2e.ts"
     ],
     rules: {
-      "custom/no-hardcoded-strings": "off"
+      "custom/no-hardcoded-strings": "off",
+      "custom/no-hardcoded-html-attributes": "off",
+      "custom/no-hardcoded-toast-messages": "off"
     }
   },
 

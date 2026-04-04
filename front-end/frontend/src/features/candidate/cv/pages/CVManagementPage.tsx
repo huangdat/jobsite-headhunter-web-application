@@ -5,6 +5,7 @@
 
 import React, { useEffect } from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { PageContainer } from "@/shared/components/layout";
 import {
   CVErrorBanner,
   CVEmptyState,
@@ -37,29 +38,27 @@ export const CVManagementPage: React.FC = () => {
   const hasFiles = state.files.length > 0;
 
   return (
-    <div className="min-h-screen bg-surface">
-      {/* Main Content Area */}
-      <main className="max-w-6xl mx-auto px-6 py-8">
-        {/* Breadcrumbs & Page Title */}
-        <div className="mb-8">
-          {/* Breadcrumbs */}
-          <nav className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-on-surface-variant uppercase mb-3">
-            <a href="/profile" className="hover:text-primary transition-colors">
-              {t("profile.page.eyebrow")}
-            </a>
-            <span className="material-symbols-outlined text-[12px]">
-              chevron_right
-            </span>
-            <span className="text-primary">
-              {t("cv.management.breadcrumb")}
-            </span>
-          </nav>
+    <PageContainer variant="default" maxWidth="6xl">
+      {/* Breadcrumbs & Page Title */}
+      <div className="mb-8">
+        {/* Breadcrumbs */}
+        <nav className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase mb-3">
+          <a href="/profile" className="hover:text-brand-primary transition-colors">
+            {t("profile.page.eyebrow")}
+          </a>
+          <span className="material-symbols-outlined text-[12px]">
+            chevron_right
+          </span>
+          <span className="text-brand-primary">
+            {t("cv.management.breadcrumb")}
+          </span>
+        </nav>
 
-          {/* Page Title */}
-          <h1 className="text-4xl font-headline font-extrabold text-on-surface tracking-tight">
-            {t("cv.management.title")}
-          </h1>
-        </div>
+        {/* Page Title */}
+        <h1 className="text-4xl font-headline font-extrabold text-slate-900 dark:text-white tracking-tight">
+          {t("cv.management.title")}
+        </h1>
+      </div>
 
         {/* Main Content Grid: 8 cols main + 4 cols sidebar */}
         <div className="grid grid-cols-12 gap-8">
@@ -130,7 +129,7 @@ export const CVManagementPage: React.FC = () => {
                 {/* Add Another Version Upload Zone */}
                 {state.files.length < state.config.maxResumes && (
                   <section className="space-y-3">
-                    <h2 className="text-lg font-headline font-bold text-on-surface">
+                    <h2 className="text-lg font-headline font-bold text-slate-900 dark:text-white">
                       {t("cv.management.success.addAnother")}
                     </h2>
                     <CVUploadZone
@@ -194,8 +193,7 @@ export const CVManagementPage: React.FC = () => {
           className="hidden"
           aria-label={t("cv.management.upload.selectFile")}
         />
-      </main>
-    </div>
+    </PageContainer>
   );
 };
 

@@ -3,18 +3,42 @@
  * Orchestrates form state, API calls, and verification flow
  */
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type {
   BusinessProfile,
-  BusinessFormData,
-  VerificationStep,
-  SubmittedDocument,
   ProfileStrengthData,
-  SubmitProfileRequest,
 } from "../types/business.types";
 import businessApi from "../services/businessApi";
 import { useFormValidation } from "./useFormValidation";
+
+// Local types for verification flow (not yet in backend)
+export interface BusinessFormData {
+  companyName: string;
+  taxId: string;
+  companySize: string;
+  website: string;
+  headquartersAddress: string;
+}
+
+export interface VerificationStep {
+  id: string;
+  status: "pending" | "in_progress" | "completed" | "rejected";
+  label: string;
+  completedAt?: string;
+}
+
+export interface SubmittedDocument {
+  id: string;
+  name: string;
+  type: string;
+  uploadedAt: string;
+  url?: string;
+}
+
+export interface SubmitProfileRequest extends BusinessFormData {
+  documents?: File[];
+}
 
 export interface UseBusinessVerificationOptions {
   autoFetchStatus?: boolean;
@@ -37,7 +61,7 @@ export const useBusinessVerification = (
   options: UseBusinessVerificationOptions = {}
 ) => {
   const { t } = useBusinessTranslation();
-  const { autoFetchStatus = true, pollInterval = 10000 } = options;
+  const { autoFetchStatus = true } = options;
 
   // Form state
   const [formData, setFormData] = useState<BusinessFormData>(INITIAL_FORM_DATA);
@@ -61,15 +85,15 @@ export const useBusinessVerification = (
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Refs
-  const pollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   /**
    * Handle form field change
    */
   const handleFieldChange = useCallback(
     (fieldName: keyof BusinessFormData, value: string) => {
-      setFormData((prev) => ({ ...prev, [fieldName]: value }));
+      setFormData((prev: BusinessFormData) => ({
+        ...prev,
+        [fieldName]: value,
+      }));
       formValidation.handleFieldChange(fieldName, value);
       setErrorMessage(null); // Clear error when user starts typing
     },
@@ -88,15 +112,34 @@ export const useBusinessVerification = (
 
   /**
    * Fetch profile status
+   * TODO: Backend endpoints not yet implemented
    */
   const fetchProfileStatus = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await businessApi.getProfileStatus();
-      setProfile(response.profile);
-      setVerificationSteps(response.verificationSteps);
-      setDocuments(response.documents);
-      setProfileStrength(response.profileStrength);
+      // TODO: Replace with actual API when backend is ready
+      const profile = await businessApi.getBusinessProfile();
+      setProfile(profile);
+
+      // Mock data until backend implements these endpoints
+      setVerificationSteps([
+        {
+          id: "1",
+          status:
+            profile.verificationStatus === "APPROVED" ? "completed" : "pending",
+          label: "business.verification.step.submit",
+          completedAt:
+            profile.verificationStatus === "APPROVED"
+              ? new Date().toISOString()
+              : undefined,
+        },
+      ]);
+      setDocuments([]);
+      setProfileStrength({
+        percentage: 75,
+        items: [],
+        lastUpdatedAt: new Date().toISOString(),
+      });
       setErrorMessage(null);
     } catch (error) {
       console.error("Failed to fetch profile status:", error);
@@ -110,6 +153,7 @@ export const useBusinessVerification = (
 
   /**
    * Submit profile for verification
+   * TODO: Backend endpoints not yet implemented
    */
   const submitProfile = useCallback(
     async (documents?: File[]) => {
@@ -126,36 +170,39 @@ export const useBusinessVerification = (
       setSuccessMessage(null);
 
       try {
-        const request: SubmitProfileRequest = {
-          ...formData,
-          documents,
+        // TODO: Replace with actual API when backend is ready
+        // For now, just simulate success
+        console.log("Submit profile (mock):", { formData, documents });
+
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // Mock successful response
+        const mockProfile: BusinessProfile = {
+          id: 1,
+          companyName: formData.companyName,
+          taxCode: formData.taxId,
+          websiteUrl: formData.website,
+          addressMain: formData.headquartersAddress,
+          companyScale: formData.companySize,
+          verificationStatus: "PENDING",
         };
 
-        const response = await businessApi.submitProfile(request);
+        setProfile(mockProfile);
+        setVerificationSteps([
+          {
+            id: "1",
+            status: "in_progress",
+            label: "business.verification.step.submit",
+            completedAt: new Date().toISOString(),
+          },
+        ]);
+        setFormData(INITIAL_FORM_DATA);
+        formValidation.clearAllErrors();
+        formValidation.resetTouched();
+        setSuccessMessage("business.success.submitted");
 
-        if (
-          response.success &&
-          response.profile &&
-          response.verificationSteps
-        ) {
-          setProfile(response.profile);
-          setVerificationSteps(response.verificationSteps);
-          setFormData(INITIAL_FORM_DATA);
-          formValidation.clearAllErrors();
-          formValidation.resetTouched();
-          setSuccessMessage("business.success.submitted");
-
-          // Fetch strength data
-          const strength = await businessApi.getProfileStrength();
-          setProfileStrength(strength);
-
-          return true;
-        } else {
-          setErrorMessage(
-            response.error?.message || "business.error.submission"
-          );
-          return false;
-        }
+        return true;
       } catch (error) {
         console.error("Submission error:", error);
         const errorMsg =
@@ -188,30 +235,6 @@ export const useBusinessVerification = (
   }, [formValidation, clearMessages]);
 
   /**
-   * Polling for status updates
-   * TODO: Enable when backend endpoints are ready
-   */
-  useEffect(() => {
-    // Polling disabled - backend endpoints not implemented yet
-    return;
-
-    // Original polling logic (commented out):
-    // if (!autoFetchStatus || !profile) return;
-    // const startPolling = () => {
-    //   pollTimeoutRef.current = setTimeout(() => {
-    //     fetchProfileStatus();
-    //     startPolling();
-    //   }, pollInterval);
-    // };
-    // startPolling();
-    // return () => {
-    //   if (pollTimeoutRef.current) {
-    //     clearTimeout(pollTimeoutRef.current);
-    //   }
-    // };
-  }, [autoFetchStatus, profile, pollInterval, fetchProfileStatus]);
-
-  /**
    * Initial fetch - only run once on mount
    */
   useEffect(() => {
@@ -219,9 +242,8 @@ export const useBusinessVerification = (
       // TODO: Enable when backend endpoints are ready
       // fetchProfileStatus();
     }
-    // Only run on mount - do not add fetchProfileStatus to dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoFetchStatus]);
+  }, []);
 
   return {
     // Form data & validation

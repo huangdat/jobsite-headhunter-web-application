@@ -5,6 +5,7 @@ import { DashboardSkeleton } from "../../shared/components/DashboardSkeleton";
 import { UserRoleDistribution } from "../components/UserRoleDistribution";
 import { JobStatusStatsComponent } from "../components/JobStatusStats";
 import { SystemOverviewCards } from "../components/SystemOverviewCards";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 
 /**
  * AdminDashboardPage
@@ -38,37 +39,39 @@ export const AdminDashboardPage: React.FC = () => {
 
   if (error) {
     return (
-      <main className="flex-1 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950">
-        <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-xl max-w-md">
-          <h2 className="text-red-800 dark:text-red-400 font-semibold">
-            {t("error.failedToLoad", "Error loading dashboard")}
-          </h2>
-          <p className="text-red-600 dark:text-red-300 text-sm mt-1">{error}</p>
-          <button
-            onClick={refetch}
-            className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-          >
-            {t("common.retry", "Retry")}
-          </button>
+      <PageContainer variant="white" maxWidth="6xl">
+        <div className="flex items-center justify-center min-h-100">
+          <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-xl max-w-md">
+            <h2 className="text-red-800 dark:text-red-400 font-semibold">
+              {t("error.failedToLoad", "Error loading dashboard")}
+            </h2>
+            <p className="text-red-600 dark:text-red-300 text-sm mt-1">
+              {error}
+            </p>
+            <button
+              onClick={refetch}
+              className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+            >
+              {t("common.retry", "Retry")}
+            </button>
+          </div>
         </div>
-      </main>
+      </PageContainer>
     );
   }
 
   return (
-    <main className="flex-1 flex flex-col overflow-hidden bg-slate-50 dark:bg-slate-950">
-      {/* Header */}
-      <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-          {t("admin.dashboard.title", "Admin Dashboard")}
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-1">
-          {t("admin.dashboard.subtitle", "System Statistics & Overview")}
-        </p>
-      </div>
+    <PageContainer variant="default" maxWidth="7xl">
+      <PageHeader
+        variant="bordered"
+        title={t("admin.dashboard.title", "Admin Dashboard")}
+        description={t(
+          "admin.dashboard.subtitle",
+          "System Statistics & Overview"
+        )}
+      />
 
-      {/* Content */}
-      <div className="flex-1 overflow-auto px-6 py-6 space-y-6">
+      <div className="space-y-6">
         {/* Date Range Filter Section (DASH-06 AC2: Time-based filtering) */}
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
@@ -177,6 +180,6 @@ export const AdminDashboardPage: React.FC = () => {
           </section>
         </div>
       </div>
-    </main>
+    </PageContainer>
   );
 };

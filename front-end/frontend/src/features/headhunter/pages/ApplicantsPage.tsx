@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useJobsTranslation } from "@/shared/hooks";
 import { Button } from "@/components/ui/button";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 
 export function ApplicantsPage() {
   const { t } = useJobsTranslation();
@@ -11,19 +12,37 @@ export function ApplicantsPage() {
     return () => clearTimeout(timeout);
   }, []);
 
-  if (loading) return <div className="p-8">{t("loadingApplicants")}</div>;
+  if (loading) {
+    return (
+      <PageContainer variant="white" maxWidth="4xl">
+        <div className="p-8 text-slate-900 dark:text-slate-100">
+          {t("loadingApplicants")}
+        </div>
+      </PageContainer>
+    );
+  }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10">
-      <h2 className="text-2xl font-semibold mb-4">{t("candidates")}</h2>
-      <p className="text-sm text-slate-600 mb-6">{t("applicantPageInfo")}</p>
-      <div className="rounded-lg bg-white p-6 shadow">
+    <PageContainer variant="white" maxWidth="4xl">
+      <PageHeader
+        variant="default"
+        title={t("candidates")}
+        description={t("applicantPageInfo")}
+      />
+
+      <div className="rounded-lg bg-white p-6 shadow dark:bg-slate-800 dark:text-slate-100">
         {t("noApplicantsYet")}
       </div>
+
       <div className="mt-6">
-        <Button onClick={() => window.location.reload()}>Refresh</Button>
+        <Button
+          onClick={() => window.location.reload()}
+          className="dark:bg-slate-700 dark:hover:bg-slate-600"
+        >
+          {t("refresh")}
+        </Button>
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

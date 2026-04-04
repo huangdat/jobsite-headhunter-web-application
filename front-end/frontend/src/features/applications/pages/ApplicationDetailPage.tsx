@@ -2,7 +2,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import {
   InterviewScheduleModal,
@@ -26,6 +25,8 @@ import {
   FileText,
   Calendar,
 } from "lucide-react";
+import { PageContainer } from "@/shared/components/layout";
+import { PageSkeleton } from "@/shared/components/states";
 
 export const ApplicationDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -51,7 +52,7 @@ export const ApplicationDetailPage: React.FC = () => {
         if (!prev) return prev;
         return {
           ...prev,
-          status: "INTERVIEW" as any,
+          status: "INTERVIEW" as Application["status"],
           interviews:
             interview && interview.scheduledAt
               ? [...(prev.interviews || []), interview]
@@ -73,7 +74,7 @@ export const ApplicationDetailPage: React.FC = () => {
         setIsLoading(true);
         const data = await getApplicationDetail(applicationId);
         setApplication(data);
-      } catch (error) {
+      } catch {
         toast.error(t("common.error"));
         navigate("/headhunter/applications");
       } finally {
@@ -88,41 +89,43 @@ export const ApplicationDetailPage: React.FC = () => {
 
     setApplication((prev) => {
       if (!prev) return prev;
-      return { ...prev, status: status as any };
+      return { ...prev, status: status as Application["status"] };
     });
 
     try {
       const updated = await updateApplicationStatus(
         application.id,
-        status as any
+        status as Application["status"]
       );
       if (updated) setApplication(updated);
       toast.success(t(successKey));
-    } catch (error) {
-      toast.error(t("applications.error.updateStatus") || t("common.error"));
+    } catch {
+      toast.error(t("applications.error.updateStatus"));
     }
   };
 
   if (isLoading)
     return (
-      <div className="max-w-4xl mx-auto p-10">
-        <Skeleton className="h-96 w-full rounded-[2rem]" />
-      </div>
+      <PageContainer variant="white" maxWidth="4xl">
+        <PageSkeleton variant="grid" count={1} />
+      </PageContainer>
     );
 
   if (!application)
     return (
-      <div className="p-20 text-center text-gray-400 font-bold">
-        {t("common.notFound")}
-      </div>
+      <PageContainer variant="white" maxWidth="4xl">
+        <div className="p-20 text-center text-gray-400 dark:text-gray-500 font-bold">
+          {t("common.notFound")}
+        </div>
+      </PageContainer>
     );
 
   const labelStyle =
     "text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1 flex items-center gap-2";
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-12">
-      <div className="flex justify-between items-end mb-8 border-b border-gray-100 pb-6">
+    <PageContainer variant="white" maxWidth="4xl">
+      <div className="flex justify-between items-end mb-8 border-b border-gray-100 dark:border-gray-800 pb-6">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-lime-400 flex items-center justify-center text-white">
             <User size={28} />
@@ -353,6 +356,6 @@ export const ApplicationDetailPage: React.FC = () => {
           onClose={() => setShowInterviewDetail(false)}
         />
       )}
-    </div>
+    </PageContainer>
   );
 };

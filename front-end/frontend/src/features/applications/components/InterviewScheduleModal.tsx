@@ -39,22 +39,32 @@ interface InterviewScheduleModalProps {
   isLoading?: boolean;
 }
 
-const validationSchema = yup.object().shape({
-  interviewType: yup.string().required("Interview type is required"),
-  scheduledAt: yup.string().required("Date and time is required"),
-  durationMinutes: yup.number().required("Duration is required").positive(),
-  meetingLink: yup.string().when("interviewType", {
-    is: InterviewType.ONLINE,
-    then: (schema) => schema.required("Meeting link is required"),
-    otherwise: (schema) => schema.optional(),
-  }),
-  location: yup.string().when("interviewType", {
-    is: InterviewType.OFFLINE,
-    then: (schema) => schema.required("Location is required"),
-    otherwise: (schema) => schema.optional(),
-  }),
-  notes: yup.string().optional(),
-});
+const createValidationSchema = (t: (key: string) => string) =>
+  yup.object().shape({
+    interviewType: yup
+      .string()
+      .required(t("applications.validation.interviewTypeRequired")),
+    scheduledAt: yup
+      .string()
+      .required(t("applications.validation.scheduledAtRequired")),
+    durationMinutes: yup
+      .number()
+      .required(t("applications.validation.durationRequired"))
+      .positive(),
+    meetingLink: yup.string().when("interviewType", {
+      is: InterviewType.ONLINE,
+      then: (schema) =>
+        schema.required(t("applications.validation.meetingLinkRequired")),
+      otherwise: (schema) => schema.optional(),
+    }),
+    location: yup.string().when("interviewType", {
+      is: InterviewType.OFFLINE,
+      then: (schema) =>
+        schema.required(t("applications.validation.locationRequired")),
+      otherwise: (schema) => schema.optional(),
+    }),
+    notes: yup.string().optional(),
+  });
 
 export const InterviewScheduleModal = ({
   isOpen,
@@ -68,7 +78,7 @@ export const InterviewScheduleModal = ({
   >();
 
   const form = useForm<InterviewScheduleFormData>({
-    resolver: yupResolver(validationSchema) as any,
+    resolver: yupResolver(createValidationSchema(t)) as any,
     defaultValues: {
       interviewType: "" as any,
       scheduledAt: "",
@@ -95,7 +105,7 @@ export const InterviewScheduleModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       {/* SỬA CHỖ NÀY: Ép sm:max-w-[700px] và w-full để đè default của Shadcn */}
-      <DialogContent className="sm:max-w-[700px] w-[95vw] rounded-[2rem] p-0 overflow-hidden border-none shadow-2xl [&>button]:hidden">
+      <DialogContent className="sm:max-w-175 w-[95vw] rounded-[2rem] p-0 overflow-hidden border-none shadow-2xl [&>button]:hidden">
         <DialogHeader className="bg-lime-400 p-6 px-8">
           <div className="flex justify-between items-center">
             <DialogTitle className="text-black font-black text-2xl flex items-center gap-3">
@@ -103,6 +113,7 @@ export const InterviewScheduleModal = ({
               {t("applications.interview.title") || "Schedule Interview"}
             </DialogTitle>
             <button
+              aria-label={t("common.close")}
               onClick={onClose}
               className="text-black/40 hover:text-black transition-colors cursor-pointer p-1"
             >
@@ -136,7 +147,9 @@ export const InterviewScheduleModal = ({
                     >
                       <FormControl>
                         <SelectTrigger className="rounded-xl border-slate-100 bg-slate-50 h-11 font-bold focus:ring-lime-400 px-4">
-                          <SelectValue placeholder="Select type..." />
+                          <SelectValue
+                            placeholder={t("applications.interview.selectType")}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="rounded-xl border-slate-100 shadow-xl p-1">
@@ -215,7 +228,9 @@ export const InterviewScheduleModal = ({
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="https://meet.google.com/..."
+                          placeholder={t(
+                            "applications.interview.meetingLinkPlaceholder"
+                          )}
                           className="rounded-xl border-slate-100 bg-slate-50 h-11 font-bold focus-visible:ring-lime-400 px-4"
                           {...field}
                         />
@@ -238,7 +253,9 @@ export const InterviewScheduleModal = ({
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Office address..."
+                          placeholder={t(
+                            "applications.interview.locationPlaceholder"
+                          )}
                           className="rounded-xl border-slate-100 bg-slate-50 h-11 font-bold focus-visible:ring-lime-400 px-4"
                           {...field}
                         />
