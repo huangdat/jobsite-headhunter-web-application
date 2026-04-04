@@ -62,7 +62,9 @@ export function SelectRolePage() {
             </span>
           </h1>
 
-          <p className="text-slate-300 mt-6">{t("pages.selectRole.subtitle")}</p>
+          <p className="text-slate-300 mt-6">
+            {t("pages.selectRole.subtitle")}
+          </p>
         </div>
 
         {/* RIGHT PANEL */}
@@ -104,13 +106,17 @@ export function SelectRolePage() {
                   onChange={() => setSelectedRole(option.value)}
                 />
 
-                <div className="text-2xl text-slate-700 dark:text-slate-300">{option.icon}</div>
+                <div className="text-2xl text-slate-700 dark:text-slate-300">
+                  {option.icon}
+                </div>
 
                 <div>
                   <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
                     {t(option.titleKey)}
                   </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{t(option.descKey)}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    {t(option.descKey)}
+                  </p>
                 </div>
               </label>
             ))}
@@ -129,7 +135,10 @@ export function SelectRolePage() {
 
             <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-4">
               {t("pages.selectRole.alreadyHaveAccount")}{" "}
-              <Link to="/login" className="text-brand-primary font-medium hover:underline">
+              <Link
+                to="/login"
+                className="text-brand-primary font-medium hover:underline"
+              >
                 {t("buttons.signIn")}
               </Link>
             </p>

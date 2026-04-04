@@ -9,6 +9,7 @@
   },
   "button": {
     "documentation": "Documentation",
+    "back": "Back",
     "preview": "Preview Profile",
     "upgrade": "Upgrade to Premium"
   },
@@ -21,6 +22,10 @@
     "company_name_placeholder": "Enter your company name",
     "company_size": "Company Size",
     "select_size": "Select company size",
+    "size_small": "Small (50-100 employees)",
+    "size_startup": "Startup (10-50 employees)",
+    "size_medium": "Medium (100-500 employees)",
+    "size_large": "Large (500+ employees)",
     "headquarters_address": "Headquarters Address",
     "address_placeholder": "Enter your headquarters address",
     "tax_id": "Tax ID",
@@ -29,6 +34,7 @@
     "website_placeholder": "https://www.example.com",
     "submit": "Submit Profile",
     "submitting": "Submitting...",
+    "back": "Back",
     "cancel": "Cancel"
   },
   "success": {
@@ -38,9 +44,28 @@
   "error": {
     "validation": "Please fix the errors below"
   },
+  "validation": {
+    "company_name_required": "Company name is required",
+    "company_name_min": "Company name must be at least 2 characters",
+    "company_name_max": "Company name cannot exceed 255 characters",
+    "company_name_pattern": "Company name contains invalid characters",
+    "tax_id_required": "Tax ID is required",
+    "tax_id_pattern": "Tax ID must be 10 or 13 digits",
+    "tax_id_invalid": "Tax ID is invalid",
+    "company_size_required": "Company size is required",
+    "website_required": "Website is required",
+    "website_pattern": "Website must start with http:// or https://",
+    "website_invalid": "Website URL is invalid",
+    "address_required": "Headquarters address is required",
+    "address_min": "Address must be at least 10 characters",
+    "address_max": "Address cannot exceed 500 characters"
+  },
   "verification": {
     "status": "Verification Status",
     "status_desc": "Track your profile verification progress",
+    "status_pending": "Pending",
+    "status_approved": "Approved",
+    "status_rejected": "Rejected",
     "PENDING": "Pending",
     "APPROVED": "Approved",
     "REJECTED": "Rejected",
@@ -153,9 +178,13 @@
   "state": {
     "loading": "Loading profile information..."
   },
-  "business": {
-    "verification": {
-      "title": "Business verification title"
-    }
+  "profile": {
+    "read_only_note": "This information was set during account registration and cannot be modified",
+    "status": "Company Information",
+    "details_title": "Manage Business Profile",
+    "details_description": "View and manage your company information. These details were set when creating your account.",
+    "info_title": "Info: Read-Only Profile",
+    "info_description": "Your business information is established during registration and cannot be changed. If you need updates, please contact support.",
+    "no_profile": "No business profile found"
   }
 }

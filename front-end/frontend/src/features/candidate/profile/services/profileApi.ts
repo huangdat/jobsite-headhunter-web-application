@@ -34,48 +34,44 @@ export const profileApi = {
 
     return mapProfileResponse(response.data?.result);
   },
+  getCurrentCvUrl: async (): Promise<string> => {
+    try {
+      const response = await apiClient.get<ApiResponse<{ cvUrl?: string }>>(
+        API_ENDPOINTS.CANDIDATE.CV_LIST
+      );
+
+      return response.data?.result?.cvUrl ?? "";
+    } catch {
+      return "";
+    }
+  },
 
   updateProfile: async (
     payload: CandidateProfilePayload
   ): Promise<CandidateProfile> => {
-    // Sanitize payload: coerce text fields to trimmed strings and
-    // ensure numeric fields are numbers or null (not empty strings)
-    const sanitized: Record<string, any> = {};
+    const formData = new FormData();
 
-    if (payload.currentTitle !== undefined) {
-      sanitized.currentTitle = String(payload.currentTitle ?? "").trim();
-    }
+    const appendIfPresent = (key: string, value: unknown) => {
+      if (value === undefined || value === null || value === "") {
+        return;
+      }
 
-    if (payload.bio !== undefined) {
-      sanitized.bio = String(payload.bio ?? "").trim();
-    }
+      formData.append(key, String(value));
+    };
 
-    if (payload.city !== undefined) {
-      sanitized.city = String(payload.city ?? "").trim();
-    }
-
-    if (payload.yearsOfExperience !== undefined) {
-      const v = payload.yearsOfExperience as any;
-      sanitized.yearsOfExperience = v === "" || v === null ? null : Number(v);
-    }
-
-    if (payload.expectedSalaryMin !== undefined) {
-      const v = payload.expectedSalaryMin as any;
-      sanitized.expectedSalaryMin = v === "" || v === null ? null : Number(v);
-    }
-
-    if (payload.expectedSalaryMax !== undefined) {
-      const v = payload.expectedSalaryMax as any;
-      sanitized.expectedSalaryMax = v === "" || v === null ? null : Number(v);
-    }
-
-    if (payload.openForWork !== undefined) {
-      sanitized.openForWork = payload.openForWork;
-    }
+    appendIfPresent("currentTitle", payload.currentTitle?.trim());
+    appendIfPresent("yearsOfExperience", payload.yearsOfExperience);
+    appendIfPresent("expectedSalaryMin", payload.expectedSalaryMin);
+    appendIfPresent("expectedSalaryMax", payload.expectedSalaryMax);
+    appendIfPresent("bio", payload.bio?.trim());
+    appendIfPresent("city", payload.city?.trim());
+    appendIfPresent("openForWork", payload.openForWork);
+    appendIfPresent("cvUrl", payload.cvUrl?.trim());
 
     const response = await apiClient.put<ApiResponse<CandidateProfile>>(
       API_ENDPOINTS.ACCOUNT.UPDATE_PROFILE,
-      sanitized
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
     );
 
     return mapProfileResponse(response.data?.result);
@@ -85,18 +81,18 @@ export const profileApi = {
     const form = new FormData();
     form.append("cvFile", file);
 
-    // Use the controller endpoint that expects a ModelAttribute with 'cvFile'
-    const response = await apiClient.put<ApiResponse<any>>(
-      "/api/cv/MyCv",
+    const response = await apiClient.put<ApiResponse<{ cvUrl: string }>>(
+      API_ENDPOINTS.UPLOAD_CV,
       form,
-      // do not force JSON Content-Type; let axios set multipart boundary
       { headers: { "Content-Type": "multipart/form-data" } }
     );
 
     return response.data?.result?.cvUrl ?? "";
   },
-  fetchCVs: async (): Promise<any[]> => {
-    const response = await apiClient.get<ApiResponse<any>>("/api/cv");
+  fetchCVs: async (): Promise<{ id: string; name: string; url: string }[]> => {
+    const response = await apiClient.get<ApiResponse<{ id: string; name: string; url: string }[]>>(API_ENDPOINTS.FETCH_CVS);
     return response.data?.result || [];
   },
 };
+
+export default profileApi;

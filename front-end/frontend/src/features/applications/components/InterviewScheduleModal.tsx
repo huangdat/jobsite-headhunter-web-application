@@ -105,7 +105,7 @@ export const InterviewScheduleModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       {/* SỬA CHỖ NÀY: Ép sm:max-w-[700px] và w-full để đè default của Shadcn */}
-      <DialogContent className="sm:max-w-[700px] w-[95vw] rounded-[2rem] p-0 overflow-hidden border-none shadow-2xl [&>button]:hidden">
+      <DialogContent className="sm:max-w-175 w-[95vw] rounded-[2rem] p-0 overflow-hidden border-none shadow-2xl [&>button]:hidden">
         <DialogHeader className="bg-lime-400 p-6 px-8">
           <div className="flex justify-between items-center">
             <DialogTitle className="text-black font-black text-2xl flex items-center gap-3">
@@ -113,6 +113,7 @@ export const InterviewScheduleModal = ({
               {t("applications.interview.title") || "Schedule Interview"}
             </DialogTitle>
             <button
+              aria-label={t("common.close")}
               onClick={onClose}
               className="text-black/40 hover:text-black transition-colors cursor-pointer p-1"
             >

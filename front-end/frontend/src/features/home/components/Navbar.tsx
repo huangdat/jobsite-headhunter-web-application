@@ -17,6 +17,12 @@ export function Navbar() {
         {t("navigation.jobs")}
       </a>
       <a
+        href="/forum-posts"
+        className="text-sm font-medium hover:text-emerald-600 transition"
+      >
+        {t("navigation.forum")}
+      </a>
+      <a
         href="#recommended"
         className="text-sm font-medium hover:text-lime-800 transition"
       >

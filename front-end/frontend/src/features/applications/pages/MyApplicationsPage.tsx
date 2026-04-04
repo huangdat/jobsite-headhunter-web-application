@@ -85,13 +85,17 @@ export const MyApplicationsPage: React.FC = () => {
                     <Building2 size={24} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-slate-900 dark:text-white">{app.jobTitle}</h3>
+                    <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
+                      {app.jobTitle}
+                    </h3>
                     <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
                       <span className="flex items-center gap-1">
                         <Calendar size={12} />{" "}
                         {new Date(app.appliedAt).toLocaleDateString()}
                       </span>
-                      <span className="text-slate-300 dark:text-slate-600">|</span>
+                      <span className="text-slate-300 dark:text-slate-600">
+                        |
+                      </span>
                       <span className="text-brand-primary font-medium">
                         {t("applications.candidateView")}
                       </span>
@@ -296,7 +300,9 @@ const StatCard: React.FC<{
       <p className="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 leading-none mb-0.5 tracking-wider">
         {label}
       </p>
-      <p className="text-sm font-bold text-slate-800 dark:text-white leading-none">{value}</p>
+      <p className="text-sm font-bold text-slate-800 dark:text-white leading-none">
+        {value}
+      </p>
     </div>
   </div>
 );
