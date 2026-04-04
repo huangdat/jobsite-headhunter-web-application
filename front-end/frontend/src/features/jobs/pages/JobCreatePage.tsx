@@ -13,6 +13,7 @@ import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 import { ChevronLeft } from "lucide-react";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { LabelText, SmallText } from "@/shared/components/typography/Typography";
 
 export function JobCreatePage() {
   const { t } = useJobsTranslation();
@@ -183,9 +184,9 @@ export function JobCreatePage() {
       >
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.jobTitle")}
-            </label>
+            </LabelText>
             <Input
               placeholder={t("create.placeholders.jobTitle")}
               {...register("title", {
@@ -193,13 +194,13 @@ export function JobCreatePage() {
               })}
             />
             {errors.title && (
-              <p className="text-sm text-destructive">{errors.title.message}</p>
+              <SmallText className="text-destructive">{errors.title.message}</SmallText>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.location")}
-            </label>
+            </LabelText>
             <Input
               placeholder={t("create.placeholders.location")}
               {...register("location", {
@@ -213,9 +214,9 @@ export function JobCreatePage() {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.addressDetail")}
-            </label>
+            </LabelText>
             <Input
               placeholder={t("create.placeholders.addressDetail")}
               {...register("addressDetail", {
@@ -224,18 +225,18 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.deadline")}
-            </label>
+            </LabelText>
             <Input type="date" {...register("deadline", { required: true })} />
           </div>
         </section>
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <LabelText className="block">
               {t("create.labels.rankLevel")}
-            </label>
+            </LabelText>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20 dark:bg-slate-900"
               {...register("rankLevel", { required: true })}
@@ -250,9 +251,9 @@ export function JobCreatePage() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.workingType")}
-            </label>
+            </LabelText>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("workingType", { required: true })}
@@ -263,9 +264,9 @@ export function JobCreatePage() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.experience")}
-            </label>
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -277,9 +278,9 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.quantity")}
-            </label>
+            </LabelText>
             <Input
               type="number"
               min={1}
@@ -290,9 +291,9 @@ export function JobCreatePage() {
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.salaryMin")}
-            </label>
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -303,9 +304,9 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.salaryMax")}
-            </label>
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -316,9 +317,9 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.currency")}
-            </label>
+            </LabelText>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("currency", { required: true })}
@@ -333,20 +334,19 @@ export function JobCreatePage() {
               id="negotiable"
               {...register("negotiable")}
             />
-            <label
-              htmlFor="negotiable"
-              className="text-sm text-slate-600 dark:text-slate-400"
-            >
-              {t("create.labels.salaryNegotiable")}
-            </label>
+            <SmallText asChild>
+              <label htmlFor="negotiable">
+                {t("create.labels.salaryNegotiable")}
+              </label>
+            </SmallText>
           </div>
         </section>
 
         <section className="grid gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.description")}
-            </label>
+            </LabelText>
             <Controller
               control={control}
               name="description"
@@ -360,15 +360,15 @@ export function JobCreatePage() {
               )}
             />
             {errors.description && (
-              <p className="text-sm text-destructive">
+              <SmallText className="text-destructive">
                 {errors.description.message}
-              </p>
+              </SmallText>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.responsibilities")}
-            </label>
+            </LabelText>
             <Controller
               control={control}
               name="responsibilities"
@@ -394,15 +394,15 @@ export function JobCreatePage() {
               )}
             />
             {errors.responsibilities && (
-              <p className="text-sm text-destructive">
+              <SmallText className="text-destructive">
                 {errors.responsibilities.message}
-              </p>
+              </SmallText>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.requirements")}
-            </label>
+            </LabelText>
             <Controller
               control={control}
               name="requirements"
@@ -428,34 +428,34 @@ export function JobCreatePage() {
               )}
             />
             {errors.requirements && (
-              <p className="text-sm text-destructive">
+              <SmallText className="text-destructive">
                 {errors.requirements.message}
-              </p>
+              </SmallText>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.benefits")}
-            </label>
+            </LabelText>
             <Textarea rows={3} {...register("benefits", { required: true })} />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.workingTime")}
-            </label>
+            </LabelText>
             <Input {...register("workingTime", { required: true })} />
           </div>
         </section>
 
         <section className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("create.labels.requiredSkills")}
-            </label>
+            </LabelText>
             {errors.skillIds && (
-              <span className="text-xs text-destructive">
+              <SmallText className="text-destructive">
                 {t("create.messages.pickAtLeastOneSkill")}
-              </span>
+              </SmallText>
             )}
           </div>
           <SkillMultiSelect
@@ -472,9 +472,9 @@ export function JobCreatePage() {
         </section>
 
         <section className="space-y-2">
-          <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+          <LabelText className="block">
             {t("create.labels.coverImage")}
-          </label>
+          </LabelText>
           <Input type="file" accept="image/*" {...register("postImage")} />
         </section>
 
