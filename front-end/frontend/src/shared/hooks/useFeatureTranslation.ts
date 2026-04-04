@@ -94,14 +94,14 @@ export const useBreadcrumbTranslation = () => {
 /**
  * Hook for business feature translations
  * Usage: const { t } = useBusinessTranslation();
- * Access: t("someKey") → business.someKey
+ * Components use full keys like t("business.xxx.yyy") - no prefix added
  */
 export const useBusinessTranslation = () => {
   const { t, i18n, changeLanguage, currentLanguage } = useAppTranslation();
 
   return {
     t: (key: string, interpolation?: Record<string, string | number>) =>
-      t(`business.${key}`, interpolation),
+      t(key, interpolation), // No prefix - use key as-is
     i18n,
     changeLanguage,
     currentLanguage,

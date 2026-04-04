@@ -21,6 +21,10 @@
     "company_name_placeholder": "Nhập tên công ty của bạn",
     "company_size": "Quy Mô Công Ty",
     "select_size": "Chọn quy mô công ty",
+    "size_small": "Nhỏ (50-100 nhân viên)",
+    "size_startup": "Khởi Nghiệp (10-50 nhân viên)",
+    "size_medium": "Vừa (100-500 nhân viên)",
+    "size_large": "Lớn (500+ nhân viên)",
     "headquarters_address": "Địa Chỉ Trụ Sở",
     "address_placeholder": "Nhập địa chỉ trụ sở của bạn",
     "tax_id": "Mã Số Thuế",
@@ -29,6 +33,7 @@
     "website_placeholder": "https://www.example.com",
     "submit": "Gửi Hồ Sơ",
     "submitting": "Đang Gửi...",
+    "back": "Quay Lại",
     "cancel": "Hủy"
   },
   "success": {
@@ -38,9 +43,28 @@
   "error": {
     "validation": "Vui lòng sửa các lỗi dưới đây"
   },
+  "validation": {
+    "company_name_required": "Tên công ty là bắt buộc",
+    "company_name_min": "Tên công ty phải ít nhất 2 ký tự",
+    "company_name_max": "Tên công ty không thể vượt quá 255 ký tự",
+    "company_name_pattern": "Tên công ty chứa các ký tự không hợp lệ",
+    "tax_id_required": "Mã số thuế là bắt buộc",
+    "tax_id_pattern": "Mã số thuế phải có 10 hoặc 13 chữ số",
+    "tax_id_invalid": "Mã số thuế không hợp lệ",
+    "company_size_required": "Quy mô công ty là bắt buộc",
+    "website_required": "Website là bắt buộc",
+    "website_pattern": "Website phải bắt đầu bằng http:// hoặc https://",
+    "website_invalid": "URL website không hợp lệ",
+    "address_required": "Địa chỉ trụ sở là bắt buộc",
+    "address_min": "Địa chỉ phải ít nhất 10 ký tự",
+    "address_max": "Địa chỉ không thể vượt quá 500 ký tự"
+  },
   "verification": {
     "status": "Trạng Thái Xác Minh",
     "status_desc": "Theo dõi tiến độ xác minh hồ sơ của bạn",
+    "status_pending": "Đang Chờ",
+    "status_approved": "Đã Duyệt",
+    "status_rejected": "Bị Từ Chối",
     "PENDING": "Đang Chờ",
     "APPROVED": "Đã Duyệt",
     "REJECTED": "Bị Từ Chối",
@@ -153,9 +177,13 @@
   "state": {
     "loading": "Đang tải thông tin hồ sơ..."
   },
-  "business": {
-    "verification": {
-      "title": "Xác minh"
-    }
+  "profile": {
+    "read_only_note": "Thông tin này được đặt khi đăng ký tài khoản và không thể chỉnh sửa",
+    "status": "Thông Tin Công Ty",
+    "details_title": "Quản Lý Hồ Sơ Doanh Nghiệp",
+    "details_description": "Xem và quản lý thông tin công ty của bạn. Các chi tiết này được đặt khi tạo tài khoản.",
+    "info_title": "Thông Tin: Hồ Sơ Chỉ Đọc",
+    "info_description": "Thông tin doanh nghiệp của bạn được thiết lập khi đăng ký và không thể thay đổi. Nếu cần cập nhật, vui lòng liên hệ hỗ trợ.",
+    "no_profile": "Không tìm thấy hồ sơ doanh nghiệp"
   }
 }

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
 import { useJobsTranslation } from "@/shared/hooks";
+import { jobKeys } from "@/shared/utils/queryKeys";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -43,15 +44,20 @@ export function JobEditPage() {
   useEffect(() => {
     let active = true;
     setLoading(true);
-    Promise.all([
-      fetchSkills(),
-      id ? getJobDetail(Number(id)) : Promise.resolve(null),
-    ])
-      .then(([skillsData, job]) => {
+
+    const loadInitialData = async () => {
+      try {
+        const [skillsData, job] = await Promise.all([
+          fetchSkills(),
+          id ? getJobDetail(Number(id)) : Promise.resolve(null),
+        ]);
+
         if (!active) return;
+
         setSkills(skillsData || []);
+
         if (job) {
-          // map job detail to form
+          // Reset form với dữ liệu từ API
           reset({
             title: job.title,
             description: job.description ?? "",
@@ -66,25 +72,29 @@ export function JobEditPage() {
             currency: job.currency ?? "VND",
             quantity: job.quantity ?? 1,
             deadline: job.deadline ?? "",
-            skillIds: (job.skills || []).map((s) => s.id),
+            skillIds: (job.skills || []).map((s: any) => s.id),
             responsibilities: job.responsibilities ?? "",
             requirements: job.requirements ?? "",
             benefits: job.benefits ?? "",
             workingTime: job.workingTime ?? "",
           });
         }
-      })
-      .catch(() => {
-        toast.error(t("edit.messages.unableToLoad"));
-      })
-      .finally(() => {
+      } catch (err) {
+        if (active) {
+          toast.error(t("edit.messages.unableToLoad"));
+        }
+      } finally {
         if (active) setLoading(false);
-      });
+      }
+    };
+
+    loadInitialData();
 
     return () => {
       active = false;
     };
-  }, [id, reset, t]);
+    // QUAN TRỌNG: Chỉ phụ thuộc vào id để tránh vòng lặp vô tận
+  }, [id]);
 
   const selectedSkillIds = watch("skillIds") ?? [];
 
@@ -104,14 +114,17 @@ export function JobEditPage() {
     try {
       await updateJob(Number(id), values);
 
-      await queryClient.invalidateQueries({ queryKey: ["my-jobs"] });
-      await queryClient.invalidateQueries({ queryKey: ["job-detail", id] });
+      // Refetch queries with matching keys
+      await Promise.all([
+        queryClient.refetchQueries({ queryKey: jobKeys.myJobs() }),
+        queryClient.refetchQueries({ queryKey: jobKeys.detail(Number(id)) }),
+      ]);
 
       toast.success(t("edit.messages.updatedSuccess"));
 
-      setTimeout(() => {
-        navigate("/headhunter/jobs");
-      }, 500);
+      // Navigate after refetch completes
+      window.scrollTo(0, 0);
+      navigate("/headhunter/jobs");
     } catch (err) {
       console.error(err);
       toast.error(t("edit.messages.failedToUpdate"));
@@ -124,7 +137,7 @@ export function JobEditPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
-      <div className="rounded-3xl bg-linear-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
+      <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-700 to-emerald-400 p-10 text-white shadow-xl">
         <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
           {t("edit.messages.pageTitle")}
         </p>
@@ -382,12 +395,29 @@ export function JobEditPage() {
           />
         </section>
 
-        <div className="flex justify-end gap-3">
-          <Button type="button" variant="ghost" onClick={() => navigate(-1)}>
+        <div className="flex justify-end gap-3 mt-12 border-t border-slate-100 pt-8 dark:border-slate-800">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => navigate(-1)}
+            className="px-6 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors cursor-pointer"
+          >
             {t("edit.buttons.cancel")}
           </Button>
-          <Button type="submit" disabled={submitting}>
-            {submitting ? t("edit.buttons.saving") : t("edit.buttons.save")}
+
+          <Button
+            type="submit"
+            disabled={submitting}
+            className="px-8 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 shadow-emerald-500/30 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {submitting ? (
+              <span className="flex items-center gap-2">
+                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                {t("edit.buttons.saving")}
+              </span>
+            ) : (
+              t("edit.buttons.save")
+            )}
           </Button>
         </div>
       </form>

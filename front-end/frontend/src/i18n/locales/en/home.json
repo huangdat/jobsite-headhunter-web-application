@@ -28,7 +28,7 @@
   },
   "featuredJobs": {
     "title": "Featured Jobs",
-    "viewMore": "VIEW MORE JOBS →"
+    "viewMore": "VIEW MORE JOBS"
   },
   "recommendedJobs": {
     "title": "Recommended for you",
@@ -37,7 +37,7 @@
   "topCompanies": {
     "title": "Top Companies",
     "openJobs": "12 Open Jobs",
-    "viewCompany": "View Company →"
+    "viewCompany": "View Company"
   },
   "footer": {
     "copyright": "© {year} JobSite. All rights reserved."

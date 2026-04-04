@@ -266,7 +266,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
         <button
           type="submit"
           disabled={isDisabled}
-          className={`flex-1 rounded-lg px-6 py-3 font-semibold text-white transition-colors ${
+          className={`flex-1 rounded-lg cursor-pointer px-6 py-3 font-semibold text-white transition-colors ${
             isDisabled
               ? "cursor-not-allowed bg-slate-400"
               : "bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800"
