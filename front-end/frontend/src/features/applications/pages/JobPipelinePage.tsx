@@ -5,6 +5,7 @@ import { getApplicationsForJob } from "../services/applicationsApi";
 import type { Application } from "../types";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Button } from "@/components/ui/button";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { ChevronLeft } from "lucide-react";
 
 export const JobPipelinePage: React.FC = () => {
@@ -37,62 +38,58 @@ export const JobPipelinePage: React.FC = () => {
 
   if (loading)
     return (
-      <div className="p-8 text-slate-500 animate-pulse">
-        {t("headhunter.loadingApplicants")}
-      </div>
+      <PageContainer variant="white" maxWidth="6xl">
+        <div className="p-8 text-slate-500 dark:text-slate-400 animate-pulse">
+          {t("headhunter.loadingApplicants")}
+        </div>
+      </PageContainer>
     );
 
   return (
-    <div className="p-8 max-w-6xl mx-auto min-h-screen">
-      <div className="flex justify-between items-end mb-8 border-b border-slate-100 pb-6">
-        <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
-            {t("headhunter.candidatesList")}
-          </h1>
-          <p className="text-slate-500 font-medium italic mt-1">
-            {t("headhunter.jobIdLabel", { id: jobId })} —{" "}
-            <span className="text-lime-600 font-bold">
-              {t("headhunter.candidatesCount", { count: applications.length })}
-            </span>
-          </p>
-        </div>
-        <Button
-          variant="outline"
-          onClick={() => navigate(-1)}
-          className="rounded-xl border-slate-200 hover:border-lime-400 hover:bg-lime-50 font-bold px-5 flex gap-2 cursor-pointer transition-all"
-        >
-          <ChevronLeft size={18} />
-          {t("common.back")}
-        </Button>
-      </div>
+    <PageContainer variant="white" maxWidth="6xl">
+      <PageHeader
+        variant="default"
+        title={t("headhunter.candidatesList")}
+        description={`${t("headhunter.jobIdLabel", { id: jobId })} — ${t("headhunter.candidatesCount", { count: applications.length })}`}
+        actions={
+          <Button
+            variant="outline"
+            onClick={() => navigate(-1)}
+            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary hover:bg-lime-50 dark:hover:bg-slate-800 font-bold px-5 flex gap-2 cursor-pointer transition-all"
+          >
+            <ChevronLeft size={18} />
+            {t("common.back")}
+          </Button>
+        }
+      />
 
-      <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50/50 border-b border-slate-100">
-              <th className="p-5 font-black text-[11px] text-slate-400 uppercase tracking-wider">
+            <tr className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700">
+              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                 {t("columns.candidate")}
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 uppercase tracking-wider">
+              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                 {t("applications.form.email")}
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 uppercase tracking-wider">
+              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                 {t("common.appliedAt")}
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 uppercase tracking-wider">
+              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                 {t("columns.status")}
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 uppercase tracking-wider text-right">
+              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider text-right">
                 {t("columns.actions")}
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-slate-50 dark:divide-slate-700">
             {applications.length === 0 ? (
               <tr>
                 <td
                   colSpan={5}
-                  className="p-12 text-center text-slate-400 font-medium italic"
+                  className="p-12 text-center text-slate-400 dark:text-slate-500 font-medium italic"
                 >
                   {t("headhunter.noApplicantsYet")}
                 </td>
@@ -101,19 +98,19 @@ export const JobPipelinePage: React.FC = () => {
               applications.map((app) => (
                 <tr
                   key={app.id}
-                  className="hover:bg-lime-50/20 transition-colors"
+                  className="hover:bg-lime-50/20 dark:hover:bg-slate-700/30 transition-colors"
                 >
-                  <td className="p-5 font-bold text-slate-800">
+                  <td className="p-5 font-bold text-slate-800 dark:text-white">
                     {app.fullName}
                   </td>
-                  <td className="p-5 text-slate-500 font-medium">
+                  <td className="p-5 text-slate-500 dark:text-slate-400 font-medium">
                     {app.email}
                   </td>
-                  <td className="p-5 text-slate-500">
+                  <td className="p-5 text-slate-500 dark:text-slate-400">
                     {new Date(app.appliedAt).toLocaleDateString()}
                   </td>
                   <td className="p-5">
-                    <span className="px-3 py-1 bg-lime-100 text-lime-700 rounded-full text-[10px] font-black uppercase tracking-tight">
+                    <span className="px-3 py-1 bg-brand-primary/20 text-brand-primary rounded-full text-[10px] font-black uppercase tracking-tight">
                       {app.status}
                     </span>
                   </td>
@@ -122,7 +119,7 @@ export const JobPipelinePage: React.FC = () => {
                       onClick={() =>
                         navigate(`/headhunter/applications/${app.id}`)
                       }
-                      className="px-4 py-2 bg-lime-300 text-black rounded-xl text-xs font-bold hover:bg-lime-400 hover:text-black transition-all cursor-pointer active:scale-95"
+                      className="px-4 py-2 bg-brand-primary text-black rounded-xl text-xs font-bold hover:bg-lime-400 hover:text-black transition-all cursor-pointer active:scale-95 dark:bg-brand-primary dark:hover:bg-lime-400"
                     >
                       {t("actions.viewDetails")}
                     </button>
@@ -133,7 +130,7 @@ export const JobPipelinePage: React.FC = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </PageContainer>
   );
 };
 
