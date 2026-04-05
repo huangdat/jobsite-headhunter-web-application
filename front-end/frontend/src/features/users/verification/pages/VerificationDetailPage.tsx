@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import { PageContainer } from "@/shared/components/layout";
 import { useVerificationDetail, useRejectModal } from "../hooks";
 import { VerificationStatus } from "../types";
@@ -113,12 +114,24 @@ export const VerificationDetailPage: React.FC = () => {
 
   return (
     <PageContainer variant="default" maxWidth="6xl">
-      {/* BREADCRUMB & BACK */}
+      {/* BREADCRUMB NAVIGATION */}
+      <Breadcrumb
+        items={[
+          {
+            label: t("breadcrumb.verification") || "Verification",
+            href: "/admin/verifications",
+          },
+          { label: verification?.business?.companyName || "" },
+        ]}
+        className="mb-6"
+      />
+
+      {/* BACK BUTTON */}
       <Button
         variant="ghost"
         size="sm"
         onClick={() => navigate("/admin/verifications")}
-        className="mb-6"
+        className="mb-4"
       >
         <ChevronLeft size={16} className="mr-2" />
         {t("verification.pages.detail.back")}

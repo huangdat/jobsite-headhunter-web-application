@@ -10,6 +10,7 @@ import { PostMetadata } from "../components/PostMetadata";
 import { ReactionsBar } from "../components/ReactionsBar";
 import { RelatedPosts } from "../components/RelatedPosts";
 import { useTranslation } from "react-i18next";
+import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import { PageContainer } from "@/shared/components/layout";
 import { PageSkeleton, ErrorState } from "@/shared/components/states";
 
@@ -51,6 +52,14 @@ export function PostDetailPage() {
 
   return (
     <PageContainer variant="white" maxWidth="4xl">
+      <Breadcrumb
+        items={[
+          { label: t("breadcrumb.forum") || "Forum", href: "/forum-posts" },
+          { label: post.title },
+        ]}
+        className="mb-6"
+      />
+
       <PostMetadata post={post} />
 
       <PostContent post={post} />

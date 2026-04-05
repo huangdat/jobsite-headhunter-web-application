@@ -7,6 +7,7 @@ import {
   useJobDetailQuery,
 } from "@/shared/hooks";
 import { SmallText } from "@/shared/components/typography/Typography";
+import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -183,16 +184,13 @@ export function JobDetailPage() {
 
   return (
     <PageContainer variant="default" maxWidth="6xl">
-      <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-        <button
-          className="hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer transition-colors"
-          onClick={() => navigate("/jobs")}
-        >
-          {t("list.pageTitle")}
-        </button>
-        <span>/</span>
-        <span className="text-slate-800 dark:text-slate-200">{job.title}</span>
-      </div>
+      <Breadcrumb
+        items={[
+          { label: t("breadcrumb.jobs") || "Jobs", href: "/jobs" },
+          { label: job?.title || "" },
+        ]}
+        className="mb-6"
+      />
 
       <div className="mt-4">
         <Button
