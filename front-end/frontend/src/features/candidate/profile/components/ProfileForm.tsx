@@ -7,9 +7,6 @@ import {
   CheckCircle2,
   Loader2,
   RefreshCw,
-  Circle,
-  Lightbulb,
-  Info,
   FileUp,
   FileText, // Import thêm icon để hiển thị file CV
 } from "lucide-react";
@@ -28,13 +25,13 @@ interface ProfileFormProps {
   success: boolean;
   saveError: string | null;
   dirty: boolean;
-  profileStrength: number;
   onFieldChange: <K extends keyof CandidateProfileFormValues>(
     field: K,
     value: CandidateProfileFormValues[K]
   ) => void;
   onDiscard: () => void;
   onSave: () => Promise<void>;
+  profileStrength?: number;
 }
 
 const ProfileFormSkeleton = () => {
@@ -58,7 +55,6 @@ export function ProfileForm({
   success,
   saveError,
   dirty,
-  profileStrength,
   onFieldChange,
   onDiscard,
   onSave,
@@ -72,17 +68,6 @@ export function ProfileForm({
 
   const hasValidationError = Object.values(errors).some(Boolean);
   const hasCV = !!values.cvUrl;
-
-  const strengthWidthClass =
-    profileStrength >= 100
-      ? "w-full"
-      : profileStrength >= 75
-        ? "w-9/12"
-        : profileStrength >= 50
-          ? "w-6/12"
-          : profileStrength >= 25
-            ? "w-3/12"
-            : "w-2/12";
 
   return (
     <div className="space-y-6">

@@ -160,7 +160,7 @@ export function JobManagePage() {
         actions={
           <button
             onClick={() => navigate("/headhunter/jobs/new")}
-            className="bg-lime-400 cursor-pointer hover:bg-lime-500 text-gray-600 font-bold px-6 py-6 rounded-2xl shadow-lg shadow-lime-500/30 transition-all active:scale-95 flex items-center gap-2"
+            className="bg-slate-700 cursor-pointer hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 text-white font-bold px-6 py-6 rounded-2xl shadow-lg shadow-slate-700/30 transition-all active:scale-95 flex items-center gap-2"
           >
             <Plus size={20} />
             <SmallText className="text-white">
@@ -191,16 +191,16 @@ export function JobManagePage() {
           {jobs.map((job) => (
             <div
               key={job.id}
-              className="group flex flex-col lg:flex-row lg:items-center justify-between rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm dark:shadow-slate-900/20 transition-all duration-300 hover:border-lime-500 hover:shadow-md hover:shadow-lime-500/10"
+              className="group flex flex-col lg:flex-row lg:items-center justify-between rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm dark:shadow-slate-900/20 transition-all duration-300 hover:border-slate-400 dark:hover:border-slate-600 hover:shadow-md hover:shadow-slate-500/10"
             >
               <div className="flex gap-4 items-center">
-                <div className="w-14 h-14 bg-slate-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:bg-lime-500/10 group-hover:text-lime-500 transition-colors shrink-0 border border-slate-100 dark:border-slate-700">
+                <div className="w-14 h-14 bg-slate-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:bg-slate-500/10 group-hover:text-slate-600 dark:group-hover:text-slate-400 transition-colors shrink-0 border border-slate-100 dark:border-slate-700">
                   <Building2 size={28} />
                 </div>
 
                 <div className="space-y-1">
                   <div className="flex items-center gap-3 flex-wrap">
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white group-hover:text-lime-600 transition-colors">
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white group-hover:text-slate-900 dark:group-hover:text-slate-100 transition-colors">
                       {job.title}
                     </h3>
                     <div
@@ -346,7 +346,7 @@ export function JobManagePage() {
               </Button>
 
               <Button
-                className="flex-1 bg-lime-100 text-lime-700 hover:bg-lime-200 dark:bg-lime-500/20 dark:text-lime-400 rounded-2xl h-12 font-bold transition-all active:scale-95 cursor-pointer border border-lime-200 dark:border-lime-500/30 shadow-sm shadow-lime-500/10"
+                className="flex-1 bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 rounded-2xl h-12 font-bold transition-all active:scale-95 cursor-pointer border border-slate-300 dark:border-slate-600 shadow-sm shadow-slate-700/10"
                 onClick={confirmOpenFromDialog}
                 disabled={toggleJobStatusMutation.isPending}
               >

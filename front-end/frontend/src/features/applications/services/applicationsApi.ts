@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiClient } from "@/shared/utils/axios";
 import { handleError } from "@/shared/api/errorHandler";
-import type { Application, ApiResponse, PaginatedResponse } from "../types";
+import type {
+  Application,
+  ApiResponse,
+  PaginatedResponse,
+  ApplicationFormData,
+  InterviewScheduleFormData,
+  Interview,
+  ApplicationFilterParams,
+} from "../types";
 
 /**
  * APPL-01: Submit Application
@@ -9,7 +17,7 @@ import type { Application, ApiResponse, PaginatedResponse } from "../types";
  */
 export const submitApplication = async (
   jobId: number,
-  data: any
+  data: ApplicationFormData | FormData
 ): Promise<Application> => {
   try {
     const isFormData = data instanceof FormData;
@@ -45,7 +53,7 @@ export const submitApplication = async (
  */
 export const getApplicationsForJob = async (
   jobId: number,
-  params?: any
+  params?: ApplicationFilterParams
 ): Promise<PaginatedResponse<Application>> => {
   const response = await apiClient.get<
     ApiResponse<PaginatedResponse<Application>>
@@ -57,7 +65,7 @@ export const getApplicationsForJob = async (
  * APPL-02: Get All Applications (Headhunter)
  */
 export const getHeadhunterApplications = async (
-  params?: any
+  params?: ApplicationFilterParams
 ): Promise<PaginatedResponse<Application>> => {
   const response = await apiClient.get<
     ApiResponse<PaginatedResponse<Application>>
@@ -97,12 +105,15 @@ export const updateApplicationStatus = async (
  */
 export const createInterview = async (
   applicationId: number,
-  data: any
-): Promise<any> => {
-  const response = await apiClient.post<ApiResponse<any>>(`/api/interviews`, {
-    applicationId,
-    ...data,
-  });
+  data: InterviewScheduleFormData
+): Promise<Interview> => {
+  const response = await apiClient.post<ApiResponse<Interview>>(
+    `/api/interviews`,
+    {
+      applicationId,
+      ...data,
+    }
+  );
   return response.data.result;
 };
 
@@ -111,9 +122,9 @@ export const createInterview = async (
  */
 export const updateInterview = async (
   applicationId: number,
-  data: any
-): Promise<any> => {
-  const response = await apiClient.patch<ApiResponse<any>>(
+  data: InterviewScheduleFormData
+): Promise<Interview> => {
+  const response = await apiClient.patch<ApiResponse<Interview>>(
     `/api/headhunter/applications/${applicationId}/interview`,
     data
   );
@@ -124,7 +135,7 @@ export const updateInterview = async (
  * APPL-07: Get Candidate Applications
  */
 export const getCandidateApplications = async (
-  params?: any
+  params?: ApplicationFilterParams
 ): Promise<PaginatedResponse<Application>> => {
   const response = await apiClient.get<
     ApiResponse<PaginatedResponse<Application>>

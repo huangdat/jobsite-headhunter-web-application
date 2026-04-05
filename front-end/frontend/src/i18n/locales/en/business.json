@@ -9,7 +9,6 @@
   },
   "button": {
     "documentation": "Documentation",
-    "back": "Back",
     "preview": "Preview Profile",
     "upgrade": "Upgrade to Premium"
   },
@@ -44,28 +43,10 @@
   "error": {
     "validation": "Please fix the errors below"
   },
-  "validation": {
-    "company_name_required": "Company name is required",
-    "company_name_min": "Company name must be at least 2 characters",
-    "company_name_max": "Company name cannot exceed 255 characters",
-    "company_name_pattern": "Company name contains invalid characters",
-    "tax_id_required": "Tax ID is required",
-    "tax_id_pattern": "Tax ID must be 10 or 13 digits",
-    "tax_id_invalid": "Tax ID is invalid",
-    "company_size_required": "Company size is required",
-    "website_required": "Website is required",
-    "website_pattern": "Website must start with http:// or https://",
-    "website_invalid": "Website URL is invalid",
-    "address_required": "Headquarters address is required",
-    "address_min": "Address must be at least 10 characters",
-    "address_max": "Address cannot exceed 500 characters"
-  },
+  "validation": {},
   "verification": {
     "status": "Verification Status",
     "status_desc": "Track your profile verification progress",
-    "status_pending": "Pending",
-    "status_approved": "Approved",
-    "status_rejected": "Rejected",
     "PENDING": "Pending",
     "APPROVED": "Approved",
     "REJECTED": "Rejected",
@@ -78,6 +59,7 @@
     "approved_message": "Congratulations! Your business profile has been verified.",
     "rejected": "Rejected",
     "rejected_desc": "Your profile needs modifications",
+    "rejected_reason": "Reason",
     "rejected_title": "Verification Rejected",
     "in_progress": "Verification in Progress",
     "title": "Business verification title"

@@ -27,8 +27,8 @@ import {
   Caption,
   Display,
 } from "@/shared/components/typography/Typography";
-import { InterviewType } from "../types";
-import type { InterviewScheduleFormData } from "../types";
+import { INTERVIEW_TYPE } from "@/shared/types/enums";
+import type { InterviewType, InterviewScheduleFormData } from "../types";
 import { Calendar, Clock, Video, MapPin, FileText, X } from "lucide-react";
 
 interface InterviewScheduleModalProps {
@@ -51,13 +51,13 @@ const createValidationSchema = (t: (key: string) => string) =>
       .required(t("applications.validation.durationRequired"))
       .positive(),
     meetingLink: yup.string().when("interviewType", {
-      is: InterviewType.ONLINE,
+      is: INTERVIEW_TYPE.ONLINE,
       then: (schema) =>
         schema.required(t("applications.validation.meetingLinkRequired")),
       otherwise: (schema) => schema.optional(),
     }),
     location: yup.string().when("interviewType", {
-      is: InterviewType.OFFLINE,
+      is: INTERVIEW_TYPE.OFFLINE,
       then: (schema) =>
         schema.required(t("applications.validation.locationRequired")),
       otherwise: (schema) => schema.optional(),
@@ -155,13 +155,13 @@ export const InterviewScheduleModal = ({
                       </FormControl>
                       <SelectContent className="rounded-xl border-slate-100 shadow-xl p-1">
                         <SelectItem
-                          value={InterviewType.ONLINE}
+                          value={INTERVIEW_TYPE.ONLINE}
                           className="cursor-pointer rounded-lg py-2"
                         >
                           {t("applications.interview.typeOnline")}
                         </SelectItem>
                         <SelectItem
-                          value={InterviewType.OFFLINE}
+                          value={INTERVIEW_TYPE.OFFLINE}
                           className="cursor-pointer rounded-lg py-2"
                         >
                           {t("applications.interview.typeOffline")}
@@ -235,7 +235,7 @@ export const InterviewScheduleModal = ({
                 />
               </div>
 
-              {interviewType === InterviewType.ONLINE && (
+              {interviewType === INTERVIEW_TYPE.ONLINE && (
                 <FormField
                   control={form.control}
                   name="meetingLink"
@@ -267,7 +267,7 @@ export const InterviewScheduleModal = ({
                 />
               )}
 
-              {interviewType === InterviewType.OFFLINE && (
+              {interviewType === INTERVIEW_TYPE.OFFLINE && (
                 <FormField
                   control={form.control}
                   name="location"

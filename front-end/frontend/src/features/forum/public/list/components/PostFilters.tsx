@@ -8,6 +8,7 @@ import { Search, X } from "lucide-react";
 import { usePostList } from "../hooks/usePostList";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { getDarkClasses } from "@/lib/theme-classes";
 
 const CATEGORIES = [
   { id: undefined, name: "forum.categories.all", label: "All" },
@@ -75,7 +76,7 @@ export function PostFilters() {
             }
             value={keyword}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("border-slate-300 focus:ring-slate-500", "border-slate-600 focus:ring-slate-400")}`}
           />
           {keyword && (
             <button

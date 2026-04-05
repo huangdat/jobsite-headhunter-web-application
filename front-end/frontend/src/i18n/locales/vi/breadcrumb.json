@@ -1,3 +1,18 @@
 {
-  "home": "Trang chủ"
+  "navigation": "Điều hướng Breadcrumb",
+  "home": "Trang Chủ",
+  "jobs": "Công Việc",
+  "jobDetail": "Chi Tiết Công Việc",
+  "applications": "Hồ Sơ Ứng Tuyển",
+  "applicationDetail": "Chi Tiết Ứng Tuyển",
+  "forum": "Diễn Đàn",
+  "forumDetail": "Chi Tiết Bài Viết",
+  "companies": "Công Ty",
+  "companyDetail": "Chi Tiết Công Ty",
+  "users": "Người Dùng",
+  "userDetail": "Hồ Sơ Người Dùng",
+  "candidates": "Ứng Viên",
+  "candidateDetail": "Hồ Sơ Ứng Viên",
+  "verification": "Xác Minh",
+  "verificationDetail": "Chi Tiết Xác Minh"
 }

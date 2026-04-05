@@ -211,7 +211,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
             type="submit"
             disabled={isLoading}
             size="xl"
-            className="flex-1 cursor-pointer bg-lime-400 hover:bg-lime-500 text-black font-bold transition-colors"
+            className="flex-1 cursor-pointer bg-slate-700 hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 text-white font-bold transition-colors"
           >
             {isLoading ? t("common.processing") : t("applications.form.submit")}
           </Button>

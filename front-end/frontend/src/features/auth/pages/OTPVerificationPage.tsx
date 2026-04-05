@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthTranslation } from "@/shared/hooks";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import {
   sendOtpSignup,
   verifyOtpSignup,
@@ -34,6 +35,7 @@ export function OTPVerificationPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
+  const [generalError, setGeneralError] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(300);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -120,6 +122,7 @@ export function OTPVerificationPage() {
             t("messages.registrationFailed")
           );
           toast.error(errorMessage);
+          setGeneralError(errorMessage);
 
           if (
             errorMessage.includes(t("messages.registrationDataNotFoundGeneric"))
@@ -155,6 +158,7 @@ export function OTPVerificationPage() {
     // eslint-disable-next-line security/detect-object-injection
     newOtp[index] = value;
     setOtp(newOtp);
+    setGeneralError(null);
 
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
@@ -187,6 +191,7 @@ export function OTPVerificationPage() {
 
   const handleResend = async () => {
     setIsResending(true);
+    setGeneralError(null);
 
     try {
       await sendOtpSignup({
@@ -224,6 +229,19 @@ export function OTPVerificationPage() {
             <MdOutlineMail className="text-brand-primary" size={18} />
             <SmallText weight="medium">{state.email}</SmallText>
           </div>
+
+          {/* ERROR STATE - Display OTP verification errors */}
+          {generalError && (
+            <ErrorState
+              variant="card"
+              title={
+                t("pages.otpVerification.verificationFailed") ||
+                "Xác thực thất bại"
+              }
+              message={generalError}
+              className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/40"
+            />
+          )}
 
           <div className="flex justify-center gap-2">
             {otp.map((digit, index) => (

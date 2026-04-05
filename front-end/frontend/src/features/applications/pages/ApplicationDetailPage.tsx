@@ -15,6 +15,7 @@ import {
   ApplicationStatusBadge,
 } from "../components";
 import { useInterviewSchedule } from "../hooks";
+import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import { formatDate } from "../utils";
 import {
   getApplicationDetail,
@@ -143,6 +144,17 @@ export const ApplicationDetailPage: React.FC = () => {
 
   return (
     <PageContainer variant="white" maxWidth="4xl">
+      <Breadcrumb
+        items={[
+          {
+            label: t("breadcrumb.applications") || "Applications",
+            href: "/applications",
+          },
+          { label: application?.fullName || "" },
+        ]}
+        className="mb-6"
+      />
+
       <div className="flex justify-between items-end mb-8 border-b border-gray-100 dark:border-gray-800 pb-6">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-brand-primary flex items-center justify-center text-black">

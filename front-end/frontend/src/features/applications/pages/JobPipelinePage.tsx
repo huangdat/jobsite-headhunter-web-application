@@ -239,7 +239,7 @@ const JobPipelineContent: React.FC<{
                       onClick={() =>
                         navigate(`/headhunter/applications/${app.id}`)
                       }
-                      className="bg-lime-400 text-slate-900 hover:bg-lime-500 shadow-sm shadow-lime-500/20"
+                      className="bg-slate-700 text-white hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 shadow-sm shadow-slate-700/20"
                       size="sm"
                     >
                       {t("actions.viewDetails")}

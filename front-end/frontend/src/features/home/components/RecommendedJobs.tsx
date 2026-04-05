@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRecommendedJobs } from "@/shared/utils/jobService";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { MATCH_BADGE_COLORS, HOME_ICONS } from "../constants";
 import {
   SubsectionTitle,
@@ -12,8 +13,8 @@ export function RecommendedJobs() {
   const { t, currentLanguage } = useHomeTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [infoMessage, setInfoMessage] = useState<string | null>(null); //new
+  const [error, setError] = useState<Error | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -24,7 +25,9 @@ export function RecommendedJobs() {
         setInfoMessage(data.message || null);
       } catch (err) {
         console.error("Failed to fetch recommended jobs:", err);
-        setError(t("messages.errorLoadJobs"));
+        setError(
+          err instanceof Error ? err : new Error(t("messages.errorLoadJobs"))
+        );
       } finally {
         setLoading(false);
       }
@@ -59,9 +62,15 @@ export function RecommendedJobs() {
       )}
 
       {error && (
-        <div className="text-center py-12">
-          <SmallText className="text-red-500">{error}</SmallText>
-        </div>
+        <ErrorState
+          error={error}
+          onRetry={() => window.location.reload()}
+          variant="inline"
+          title={
+            t("recommendedJobs.errorTitle") ||
+            "Không thể tải công việc được đề xuất"
+          }
+        />
       )}
 
       {!loading && !error && jobs.length === 0 && (
