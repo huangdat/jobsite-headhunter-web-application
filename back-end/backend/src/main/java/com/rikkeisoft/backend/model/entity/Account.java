@@ -6,6 +6,7 @@ import com.rikkeisoft.backend.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -62,6 +63,7 @@ public class Account {
     @CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id")
     )
     @Column(name = "role")
+    @BatchSize(size = 50)
     @Builder.Default
     Set<String> roles = new HashSet<>();
 

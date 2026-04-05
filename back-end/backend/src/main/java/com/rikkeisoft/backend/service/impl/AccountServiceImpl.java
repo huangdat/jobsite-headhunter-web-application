@@ -29,9 +29,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -73,12 +76,7 @@ public class AccountServiceImpl implements AccountService {
         // find all accounts
         List<Account> accounts = accountRepo.findAll();
 
-        // map to resp
-        List<AccountResp> accountResps = new ArrayList<>();
-        for (Account account : accounts) {
-            accountResps.add(toAccountResp(account));
-        }
-        return accountResps;
+        return toAccountResps(accounts);
     }
 
     @Override
@@ -321,7 +319,7 @@ public class AccountServiceImpl implements AccountService {
 
         Page<Account> result = accountRepo.findAll(spec, pageable);
 
-        List<AccountResp> data = result.stream().map(this::toAccountResp).collect(Collectors.toList());
+        List<AccountResp> data = toAccountResps(result.getContent());
 
         PagedResponse<AccountResp> resp = new PagedResponse<>();
         resp.setPage(pageIndex + 1);
@@ -528,4 +526,32 @@ public class AccountServiceImpl implements AccountService {
         CandidateProfile candidateProfile = candidateProfileRepo.findByAccount_Id(account.getId()).orElse(null);
         return accountMapper.toAccountResp(account, candidateProfile);
     }
+
+        private List<AccountResp> toAccountResps(List<Account> accounts) {
+        if (accounts == null || accounts.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<String> accountIds = accounts.stream()
+            .map(Account::getId)
+            .filter(id -> id != null && !id.isBlank())
+            .collect(Collectors.toList());
+
+        Map<String, CandidateProfile> profilesByAccountId = candidateProfileRepo
+            .findByAccount_IdIn(accountIds)
+            .stream()
+            .filter(profile -> profile.getAccount() != null)
+            .collect(Collectors.toMap(
+                profile -> profile.getAccount().getId(),
+                Function.identity(),
+                (existing, replacement) -> existing
+            ));
+
+        return accounts.stream()
+            .map(account -> accountMapper.toAccountResp(
+                account,
+                profilesByAccountId.get(account.getId())
+            ))
+            .collect(Collectors.toList());
+        }
 }

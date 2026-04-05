@@ -13,6 +13,7 @@ import type {
   JobDetail,
   JobFilterParams,
   JobFormValues,
+  JobSummary,
 } from "../types";
 import type { ApiResponse } from "@/features/auth/types/api.types";
 
@@ -157,7 +158,7 @@ export const toggleJobStatus = async (id: number, newDeadline?: string) => {
 };
 
 export const deleteJobSoft = async (id: number) => {
-  const res = await apiClient.patch<ApiResponse<void>>(
+  const res = await apiClient.patch<ApiResponse<JobSummary>>(
     API_ENDPOINTS.JOBS.DELETE_SOFT.replace("{id}", String(id))
   );
   return extractResult(res);

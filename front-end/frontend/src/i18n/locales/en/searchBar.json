@@ -1,3 +1,14 @@
 {
-  "search": "Search"
+  "search": "Search",
+  "openSearch": "Search candidates",
+  "shortcut": "Ctrl+K",
+  "candidatePlaceholder": "Search candidates by name, email, phone, or skill...",
+  "recent": "Recent searches",
+  "noRecent": "No recent searches",
+  "loading": "Searching...",
+  "noResults": "No matching candidates",
+  "loadFailed": "Unable to load candidates",
+  "clear": "Clear",
+  "close": "Close",
+  "searchHint": "Auto-search after 3–4 seconds, or press Enter to run now"
 }

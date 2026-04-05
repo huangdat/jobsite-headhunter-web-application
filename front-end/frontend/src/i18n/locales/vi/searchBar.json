@@ -1,3 +1,14 @@
 {
-  "search": "Tìm kiếm"
+  "search": "Tìm kiếm",
+  "openSearch": "Tìm ứng viên",
+  "shortcut": "Ctrl+K",
+  "candidatePlaceholder": "Tìm ứng viên theo tên, email, SĐT hoặc kỹ năng...",
+  "recent": "Tìm kiếm gần đây",
+  "noRecent": "Chưa có tìm kiếm gần đây",
+  "loading": "Đang tìm...",
+  "noResults": "Không tìm thấy ứng viên phù hợp",
+  "loadFailed": "Không thể tải danh sách ứng viên",
+  "clear": "Xóa",
+  "close": "Đóng",
+  "searchHint": "Tự động tìm sau 3–4 giây, hoặc nhấn Enter để tìm ngay"
 }

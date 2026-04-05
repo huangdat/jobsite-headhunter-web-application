@@ -77,7 +77,7 @@ export const API_ENDPOINTS = {
     GET_SAVED: "/api/jobs/saved",
     CREATE: "/api/jobs",
     UPDATE: "/api/jobs/{id}",
-    DELETE_SOFT: "/api/jobs/{id}",
+    DELETE_SOFT: "/api/jobs/{id}/toggle-active",
     TOGGLE_STATUS: "/api/jobs/{id}/toggle-job-status",
     SAVE: "/api/jobs/{id}/save",
     REMOVE_SAVED: "/api/jobs/{id}/saved",
@@ -133,6 +133,8 @@ export const API_ENDPOINTS = {
     GET_APPLICATION_DETAIL: "/api/headhunter/applications/{id}",
     UPDATE_APPLICATION_STATUS: "/api/headhunter/applications/{id}/status",
     SCHEDULE_INTERVIEW: "/api/headhunter/applications/{id}/interview",
+    CANDIDATE_SEARCH: "/api/v1/headhunter/candidates/search",
+    CANDIDATE_FILTER: "/api/v1/headhunter/candidates",
   },
 
   // Interview

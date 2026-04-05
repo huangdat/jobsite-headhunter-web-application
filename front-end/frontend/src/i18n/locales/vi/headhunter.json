@@ -14,5 +14,101 @@
   "activityLog": "Nhật ký hoạt động",
   "accountSettings": "Cài đặt tài khoản",
   "supportInbox": "Hộp thư hỗ trợ",
-  "profileTitle": "Tiêu đề hồ sơ"
+  "profileTitle": "Tiêu đề hồ sơ",
+  "refresh": "Làm mới",
+  "filters": {
+    "eyebrow": "Bộ lọc",
+    "advancedTitle": "Lọc nâng cao",
+    "openButton": "Lọc nâng cao",
+    "educationNote": "Bộ lọc trình độ sẽ sớm có.",
+    "actions": {
+      "apply": "Áp dụng",
+      "reset": "Đặt lại",
+      "close": "Đóng",
+      "clearAll": "Xóa tất cả",
+      "remove": "Xóa bộ lọc"
+    },
+    "sections": {
+      "status": "Trạng thái",
+      "location": "Vị trí mong muốn",
+      "industry": "Nhóm kỹ năng",
+      "education": "Trình độ",
+      "experience": "Kinh nghiệm",
+      "registrationDate": "Ngày đăng ký"
+    },
+    "fields": {
+      "experienceMin": "Tối thiểu (năm)",
+      "experienceMax": "Tối đa (năm)",
+      "dateFrom": "Từ ngày",
+      "dateTo": "Đến ngày"
+    },
+    "placeholders": {
+      "experienceMin": "Ví dụ: 3",
+      "experienceMax": "Ví dụ: 7"
+    },
+    "options": {
+      "status": {
+        "active": "Hoạt động",
+        "pending": "Đang chờ",
+        "suspended": "Bị tạm dừng",
+        "deleted": "Đã xóa"
+      },
+      "locations": {
+        "haNoi": "Hà Nội",
+        "hoChiMinh": "TP. Hồ Chí Minh",
+        "daNang": "Đà Nẵng"
+      },
+      "industries": {
+        "programmingLanguages": "Ngôn ngữ lập trình",
+        "frontendDevelopment": "Phát triển Frontend",
+        "backendDevelopment": "Phát triển Backend",
+        "databases": "Cơ sở dữ liệu",
+        "devopsAndCloud": "DevOps & Cloud",
+        "testing": "Kiểm thử",
+        "versionControl": "Quản lý phiên bản",
+        "softwareArchitecture": "Kiến trúc & Khái niệm phần mềm",
+        "dataAndAi": "Dữ liệu & AI"
+      },
+      "education": {
+        "highSchool": "Trung học phổ thông",
+        "associate": "Cao đẳng",
+        "bachelor": "Cử nhân",
+        "master": "Thạc sĩ",
+        "phd": "Tiến sĩ"
+      }
+    },
+    "messages": {
+      "empty": "Không có ứng viên phù hợp với bộ lọc này.",
+      "loadFailed": "Không thể tải danh sách ứng viên.",
+      "rateLimited": "Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 1 phút."
+    },
+    "tags": {
+      "status": "Trạng thái",
+      "location": "Vị trí",
+      "industry": "Nhóm kỹ năng",
+      "experience": "Kinh nghiệm",
+      "registered": "Ngày đăng ký",
+      "experienceRange": "{{min}}-{{max}} năm",
+      "experienceMin": "Từ {{min}} năm",
+      "experienceMax": "Tối đa {{max}} năm",
+      "registeredRange": "{{from}} đến {{to}}",
+      "registeredFrom": "Từ {{from}}",
+      "registeredTo": "Đến {{to}}"
+    },
+    "pagination": {
+      "rowsPerPage": "Số dòng mỗi trang",
+      "info": "Hiển thị {{start}}-{{end}} của {{total}}",
+      "prev": "Trang trước",
+      "next": "Trang sau"
+    }
+  },
+  "candidateList": {
+    "summary": "{{count}} ứng viên",
+    "viewProfile": "Xem hồ sơ",
+    "unknownName": "Ứng viên",
+    "noTitle": "Chưa có chức danh",
+    "experience": "{{years}} năm",
+    "openForWork": "Sẵn sàng nhận việc",
+    "registered": "Đăng ký {{date}}"
+  }
 }
