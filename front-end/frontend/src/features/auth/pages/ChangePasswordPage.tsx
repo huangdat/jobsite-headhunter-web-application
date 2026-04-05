@@ -136,7 +136,7 @@ export function ChangePasswordPage() {
       {/* Sidebar */}
       <aside className="w-80 bg-slate-900 dark:bg-slate-950 text-white flex flex-col border-r border-white/10 shrink-0">
         <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-slate-900">
+          <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-slate-900 dark:text-slate-900">
             <span className="material-symbols-outlined font-bold">
               account_tree
             </span>
@@ -251,15 +251,17 @@ export function ChangePasswordPage() {
                     {...register("currentPassword")}
                     error={!!errors.currentPassword}
                     rightIcon={
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={() => togglePasswordVisibility("current")}
-                        className="material-symbols-outlined text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
+                        className="h-10 w-10 material-symbols-outlined"
                       >
                         {showPasswords.current
                           ? "visibility"
                           : "visibility_off"}
-                      </button>
+                      </Button>
                     }
                   />
                 </FormField>
@@ -274,13 +276,15 @@ export function ChangePasswordPage() {
                     {...register("newPassword")}
                     error={!!errors.newPassword}
                     rightIcon={
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={() => togglePasswordVisibility("new")}
-                        className="material-symbols-outlined text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
+                        className="h-10 w-10 material-symbols-outlined"
                       >
                         {showPasswords.new ? "visibility" : "visibility_off"}
-                      </button>
+                      </Button>
                     }
                   />
                 </FormField>
@@ -295,15 +299,17 @@ export function ChangePasswordPage() {
                     {...register("confirmPassword")}
                     error={!!errors.confirmPassword}
                     rightIcon={
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={() => togglePasswordVisibility("confirm")}
-                        className="material-symbols-outlined text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
+                        className="h-10 w-10 material-symbols-outlined"
                       >
                         {showPasswords.confirm
                           ? "visibility"
                           : "visibility_off"}
-                      </button>
+                      </Button>
                     }
                   />
                 </FormField>

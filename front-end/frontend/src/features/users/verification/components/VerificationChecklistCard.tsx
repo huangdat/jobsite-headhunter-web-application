@@ -35,7 +35,7 @@ export const VerificationChecklistCard: React.FC<
     >
       {/* Header with Progress */}
       <div className="mb-6">
-        <h3 className="font-semibold text-slate-900 mb-3">
+        <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-3">
           {t("verification.cards.checklist.title")}
         </h3>
 

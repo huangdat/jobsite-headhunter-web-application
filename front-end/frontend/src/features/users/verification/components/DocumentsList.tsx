@@ -111,7 +111,7 @@ export const DocumentsList: React.FC<DocumentsListProps> = ({
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-slate-900 truncate">
+                  <h4 className="font-medium text-slate-900 dark:text-slate-50 truncate">
                     {doc.fileName}
                   </h4>
                   <p className="text-xs text-slate-500 mt-1">

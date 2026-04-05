@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { ApplicationStatusBadge } from "../components";
 import { useApplications, useInterviewSchedule } from "../hooks";
 import { formatDate, formatDuration } from "../utils";
@@ -25,11 +26,17 @@ export const MyApplicationsPage: React.FC = () => {
   const { t } = useAppTranslation();
   const [viewingApp, setViewingApp] = useState<Application | null>(null);
 
-  const { applications, isLoading, pagination, handlePageChange } =
-    useApplications({
-      isCandidateView: true,
-      autoFetch: true,
-    });
+  const {
+    applications,
+    isLoading,
+    error,
+    pagination,
+    handlePageChange,
+    refetch,
+  } = useApplications({
+    isCandidateView: true,
+    autoFetch: true,
+  });
 
   const stats = {
     total: pagination.totalElements,
@@ -63,55 +70,69 @@ export const MyApplicationsPage: React.FC = () => {
 
       {/* LIST */}
       <div className="space-y-4">
-        {isLoading ? (
-          Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 w-full rounded-xl" />
-          ))
-        ) : applications.length === 0 ? (
+        {/* Error State */}
+        {error && (
+          <ErrorState
+            error={new Error(error)}
+            onRetry={() => refetch()}
+            variant="inline"
+          />
+        )}
+
+        {/* Loading State */}
+        {!error && isLoading && <PageSkeleton variant="list" count={3} />}
+
+        {/* Empty State */}
+        {!error && !isLoading && applications.length === 0 && (
           <div className="text-center py-20 border-2 border-dashed rounded-3xl text-slate-400 dark:text-slate-500 dark:border-slate-700">
             <Search className="mx-auto mb-4 opacity-20" size={40} />
             <p>{t("applications.empty.noApplications")}</p>
           </div>
-        ) : (
-          applications.map((app) => (
-            <Card
-              key={app.id}
-              onClick={() => setViewingApp(app)}
-              className="group p-5 rounded-xl border-slate-200/60 dark:border-slate-700 shadow-sm hover:border-brand-primary transition-all cursor-pointer bg-white dark:bg-slate-800"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-lg bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-brand-primary transition-colors">
-                    <Building2 size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
-                      {app.jobTitle}
-                    </h3>
-                    <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
-                      <span className="flex items-center gap-1">
-                        <Calendar size={12} />{" "}
-                        {new Date(app.appliedAt).toLocaleDateString()}
-                      </span>
-                      <span className="text-slate-300 dark:text-slate-600">
-                        |
-                      </span>
-                      <span className="text-brand-primary font-medium">
-                        {t("applications.candidateView")}
-                      </span>
+        )}
+
+        {/* Applications List */}
+        {!error && !isLoading && applications.length > 0 && (
+          <>
+            {applications.map((app) => (
+              <Card
+                key={app.id}
+                onClick={() => setViewingApp(app)}
+                className="group p-5 rounded-xl border-slate-200/60 dark:border-slate-700 shadow-sm hover:border-brand-primary transition-all cursor-pointer bg-white dark:bg-slate-800"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-lg bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-brand-primary transition-colors">
+                      <Building2 size={24} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
+                        {app.jobTitle}
+                      </h3>
+                      <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={12} />{" "}
+                          {new Date(app.appliedAt).toLocaleDateString()}
+                        </span>
+                        <span className="text-slate-300 dark:text-slate-600">
+                          |
+                        </span>
+                        <span className="text-brand-primary font-medium">
+                          {t("applications.candidateView")}
+                        </span>
+                      </div>
                     </div>
                   </div>
+                  <div className="text-right">
+                    <ApplicationStatusBadge status={app.status} />
+                    <ChevronRight
+                      size={16}
+                      className="ml-auto mt-2 text-slate-300 dark:text-slate-600 group-hover:text-brand-primary transition-all"
+                    />
+                  </div>
                 </div>
-                <div className="text-right">
-                  <ApplicationStatusBadge status={app.status} />
-                  <ChevronRight
-                    size={16}
-                    className="ml-auto mt-2 text-slate-300 dark:text-slate-600 group-hover:text-brand-primary transition-all"
-                  />
-                </div>
-              </div>
-            </Card>
-          ))
+              </Card>
+            ))}
+          </>
         )}
       </div>
 
@@ -209,7 +230,7 @@ const ModalContent: React.FC<{
             </div>
 
             {isLoading ? (
-              <Skeleton className="h-20 w-full" />
+              <div className="h-20 w-full rounded-xl bg-slate-200 dark:bg-slate-700 animate-pulse" />
             ) : interview ? (
               <div className="grid grid-cols-2 gap-4 text-sm text-slate-700 dark:text-slate-300">
                 <div className="space-y-1">

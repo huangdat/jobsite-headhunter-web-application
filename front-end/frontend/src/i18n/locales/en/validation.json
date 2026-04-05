@@ -35,6 +35,11 @@
     "salaryInvalid": "Salary is invalid",
     "salaryNegative": "Salary cannot be negative",
     "commissionRateInvalid": "Commission rate is invalid",
+    "commissionRateRequired": "Commission rate is required",
+    "commissionRateMax": "Commission rate must not exceed 100%",
+    "currentTitleRequired": "Current job title is required",
+    "commissionRateRequired": "Commission rate is required",
+    "commissionRateMax": "Commission rate must not exceed 100%",
     "taxCodeRequired": "Tax code is required",
     "taxCodeInvalid": "Tax code is invalid",
     "websiteUrlInvalid": "Website URL is invalid"

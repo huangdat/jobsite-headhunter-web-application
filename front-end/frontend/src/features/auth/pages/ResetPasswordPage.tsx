@@ -174,17 +174,19 @@ export function ResetPasswordPage() {
                       {...register("password")}
                       error={!!errors.password}
                       rightIcon={
-                        <button
+                        <Button
                           type="button"
+                          variant="ghost"
+                          size="icon"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="cursor-pointer text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
+                          className="h-10 w-10"
                         >
                           {showPassword ? (
                             <AiOutlineEyeInvisible />
                           ) : (
                             <AiOutlineEye />
                           )}
-                        </button>
+                        </Button>
                       }
                     />
                   </FormField>
@@ -200,19 +202,21 @@ export function ResetPasswordPage() {
                       {...register("confirmPassword")}
                       error={!!errors.confirmPassword}
                       rightIcon={
-                        <button
+                        <Button
                           type="button"
+                          variant="ghost"
+                          size="icon"
                           onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
                           }
-                          className="cursor-pointer text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
+                          className="h-10 w-10"
                         >
                           {showConfirmPassword ? (
                             <AiOutlineEyeInvisible />
                           ) : (
                             <AiOutlineEye />
                           )}
-                        </button>
+                        </Button>
                       }
                     />
                   </FormField>

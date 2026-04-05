@@ -221,10 +221,15 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         : currentStep === 2
           ? ["fullName", "phone"]
           : userRole === "candidate"
-            ? ["currentTitle"]
+            ? [] // No required fields for candidate step 3
             : userRole === "headhunter"
               ? ["taxCode"]
               : ["commissionRate"];
+
+    // If no fields to validate, return true
+    if (fieldsToValidate.length === 0) {
+      return true;
+    }
 
     const result = await trigger(
       fieldsToValidate as unknown as Parameters<typeof trigger>[0]
@@ -290,12 +295,12 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
 
       navigate("/verify-otp", {
         state: {
-          accountId: otpResponse.accountId,
           email: otpResponse.email,
           expiresAt: otpResponse.expiresAt,
         },
       });
     } catch (error: unknown) {
+      console.error("Registration error:", error);
       const errorMessage = extractApiErrorMessage(
         error,
         t("messages.failedToSendOtp")

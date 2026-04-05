@@ -35,6 +35,12 @@
     "salaryInvalid": "Lương không hợp lệ",
     "salaryNegative": "Lương không được âm",
     "commissionRateInvalid": "Tỷ lệ hoa hồng không hợp lệ",
+    "commissionRateRequired": "Tỷ lệ hoa hồng bắt buộc",
+    "commissionRateMax": "Tỷ lệ hoa hồng không được vượt quá 100%",
+    "currentTitleRequired": "Chức danh công việc hiện tại bắt buộc",
+    "commissionRateRequired": "Tỷ lệ hoa hồng bắt buộc",
+    "commissionRateMax": "Tỷ lệ hoa hồng không được vượt quá 100%",
+    "currentTitleRequired": "Chức danh công việc hiện tại bắt buộc",
     "taxCodeRequired": "Mã số thuế bắt buộc",
     "taxCodeInvalid": "Mã số thuế không hợp lệ",
     "websiteUrlInvalid": "URL trang web không hợp lệ"

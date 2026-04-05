@@ -44,7 +44,9 @@ export const EmptyStateView: React.FC<EmptyStateViewProps> = ({
       {Icon && <Icon className="w-16 h-16 text-slate-300 mb-4 opacity-50" />}
 
       {/* Title */}
-      <h3 className="text-lg font-semibold text-slate-900 mb-2">{title}</h3>
+      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50 mb-2">
+        {title}
+      </h3>
 
       {/* Description */}
       {description && (

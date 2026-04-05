@@ -6,6 +6,7 @@ import { ApplicationCard, ApplicationFilters } from "../components";
 import { useApplications, useApplicationFilters } from "../hooks";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { PageSkeleton } from "@/shared/components/states";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { FileText } from "lucide-react";
 
@@ -22,9 +23,11 @@ export const ApplicationListPage: React.FC<ApplicationListPageProps> = ({
   const {
     applications,
     isLoading,
+    error,
     pagination,
     handlePageChange,
     handleFilter,
+    refetch,
   } = useApplications({
     jobId,
     isCandidateView: false,
@@ -64,8 +67,17 @@ export const ApplicationListPage: React.FC<ApplicationListPageProps> = ({
 
         {/* Applications List */}
         <div className="lg:col-span-3">
+          {/* Error State */}
+          {error && (
+            <ErrorState
+              error={new Error(error)}
+              onRetry={() => refetch()}
+              variant="inline"
+            />
+          )}
+
           {/* Loading State */}
-          {isLoading && <PageSkeleton variant="list" count={3} />}
+          {!error && isLoading && <PageSkeleton variant="list" count={3} />}
 
           {/* Empty State */}
           {!isLoading && applications.length === 0 && (

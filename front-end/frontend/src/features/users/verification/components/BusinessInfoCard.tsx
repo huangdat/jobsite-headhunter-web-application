@@ -26,12 +26,14 @@ export const BusinessInfoCard: React.FC<BusinessInfoCardProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-xl border border-slate-200 bg-white/50 p-6 backdrop-blur-sm ${className}`}
+      className={`rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/40 p-6 backdrop-blur-sm ${className}`}
     >
       {/* Header with Icon & Title */}
       <div className="flex items-center gap-3 mb-4">
         {Icon && <Icon className="text-lime-600 shrink-0" size={20} />}
-        <h3 className="font-semibold text-slate-900">{title}</h3>
+        <h3 className="font-semibold text-slate-900 dark:text-slate-50">
+          {title}
+        </h3>
       </div>
 
       {/* Content */}
@@ -57,10 +59,17 @@ export const InfoRow: React.FC<InfoRowProps> = ({
   return (
     <div className="flex items-start justify-between gap-4">
       <div className="flex items-start gap-2 flex-1">
-        {Icon && <Icon className="text-slate-400 shrink-0 mt-0.5" size={16} />}
-        <span className="text-slate-600">{label}</span>
+        {Icon && (
+          <Icon
+            className="text-slate-400 dark:text-slate-500 shrink-0 mt-0.5"
+            size={16}
+          />
+        )}
+        <span className="text-slate-600 dark:text-slate-400">{label}</span>
       </div>
-      <span className="font-medium text-slate-900 text-right">{value}</span>
+      <span className="font-medium text-slate-900 dark:text-slate-50 text-right">
+        {value}
+      </span>
     </div>
   );
 };
