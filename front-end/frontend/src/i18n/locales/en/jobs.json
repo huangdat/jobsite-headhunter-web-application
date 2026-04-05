@@ -3,6 +3,7 @@
     "common": {
       "total": "Total"
     },
+
     "jobPostings": "Job Postings",
     "postNewJob": "Post New Job",
     "candidates": "Candidates",
@@ -12,6 +13,11 @@
       "interview": "Interview",
       "passed": "Hired",
       "rejected": "Rejected"
+    }
+  },
+  "applications": {
+    "interview": {
+      "scheduledAt": "Interview scheduled at {{date}}"
     }
   },
 
@@ -219,12 +225,19 @@
       "pickAtLeastOneSkill": "Please pick at least one skill"
     }
   },
-  "types": {
-    "workingTypes": {
-      "ONSITE": "On-site",
-      "REMOTE": "Remote",
-      "HYBRID": "Hybrid"
+  "home": {
+    "jobTypes": {
+      "full-time": "Full-time",
+      "remote": "Remote",
+      "onsite": "On-site",
+      "hybrid": "Hybrid"
     }
+  },
+  "jobTypes": {
+    "full-time": "Full-time",
+    "remote": "Remote",
+    "onsite": "On-site",
+    "hybrid": "Hybrid"
   },
   "messages": {
     "jobCreatedSuccess": "Job created successfully",
@@ -242,7 +255,8 @@
     "jobRemovedFromSaved": "Job removed from saved list.",
     "jobSaved": "Job saved.",
     "unableToUpdateSavedJobs": "Unable to update saved jobs. Please try again.",
-    "confidentialCompany": "Confidential company"
+    "confidentialCompany": "Confidential company",
+    "closeJobWarning": "This action will pause receiving applications for this job."
   },
   "manage": {
     "pageTitle": "Manage Postings",

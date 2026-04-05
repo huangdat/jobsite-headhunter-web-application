@@ -89,6 +89,7 @@ export const profileApi = {
 
     return response.data?.result?.cvUrl ?? "";
   },
+
   fetchCVs: async (): Promise<{ id: string; name: string; url: string }[]> => {
     const response = await apiClient.get<
       ApiResponse<{ id: string; name: string; url: string }[]>

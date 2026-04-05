@@ -1,264 +1,119 @@
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import {
-  Display,
-  SubsectionTitle,
-  SmallText,
-} from "@/shared/components/typography/Typography";
-import type { VerificationStatus as VerificationStatusType } from "../types/business.types";
-import { useBusinessVerification } from "../hooks/useBusinessVerification";
-import {
-  BusinessIdentityForm,
-  VerificationStatus,
-  SubmittedDocuments,
-  ProfileStrengthCard,
-  OptimizationTips,
-  CompanyBestPractices,
-  SuccessBanner,
-  ErrorBanner,
-} from "../components";
-import { PageContainer } from "@/shared/components/layout";
+import { Toaster } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { useBusinessProfile } from "../hooks/useBusinessProfile";
+import { BusinessProfileDisplay } from "../components";
 
 /**
- * Main page for business profile management and verification
- * Layout: 8-column main content + 4-column sidebar
- * States: form-filling → submitted → error
+ * Business Profile Page (Read-only version)
+ * Displays company information set during registration
  */
 export const BusinessProfilePage: React.FC = () => {
   const { t } = useAppTranslation();
-  const {
-    // Profile state
-    formData,
-    verificationSteps,
-    documents,
-    profileStrength,
-    isLoading,
-    isSubmitting,
-    errorMessage,
-    successMessage,
+  const navigate = useNavigate();
 
-    // Form state
-    formErrors,
-    touchedFields,
-
-    // Form actions
-    handleFieldChange,
-    handleFieldBlur,
-    submitProfile,
-
-    // UI management
-    clearMessages,
-  } = useBusinessVerification();
-
-  // Auto-dismiss success message after 5 seconds
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(clearMessages, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage, clearMessages]);
-
-  // Form submission handler
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    submitProfile();
-  };
-
-  // Map VerificationStepStatus to VerificationStatus
-  const mapStepStatusToVerification = (
-    stepStatus?: string
-  ): VerificationStatusType => {
-    switch (stepStatus) {
-      case "completed":
-        return "APPROVED";
-      case "in_progress":
-        return "PENDING";
-      default:
-        return "PENDING";
-    }
-  };
-
-  const currentVerificationStatus = useMemo(
-    () => mapStepStatusToVerification(verificationSteps?.[0]?.status),
-    [verificationSteps]
-  );
-
-  // Determine page state
-  const isSubmitted = verificationSteps && verificationSteps.length > 0;
-  const hasError = errorMessage !== null;
-  const hasDocuments = documents && documents.length > 0;
+  const { profile, isLoading, errorMessage } = useBusinessProfile();
 
   return (
-    <PageContainer variant="white" maxWidth="7xl">
-      {/* Breadcrumbs */}
-      <nav className="mb-6 flex items-center gap-2">
-        <SmallText variant="muted">
-          {t("business.breadcrumb.business")}
-        </SmallText>
-        <span className="text-gray-300 dark:text-gray-600">{">"} </span>
-        <SmallText weight="bold" className="text-gray-900 dark:text-gray-100">
-          {t("business.breadcrumb.profile")}
-        </SmallText>
-      </nav>
+    <div className="min-h-screen bg-[#f8fafc]">
+      <Toaster position="top-right" richColors closeButton />
 
-      {/* Header Section */}
-      <div className="mb-8 flex items-start justify-between">
-        <div>
-          <Display>{t("business.page.title")}</Display>
-          <SmallText variant="muted" className="mt-2">
-            {t("business.page.description")}
-          </SmallText>
-        </div>
-        <div className="flex gap-3">
-          <Button variant="outline">
-            <SmallText weight="medium">
-              {t("business.button.documentation")}
-            </SmallText>
-          </Button>
-          <Button>
-            <SmallText weight="medium" className="text-white">
-              {t("business.button.preview")}
-            </SmallText>
-          </Button>
-        </div>
-      </div>
-      {/* Error Banner */}
-      {hasError && (
-        <div className="mb-6">
-          <ErrorBanner message={errorMessage || ""} onDismiss={clearMessages} />
-        </div>
-      )}
+      {/* Header Profile */}
+      <div className="relative h-40 bg-linear-to-r from-emerald-600 to-teal-700">
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[size:20px_20px]" />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative h-full flex flex-col justify-end pb-8">
+          {/* Điều hướng & Nút Back */}
+          <div className="mb-4 flex items-center justify-between">
+            <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-100/60">
+              <span>{t("business.breadcrumb.business")}</span>
+              <span>/</span>
+              <span className="text-white">
+                {t("business.breadcrumb.profile")}
+              </span>
+            </nav>
 
-      {/* Success Banner */}
-      {successMessage && (
-        <div className="mb-6">
-          <SuccessBanner message={successMessage} onDismiss={clearMessages} />
-        </div>
-      )}
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-12 gap-8">
-        {/* Main Content (8 columns) */}
-        <div className="col-span-12 lg:col-span-8">
-          <div className="space-y-8">
-            {/* Company Identity Form - Show in default or error state */}
-            {!isSubmitted || hasError ? (
-              <div className="rounded-lg border border-slate-200 bg-white p-6">
-                <div className="mb-6">
-                  <SubsectionTitle>{t("business.form.title")}</SubsectionTitle>
-                  <SmallText variant="muted" className="mt-1">
-                    {t("business.form.subtitle")}
-                  </SmallText>
-                </div>
-
-                <BusinessIdentityForm
-                  formData={formData}
-                  errors={formErrors}
-                  touchedFields={touchedFields}
-                  isSubmitting={isSubmitting}
-                  onFieldChange={handleFieldChange}
-                  onFieldBlur={handleFieldBlur}
-                  onSubmit={handleSubmit}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate(-1)}
+              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/80 hover:text-white h-auto p-1"
+            >
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2.5"
+                  d="M15 19l-7-7 7-7"
                 />
-              </div>
-            ) : null}
-
-            {/* Verification Timeline - Show in submitted state */}
-            {isSubmitted &&
-              verificationSteps &&
-              verificationSteps.length > 0 && (
-                <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <SubsectionTitle className="mb-6">
-                    {t("business.verification.title")}
-                  </SubsectionTitle>
-                  <VerificationStatus
-                    currentStatus={currentVerificationStatus}
-                  />
-                </div>
-              )}
-
-            {/* Submitted Documents - Show when documents exist */}
-            {hasDocuments && documents && (
-              <div className="rounded-lg border border-slate-200 bg-white p-6">
-                <SubsectionTitle className="mb-6">
-                  {t("business.documents.title")}
-                </SubsectionTitle>
-                <SubmittedDocuments documents={documents} />
-              </div>
-            )}
-
-            {/* Bottom Sections - Privacy & Best Practices */}
-            <div className="grid grid-cols-2 gap-6">
-              {/* Privacy Control Card */}
-              <div className="rounded-lg border border-slate-200 bg-white p-6">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <SmallText weight="bold" className="text-slate-900">
-                      {t("business.privacy.title")}
-                    </SmallText>
-                    <SmallText variant="muted" className="mt-2">
-                      {t("business.privacy.description")}
-                    </SmallText>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  className="mt-4 h-auto p-0 text-emerald-600 hover:text-emerald-700"
-                >
-                  <SmallText weight="bold" className="text-inherit">
-                    {t("business.action.configure")} →
-                  </SmallText>
-                </Button>
-              </div>
-
-              {/* Best Practices Card */}
-              <div className="rounded-lg border border-slate-200 bg-white p-6">
-                <CompanyBestPractices />
-              </div>
-            </div>
+              </svg>
+              {t("common.back")}
+            </Button>
           </div>
-        </div>
 
-        {/* Sidebar (4 columns) */}
-        <div className="col-span-12 lg:col-span-4">
-          <div className="space-y-6">
-            {/* Profile Strength Card */}
-            <ProfileStrengthCard strengthData={profileStrength} />
-
-            {/* Optimization Tips Card */}
-            <OptimizationTips tips={[]} />
-
-            {/* Premium Services Card */}
-            <div className="rounded-lg border border-gray-200 bg-linear-to-b from-gray-900 to-gray-800 p-6 text-white">
-              <SubsectionTitle className="text-white">
-                {t("business.premium.title")}
-              </SubsectionTitle>
-              <SmallText variant="muted" className="mt-2 text-gray-300">
-                {t("business.premium.description")}
-              </SmallText>
-              <Button className="mt-4 w-full bg-green-600 hover:bg-green-700">
-                <SmallText weight="medium" className="text-white">
-                  {t("business.button.upgrade")}
-                </SmallText>
-              </Button>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <h1 className="text-4xl font-black text-white tracking-tight">
+                {t("business.page.title")}
+              </h1>
+              <p className="mt-2 text-emerald-50 max-w-2xl font-medium opacity-90 text-sm italic">
+                {t("business.page.description")}
+              </p>
             </div>
-
-            {/* Loading State for Verification Check */}
-            {isLoading && (
-              <div className="flex items-center justify-center rounded-lg border border-gray-200 bg-white p-8">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-green-600" />
-                  <SmallText variant="muted">
-                    {t("business.state.loading")}
-                  </SmallText>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
-    </PageContainer>
+
+      <div className="mx-auto max-w-4xl px-4 pb-16 sm:px-6 lg:px-8 pt-8">
+        <section className="rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/50 overflow-hidden transition-all min-h-[400px]">
+          {isLoading ? (
+            // Loading state
+            <div className="flex h-[400px] items-center justify-center">
+              <div className="flex flex-col items-center gap-4">
+                <div className="h-12 w-12 animate-spin rounded-full border-4 border-slate-200 border-t-emerald-600" />
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-400 animate-pulse">
+                  {t("business.state.loading")}
+                </p>
+              </div>
+            </div>
+          ) : errorMessage ? (
+            // Error state
+            <div className="p-12 text-center space-y-4">
+              <div className="mx-auto h-16 w-16 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center">
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">
+                {t("business.error.fetch_title")}
+              </h3>
+              <p className="text-slate-500 max-w-sm mx-auto">{errorMessage}</p>
+            </div>
+          ) : profile ? (
+            // Hiển thị component Read-only rộng rãi
+            <div className="p-8 md:p-12">
+              <BusinessProfileDisplay profile={profile} />
+            </div>
+          ) : null}
+        </section>
+      </div>
+    </div>
   );
 };
 

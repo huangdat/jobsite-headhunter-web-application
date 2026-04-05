@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { login } from "@/features/auth/services/authApi";
@@ -143,7 +143,7 @@ export const useLogin = () => {
     }
   };
 
-  const handleChange =
+  const handleChange = useCallback(
     (field: keyof LoginFormData) => (value: string | boolean) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
@@ -156,9 +156,11 @@ export const useLogin = () => {
       if (field === "rememberMe" && value === false) {
         localStorage.removeItem(REMEMBERED_LOGIN_KEY);
       }
-    };
+    },
+    [errors]
+  );
 
-  const loadRememberedEmail = () => {
+  const loadRememberedEmail = useCallback(() => {
     const rememberedLogin = localStorage.getItem(REMEMBERED_LOGIN_KEY);
     if (rememberedLogin) {
       setFormData((prev) => ({
@@ -167,7 +169,7 @@ export const useLogin = () => {
         rememberMe: true,
       }));
     }
-  };
+  }, []);
 
   return {
     formData,

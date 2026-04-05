@@ -6,9 +6,12 @@
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
 import { getMyInfo } from "@/features/auth/services/authApi";
-import type { ApiResponse } from "@/features/auth/types/api.types";
+import type { ApiResponse } from "@/features/auth/types";
 import type { BusinessProfile } from "../types/business.types";
 
+/**
+ * Fetch a specific business profile by ID
+ */
 export const getBusinessProfileById = async (
   id: number
 ): Promise<BusinessProfile> => {
@@ -28,14 +31,24 @@ export const getBusinessProfileById = async (
  * Uses /api/account/myInfo to read businessProfileId first, then loads that company.
  */
 export const getBusinessProfile = async (): Promise<BusinessProfile> => {
-  const account = await getMyInfo();
-  const businessProfileId = account.businessProfileId;
+  try {
+    const account = await getMyInfo();
+    const businessProfileId = account.businessProfileId;
 
-  if (!businessProfileId) {
-    throw new Error("No business profile found");
+    console.log("Debug - Full account info:", account);
+    console.log("Debug - businessProfileId:", businessProfileId);
+
+    if (!businessProfileId) {
+      throw new Error("No business profile assigned to this account.");
+    }
+
+    const profile = await getBusinessProfileById(businessProfileId);
+    console.log("Debug - Fetched profile:", profile);
+    return profile;
+  } catch (error) {
+    console.error("Error fetching headhunter's business profile:", error);
+    throw error;
   }
-
-  return getBusinessProfileById(businessProfileId);
 };
 
 // Export as namespace for backward compatibility

@@ -172,3 +172,12 @@ export const VERIFICATION_STATUS_COLORS: Record<VerificationStatus, string> = {
   REJECTED:
     "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-900/50",
 };
+
+export const GENERAL_ERROR_KEYS = {
+  REQUIRED: "validation.required",
+  INVALID_EMAIL: "validation.invalidEmail",
+  INVALID_PHONE: "validation.invalidPhone",
+  INVALID_URL: "validation.invalidUrl",
+  MIN_LENGTH: "validation.minLength",
+  MAX_LENGTH: "validation.maxLength",
+} as const;
