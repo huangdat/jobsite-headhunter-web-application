@@ -210,20 +210,10 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
           <Button
             type="submit"
             disabled={isLoading}
-            variant="brand-primary"
             size="xl"
-            className="flex-1 cursor-pointer"
+            className="flex-1 cursor-pointer bg-lime-400 hover:bg-lime-500 text-black font-bold transition-colors"
           >
             {isLoading ? t("common.processing") : t("applications.form.submit")}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="xl"
-            className="w-32 cursor-pointer"
-            onClick={() => form.reset()}
-          >
-            {t("applications.form.cancel")}
           </Button>
         </div>
       </form>

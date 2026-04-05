@@ -93,7 +93,7 @@ export function JobCard({ job }: JobCardProps) {
         <Caption className="uppercase tracking-[0.2em] text-slate-400">
           #{job.jobCode}
         </Caption>
-        <SmallText weight="semibold" className="text-brand-primary">
+        <SmallText weight="semibold" className="text-lime-500">
           {t("list.viewDetails")}
         </SmallText>
       </div>

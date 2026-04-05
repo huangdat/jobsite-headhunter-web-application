@@ -92,6 +92,13 @@
   "actions": {
     "viewDetails": "View Details"
   },
+  "saved": {
+    "removeButton": "Remove",
+    "viewJobButton": "View Job",
+    "postedText": "Posted on",
+    "description": "Explore your saved jobs and find the perfect match for your career aspirations. Review job details, track application deadlines, and easily access your favorite opportunities all in one place.",
+    "pageTitle": "Saved Jobs"
+  },
   "detail": {
     "jobDetailsSection": "Job details",
     "jobCodeLabel": "Job code:",

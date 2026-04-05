@@ -88,7 +88,7 @@ export function SavedJobsPage() {
             className="flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between"
           >
             <div>
-              <MetaText className="text-brand-primary">
+              <MetaText className="text-lime-500">
                 {job.companyName ?? t("saved.confidentialCompany")}
               </MetaText>
               <SubsectionTitle className="mt-1">{job.title}</SubsectionTitle>
@@ -116,14 +116,14 @@ export function SavedJobsPage() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 variant="outline"
-                className="sm:min-w-[calc(140px)]"
+                className="sm:min-w-[calc(140px)] cursor-pointer"
                 onClick={() => navigate(`/jobs/${job.jobId}`)}
               >
                 {t("saved.viewJobButton")}
               </Button>
               <Button
                 variant="ghost"
-                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700"
+                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700 cursor-pointer"
                 onClick={() => handleRemove(job.jobId)}
                 disabled={removeJobMutation.isPending}
               >

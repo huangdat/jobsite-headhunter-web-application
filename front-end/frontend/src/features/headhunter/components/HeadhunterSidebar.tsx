@@ -28,7 +28,7 @@ export function HeadhunterSidebar({ onItemClick }: HeadhunterSidebarProps) {
   ];
 
   return (
-    <aside className="w-72 bg-white text-black min-h-screen p-6 flex flex-col">
+    <aside className="w-72 bg-white text-black min-h-screen p-6 flex flex-col border-r border-slate-100">
       <nav className="flex-1 space-y-2 mt-4">
         {items.map((it) => (
           <NavLink
@@ -37,11 +37,11 @@ export function HeadhunterSidebar({ onItemClick }: HeadhunterSidebarProps) {
             end
             onClick={onItemClick}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 border border-transparent
+              `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-200 border
               ${
                 isActive
-                  ? "bg-brand-primary/20 text-brand-primary shadow-sm border-brand-primary/30 ring-1 ring-brand-primary/10"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                  ? "bg-lime-100 text-black border-lime-300 shadow-sm"
+                  : "text-slate-600 border-transparent hover:bg-slate-50 hover:text-slate-900"
               }`
             }
           >
@@ -49,7 +49,7 @@ export function HeadhunterSidebar({ onItemClick }: HeadhunterSidebarProps) {
               <>
                 <it.icon
                   className={`w-5 h-5 transition-colors ${
-                    isActive ? "text-brand-primary" : "text-slate-400"
+                    isActive ? "text-black" : "text-gray-500"
                   }`}
                 />
                 <span>{it.label}</span>

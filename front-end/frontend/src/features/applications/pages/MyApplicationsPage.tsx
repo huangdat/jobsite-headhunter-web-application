@@ -40,8 +40,9 @@ export const MyApplicationsPage: React.FC = () => {
 
   const stats = {
     total: pagination.totalElements,
-    applied: applications.filter((a) => (a.status as string) === "APPLIED")
-      .length,
+    applied: applications.filter((a) => (a.status as string) === "APPLIED").length,
+    interviewing: applications.filter((a) => (a.status as string) === "INTERVIEW").length,
+    rejected: applications.filter((a) => (a.status as string) === "REJECTED").length,
   };
 
   return (
@@ -52,8 +53,7 @@ export const MyApplicationsPage: React.FC = () => {
         description={t("applications.subtitle")}
       />
 
-      {/* STATS */}
-      <div className="flex gap-2 mb-8">
+      <div className="flex flex-wrap gap-2 mb-8">
         <StatCard
           label={t("common.total")}
           value={stats.total}
@@ -66,11 +66,21 @@ export const MyApplicationsPage: React.FC = () => {
           icon={<Clock size={14} />}
           color="amber"
         />
+        <StatCard
+          label={t("applications.status.interviewing") || "Interviewing"}
+          value={stats.interviewing}
+          icon={<Video size={14} />}
+          color="blue"
+        />
+        <StatCard
+          label={t("applications.status.rejected") || "Rejected"}
+          value={stats.rejected}
+          icon={<X size={14} />}
+          color="red"
+        />
       </div>
 
-      {/* LIST */}
       <div className="space-y-4">
-        {/* Error State */}
         {error && (
           <ErrorState
             error={new Error(error)}
@@ -79,64 +89,54 @@ export const MyApplicationsPage: React.FC = () => {
           />
         )}
 
-        {/* Loading State */}
         {!error && isLoading && <PageSkeleton variant="list" count={3} />}
 
-        {/* Empty State */}
-        {!error && !isLoading && applications.length === 0 && (
+        {!error && !isLoading && applications.length === 0 ? (
           <div className="text-center py-20 border-2 border-dashed rounded-3xl text-slate-400 dark:text-slate-500 dark:border-slate-700">
             <Search className="mx-auto mb-4 opacity-20" size={40} />
             <p>{t("applications.empty.noApplications")}</p>
           </div>
-        )}
-
-        {/* Applications List */}
-        {!error && !isLoading && applications.length > 0 && (
-          <>
-            {applications.map((app) => (
-              <Card
-                key={app.id}
-                onClick={() => setViewingApp(app)}
-                className="group p-5 rounded-xl border-slate-200/60 dark:border-slate-700 shadow-sm hover:border-brand-primary transition-all cursor-pointer bg-white dark:bg-slate-800"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-lg bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-brand-primary transition-colors">
-                      <Building2 size={24} />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
-                        {app.jobTitle}
-                      </h3>
-                      <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
-                        <span className="flex items-center gap-1">
-                          <Calendar size={12} />{" "}
-                          {new Date(app.appliedAt).toLocaleDateString()}
-                        </span>
-                        <span className="text-slate-300 dark:text-slate-600">
-                          |
-                        </span>
-                        <span className="text-brand-primary font-medium">
-                          {t("applications.candidateView")}
-                        </span>
-                      </div>
-                    </div>
+        ) : (
+          applications.map((app) => (
+            <Card
+              key={app.id}
+              onClick={() => setViewingApp(app)}
+              className="group p-5 rounded-xl border-slate-200/60 dark:border-slate-700 shadow-sm hover:border-lime-500 transition-all cursor-pointer bg-white dark:bg-slate-800"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-lg bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-lime-500 group-hover:bg-lime-50 transition-colors">
+                    <Building2 size={24} />
                   </div>
-                  <div className="text-right">
-                    <ApplicationStatusBadge status={app.status} />
-                    <ChevronRight
-                      size={16}
-                      className="ml-auto mt-2 text-slate-300 dark:text-slate-600 group-hover:text-brand-primary transition-all"
-                    />
+                  <div>
+                    <h3 className="font-semibold text-lg text-slate-900 dark:text-white group-hover:text-lime-600 transition-colors">
+                      {app.jobTitle}
+                    </h3>
+                    <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
+                      <span className="flex items-center gap-1">
+                        <Calendar size={12} />
+                        {new Date(app.appliedAt).toLocaleDateString()}
+                      </span>
+                      <span className="text-slate-300 dark:text-slate-600">|</span>
+                      <span className="text-lime-500 font-bold uppercase tracking-wider">
+                        {t("applications.candidateView")}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </Card>
-            ))}
-          </>
+                <div className="text-right">
+                  <ApplicationStatusBadge status={app.status} />
+                  <ChevronRight
+                    size={16}
+                    className="ml-auto mt-2 text-slate-300 dark:text-slate-600 group-hover:text-lime-500 transition-all"
+                  />
+                </div>
+              </div>
+            </Card>
+          ))
         )}
       </div>
 
-      {/* PAGINATION */}
       {!isLoading && pagination.totalPages > 1 && (
         <div className="mt-8 flex justify-between items-center text-sm font-medium text-slate-500 dark:text-slate-400">
           <span>
@@ -163,7 +163,6 @@ export const MyApplicationsPage: React.FC = () => {
         </div>
       )}
 
-      {/* DETAIL MODAL */}
       {viewingApp && (
         <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-[2px]">
           <ModalContent app={viewingApp} onClose={() => setViewingApp(null)} />
@@ -193,7 +192,7 @@ const ModalContent: React.FC<{
           variant="ghost"
           size="icon"
           onClick={onClose}
-          className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
+          className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 cursor-pointer"
           aria-label={t("common.actions.close")}
         >
           <X size={20} />
@@ -246,8 +245,7 @@ const ModalContent: React.FC<{
                     {t("applications.interview.duration")}
                   </p>
                   <p className="font-semibold flex items-center justify-end gap-1">
-                    <Clock size={12} />{" "}
-                    {formatDuration(interview.durationMinutes)}
+                    <Clock size={12} /> {formatDuration(interview.durationMinutes)}
                   </p>
                 </div>
                 <div className="col-span-2 pt-2 border-t border-blue-100/50 dark:border-blue-800">
@@ -265,14 +263,12 @@ const ModalContent: React.FC<{
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <Video size={14} className="mr-1.5" />{" "}
-                        {interview.meetingLink}
+                        <Video size={14} className="mr-1.5" /> {interview.meetingLink}
                       </a>
                     </Button>
                   ) : (
                     <p className="text-xs font-medium flex items-center gap-1">
-                      <MapPin size={14} className="text-red-400" />{" "}
-                      {interview.location}
+                      <MapPin size={14} className="text-red-400" /> {interview.location}
                     </p>
                   )}
                 </div>
@@ -311,21 +307,26 @@ const StatCard: React.FC<{
   label: string;
   value: number;
   icon: React.ReactNode;
-  color: "lime" | "amber";
-}> = ({ label, value, icon, color }) => (
-  <div className="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm">
-    <div
-      className={`p-1.5 rounded-md ${color === "lime" ? "bg-lime-50 dark:bg-lime-900/30 text-lime-600 dark:text-lime-400" : "bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"}`}
-    >
-      {icon}
+  color: "lime" | "amber" | "blue" | "red";
+}> = ({ label, value, icon, color }) => {
+  const colorClasses = {
+    lime: "bg-lime-50 text-lime-600 dark:bg-lime-900/30 dark:text-lime-400",
+    amber: "bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
+    blue: "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
+    red: "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400",
+  };
+
+  return (
+    <div className="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm">
+      <div className={`p-1.5 rounded-md ${colorClasses[color]}`}>{icon}</div>
+      <div>
+        <p className="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 leading-none mb-0.5 tracking-wider">
+          {label}
+        </p>
+        <p className="text-sm font-bold text-slate-800 dark:text-white leading-none">
+          {value}
+        </p>
+      </div>
     </div>
-    <div>
-      <p className="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500 leading-none mb-0.5 tracking-wider">
-        {label}
-      </p>
-      <p className="text-sm font-bold text-slate-800 dark:text-white leading-none">
-        {value}
-      </p>
-    </div>
-  </div>
-);
+  );
+};
