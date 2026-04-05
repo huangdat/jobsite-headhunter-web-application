@@ -1,22 +1,27 @@
-// Application Status Enum
-export enum ApplicationStatus {
-  APPLIED = "APPLIED",
-  SCREENING = "SCREENING",
-  INTERVIEW = "INTERVIEW",
-  PASSED = "PASSED",
-  REJECTED = "REJECTED",
-}
+// Application Status (using const as const pattern for erasable syntax)
+export const ApplicationStatus = {
+  APPLIED: "APPLIED",
+  SCREENING: "SCREENING",
+  INTERVIEW: "INTERVIEW",
+  PASSED: "PASSED",
+  REJECTED: "REJECTED",
+} as const;
+export type ApplicationStatus =
+  (typeof ApplicationStatus)[keyof typeof ApplicationStatus];
 
-export enum InterviewType {
-  ONLINE = "ONLINE",
-  OFFLINE = "OFFLINE",
-}
+export const InterviewType = {
+  ONLINE: "ONLINE",
+  OFFLINE: "OFFLINE",
+} as const;
+export type InterviewType = (typeof InterviewType)[keyof typeof InterviewType];
 
-export enum InterviewStatus {
-  SCHEDULED = "SCHEDULED",
-  COMPLETED = "COMPLETED",
-  CANCELLED = "CANCELLED",
-}
+export const InterviewStatus = {
+  SCHEDULED: "SCHEDULED",
+  COMPLETED: "COMPLETED",
+  CANCELLED: "CANCELLED",
+} as const;
+export type InterviewStatus =
+  (typeof InterviewStatus)[keyof typeof InterviewStatus];
 
 // Main Application Interface
 export interface Application {

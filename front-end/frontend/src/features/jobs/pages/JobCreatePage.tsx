@@ -339,11 +339,9 @@ export function JobCreatePage() {
               id="negotiable"
               {...register("negotiable")}
             />
-            <SmallText asChild>
-              <label htmlFor="negotiable">
-                {t("create.labels.salaryNegotiable")}
-              </label>
-            </SmallText>
+            <label htmlFor="negotiable" className="text-sm font-medium">
+              {t("create.labels.salaryNegotiable")}
+            </label>
           </div>
         </section>
 

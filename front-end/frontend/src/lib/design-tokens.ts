@@ -53,6 +53,7 @@ export const brandColors = {
     text: "text-amber-600",
     textDark: "dark:text-amber-400",
     border: "border-amber-200",
+    borderDark: "dark:border-amber-900/50",
     icon: "text-amber-600 dark:text-amber-400",
   },
 
@@ -66,6 +67,7 @@ export const brandColors = {
     text: "text-red-600",
     textDark: "dark:text-red-400",
     border: "border-red-200",
+    borderDark: "dark:border-red-900/50",
     icon: "text-red-600 dark:text-red-400",
   },
 } as const;
@@ -97,6 +99,7 @@ export const getBrandClass = (
     return "hover:bg-brand-hover";
   }
 
+  // eslint-disable-next-line security/detect-object-injection
   const baseClass = brandColors.primary[type];
 
   // Dark mode variants (if needed in future)
@@ -145,11 +148,11 @@ export const getSemanticClass = (
     return `${color.border} ${color.borderDark || ""}`.trim();
   }
   if (type === "icon") {
-    return color.icon || color.text;
+    const iconClass = (color as Record<string, string>).icon;
+    return iconClass || color.text;
   }
 
-  // eslint-disable-next-line security/detect-object-injection
-  return color[type];
+  return "";
 };
 
 /**

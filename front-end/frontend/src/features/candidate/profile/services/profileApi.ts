@@ -82,7 +82,7 @@ export const profileApi = {
     form.append("cvFile", file);
 
     const response = await apiClient.put<ApiResponse<{ cvUrl: string }>>(
-      API_ENDPOINTS.UPLOAD_CV,
+      API_ENDPOINTS.CANDIDATE.CV_UPLOAD,
       form,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
@@ -90,7 +90,9 @@ export const profileApi = {
     return response.data?.result?.cvUrl ?? "";
   },
   fetchCVs: async (): Promise<{ id: string; name: string; url: string }[]> => {
-    const response = await apiClient.get<ApiResponse<{ id: string; name: string; url: string }[]>>(API_ENDPOINTS.FETCH_CVS);
+    const response = await apiClient.get<
+      ApiResponse<{ id: string; name: string; url: string }[]>
+    >(API_ENDPOINTS.CANDIDATE.CV_LIST);
     return response.data?.result || [];
   },
 };

@@ -13,7 +13,6 @@ export const ApplyJobPage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
   const { t } = useAppTranslation();
-  const jobTitle = jobId ? "Software Engineer" : "Job Position";
   const [defaultValues, setDefaultValues] = useState<
     Partial<ApplicationFormData> | undefined
   >(undefined);
@@ -56,19 +55,8 @@ export const ApplyJobPage: React.FC = () => {
   }, []);
 
   return (
-    <PageContainer variant="white" maxWidth="3xl">
-      <PageHeader
-        variant="default"
-        title={t("applications.form.title")}
-        description={
-          <>
-            {t("applications.form.submit")}
-            <SmallText weight="bold" className="text-brand-primary ml-2">
-              {jobTitle}
-            </SmallText>
-          </>
-        }
-      />
+    <PageContainer variant="white" maxWidth="4xl">
+      <PageHeader variant="default" title={t("applications.form.title")} />
 
       {/* Form Card */}
       <Card className="p-8 border-none shadow-xl shadow-slate-200/60 rounded-3xl bg-white dark:bg-gray-800 dark:shadow-gray-900/20">

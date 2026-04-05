@@ -93,6 +93,17 @@ export { VerificationChecklistCard } from "./components";
 export { ApprovalDetailsCard } from "./components";
 
 // ============================================================================
+// COMPONENTS (Phase 4) - Data Display & Container Components
+// ============================================================================
+
+export { TimelineEventItem } from "./components";
+export { AutomatedActionItem } from "./components";
+export { DetailsGrid, SectionTitle } from "./components";
+export { SectionCard } from "./components";
+export { ApprovalSuccessBanner } from "./components";
+export { EmptyStateView } from "./components";
+
+// ============================================================================
 // PAGES (Phase 2)
 // ============================================================================
 

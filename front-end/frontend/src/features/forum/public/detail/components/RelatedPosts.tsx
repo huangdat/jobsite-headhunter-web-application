@@ -58,12 +58,9 @@ export function RelatedPosts({ categoryId, excludeId }: RelatedPostsProps) {
             {/* Card Content */}
             <div className="p-4">
               {/* Category */}
-              <Caption
-                weight="semibold"
-                className="text-brand-primary uppercase block"
-              >
+              <div className="text-xs font-semibold text-brand-primary uppercase block">
                 {post.categoryName}
-              </Caption>
+              </div>
 
               {/* Title */}
               <SmallText
@@ -79,7 +76,7 @@ export function RelatedPosts({ categoryId, excludeId }: RelatedPostsProps) {
               </SmallText>
 
               {/* Date */}
-              <Caption variant="muted">
+              <Caption variant="default">
                 {new Date(post.createdAt).toLocaleDateString("vi-VN")}
               </Caption>
             </div>

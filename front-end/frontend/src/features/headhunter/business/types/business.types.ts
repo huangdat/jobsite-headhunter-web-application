@@ -54,13 +54,65 @@ export interface BusinessProfile {
 }
 
 /* ============================================
+    FORM TYPES & VALIDATION
+   ============================================ */
+
+export interface BusinessFormData {
+  companyName: string;
+  taxId: string;
+  website: string;
+  companySize: string;
+  headquartersAddress: string;
+}
+
+export interface BusinessFormErrors extends Record<string, string | undefined> {
+  companyName?: string | undefined;
+  taxId?: string | undefined;
+  website?: string | undefined;
+  companySize?: string | undefined;
+  headquartersAddress?: string | undefined;
+}
+
+export const ERROR_MESSAGE_KEYS = {
+  companyName: {
+    required: "business.form.errors.companyName.required",
+    minLength: "business.form.errors.companyName.minLength",
+    maxLength: "business.form.errors.companyName.maxLength",
+    pattern: "business.form.errors.companyName.pattern",
+  },
+  taxId: {
+    required: "business.form.errors.taxId.required",
+    pattern: "business.form.errors.taxId.pattern",
+    invalid: "business.form.errors.taxId.invalid",
+  },
+  website: {
+    required: "business.form.errors.website.required",
+    invalid: "business.form.errors.website.invalid",
+    minLength: "business.form.errors.website.minLength",
+    pattern: "business.form.errors.website.pattern",
+  },
+  companySize: {
+    required: "business.form.errors.companySize.required",
+  },
+  headquartersAddress: {
+    required: "business.form.errors.headquartersAddress.required",
+    minLength: "business.form.errors.headquartersAddress.minLength",
+    maxLength: "business.form.errors.headquartersAddress.maxLength",
+  },
+} as const;
+
+/* ============================================
     PROFILE STRENGTH (Giữ lại để hiển thị dashboard)
    ============================================ */
+
+export type StrengthItemStatus = "completed" | "in_progress" | "incomplete";
 
 export interface StrengthItem {
   id: string;
   label: string; // i18n key
+  description?: string; // i18n key
   completed: boolean;
+  status?: StrengthItemStatus;
   impact: number;
 }
 
@@ -68,6 +120,25 @@ export interface ProfileStrengthData {
   percentage: number;
   items: StrengthItem[];
   lastUpdatedAt: string;
+  nextAction?: string; // i18n key
+}
+
+/**
+ * Submitted document (for business verification/profile)
+ */
+export interface SubmittedDocument {
+  id: string;
+  fileName?: string;
+  filename?: string; // Alias for fileName
+  fileUrl: string;
+  fileSize: number; // bytes
+  mimeType: string;
+  category?: string;
+  documentType?: string; // "LICENSE", "TAX_CERTIFICATE", "BUSINESS_REGISTRATION", etc
+  uploadedAt: string; // ISO datetime
+  status?: "VERIFIED" | "PENDING" | "REJECTED";
+  verificationStatus?: "verified" | "pending" | "rejected"; // Alias for status
+  notes?: string;
 }
 
 /* ============================================
