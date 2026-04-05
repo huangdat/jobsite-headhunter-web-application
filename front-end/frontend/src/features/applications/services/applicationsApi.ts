@@ -145,11 +145,11 @@ export const validateApplicationEligibility = async (
 };
 
 /**
- * Get application by ID
+ * Get application by ID - use headhunter endpoint
  */
 export const getApplicationById = async (id: number): Promise<Application> => {
   const response = await apiClient.get<ApiResponse<Application>>(
-    `/api/applications/${id}`
+    `/api/headhunter/applications/${id}`
   );
   return response.data.result;
 };
@@ -221,7 +221,10 @@ export const getInterviewById = async (id: number): Promise<any> => {
 
 export const cancelApplication = async (id: number): Promise<void> => {
   try {
-    await apiClient.delete(`/api/applications/${id}`); // Hoặc dùng PATCH tùy Backend
+    // Use PATCH to update status to CANCELLED instead of DELETE
+    await apiClient.patch(`/api/headhunter/applications/${id}/status`, {
+      status: "CANCELLED",
+    });
   } catch (error) {
     handleError(error, {
       service: "applications",
