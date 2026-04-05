@@ -40,9 +40,13 @@ export const MyApplicationsPage: React.FC = () => {
 
   const stats = {
     total: pagination.totalElements,
-    applied: applications.filter((a) => (a.status as string) === "APPLIED").length,
-    interviewing: applications.filter((a) => (a.status as string) === "INTERVIEW").length,
-    rejected: applications.filter((a) => (a.status as string) === "REJECTED").length,
+    applied: applications.filter((a) => (a.status as string) === "APPLIED")
+      .length,
+    interviewing: applications.filter(
+      (a) => (a.status as string) === "INTERVIEW"
+    ).length,
+    rejected: applications.filter((a) => (a.status as string) === "REJECTED")
+      .length,
   };
 
   return (
@@ -101,15 +105,15 @@ export const MyApplicationsPage: React.FC = () => {
             <Card
               key={app.id}
               onClick={() => setViewingApp(app)}
-              className="group p-5 rounded-xl border-slate-200/60 dark:border-slate-700 shadow-sm hover:border-lime-500 transition-all cursor-pointer bg-white dark:bg-slate-800"
+              className="group p-5 rounded-xl border-slate-200/60 dark:border-slate-700 shadow-sm hover:border-slate-400 dark:hover:border-slate-600 transition-all cursor-pointer bg-white dark:bg-slate-800"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-lg bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-lime-500 group-hover:bg-lime-50 transition-colors">
+                  <div className="h-12 w-12 rounded-lg bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300 group-hover:bg-slate-100 dark:group-hover:bg-slate-700 transition-colors">
                     <Building2 size={24} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-slate-900 dark:text-white group-hover:text-lime-600 transition-colors">
+                    <h3 className="font-semibold text-lg text-slate-900 dark:text-white group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors">
                       {app.jobTitle}
                     </h3>
                     <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -117,8 +121,10 @@ export const MyApplicationsPage: React.FC = () => {
                         <Calendar size={12} />
                         {new Date(app.appliedAt).toLocaleDateString()}
                       </span>
-                      <span className="text-slate-300 dark:text-slate-600">|</span>
-                      <span className="text-lime-500 font-bold uppercase tracking-wider">
+                      <span className="text-slate-300 dark:text-slate-600">
+                        |
+                      </span>
+                      <span className="text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider">
                         {t("applications.candidateView")}
                       </span>
                     </div>
@@ -128,7 +134,7 @@ export const MyApplicationsPage: React.FC = () => {
                   <ApplicationStatusBadge status={app.status} />
                   <ChevronRight
                     size={16}
-                    className="ml-auto mt-2 text-slate-300 dark:text-slate-600 group-hover:text-lime-500 transition-all"
+                    className="ml-auto mt-2 text-slate-300 dark:text-slate-600 group-hover:text-slate-600 dark:group-hover:text-slate-400 transition-all"
                   />
                 </div>
               </div>
@@ -245,7 +251,8 @@ const ModalContent: React.FC<{
                     {t("applications.interview.duration")}
                   </p>
                   <p className="font-semibold flex items-center justify-end gap-1">
-                    <Clock size={12} /> {formatDuration(interview.durationMinutes)}
+                    <Clock size={12} />{" "}
+                    {formatDuration(interview.durationMinutes)}
                   </p>
                 </div>
                 <div className="col-span-2 pt-2 border-t border-blue-100/50 dark:border-blue-800">
@@ -263,12 +270,14 @@ const ModalContent: React.FC<{
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <Video size={14} className="mr-1.5" /> {interview.meetingLink}
+                        <Video size={14} className="mr-1.5" />{" "}
+                        {interview.meetingLink}
                       </a>
                     </Button>
                   ) : (
                     <p className="text-xs font-medium flex items-center gap-1">
-                      <MapPin size={14} className="text-red-400" /> {interview.location}
+                      <MapPin size={14} className="text-red-400" />{" "}
+                      {interview.location}
                     </p>
                   )}
                 </div>
@@ -311,7 +320,8 @@ const StatCard: React.FC<{
 }> = ({ label, value, icon, color }) => {
   const colorClasses = {
     lime: "bg-lime-50 text-lime-600 dark:bg-lime-900/30 dark:text-lime-400",
-    amber: "bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
+    amber:
+      "bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
     blue: "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
     red: "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400",
   };

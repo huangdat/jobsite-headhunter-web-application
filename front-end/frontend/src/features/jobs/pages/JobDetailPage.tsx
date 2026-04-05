@@ -185,7 +185,7 @@ export function JobDetailPage() {
     <PageContainer variant="default" maxWidth="6xl">
       <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
         <button
-          className="hover:text-lime-500 dark:hover:text-brand-primary cursor-pointer"
+          className="hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer transition-colors"
           onClick={() => navigate("/jobs")}
         >
           {t("list.pageTitle")}

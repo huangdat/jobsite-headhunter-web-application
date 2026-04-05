@@ -12,14 +12,14 @@ export function Navbar() {
     <nav className="hidden md:flex items-center gap-8">
       <Link
         to="/jobs"
-        className="text-sm font-medium hover:text-lime-500 transition-colors"
+        className="text-sm font-medium hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
       >
         {t("navigation.jobs")}
       </Link>
 
       <Link
         to="/forum-posts"
-        className="text-sm font-medium hover:text-lime-500 transition-colors"
+        className="text-sm font-medium hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
       >
         {t("navigation.forum")}
       </Link>
