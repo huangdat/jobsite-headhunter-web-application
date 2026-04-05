@@ -6,14 +6,14 @@
  * Displays full verification details with approval/rejection flow
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { PageContainer } from "@/shared/components/layout";
-import { useVerificationDetail } from "../hooks";
+import { useVerificationDetail, useRejectModal } from "../hooks";
 import { VerificationStatus } from "../types";
 import {
   VerificationTimeline,
@@ -24,14 +24,11 @@ import {
   EmptyStateView,
 } from "../components";
 import { ChevronLeft, AlertCircle } from "lucide-react";
-import { toast } from "sonner";
 
 export const VerificationDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useAppTranslation();
-  const [showRejectModal, setShowRejectModal] = useState<boolean>(false);
-  const [rejectReason, setRejectReason] = useState<string>("");
   const verificationId = id ? parseInt(id, 10) : 0;
 
   // Fetch verification detail
@@ -44,6 +41,9 @@ export const VerificationDetailPage: React.FC = () => {
     approve,
     reject,
   } = useVerificationDetail();
+
+  // Manage rejection modal state and validation
+  const rejectModal = useRejectModal({ minLength: 20, maxLength: 500 });
 
   useEffect(() => {
     if (verificationId) {
@@ -66,19 +66,13 @@ export const VerificationDetailPage: React.FC = () => {
    * Handle rejection submission
    */
   const handleRejectSubmit = async () => {
-    if (rejectReason.length < 20) {
-      toast.error(t("verification.modal.reject.reasonMinLength"));
-      return;
-    }
-    if (rejectReason.length > 500) {
-      toast.error(t("verification.modal.reject.reasonMaxLength"));
+    if (!rejectModal.validate()) {
       return;
     }
 
     try {
-      await reject({ reason: rejectReason });
-      setShowRejectModal(false);
-      setRejectReason("");
+      await reject({ reason: rejectModal.reason });
+      rejectModal.resetModal();
     } catch {
       // Error handled by hook
     }
@@ -233,7 +227,7 @@ export const VerificationDetailPage: React.FC = () => {
                     : t("verification.buttons.approve")}
                 </Button>
                 <Button
-                  onClick={() => setShowRejectModal(true)}
+                  onClick={rejectModal.open}
                   disabled={isRejecting}
                   variant="outline"
                   className="w-full bg-slate-800 border-slate-600 text-white hover:bg-slate-700"
@@ -249,7 +243,7 @@ export const VerificationDetailPage: React.FC = () => {
       </div>
 
       {/* REJECT MODAL */}
-      {showRejectModal && (
+      {rejectModal.isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <Card className="w-full max-w-md mx-4 p-6">
             <h2 className="text-xl font-semibold mb-4">
@@ -276,22 +270,19 @@ export const VerificationDetailPage: React.FC = () => {
               </label>
               <textarea
                 placeholder={t("verification.modal.reject.reasonPlaceholder")}
-                value={rejectReason}
-                onChange={(e) => setRejectReason(e.target.value)}
+                value={rejectModal.reason}
+                onChange={(e) => rejectModal.setReason(e.target.value)}
                 className="w-full min-h-24 p-3 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <p className="text-xs text-slate-600 mt-1">
-                {rejectReason.length}/500 -{" "}
+                {rejectModal.reason.length}/500 -{" "}
                 {t("verification.modal.reject.reasonHint")}
               </p>
             </div>
 
             <div className="flex gap-2">
               <Button
-                onClick={() => {
-                  setShowRejectModal(false);
-                  setRejectReason("");
-                }}
+                onClick={rejectModal.close}
                 variant="outline"
                 className="flex-1"
               >
@@ -299,7 +290,7 @@ export const VerificationDetailPage: React.FC = () => {
               </Button>
               <Button
                 onClick={handleRejectSubmit}
-                disabled={isRejecting || rejectReason.length < 20}
+                disabled={isRejecting || rejectModal.reason.length < 20}
                 className="flex-1 bg-red-600 hover:bg-red-700"
               >
                 {t("verification.modal.reject.submit")}

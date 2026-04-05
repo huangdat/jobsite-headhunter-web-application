@@ -6,14 +6,14 @@
  * Displays list of pending business verifications with KPIs and recent activity
  */
 
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { useVerifications } from "../hooks";
+import { useVerifications, useVerificationFilters } from "../hooks";
 import type { Verification } from "../types";
 import {
   VerificationStatsCard,
@@ -25,20 +25,14 @@ import { Search, Filter, AlertCircle } from "lucide-react";
 export const VerificationListPage: React.FC = () => {
   const { t } = useAppTranslation();
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [showFilters, setShowFilters] = useState<boolean>(false);
 
   // Fetch verifications with filters
   const { verifications, stats, isLoading, pagination, handlePageChange } =
     useVerifications(true);
 
-  /**
-   * Handle search - debounced filter
-   */
-  const handleSearch = useCallback((value: string) => {
-    setSearchTerm(value);
-    // TODO: Implement search filtering in Phase 3
-  }, []);
+  // Manage search and filter UI state
+  const { searchTerm, setSearchTerm, toggleFilters } =
+    useVerificationFilters(500);
 
   /**
    * Handle verification card click - navigate to detail
@@ -63,14 +57,14 @@ export const VerificationListPage: React.FC = () => {
           <Input
             placeholder={t("verification.pages.list.search")}
             value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
           />
         </div>
         <Button
           variant="outline"
           size="sm"
-          onClick={() => setShowFilters(!showFilters)}
+          onClick={toggleFilters}
           className="gap-2"
         >
           <Filter size={16} />

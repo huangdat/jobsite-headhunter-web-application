@@ -7,6 +7,8 @@
  * - useVerificationDetail: Single verification detail with approval/rejection
  * - useVerificationStats: KPI statistics and metrics
  * - useRecentEvents: Recent activity/events feed
+ * - useVerificationFilters: Search and filter state management (Phase 6)
+ * - useRejectModal: Modal state and validation for rejection flow (Phase 6)
  */
 
 // These will be created in Phase 2 (Custom Hooks)
@@ -23,3 +25,10 @@ export { useVerificationStats } from "./useVerificationStats";
 
 export type { UseRecentEventsReturn } from "./useRecentEvents";
 export { useRecentEvents } from "./useRecentEvents";
+
+// Phase 6: Filter and Modal Hooks
+export type { UseVerificationFiltersReturn } from "./useVerificationFilters";
+export { useVerificationFilters } from "./useVerificationFilters";
+
+export type { UseRejectModalReturn } from "./useRejectModal";
+export { useRejectModal } from "./useRejectModal";
