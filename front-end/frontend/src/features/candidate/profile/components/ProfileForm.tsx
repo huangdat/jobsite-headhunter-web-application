@@ -31,6 +31,7 @@ interface ProfileFormProps {
   ) => void;
   onDiscard: () => void;
   onSave: () => Promise<void>;
+  profileStrength?: number;
 }
 
 const ProfileFormSkeleton = () => {

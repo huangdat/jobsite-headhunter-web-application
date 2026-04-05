@@ -66,6 +66,7 @@ export function ProfileEditPage() {
           success={profileModel.success}
           saveError={profileModel.saveError || profileModel.fetchError}
           dirty={profileModel.dirty}
+          profileStrength={profileModel.profileStrength}
           onFieldChange={profileModel.updateField}
           onDiscard={profileModel.discardChanges}
           onSave={async () => {
