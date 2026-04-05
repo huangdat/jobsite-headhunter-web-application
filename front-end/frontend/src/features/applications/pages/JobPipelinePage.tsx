@@ -119,18 +119,18 @@ export const JobPipelinePage: React.FC = () => {
                     {new Date(app.appliedAt).toLocaleDateString()}
                   </td>
                   <td className="p-5">
-                    {/* Đổi màu Badge sang Lime */}
-                    <span className="px-3 py-1 bg-lime-100 text-lime-700 dark:bg-lime-500/20 dark:text-lime-400 rounded-full text-[10px] font-black uppercase tracking-tight">
+                    {/* Status badge with design tokens */}
+                    <span className="px-3 py-1 bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300 rounded-full text-[10px] font-black uppercase tracking-tight">
                       {app.status}
                     </span>
                   </td>
                   <td className="p-5 text-right">
-                    {/* Đổi nút View Details sang nền Lime chữ đen chuẩn bài */}
+                    {/* View Details button with design tokens */}
                     <Button
                       onClick={() =>
                         navigate(`/headhunter/applications/${app.id}`)
                       }
-                      className="bg-lime-400 text-slate-900 hover:bg-lime-500 shadow-sm shadow-lime-500/20"
+                      className="bg-slate-700 text-white hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 shadow-sm shadow-slate-700/20"
                       size="sm"
                     >
                       {t("actions.viewDetails")}

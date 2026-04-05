@@ -19,6 +19,7 @@ export const useLogin = () => {
     rememberMe: false,
   });
   const [errors, setErrors] = useState<Partial<LoginFormData>>({});
+  const [generalError, setGeneralError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = (data: LoginFormData): boolean => {
@@ -56,6 +57,7 @@ export const useLogin = () => {
 
     setIsLoading(true);
     setErrors({});
+    setGeneralError(null);
 
     try {
       // Send username/email as 'username' field (backend expects username)
@@ -131,10 +133,14 @@ export const useLogin = () => {
       // Set form error for the appropriate field
       if (errorField === "email") {
         setErrors({ email: errorMessage });
+        setGeneralError(null);
       } else if (errorField === "password") {
         setErrors({ password: errorMessage });
+        setGeneralError(null);
       } else {
-        setErrors({ email: errorMessage });
+        // General error - not field-specific
+        setErrors({});
+        setGeneralError(errorMessage);
       }
 
       console.error("Login detail error:", error);
@@ -174,6 +180,7 @@ export const useLogin = () => {
   return {
     formData,
     errors,
+    generalError,
     isLoading,
     handleSubmit,
     handleChange,

@@ -48,7 +48,7 @@ export function ProfileEditPage() {
             <Button
               variant="ghost"
               onClick={() => navigate(-1)}
-              className="hidden items-center gap-2 font-bold uppercase tracking-widest text-white hover:text-lime-400 hover:bg-transparent md:flex text-[11px] cursor-pointer transition-colors"
+              className="hidden items-center gap-2 font-bold uppercase tracking-widest text-white hover:text-slate-300 dark:hover:text-slate-400 hover:bg-transparent md:flex text-[11px] cursor-pointer transition-colors"
             >
               <ChevronLeft size={16} />
               {t("common.back")}
