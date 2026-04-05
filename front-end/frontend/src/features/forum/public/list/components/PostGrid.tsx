@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { usePostList } from "../hooks/usePostList";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import {
   BodyText,
   MetaText,
@@ -21,7 +22,24 @@ import {
 export function PostGrid() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { posts, isLoading, isEmpty } = usePostList();
+  const { posts, isLoading, isEmpty, isError, error } = usePostList();
+
+  // Error state
+  if (isError) {
+    return (
+      <ErrorState
+        error={error || undefined}
+        onRetry={() => window.location.reload()}
+        variant="inline"
+        title={t("forum.list.errorTitle") || "Không thể tải tin tức"}
+        message={
+          error?.message ||
+          t("forum.list.errorMessage") ||
+          "Đã xảy ra lỗi khi tải tin tức. Vui lòng thử lại."
+        }
+      />
+    );
+  }
 
   // AC5: Show loading spinner
   if (isLoading) {

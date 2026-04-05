@@ -5,6 +5,7 @@ import {
   getTop10Companies,
   type BusinessProfileResp,
 } from "@/shared/utils/businessProfileService";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { COMPANY_LOGO_COLORS, HOME_SIZES } from "../constants";
 import {
   SubsectionTitle,
@@ -15,7 +16,7 @@ export function TopCompanies() {
   const { t, currentLanguage } = useHomeTranslation();
   const [companies, setCompanies] = useState<BusinessProfileResp[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -25,7 +26,11 @@ export function TopCompanies() {
         setCompanies(data);
       } catch (err) {
         console.error("Failed to fetch companies:", err);
-        setError(t("messages.errorLoadCompanies"));
+        setError(
+          err instanceof Error
+            ? err
+            : new Error(t("messages.errorLoadCompanies"))
+        );
       } finally {
         setLoading(false);
       }
@@ -51,9 +56,12 @@ export function TopCompanies() {
         )}
 
         {error && (
-          <div className="text-center py-12">
-            <SmallText className="text-red-500">{error}</SmallText>
-          </div>
+          <ErrorState
+            error={error}
+            onRetry={() => window.location.reload()}
+            variant="inline"
+            title={t("topCompanies.errorTitle") || "Không thể tải công ty"}
+          />
         )}
 
         {!loading && !error && companies.length === 0 && (
@@ -84,7 +92,7 @@ export function TopCompanies() {
 
                 <SmallText
                   weight="semibold"
-                  className="text-lime-500 mt-2 transition group-hover:translate-x-1 text-xs block"
+                  className="text-slate-700 dark:text-slate-300 mt-2 transition group-hover:translate-x-1 text-xs block"
                 >
                   {t("topCompanies.viewCompany")}
                 </SmallText>
