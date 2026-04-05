@@ -149,7 +149,6 @@
       },
       "validation": {
         "fileTooLarge": "File is too large. Maximum size is 5MB.",
-        "invalidFileFormat": "File format not supported. Please use PDF, DOC, DOCX, or RTF.",
         "fileTooLargeShort": "Too large",
         "invalidFileFormatShort": "Invalid format",
         "maxFilesReached": "You've reached the maximum number of resumes",
