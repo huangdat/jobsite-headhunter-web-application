@@ -6,6 +6,10 @@ import { UserRoleDistribution } from "../components/UserRoleDistribution";
 import { JobStatusStatsComponent } from "../components/JobStatusStats";
 import { SystemOverviewCards } from "../components/SystemOverviewCards";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import {
+  SectionTitle,
+  LabelText,
+} from "@/shared/components/typography/Typography";
 
 /**
  * AdminDashboardPage
@@ -74,15 +78,13 @@ export const AdminDashboardPage: React.FC = () => {
       <div className="space-y-6">
         {/* Date Range Filter Section (DASH-06 AC2: Time-based filtering) */}
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
+          <SectionTitle className="mb-4">
             {t("admin.dashboard.filter.timeRange", "Filter by Date Range")}
-          </h2>
+          </SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* From Date */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                {t("admin.dashboard.filter.from", "From")}
-              </label>
+              <LabelText>{t("admin.dashboard.filter.from", "From")}</LabelText>
               <input
                 type="date"
                 title={t("admin.dashboard.filter.from", "From")}
@@ -98,9 +100,7 @@ export const AdminDashboardPage: React.FC = () => {
 
             {/* To Date */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                {t("admin.dashboard.filter.to", "To")}
-              </label>
+              <LabelText>{t("admin.dashboard.filter.to", "To")}</LabelText>
               <input
                 type="date"
                 title={t("admin.dashboard.filter.to", "To")}

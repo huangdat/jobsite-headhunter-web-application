@@ -72,7 +72,7 @@ export function CommissionForm() {
   if (!formData) {
     return (
       <div className="flex items-center justify-center h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-primary"></div>
       </div>
     );
   }
@@ -103,13 +103,13 @@ export function CommissionForm() {
 
       {/* Success Alert */}
       {success && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
+        <div className="p-4 bg-brand-primary/10 border border-brand-primary/30 rounded-lg">
           <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-emerald-600">
+            <span className="material-symbols-outlined text-brand-primary">
               check_circle
             </span>
             <div>
-              <p className="font-medium text-emerald-900">
+              <p className="font-medium text-black">
                 {t("success.profileUpdated")}
               </p>
             </div>
@@ -309,7 +309,7 @@ export function CommissionForm() {
         <button
           type="submit"
           disabled={saving}
-          className="flex items-center gap-2 px-6 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-medium rounded-lg transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
         >
           {saving ? (
             <>

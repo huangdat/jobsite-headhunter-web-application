@@ -54,8 +54,8 @@ export const useInterviewSchedule = (options: UseInterviewScheduleOptions) => {
           onSuccess(interview);
         }
       } catch (err: unknown) {
-        const errorMsg = err?.message || t("common.error");
-        toast.error(errorMsg);
+        const message = err instanceof Error ? err.message : t("common.error");
+        toast.error(message);
       } finally {
         setIsSubmitting(false);
       }

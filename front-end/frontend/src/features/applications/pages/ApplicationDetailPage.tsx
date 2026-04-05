@@ -4,6 +4,12 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import {
+  Display,
+  SmallText,
+  MetaText,
+  BodyText,
+} from "@/shared/components/typography/Typography";
+import {
   InterviewScheduleModal,
   InterviewDetailModal,
   ApplicationStatusBadge,
@@ -114,88 +120,98 @@ export const ApplicationDetailPage: React.FC = () => {
   if (!application)
     return (
       <PageContainer variant="white" maxWidth="4xl">
-        <div className="p-20 text-center text-gray-400 dark:text-gray-500 font-bold">
-          {t("common.notFound")}
+        <div className="p-20 text-center">
+          <SmallText variant="muted" weight="bold">
+            {t("common.notFound")}
+          </SmallText>
         </div>
       </PageContainer>
     );
 
-  const labelStyle =
-    "text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1 flex items-center gap-2";
+  const LabelWithIcon = ({
+    children,
+    icon: Icon,
+  }: {
+    children: React.ReactNode;
+    icon?: React.ReactNode;
+  }) => (
+    <MetaText className="flex items-center gap-2 mb-1">
+      {Icon}
+      {children}
+    </MetaText>
+  );
 
   return (
     <PageContainer variant="white" maxWidth="4xl">
       <div className="flex justify-between items-end mb-8 border-b border-gray-100 dark:border-gray-800 pb-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-lime-400 flex items-center justify-center text-white">
+          <div className="w-14 h-14 rounded-2xl bg-brand-primary flex items-center justify-center text-black">
             <User size={28} />
           </div>
           <div>
-            <h1 className="text-3xl font-black text-gray-900 tracking-tight uppercase">
-              {application.fullName}
-            </h1>
-            <p className="text-gray-500 font-bold italic mt-1">
+            <Display className="uppercase">{application.fullName}</Display>
+            <SmallText variant="muted" weight="bold" className="italic mt-1">
               {application.jobTitle}
-            </p>
+            </SmallText>
           </div>
         </div>
         <Button
           variant="outline"
           onClick={() => navigate(-1)}
-          className="rounded-xl border-gray-200 hover:border-lime-400 hover:bg-lime-50 font-bold px-5 flex gap-2 cursor-pointer transition-all"
+          className="rounded-xl border-gray-200 hover:border-brand-primary hover:bg-brand-primary/10 px-5 flex gap-2 cursor-pointer transition-all"
         >
           <ChevronLeft size={18} />
-          {t("common.back")}
+          <SmallText weight="bold">{t("common.back")}</SmallText>
         </Button>
       </div>
 
       <div className="grid gap-6">
         <Card className="p-8 rounded-[2rem] border-gray-100 shadow-sm bg-white grid md:grid-cols-3 gap-8">
           <div className="space-y-1">
-            <label className={labelStyle}>
-              <Mail size={14} /> {t("applications.form.email")}
-            </label>
-            <p className="font-bold text-gray-700">{application.email}</p>
+            <LabelWithIcon icon={<Mail size={14} />}>
+              {t("applications.form.email")}
+            </LabelWithIcon>
+            <SmallText weight="bold">{application.email}</SmallText>
           </div>
           <div className="space-y-1">
-            <label className={labelStyle}>
-              <Phone size={14} /> {t("applications.form.phone")}
-            </label>
-            <p className="font-bold text-gray-700">{application.phone}</p>
+            <LabelWithIcon icon={<Phone size={14} />}>
+              {t("applications.form.phone")}
+            </LabelWithIcon>
+            <SmallText weight="bold">{application.phone}</SmallText>
           </div>
           <div className="space-y-1">
-            <label className={labelStyle}>
-              <Wallet size={14} /> {t("applications.form.salaryExpectation")}
-            </label>
-            <p className="font-bold text-lime-600">
+            <LabelWithIcon icon={<Wallet size={14} />}>
+              {t("applications.form.salaryExpectation")}
+            </LabelWithIcon>
+            <SmallText weight="bold" className="text-brand-primary">
               {application.salaryExpectation || "---"}
-            </p>
+            </SmallText>
           </div>
         </Card>
 
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="p-8 rounded-[2rem] border-gray-100 shadow-sm bg-white">
-            <label className={labelStyle}>{t("columns.status")}</label>
+            <MetaText className="mb-1">{t("columns.status")}</MetaText>
             <div className="mt-2 flex items-center gap-3">
               <ApplicationStatusBadge status={application.status} />
-              <span className="font-bold text-gray-700 uppercase text-sm">
+              <MetaText>
                 {t(`applications.status.${application.status.toLowerCase()}`)}
-              </span>
+              </MetaText>
             </div>
-            <p className="text-[10px] text-gray-400 font-bold mt-4 uppercase tracking-widest">
+            <MetaText className="mt-4">
               {t("common.appliedAt")}:{" "}
               {formatDate(application.appliedAt, i18n.language)}
-            </p>
+            </MetaText>
           </Card>
 
           <Card className="p-8 rounded-[2rem] border-gray-100 shadow-sm bg-white flex flex-col justify-between">
-            <label className={labelStyle}>
-              <FileText size={14} /> {t("common.viewCV")}
-            </label>
+            <LabelWithIcon icon={<FileText size={14} />}>
+              {t("common.viewCV")}
+            </LabelWithIcon>
             {application.cvSnapshotUrl ? (
               <Button
                 variant="outline"
-                className="rounded-xl border-gray-200 font-bold hover:border-lime-400 transition-all cursor-pointer w-full mt-2"
+                className="rounded-xl border-gray-200 hover:border-brand-primary transition-all cursor-pointer w-full mt-2"
                 asChild
               >
                 <a
@@ -203,59 +219,63 @@ export const ApplicationDetailPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open CV File
+                  <SmallText weight="bold">Open CV File</SmallText>
                 </a>
               </Button>
             ) : (
-              <p className="text-gray-400 italic text-sm">No CV attached</p>
+              <SmallText variant="muted" className="italic mt-2">
+                No CV attached
+              </SmallText>
             )}
           </Card>
         </div>
 
         {application.coverLetter && (
           <Card className="p-8 rounded-[2rem] border-gray-100 shadow-sm bg-white">
-            <label className={labelStyle}>
+            <MetaText className="mb-1">
               {t("applications.form.coverLetter")}
-            </label>
-            <p className="text-gray-600 leading-relaxed font-medium whitespace-pre-wrap mt-4 bg-gray-50/50 p-6 rounded-2xl border border-gray-100 italic">
+            </MetaText>
+            <BodyText className="whitespace-pre-wrap mt-4 bg-gray-50/50 dark:bg-gray-900/30 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 italic">
               "{application.coverLetter}"
-            </p>
+            </BodyText>
           </Card>
         )}
 
         {application.interviews && application.interviews.length > 0 && (
           <div className="space-y-4">
-            <label className={labelStyle + " px-2"}>
-              <Calendar size={14} /> {t("applications.interview.title")}
-            </label>
+            <LabelWithIcon icon={<Calendar size={14} />}>
+              {t("applications.interview.title")}
+            </LabelWithIcon>
             <div className="grid gap-3">
               {application.interviews.map((interview, index) => {
                 if (!interview) return null;
                 return (
                   <div
                     key={interview.id || index}
-                    className="bg-white border border-gray-100 rounded-2xl p-5 flex items-center justify-between hover:border-lime-400 transition-all cursor-pointer"
+                    className="bg-white border border-gray-100 rounded-2xl p-5 flex items-center justify-between hover:border-brand-primary transition-all cursor-pointer"
                     onClick={() => {
                       setSelectedInterview(interview);
                       setShowInterviewDetail(true);
                     }}
                   >
                     <div>
-                      <p className="font-bold text-gray-800">
+                      <SmallText weight="bold">
                         {interview.scheduledAt
                           ? formatDate(interview.scheduledAt, i18n.language)
                           : "---"}
-                      </p>
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-tighter">
+                      </SmallText>
+                      <MetaText className="mt-1">
                         Code: {interview.interviewCode || "N/A"}
-                      </p>
+                      </MetaText>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="font-bold text-xs cursor-pointer text-lime-600 uppercase tracking-widest hover:bg-transparent hover:text-lime-600 p-0"
+                      className="cursor-pointer text-brand-primary hover:bg-transparent hover:text-brand-primary p-0"
                     >
-                      {t("common.view")}
+                      <MetaText className="text-brand-primary">
+                        {t("common.view")}
+                      </MetaText>
                     </Button>
                   </div>
                 );
@@ -274,9 +294,11 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.reviewed"
                   )
                 }
-                className="flex-1 bg-lime-400 hover:bg-lime-500 text-white font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                variant="brand-primary"
+                size="xl"
+                className="flex-1 cursor-pointer"
               >
-                {t("common.approve") || "Approve"}
+                <MetaText>{t("common.approve") || "Approve"}</MetaText>
               </Button>
               <Button
                 variant="outline"
@@ -286,9 +308,11 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
               >
-                {t("common.reject")}
+                <MetaText className="text-red-500">
+                  {t("common.reject")}
+                </MetaText>
               </Button>
             </>
           )}
@@ -297,9 +321,11 @@ export const ApplicationDetailPage: React.FC = () => {
             <>
               <Button
                 onClick={() => setShowInterviewModal(true)}
-                className="flex-1 bg-lime-400 hover:bg-lime-500 text-white font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                variant="brand-primary"
+                size="xl"
+                className="flex-1 cursor-pointer"
               >
-                {t("applications.interview.title")}
+                <MetaText>{t("applications.interview.title")}</MetaText>
               </Button>
               <Button
                 variant="outline"
@@ -309,9 +335,11 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
               >
-                {t("common.reject")}
+                <MetaText className="text-red-500">
+                  {t("common.reject")}
+                </MetaText>
               </Button>
             </>
           )}
@@ -322,9 +350,11 @@ export const ApplicationDetailPage: React.FC = () => {
                 onClick={() =>
                   handleStatusUpdate("PASSED", "applications.success.hired")
                 }
-                className="flex-1 bg-lime-400 hover:bg-lime-500 text-white font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                variant="brand-primary"
+                size="xl"
+                className="flex-1 cursor-pointer"
               >
-                {t("applications.status.passed")}
+                <MetaText>{t("applications.status.passed")}</MetaText>
               </Button>
               <Button
                 variant="outline"
@@ -334,9 +364,11 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 font-bold h-12 rounded-xl transition-all cursor-pointer uppercase text-xs tracking-widest"
+                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
               >
-                {t("common.reject")}
+                <MetaText className="text-red-500">
+                  {t("common.reject")}
+                </MetaText>
               </Button>
             </>
           )}

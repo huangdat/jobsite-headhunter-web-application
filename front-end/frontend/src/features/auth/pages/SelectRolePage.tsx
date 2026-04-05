@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import type { RegistrationUserRole } from "@/features/auth/types";
+import {
+  Display,
+  SectionTitle,
+  SubsectionTitle,
+  BodyText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 import { MdPersonSearch, MdGroups, MdWorkHistory } from "react-icons/md";
 import { HiOutlineArrowRight } from "react-icons/hi";
@@ -55,27 +62,27 @@ export function SelectRolePage() {
       <div className="w-full max-w-5xl min-h-[calc(600px)] bg-white dark:bg-slate-900 rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
-          <h1 className="text-5xl font-bold leading-tight">
+          <Display size="md">
             {t("pages.selectRole.title")} <br />
             <span className="text-brand-primary">
               {t("pages.selectRole.titleHighlight")}
             </span>
-          </h1>
+          </Display>
 
-          <p className="text-slate-300 mt-6">
+          <BodyText className="text-slate-300 mt-6">
             {t("pages.selectRole.subtitle")}
-          </p>
+          </BodyText>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10 flex flex-col justify-center">
-          <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
+          <SectionTitle className="mb-2">
             {t("pages.selectRole.pageTitle")}
-          </h2>
+          </SectionTitle>
 
-          <p className="text-slate-500 dark:text-slate-400 mb-8">
+          <BodyText variant="muted" className="mb-8">
             {t("pages.selectRole.pageSubtitle")}
-          </p>
+          </BodyText>
 
           <form
             onSubmit={handleSubmit}
@@ -111,12 +118,8 @@ export function SelectRolePage() {
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
-                    {t(option.titleKey)}
-                  </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    {t(option.descKey)}
-                  </p>
+                  <SubsectionTitle>{t(option.titleKey)}</SubsectionTitle>
+                  <SmallText variant="muted">{t(option.descKey)}</SmallText>
                 </div>
               </label>
             ))}
@@ -133,14 +136,16 @@ export function SelectRolePage() {
               <HiOutlineArrowRight />
             </Button>
 
-            <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-4">
-              {t("pages.selectRole.alreadyHaveAccount")}{" "}
-              <Link
-                to="/login"
-                className="text-brand-primary font-medium hover:underline"
-              >
-                {t("buttons.signIn")}
-              </Link>
+            <p className="text-center mt-4">
+              <SmallText variant="muted">
+                {t("pages.selectRole.alreadyHaveAccount")}{" "}
+                <Link
+                  to="/login"
+                  className="text-brand-primary font-medium hover:underline"
+                >
+                  {t("buttons.signIn")}
+                </Link>
+              </SmallText>
             </p>
           </form>
         </div>

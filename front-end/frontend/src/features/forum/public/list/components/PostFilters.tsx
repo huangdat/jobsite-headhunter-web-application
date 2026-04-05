@@ -54,7 +54,7 @@ export function PostFilters() {
               px-4 py-2 rounded-full whitespace-nowrap font-medium transition
               ${
                 selectedCategory === cat.id
-                  ? "bg-emerald-600 text-white"
+                  ? "bg-brand-primary text-black font-bold"
                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
               }
             `}

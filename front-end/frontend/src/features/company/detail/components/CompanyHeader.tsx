@@ -11,7 +11,7 @@ export function CompanyHeader({ company }: Props) {
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-6">
-      <div className="h-40 bg-gradient-to-r from-lime-200 to-emerald-200 relative">
+      <div className="h-40 bg-linear-to-r from-lime-200 to-emerald-200 relative">
         <div className="absolute -bottom-10 left-8 w-24 h-24 bg-white rounded-2xl p-1.5 shadow-lg border border-slate-100">
           <div className="w-full h-full bg-slate-50 rounded-xl flex items-center justify-center text-3xl font-black text-slate-300 uppercase">
             {company.companyName?.charAt(0) || "C"}
@@ -48,9 +48,9 @@ export function CompanyHeader({ company }: Props) {
               }
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 bg-lime-50 text-lime-700 hover:bg-lime-100 border border-lime-100 px-3 py-1.5 rounded-lg transition cursor-pointer"
+              className="flex items-center gap-2 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 border border-brand-primary/20 px-3 py-1.5 rounded-lg transition cursor-pointer font-semibold"
             >
-              <Globe className="w-4 h-4 text-lime-600" />
+              <Globe className="w-4 h-4 text-brand-primary" />
               {t("business.form.website")}
             </a>
           )}

@@ -8,6 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { forumPostApi } from "../../list/services/forumPostApi";
 import { useTranslation } from "react-i18next";
 import type { ForumPost } from "@/features/forum/admin/posts/types";
+import {
+  SubsectionTitle,
+  SmallText,
+  Caption,
+} from "@/shared/components/typography/Typography";
 
 interface RelatedPostsProps {
   categoryId: number;
@@ -28,9 +33,9 @@ export function RelatedPosts({ categoryId, excludeId }: RelatedPostsProps) {
 
   return (
     <section className="mt-12 pt-8 border-t border-slate-200">
-      <h2 className="text-2xl font-bold text-slate-900 mb-6">
+      <SubsectionTitle className="mb-6">
         {t("forum.detail.relatedPosts") || "Bài viết liên quan"}
-      </h2>
+      </SubsectionTitle>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {relatedPosts.map((post: ForumPost) => (
@@ -53,24 +58,27 @@ export function RelatedPosts({ categoryId, excludeId }: RelatedPostsProps) {
             {/* Card Content */}
             <div className="p-4">
               {/* Category */}
-              <span className="text-xs font-medium text-emerald-600 uppercase">
+              <div className="text-xs font-semibold text-brand-primary uppercase block">
                 {post.categoryName}
-              </span>
+              </div>
 
               {/* Title */}
-              <h3 className="font-semibold text-base mt-2 mb-2 line-clamp-2 hover:text-emerald-600">
+              <SmallText
+                weight="semibold"
+                className="mt-2 mb-2 line-clamp-2 hover:text-brand-primary block"
+              >
                 {post.title}
-              </h3>
+              </SmallText>
 
               {/* Description */}
-              <p className="text-slate-600 text-sm line-clamp-2 mb-4">
+              <SmallText variant="muted" className="line-clamp-2 mb-4 block">
                 {post.description || post.content?.substring(0, 80)}
-              </p>
+              </SmallText>
 
               {/* Date */}
-              <p className="text-xs text-slate-500">
+              <Caption variant="default">
                 {new Date(post.createdAt).toLocaleDateString("vi-VN")}
-              </p>
+              </Caption>
             </div>
           </div>
         ))}

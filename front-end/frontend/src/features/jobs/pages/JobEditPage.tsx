@@ -13,6 +13,10 @@ import type { JobFormValues, SkillOption } from "../types";
 import { JOB_FORM_DEFAULTS } from "../utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import {
+  LabelText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export function JobEditPage() {
   const { t } = useJobsTranslation();
@@ -146,9 +150,7 @@ export function JobEditPage() {
       >
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-              {t("edit.labels.jobTitle")}
-            </label>
+            <LabelText className="block">{t("edit.labels.jobTitle")}</LabelText>
             <Input
               placeholder={t("edit.placeholders.jobTitle")}
               {...register("title", {
@@ -156,14 +158,14 @@ export function JobEditPage() {
               })}
             />
             {errors.title && (
-              <p className="text-sm text-destructive">{errors.title.message}</p>
+              <SmallText className="text-destructive">
+                {errors.title.message}
+              </SmallText>
             )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-              {t("edit.labels.location")}
-            </label>
+            <LabelText className="block">{t("edit.labels.location")}</LabelText>
             <Input
               placeholder={t("edit.placeholders.location")}
               {...register("location", {
@@ -171,16 +173,16 @@ export function JobEditPage() {
               })}
             />
             {errors.location && (
-              <p className="text-sm text-destructive">
+              <SmallText className="text-destructive">
                 {errors.location.message}
-              </p>
+              </SmallText>
             )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.addressDetail")}
-            </label>
+            </LabelText>
             <Input
               placeholder={t("edit.placeholders.addressDetail")}
               {...register("addressDetail")}
@@ -188,20 +190,18 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-              {t("edit.labels.deadline")}
-            </label>
+            <LabelText className="block">{t("edit.labels.deadline")}</LabelText>
             <Input type="date" {...register("deadline")} />
           </div>
         </section>
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
+            <LabelText className="block">
               {t("edit.labels.rankLevel")}
-            </label>
+            </LabelText>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20 dark:bg-slate-900"
               {...register("rankLevel", { required: true })}
             >
               <option value="INTERN">Intern</option>
@@ -215,9 +215,9 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.workingType")}
-            </label>
+            </LabelText>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("workingType", { required: true })}
@@ -229,9 +229,9 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.experience")}
-            </label>
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -244,9 +244,7 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-              {t("edit.labels.quantity")}
-            </label>
+            <LabelText className="block">{t("edit.labels.quantity")}</LabelText>
             <Input
               type="number"
               min={1}
@@ -257,9 +255,9 @@ export function JobEditPage() {
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.salaryMin")}
-            </label>
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -267,9 +265,9 @@ export function JobEditPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.salaryMax")}
-            </label>
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -277,9 +275,7 @@ export function JobEditPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-              {t("edit.labels.currency")}
-            </label>
+            <LabelText className="block">{t("edit.labels.currency")}</LabelText>
             <select
               className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("currency")}
@@ -294,10 +290,7 @@ export function JobEditPage() {
               id="negotiable"
               {...register("negotiable")}
             />
-            <label
-              htmlFor="negotiable"
-              className="text-sm text-slate-600 dark:text-slate-400"
-            >
+            <label htmlFor="negotiable" className="text-sm font-medium">
               {t("edit.labels.salaryNegotiable")}
             </label>
           </div>
@@ -305,9 +298,9 @@ export function JobEditPage() {
 
         <section className="grid gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.description")}
-            </label>
+            </LabelText>
             <Controller
               control={control}
               name="description"
@@ -322,9 +315,9 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.responsibilities")}
-            </label>
+            </LabelText>
             <Controller
               control={control}
               name="responsibilities"
@@ -339,9 +332,9 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.requirements")}
-            </label>
+            </LabelText>
             <Controller
               control={control}
               name="requirements"
@@ -356,29 +349,27 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-              {t("edit.labels.benefits")}
-            </label>
+            <LabelText className="block">{t("edit.labels.benefits")}</LabelText>
             <Textarea rows={3} {...register("benefits")} />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.workingTime")}
-            </label>
+            </LabelText>
             <Input {...register("workingTime")} />
           </div>
         </section>
 
         <section className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <LabelText className="block">
               {t("edit.labels.requiredSkills")}
-            </label>
+            </LabelText>
             {errors.skillIds && (
-              <span className="text-xs text-destructive">
+              <SmallText className="text-destructive">
                 {t("edit.messages.pickAtLeastOneSkill")}
-              </span>
+              </SmallText>
             )}
           </div>
           <SkillMultiSelect

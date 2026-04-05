@@ -33,8 +33,8 @@ export function PostContent({ post }: PostContentProps) {
         className="prose prose-lg max-w-none
           prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-6 prose-h2:mb-4
           prose-p:text-slate-700 prose-p:leading-8 prose-p:mb-4
-          prose-a:text-emerald-600 prose-a:hover:text-emerald-700
-          prose-blockquote:border-l-4 prose-blockquote:border-emerald-600 prose-blockquote:pl-4 prose-blockquote:italic
+          prose-a:text-brand-primary prose-a:hover:text-brand-hover
+          prose-blockquote:border-l-4 prose-blockquote:border-brand-primary prose-blockquote:pl-4 prose-blockquote:italic
           prose-img:rounded-lg"
         dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       />

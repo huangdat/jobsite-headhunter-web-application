@@ -7,6 +7,10 @@ import {
   useToggleJobStatusMutation,
   useDeleteJobMutation,
 } from "@/shared/hooks";
+import {
+  SmallText,
+  SubsectionTitle,
+} from "@/shared/components/typography/Typography";
 import type { JobSummary } from "../types";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { Button } from "@/components/ui/button";
@@ -143,9 +147,9 @@ export function JobManagePage() {
     return (
       <PageContainer variant="white" maxWidth="7xl">
         <div className="flex justify-center items-center min-h-100">
-          <p className="text-slate-500 dark:text-slate-400 font-medium animate-pulse">
+          <SmallText variant="muted" weight="bold" className="animate-pulse">
             {t("manage.loadingJobs")}
-          </p>
+          </SmallText>
         </div>
       </PageContainer>
     );
@@ -157,13 +161,15 @@ export function JobManagePage() {
         title={t("manage.pageTitle")}
         description={`${t("common.total")}: ${jobs.length}`}
         actions={
-          <Button
+          <button
             onClick={() => navigate("/headhunter/jobs/new")}
             className="bg-lime-400 cursor-pointer hover:bg-lime-500 text-gray-600 font-bold px-6 py-6 rounded-2xl shadow-lg shadow-lime-500/30 transition-all active:scale-95 flex items-center gap-2"
           >
             <Plus size={20} />
-            {t("manage.createNewButton")}
-          </Button>
+            <SmallText className="text-white">
+              {t("manage.createNewButton")}
+            </SmallText>
+          </button>
         }
       />
 
@@ -172,9 +178,12 @@ export function JobManagePage() {
           <div className="text-slate-400 dark:text-slate-500 mb-4 flex justify-center">
             <Briefcase size={48} />
           </div>
-          <p className="text-slate-500 dark:text-slate-400 font-bold">
+          <SmallText
+            weight="bold"
+            className="text-slate-500 dark:text-slate-400"
+          >
             {t("manage.noJobsYet")}
-          </p>
+          </SmallText>
         </Card>
       ) : (
         <div className="grid gap-5">
@@ -197,7 +206,7 @@ export function JobManagePage() {
                       className={`flex items-center gap-1.5 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${
                         job.visible === false
                           ? "bg-slate-100 text-slate-500 border-slate-200"
-                          : "bg-lime-100 text-lime-700 border-lime-200"
+                          : "bg-brand-primary/20 text-brand-primary border-brand-primary/30 font-bold"
                       }`}
                     >
                       {job.visible === false ? (
@@ -223,7 +232,9 @@ export function JobManagePage() {
                     {job.deadline && (
                       <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border border-red-100">
                         <Calendar size={14} />
-                        <span className="text-[12px]">{job.deadline}</span>
+                        <SmallText className="text-[12px]">
+                          {job.deadline}
+                        </SmallText>
                       </div>
                     )}
                   </div>
@@ -234,11 +245,13 @@ export function JobManagePage() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="rounded-xl font-bold hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex gap-1.5 cursor-pointer"
+                  className="rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex gap-1.5 cursor-pointer"
                   onClick={() => handleEdit(job.id)}
                 >
                   <Edit3 size={16} />
-                  {t("manage.editButton")}
+                  <SmallText className="text-inherit">
+                    {t("manage.editButton")}
+                  </SmallText>
                 </Button>
 
                 <Button
@@ -249,7 +262,9 @@ export function JobManagePage() {
                   }
                 >
                   <Users size={16} />
-                  {t("manage.viewCandidates")}
+                  <SmallText className="text-white">
+                    {t("manage.viewCandidates")}
+                  </SmallText>
                 </Button>
 
                 <div className="flex items-center bg-slate-50 dark:bg-slate-700/50 rounded-xl p-1 gap-1 border border-slate-100 dark:border-slate-700">

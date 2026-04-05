@@ -7,6 +7,12 @@ import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Button } from "@/components/ui/button";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { ChevronLeft } from "lucide-react";
+import {
+  MetaText,
+  Caption,
+  SubsectionTitle,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export const JobPipelinePage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -67,44 +73,47 @@ export const JobPipelinePage: React.FC = () => {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700">
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {t("columns.candidate")}
+              <th className="p-5">
+                <MetaText as="span">{t("columns.candidate")}</MetaText>
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {t("applications.form.email")}
+              <th className="p-5">
+                <MetaText as="span">{t("applications.form.email")}</MetaText>
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {t("common.appliedAt")}
+              <th className="p-5">
+                <MetaText as="span">{t("common.appliedAt")}</MetaText>
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {t("columns.status")}
+              <th className="p-5">
+                <MetaText as="span">{t("columns.status")}</MetaText>
               </th>
-              <th className="p-5 font-black text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider text-right">
-                {t("columns.actions")}
+              <th className="p-5 text-right">
+                <MetaText as="span">{t("columns.actions")}</MetaText>
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50 dark:divide-slate-700">
             {applications.length === 0 ? (
               <tr>
-                <td
-                  colSpan={5}
-                  className="p-12 text-center text-slate-400 dark:text-slate-500 font-medium italic"
-                >
-                  {t("headhunter.noApplicantsYet")}
+                <td colSpan={5} className="p-12 text-center">
+                  <Caption className="italic">
+                    {t("headhunter.noApplicantsYet")}
+                  </Caption>
                 </td>
               </tr>
             ) : (
               applications.map((app) => (
                 <tr
                   key={app.id}
-                  className="hover:bg-lime-50/20 dark:hover:bg-slate-700/30 transition-colors"
+                  className="hover:bg-brand-primary/5 dark:hover:bg-slate-700/30 transition-colors"
                 >
-                  <td className="p-5 font-bold text-slate-800 dark:text-white">
-                    {app.fullName}
+                  <td className="p-5">
+                    <SubsectionTitle className="text-base font-semibold">
+                      {app.fullName}
+                    </SubsectionTitle>
                   </td>
-                  <td className="p-5 text-slate-500 dark:text-slate-400 font-medium">
-                    {app.email}
+                  <td className="p-5">
+                    <SmallText variant="muted" weight="medium">
+                      {app.email}
+                    </SmallText>
                   </td>
                   <td className="p-5 text-slate-500 dark:text-slate-400">
                     {new Date(app.appliedAt).toLocaleDateString()}

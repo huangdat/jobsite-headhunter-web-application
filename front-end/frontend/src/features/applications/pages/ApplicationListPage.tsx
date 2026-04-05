@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { SmallText } from "@/shared/components/typography/Typography";
 import { ApplicationCard, ApplicationFilters } from "../components";
 import { useApplications, useApplicationFilters } from "../hooks";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
@@ -92,10 +93,10 @@ export const ApplicationListPage: React.FC<ApplicationListPageProps> = ({
               {/* Pagination */}
               {pagination.totalPages > 1 && (
                 <div className="mt-6 flex items-center justify-between">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <SmallText variant="muted">
                     {t("common.page")} {pagination.page + 1} {t("common.of")}{" "}
                     {pagination.totalPages}
-                  </p>
+                  </SmallText>
                   <div className="flex gap-2">
                     <Button
                       variant="outline"

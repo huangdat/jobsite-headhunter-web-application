@@ -178,7 +178,9 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
         {strengthData.items.map((item: StrengthItem) => (
           <div key={item.id} className="flex items-start gap-3">
             {/* Icon */}
-            <div className="mt-0.5 shrink-0">{getStatusIcon(item.status)}</div>
+            <div className="mt-0.5 shrink-0">
+              {getStatusIcon(item.status || "incomplete")}
+            </div>
 
             {/* Item Details */}
             <div className="flex-1 min-w-0">
@@ -230,4 +232,3 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
 };
 
 export default ProfileStrengthCard;
-

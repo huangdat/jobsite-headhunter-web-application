@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { SmallText } from "@/shared/components/typography/Typography";
 import { ApplicationForm } from "../components/ApplicationForm";
 import { useApplicationForm } from "../hooks/useApplicationForm";
 import type { ApplicationFormData } from "../types";
@@ -12,7 +13,6 @@ export const ApplyJobPage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
   const { t } = useAppTranslation();
-  const jobTitle = jobId ? "Software Engineer" : "Job Position";
   const [defaultValues, setDefaultValues] = useState<
     Partial<ApplicationFormData> | undefined
   >(undefined);
@@ -55,17 +55,8 @@ export const ApplyJobPage: React.FC = () => {
   }, []);
 
   return (
-    <PageContainer variant="white" maxWidth="3xl">
-      <PageHeader
-        variant="default"
-        title={t("applications.form.title")}
-        description={
-          <>
-            {t("applications.form.submit")}
-            <span className="text-emerald-600 ml-2 font-bold">{jobTitle}</span>
-          </>
-        }
-      />
+    <PageContainer variant="white" maxWidth="4xl">
+      <PageHeader variant="default" title={t("applications.form.title")} />
 
       {/* Form Card */}
       <Card className="p-8 border-none shadow-xl shadow-slate-200/60 rounded-3xl bg-white dark:bg-gray-800 dark:shadow-gray-900/20">
@@ -81,9 +72,11 @@ export const ApplyJobPage: React.FC = () => {
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="px-8 py-2.5 bg-slate-100 hover:bg-slate-200 cursor-pointer text-slate-600 font-bold text-sm rounded-xl transition-all duration-200 active:scale-95 shadow-sm dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200"
+          className="px-8 py-2.5 bg-slate-100 hover:bg-slate-200 cursor-pointer text-slate-600 rounded-xl transition-all duration-200 active:scale-95 shadow-sm dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200"
         >
-          {t("applications.form.back")}
+          <SmallText weight="bold" variant="muted">
+            {t("applications.form.back")}
+          </SmallText>
         </button>
       </div>
     </PageContainer>

@@ -5,6 +5,7 @@ import { HiMenu } from "react-icons/hi"; // Thêm icon Menu
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Navbar } from "./Navbar";
+import { Button } from "@/components/ui/button";
 
 // Thêm Interface cho Props
 interface HeaderProps {
@@ -87,12 +88,14 @@ export function Header({ onMenuClick }: HeaderProps) {
               >
                 {t("navigation.login")}
               </Link>
-              <Link
-                to="/select-role"
-                className="bg-brand-primary text-black px-6 py-2 rounded-full text-sm font-semibold hover:bg-brand-hover transition"
+              <Button
+                variant="brand-primary"
+                size="sm"
+                className="rounded-full"
+                asChild
               >
-                {t("navigation.signUp")}
-              </Link>
+                <Link to="/select-role">{t("navigation.signUp")}</Link>
+              </Button>
             </div>
           ) : (
             <div className="relative" ref={dropdownRef}>

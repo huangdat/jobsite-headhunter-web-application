@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { formatUploadDate } from "@/features/candidate/cv/services/cvApi";
 import { fetchMyCurrentCV } from "@/features/applications/services/applicationsApi";
-import {
-  FileText,
-  Loader,
-  AlertCircle,
-  Calendar,
-  Download,
-} from "lucide-react";
+import { FileText, Loader, AlertCircle } from "lucide-react";
 
 interface CVSelectorProps {
   onCVSelect: (cvId: string, cvUrl: string) => void;
   selectedId?: string;
   error?: string;
+}
+
+interface CV {
+  id: number;
+  cvUrl: string;
 }
 
 export const CVSelector: React.FC<CVSelectorProps> = ({
@@ -23,7 +21,7 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
   error,
 }) => {
   const { t } = useAppTranslation();
-  const [myCv, setMyCv] = useState<any>(null);
+  const [myCv, setMyCv] = useState<CV | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -42,6 +40,7 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
       }
     };
     loadDefaultCV();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ✅ Format filename
@@ -57,14 +56,14 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
         <label className="text-sm font-bold text-slate-700">
           {t("applications.form.selectCV")}
         </label>
-        <span className="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+        <span className="text-[10px] bg-brand-primary/20 text-black px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
           {t("applications.form.profileCvBadge")}
         </span>
       </div>
 
       {isLoading ? (
         <div className="p-4 text-center text-slate-500 animate-pulse font-medium flex items-center justify-center gap-2 border-2 border-slate-100 rounded-2xl">
-          <Loader className="w-5 h-5 animate-spin text-emerald-500" />
+          <Loader className="w-5 h-5 animate-spin text-brand-primary" />
           {t("common.loading")}
         </div>
       ) : myCv ? (
@@ -72,12 +71,12 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
           <div
             className={`relative flex items-center justify-between rounded-2xl border-2 p-4 transition-all duration-300 ${
               selectedId === String(myCv.id) || selectedId === myCv.cvUrl
-                ? "border-emerald-500 bg-emerald-50/50 shadow-md ring-1 ring-emerald-500/20"
+                ? "border-brand-primary bg-brand-primary/10 shadow-md ring-1 ring-brand-primary/20"
                 : "border-slate-100 bg-white"
             }`}
           >
             <div className="flex items-center gap-4 text-left overflow-hidden">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 shadow-inner">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-primary/20 text-black shadow-inner">
                 <FileText className="w-6 h-6" />
               </div>
               <div className="overflow-hidden">
@@ -88,7 +87,7 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
             </div>
 
             <div className="flex items-center ml-2">
-              <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white">
+              <div className="w-6 h-6 rounded-full bg-brand-primary flex items-center justify-center text-black">
                 <svg
                   className="w-4 h-4"
                   fill="currentColor"
@@ -120,7 +119,8 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
             {t("applications.form.noCvDescription")}
           </p>
           <Button
-            className="mt-4 shadow-lg shadow-emerald-500/20 bg-emerald-600 hover:bg-emerald-700"
+            variant="brand-primary"
+            className="mt-4"
             onClick={() => window.open("/candidate/cv", "_blank")}
           >
             {t("applications.form.updateCvNow")}

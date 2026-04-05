@@ -8,7 +8,15 @@
 import { MessageCircle, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { usePostList } from "../hooks/usePostList";
+import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import {
+  BodyText,
+  MetaText,
+  SubsectionTitle,
+  SmallText,
+  Caption,
+} from "@/shared/components/typography/Typography";
 
 export function PostGrid() {
   const navigate = useNavigate();
@@ -19,10 +27,10 @@ export function PostGrid() {
   if (isLoading) {
     return (
       <div className="py-12 text-center">
-        <Loader2 className="w-8 h-8 animate-spin text-emerald-600 mx-auto mb-3" />
-        <p className="text-slate-600">
+        <Loader2 className="w-8 h-8 animate-spin text-brand-primary mx-auto mb-3" />
+        <BodyText variant="muted">
           {t("forum.list.loading") || "Đang tải tin tức..."}
-        </p>
+        </BodyText>
       </div>
     );
   }
@@ -32,15 +40,15 @@ export function PostGrid() {
     return (
       <div className="py-12 text-center">
         <MessageCircle className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-        <p className="text-lg text-slate-600 mb-4">
+        <BodyText variant="muted" className="mb-4">
           {t("forum.list.noResults") || "Không tìm thấy tin tức nào"}
-        </p>
-        <button
+        </BodyText>
+        <Button
           onClick={() => window.location.reload()}
-          className="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+          variant="brand-primary"
         >
           {t("forum.list.retry") || "Thử lại"}
-        </button>
+        </Button>
       </div>
     );
   }
@@ -68,26 +76,24 @@ export function PostGrid() {
           {/* Card Content */}
           <div className="p-4">
             {/* Category Badge */}
-            <span className="text-xs font-medium text-emerald-600 uppercase">
-              {post.categoryName}
-            </span>
+            <MetaText as="span">{post.categoryName}</MetaText>
 
             {/* Title */}
-            <h3 className="font-semibold text-base mt-2 mb-2 line-clamp-2 hover:text-emerald-600">
+            <SubsectionTitle className="mt-2 mb-2 line-clamp-2 hover:text-brand-primary">
               {post.title}
-            </h3>
+            </SubsectionTitle>
 
             {/* Description */}
-            <p className="text-slate-600 text-sm line-clamp-2 mb-4">
-              {post.description || post.content?.substring(0, 100)}
+            <p className="mb-4">
+              <SmallText variant="muted" className="line-clamp-2">
+                {post.description || post.content?.substring(0, 100)}
+              </SmallText>
             </p>
 
             {/* Meta Info */}
-            <div className="flex items-center justify-between text-xs text-slate-500">
-              <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-              <span className="flex items-center gap-1">
-                👁️ {post.viewCount || 0}
-              </span>
+            <div className="flex items-center justify-between">
+              <Caption>{new Date(post.createdAt).toLocaleDateString()}</Caption>
+              <Caption>👁️ {post.viewCount || 0}</Caption>
             </div>
           </div>
         </div>

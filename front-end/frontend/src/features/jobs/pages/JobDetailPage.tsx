@@ -6,6 +6,7 @@ import {
   useJobsTranslation,
   useJobDetailQuery,
 } from "@/shared/hooks";
+import { SmallText } from "@/shared/components/typography/Typography";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
@@ -112,9 +113,9 @@ export function JobDetailPage() {
     return (
       <PageContainer variant="default" maxWidth="4xl">
         <div className="text-center py-10">
-          <p className="text-lg text-slate-500 dark:text-slate-400">
+          <SmallText variant="muted" className="text-lg">
             {error ? t("detail.unableToLoad") : t("detail.notFound")}
-          </p>
+          </SmallText>
           <Button
             variant="link"
             className="mt-4"

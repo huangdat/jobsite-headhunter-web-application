@@ -4,6 +4,10 @@ import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRandomLatestJobs } from "@/shared/utils/jobService";
 import { JOB_TYPE_COLORS } from "../constants";
+import {
+  SubsectionTitle,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export function FeaturedJobs() {
   const { t, currentLanguage } = useHomeTranslation();
@@ -26,27 +30,30 @@ export function FeaturedJobs() {
     };
 
     fetchJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLanguage?.code]);
   
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
-      <h2 className="text-2xl font-bold mb-10">{t("featuredJobs.title")}</h2>
+      <SubsectionTitle className="mb-10">
+        {t("featuredJobs.title")}
+      </SubsectionTitle>
 
       {loading && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.loadingJobs")}</p>
+          <SmallText variant="muted">{t("messages.loadingJobs")}</SmallText>
         </div>
       )}
 
       {error && (
         <div className="text-center py-12">
-          <p className="text-red-500">{error}</p>
+          <SmallText className="text-red-500">{error}</SmallText>
         </div>
       )}
 
       {!loading && !error && jobs.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.noFeaturedJobs")}</p>
+          <SmallText variant="muted">{t("messages.noFeaturedJobs")}</SmallText>
         </div>
       )}
 
@@ -58,8 +65,12 @@ export function FeaturedJobs() {
                 key={job.id}
                 className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition"
               >
-                <h3 className="font-semibold">{job.title}</h3>
-                <p className="text-gray-500 text-sm">{job.company}</p>
+                <SmallText weight="semibold" className="block">
+                  {job.title}
+                </SmallText>
+                <SmallText variant="muted" className="block">
+                  {job.company}
+                </SmallText>
 
                 <div className="flex gap-2 mt-3 text-xs">
                   {job.workingType && (

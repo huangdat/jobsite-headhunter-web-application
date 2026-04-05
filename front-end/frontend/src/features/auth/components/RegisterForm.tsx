@@ -313,7 +313,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
             {t("form.register.joinNetwork")} <br />
-            <span className="text-lime-400">
+            <span className="text-brand-primary">
               {t("form.register.professional")}
             </span>{" "}
             <br />
@@ -368,7 +368,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   disabled={isSubmitting}
                   variant="outline"
                   size="xl"
-                  className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 flex justify-center gap-2 border border-brand-primary text-black bg-transparent hover:bg-brand-primary/10 cursor-pointer rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <HiOutlineArrowLeft />
                   {t("buttons.previous")}
@@ -408,7 +408,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
             {t("pages.register.haveAccount")}{" "}
             <Link
               to="/login"
-              className="text-lime-500 font-semibold hover:underline"
+              className="text-brand-primary font-semibold hover:underline"
             >
               {t("pages.register.signIn")}
             </Link>

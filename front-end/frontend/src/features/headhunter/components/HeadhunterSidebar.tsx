@@ -40,7 +40,7 @@ export function HeadhunterSidebar({ onItemClick }: HeadhunterSidebarProps) {
               `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 border border-transparent
               ${
                 isActive
-                  ? "bg-emerald-50 text-emerald-600 shadow-sm border-emerald-100 ring-1 ring-emerald-500/10"
+                  ? "bg-brand-primary/20 text-brand-primary shadow-sm border-brand-primary/30 ring-1 ring-brand-primary/10"
                   : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`
             }
@@ -49,7 +49,7 @@ export function HeadhunterSidebar({ onItemClick }: HeadhunterSidebarProps) {
               <>
                 <it.icon
                   className={`w-5 h-5 transition-colors ${
-                    isActive ? "text-emerald-600" : "text-slate-400"
+                    isActive ? "text-brand-primary" : "text-slate-400"
                   }`}
                 />
                 <span>{it.label}</span>

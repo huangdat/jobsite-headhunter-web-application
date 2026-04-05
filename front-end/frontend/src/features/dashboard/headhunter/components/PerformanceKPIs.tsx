@@ -68,7 +68,7 @@ export const PerformanceKPIs: React.FC<PerformanceKPIsProps> = ({
       {/* Time-to-Hire Card */}
       <StatCard
         title={t("headhunter.dashboard.timeToHire", "Avg Time-to-Hire")}
-        value={`${data.avgTimeToHire || 0} ${t("headhunter.dashboard.days", "days")}`}
+        value={`${data.timeToHire || 0} ${t("headhunter.dashboard.days", "days")}`}
         icon="⏱️"
         color="purple"
         trend="down"
@@ -76,10 +76,10 @@ export const PerformanceKPIs: React.FC<PerformanceKPIsProps> = ({
         subtitle="Industry avg: 28 days"
       />
 
-      {/* Conversion Rate Card */}
+      {/* Hiring Success Card */}
       <StatCard
-        title={t("headhunter.dashboard.conversionRate", "Conversion Rate")}
-        value={`${data.conversionRate || 0}%`}
+        title={t("headhunter.dashboard.hiringSuccess", "Hiring Success")}
+        value={`${data.hiringSuccess || 0}%`}
         icon="📈"
         color="yellow"
         trend="up"

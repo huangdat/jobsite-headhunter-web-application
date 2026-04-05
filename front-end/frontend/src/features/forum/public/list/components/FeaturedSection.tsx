@@ -8,6 +8,13 @@
 import { useNavigate } from "react-router-dom";
 import { useFeaturedPosts } from "../hooks/useFeaturedPosts";
 import { Loader2 } from "lucide-react";
+import {
+  SectionTitle,
+  BodyText,
+  MetaText,
+  SmallText,
+  Caption,
+} from "@/shared/components/typography/Typography";
 
 export function FeaturedSection() {
   const navigate = useNavigate();
@@ -20,7 +27,7 @@ export function FeaturedSection() {
   if (isLoading) {
     return (
       <div className="h-96 rounded-xl bg-slate-100 flex items-center justify-center mb-8">
-        <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-brand-primary" />
       </div>
     );
   }
@@ -42,16 +49,19 @@ export function FeaturedSection() {
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <span className="inline-block bg-emerald-600 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                <MetaText
+                  as="span"
+                  className="inline-block bg-brand-primary text-black px-3 py-1 rounded-full mb-3"
+                >
                   {mainFeatured.categoryName}
-                </span>
-                <h2 className="text-2xl font-bold mb-2 line-clamp-2">
+                </MetaText>
+                <SectionTitle className="mb-2 line-clamp-2 text-white">
                   {mainFeatured.title}
-                </h2>
-                <p className="text-gray-200 text-sm line-clamp-2">
+                </SectionTitle>
+                <BodyText className="text-gray-200 line-clamp-2">
                   {mainFeatured.description ||
                     mainFeatured.content?.substring(0, 100)}
-                </p>
+                </BodyText>
               </div>
             </div>
           </div>
@@ -73,15 +83,13 @@ export function FeaturedSection() {
                 />
               </div>
               <div className="p-4 bg-white border border-slate-200">
-                <span className="text-xs font-medium text-emerald-600 uppercase">
-                  {post.categoryName}
-                </span>
-                <h3 className="font-semibold text-sm mt-1 line-clamp-2 group-hover:text-emerald-600">
-                  {post.title}
-                </h3>
-                <p className="text-xs text-gray-500 mt-2">
-                  {new Date(post.createdAt).toLocaleDateString()}
+                <MetaText as="span">{post.categoryName}</MetaText>
+                <p className="mt-1 line-clamp-2 group-hover:text-brand-primary">
+                  <SmallText weight="semibold">{post.title}</SmallText>
                 </p>
+                <Caption className="mt-2">
+                  {new Date(post.createdAt).toLocaleDateString()}
+                </Caption>
               </div>
             </div>
           ))}

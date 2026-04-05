@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  Display,
+  SubsectionTitle,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useUserDetail } from "@/features/users/detail/hooks/useUserDetail";
 import { userMapper } from "@/features/users/utils/userMapper";
@@ -227,19 +232,22 @@ const UserDetailPage: React.FC = () => {
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+                <Display className="text-2xl">
                   {t("detail.userDetails")}
-                </h1>
-                <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">
+                </Display>
+                <SmallText variant="muted" className="mt-1">
                   {t("detail.personalInfo")}
-                </p>
+                </SmallText>
               </div>
             </div>
             <button
               aria-label={t("aria.editProfile")}
-              className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition font-medium"
+              className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition"
             >
-              ✎ {t("detail.editProfile")}
+              ✎{" "}
+              <SmallText weight="medium" className="text-white">
+                {t("detail.editProfile")}
+              </SmallText>
             </button>
           </div>
 
@@ -248,12 +256,18 @@ const UserDetailPage: React.FC = () => {
               <div className="max-w-7xl mx-auto px-8 py-3 flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-yellow-900 dark:text-yellow-200 font-medium">
+                  <SmallText
+                    weight="bold"
+                    className="text-yellow-900 dark:text-yellow-200"
+                  >
                     {t("warnings.adminWarning")}
-                  </p>
-                  <p className="text-yellow-800 text-sm mt-1">
+                  </SmallText>
+                  <SmallText
+                    variant="muted"
+                    className="text-yellow-800 dark:text-yellow-400 mt-1"
+                  >
                     {t("warnings.adminWarningDesc")}
-                  </p>
+                  </SmallText>
                 </div>
               </div>
             </div>
@@ -286,12 +300,10 @@ const UserDetailPage: React.FC = () => {
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 flex items-start gap-4">
             <AlertCircle className="w-6 h-6 text-red-500 shrink-0 mt-1" />
             <div>
-              <h3 className="font-semibold text-red-900">
-                {t("detail.errorLoadingData")}
-              </h3>
-              <p className="text-red-700 mt-1">
+              <SubsectionTitle>{t("detail.errorLoadingData")}</SubsectionTitle>
+              <SmallText variant="muted" className="mt-1">
                 {error || t("list.noResults")}
-              </p>
+              </SmallText>
             </div>
           </div>
         </div>
@@ -367,14 +379,16 @@ const UserDetailPage: React.FC = () => {
 
         <div className="bg-white dark:bg-slate-800 rounded-lg shadow dark:shadow-slate-900/20 border dark:border-slate-700 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold flex items-center gap-2 text-slate-900 dark:text-white">
+            <SubsectionTitle className="flex items-center gap-2">
               {t("sections.loginHistory")}
-            </h2>
+            </SubsectionTitle>
             <button
               type="button"
-              className="text-brand-primary hover:text-brand-primary/80 text-sm font-medium bg-transparent border-none cursor-pointer"
+              className="text-brand-primary hover:text-brand-primary/80 bg-transparent border-none cursor-pointer"
             >
-              {t("sections.viewAllSessions")}
+              <SmallText weight="bold" className="text-brand-primary">
+                {t("sections.viewAllSessions")}
+              </SmallText>
             </button>
           </div>
           <LoginHistoryTable sessions={loginHistory} />

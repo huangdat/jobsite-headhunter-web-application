@@ -35,9 +35,9 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   const validationSchema = createValidationSchema(t);
 
   const form = useForm<ApplicationFormData>({
-    resolver: (yupResolver(validationSchema) as unknown) as Resolver<
-      ApplicationFormData
-    >,
+    resolver: yupResolver(
+      validationSchema
+    ) as unknown as Resolver<ApplicationFormData>,
     defaultValues: defaultValues || {
       fullName: "",
       email: "",
@@ -60,7 +60,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
   /**
    * Xử lý khi CVSelector báo đã lấy được CV thành công
    */
-  const handleCVSelect = (cvId: string, cvUrl: string) => {
+  const handleCVSelect = (_cvId: string, cvUrl: string) => {
     // Chúng ta lưu cvUrl vào form để gửi lên server
     form.setValue("cvSnapshotUrl", cvUrl, { shouldValidate: true });
   };
@@ -210,14 +210,17 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
           <Button
             type="submit"
             disabled={isLoading}
-            className="flex-1 bg-emerald-600 hover:bg-emerald-700 cursor-pointer text-white font-bold h-12 rounded-xl shadow-lg shadow-emerald-200"
+            variant="brand-primary"
+            size="xl"
+            className="flex-1 cursor-pointer"
           >
             {isLoading ? t("common.processing") : t("applications.form.submit")}
           </Button>
           <Button
             type="button"
             variant="outline"
-            className="w-32 h-12 font-bold cursor-pointer rounded-xl border-2"
+            size="xl"
+            className="w-32 cursor-pointer"
             onClick={() => form.reset()}
           >
             {t("applications.form.cancel")}

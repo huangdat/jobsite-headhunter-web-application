@@ -10,6 +10,7 @@ import type { JobSummary } from "../types";
 import { formatSalary, formatDeadlineDate } from "../utils";
 import { getJobDetail } from "../services/jobsApi";
 import { jobKeys } from "@/shared/utils/queryKeys";
+import { SmallText, Caption } from "@/shared/components/typography/Typography";
 
 interface JobCardProps {
   job: JobSummary & { negotiable?: boolean };
@@ -54,11 +55,13 @@ export function JobCard({ job }: JobCardProps) {
     >
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+          <SmallText weight="semibold" className="block text-lg">
             {job.title}
-          </h3>
+          </SmallText>
           {job.headhunterName && (
-            <p className="text-sm text-slate-500">{job.headhunterName}</p>
+            <SmallText variant="muted" className="block">
+              {job.headhunterName}
+            </SmallText>
           )}
         </div>
         <Badge variant="secondary" className="uppercase tracking-wide">
@@ -87,12 +90,12 @@ export function JobCard({ job }: JobCardProps) {
         )}
       </div>
       <div className="mt-6 flex items-center justify-between">
-        <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
+        <Caption className="uppercase tracking-[0.2em] text-slate-400">
           #{job.jobCode}
-        </span>
-        <span className="text-sm font-semibold text-emerald-600">
+        </Caption>
+        <SmallText weight="semibold" className="text-brand-primary">
           {t("list.viewDetails")}
-        </span>
+        </SmallText>
       </div>
     </div>
   );

@@ -12,6 +12,12 @@ import type { RegisterFormData } from "@/features/auth/types";
 import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 import { AuthLayout } from "@/shared/components";
 import { Button } from "@/components/ui/button";
+import {
+  SectionTitle,
+  BodyText,
+  SmallText,
+  Caption,
+} from "@/shared/components/typography/Typography";
 
 interface LocationState {
   accountId: string;
@@ -209,18 +215,16 @@ export function OTPVerificationPage() {
     <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <div className="w-full max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 dark:text-white">
-            {t("pages.otpVerification.title")}
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-2">
+          <SectionTitle>{t("pages.otpVerification.title")}</SectionTitle>
+          <BodyText variant="muted" className="mt-2">
             {t("pages.otpVerification.subtitle")}
-          </p>
+          </BodyText>
         </div>
 
         <div className="space-y-6">
-          <div className="flex items-center justify-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+          <div className="flex items-center justify-center gap-2">
             <MdOutlineMail className="text-brand-primary" size={18} />
-            <span className="font-medium">{state.email}</span>
+            <SmallText weight="medium">{state.email}</SmallText>
           </div>
 
           <div className="flex justify-center gap-2">
@@ -238,7 +242,7 @@ export function OTPVerificationPage() {
                 onChange={(e) => handleOtpChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 onPaste={handlePaste}
-                className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-emerald-200 dark:focus:ring-emerald-800 transition-all dark:bg-slate-800 dark:text-white"
+                className="w-12 h-14 text-center text-2xl font-semibold border-2 border-slate-300 dark:border-slate-600 rounded-lg focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:focus:ring-brand-primary/30 transition-all dark:bg-slate-800 dark:text-white"
                 autoFocus={index === 0}
                 aria-label={t("pages.otpVerification.otpDigit", {
                   digit: index + 1,
@@ -297,7 +301,9 @@ export function OTPVerificationPage() {
               otp.join("").length !== 6 ||
               otp.join("").length === 6
             }
-            className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="brand-primary"
+            size="xl"
+            className="w-full"
           >
             {isLoading || otp.join("").length === 6
               ? t("buttons.connecting")
@@ -305,23 +311,23 @@ export function OTPVerificationPage() {
           </Button>
 
           <div className="text-center">
-            <p className="text-sm text-slate-600 mb-2">
+            <SmallText variant="muted" className="mb-2">
               {t("pages.otpVerification.didNotReceiveCode")}
-            </p>
+            </SmallText>
             <button
               onClick={handleResend}
               disabled={isLoading || isResending || timeLeft > 240}
-              className="text-sm text-emerald-600 hover:text-emerald-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
+              className="text-sm text-brand-primary hover:text-brand-hover font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
               {isResending
                 ? t("buttons.sendingOtp")
                 : t("pages.otpVerification.resendCode")}
             </button>
             {timeLeft > 240 && (
-              <p className="text-xs text-slate-500 mt-1">
+              <Caption className="mt-1">
                 {t("pages.otpVerification.availableIn")}{" "}
                 {formatTime(timeLeft - 240)}
-              </p>
+              </Caption>
             )}
           </div>
 
