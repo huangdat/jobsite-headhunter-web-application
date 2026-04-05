@@ -29,6 +29,7 @@
   "applications.error.noInterviewData": "Interview scheduled, but details are not available. Please contact hiring team.",
   "applications.empty.noInterviewDetails": "Interview details are being updated...",
   "applications.interview.joinMeeting": "Join Interview Now",
+  "applications.interview.time": "Interview Time",
 
   "applications.title": "Application Management",
   "applications.myApplications": "My Applications",
@@ -37,6 +38,7 @@
 
   "applications.status.applied": "Applied",
   "applications.status.screening": "Approve",
+  "applications.status.interviewing": "Interview",
   "applications.status.interview": "Interview",
   "applications.status.passed": "Passed",
   "applications.status.rejected": "Rejected",

@@ -119,7 +119,7 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
               href={profile.websiteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-base font-medium text-brand-primary hover:text-brand-hover break-all"
+              className="text-base font-medium text-lime-500 hover:text-brand-hover break-all"
             >
               {profile.websiteUrl}
             </a>

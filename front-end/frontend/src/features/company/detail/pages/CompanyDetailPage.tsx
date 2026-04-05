@@ -46,7 +46,7 @@ export function CompanyDetailPage() {
       <div className="max-w-4xl mx-auto px-4">
         <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6">
           <ChevronLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
-          <SmallText weight="bold" className="text-inherit">
+          <SmallText weight="bold" className="text-inherit cursor-pointer">
             {t("business.form.back")}
           </SmallText>
         </Button>

@@ -14,6 +14,7 @@
   "clearAllFilters": "Clear all filters",
   "noResults": "No results",
   "applyBefore": "Apply before",
+  "viewJobLabel": "View job label",
   "filters": {
     "allLevels": "All Levels",
     "allTypes": "All Types",
@@ -24,7 +25,8 @@
     "rankLevel": "Rank Level",
     "salaryVND": "Salary (VND)",
     "toMillion": "To (Million VND)",
-    "workingType": "Working Type"
+    "workingType": "Working Type",
+    "locationPlaceholder": "Location or 'Remote'..."
   },
   "viewDetails": "View Details"
 }

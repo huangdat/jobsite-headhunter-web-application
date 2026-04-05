@@ -185,7 +185,7 @@ export function JobDetailPage() {
     <PageContainer variant="default" maxWidth="6xl">
       <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
         <button
-          className="hover:text-brand-primary dark:hover:text-brand-primary"
+          className="hover:text-lime-500 dark:hover:text-brand-primary cursor-pointer"
           onClick={() => navigate("/jobs")}
         >
           {t("list.pageTitle")}
@@ -198,7 +198,7 @@ export function JobDetailPage() {
         <Button
           variant="outline"
           size="lg"
-          className="px-4 py-2 rounded-lg"
+          className="px-4 py-2 rounded-lg cursor-pointer"
           onClick={() => navigate("/jobs")}
         >
           {t("detail.backToJobs")}
@@ -208,7 +208,7 @@ export function JobDetailPage() {
       <div className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-8 shadow-xl dark:shadow-slate-900/30 mt-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand-primary">
+            <p className="text-sm font-semibold uppercase tracking-wide text-lime-500">
               {job.companyName ?? t("messages.confidentialCompany")}
             </p>
             <h1 className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
@@ -224,7 +224,7 @@ export function JobDetailPage() {
             <Button
               variant="primary"
               size="lg"
-              className="flex-1 shadow-lg shadow-brand-primary/30"
+              className="flex-1 shadow-lg shadow-brand-primary/30 cursor-pointer"
               onClick={() => {
                 if (isAuthenticated) {
                   if (isApplied) {
@@ -251,9 +251,9 @@ export function JobDetailPage() {
             <Button
               variant="outline"
               size="lg"
-              className={`flex-1 border-2 ${
+              className={`flex-1 border-2 cursor-pointer ${
                 isSaved
-                  ? "border-brand-primary/30 bg-brand-primary/10 text-brand-primary"
+                  ? "border-brand-primary/30 bg-brand-primary/10 text-black hover:bg-brand-primary/20"
                   : "border-slate-200 dark:border-slate-700"
               }`}
               onClick={handleToggleSaved}
@@ -291,7 +291,7 @@ export function JobDetailPage() {
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
               {t("detail.jobDetailsSection")}
             </h2>
-            <p className="text-sm text-brand-primary">
+            <p className="text-sm text-lime-500">
               {t("detail.jobCodeLabel")} {job.jobCode}
             </p>
           </div>
@@ -356,7 +356,7 @@ export function JobDetailPage() {
                   job.skills.map((skill) => (
                     <span
                       key={skill.id}
-                      className="rounded-full bg-brand-primary/10 px-4 py-1 text-sm font-medium text-brand-primary"
+                      className="rounded-full bg-brand-primary/10 px-4 py-1 text-sm font-medium text-lime-500"
                     >
                       {skill.name}
                     </span>
@@ -397,7 +397,7 @@ export function JobDetailPage() {
                   <dd>
                     <a
                       href={job.companyWebsite}
-                      className="font-semibold text-brand-primary hover:underline"
+                      className="font-semibold text-lime-500 hover:underline"
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -423,26 +423,6 @@ export function JobDetailPage() {
                 </div>
               ))}
             </dl>
-          </section>
-
-          <section className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-6 shadow-lg dark:shadow-slate-900/30">
-            <p className="text-sm uppercase tracking-wide text-slate-500 dark:text-slate-400">
-              Contact
-            </p>
-            <p className="mt-2 text-lg font-semibold text-slate-900 dark:text-white">
-              {job.headhunterName ?? "Recruiter not available"}
-            </p>
-            <p className="text-sm text-slate-500 dark:text-slate-400">
-              {job.companyAddress ?? job.addressDetail}
-            </p>
-            <Button
-              variant="primary"
-              size="lg"
-              className="mt-6 w-full justify-center shadow-lg shadow-brand-primary/30"
-              onClick={() => navigate("/login")}
-            >
-              Send CV to recruiter
-            </Button>
           </section>
         </aside>
       </div>
