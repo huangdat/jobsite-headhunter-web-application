@@ -91,3 +91,12 @@ export const VERIFICATION_STATUS_COLORS: Record<VerificationStatus, string> = {
   APPROVED: "text-emerald-600 bg-emerald-50 border-emerald-200",
   REJECTED: "text-rose-600 bg-rose-50 border-rose-200",
 };
+
+export const ERROR_MESSAGE_KEYS = {
+  REQUIRED: "validation.required",
+  INVALID_EMAIL: "validation.invalidEmail",
+  INVALID_PHONE: "validation.invalidPhone",
+  INVALID_URL: "validation.invalidUrl",
+  MIN_LENGTH: "validation.minLength",
+  MAX_LENGTH: "validation.maxLength",
+} as const;

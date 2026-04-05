@@ -169,7 +169,7 @@ export function LoginPage() {
     return () => {
       active = false;
     };
-  }, [t]);
+  }, []);
 
   // Handle OAuth callback for Google (hash fragment) and LinkedIn (query params).
   useEffect(() => {
@@ -358,7 +358,7 @@ export function LoginPage() {
 
               <Link
                 to="/forgot-password"
-                className="text-brand-primary hover:underline"
+                className="text-brand-primary hover:underline text-lime-500"
               >
                 {t("pages.login.forgotPasswordLink")}
               </Link>

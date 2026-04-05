@@ -34,14 +34,12 @@ export const getJobs = async (params: JobFilterParams) => {
 };
 
 export const getMyJobs = async (page = 1, size = 10) => {
-  console.log(`[API] Calling getMyJobs with page=${page}, size=${size}`);
   const res = await apiClient.get<ApiResponse<JobListResponse>>(
     API_ENDPOINTS.JOBS.GET_MY_JOBS,
     {
       params: { page, size },
     }
   );
-  console.log(`[API] getMyJobs response:`, res.data);
   return extractResult(res);
 };
 

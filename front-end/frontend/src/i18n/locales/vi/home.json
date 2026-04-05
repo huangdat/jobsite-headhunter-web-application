@@ -53,5 +53,11 @@
   },
   "badges": {
     "new": "MỚI"
+  },
+  "jobTypes": {
+    "full-time": "Toàn thời gian",
+    "remote": "Làm việc từ xa",
+    "onsite": "Tại văn phòng",
+    "hybrid": "Kết hợp"
   }
 }

@@ -491,7 +491,7 @@ export function JobCreatePage() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-brand-primary hover:bg-brand-primary/90 text-white font-bold h-11 px-8 rounded-xl shadow-sm shadow-brand-primary/20 transition-all active:scale-95 border-none cursor-pointer"
+            className="rounded-xl border border-lime-500 bg-white text-lime-600 hover:bg-lime-50 dark:bg-slate-900 dark:border-lime-500 dark:text-lime-400 dark:hover:bg-lime-500/10 font-bold px-6 h-12 flex items-center justify-center gap-2 transition-all cursor-pointer"
           >
             {isSubmitting ? (
               <div className="flex items-center gap-2">
