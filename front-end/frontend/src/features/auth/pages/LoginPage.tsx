@@ -6,6 +6,7 @@ import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import { AnimatedCheckbox } from "@/features/auth/components/AnimatedCheckbox";
 import { useLogin } from "@/features/auth/hooks";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import {
   getSocialConfig,
   googleLogin,
@@ -64,6 +65,7 @@ export function LoginPage() {
   const {
     formData,
     errors,
+    generalError,
     isLoading,
     handleSubmit,
     handleChange,
@@ -318,6 +320,16 @@ export function LoginPage() {
             }}
             className="space-y-6"
           >
+            {/* ERROR STATE - Display general login errors */}
+            {generalError && (
+              <ErrorState
+                variant="card"
+                title={t("pages.login.signInFailed")}
+                message={generalError}
+                className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/40"
+              />
+            )}
+
             {/* USERNAME OR EMAIL */}
             <FormField label={t("labels.username")} error={errors.email}>
               <Input
