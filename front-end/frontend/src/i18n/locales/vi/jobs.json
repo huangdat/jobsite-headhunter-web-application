@@ -201,6 +201,12 @@
       "HYBRID": "Kết hợp"
     }
   },
+  "jobTypes": {
+    "full-time": "Toàn thời gian",
+    "remote": "Làm việc từ xa",
+    "onsite": "Tại văn phòng",
+    "hybrid": "Kết hợp"
+  },
   "messages": {
     "jobCreatedSuccess": "Công việc được tạo thành công",
     "closeJobConfirm": "Đóng công việc này?",

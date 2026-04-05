@@ -32,6 +32,7 @@ export function FeaturedJobs() {
     fetchJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLanguage?.code]);
+  
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
       <SubsectionTitle className="mb-10">

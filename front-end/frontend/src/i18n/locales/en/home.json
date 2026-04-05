@@ -53,5 +53,11 @@
   },
   "badges": {
     "new": "NEW"
+  },
+  "jobTypes": {
+    "full-time": "Full-time",
+    "remote": "Remote",
+    "onsite": "On-site",
+    "hybrid": "Hybrid"
   }
 }
