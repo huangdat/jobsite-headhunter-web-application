@@ -15,7 +15,12 @@ import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { useVerifications } from "../hooks";
 import type { Verification } from "../types";
-import { Search, Filter, AlertCircle, Calendar } from "lucide-react";
+import {
+  VerificationStatsCard,
+  VerificationQueueCard,
+  EmptyStateView,
+} from "../components";
+import { Search, Filter, AlertCircle } from "lucide-react";
 
 export const VerificationListPage: React.FC = () => {
   const { t } = useAppTranslation();
@@ -74,28 +79,7 @@ export const VerificationListPage: React.FC = () => {
       </div>
 
       {/* STATS CARD */}
-      {stats && (
-        <div className="bg-slate-900 text-white rounded-xl p-6 mb-8 grid grid-cols-3 gap-4">
-          <div>
-            <div className="text-sm text-slate-400 mb-1">
-              {t("verification.cards.stats.pending")}
-            </div>
-            <div className="text-3xl font-bold">{stats.currentPending}</div>
-          </div>
-          <div>
-            <div className="text-sm text-slate-400 mb-1">
-              {t("verification.cards.stats.approved")}
-            </div>
-            <div className="text-3xl font-bold">{stats.totalApproved}</div>
-          </div>
-          <div>
-            <div className="text-sm text-slate-400 mb-1">
-              {t("verification.cards.stats.completionRate")}
-            </div>
-            <div className="text-3xl font-bold">{stats.approvalRate}%</div>
-          </div>
-        </div>
-      )}
+      {stats && <VerificationStatsCard stats={stats} isLoading={isLoading} />}
 
       {/* VERIFICATIONS GRID */}
       {isLoading ? (
@@ -105,59 +89,19 @@ export const VerificationListPage: React.FC = () => {
           ))}
         </div>
       ) : verifications.length === 0 ? (
-        <div className="text-center py-20 border-2 border-dashed rounded-3xl text-slate-400">
-          <AlertCircle className="mx-auto mb-4 opacity-20" size={40} />
-          <p className="text-lg">{t("verification.pages.list.noResults")}</p>
-          <p className="text-sm mt-2">
-            {t("verification.pages.list.noResultsDescription")}
-          </p>
-        </div>
+        <EmptyStateView
+          icon={AlertCircle}
+          title={t("verification.pages.list.noResults")}
+          description={t("verification.pages.list.noResultsDescription")}
+        />
       ) : (
         <div className="space-y-4 mb-8">
           {verifications.map((verification: Verification) => (
-            <div
+            <VerificationQueueCard
               key={verification.id}
+              verification={verification}
               onClick={() => handleCardClick(verification)}
-              className="group p-4 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:shadow-md transition-all cursor-pointer"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h3 className="font-semibold text-slate-900">
-                    {verification.business.companyName}
-                  </h3>
-                  <div className="text-sm text-slate-600 mt-1 space-y-1">
-                    <p>
-                      {t("verification.fields.taxId")}:{" "}
-                      {verification.business.taxId}
-                    </p>
-                    <p className="flex items-center gap-2 mt-2">
-                      <Calendar size={14} />
-                      {t("verification.cards.queueItem.submitted")}{" "}
-                      {new Date(verification.submittedAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div
-                    className={`px-3 py-1 rounded-full text-xs font-bold ${
-                      verification.status === "PENDING"
-                        ? "bg-amber-100 text-amber-700"
-                        : "bg-green-100 text-green-700"
-                    }`}
-                  >
-                    {t(
-                      verification.status === "PENDING"
-                        ? "verification.status.pending"
-                        : "verification.status.approved"
-                    )}
-                  </div>
-                  <div className="text-sm text-slate-600 mt-2">
-                    {verification.complianceScore}%{" "}
-                    {t("verification.fields.complianceScore")}
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
           ))}
         </div>
       )}
