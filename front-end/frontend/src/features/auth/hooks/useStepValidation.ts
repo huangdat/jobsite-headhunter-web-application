@@ -6,13 +6,14 @@ import type {
 
 /**
  * Define which fields need validation for each step
+ * Only include REQUIRED fields here
  */
 const STEP_FIELDS = {
   1: ["username", "email", "password", "confirmPassword"],
   2: ["fullName", "phone"],
   3: {
-    candidate: ["currentTitle"],
-    collaborator: ["commissionRate"],
+    candidate: [], // No required fields for candidate step 3
+    collaborator: [],
     headhunter: ["taxCode"],
   },
 } as const;
@@ -32,7 +33,7 @@ export function useStepValidation(
   isCheckingDuplicate: boolean
 ) {
   const { formState } = form;
-  const { errors, isDirty } = formState;
+  const { errors } = formState;
 
   // Get fields that should be validated for current step
   const getFieldsForStep = (step: number): string[] => {
@@ -59,15 +60,29 @@ export function useStepValidation(
    */
   const hasEmptyRequiredFields = (): boolean => {
     const fieldsToCheck = getFieldsForStep(currentStep);
+
+    // If no fields to check, return false (no empty fields)
+    if (fieldsToCheck.length === 0) {
+      return false;
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const formValues = form.getValues() as any;
     return fieldsToCheck.some((field) => {
       // eslint-disable-next-line security/detect-object-injection
       const value = formValues[field];
-      // Check for empty strings, null, undefined, or 0 (for commission rate)
+
+      // For number fields like commissionRate
       if (field === "commissionRate") {
-        return value === null || value === undefined || value === "";
+        return (
+          value === null ||
+          value === undefined ||
+          value === "" ||
+          Number.isNaN(value)
+        );
       }
+
+      // For string fields
       return !value || (typeof value === "string" && value.trim() === "");
     });
   };
@@ -82,8 +97,6 @@ export function useStepValidation(
     if (isCheckingDuplicate) return true;
     // Disable if current step has validation errors
     if (hasStepErrors()) return true;
-    // Disable if required fields are empty and form has been touched
-    if (isDirty && hasEmptyRequiredFields()) return true;
 
     return false;
   };
@@ -98,8 +111,8 @@ export function useStepValidation(
     if (isCheckingDuplicate) return true;
     // Disable if current step (last step) has validation errors
     if (hasStepErrors()) return true;
-    // Disable if required fields are empty
-    if (isDirty && hasEmptyRequiredFields()) return true;
+    // Disable if current step has empty required fields
+    if (hasEmptyRequiredFields()) return true;
 
     return false;
   };

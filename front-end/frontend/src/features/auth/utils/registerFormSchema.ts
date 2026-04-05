@@ -158,10 +158,10 @@ export function createSchemaWithI18n(t: (key: string) => string) {
   const collaboratorSchema = baseSchema.shape({
     commissionRate: yup
       .number()
-      .nullable()
+      .required(t("validation.fields.commissionRateRequired"))
       .typeError(t("validation.fields.commissionRateInvalid"))
       .min(0, t("validation.fields.commissionRateInvalid"))
-      .max(100, t("validation.fields.commissionRateInvalid")),
+      .max(100, t("validation.fields.commissionRateMax")),
   });
 
   /**

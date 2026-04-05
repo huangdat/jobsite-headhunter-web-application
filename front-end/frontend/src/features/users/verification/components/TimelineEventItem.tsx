@@ -37,7 +37,7 @@ export const TimelineEventItem: React.FC<TimelineEventItemProps> = ({
 
         {/* Event Details */}
         <div className="flex-1">
-          <p className="font-semibold text-sm text-slate-900">
+          <p className="font-semibold text-sm text-slate-900 dark:text-slate-50">
             {event.eventType}
           </p>
           <p className="text-xs text-slate-600 mt-1">

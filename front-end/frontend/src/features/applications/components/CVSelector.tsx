@@ -80,7 +80,7 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
                 <FileText className="w-6 h-6" />
               </div>
               <div className="overflow-hidden">
-                <h4 className="text-sm font-bold text-slate-900 truncate">
+                <h4 className="text-sm font-bold text-slate-900 dark:text-slate-50 truncate">
                   {formatFileName(myCv.cvUrl)}
                 </h4>
               </div>

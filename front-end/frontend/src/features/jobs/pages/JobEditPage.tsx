@@ -21,6 +21,8 @@ import {
   LabelText,
   SmallText,
 } from "@/shared/components/typography/Typography";
+import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 
 export function JobEditPage() {
   const { t } = useJobsTranslation();
@@ -30,7 +32,12 @@ export function JobEditPage() {
   const queryClient = useQueryClient();
 
   const jobId = id ? Number(id) : null;
-  const { data: jobDetail, isLoading: jobLoading } = useJobDetailQuery(jobId);
+  const {
+    data: jobDetail,
+    isLoading: jobLoading,
+    error: jobError,
+    refetch: refetchJob,
+  } = useJobDetailQuery(jobId);
   const { data: skills = [] } = useSkillsQuery();
 
   const {
@@ -111,16 +118,26 @@ export function JobEditPage() {
     }
   };
 
-  if (jobLoading)
+  if (jobLoading) {
     return (
       <PageContainer variant="white" maxWidth="5xl">
-        <div className="flex justify-center items-center min-h-100">
-          <p className="text-slate-500 dark:text-slate-400 font-medium animate-pulse">
-            {t("edit.messages.loading")}
-          </p>
-        </div>
+        <PageSkeleton variant="grid" columns={2} count={4} />
       </PageContainer>
     );
+  }
+
+  if (jobError) {
+    return (
+      <PageContainer variant="white" maxWidth="5xl">
+        <ErrorState
+          error={jobError}
+          onRetry={() => refetchJob()}
+          variant="page"
+          title={t("edit.messages.failedToLoad") || "Failed to load job"}
+        />
+      </PageContainer>
+    );
+  }
 
   return (
     <PageContainer variant="white" maxWidth="5xl">

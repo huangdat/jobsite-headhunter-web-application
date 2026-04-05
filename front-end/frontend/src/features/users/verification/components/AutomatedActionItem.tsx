@@ -52,7 +52,9 @@ export const AutomatedActionItem: React.FC<AutomatedActionItemProps> = ({
         {/* Action Details */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <h4 className="font-medium text-slate-900">{action.type}</h4>
+            <h4 className="font-medium text-slate-900 dark:text-slate-50">
+              {action.type}
+            </h4>
             <span
               className={`text-xs font-semibold px-2 py-1 rounded-full ${
                 action.status === "COMPLETED"

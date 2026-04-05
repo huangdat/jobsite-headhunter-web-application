@@ -341,9 +341,11 @@ export function LoginPage() {
                 value={formData.password}
                 onChange={(e) => handleChange("password")(e.target.value)}
                 rightIcon={
-                  <button
+                  <Button
                     type="button"
-                    className="cursor-pointer"
+                    variant="ghost"
+                    size="icon"
+                    className="h-10 w-10"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -351,7 +353,7 @@ export function LoginPage() {
                     ) : (
                       <AiOutlineEye />
                     )}
-                  </button>
+                  </Button>
                 }
               />
             </FormField>

@@ -9,7 +9,7 @@ export function CompanyAbout({ description }: Props) {
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-6">
-      <h2 className="text-xl font-bold text-slate-900 mb-4">
+      <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50 mb-4">
         {t("business.form.company_identity")}
       </h2>
       <div className="text-slate-600 leading-relaxed whitespace-pre-line">

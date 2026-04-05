@@ -126,14 +126,15 @@ export const JobPipelinePage: React.FC = () => {
                   </td>
                   <td className="p-5 text-right">
                     {/* Đổi nút View Details sang nền Lime chữ đen chuẩn bài */}
-                    <button
+                    <Button
                       onClick={() =>
                         navigate(`/headhunter/applications/${app.id}`)
                       }
-                      className="px-4 py-2 bg-lime-400 text-slate-900 rounded-xl text-xs font-bold hover:bg-lime-500 transition-all cursor-pointer active:scale-95 shadow-sm shadow-lime-500/20"
+                      className="bg-lime-400 text-slate-900 hover:bg-lime-500 shadow-sm shadow-lime-500/20"
+                      size="sm"
                     >
                       {t("actions.viewDetails")}
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))

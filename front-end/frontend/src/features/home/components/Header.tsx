@@ -117,7 +117,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                       {userInitial}
                     </div>
                     <div className="overflow-hidden">
-                      <p className="text-sm font-medium text-slate-900 truncate">
+                      <p className="text-sm font-medium text-slate-900 dark:text-slate-50 truncate">
                         {user?.username}
                       </p>
                       <span className="inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700 uppercase">

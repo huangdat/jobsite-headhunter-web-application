@@ -54,7 +54,9 @@ export const SectionCard: React.FC<SectionCardProps> = ({
         <div className="px-6 pt-6 pb-4 border-b border-slate-200/50">
           <div className="flex items-center gap-3">
             {Icon && <Icon className="text-lime-600 shrink-0" size={20} />}
-            <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+              {title}
+            </h3>
           </div>
         </div>
       )}

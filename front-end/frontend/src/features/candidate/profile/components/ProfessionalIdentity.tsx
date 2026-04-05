@@ -42,7 +42,7 @@ export function ProfessionalIdentity({
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-900">
+          <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-slate-50">
             {t("profile.form.sectionTitle")}
           </h2>
           <p className="mt-1 text-sm text-slate-500">
