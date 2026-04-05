@@ -5,7 +5,8 @@
       "title": "Professional Identity",
       "subtitleDefault": "Manage your executive presence and candidate market positioning.",
       "subtitleSaving": "Saving your profile...",
-      "subtitleSuccess": "Your profile is up to date."
+      "subtitleSuccess": "Your profile is up to date.",
+      "candidate": "Candidate Profile"
     },
     "alerts": {
       "saveErrorTitle": "Action Required: Profile Validation Errors",
@@ -168,6 +169,9 @@
   },
   "messages": {
     "uploading": "Uploading..."
+  },
+  "common": {
+    "back": "Back"
   },
   "candidate": {
     "common": {

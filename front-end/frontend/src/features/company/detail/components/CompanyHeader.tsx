@@ -43,15 +43,16 @@ export function CompanyHeader({ company }: Props) {
               href={
                 company.websiteUrl.startsWith("http")
                   ? company.websiteUrl
-                  : // eslint-disable-next-line custom/no-api-urls
-                    `https://${company.websiteUrl}`
+                  : `https://${company.websiteUrl}`
               }
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 border border-brand-primary/20 px-3 py-1.5 rounded-lg transition cursor-pointer font-semibold"
+              className="flex items-center gap-2 bg-lime-400 text-gray-700 hover:bg-lime-500 
+              border border-lime-500 px-3 py-1.5 rounded-lg transition-all 
+              font-bold shadow-sm cursor-pointer"
             >
-              <Globe className="w-4 h-4 text-brand-primary" />
-              {t("business.form.website")}
+              <Globe className="w-4 h-4 text-black" />
+              <span>{t("business.form.website")}</span>
             </a>
           )}
         </div>

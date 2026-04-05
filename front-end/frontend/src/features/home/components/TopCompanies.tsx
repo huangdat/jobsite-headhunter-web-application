@@ -84,7 +84,7 @@ export function TopCompanies() {
 
                 <SmallText
                   weight="semibold"
-                  className="text-brand-primary mt-2 transition group-hover:translate-x-1 text-xs block"
+                  className="text-lime-500 mt-2 transition group-hover:translate-x-1 text-xs block"
                 >
                   {t("topCompanies.viewCompany")}
                 </SmallText>

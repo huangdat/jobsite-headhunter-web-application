@@ -5,7 +5,6 @@ export function CompanyJobs() {
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mb-6">
-      {/* Dùng key từ file jobs.json hoặc list.json của bạn */}
       <h2 className="text-xl font-bold text-slate-900 mb-4">
         {t("navigation.jobs")}
       </h2>

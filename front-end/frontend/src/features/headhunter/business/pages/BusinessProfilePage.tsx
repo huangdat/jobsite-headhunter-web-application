@@ -24,7 +24,6 @@ export const BusinessProfilePage: React.FC = () => {
       <div className="relative h-40 bg-linear-to-r from-emerald-600 to-teal-700">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[size:20px_20px]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative h-full flex flex-col justify-end pb-8">
-          {/* Điều hướng & Nút Back */}
           <div className="mb-4 flex items-center justify-between">
             <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-100/60">
               <span>{t("business.breadcrumb.business")}</span>
@@ -38,7 +37,9 @@ export const BusinessProfilePage: React.FC = () => {
               variant="ghost"
               size="sm"
               onClick={() => navigate(-1)}
-              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/80 hover:text-white h-auto p-1"
+              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest 
+              text-white/80 h-auto p-1 cursor-pointer transition-colors
+              hover:bg-transparent hover:text-lime-400"
             >
               <svg
                 className="h-4 w-4"
@@ -106,7 +107,6 @@ export const BusinessProfilePage: React.FC = () => {
               <p className="text-slate-500 max-w-sm mx-auto">{errorMessage}</p>
             </div>
           ) : profile ? (
-            // Hiển thị component Read-only rộng rãi
             <div className="p-8 md:p-12">
               <BusinessProfileDisplay profile={profile} />
             </div>

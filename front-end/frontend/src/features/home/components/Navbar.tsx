@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { useAuth } from "@/features/auth/context/useAuth";
 
@@ -5,40 +6,41 @@ export function Navbar() {
   const { t } = useAppTranslation();
   const { user } = useAuth();
 
-  // hide public nav links for headhunters (case-insensitive)
   if (user?.role?.toLowerCase() === "headhunter") return null;
 
   return (
     <nav className="hidden md:flex items-center gap-8">
-      <a
-        href="/jobs"
-        className="text-sm font-medium hover:text-brand-primary transition"
+      <Link
+        to="/jobs"
+        className="text-sm font-medium hover:text-lime-500 transition-colors"
       >
         {t("navigation.jobs")}
-      </a>
-      <a
-        href="/forum-posts"
-        className="text-sm font-medium hover:text-brand-primary transition"
+      </Link>
+
+      <Link
+        to="/forum-posts"
+        className="text-sm font-medium hover:text-lime-500 transition-colors"
       >
         {t("navigation.forum")}
-      </a>
+      </Link>
+
       <a
         href="#recommended"
-        className="text-sm font-medium hover:text-brand-primary transition"
+        className="text-sm font-medium hover:text-lime-500 transition-colors"
       >
         {t("navigation.recommended")}
       </a>
 
       <a
         href="#top-companies"
-        className="text-sm font-medium hover:text-brand-primary transition"
+        className="text-sm font-medium hover:text-lime-500 transition-colors"
       >
         {t("navigation.topCompanies")}
       </a>
 
       <a
         href="#featured-jobs"
-        className="text-sm font-medium hover:text-brand-primary transition"
+        className="text-sm font-medium hover:text-lime-500 transition-colors"
       >
         {t("navigation.featuredJobs")}
       </a>

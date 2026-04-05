@@ -11,6 +11,9 @@
   },
   "common": {
     "loading": "Common loading",
+    "actions": {
+      "close": "Close"
+    },
     "adminUserTitle": "Admin User",
     "appVersion": "v2.4.0 Release",
     "permanentDelete": "Permanent Delete",
