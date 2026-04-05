@@ -42,7 +42,7 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
     switch (status) {
       case "SCHEDULED":
         return "bg-blue-100 text-blue-700 hover:bg-blue-100 border-none";
-      case "COMPLETED":
+      case "DONE":
         return "bg-green-100 text-green-700 hover:bg-green-100 border-none";
       case "CANCELLED":
         return "bg-red-100 text-red-700 hover:bg-red-100 border-none";

@@ -6,13 +6,10 @@
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
 import type { ApiResponse } from "@/features/auth/types/api.types";
-
-/**
- * Interview Data Types
- * Backend enums match with ONLINE | OFFLINE
- */
-export type InterviewType = "ONLINE" | "OFFLINE";
-export type InterviewStatusType = "SCHEDULED" | "DONE" | "CANCELLED";
+import type {
+  InterviewType,
+  InterviewStatus as InterviewStatusType,
+} from "@/shared/types/enums";
 
 export interface InterviewScheduleRequest {
   applicationId: number;

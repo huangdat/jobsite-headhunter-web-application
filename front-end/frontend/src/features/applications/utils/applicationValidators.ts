@@ -2,7 +2,7 @@ import type {
   ApplicationFormData,
   InterviewScheduleFormData,
 } from "@/features/applications/types";
-import { InterviewType } from "@/features/applications/types";
+import { INTERVIEW_TYPE } from "@/shared/types/enums";
 import { APPLICATION_VALIDATION } from "./applicationConstants";
 
 /**
@@ -84,7 +84,7 @@ export const validateInterviewScheduleForm = (
   }
 
   // Validate interview type specific fields
-  if (data.interviewType === InterviewType.ONLINE) {
+  if (data.interviewType === INTERVIEW_TYPE.ONLINE) {
     if (!data.meetingLink?.trim()) {
       errors.meetingLink = "applications.validation.meetingLinkRequired";
     } else if (!isValidUrl(data.meetingLink)) {
@@ -92,7 +92,7 @@ export const validateInterviewScheduleForm = (
     }
   }
 
-  if (data.interviewType === InterviewType.OFFLINE) {
+  if (data.interviewType === INTERVIEW_TYPE.OFFLINE) {
     if (!data.location?.trim()) {
       errors.location = "applications.validation.locationRequired";
     }

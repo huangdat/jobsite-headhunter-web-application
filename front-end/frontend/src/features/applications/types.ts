@@ -1,27 +1,12 @@
-// Application Status (using const as const pattern for erasable syntax)
-export const ApplicationStatus = {
-  APPLIED: "APPLIED",
-  SCREENING: "SCREENING",
-  INTERVIEW: "INTERVIEW",
-  PASSED: "PASSED",
-  REJECTED: "REJECTED",
-} as const;
-export type ApplicationStatus =
-  (typeof ApplicationStatus)[keyof typeof ApplicationStatus];
+// Import centralized enums from shared domain for type annotations
+import type {
+  ApplicationStatus,
+  InterviewType,
+  InterviewStatus,
+} from "@/shared/types/enums";
 
-export const InterviewType = {
-  ONLINE: "ONLINE",
-  OFFLINE: "OFFLINE",
-} as const;
-export type InterviewType = (typeof InterviewType)[keyof typeof InterviewType];
-
-export const InterviewStatus = {
-  SCHEDULED: "SCHEDULED",
-  COMPLETED: "COMPLETED",
-  CANCELLED: "CANCELLED",
-} as const;
-export type InterviewStatus =
-  (typeof InterviewStatus)[keyof typeof InterviewStatus];
+// Re-export types for use in this module
+export type { ApplicationStatus, InterviewType, InterviewStatus };
 
 // Main Application Interface
 export interface Application {
