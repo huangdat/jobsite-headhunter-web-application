@@ -36,3 +36,11 @@ export { SectionCard } from "./SectionCard";
 // Feedback & State Components
 export { ApprovalSuccessBanner } from "./ApprovalSuccessBanner";
 export { EmptyStateView } from "./EmptyStateView";
+
+// ============================================================================
+// PHASE 5: Page Refactoring & Integration
+// ============================================================================
+
+// Composite Components
+export { VerificationTimeline } from "./VerificationTimeline";
+export { AutomatedActionsList } from "./AutomatedActionsList";

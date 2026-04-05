@@ -12,7 +12,7 @@
 import React from "react";
 import type { LucideIcon } from "lucide-react";
 
-interface DetailItem {
+export interface DetailItem {
   label: string;
   value: string | React.ReactNode;
   icon?: LucideIcon;

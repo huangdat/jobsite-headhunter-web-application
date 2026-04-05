@@ -16,15 +16,14 @@ import { PageContainer } from "@/shared/components/layout";
 import { useVerificationDetail } from "../hooks";
 import { VerificationStatus } from "../types";
 import {
-  ChevronLeft,
-  MapPin,
-  Mail,
-  Phone,
-  Globe,
-  Users,
-  CheckCircle,
-  AlertCircle,
-} from "lucide-react";
+  VerificationTimeline,
+  AutomatedActionsList,
+  DetailsGrid,
+  SectionCard,
+  ApprovalSuccessBanner,
+  EmptyStateView,
+} from "../components";
+import { ChevronLeft, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
 export const VerificationDetailPage: React.FC = () => {
@@ -106,19 +105,12 @@ export const VerificationDetailPage: React.FC = () => {
   if (!verification) {
     return (
       <PageContainer variant="default" maxWidth="6xl">
-        <div className="text-center py-20">
-          <AlertCircle className="mx-auto mb-4 opacity-40" size={40} />
-          <p className="text-lg text-slate-600">
-            {t("verification.errors.notFound")}
-          </p>
-          <Button
-            variant="default"
-            className="mt-4"
-            onClick={() => navigate("/admin/verifications")}
-          >
-            {t("verification.pages.detail.back")}
-          </Button>
-        </div>
+        <EmptyStateView
+          icon={AlertCircle}
+          title={t("verification.errors.notFound")}
+          onPrimaryAction={() => navigate("/admin/verifications")}
+          primaryActionLabel={t("verification.pages.detail.back")}
+        />
       </PageContainer>
     );
   }
@@ -135,141 +127,52 @@ export const VerificationDetailPage: React.FC = () => {
       </button>
 
       {/* SUCCESS BANNER (conditional) */}
-      {verification.status === VerificationStatus.APPROVED && (
-        <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg mb-6">
-          <div className="flex items-start gap-3">
-            <CheckCircle className="text-green-600 shrink-0 mt-0.5" size={20} />
-            <div>
-              <h3 className="font-semibold text-green-900">
-                {t("verification.approval.success")}
-              </h3>
-              <p className="text-sm text-green-800 mt-1">
-                {t("verification.approval.successMessage")}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      <ApprovalSuccessBanner
+        show={verification.status === VerificationStatus.APPROVED}
+        onNext={() => navigate("/admin/verifications")}
+      />
 
       {/* MAIN CONTENT */}
       <div className="grid grid-cols-12 gap-8">
         {/* LEFT: BUSINESS DETAILS (60%) */}
         <div className="col-span-8 space-y-6">
           {/* Company Identity */}
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">
-              {t("verification.cards.businessInfo.identity")}
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="text-sm text-slate-600">
-                  {t("verification.fields.companyName")}
-                </label>
-                <p className="font-semibold">
-                  {verification.business.companyName}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm text-slate-600">
-                  {t("verification.fields.taxId")}
-                </label>
-                <p className="font-mono bg-slate-100 px-3 py-1 rounded text-sm">
-                  {verification.business.taxId}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm text-slate-600">
-                  {t("verification.fields.industry")}
-                </label>
-                <p className="font-semibold">
-                  {verification.business.industry}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm text-slate-600">
-                  {t("verification.fields.yearEstablished")}
-                </label>
-                <p className="font-semibold">
-                  {verification.business.yearEstablished}
-                </p>
-              </div>
-            </div>
-          </Card>
-
-          {/* Operations & Contact */}
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">
-              {t("verification.cards.businessInfo.operations")}
-            </h2>
-            <div className="space-y-3">
-              {verification.business.website && (
-                <div className="flex items-center gap-2">
-                  <Globe size={16} className="text-slate-600" />
-                  <a
-                    href={verification.business.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
-                  >
-                    {verification.business.website}
-                  </a>
-                </div>
-              )}
-              <div className="flex items-center gap-2">
-                <Mail size={16} className="text-slate-600" />
-                <span>{verification.business.email}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone size={16} className="text-slate-600" />
-                <span>{verification.business.phone}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users size={16} className="text-slate-600" />
-                <span>{verification.business.employeeCount} employees</span>
-              </div>
-              {verification.business.hq && (
-                <div className="flex items-start gap-2">
-                  <MapPin size={16} className="text-slate-600 mt-1" />
-                  <span>
-                    {verification.business.hq.address},{" "}
-                    {verification.business.hq.city}
-                  </span>
-                </div>
-              )}
-            </div>
-          </Card>
+          <SectionCard title={t("verification.cards.businessInfo.identity")}>
+            <DetailsGrid
+              items={[
+                {
+                  label: t("verification.fields.companyName"),
+                  value: verification.business.companyName,
+                },
+                {
+                  label: t("verification.fields.taxId"),
+                  value: verification.business.taxId,
+                  className: "font-mono bg-slate-100 px-2 py-1 rounded text-sm",
+                },
+                {
+                  label: t("verification.fields.industry"),
+                  value: verification.business.industry,
+                },
+                {
+                  label: t("verification.fields.yearEstablished"),
+                  value: String(verification.business.yearEstablished),
+                },
+              ]}
+              columns={2}
+            />
+          </SectionCard>
 
           {/* Timeline */}
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold mb-4">
-              {t("verification.timeline.title")}
-            </h2>
-            <div className="space-y-4">
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              {verification.timeline.map((event: any, idx: number) => (
-                <div key={event.id} className="relative pb-4">
-                  {idx < verification.timeline.length - 1 && (
-                    <div className="absolute left-2 top-6 bottom-0 w-0.5 bg-slate-200" />
-                  )}
-                  <div className="flex gap-4">
-                    <div className="w-5 h-5 rounded-full bg-green-600 shrink-0 mt-1" />
-                    <div>
-                      <p className="font-semibold text-sm">{event.eventType}</p>
-                      <p className="text-xs text-slate-600 mt-1">
-                        {new Date(event.timestamp).toLocaleString()}
-                        {event.actor && ` - ${event.actor}`}
-                      </p>
-                      {event.description && (
-                        <p className="text-sm text-slate-700 mt-1">
-                          {event.description}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
+          <VerificationTimeline
+            events={verification.timeline}
+            isLoading={isLoading}
+          />
+
+          {/* Automated Actions */}
+          <AutomatedActionsList
+            actions={verification.automatedActions}
+            isLoading={isLoading}
+          />
         </div>
 
         {/* RIGHT: APPROVAL CARD (35%) */}
@@ -314,34 +217,6 @@ export const VerificationDetailPage: React.FC = () => {
                     }`}
                   />
                 </div>
-              </div>
-            </div>
-
-            {/* Automated Actions */}
-            <div className="mb-6">
-              <label className="text-xs text-slate-400 uppercase">
-                {t("verification.cards.approvalDetails.automatedActions")}
-              </label>
-              <div className="space-y-2 mt-3">
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                {verification.automatedActions.map((action: any) => (
-                  <div
-                    key={action.id}
-                    className="flex items-center gap-2 text-sm"
-                  >
-                    <CheckCircle
-                      size={16}
-                      className={
-                        action.status === "COMPLETED"
-                          ? "text-green-400"
-                          : action.status === "FAILED"
-                            ? "text-red-400"
-                            : "text-slate-500"
-                      }
-                    />
-                    <span>{action.type}</span>
-                  </div>
-                ))}
               </div>
             </div>
 
