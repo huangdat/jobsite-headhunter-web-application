@@ -25,4 +25,7 @@ export interface APIResponse<T> {
   result: T;
 }
 
+// Export all centralized enums
+export * from "@/shared/types/enums";
+
 export type { ApiResponse } from "@/features/auth/types/api.types";

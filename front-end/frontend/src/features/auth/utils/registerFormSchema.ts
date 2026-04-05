@@ -70,28 +70,55 @@ export function createSchemaWithI18n(t: (key: string) => string) {
 
     gender: yup
       .string()
-      .oneOf(["MALE", "FEMALE", "OTHER"], t("validation.fields.genderInvalid"))
       .nullable()
-      .optional(),
+      .optional()
+      .test(
+        "valid-gender",
+        t("validation.fields.genderInvalid"),
+        (value) => !value || ["MALE", "FEMALE", "OTHER"].includes(value)
+      ),
 
     avatar: yup
       .mixed<File>()
       .nullable()
       .optional()
+      .transform((value) => {
+        // Convert empty FileList or empty File arrays to undefined
+        if (!value) return undefined;
+        if ("length" in value && value.length === 0) return undefined;
+        // Handle File objects that are 0 bytes
+        if (value instanceof File && value.size === 0 && value.name === "")
+          return undefined;
+        return value;
+      })
       .test(
         "fileSize",
         t("validation.fields.avatarFileSizeExceeded"),
         (file: File | null | undefined) => {
+          // Handle null, undefined, empty FileList, and empty File arrays
           if (!file) return true;
-          return file.size <= 5 * 1024 * 1024; // 5MB
+          // Check if it's a FileList with no files
+          if ("length" in file && file.length === 0) return true;
+          // Check if it's a File with valid size
+          if (file instanceof File) {
+            return file.size <= 5 * 1024 * 1024; // 5MB
+          }
+          return true;
         }
       )
       .test(
         "fileType",
         t("validation.fields.avatarFileTypeInvalid"),
         (file: File | null | undefined) => {
+          // Handle null, undefined, empty FileList, and empty File arrays
           if (!file) return true;
-          return /^image\/(jpg|jpeg|png|gif|webp)$/.test(file.type);
+          // Check if it's a FileList with no files
+          if ("length" in file && file.length === 0) return true;
+          // Check if it's a File with valid type
+          if (file instanceof File) {
+            return /^image\/(jpg|jpeg|png|gif|webp)$/.test(file.type);
+          }
+          return true;
         }
       ),
 
@@ -158,7 +185,8 @@ export function createSchemaWithI18n(t: (key: string) => string) {
   const collaboratorSchema = baseSchema.shape({
     commissionRate: yup
       .number()
-      .required(t("validation.fields.commissionRateRequired"))
+      .nullable()
+      .optional()
       .typeError(t("validation.fields.commissionRateInvalid"))
       .min(0, t("validation.fields.commissionRateInvalid"))
       .max(100, t("validation.fields.commissionRateMax")),
@@ -170,14 +198,20 @@ export function createSchemaWithI18n(t: (key: string) => string) {
   const headhunterSchema = baseSchema.shape({
     taxCode: yup
       .string()
-      .required(t("validation.fields.taxCodeRequired"))
+      .nullable()
+      .optional()
       .matches(/^\d{10}$|^\d{13}$/, t("validation.fields.taxCodeInvalid"))
       .transform(sanitizeInput),
 
     websiteUrl: yup
       .string()
       .nullable()
-      .url(t("validation.fields.websiteUrlInvalid"))
+      .optional()
+      .test(
+        "valid-url",
+        t("validation.fields.websiteUrlInvalid"),
+        (value) => !value || /^https?:\/\/.+/.test(value)
+      )
       .transform((value: string | null | undefined) => value || undefined)
       .transform(sanitizeInput),
 

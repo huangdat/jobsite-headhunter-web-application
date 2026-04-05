@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
+import { useDebounce } from "@/shared/hooks/useDebounce";
 import type {
   RegistrationUserRole,
   RegisterFormData,
@@ -90,11 +91,11 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     taxCode: "",
     websiteUrl: "",
     companyScale: "",
-    commissionRate: undefined,
+    commissionRate: 0,
     currentTitle: "",
-    yearsOfExperience: undefined,
-    expectedSalaryMin: undefined,
-    expectedSalaryMax: undefined,
+    yearsOfExperience: 0,
+    expectedSalaryMin: 0,
+    expectedSalaryMax: 0,
     bio: "",
     city: "",
     openForWork: false,
@@ -110,9 +111,13 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     defaultValues,
   });
 
-  const { watch, trigger, setError } = form;
+  const { watch, trigger, setError, clearErrors } = form;
   const watchEmail = watch("email");
   const watchUsername = watch("username");
+
+  // Debounce email and username to stabilize dependencies
+  const debouncedEmail = useDebounce(watchEmail, 500);
+  const debouncedUsername = useDebounce(watchUsername, 500);
 
   useEffect(() => {
     if (!isInitializing && isAuthenticated) {
@@ -128,19 +133,22 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
 
   // Async validation for email uniqueness
   useEffect(() => {
-    if (!watchEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(watchEmail)) {
+    if (!debouncedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(debouncedEmail)) {
       return;
     }
 
-    const timer = setTimeout(async () => {
+    const checkEmail = async () => {
       setIsCheckingDuplicate(true);
       try {
-        const exists = await checkEmailUsernameExist(watchEmail);
+        const exists = await checkEmailUsernameExist(debouncedEmail);
         if (exists) {
           setError("email", {
             type: "custom",
             message: t("validation.emailExists"),
           });
+        } else {
+          // Clear error if email is valid and doesn't exist
+          clearErrors("email");
         }
       } catch {
         setError("email", {
@@ -150,30 +158,38 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       } finally {
         setIsCheckingDuplicate(false);
       }
-    }, 500);
+    };
 
-    return () => clearTimeout(timer);
-  }, [watchEmail, setError, t]);
+    checkEmail();
+    // Only depend on debouncedEmail - prevents infinite loops
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedEmail]);
 
   // Async validation for username uniqueness
   useEffect(() => {
     if (
-      !watchUsername ||
-      watchUsername.length < 8 ||
-      !/^[a-zA-Z][a-zA-Z0-9_]*$/.test(watchUsername)
+      !debouncedUsername ||
+      debouncedUsername.length < 8 ||
+      !/^[a-zA-Z][a-zA-Z0-9_]*$/.test(debouncedUsername)
     ) {
       return;
     }
 
-    const timer = setTimeout(async () => {
+    const checkUsername = async () => {
       setIsCheckingDuplicate(true);
       try {
-        const exists = await checkEmailUsernameExist(undefined, watchUsername);
+        const exists = await checkEmailUsernameExist(
+          undefined,
+          debouncedUsername
+        );
         if (exists) {
           setError("username", {
             type: "custom",
             message: t("validation.usernameExists"),
           });
+        } else {
+          // Clear error if username is valid and doesn't exist
+          clearErrors("username");
         }
       } catch {
         setError("username", {
@@ -183,10 +199,12 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
       } finally {
         setIsCheckingDuplicate(false);
       }
-    }, 500);
+    };
 
-    return () => clearTimeout(timer);
-  }, [watchUsername, setError, t]);
+    checkUsername();
+    // Only depend on debouncedUsername - prevents infinite loops
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedUsername]);
 
   const steps = [
     {
@@ -220,16 +238,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         ? ["username", "email", "password", "confirmPassword"]
         : currentStep === 2
           ? ["fullName", "phone"]
-          : userRole === "candidate"
-            ? [] // No required fields for candidate step 3
-            : userRole === "headhunter"
-              ? ["taxCode"]
-              : ["commissionRate"];
-
-    // If no fields to validate, return true
-    if (fieldsToValidate.length === 0) {
-      return true;
-    }
+          : ["agreeToTerms"]; // All roles must agree to terms
 
     const result = await trigger(
       fieldsToValidate as unknown as Parameters<typeof trigger>[0]
@@ -334,7 +343,18 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
 
           <StepIndicator steps={steps} currentStep={currentStep} />
 
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            onSubmit={form.handleSubmit(
+              (data) => {
+                console.log("Form values are valid. Starting submission:", data);
+                onSubmit(data);
+              },
+              (errors) => {
+                console.error("Form validation errors:", errors);
+              }
+            )}
+            className="space-y-6"
+          >
             {/* Step 1: Account Information */}
             {currentStep === 1 && (
               <AccountStep
@@ -361,6 +381,43 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 {userRole === "collaborator" && (
                   <CollaboratorDetailsStep form={form} />
                 )}
+
+                {/* Terms & Conditions Checkbox */}
+                <div className="border-t border-slate-200 pt-6">
+                  <div className="flex items-start gap-3">
+                    <input
+                      {...form.register("agreeToTerms")}
+                      type="checkbox"
+                      id="agreeToTerms"
+                      className="mt-1 w-4 h-4 rounded border-slate-300 text-brand-primary focus:ring-brand-primary cursor-pointer"
+                    />
+                    <label
+                      htmlFor="agreeToTerms"
+                      className="text-sm text-slate-700 leading-relaxed cursor-pointer flex-1"
+                    >
+                      {t("form.register.agreeToTerms")}{" "}
+                      <a
+                        href="/terms"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-brand-primary hover:underline font-medium"
+                      >
+                        {t("form.register.termsOfService")}
+                      </a>
+                    </label>
+                  </div>
+                  {form.getError("agreeToTerms") && (
+                    <p className="text-red-500 text-xs mt-2">
+                      {typeof form.getError("agreeToTerms") === "string"
+                        ? form.getError("agreeToTerms")
+                        : (
+                            form.getError("agreeToTerms") as {
+                              message?: string;
+                            }
+                          )?.message}
+                    </p>
+                  )}
+                </div>
               </>
             )}
 

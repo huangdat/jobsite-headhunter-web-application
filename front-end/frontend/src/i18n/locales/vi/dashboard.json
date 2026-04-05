@@ -42,17 +42,14 @@
       "totalJobs": "Tổng Công việc",
       "activeApplications": "Ứng tuyển Hoạt động",
       "timeToHire": "Thời gian Tuyển dụng Trung bình",
-      "conversionRate": "Tỷ lệ Chuyển đổi",
       "hiringFunnel": "Phễu Tuyển dụng",
-      "hiringFunnelEmpty": "Chưa có dữ liệu ứng tuyển cho công việc này",
       "upcomingInterviews": "Phỏng vấn Sắp tới",
       "noUpcomingInterviews": "Chưa có phỏng vấn nào",
       "pendingCandidates": "Ứng viên Chờ Duyệt",
       "noPendingCandidates": "Không có ứng viên chờ duyệt",
       "filter": {
         "jobFilter": "Lọc theo Công việc",
-        "allJobs": "Tất cả Công việc",
-        "jobPlaceholder": "Chọn công việc"
+        "allJobs": "Tất cả Công việc"
       },
       "interviewDetails": {
         "candidate": "Ứng viên",
@@ -73,11 +70,6 @@
       "days": "ngày"
     }
   },
-  "loading": "Đang tải...",
-  "retry": "Thử lại",
-  "noData": "Không có dữ liệu",
-  "noChange": "Không thay đổi",
-  "failedToLoad": "Tải dữ liệu thất bại",
   "error": {
     "failedToLoad": "Lỗi khi tải dữ liệu"
   }
