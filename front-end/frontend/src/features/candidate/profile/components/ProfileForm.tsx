@@ -7,9 +7,6 @@ import {
   CheckCircle2,
   Loader2,
   RefreshCw,
-  Circle,
-  Lightbulb,
-  Info,
   FileUp,
   FileText, // Import thêm icon để hiển thị file CV
 } from "lucide-react";
@@ -28,7 +25,6 @@ interface ProfileFormProps {
   success: boolean;
   saveError: string | null;
   dirty: boolean;
-  profileStrength: number;
   onFieldChange: <K extends keyof CandidateProfileFormValues>(
     field: K,
     value: CandidateProfileFormValues[K]
@@ -58,7 +54,6 @@ export function ProfileForm({
   success,
   saveError,
   dirty,
-  profileStrength,
   onFieldChange,
   onDiscard,
   onSave,
@@ -73,20 +68,8 @@ export function ProfileForm({
   const hasValidationError = Object.values(errors).some(Boolean);
   const hasCV = !!values.cvUrl;
 
-  const strengthWidthClass =
-    profileStrength >= 100
-      ? "w-full"
-      : profileStrength >= 75
-        ? "w-9/12"
-        : profileStrength >= 50
-          ? "w-6/12"
-          : profileStrength >= 25
-            ? "w-3/12"
-            : "w-2/12";
-
   return (
     <div className="space-y-6">
-      {/* Alert Thông báo lỗi Save */}
       {saveError && (
         <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
           <AlertCircle className="h-5 w-5 mt-0.5" />
@@ -97,7 +80,6 @@ export function ProfileForm({
         </div>
       )}
 
-      {/* Alert Lỗi Validation */}
       {hasValidationError && (
         <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
           <AlertCircle className="h-5 w-5 mt-0.5" />
@@ -109,7 +91,6 @@ export function ProfileForm({
         </div>
       )}
 
-      {/* Alert Thành công khi Save Profile */}
       {success && (
         <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-700">
           <CheckCircle2 className="h-5 w-5 mt-0.5" />
@@ -135,7 +116,7 @@ export function ProfileForm({
               variant="outline"
               size="lg"
               disabled={!dirty || saving}
-              className="h-11 border-slate-300 px-6 font-bold text-slate-700"
+              className="h-11 border-slate-300 px-6 font-bold text-slate-700 cursor-pointer"
               onClick={onDiscard}
             >
               {t("profile.actions.discardChanges")}
@@ -144,7 +125,7 @@ export function ProfileForm({
               variant="primary"
               size="lg"
               disabled={!dirty || saving}
-              className="h-11 w-auto px-8 text-sm"
+              className="h-11 w-auto px-8 text-sm cursor-pointer"
               onClick={() => void onSave()}
             >
               {saving ? (
@@ -161,34 +142,6 @@ export function ProfileForm({
 
         {/* Sidebar */}
         <aside className="space-y-4 xl:col-span-4">
-          {/* Profile Strength */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-sm font-black uppercase tracking-wide text-slate-600">
-                {t("profile.sidebar.strengthTitle")}
-              </h3>
-              <span
-                className={`text-sm font-black ${
-                  profileStrength < 60 ? "text-red-600" : "text-emerald-600"
-                }`}
-              >
-                {profileStrength}%
-              </span>
-            </div>
-
-            <div className="h-2 overflow-hidden rounded-full bg-slate-200">
-              <div
-                className={`h-full transition-all ${
-                  profileStrength < 60 ? "bg-red-500" : "bg-emerald-500"
-                } ${strengthWidthClass}`}
-              />
-            </div>
-
-            <p className="mt-3 text-xs text-slate-500">
-              {t("profile.sidebar.strengthHint")}
-            </p>
-          </div>
-
           {/* CV Management Box */}
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
@@ -269,7 +222,7 @@ export function ProfileForm({
                 className={`h-11 px-6 font-bold cursor-pointer rounded-xl shadow-md transition-all active:scale-95 flex-1 ${
                   !hasCV
                     ? "bg-brand-primary hover:bg-brand-hover text-black"
-                    : "border-brand-primary text-brand-primary hover:bg-brand-primary/10"
+                    : "border-lime-400 text-black hover:bg-brand-primary/10"
                 }`}
                 onClick={() =>
                   document.getElementById("profile-cv-input")?.click()
@@ -293,45 +246,6 @@ export function ProfileForm({
                   </>
                 )}
               </Button>
-            </div>
-          </div>
-
-          {/* Profile Tips */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center gap-2 mb-3">
-              <Lightbulb className="h-4 w-4 text-emerald-600" />
-              <h3 className="text-sm font-black uppercase tracking-wide text-slate-600">
-                {t("profile.sidebar.tipsTitle")}
-              </h3>
-            </div>
-            <ul className="space-y-2 text-sm text-slate-600">
-              <li className="flex gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                {t("profile.sidebar.tipOne")}
-              </li>
-              <li className="flex gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                {t("profile.sidebar.tipTwo")}
-              </li>
-              <li className="flex gap-2">
-                <Circle className="h-4 w-4 text-slate-400 shrink-0" />
-                {t("profile.sidebar.tipThree")}
-              </li>
-            </ul>
-          </div>
-
-          {/* Insight Card */}
-          <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-linear-to-br from-emerald-50 to-emerald-100 p-6 shadow-sm">
-            <div className="relative z-10 space-y-2">
-              <div className="flex items-center gap-2">
-                <Info className="h-4 w-4 text-emerald-700" />
-                <p className="text-xs font-black uppercase tracking-widest text-emerald-700">
-                  {t("profile.sidebar.insightEyebrow")}
-                </p>
-              </div>
-              <p className="text-sm font-semibold leading-relaxed text-emerald-900">
-                {t("profile.sidebar.insightBody")}
-              </p>
             </div>
           </div>
         </aside>

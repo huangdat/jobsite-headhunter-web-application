@@ -56,6 +56,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           {isHeadhunter && (
             <Button
               variant="ghost"
+              className="cursor-pointer"
               size="icon"
               aria-label={t("navigation.openMenu") || "Open menu"}
               onClick={onMenuClick}
@@ -104,7 +105,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                 variant="ghost"
                 size="icon"
                 onClick={() => setDropdownOpen((prev) => !prev)}
-                className="w-10 h-10 rounded-full bg-brand-primary text-black hover:bg-brand-primary/90"
+                className="w-10 h-10 rounded-full bg-brand-primary text-black hover:bg-brand-primary/90 cursor-pointer"
               >
                 {userInitial}
               </Button>
@@ -141,7 +142,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                         }
                         setDropdownOpen(false);
                       }}
-                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition"
+                      className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                     >
                       {t("navigation.profile")}
                     </button>
@@ -152,7 +153,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                           navigate("/headhunter/jobs");
                           setDropdownOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition"
+                        className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                       >
                         {t("headhunter.approveApplications")}
                       </button>
@@ -163,7 +164,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                             navigate("my-applications");
                             setDropdownOpen(false);
                           }}
-                          className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition"
+                          className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
                           {t("navigation.applications")}
                         </button>
@@ -172,7 +173,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                             navigate("/saved-jobs");
                             setDropdownOpen(false);
                           }}
-                          className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition"
+                          className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition cursor-pointer"
                         >
                           {t("navigation.savedJobs")}
                         </button>
@@ -182,7 +183,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                     <div className="border-t border-border my-1" />
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition"
+                      className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition cursor-pointer"
                     >
                       {t("navigation.logout")}
                     </button>
