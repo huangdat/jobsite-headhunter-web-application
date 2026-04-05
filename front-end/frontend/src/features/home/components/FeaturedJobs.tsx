@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRandomLatestJobs } from "@/shared/utils/jobService";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { JOB_TYPE_COLORS } from "../constants";
 import {
   SubsectionTitle,
@@ -13,7 +14,7 @@ export function FeaturedJobs() {
   const { t, currentLanguage } = useHomeTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); //new
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -23,7 +24,9 @@ export function FeaturedJobs() {
         setJobs(data.jobs || []);
       } catch (err) {
         console.error("Failed to fetch featured jobs:", err);
-        setError(t("messages.errorLoadJobs"));
+        setError(
+          err instanceof Error ? err : new Error(t("messages.errorLoadJobs"))
+        );
       } finally {
         setLoading(false);
       }
@@ -32,7 +35,7 @@ export function FeaturedJobs() {
     fetchJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLanguage?.code]);
-  
+
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
       <SubsectionTitle className="mb-10">
@@ -46,9 +49,14 @@ export function FeaturedJobs() {
       )}
 
       {error && (
-        <div className="text-center py-12">
-          <SmallText className="text-red-500">{error}</SmallText>
-        </div>
+        <ErrorState
+          error={error}
+          onRetry={() => window.location.reload()}
+          variant="inline"
+          title={
+            t("featuredJobs.errorTitle") || "Không thể tải công việc nổi bật"
+          }
+        />
       )}
 
       {!loading && !error && jobs.length === 0 && (
