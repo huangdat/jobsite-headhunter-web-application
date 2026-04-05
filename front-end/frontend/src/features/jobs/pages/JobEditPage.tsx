@@ -3,13 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
 import { useJobsTranslation } from "@/shared/hooks";
+import {
+  useJobDetailQuery,
+  useSkillsQuery,
+} from "@/shared/hooks/useJobsQueries";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { RichTextEditor } from "@/components/RichTextEditor.lazy";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
-import { getJobDetail, updateJob, fetchSkills } from "../services/jobsApi";
-import type { JobFormValues, SkillOption } from "../types";
+import { updateJob } from "../services/jobsApi";
+import type { JobFormValues } from "../types";
 import { JOB_FORM_DEFAULTS } from "../utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
@@ -22,10 +26,12 @@ export function JobEditPage() {
   const { t } = useJobsTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [skills, setSkills] = useState<SkillOption[]>([]);
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const queryClient = useQueryClient();
+
+  const jobId = id ? Number(id) : null;
+  const { data: jobDetail, isLoading: jobLoading } = useJobDetailQuery(jobId);
+  const { data: skills = [] } = useSkillsQuery();
 
   const {
     control,
@@ -45,51 +51,31 @@ export function JobEditPage() {
     },
   });
 
+  // Populate form when job detail is loaded
   useEffect(() => {
-    let active = true;
-    setLoading(true);
-    Promise.all([
-      fetchSkills(),
-      id ? getJobDetail(Number(id)) : Promise.resolve(null),
-    ])
-      .then(([skillsData, job]) => {
-        if (!active) return;
-        setSkills(skillsData || []);
-        if (job) {
-          // map job detail to form
-          reset({
-            title: job.title,
-            description: job.description ?? "",
-            rankLevel: job.rankLevel,
-            workingType: job.workingType,
-            location: job.location ?? "",
-            addressDetail: job.addressDetail ?? "",
-            experience: job.experience ?? 0,
-            salaryMin: job.salaryMin ?? 0,
-            salaryMax: job.salaryMax ?? 0,
-            negotiable: job.negotiable ?? false,
-            currency: job.currency ?? "VND",
-            quantity: job.quantity ?? 1,
-            deadline: job.deadline ?? "",
-            skillIds: (job.skills || []).map((s) => s.id),
-            responsibilities: job.responsibilities ?? "",
-            requirements: job.requirements ?? "",
-            benefits: job.benefits ?? "",
-            workingTime: job.workingTime ?? "",
-          });
-        }
-      })
-      .catch(() => {
-        toast.error(t("edit.messages.unableToLoad"));
-      })
-      .finally(() => {
-        if (active) setLoading(false);
+    if (jobDetail) {
+      reset({
+        title: jobDetail.title,
+        description: jobDetail.description ?? "",
+        rankLevel: jobDetail.rankLevel,
+        workingType: jobDetail.workingType,
+        location: jobDetail.location ?? "",
+        addressDetail: jobDetail.addressDetail ?? "",
+        experience: jobDetail.experience ?? 0,
+        salaryMin: jobDetail.salaryMin ?? 0,
+        salaryMax: jobDetail.salaryMax ?? 0,
+        negotiable: jobDetail.negotiable ?? false,
+        currency: jobDetail.currency ?? "VND",
+        quantity: jobDetail.quantity ?? 1,
+        deadline: jobDetail.deadline ?? "",
+        skillIds: (jobDetail.skills || []).map((s) => s.id),
+        responsibilities: jobDetail.responsibilities ?? "",
+        requirements: jobDetail.requirements ?? "",
+        benefits: jobDetail.benefits ?? "",
+        workingTime: jobDetail.workingTime ?? "",
       });
-
-    return () => {
-      active = false;
-    };
-  }, [id, reset]);
+    }
+  }, [jobDetail, reset]);
 
   const selectedSkillIds = watch("skillIds") ?? [];
 
@@ -125,7 +111,7 @@ export function JobEditPage() {
     }
   };
 
-  if (loading)
+  if (jobLoading)
     return (
       <PageContainer variant="white" maxWidth="5xl">
         <div className="flex justify-center items-center min-h-100">

@@ -7,7 +7,7 @@ import {
   XCircle,
   Loader,
 } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { useAuthUser } from "@/shared/hooks/useAuthUser";
@@ -313,19 +313,15 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
             {/* Buttons */}
             <div className="flex gap-3 justify-end">
-              <button
-                onClick={handleClose}
-                className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
-              >
+              <Button variant="outline" onClick={handleClose}>
                 {t("buttons.cancel")}
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => setStep("confirmation")}
                 disabled={!selectedType}
-                className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
               >
                 {t("buttons.next")}
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -371,24 +367,22 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
               </div>
 
               <div className="flex gap-3 justify-end">
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
                   onClick={() => {
                     setReason("");
                     setSelectedType(null);
                     setStep("choice");
                   }}
-                  className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
                 >
                   {t("delete.back")}
-                </button>
-                <button
-                  type="submit"
+                </Button>
+                <Button
+                  onClick={handleReasonSubmit}
                   disabled={reason.trim() === ""}
-                  className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
                 >
                   {t("buttons.next")}
-                </button>
+                </Button>
               </div>
             </form>
           </div>
@@ -447,25 +441,21 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
             {/* Buttons */}
             <div className="flex gap-3 justify-end">
-              <button
+              <Button
+                variant="outline"
                 onClick={() => setStep("choice")}
                 disabled={loading}
-                className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 transition font-medium"
               >
                 {t("delete.back")}
-              </button>
-              <button
+              </Button>
+              <Button
+                variant={selectedType === "soft" ? "default" : "destructive"}
                 onClick={handleConfirmDelete}
                 disabled={loading}
-                className={`px-6 py-2 rounded-lg text-white transition font-medium flex items-center gap-2 ${
-                  selectedType === "soft"
-                    ? "bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400"
-                    : "bg-red-600 hover:bg-red-700 disabled:bg-red-400"
-                }`}
               >
-                {loading && <Loader className="w-4 h-4 animate-spin" />}
+                {loading && <Loader className="w-4 h-4 animate-spin mr-2" />}
                 {loading ? t("delete.processing") : t("delete.confirmAction")}
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -485,12 +475,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 : t("delete.successHardMessage")}
             </p>
 
-            <button
-              onClick={handleClose}
-              className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
-            >
-              {t("delete.close")}
-            </button>
+            <Button onClick={handleClose}>{t("delete.close")}</Button>
           </div>
         )}
 
@@ -507,18 +492,12 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             </p>
 
             <div className="flex gap-3 justify-center">
-              <button
-                onClick={() => setStep("choice")}
-                className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
-              >
+              <Button variant="outline" onClick={() => setStep("choice")}>
                 {t("delete.tryAgain")}
-              </button>
-              <button
-                onClick={handleClose}
-                className="px-6 py-2 rounded-lg bg-gray-700 text-white hover:bg-gray-800 transition font-medium"
-              >
+              </Button>
+              <Button variant="outline" onClick={handleClose}>
                 {t("delete.close")}
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -568,21 +547,17 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             </div>
 
             <div className="flex gap-3 justify-end">
-              <button
-                onClick={handleClose}
-                className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition font-medium"
-              >
+              <Button variant="outline" onClick={handleClose}>
                 {t("delete.close")}
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => {
                   setSelectedType("soft");
                   setStep("confirmation");
                 }}
-                className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition font-medium"
               >
                 {t("delete.useSoftDelete")}
-              </button>
+              </Button>
             </div>
           </div>
         )}

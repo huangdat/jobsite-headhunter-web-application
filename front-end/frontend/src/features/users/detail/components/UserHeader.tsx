@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
 
 interface UserHeaderProps {
@@ -92,12 +93,15 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
 
         {/* Buttons */}
         <div className="flex gap-2 flex-0 lg:w-full lg:mt-4">
-          <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-medium whitespace-nowrap">
+          <Button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium whitespace-nowrap">
             ✎ {t("detail.editProfile")}
-          </button>
-          <button className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium whitespace-nowrap">
+          </Button>
+          <Button
+            variant="outline"
+            className="px-4 py-2 font-medium whitespace-nowrap"
+          >
             📥 {t("detail.exportData")}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

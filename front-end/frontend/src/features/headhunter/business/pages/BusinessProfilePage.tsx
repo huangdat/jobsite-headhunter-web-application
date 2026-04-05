@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +21,7 @@ export const BusinessProfilePage: React.FC = () => {
       <Toaster position="top-right" richColors closeButton />
 
       {/* Header Profile */}
-      <div className="relative h-40 bg-gradient-to-r from-emerald-600 to-teal-700">
+      <div className="relative h-40 bg-linear-to-r from-emerald-600 to-teal-700">
         <div className="absolute inset-0 bg-grid-white/[0.1] bg-[size:20px_20px]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative h-full flex flex-col justify-end pb-8">
           {/* Điều hướng & Nút Back */}
@@ -33,9 +34,11 @@ export const BusinessProfilePage: React.FC = () => {
               </span>
             </nav>
 
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => navigate(-1)}
-              className="flex items-center gap-2 text-[10px] cursor-pointer font-black uppercase tracking-widest text-white/80 transition-all hover:text-white hover:-translate-x-1"
+              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/80 hover:text-white h-auto p-1"
             >
               <svg
                 className="h-4 w-4"
@@ -51,7 +54,7 @@ export const BusinessProfilePage: React.FC = () => {
                 />
               </svg>
               {t("common.back")}
-            </button>
+            </Button>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">

@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
 import type { CVEmptyStateProps } from "../types";
 import {
   SectionTitle,
@@ -38,13 +39,10 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
         </div>
 
         {/* CTA Button */}
-        <button
-          onClick={onUpload}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-dim transition-colors text-sm"
-        >
-          <span className="material-symbols-outlined">upload</span>
+        <Button onClick={onUpload} className="inline-flex items-center gap-2">
+          <span className="material-symbols-outlined mr-2">upload</span>
           {t("cv.management.empty.button")}
-        </button>
+        </Button>
 
         {/* Supported Formats Info */}
         <Caption>{t("cv.management.empty.supported")}</Caption>

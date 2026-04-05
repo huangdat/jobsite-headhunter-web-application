@@ -1,5 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
 import type { ClassificationGroupData } from "@/features/users/classification/types/classification.types";
 import {
   formatPercentage,
@@ -66,9 +67,10 @@ export const UserClassificationGroup: React.FC<
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:border-primary/50 transition-colors group">
       {/* Group Header */}
-      <button
+      <Button
+        variant="ghost"
         onClick={onToggleExpand}
-        className="w-full p-5 flex items-center justify-between cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+        className="w-full p-5 flex items-center justify-between rounded-t-xl"
       >
         <div className="flex items-center gap-4 flex-1 min-w-0">
           {/* Icon */}
@@ -142,7 +144,7 @@ export const UserClassificationGroup: React.FC<
         >
           expand_more
         </span>
-      </button>
+      </Button>
 
       {/* Expanded Content - Users List */}
       {isExpanded && (

@@ -7,10 +7,7 @@ import {
   useToggleJobStatusMutation,
   useDeleteJobMutation,
 } from "@/shared/hooks";
-import {
-  SmallText,
-  SubsectionTitle,
-} from "@/shared/components/typography/Typography";
+import { SmallText } from "@/shared/components/typography/Typography";
 import type { JobSummary } from "../types";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { Button } from "@/components/ui/button";
@@ -20,7 +17,6 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {

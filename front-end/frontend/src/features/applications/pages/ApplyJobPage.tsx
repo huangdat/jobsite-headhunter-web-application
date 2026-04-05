@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { SmallText } from "@/shared/components/typography/Typography";
 import { ApplicationForm } from "../components/ApplicationForm";
@@ -69,15 +70,11 @@ export const ApplyJobPage: React.FC = () => {
 
       {/* Back Button */}
       <div className="mt-10 text-center">
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="px-8 py-2.5 bg-slate-100 hover:bg-slate-200 cursor-pointer text-slate-600 rounded-xl transition-all duration-200 active:scale-95 shadow-sm dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200"
-        >
+        <Button variant="outline" onClick={() => navigate(-1)}>
           <SmallText weight="bold" variant="muted">
             {t("applications.form.back")}
           </SmallText>
-        </button>
+        </Button>
       </div>
     </PageContainer>
   );

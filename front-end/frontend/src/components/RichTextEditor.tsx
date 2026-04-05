@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import "./RichTextEditor.css";
 
 interface RichTextEditorProps {
@@ -71,46 +72,51 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
         )}
       >
         <div className="bg-slate-50 dark:bg-slate-800 border-b border-input p-2 flex gap-1">
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => insertAroundSelection("**", "**")}
             disabled={disabled}
-            className="px-3 py-1 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-slate-700"
           >
             <strong>B</strong>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => insertAroundSelection("*", "*")}
             disabled={disabled}
-            className="px-3 py-1 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-slate-700"
           >
             <em>I</em>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => insertAroundSelection("\n- ", "\n")}
             disabled={disabled}
-            className="px-3 py-1 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-slate-700"
           >
             •
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => insertAroundSelection("\n1. ", "\n")}
             disabled={disabled}
-            className="px-3 py-1 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-slate-700"
           >
             1.
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => insertAroundSelection("\n## ", "\n")}
             disabled={disabled}
-            className="px-3 py-1 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-slate-700"
           >
             H
-          </button>
+          </Button>
         </div>
 
         <div className="flex gap-4 p-3">

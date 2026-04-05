@@ -5,6 +5,7 @@
 
 import React, { useState, useCallback } from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
 import { validateCVFile } from "../services/cvApi";
 import type { CVUploadZoneProps } from "../types";
 import { CVErrorBanner } from "./CVErrorBanner";
@@ -178,26 +179,28 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                       : t("validation.invalidFileFormatShort")}
                   </p>
                 </div>
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => setSelectedFile(null)}
-                  className="text-red-700 hover:bg-red-50/10 p-1 rounded transition-colors"
+                  className="text-red-700"
                   title={t("cv.management.validation.clear")}
                   aria-label={t("cv.management.validation.clear")}
                 >
                   <span className="material-symbols-outlined text-lg">
                     close
                   </span>
-                </button>
+                </Button>
               </div>
             </div>{" "}
             {/* Retry Button */}
-            <button
+            <Button
               onClick={handleBrowseClick}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-dim transition-colors text-sm"
+              className="inline-flex items-center gap-2"
             >
-              <span className="material-symbols-outlined">refresh</span>
+              <span className="material-symbols-outlined mr-2">refresh</span>
               {t("cv.management.error.tryAnother")}
-            </button>
+            </Button>
           </div>
         ) : (
           // Upload Ready State
@@ -223,13 +226,15 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 
             {/* Actions */}
             <div className="flex flex-col items-center gap-3 pt-2">
-              <button
+              <Button
                 onClick={handleBrowseClick}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-dim transition-colors text-sm"
+                className="inline-flex items-center gap-2"
               >
-                <span className="material-symbols-outlined">folder_open</span>
+                <span className="material-symbols-outlined mr-2">
+                  folder_open
+                </span>
                 {t("cv.management.success.browseFiles")}
-              </button>
+              </Button>
 
               {/* Hidden File Input */}
               <input

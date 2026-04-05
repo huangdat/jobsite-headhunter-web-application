@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
 import type { CVErrorBannerProps } from "../types";
 
 export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
@@ -37,24 +38,28 @@ export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
       {/* Actions */}
       <div className="flex items-center gap-2 shrink-0">
         {onRetry && (
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={onRetry}
-            className="text-red-700 hover:text-red-700/80 transition-colors p-1"
+            className="text-red-700 hover:text-red-700/80"
             title={t("cv.management.validation.retry")}
             aria-label={t("cv.management.validation.retry")}
           >
             <span className="material-symbols-outlined text-base">refresh</span>
-          </button>
+          </Button>
         )}
         {onDismiss && (
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={onDismiss}
-            className="text-red-700 hover:text-red-700/80 transition-colors p-1"
+            className="text-red-700 hover:text-red-700/80"
             title={t("cv.management.validation.dismiss")}
             aria-label={t("cv.management.validation.dismiss")}
           >
             <span className="material-symbols-outlined text-base">close</span>
-          </button>
+          </Button>
         )}
       </div>
     </div>

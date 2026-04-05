@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface SkillOption {
   id: number;
@@ -52,16 +53,11 @@ export function SkillMultiSelect({
 
   return (
     <div className="relative w-full">
-      <button
-        type="button"
+      <Button
+        variant="outline"
         onClick={() => setIsOpen(!isOpen)}
         disabled={disabled}
-        className={cn(
-          "w-full rounded-xl border border-input bg-white px-3 py-2 text-sm text-left shadow-inner",
-          "focus-visible:border-brand-primary focus-visible:ring-4 focus-visible:ring-brand-primary/20",
-          "dark:bg-slate-900",
-          disabled && "opacity-50 cursor-not-allowed"
-        )}
+        className="w-full text-left justify-between"
       >
         {selectedSkillNames ? (
           <span className="text-slate-700 dark:text-slate-300">
@@ -70,7 +66,7 @@ export function SkillMultiSelect({
         ) : (
           <span className="text-slate-400">Select skills...</span>
         )}
-      </button>
+      </Button>
 
       {isOpen && !disabled && (
         <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-slate-800 border border-input rounded-xl shadow-lg z-50 max-h-96 overflow-y-auto">

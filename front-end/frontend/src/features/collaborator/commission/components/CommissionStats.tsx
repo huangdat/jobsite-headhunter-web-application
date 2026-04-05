@@ -4,6 +4,7 @@
  * Displays commission statistics in sidebar
  */
 
+import { Button } from "@/components/ui/button";
 import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type { CommissionStats } from "../types/commission.types";
 
@@ -160,13 +161,15 @@ export function CommissionStats({
 
       {/* Payout Button */}
       {onRequestPayout && stats.pendingCommissions > 0 && (
-        <button
+        <Button
           onClick={() => onRequestPayout(stats.pendingCommissions)}
-          className="w-full px-4 py-2 flex items-center justify-center gap-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+          className="w-full"
         >
-          <span className="material-symbols-outlined">account_balance</span>
+          <span className="material-symbols-outlined mr-2">
+            account_balance
+          </span>
           {t("button.requestPayout")}
-        </button>
+        </Button>
       )}
 
       {/* Empty State */}

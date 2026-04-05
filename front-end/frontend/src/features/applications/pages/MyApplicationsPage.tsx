@@ -168,13 +168,15 @@ const ModalContent: React.FC<{
     <Card className="w-full max-w-lg bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden border-none animate-in zoom-in-95 duration-200 text-slate-900 dark:text-white">
       <div className="p-6 border-b dark:border-slate-700 flex justify-between items-center">
         <h2 className="font-bold text-xl">{app.jobTitle}</h2>
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={onClose}
-          className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+          className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
           aria-label={t("common.actions.close")}
         >
           <X size={20} />
-        </button>
+        </Button>
       </div>
 
       <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto">

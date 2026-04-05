@@ -179,3 +179,191 @@ export const badgeClasses = {
   danger:
     "bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400",
 } as const;
+
+/**
+ * Application/Verification Status Color Tokens
+ * Semantic colors for different application and verification statuses
+ * Used in badges, cards, timeline, and status indicators
+ */
+export const statusColors = {
+  /**
+   * SUBMITTED status - Initial application submission
+   * Visual: Amber/Warning to indicate pending review
+   */
+  SUBMITTED: {
+    bg: "bg-amber-50",
+    bgDark: "dark:bg-amber-900/30",
+    text: "text-amber-700",
+    textDark: "dark:text-amber-400",
+    border: "border-amber-200",
+    borderDark: "dark:border-amber-900/50",
+  },
+
+  /**
+   * SCREENING status - Application under screening
+   * Visual: Amber to indicate in-progress review
+   */
+  SCREENING: {
+    bg: "bg-amber-50",
+    bgDark: "dark:bg-amber-900/30",
+    text: "text-amber-700",
+    textDark: "dark:text-amber-400",
+    border: "border-amber-200",
+    borderDark: "dark:border-amber-900/50",
+  },
+
+  /**
+   * HEADHUNTER_ACCEPTED status - Headhunter accepted the candidate
+   * Visual: Amber (in-progress)
+   */
+  HEADHUNTER_ACCEPTED: {
+    bg: "bg-amber-50",
+    bgDark: "dark:bg-amber-900/30",
+    text: "text-amber-700",
+    textDark: "dark:text-amber-400",
+    border: "border-amber-200",
+    borderDark: "dark:border-amber-900/50",
+  },
+
+  /**
+   * INTERVIEW status - Candidate moved to interview stage
+   * Visual: Emerald bold to indicate significant progress
+   */
+  INTERVIEW: {
+    bg: "bg-emerald-500",
+    bgDark: "dark:bg-emerald-600",
+    text: "text-white",
+    textDark: "dark:text-emerald-100",
+    border: "border-emerald-600",
+    borderDark: "dark:border-emerald-700",
+  },
+
+  /**
+   * PASSED/ACCEPTED status - Candidate passed or was accepted
+   * Visual: Emerald success state
+   */
+  PASSED: {
+    bg: "bg-emerald-50",
+    bgDark: "dark:bg-emerald-900/30",
+    text: "text-emerald-700",
+    textDark: "dark:text-emerald-400",
+    border: "border-emerald-200",
+    borderDark: "dark:border-emerald-900/50",
+  },
+
+  /**
+   * ACCEPTED alias for PASSED
+   */
+  ACCEPTED: {
+    bg: "bg-emerald-50",
+    bgDark: "dark:bg-emerald-900/30",
+    text: "text-emerald-700",
+    textDark: "dark:text-emerald-400",
+    border: "border-emerald-200",
+    borderDark: "dark:border-emerald-900/50",
+  },
+
+  /**
+   * REJECTED status - Application rejected
+   * Visual: Red danger state
+   */
+  REJECTED: {
+    bg: "bg-red-50",
+    bgDark: "dark:bg-red-900/30",
+    text: "text-red-700",
+    textDark: "dark:text-red-400",
+    border: "border-red-200",
+    borderDark: "dark:border-red-900/50",
+  },
+
+  /**
+   * Default/Unknown status
+   * Visual: Neutral slate
+   */
+  DEFAULT: {
+    bg: "bg-slate-100",
+    bgDark: "dark:bg-slate-800",
+    text: "text-slate-600",
+    textDark: "dark:text-slate-400",
+    border: "border-slate-200",
+    borderDark: "dark:border-slate-700",
+  },
+} as const;
+
+/**
+ * Pre-built status badge classes
+ * Maps status to complete badge styling (bg + text + border + dark variants)
+ */
+export const statusBadgeClasses = {
+  SUBMITTED: `${statusColors.SUBMITTED.bg} ${statusColors.SUBMITTED.bgDark} ${statusColors.SUBMITTED.text} ${statusColors.SUBMITTED.textDark} ${statusColors.SUBMITTED.border} ${statusColors.SUBMITTED.borderDark}`,
+  SCREENING: `${statusColors.SCREENING.bg} ${statusColors.SCREENING.bgDark} ${statusColors.SCREENING.text} ${statusColors.SCREENING.textDark} ${statusColors.SCREENING.border} ${statusColors.SCREENING.borderDark}`,
+  HEADHUNTER_ACCEPTED: `${statusColors.HEADHUNTER_ACCEPTED.bg} ${statusColors.HEADHUNTER_ACCEPTED.bgDark} ${statusColors.HEADHUNTER_ACCEPTED.text} ${statusColors.HEADHUNTER_ACCEPTED.textDark} ${statusColors.HEADHUNTER_ACCEPTED.border} ${statusColors.HEADHUNTER_ACCEPTED.borderDark}`,
+  INTERVIEW: `${statusColors.INTERVIEW.bg} ${statusColors.INTERVIEW.bgDark} ${statusColors.INTERVIEW.text} ${statusColors.INTERVIEW.textDark} ${statusColors.INTERVIEW.border} ${statusColors.INTERVIEW.borderDark}`,
+  PASSED: `${statusColors.PASSED.bg} ${statusColors.PASSED.bgDark} ${statusColors.PASSED.text} ${statusColors.PASSED.textDark} ${statusColors.PASSED.border} ${statusColors.PASSED.borderDark}`,
+  ACCEPTED: `${statusColors.ACCEPTED.bg} ${statusColors.ACCEPTED.bgDark} ${statusColors.ACCEPTED.text} ${statusColors.ACCEPTED.textDark} ${statusColors.ACCEPTED.border} ${statusColors.ACCEPTED.borderDark}`,
+  REJECTED: `${statusColors.REJECTED.bg} ${statusColors.REJECTED.bgDark} ${statusColors.REJECTED.text} ${statusColors.REJECTED.textDark} ${statusColors.REJECTED.border} ${statusColors.REJECTED.borderDark}`,
+  DEFAULT: `${statusColors.DEFAULT.bg} ${statusColors.DEFAULT.bgDark} ${statusColors.DEFAULT.text} ${statusColors.DEFAULT.textDark} ${statusColors.DEFAULT.border} ${statusColors.DEFAULT.borderDark}`,
+} as const;
+
+/**
+ * Get status badge classes dynamically
+ *
+ * Maps application/verification status to appropriate badge styling.
+ * Includes full dark mode support.
+ *
+ * @param status - Application or verification status
+ * @param fallbackType - Which style property to return if status not found ('full' | 'bg' | 'text' | 'border')
+ * @returns CSS class string with light and dark mode variants
+ *
+ * @example
+ * ```tsx
+ * <Badge className={getStatusBadgeClass('PASSED')}>
+ *   Application Passed
+ * </Badge>
+ *
+ * // Get only background color
+ * <div className={getStatusBadgeClass('REJECTED', 'bg')}>
+ * ```
+ */
+export const getStatusBadgeClass = (
+  status: string,
+  fallbackType: "full" | "bg" | "text" | "border" = "full"
+): string => {
+  // Normalize status to uppercase
+  const normalizedStatus = (status || "DEFAULT").toUpperCase();
+
+   
+  const statusColor =
+    statusColors[normalizedStatus as keyof typeof statusColors];
+
+  if (!statusColor) {
+    // Fallback to DEFAULT if status not found
+     
+    const defaultColor = statusColors.DEFAULT;
+    if (fallbackType === "bg") {
+      return `${defaultColor.bg} ${defaultColor.bgDark}`.trim();
+    }
+    if (fallbackType === "text") {
+      return `${defaultColor.text} ${defaultColor.textDark}`.trim();
+    }
+    if (fallbackType === "border") {
+      return `${defaultColor.border} ${defaultColor.borderDark}`.trim();
+    }
+    // full
+    return `${defaultColor.bg} ${defaultColor.bgDark} ${defaultColor.text} ${defaultColor.textDark} ${defaultColor.border} ${defaultColor.borderDark}`.trim();
+  }
+
+  // Return requested style type
+  if (fallbackType === "bg") {
+    return `${statusColor.bg} ${statusColor.bgDark}`.trim();
+  }
+  if (fallbackType === "text") {
+    return `${statusColor.text} ${statusColor.textDark}`.trim();
+  }
+  if (fallbackType === "border") {
+    return `${statusColor.border} ${statusColor.borderDark}`.trim();
+  }
+
+  // Return full classes (bg + text + border + dark variants)
+  return `${statusColor.bg} ${statusColor.bgDark} ${statusColor.text} ${statusColor.textDark} ${statusColor.border} ${statusColor.borderDark}`.trim();
+};

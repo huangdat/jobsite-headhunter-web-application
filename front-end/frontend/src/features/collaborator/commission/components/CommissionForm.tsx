@@ -5,6 +5,7 @@
  */
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useCommissionManagement } from "../hooks/useCommissionManagement";
 import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 
@@ -89,13 +90,14 @@ export function CommissionForm() {
             <div>
               <h3 className="font-medium text-red-900">{t("errors.title")}</h3>
               <p className="text-sm text-red-700 mt-1">{error}</p>
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={clearError}
-                className="mt-2 text-sm font-medium text-red-600 hover:text-red-700 underline"
+                className="mt-2 text-red-600 hover:text-red-700 px-0 underline"
               >
                 {t("button.dismiss")}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

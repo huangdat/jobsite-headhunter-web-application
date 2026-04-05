@@ -143,7 +143,7 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
           <label className="block text-xs font-semibold uppercase tracking-wide text-slate-600 mb-2">
             {t("business.form.headquarters_address")}
           </label>
-          <p className="text-base font-medium text-slate-900 break-words">
+          <p className="text-base font-medium text-slate-900 wrap-break-word">
             {profile.addressMain || <span className="text-slate-400">-</span>}
           </p>
         </div>

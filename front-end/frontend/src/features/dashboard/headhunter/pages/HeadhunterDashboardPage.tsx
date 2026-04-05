@@ -10,6 +10,7 @@ import { PendingCandidates } from "../components/PendingCandidates";
 import { JobDashboardFilter } from "../components/JobDashboardFilter";
 import type { DashboardFilterOptions } from "../../types";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { Button } from "@/components/ui/button";
 
 /**
  * HeadhunterDashboardPage
@@ -54,12 +55,9 @@ export const HeadhunterDashboardPage: React.FC = () => {
             >
               {error}
             </SmallText>
-            <button
-              onClick={refetch}
-              className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-            >
+            <Button variant="destructive" onClick={refetch}>
               {t("common.retry", "Retry")}
-            </button>
+            </Button>
           </div>
         </div>
       </PageContainer>
@@ -76,17 +74,13 @@ export const HeadhunterDashboardPage: React.FC = () => {
           "Personal Performance & Metrics"
         )}
         actions={
-          <button
-            onClick={refetch}
-            disabled={isLoading}
-            className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors dark:bg-brand-primary dark:hover:bg-brand-primary/90"
-          >
+          <Button onClick={refetch} disabled={isLoading}>
             <SmallText weight="bold" className="text-white">
               {isLoading
                 ? t("common.loading", "Loading...")
                 : t("headhunter.dashboard.refresh", "Refresh")}
             </SmallText>
-          </button>
+          </Button>
         }
       />
 

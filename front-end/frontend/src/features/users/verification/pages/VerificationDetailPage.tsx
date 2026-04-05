@@ -114,13 +114,15 @@ export const VerificationDetailPage: React.FC = () => {
   return (
     <PageContainer variant="default" maxWidth="6xl">
       {/* BREADCRUMB & BACK */}
-      <button
+      <Button
+        variant="ghost"
+        size="sm"
         onClick={() => navigate("/admin/verifications")}
-        className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 mb-6"
+        className="mb-6"
       >
-        <ChevronLeft size={16} />
+        <ChevronLeft size={16} className="mr-2" />
         {t("verification.pages.detail.back")}
-      </button>
+      </Button>
 
       {/* SUCCESS BANNER (conditional) */}
       <ApprovalSuccessBanner
@@ -176,10 +178,10 @@ export const VerificationDetailPage: React.FC = () => {
 
         {/* RIGHT: APPROVAL CARD (35%) */}
         <div className="col-span-4">
-          <Card className="p-6 bg-slate-900 text-white sticky top-6">
+          <Card className="p-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white sticky top-6 border border-slate-200 dark:border-slate-700">
             {/* Officer Info */}
             <div className="mb-6">
-              <label className="text-xs text-slate-400 uppercase">
+              <label className="text-xs text-slate-500 dark:text-slate-400 uppercase">
                 {t("verification.cards.approvalDetails.officer")}
               </label>
               {verification.approvedBy ? (
@@ -187,32 +189,34 @@ export const VerificationDetailPage: React.FC = () => {
                   <p className="font-semibold text-lg mt-1">
                     {verification.approvedBy.name}
                   </p>
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
                     {verification.approvedBy.avatarRole}
                   </p>
                 </>
               ) : (
-                <p className="text-slate-400 text-sm mt-1">Pending review</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">
+                  Pending review
+                </p>
               )}
             </div>
 
             {/* Compliance Score */}
-            <div className="mb-6 pb-6 border-b border-slate-700">
-              <label className="text-xs text-slate-400 uppercase">
+            <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-700">
+              <label className="text-xs text-slate-500 dark:text-slate-400 uppercase">
                 {t("verification.cards.approvalDetails.score")}
               </label>
               <div className="mt-2">
                 <div className="text-4xl font-bold">
                   {verification.complianceScore}
                 </div>
-                <div className="h-2 bg-slate-600 rounded-full mt-3 overflow-hidden">
+                <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full mt-3 overflow-hidden">
                   <div
                     className={`h-full rounded-full ${
                       verification.complianceScore >= 80
-                        ? "w-5/6 bg-green-500"
+                        ? "w-5/6 bg-emerald-500 dark:bg-emerald-600"
                         : verification.complianceScore >= 50
-                          ? "w-3/5 bg-amber-500"
-                          : "w-2/5 bg-red-500"
+                          ? "w-3/5 bg-amber-500 dark:bg-amber-600"
+                          : "w-2/5 bg-red-500 dark:bg-red-600"
                     }`}
                   />
                 </div>
@@ -221,11 +225,11 @@ export const VerificationDetailPage: React.FC = () => {
 
             {/* Action Buttons */}
             {verification.status === VerificationStatus.PENDING && (
-              <div className="space-y-2 mt-6 pt-6 border-t border-slate-700">
+              <div className="space-y-2 mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
                 <Button
                   onClick={handleApprove}
                   disabled={isApproving}
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
                 >
                   {isApproving
                     ? "Approving..."
@@ -235,7 +239,7 @@ export const VerificationDetailPage: React.FC = () => {
                   onClick={rejectModal.open}
                   disabled={isRejecting}
                   variant="outline"
-                  className="w-full bg-slate-800 border-slate-600 text-white hover:bg-slate-700"
+                  className="w-full border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
                   {isRejecting
                     ? "Rejecting..."
@@ -277,9 +281,9 @@ export const VerificationDetailPage: React.FC = () => {
                 placeholder={t("verification.modal.reject.reasonPlaceholder")}
                 value={rejectModal.reason}
                 onChange={(e) => rejectModal.setReason(e.target.value)}
-                className="w-full min-h-24 p-3 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full min-h-24 p-3 border border-slate-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-primary dark:focus:ring-brand-primary"
               />
-              <p className="text-xs text-slate-600 mt-1">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                 {rejectModal.reason.length}/500 -{" "}
                 {t("verification.modal.reject.reasonHint")}
               </p>
@@ -296,7 +300,7 @@ export const VerificationDetailPage: React.FC = () => {
               <Button
                 onClick={handleRejectSubmit}
                 disabled={isRejecting || rejectModal.reason.length < 20}
-                className="flex-1 bg-red-600 hover:bg-red-700"
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white"
               >
                 {t("verification.modal.reject.submit")}
               </Button>

@@ -60,7 +60,9 @@ export const ApprovalSuccessBanner: React.FC<ApprovalSuccessBannerProps> = ({
         </div>
 
         {/* Dismiss Button */}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => {
             setIsVisible(false);
             onDismiss?.();
@@ -70,7 +72,7 @@ export const ApprovalSuccessBanner: React.FC<ApprovalSuccessBannerProps> = ({
           aria-label={t("verification.approval.dismiss")}
         >
           <X size={20} />
-        </button>
+        </Button>
       </div>
 
       {/* Action Buttons */}

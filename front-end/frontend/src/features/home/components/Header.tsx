@@ -54,13 +54,14 @@ export function Header({ onMenuClick }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
         <div className="flex items-center gap-4">
           {isHeadhunter && (
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               aria-label={t("navigation.openMenu") || "Open menu"}
               onClick={onMenuClick}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-2xl text-slate-700 cursor-pointer"
             >
-              <HiMenu />
-            </button>
+              <HiMenu className="text-2xl" />
+            </Button>
           )}
 
           {/* LOGO */}
@@ -99,12 +100,14 @@ export function Header({ onMenuClick }: HeaderProps) {
             </div>
           ) : (
             <div className="relative" ref={dropdownRef}>
-              <button
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setDropdownOpen((prev) => !prev)}
-                className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-black font-semibold cursor-pointer hover:opacity-85 transition"
+                className="w-10 h-10 rounded-full bg-brand-primary text-black hover:bg-brand-primary/90"
               >
                 {userInitial}
-              </button>
+              </Button>
 
               {dropdownOpen && (
                 <div className="absolute right-0 top-[calc(100%+8px)] w-56 bg-white border border-border rounded-xl shadow-xl overflow-hidden z-50">
