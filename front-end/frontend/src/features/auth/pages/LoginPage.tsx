@@ -291,12 +291,13 @@ export function LoginPage() {
       <div className="w-full max-w-5xl min-h-150 bg-white dark:bg-slate-900 rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
-          <Display size="md">
+          <Display size="md" className="text-white">
+            {" "}
             {t("pages.login.heroTitlePart1")} <br />
             {t("pages.login.heroTitlePart2")}
           </Display>
 
-          <BodyText className="text-slate-300 mt-6">
+          <BodyText className="text-white mt-6 opacity-90">
             {t("pages.login.heroSubtitle")}
           </BodyText>
         </div>
