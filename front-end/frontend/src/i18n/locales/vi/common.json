@@ -27,6 +27,7 @@
     "enterDetailsDescription": "Nhập mô tả chi tiết",
     "failedToFetchUsers": "Common failed to fetch Người dùngs",
     "tryAgain": "Common Thử lại",
+    "retry": "Thử lại",
     "noDataAvailable": "Common Không có dữ liệu available",
     "unknownError": "Đã xảy ra lỗi không xác định"
   },

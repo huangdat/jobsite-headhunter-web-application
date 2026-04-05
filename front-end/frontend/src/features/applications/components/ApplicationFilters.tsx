@@ -22,16 +22,22 @@ export const ApplicationFilters: React.FC<ApplicationFiltersProps> = ({
   onReset,
 }) => {
   const { t } = useAppTranslation();
+  const allStatusValue = "ALL" as const;
   const [keyword, setKeyword] = useState("");
-  const [status, setStatus] = useState<ApplicationStatus | undefined>();
+  const [status, setStatus] = useState<
+    ApplicationStatus | typeof allStatusValue
+  >(allStatusValue);
 
   const handleApplyFilters = () => {
-    onFilterChange(keyword, status);
+    onFilterChange(
+      keyword,
+      status === allStatusValue ? undefined : status
+    );
   };
 
   const handleReset = () => {
     setKeyword("");
-    setStatus(undefined);
+    setStatus(allStatusValue);
     onReset();
   };
 
@@ -54,16 +60,18 @@ export const ApplicationFilters: React.FC<ApplicationFiltersProps> = ({
           {t("applications.filter.status")}
         </label>
         <Select
-          value={status || ""}
+          value={status}
           onValueChange={(val) =>
-            setStatus(val as ApplicationStatus | undefined)
+            setStatus(val as ApplicationStatus | typeof allStatusValue)
           }
         >
           <SelectTrigger className="w-full">
             <SelectValue placeholder={t("applications.filter.all")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">{t("applications.filter.all")}</SelectItem>
+            <SelectItem value={allStatusValue}>
+              {t("applications.filter.all")}
+            </SelectItem>
             {Object.entries(APPLICATION_STATUS_LABELS).map(
               ([key, labelKey]) => (
                 <SelectItem key={key} value={key}>

@@ -15,5 +15,101 @@
   "activityLog": "Headhunter activity log",
   "accountSettings": "Headhunter account settings",
   "supportInbox": "Headhunter support inbox",
-  "profileTitle": "Headhunter profile title"
+  "profileTitle": "Headhunter profile title",
+  "refresh": "Refresh",
+  "filters": {
+    "eyebrow": "Filters",
+    "advancedTitle": "Advanced filters",
+    "openButton": "Advanced filters",
+    "educationNote": "Education filters will be available soon.",
+    "actions": {
+      "apply": "Apply",
+      "reset": "Reset",
+      "close": "Close",
+      "clearAll": "Clear all",
+      "remove": "Remove filter"
+    },
+    "sections": {
+      "status": "Status",
+      "location": "Preferred locations",
+      "industry": "Skill categories",
+      "education": "Education",
+      "experience": "Experience",
+      "registrationDate": "Registration date"
+    },
+    "fields": {
+      "experienceMin": "Minimum (years)",
+      "experienceMax": "Maximum (years)",
+      "dateFrom": "From",
+      "dateTo": "To"
+    },
+    "placeholders": {
+      "experienceMin": "e.g. 3",
+      "experienceMax": "e.g. 7"
+    },
+    "options": {
+      "status": {
+        "active": "Active",
+        "pending": "Pending",
+        "suspended": "Suspended",
+        "deleted": "Deleted"
+      },
+      "locations": {
+        "haNoi": "Ha Noi",
+        "hoChiMinh": "Ho Chi Minh City",
+        "daNang": "Da Nang"
+      },
+      "industries": {
+        "programmingLanguages": "Programming Languages",
+        "frontendDevelopment": "Frontend Development",
+        "backendDevelopment": "Backend Development",
+        "databases": "Databases",
+        "devopsAndCloud": "DevOps and Cloud",
+        "testing": "Testing",
+        "versionControl": "Version Control",
+        "softwareArchitecture": "Software Architecture and Concepts",
+        "dataAndAi": "Data and AI"
+      },
+      "education": {
+        "highSchool": "High school",
+        "associate": "Associate degree",
+        "bachelor": "Bachelor's",
+        "master": "Master's",
+        "phd": "PhD"
+      }
+    },
+    "messages": {
+      "empty": "No candidates match these filters.",
+      "loadFailed": "Failed to load candidates.",
+      "rateLimited": "Too many requests. Try again in a minute."
+    },
+    "tags": {
+      "status": "Status",
+      "location": "Location",
+      "industry": "Skill category",
+      "experience": "Experience",
+      "registered": "Registered",
+      "experienceRange": "{{min}}-{{max}} years",
+      "experienceMin": "{{min}}+ years",
+      "experienceMax": "Up to {{max}} years",
+      "registeredRange": "{{from}} to {{to}}",
+      "registeredFrom": "From {{from}}",
+      "registeredTo": "Until {{to}}"
+    },
+    "pagination": {
+      "rowsPerPage": "Rows per page",
+      "info": "Showing {{start}}-{{end}} of {{total}}",
+      "prev": "Previous page",
+      "next": "Next page"
+    }
+  },
+  "candidateList": {
+    "summary": "{{count}} candidates",
+    "viewProfile": "View profile",
+    "unknownName": "Candidate",
+    "noTitle": "No title",
+    "experience": "{{years}} years",
+    "openForWork": "Open for work",
+    "registered": "Registered {{date}}"
+  }
 }

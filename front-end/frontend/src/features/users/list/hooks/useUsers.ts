@@ -48,6 +48,11 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
     status?: string;
   }>({});
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tRef = useRef(t);
+
+  useEffect(() => {
+    tRef.current = t;
+  }, [t]);
 
   // Debounce search (300ms)
   useEffect(() => {
@@ -98,7 +103,9 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
       setError(null);
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : t("common.failedToFetchUsers");
+        err instanceof Error
+          ? err.message
+          : tRef.current("common.failedToFetchUsers");
       setError(errorMessage);
       console.error("Error fetching users:", err);
       setUsers([]);
@@ -107,7 +114,7 @@ export const useUsers = (pageSize: number = 10): UseUserListReturn => {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, itemsPerPage, debouncedSearch, filters, sortBy, t]);
+  }, [currentPage, itemsPerPage, debouncedSearch, filters, sortBy]);
 
   // Fetch whenever dependencies change (server-side)
   useEffect(() => {

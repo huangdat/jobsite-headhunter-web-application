@@ -144,7 +144,7 @@ export const AdminDashboardPage: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
-                onClick={() => navigate("/users")}
+                onClick={() => navigate("/admin/users")}
                 className="p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -161,7 +161,7 @@ export const AdminDashboardPage: React.FC = () => {
               </button>
 
               <button
-                onClick={() => navigate("/users/classification")}
+                onClick={() => navigate("/admin/users/classification")}
                 className="p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-900/10 transition-colors"
               >
                 <div className="flex items-center gap-3">

@@ -12,6 +12,7 @@ import type { JobSummary } from "../types";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { CandidateInstantSearch } from "@/features/headhunter/candidates/components/CandidateInstantSearch";
 import {
   Dialog,
   DialogContent,
@@ -168,6 +169,10 @@ export function JobManagePage() {
           </button>
         }
       />
+
+      <div className="mt-6">
+        <CandidateInstantSearch />
+      </div>
 
       {jobs.length === 0 ? (
         <Card className="p-20 text-center border-dashed border-2 bg-transparent dark:bg-slate-900/50 dark:border-slate-700 rounded-3xl">

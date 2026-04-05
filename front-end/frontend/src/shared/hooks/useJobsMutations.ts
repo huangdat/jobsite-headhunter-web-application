@@ -11,7 +11,6 @@ import type { JobFormValues } from "@/features/jobs/types";
 import { jobKeys } from "@/shared/utils/queryKeys";
 import {
   updateJobEverywhere,
-  removeJobFromAllLists,
   addJobToLists,
 } from "@/shared/utils/cacheUpdaters";
 
@@ -43,18 +42,21 @@ export const useToggleJobStatusMutation = () => {
 };
 
 /**
- * Delete/hide job (soft delete)
- * Uses smart cache update - removes job from lists without refetch
+ * Toggle job visibility (soft delete)
+ * Keeps the job in lists and refreshes caches for accurate visibility state
  */
 export const useDeleteJobMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (jobId: number) => deleteJobSoft(jobId),
-    onSuccess: (_, jobId) => {
-      // Smart update: remove job from all list caches
-      removeJobFromAllLists(queryClient, jobId);
-      // Instant UI update - job disappears immediately
+    onSuccess: (updatedJob) => {
+      updateJobEverywhere(queryClient, updatedJob.id, (oldJob) => ({
+        ...oldJob,
+        ...updatedJob,
+      }));
+      queryClient.invalidateQueries({ queryKey: jobKeys.myJobs() });
+      queryClient.invalidateQueries({ queryKey: jobKeys.lists() });
     },
   });
 };

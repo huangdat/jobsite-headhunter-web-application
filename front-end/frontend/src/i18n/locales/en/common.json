@@ -30,6 +30,7 @@
     "enterDetailsDescription": "Common enter details description",
     "failedToFetchUsers": "Common failed to fetch users",
     "tryAgain": "Common try again",
+    "retry": "Retry",
     "noDataAvailable": "Common no data available",
     "unknownError": "Unknown error occurred"
   },

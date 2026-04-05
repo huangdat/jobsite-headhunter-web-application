@@ -98,6 +98,13 @@ const BusinessProfilePage = lazy(() =>
     default: m.BusinessProfilePage,
   }))
 );
+const CandidateDetailPage = lazy(() =>
+  import("@/features/headhunter/candidates/pages/CandidateDetailPage").then(
+    (m) => ({
+      default: m.CandidateDetailPage,
+    })
+  )
+);
 
 // Applications (lazy)
 const ApplyJobPage = lazy(() =>
@@ -314,6 +321,14 @@ export function AppRouter() {
             element={
               <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
                 <ApplicantsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/headhunter/candidates/:id"
+            element={
+              <ProtectedRoute allowedRoles={["HEADHUNTER", "ADMIN"]}>
+                <CandidateDetailPage />
               </ProtectedRoute>
             }
           />
