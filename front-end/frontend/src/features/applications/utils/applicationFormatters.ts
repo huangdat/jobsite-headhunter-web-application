@@ -1,4 +1,4 @@
-import { ApplicationStatus, InterviewType } from "../types";
+import type { ApplicationStatus, InterviewType } from "../types";
 import {
   APPLICATION_STATUS_LABELS,
   INTERVIEW_TYPE_LABELS,

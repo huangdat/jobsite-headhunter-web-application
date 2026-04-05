@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { ApplicationStatus } from "../types";
+import type { ApplicationStatus } from "../types";
 import { APPLICATION_STATUS_LABELS } from "../utils";
 
 interface ApplicationFiltersProps {

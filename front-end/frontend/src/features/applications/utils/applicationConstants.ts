@@ -1,27 +1,34 @@
-import { ApplicationStatus, InterviewType } from "../types";
+import type { ApplicationStatus, InterviewType } from "../types";
+import {
+  APPLICATION_STATUS as ApplicationStatusValues,
+  INTERVIEW_TYPE as InterviewTypeValues,
+  INTERVIEW_TYPE,
+} from "@/shared/types/enums";
 
 // Status Labels (dùng cho UI display)
 export const APPLICATION_STATUS_LABELS: Record<ApplicationStatus, string> = {
-  [ApplicationStatus.APPLIED]: "applications.status.applied",
-  [ApplicationStatus.SCREENING]: "applications.status.screening",
-  [ApplicationStatus.INTERVIEW]: "applications.status.interview",
-  [ApplicationStatus.PASSED]: "applications.status.passed",
-  [ApplicationStatus.REJECTED]: "applications.status.rejected",
+  [ApplicationStatusValues.APPLIED]: "applications.status.applied",
+  [ApplicationStatusValues.SCREENING]: "applications.status.screening",
+  [ApplicationStatusValues.INTERVIEW]: "applications.status.interview",
+  [ApplicationStatusValues.PASSED]: "applications.status.passed",
+  [ApplicationStatusValues.REJECTED]: "applications.status.rejected",
+  [ApplicationStatusValues.CANCELLED]: "applications.status.cancelled",
 };
 
 // Status Colors (cho Badge component)
 export const APPLICATION_STATUS_COLORS: Record<ApplicationStatus, string> = {
-  [ApplicationStatus.APPLIED]: "bg-blue-100 text-blue-800",
-  [ApplicationStatus.SCREENING]: "bg-yellow-100 text-yellow-800",
-  [ApplicationStatus.INTERVIEW]: "bg-purple-100 text-purple-800",
-  [ApplicationStatus.PASSED]: "bg-green-100 text-green-800",
-  [ApplicationStatus.REJECTED]: "bg-red-100 text-red-800",
+  [ApplicationStatusValues.APPLIED]: "bg-blue-100 text-blue-800",
+  [ApplicationStatusValues.SCREENING]: "bg-yellow-100 text-yellow-800",
+  [ApplicationStatusValues.INTERVIEW]: "bg-purple-100 text-purple-800",
+  [ApplicationStatusValues.PASSED]: "bg-green-100 text-green-800",
+  [ApplicationStatusValues.REJECTED]: "bg-red-100 text-red-800",
+  [ApplicationStatusValues.CANCELLED]: "bg-gray-100 text-gray-800",
 };
 
 // Interview Type Labels
 export const INTERVIEW_TYPE_LABELS: Record<InterviewType, string> = {
-  [InterviewType.ONLINE]: "applications.interview.typeOnline",
-  [InterviewType.OFFLINE]: "applications.interview.typeOffline",
+  [InterviewTypeValues.ONLINE]: "applications.interview.typeOnline",
+  [InterviewTypeValues.OFFLINE]: "applications.interview.typeOffline",
 };
 
 // Allowed Status Transitions (workflow validation)
@@ -29,20 +36,21 @@ export const ALLOWED_STATUS_TRANSITIONS: Record<
   ApplicationStatus,
   ApplicationStatus[]
 > = {
-  [ApplicationStatus.APPLIED]: [
-    ApplicationStatus.SCREENING,
-    ApplicationStatus.REJECTED,
+  [ApplicationStatusValues.APPLIED]: [
+    ApplicationStatusValues.SCREENING,
+    ApplicationStatusValues.REJECTED,
   ],
-  [ApplicationStatus.SCREENING]: [
-    ApplicationStatus.INTERVIEW,
-    ApplicationStatus.REJECTED,
+  [ApplicationStatusValues.SCREENING]: [
+    ApplicationStatusValues.INTERVIEW,
+    ApplicationStatusValues.REJECTED,
   ],
-  [ApplicationStatus.INTERVIEW]: [
-    ApplicationStatus.PASSED,
-    ApplicationStatus.REJECTED,
+  [ApplicationStatusValues.INTERVIEW]: [
+    ApplicationStatusValues.PASSED,
+    ApplicationStatusValues.REJECTED,
   ],
-  [ApplicationStatus.PASSED]: [],
-  [ApplicationStatus.REJECTED]: [],
+  [ApplicationStatusValues.PASSED]: [],
+  [ApplicationStatusValues.REJECTED]: [],
+  [ApplicationStatusValues.CANCELLED]: [],
 };
 
 // Pagination defaults
@@ -51,11 +59,17 @@ export const APPLICATIONS_PAGE_OPTIONS = [10, 20, 50];
 
 // API endpoints (base endpoints, full paths sẽ được construct ở service)
 export const APPLICATION_ENDPOINTS = {
+  // eslint-disable-next-line custom/no-api-urls
   APPLY_JOB: "/api/jobs/:jobId/applications",
+  // eslint-disable-next-line custom/no-api-urls
   GET_HEADHUNTER_APPLICATIONS: "/api/headhunter/jobs/:jobId/applications",
+  // eslint-disable-next-line custom/no-api-urls
   GET_APPLICATION_DETAIL: "/api/headhunter/applications/:id",
+  // eslint-disable-next-line custom/no-api-urls
   UPDATE_APPLICATION_STATUS: "/api/headhunter/applications/:id/status",
+  // eslint-disable-next-line custom/no-api-urls
   CREATE_INTERVIEW: "/api/interviews",
+  // eslint-disable-next-line custom/no-api-urls
   GET_CANDIDATE_APPLICATIONS: "/api/candidates/me/applications",
 } as const;
 
@@ -76,8 +90,8 @@ export const APPLICATION_VALIDATION = {
 
 // Interview type conditional fields
 export const INTERVIEW_TYPE_FIELDS = {
-  [InterviewType.ONLINE]: ["meetingLink"],
-  [InterviewType.OFFLINE]: ["location"],
+  [INTERVIEW_TYPE.ONLINE]: ["meetingLink"],
+  [INTERVIEW_TYPE.OFFLINE]: ["location"],
 } as const;
 
 // Default sort options
