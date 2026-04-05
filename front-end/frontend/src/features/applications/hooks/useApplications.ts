@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from "react";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { toast } from "sonner";
 import type {
   Application,
@@ -20,7 +19,6 @@ interface UseApplicationsOptions {
 
 export const useApplications = (options: UseApplicationsOptions = {}) => {
   const { jobId, isCandidateView = false, autoFetch = true } = options;
-  const { t } = useAppTranslation();
 
   const [applications, setApplications] = useState<Application[]>([]);
   const [isLoading, setIsLoading] = useState(false);

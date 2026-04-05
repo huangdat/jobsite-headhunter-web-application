@@ -37,9 +37,15 @@ describe("Router - Lazy Loading", () => {
     // PageLoader should appear during lazy load
     // Note: This might be too fast to catch in test
     // but the implementation is correct
-    await waitFor(() => {
-      expect(screen.queryByRole("progressbar") || screen.queryByTestId("page-loader")).toBeDefined();
-    }, { timeout: 100 });
+    await waitFor(
+      () => {
+        expect(
+          screen.queryByRole("progressbar") ||
+            screen.queryByTestId("page-loader")
+        ).toBeDefined();
+      },
+      { timeout: 100 }
+    );
   });
 
   it("should lazy load HomePage component", async () => {
@@ -52,7 +58,9 @@ describe("Router - Lazy Loading", () => {
     // Wait for HomePage to load
     await waitFor(() => {
       // HomePage should eventually render
-      expect(document.querySelector('[data-testid="home-page"]') || document.body).toBeDefined();
+      expect(
+        document.querySelector('[data-testid="home-page"]') || document.body
+      ).toBeDefined();
     });
   });
 
@@ -147,17 +155,16 @@ describe("Router - Lazy Loading", () => {
 describe("Lazy Component - RichTextEditor", () => {
   it("should show ComponentLoader while RichTextEditor loads", async () => {
     const { RichTextEditor } = await import("@/components/RichTextEditor.lazy");
-    
+
     const { container } = render(
-      <RichTextEditor 
-        value=""
-        onChange={() => {}}
-      />
+      <RichTextEditor value="" onChange={() => {}} />
     );
 
     // Component should eventually render
     await waitFor(() => {
-      expect(container.querySelector(".rich-text-editor") || container).toBeDefined();
+      expect(
+        container.querySelector(".rich-text-editor") || container
+      ).toBeDefined();
     });
   });
 });
@@ -165,22 +172,28 @@ describe("Lazy Component - RichTextEditor", () => {
 describe("PageLoader Component", () => {
   it("should render loading spinner", async () => {
     const { PageLoader } = await import("@/shared/components/PageLoader");
-    
+
     render(<PageLoader />);
-    
+
     // Should show loading spinner
-    expect(document.querySelector(".animate-spin") || screen.queryByRole("progressbar")).toBeDefined();
+    expect(
+      document.querySelector(".animate-spin") ||
+        screen.queryByRole("progressbar")
+    ).toBeDefined();
   });
 });
 
 describe("ComponentLoader", () => {
   it("should render inline loading spinner", async () => {
     const { ComponentLoader } = await import("@/shared/components/PageLoader");
-    
+
     render(<ComponentLoader />);
-    
+
     // Should show loading spinner
-    expect(document.querySelector(".animate-spin") || screen.queryByRole("progressbar")).toBeDefined();
+    expect(
+      document.querySelector(".animate-spin") ||
+        screen.queryByRole("progressbar")
+    ).toBeDefined();
   });
 });
 
@@ -188,9 +201,9 @@ describe("Code Splitting Verification", () => {
   it("should create separate chunks for lazy components", () => {
     // This test verifies that lazy() creates dynamic imports
     // In production build, Vite will split these into separate chunks
-    
+
     const lazyImport = () => import("@/features/home/pages/HomePage");
-    
+
     expect(lazyImport).toBeInstanceOf(Function);
     expect(lazyImport()).toBeInstanceOf(Promise);
   });
@@ -198,7 +211,7 @@ describe("Code Splitting Verification", () => {
   it("should not bundle lazy components in main chunk", async () => {
     // This is verified by build output analysis
     // Here we just verify the lazy import pattern
-    
+
     const modules = [
       () => import("@/features/home/pages/HomePage"),
       () => import("@/features/jobs/pages/JobListPage"),
@@ -215,16 +228,17 @@ describe("Code Splitting Verification", () => {
 
 describe("Memoization - Component Re-render Prevention", () => {
   it("should prevent ImageUploadField re-renders with unchanged props", async () => {
-    const { ImageUploadField } = await import("@/shared/components/ImageUploadField");
-    
+    const { ImageUploadField } =
+      await import("@/shared/components/ImageUploadField");
+
     const mockOnChange = vi.fn();
     const mockOnRemove = vi.fn();
 
     const { rerender } = render(
       <ImageUploadField
-        currentImage="test.jpg"
-        onImageChange={mockOnChange}
-        onImageRemove={mockOnRemove}
+        preview="test.jpg"
+        onChange={mockOnChange}
+        onRemove={mockOnRemove}
         label="Test"
       />
     );
@@ -232,9 +246,9 @@ describe("Memoization - Component Re-render Prevention", () => {
     // Re-render with same props
     rerender(
       <ImageUploadField
-        currentImage="test.jpg"
-        onImageChange={mockOnChange}
-        onImageRemove={mockOnRemove}
+        preview="test.jpg"
+        onChange={mockOnChange}
+        onRemove={mockOnRemove}
         label="Test"
       />
     );
@@ -246,34 +260,23 @@ describe("Memoization - Component Re-render Prevention", () => {
 
   it("should prevent EmptyState re-renders with unchanged props", async () => {
     const { EmptyState } = await import("@/shared/components/EmptyState");
-    
+
     const { rerender } = render(
-      <EmptyState
-        title="No Data"
-        description="Try again"
-      />
+      <EmptyState title="No Data" description="Try again" />
     );
 
-    rerender(
-      <EmptyState
-        title="No Data"
-        description="Try again"
-      />
-    );
+    rerender(<EmptyState title="No Data" description="Try again" />);
 
     expect(document.body).toBeDefined();
   });
 
   it("should prevent LoadingSpinner re-renders with unchanged props", async () => {
-    const { LoadingSpinner } = await import("@/shared/components/LoadingSpinner");
-    
-    const { rerender } = render(
-      <LoadingSpinner size="md" text="Loading..." />
-    );
+    const { LoadingSpinner } =
+      await import("@/shared/components/LoadingSpinner");
 
-    rerender(
-      <LoadingSpinner size="md" text="Loading..." />
-    );
+    const { rerender } = render(<LoadingSpinner size="md" text="Loading..." />);
+
+    rerender(<LoadingSpinner size="md" text="Loading..." />);
 
     expect(document.body).toBeDefined();
   });
@@ -284,13 +287,16 @@ describe("Performance - Suspense Boundaries", () => {
     const { Suspense, lazy } = await import("react");
     const { PageLoader } = await import("@/shared/components/PageLoader");
 
-    const LazyComponent = lazy(() => new Promise<{ default: React.ComponentType }>(resolve => {
-      setTimeout(() => {
-        resolve({
-          default: () => <div data-testid="lazy-content">Loaded!</div>
-        });
-      }, 100);
-    }));
+    const LazyComponent = lazy(
+      () =>
+        new Promise<{ default: React.ComponentType }>((resolve) => {
+          setTimeout(() => {
+            resolve({
+              default: () => <div data-testid="lazy-content">Loaded!</div>,
+            });
+          }, 100);
+        })
+    );
 
     render(
       <Suspense fallback={<PageLoader />}>
@@ -299,11 +305,16 @@ describe("Performance - Suspense Boundaries", () => {
     );
 
     // Should show PageLoader initially
-    expect(document.querySelector(".animate-spin") || document.body).toBeDefined();
+    expect(
+      document.querySelector(".animate-spin") || document.body
+    ).toBeDefined();
 
     // Wait for lazy component
-    await waitFor(() => {
-      expect(screen.queryByTestId("lazy-content")).toBeDefined();
-    }, { timeout: 500 });
+    await waitFor(
+      () => {
+        expect(screen.queryByTestId("lazy-content")).toBeDefined();
+      },
+      { timeout: 500 }
+    );
   });
 });

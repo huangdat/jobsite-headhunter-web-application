@@ -167,7 +167,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                 {doc.filename}
               </p>
               <p className="mt-1 text-xs text-slate-600">
-                {t(getDocumentTypeLabel(doc.documentType))} •{" "}
+                {t(getDocumentTypeLabel(doc.documentType || "document"))} •{" "}
                 {formatFileSize(doc.fileSize)}
               </p>
 

@@ -139,9 +139,9 @@ export function JobManagePage() {
             className="bg-brand-primary cursor-pointer hover:bg-brand-primary/90 text-white px-6 py-6 rounded-2xl shadow-lg shadow-brand-primary/20 transition-all active:scale-95 flex gap-2"
           >
             <Plus size={20} />
-            <MetaText className="text-white">
+            <SmallText className="text-white">
               {t("manage.createNewButton")}
-            </MetaText>
+            </SmallText>
           </button>
         }
       />
@@ -233,9 +233,9 @@ export function JobManagePage() {
                   onClick={() => handleEdit(job.id)}
                 >
                   <Edit3 size={16} />
-                  <MetaText className="text-inherit">
+                  <SmallText className="text-inherit">
                     {t("manage.editButton")}
-                  </MetaText>
+                  </SmallText>
                 </Button>
 
                 <Button
@@ -246,9 +246,9 @@ export function JobManagePage() {
                   }
                 >
                   <Users size={16} />
-                  <MetaText className="text-white">
+                  <SmallText className="text-white">
                     {t("manage.viewCandidates")}
-                  </MetaText>
+                  </SmallText>
                 </Button>
 
                 <div className="flex items-center bg-slate-50 dark:bg-slate-700/50 rounded-xl p-1 gap-1 border border-slate-100 dark:border-slate-700">

@@ -102,8 +102,10 @@ export const VerificationDetailPage: React.FC = () => {
         <EmptyStateView
           icon={AlertCircle}
           title={t("verification.errors.notFound")}
-          onPrimaryAction={() => navigate("/admin/verifications")}
-          primaryActionLabel={t("verification.pages.detail.back")}
+          primaryAction={{
+            label: t("verification.pages.detail.back"),
+            onClick: () => navigate("/admin/verifications"),
+          }}
         />
       </PageContainer>
     );
@@ -140,8 +142,11 @@ export const VerificationDetailPage: React.FC = () => {
                 },
                 {
                   label: t("verification.fields.taxId"),
-                  value: verification.business.taxId,
-                  className: "font-mono bg-slate-100 px-2 py-1 rounded text-sm",
+                  value: (
+                    <span className="font-mono bg-slate-100 px-2 py-1 rounded text-sm">
+                      {verification.business.taxId}
+                    </span>
+                  ),
                 },
                 {
                   label: t("verification.fields.industry"),
@@ -183,7 +188,7 @@ export const VerificationDetailPage: React.FC = () => {
                     {verification.approvedBy.name}
                   </p>
                   <p className="text-sm text-slate-400">
-                    {verification.approvedBy.actorRole}
+                    {verification.approvedBy.avatarRole}
                   </p>
                 </>
               ) : (

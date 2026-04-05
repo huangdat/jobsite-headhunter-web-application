@@ -290,11 +290,9 @@ export function JobEditPage() {
               id="negotiable"
               {...register("negotiable")}
             />
-            <SmallText asChild>
-              <label htmlFor="negotiable">
-                {t("edit.labels.salaryNegotiable")}
-              </label>
-            </SmallText>
+            <label htmlFor="negotiable" className="text-sm font-medium">
+              {t("edit.labels.salaryNegotiable")}
+            </label>
           </div>
         </section>
 

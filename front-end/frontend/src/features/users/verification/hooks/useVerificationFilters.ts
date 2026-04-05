@@ -30,7 +30,7 @@ export const useVerificationFilters = (
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
   // Debounce timer reference
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /**
    * Set search term with debouncing

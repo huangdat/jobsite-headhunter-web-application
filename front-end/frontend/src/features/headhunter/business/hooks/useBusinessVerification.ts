@@ -8,6 +8,7 @@ import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type {
   BusinessProfile,
   ProfileStrengthData,
+  SubmittedDocument,
 } from "../types/business.types";
 import businessApi from "../services/businessApi";
 import { useFormValidation } from "./useFormValidation";
@@ -26,14 +27,6 @@ export interface VerificationStep {
   status: "pending" | "in_progress" | "completed" | "rejected";
   label: string;
   completedAt?: string;
-}
-
-export interface SubmittedDocument {
-  id: string;
-  name: string;
-  type: string;
-  uploadedAt: string;
-  url?: string;
 }
 
 export interface SubmitProfileRequest extends BusinessFormData {

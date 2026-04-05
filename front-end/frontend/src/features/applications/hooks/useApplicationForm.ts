@@ -47,8 +47,6 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
     (fileOrId: File | string) => {
       if (typeof fileOrId === "string") {
         // TRƯỜNG HỢP 1: CHỌN CV TỪ PROFILE
-        setExistingCvId(fileOrId);
-        setCvFile(null);
         setFormData((prev) => ({
           ...prev,
           cvSnapshotUrl: fileOrId, // Lưu ID vào để validate pass
@@ -124,7 +122,8 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
         type AxiosLike = { response?: { data?: { message?: string } } };
         const maybe = err as AxiosLike;
         const errorMsg =
-          maybe.response?.data?.message || (err instanceof Error ? err.message : String(err));
+          maybe.response?.data?.message ||
+          (err instanceof Error ? err.message : String(err));
         console.error("❌ Submit Error:", errorMsg);
         toast.error(errorMsg);
       } finally {
@@ -144,8 +143,6 @@ export const useApplicationForm = (options: UseApplicationFormOptions) => {
       cvSnapshotUrl: "",
     });
     setErrors({});
-    setCvFile(null);
-    setExistingCvId(null);
   }, []);
 
   return {
