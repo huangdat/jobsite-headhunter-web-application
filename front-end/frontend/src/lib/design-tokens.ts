@@ -9,6 +9,67 @@
  */
 
 /**
+ * Intent mapping - Define color intent to semantic meaning
+ * Maps abstract intents to concrete color palettes
+ */
+export const intentMap = {
+  primary: "brand-primary", // Main CTAs, highlights
+  secondary: "slate-600", // Secondary actions
+  success: "emerald-600", // Confirmations, positive feedback
+  warning: "amber-600", // Alerts, cautions
+  danger: "red-600", // Errors, destructive actions
+  neutral: "slate-500", // Neutral text, borders
+} as const;
+
+/**
+ * Dark mode pair helper
+ * Combines light and dark class variants
+ *
+ * @example
+ * getDarkPair('bg-white', 'bg-slate-900') → 'bg-white dark:bg-slate-900'
+ */
+export const getDarkPair = (lightClass: string, darkClass: string): string => {
+  return `${lightClass} dark:${darkClass}`;
+};
+
+/**
+ * Theme helpers - Common color combinations with dark mode support
+ * Use these for consistent styling across light and dark modes
+ */
+export const themeHelpers = {
+  // Base background colors
+  bg: {
+    light: "bg-white dark:bg-slate-900",
+    lightAlt: "bg-slate-50 dark:bg-slate-900",
+    card: "bg-white dark:bg-slate-800",
+    hover: "hover:bg-slate-50 dark:hover:bg-slate-700",
+    disabled: "bg-slate-100 dark:bg-slate-800",
+  },
+
+  // Text colors
+  text: {
+    primary: "text-slate-900 dark:text-slate-100",
+    secondary: "text-slate-600 dark:text-slate-400",
+    muted: "text-slate-500 dark:text-slate-500",
+    inverse: "text-white dark:text-slate-900",
+    disabled: "text-slate-400 dark:text-slate-600",
+  },
+
+  // Border colors
+  border: {
+    light: "border-slate-200 dark:border-slate-700",
+    medium: "border-slate-300 dark:border-slate-600",
+    dark: "border-slate-400 dark:border-slate-500",
+  },
+
+  // Dividers
+  divider: "divide-slate-200 dark:divide-slate-700",
+
+  // Shadow/Ring
+  ring: "ring-slate-200 dark:ring-slate-700",
+} as const;
+
+/**
  * Brand color tokens
  * Based on CSS variables defined in src/index.css
  */
@@ -332,13 +393,12 @@ export const getStatusBadgeClass = (
   // Normalize status to uppercase
   const normalizedStatus = (status || "DEFAULT").toUpperCase();
 
-   
   const statusColor =
     statusColors[normalizedStatus as keyof typeof statusColors];
 
   if (!statusColor) {
     // Fallback to DEFAULT if status not found
-     
+
     const defaultColor = statusColors.DEFAULT;
     if (fallbackType === "bg") {
       return `${defaultColor.bg} ${defaultColor.bgDark}`.trim();
