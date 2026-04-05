@@ -20,3 +20,19 @@ export { VerificationChecklistCard } from "./VerificationChecklistCard";
 
 // Approval Workflow Components
 export { ApprovalDetailsCard } from "./ApprovalDetailsCard";
+
+// ============================================================================
+// PHASE 4: Data Display & Container Components
+// ============================================================================
+
+// Timeline & Action Items
+export { TimelineEventItem } from "./TimelineEventItem";
+export { AutomatedActionItem } from "./AutomatedActionItem";
+
+// Generic Display Utilities
+export { DetailsGrid, SectionTitle } from "./DetailsGrid";
+export { SectionCard } from "./SectionCard";
+
+// Feedback & State Components
+export { ApprovalSuccessBanner } from "./ApprovalSuccessBanner";
+export { EmptyStateView } from "./EmptyStateView";
