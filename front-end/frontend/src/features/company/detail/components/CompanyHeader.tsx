@@ -43,8 +43,8 @@ export function CompanyHeader({ company }: Props) {
               href={
                 company.websiteUrl.startsWith("http")
                   ? company.websiteUrl
-                  : // eslint-disable-next-line custom/no-api-urls
-                    `https://${company.websiteUrl}`
+                  // eslint-disable-next-line custom/no-api-urls
+                  : `https://${company.websiteUrl}`
               }
               target="_blank"
               rel="noreferrer"
