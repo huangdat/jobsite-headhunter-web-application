@@ -27,7 +27,9 @@ export function PostMetadata({ post }: PostMetadataProps) {
           {t("forum.breadcrumb.news") || "TIN TỨC"}
         </a>
         {" > "}
-        <span className="text-slate-900">{post.categoryName || "Tin tức"}</span>
+        <span className="text-slate-900 dark:text-slate-50">
+          {post.categoryName || "Tin tức"}
+        </span>
       </SmallText>
 
       {/* Title */}

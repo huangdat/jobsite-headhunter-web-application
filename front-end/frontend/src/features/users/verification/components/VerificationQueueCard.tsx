@@ -43,15 +43,15 @@ export const VerificationQueueCard: React.FC<VerificationQueueCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className="group p-4 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:shadow-md transition-all cursor-pointer"
+      className="group p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 hover:shadow-md dark:hover:shadow-slate-900/50 transition-all cursor-pointer"
     >
       <div className="flex items-start justify-between">
         {/* Left: Company Info */}
         <div className="flex-1">
-          <h3 className="font-semibold text-slate-900">
+          <h3 className="font-semibold text-slate-900 dark:text-slate-50">
             {verification.business.companyName}
           </h3>
-          <div className="text-sm text-slate-600 mt-1 space-y-1">
+          <div className="text-sm text-slate-600 dark:text-slate-400 mt-1 space-y-1">
             <p>
               {t("verification.fields.taxId")}: {verification.business.taxId}
             </p>

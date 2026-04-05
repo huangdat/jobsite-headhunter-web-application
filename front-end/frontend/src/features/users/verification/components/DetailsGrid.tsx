@@ -58,7 +58,9 @@ export const DetailsGrid: React.FC<DetailsGridProps> = ({
             </label>
 
             {/* Value */}
-            <p className="font-semibold text-slate-900">{item.value}</p>
+            <p className="font-semibold text-slate-900 dark:text-slate-50">
+              {item.value}
+            </p>
           </div>
         );
       })}
@@ -86,7 +88,9 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
     <div className={className}>
       <div className="flex items-center gap-3 mb-4">
         {Icon && <Icon className="text-lime-600 shrink-0" size={20} />}
-        <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+          {title}
+        </h2>
       </div>
       {subtitle && <p className="text-sm text-slate-600">{subtitle}</p>}
     </div>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { ApplicationStatusBadge } from "../components";
 import { useApplications, useInterviewSchedule } from "../hooks";
 import { formatDate, formatDuration } from "../utils";
@@ -25,21 +26,23 @@ export const MyApplicationsPage: React.FC = () => {
   const { t } = useAppTranslation();
   const [viewingApp, setViewingApp] = useState<Application | null>(null);
 
-  const { applications, isLoading, pagination, handlePageChange } =
-    useApplications({
-      isCandidateView: true,
-      autoFetch: true,
-    });
+  const {
+    applications,
+    isLoading,
+    error,
+    pagination,
+    handlePageChange,
+    refetch,
+  } = useApplications({
+    isCandidateView: true,
+    autoFetch: true,
+  });
 
   const stats = {
     total: pagination.totalElements,
-    applied: applications.filter((a) => (a.status as string) === "APPLIED")
-      .length,
-    interviewing: applications.filter(
-      (a) => (a.status as string) === "INTERVIEW"
-    ).length,
-    rejected: applications.filter((a) => (a.status as string) === "REJECTED")
-      .length,
+    applied: applications.filter((a) => (a.status as string) === "APPLIED").length,
+    interviewing: applications.filter((a) => (a.status as string) === "INTERVIEW").length,
+    rejected: applications.filter((a) => (a.status as string) === "REJECTED").length,
   };
 
   return (
@@ -78,11 +81,17 @@ export const MyApplicationsPage: React.FC = () => {
       </div>
 
       <div className="space-y-4">
-        {isLoading ? (
-          Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 w-full rounded-xl" />
-          ))
-        ) : applications.length === 0 ? (
+        {error && (
+          <ErrorState
+            error={new Error(error)}
+            onRetry={() => refetch()}
+            variant="inline"
+          />
+        )}
+
+        {!error && isLoading && <PageSkeleton variant="list" count={3} />}
+
+        {!error && !isLoading && applications.length === 0 ? (
           <div className="text-center py-20 border-2 border-dashed rounded-3xl text-slate-400 dark:text-slate-500 dark:border-slate-700">
             <Search className="mx-auto mb-4 opacity-20" size={40} />
             <p>{t("applications.empty.noApplications")}</p>
@@ -105,12 +114,10 @@ export const MyApplicationsPage: React.FC = () => {
                     </h3>
                     <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
                       <span className="flex items-center gap-1">
-                        <Calendar size={12} />{" "}
+                        <Calendar size={12} />
                         {new Date(app.appliedAt).toLocaleDateString()}
                       </span>
-                      <span className="text-slate-300 dark:text-slate-600">
-                        |
-                      </span>
+                      <span className="text-slate-300 dark:text-slate-600">|</span>
                       <span className="text-lime-500 font-bold uppercase tracking-wider">
                         {t("applications.candidateView")}
                       </span>
@@ -222,7 +229,7 @@ const ModalContent: React.FC<{
             </div>
 
             {isLoading ? (
-              <Skeleton className="h-20 w-full" />
+              <div className="h-20 w-full rounded-xl bg-slate-200 dark:bg-slate-700 animate-pulse" />
             ) : interview ? (
               <div className="grid grid-cols-2 gap-4 text-sm text-slate-700 dark:text-slate-300">
                 <div className="space-y-1">
@@ -238,8 +245,7 @@ const ModalContent: React.FC<{
                     {t("applications.interview.duration")}
                   </p>
                   <p className="font-semibold flex items-center justify-end gap-1">
-                    <Clock size={12} />{" "}
-                    {formatDuration(interview.durationMinutes)}
+                    <Clock size={12} /> {formatDuration(interview.durationMinutes)}
                   </p>
                 </div>
                 <div className="col-span-2 pt-2 border-t border-blue-100/50 dark:border-blue-800">
@@ -257,14 +263,12 @@ const ModalContent: React.FC<{
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <Video size={14} className="mr-1.5" />{" "}
-                        {interview.meetingLink}
+                        <Video size={14} className="mr-1.5" /> {interview.meetingLink}
                       </a>
                     </Button>
                   ) : (
                     <p className="text-xs font-medium flex items-center gap-1">
-                      <MapPin size={14} className="text-red-400" />{" "}
-                      {interview.location}
+                      <MapPin size={14} className="text-red-400" /> {interview.location}
                     </p>
                   )}
                 </div>
@@ -307,8 +311,7 @@ const StatCard: React.FC<{
 }> = ({ label, value, icon, color }) => {
   const colorClasses = {
     lime: "bg-lime-50 text-lime-600 dark:bg-lime-900/30 dark:text-lime-400",
-    amber:
-      "bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
+    amber: "bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
     blue: "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
     red: "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400",
   };

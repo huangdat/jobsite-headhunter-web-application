@@ -19,7 +19,7 @@ export function CompanyHeader({ company }: Props) {
         </div>
       </div>
       <div className="pt-14 px-8 pb-8">
-        <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-3xl font-black text-slate-900 dark:text-slate-50 tracking-tight">
           {company.companyName}
         </h1>
 

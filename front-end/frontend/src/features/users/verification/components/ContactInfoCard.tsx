@@ -39,27 +39,30 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
 
   return (
     <div
-      className={`rounded-xl border border-slate-200 bg-white/50 p-6 backdrop-blur-sm ${className}`}
+      className={`rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/40 p-6 backdrop-blur-sm ${className}`}
     >
       {/* Header */}
-      <h3 className="font-semibold text-slate-900 mb-4">
+      <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-4">
         {t("verification.cards.contactInfo.title")}
       </h3>
 
       {/* Address Section */}
-      <div className="mb-6 pb-6 border-b border-slate-200">
+      <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-700">
         <div className="flex items-start gap-3">
-          <MapPin className="text-slate-400 shrink-0 mt-1" size={18} />
+          <MapPin
+            className="text-slate-400 dark:text-slate-500 shrink-0 mt-1"
+            size={18}
+          />
           <div>
-            <p className="text-sm font-medium text-slate-900">
+            <p className="text-sm font-medium text-slate-900 dark:text-slate-50">
               {t("verification.fields.hqLocation")}
             </p>
-            <p className="text-sm text-slate-600 mt-1">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               {business.hq?.city}, {business.hq?.country}
             </p>
             {business.hq?.latitude && business.hq?.longitude && (
-              <div className="mt-3 bg-slate-100 rounded-lg p-3 text-xs text-slate-600">
-                <p className="font-medium text-slate-700">
+              <div className="mt-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg p-3 text-xs text-slate-600 dark:text-slate-400">
+                <p className="font-medium text-slate-700 dark:text-slate-300">
                   {t("verification.cards.contactInfo.coordinates")}
                 </p>
                 <p className="mt-1">
@@ -76,14 +79,17 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
       <div className="space-y-4">
         {/* Email */}
         <div className="flex items-start gap-3">
-          <Mail className="text-slate-400 shrink-0 mt-1" size={18} />
+          <Mail
+            className="text-slate-400 dark:text-slate-500 shrink-0 mt-1"
+            size={18}
+          />
           <div className="flex-1">
-            <p className="text-xs text-slate-600 uppercase">
+            <p className="text-xs text-slate-600 dark:text-slate-400 uppercase">
               {t("verification.fields.email")}
             </p>
             <a
               href={`mailto:${business.email}`}
-              className="text-sm font-medium text-lime-600 hover:underline"
+              className="text-sm font-medium text-lime-600 dark:text-lime-400 hover:underline"
             >
               {business.email}
             </a>
@@ -92,14 +98,17 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
 
         {/* Phone */}
         <div className="flex items-start gap-3">
-          <User className="text-slate-400 shrink-0 mt-1" size={18} />
+          <User
+            className="text-slate-400 dark:text-slate-500 shrink-0 mt-1"
+            size={18}
+          />
           <div className="flex-1">
-            <p className="text-xs text-slate-600 uppercase">
+            <p className="text-xs text-slate-600 dark:text-slate-400 uppercase">
               {t("verification.fields.phone")}
             </p>
             <a
               href={`tel:${business.phone}`}
-              className="text-sm font-medium text-slate-900"
+              className="text-sm font-medium text-slate-900 dark:text-slate-50"
             >
               {business.phone}
             </a>

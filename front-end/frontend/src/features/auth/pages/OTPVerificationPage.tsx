@@ -20,7 +20,7 @@ import {
 } from "@/shared/components/typography/Typography";
 
 interface LocationState {
-  accountId: string;
+  accountId?: string; // Optional - backend may not return it
   email: string;
   expiresAt: string;
 }
@@ -67,7 +67,6 @@ export function OTPVerificationPage() {
 
         try {
           const otpResponse = await verifyOtpSignup({
-            accountId: state!.accountId,
             email: state!.email,
             code: otpCode,
             tokenType: "SIGN_UP",
@@ -193,7 +192,6 @@ export function OTPVerificationPage() {
       await sendOtpSignup({
         email: state.email,
         tokenType: "SIGN_UP",
-        accountId: state.accountId,
       });
 
       toast.success(t("messages.otpResent"));
