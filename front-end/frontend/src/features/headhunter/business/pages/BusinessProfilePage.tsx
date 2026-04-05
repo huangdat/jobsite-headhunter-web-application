@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import {
   Display,
@@ -110,22 +111,16 @@ export const BusinessProfilePage: React.FC = () => {
           </SmallText>
         </div>
         <div className="flex gap-3">
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-          >
+          <Button variant="outline">
             <SmallText weight="medium">
               {t("business.button.documentation")}
             </SmallText>
-          </button>
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 text-white transition-colors hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
-          >
+          </Button>
+          <Button>
             <SmallText weight="medium" className="text-white">
               {t("business.button.preview")}
             </SmallText>
-          </button>
+          </Button>
         </div>
       </div>
       {/* Error Banner */}
@@ -207,14 +202,14 @@ export const BusinessProfilePage: React.FC = () => {
                     </SmallText>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  className="mt-4 text-emerald-600 transition-colors hover:text-emerald-700"
+                <Button
+                  variant="ghost"
+                  className="mt-4 h-auto p-0 text-emerald-600 hover:text-emerald-700"
                 >
                   <SmallText weight="bold" className="text-inherit">
                     {t("business.action.configure")} →
                   </SmallText>
-                </button>
+                </Button>
               </div>
 
               {/* Best Practices Card */}
@@ -242,14 +237,11 @@ export const BusinessProfilePage: React.FC = () => {
               <SmallText variant="muted" className="mt-2 text-gray-300">
                 {t("business.premium.description")}
               </SmallText>
-              <button
-                type="button"
-                className="mt-4 w-full rounded-lg bg-green-600 px-4 py-2.5 text-white transition-colors hover:bg-green-700"
-              >
+              <Button className="mt-4 w-full bg-green-600 hover:bg-green-700">
                 <SmallText weight="medium" className="text-white">
                   {t("business.button.upgrade")}
                 </SmallText>
-              </button>
+              </Button>
             </div>
 
             {/* Loading State for Verification Check */}

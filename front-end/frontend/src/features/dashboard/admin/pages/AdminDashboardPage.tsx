@@ -6,6 +6,7 @@ import { UserRoleDistribution } from "../components/UserRoleDistribution";
 import { JobStatusStatsComponent } from "../components/JobStatusStats";
 import { SystemOverviewCards } from "../components/SystemOverviewCards";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { Button } from "@/components/ui/button";
 import {
   SectionTitle,
   LabelText,
@@ -52,12 +53,9 @@ export const AdminDashboardPage: React.FC = () => {
             <p className="text-red-600 dark:text-red-300 text-sm mt-1">
               {error}
             </p>
-            <button
-              onClick={refetch}
-              className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-            >
+            <Button variant="destructive" onClick={refetch}>
               {t("common.retry", "Retry")}
-            </button>
+            </Button>
           </div>
         </div>
       </PageContainer>
@@ -116,15 +114,15 @@ export const AdminDashboardPage: React.FC = () => {
 
             {/* Apply Button */}
             <div className="flex items-end">
-              <button
+              <Button
                 onClick={handleApplyDateFilter}
                 disabled={!dateFrom || !dateTo || isLoading}
-                className="w-full px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full"
               >
                 {isLoading
                   ? t("common.loading", "Loading...")
                   : t("admin.dashboard.filter.apply", "Apply")}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

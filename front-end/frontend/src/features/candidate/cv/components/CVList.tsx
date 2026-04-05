@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
 import type { CVListProps } from "../types";
 import { formatFileSize, formatUploadDate } from "../services";
 
@@ -101,58 +102,63 @@ export const CVList: React.FC<CVListProps> = ({
             <div className="flex items-center gap-1 group-hover:visible invisible md:visible transition-all">
               {/* View Button */}
               {onView && (
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => onView(file.id)}
-                  className="p-2 text-slate-600 hover:text-emerald-600 transition-colors rounded-lg hover:bg-white"
                   title={t("cv.management.fileList.actions.view")}
                   aria-label={t("cv.management.fileList.actions.view")}
                 >
                   <span className="material-symbols-outlined text-lg">
                     visibility
                   </span>
-                </button>
+                </Button>
               )}
 
               {/* Download Button */}
               {onDownload && (
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => onDownload(file.id)}
-                  className="p-2 text-slate-600 hover:text-emerald-600 transition-colors rounded-lg hover:bg-white"
                   title={t("cv.management.fileList.actions.download")}
                   aria-label={t("cv.management.fileList.actions.download")}
                 >
                   <span className="material-symbols-outlined text-lg">
                     download
                   </span>
-                </button>
+                </Button>
               )}
 
               {/* Make Active Button (if not already active) */}
               {onMakeActive && !file.isActive && (
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => onMakeActive(file.id)}
-                  className="p-2 text-slate-600 hover:text-emerald-600 transition-colors rounded-lg hover:bg-white"
                   title={t("cv.management.fileList.actions.makeActive")}
                   aria-label={t("cv.management.fileList.actions.makeActive")}
                 >
                   <span className="material-symbols-outlined text-lg">
                     check_circle_outline
                   </span>
-                </button>
+                </Button>
               )}
 
               {/* Delete Button */}
               {onDelete && (
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => onDelete(file.id)}
-                  className="p-2 text-slate-600 hover:text-red-700 transition-colors rounded-lg hover:bg-white"
+                  className="text-red-600 hover:text-red-700"
                   title={t("cv.management.fileList.actions.delete")}
                   aria-label={t("cv.management.fileList.actions.delete")}
                 >
                   <span className="material-symbols-outlined text-lg">
                     delete
                   </span>
-                </button>
+                </Button>
               )}
             </div>
           </div>
@@ -176,4 +182,3 @@ export const CVList: React.FC<CVListProps> = ({
 };
 
 export default CVList;
-

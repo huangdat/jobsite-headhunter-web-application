@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { FormField } from "@/shared/components";
 import {
   Display,
@@ -143,44 +144,48 @@ export function ChangePasswordPage() {
           <h2 className="text-xl font-bold tracking-tight text-white">
             {tApp("common.appName")}
           </h2>
-          <button
+          <Button
+            variant="ghost"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 h-auto justify-start w-full"
             onClick={() => navigate("/dashboard")}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined text-brand-primary">
               dashboard
             </span>
             <span className="font-medium">{tApp("navigation.dashboard")}</span>
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="ghost"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 h-auto justify-start w-full"
             onClick={() => navigate("/jobs")}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined text-brand-primary">
               work
             </span>
             <span className="font-medium">{tApp("navigation.jobs")}</span>
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="ghost"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 h-auto justify-start w-full"
             onClick={() => navigate("/referrals")}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined text-brand-primary">
               group_add
             </span>
             <span className="font-medium">{tApp("navigation.referrals")}</span>
-          </button>
+          </Button>
 
           <div className="pt-4 pb-2 px-4 uppercase tracking-wider">
             <MetaText>{tApp("common.section.account")}</MetaText>
           </div>
-          <button
+          <Button
+            variant="ghost"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary border border-brand-primary/20 h-auto justify-start w-full"
             onClick={() => navigate("/settings")}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary transition-colors border border-brand-primary/20 cursor-pointer text-left w-full"
           >
             <span className="material-symbols-outlined">settings</span>
             <span className="font-medium">{tApp("navigation.settings")}</span>
-          </button>
+          </Button>
         </div>
 
         <div className="p-4 border-t border-white/10">
@@ -212,12 +217,12 @@ export function ChangePasswordPage() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
+            <Button variant="ghost" size="sm" className="p-2">
               <span className="material-symbols-outlined">notifications</span>
-            </button>
-            <button className="p-2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
+            </Button>
+            <Button variant="ghost" size="sm" className="p-2">
               <span className="material-symbols-outlined">help_outline</span>
-            </button>
+            </Button>
           </div>
         </header>
 
@@ -304,31 +309,28 @@ export function ChangePasswordPage() {
                 </FormField>
 
                 <div className="pt-6 flex flex-col sm:flex-row gap-4">
-                  <button
+                  <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`flex-1 h-12 rounded-xl transition-all flex items-center justify-center gap-2 ${
-                      !isSubmitting
-                        ? "bg-brand-primary text-slate-900 hover:bg-brand-hover"
-                        : "bg-slate-200 text-slate-400 cursor-not-allowed"
-                    }`}
+                    className="flex-1"
                   >
                     <MetaText>
                       {isSubmitting
                         ? t("common.loading")
                         : t("pages.changePassword.submitButton")}
                     </MetaText>
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="outline"
                     onClick={handleCancel}
                     disabled={isSubmitting}
-                    className="flex-1 h-12 bg-transparent text-slate-600 dark:text-slate-400 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700"
+                    className="flex-1"
                   >
                     <MetaText>
                       {t("pages.changePassword.cancelButton")}
                     </MetaText>
-                  </button>
+                  </Button>
                 </div>
               </form>
 

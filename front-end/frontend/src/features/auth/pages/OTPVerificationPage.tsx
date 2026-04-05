@@ -314,15 +314,17 @@ export function OTPVerificationPage() {
             <SmallText variant="muted" className="mb-2">
               {t("pages.otpVerification.didNotReceiveCode")}
             </SmallText>
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-auto p-0 text-brand-primary hover:text-brand-hover font-medium disabled:opacity-50"
               onClick={handleResend}
               disabled={isLoading || isResending || timeLeft > 240}
-              className="text-sm text-brand-primary hover:text-brand-hover font-medium disabled:opacity-50 disabled:cursor-not-allowed underline"
             >
               {isResending
                 ? t("buttons.sendingOtp")
                 : t("pages.otpVerification.resendCode")}
-            </button>
+            </Button>
             {timeLeft > 240 && (
               <Caption className="mt-1">
                 {t("pages.otpVerification.availableIn")}{" "}
@@ -332,13 +334,15 @@ export function OTPVerificationPage() {
           </div>
 
           <div className="text-center pt-4 border-t">
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-auto p-0 text-slate-600 hover:text-slate-800 font-medium"
               onClick={() => navigate("/select-role")}
               disabled={isLoading || isResending}
-              className="text-sm text-slate-600 hover:text-slate-800"
             >
               {t("buttons.backToRegistration")}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

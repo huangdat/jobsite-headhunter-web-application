@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
 import type { PremiumServicesProps } from "../types";
 
 export const PremiumServices: React.FC<PremiumServicesProps> = ({
@@ -47,15 +48,16 @@ export const PremiumServices: React.FC<PremiumServicesProps> = ({
         </p>
 
         {/* CTA Button */}
-        <button
+        <Button
           onClick={onAction}
-          className="w-full mt-4 px-4 py-3 bg-white text-brand-primary font-bold rounded-lg hover:bg-slate-100 transition-colors text-sm flex items-center justify-center gap-2"
+          disabled={isLoading}
+          className="w-full mt-4 text-brand-primary bg-white hover:bg-slate-100"
         >
-          <span className="material-symbols-outlined text-lg">
+          <span className="material-symbols-outlined text-lg mr-2">
             calendar_today
           </span>
           {t("cv.management.premiumServices.bookAudit")}
-        </button>
+        </Button>
 
         {/* Footer */}
         <p className="text-xs opacity-75 text-center mt-4">
@@ -84,13 +86,16 @@ export const PremiumServices: React.FC<PremiumServicesProps> = ({
       </p>
 
       {/* CTA Button */}
-      <button
+      <Button
         onClick={onAction}
-        className="w-full mt-4 px-4 py-3 bg-white text-tertiary font-bold rounded-lg hover:bg-slate-100 transition-colors text-sm flex items-center justify-center gap-2"
+        disabled={isLoading}
+        className="w-full mt-4 text-tertiary bg-white hover:bg-slate-100"
       >
-        <span className="material-symbols-outlined text-lg">person_check</span>
+        <span className="material-symbols-outlined text-lg mr-2">
+          person_check
+        </span>
         {t("cv.management.premiumServices.getReview")}
-      </button>
+      </Button>
 
       {/* Footer */}
       <p className="text-xs opacity-75 text-center mt-4">

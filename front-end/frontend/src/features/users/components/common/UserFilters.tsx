@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import {
   USERS_LIST_ROLE_VALUES,
@@ -88,18 +89,12 @@ export const UserFilters: React.FC<UserFiltersProps> = ({
 
       {/* Action Buttons */}
       <div className="flex gap-3 pt-4">
-        <button
-          onClick={handleApply}
-          className="flex-1 px-4 py-2 bg-primary hover:bg-green-600 text-white font-bold rounded-lg transition-colors"
-        >
+        <Button onClick={handleApply} className="flex-1">
           {t("filters.applyFilter")}
-        </button>
-        <button
-          onClick={handleReset}
-          className="flex-1 px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 font-bold rounded-lg transition-colors"
-        >
+        </Button>
+        <Button onClick={handleReset} variant="outline" className="flex-1">
           {t("filters.resetFilter")}
-        </button>
+        </Button>
       </div>
     </div>
   );

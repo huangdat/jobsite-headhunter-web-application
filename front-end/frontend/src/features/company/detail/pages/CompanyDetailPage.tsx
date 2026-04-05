@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Display, SmallText } from "@/shared/components/typography/Typography";
 import { useCompanyDetail } from "../hooks/useCompanyDetail";
 import { CompanyHeader } from "../components/CompanyHeader";
@@ -31,14 +32,11 @@ export function CompanyDetailPage() {
         <Display className="text-red-500">
           {error || t("business.strength.no_data")}
         </Display>
-        <button
-          onClick={() => navigate(-1)}
-          className="px-6 py-2 bg-slate-900 hover:bg-slate-800 rounded-xl text-white transition cursor-pointer"
-        >
+        <Button onClick={() => navigate(-1)}>
           <SmallText weight="bold" className="text-white">
             {t("business.form.back")}
           </SmallText>
-        </button>
+        </Button>
       </div>
     );
   }
@@ -46,15 +44,12 @@ export function CompanyDetailPage() {
   return (
     <div className="min-h-screen bg-slate-50 py-10">
       <div className="max-w-4xl mx-auto px-4">
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-6 text-slate-500 hover:text-brand-primary transition cursor-pointer flex items-center gap-2 group"
-        >
-          <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6">
+          <ChevronLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
           <SmallText weight="bold" className="text-inherit">
             {t("business.form.back")}
           </SmallText>
-        </button>
+        </Button>
 
         <CompanyHeader company={company} />
 

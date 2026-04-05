@@ -1,5 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
 import type {
   ClassificationGroupData,
   ClassificationOverviewStats,
@@ -63,12 +64,9 @@ export const UserClassificationOverview: React.FC<
             <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
           </div>
           {onRetry && (
-            <button
-              onClick={onRetry}
-              className="inline-block px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm font-medium"
-            >
+            <Button variant="destructive" onClick={onRetry}>
               {t("common.tryAgain")}
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -213,4 +211,3 @@ export const UserClassificationOverview: React.FC<
     </div>
   );
 };
-

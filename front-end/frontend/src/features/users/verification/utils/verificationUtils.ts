@@ -7,6 +7,7 @@ import {
   VerificationStatus,
   DocumentStatus,
 } from "../types/verification.types";
+import { getStatusBadgeClass } from "@/lib/design-tokens";
 
 /**
  * Format verification status for UI display (returns i18n key)
@@ -28,20 +29,20 @@ export const getVerificationStatusKey = (
 
 /**
  * Get status badge color/styling class for verification
+ * Uses design tokens for consistent theming with dark mode support
  */
 export const getVerificationStatusColor = (
   status: VerificationStatus
 ): string => {
-  switch (status) {
-    case VerificationStatus.PENDING:
-      return "bg-amber-100 text-amber-700 border-amber-200";
-    case VerificationStatus.APPROVED:
-      return "bg-green-100 text-green-700 border-green-200";
-    case VerificationStatus.REJECTED:
-      return "bg-red-100 text-red-700 border-red-200";
-    default:
-      return "bg-slate-100 text-slate-700 border-slate-200";
-  }
+  // Map verification statuses to application status names matching design tokens
+  const statusMap: Record<string, string> = {
+    [VerificationStatus.PENDING]: "SUBMITTED",
+    [VerificationStatus.APPROVED]: "PASSED",
+    [VerificationStatus.REJECTED]: "REJECTED",
+  };
+
+  const mappedStatus = statusMap[status] || "DEFAULT";
+  return getStatusBadgeClass(mappedStatus);
 };
 
 /**
@@ -86,12 +87,14 @@ export const getComplianceLevel = (score: number): string => {
 };
 
 /**
- * Get compliance score color
+ * Get compliance score color based on score
+ * Uses design tokens for semantic meaning:
+ * High (>=80): Success/emerald, Medium (>=50): Warning/amber, Low: Danger/red
  */
 export const getComplianceLevelColor = (score: number): string => {
-  if (score >= 80) return "text-green-600";
-  if (score >= 50) return "text-amber-600";
-  return "text-red-600";
+  if (score >= 80) return "text-emerald-600 dark:text-emerald-400";
+  if (score >= 50) return "text-amber-600 dark:text-amber-400";
+  return "text-red-600 dark:text-red-400";
 };
 
 /**

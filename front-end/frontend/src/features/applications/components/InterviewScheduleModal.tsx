@@ -110,13 +110,15 @@ export const InterviewScheduleModal = ({
                 {t("applications.interview.title") || "Schedule Interview"}
               </Display>
             </div>
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               aria-label={t("common.close")}
               onClick={onClose}
-              className="text-black/40 hover:text-black transition-colors cursor-pointer p-1"
+              className="text-black/40 hover:text-black"
             >
               <X size={24} />
-            </button>
+            </Button>
           </div>
         </DialogHeader>
 

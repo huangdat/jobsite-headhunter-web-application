@@ -9,7 +9,7 @@ import {
   Mail,
   LogOut,
 } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
@@ -284,20 +284,10 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
 
               {/* Buttons */}
               <div className="flex gap-3 justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
-                >
+                <Button variant="outline" onClick={handleClose}>
                   {t("buttons.cancel")}
-                </button>
-                <button
-                  type="submit"
-                  disabled={!canProceed}
-                  className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
-                >
-                  {t("buttons.next")}
-                </button>
+                </Button>
+                <Button disabled={!canProceed}>{t("buttons.next")}</Button>
               </div>
             </form>
           </div>
@@ -344,24 +334,19 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               </div>
 
               <div className="flex gap-3 justify-end">
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
                   onClick={() => {
                     setOtherReasonText("");
                     setReason("");
                     setStep("form");
                   }}
-                  className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
                 >
                   {t("lock.back")}
-                </button>
-                <button
-                  type="submit"
-                  disabled={otherReasonText.trim() === ""}
-                  className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
-                >
+                </Button>
+                <Button disabled={otherReasonText.trim() === ""}>
                   {t("buttons.next")}
-                </button>
+                </Button>
               </div>
             </form>
           </div>
@@ -462,21 +447,17 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
 
             {/* Buttons */}
             <div className="flex gap-3 justify-end">
-              <button
+              <Button
+                variant="outline"
                 onClick={() => setStep("form")}
                 disabled={loading}
-                className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition font-medium"
               >
                 {t("lock.back")}
-              </button>
-              <button
-                onClick={handleConfirmLock}
-                disabled={loading}
-                className="px-6 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-700 disabled:bg-amber-400 transition font-medium flex items-center gap-2"
-              >
-                {loading && <Loader className="w-4 h-4 animate-spin" />}
+              </Button>
+              <Button onClick={handleConfirmLock} disabled={loading}>
+                {loading && <Loader className="w-4 h-4 animate-spin mr-2" />}
                 {loading ? t("lock.processing") : t("lock.confirmAction")}
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -495,12 +476,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               {t("lock.successDescription")}
             </p>
 
-            <button
-              onClick={handleClose}
-              className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
-            >
-              {t("lock.close")}
-            </button>
+            <Button onClick={handleClose}>{t("lock.close")}</Button>
           </div>
         )}
 
@@ -519,18 +495,12 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
             </p>
 
             <div className="flex gap-3 justify-center">
-              <button
-                onClick={() => setStep("form")}
-                className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
-              >
+              <Button variant="outline" onClick={() => setStep("form")}>
                 {t("lock.tryAgain")}
-              </button>
-              <button
-                onClick={handleClose}
-                className="px-6 py-2 rounded-lg bg-gray-700 dark:bg-gray-600 text-white hover:bg-gray-800 dark:hover:bg-gray-700 transition font-medium"
-              >
+              </Button>
+              <Button variant="outline" onClick={handleClose}>
                 {t("lock.close")}
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -550,12 +520,9 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                 : t("lock.errorInsufficientPermissionDescription")}
             </p>
 
-            <button
-              onClick={handleClose}
-              className="px-6 py-2 rounded-lg bg-gray-700 dark:bg-gray-600 text-white hover:bg-gray-800 dark:hover:bg-gray-700 transition font-medium"
-            >
+            <Button variant="outline" onClick={handleClose}>
               {t("lock.close")}
-            </button>
+            </Button>
           </div>
         )}
       </div>
@@ -564,4 +531,3 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
 };
 
 export default LockUserModal;
-

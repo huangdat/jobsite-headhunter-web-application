@@ -157,8 +157,18 @@ export interface BusinessProfileState {
     CONSTANTS
    ============================================ */
 
+/**
+ * Verification status colors
+ * @deprecated Use getStatusBadgeClass() from @/lib/design-tokens instead
+ * This constant is kept for backward compatibility but should not be used in new code
+ *
+ * Replaced by design-tokens.ts statusColors which includes dark mode support
+ */
 export const VERIFICATION_STATUS_COLORS: Record<VerificationStatus, string> = {
-  PENDING: "text-amber-600 bg-amber-50 border-amber-200",
-  APPROVED: "text-emerald-600 bg-emerald-50 border-emerald-200",
-  REJECTED: "text-rose-600 bg-rose-50 border-rose-200",
+  PENDING:
+    "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-900/50",
+  APPROVED:
+    "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-900/50",
+  REJECTED:
+    "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-900/50",
 };
