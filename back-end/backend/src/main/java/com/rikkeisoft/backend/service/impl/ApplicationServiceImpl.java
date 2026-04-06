@@ -4,6 +4,7 @@ import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ApplicationStatus;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
+import com.rikkeisoft.backend.enums.Role;
 import com.rikkeisoft.backend.mapper.ApplicationMapper;
 import com.rikkeisoft.backend.model.dto.req.application.ApplicationCreateReq;
 import com.rikkeisoft.backend.model.dto.req.application.ApplicationStatusUpdateReq;
@@ -27,13 +28,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import com.rikkeisoft.backend.component.Translator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
-
 import java.util.Map;
 import java.util.Set;
 import java.time.LocalDateTime;
@@ -55,6 +56,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     ApplicationRepo applicationRepo;
     ApplicationMapper applicationMapper;
     OtpService otpService;
+    Translator translator;
 
     private static final Map<ApplicationStatus, Set<ApplicationStatus>> ALLOWED_TRANSITIONS = Map.of(
             ApplicationStatus.APPLIED,
@@ -184,14 +186,21 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER)
     @Transactional
     public ApplicationDetailResp updateStatus(Long applicationId, ApplicationStatusUpdateReq req) {
         Account currentAccount = accountService.getCurrentAccount();
         Application application = applicationRepo.findById(applicationId)
                 .orElseThrow(() -> new AppException(ErrorCode.APPLICATION_NOT_FOUND));
 
-        checkPermissions(currentAccount, application.getJob());
-        validateStatusTransition(application.getStatus(), req.getStatus());
+        checkUpdateStatusPermission(currentAccount, applicationId);
+
+        // ADMIN can set any status freely; only validate transitions for non-admin roles
+        boolean isAdmin = currentAccount.getRoles() != null
+                && currentAccount.getRoles().contains(Role.ADMIN.name());
+        if (!isAdmin) {
+            validateStatusTransition(application.getStatus(), req.getStatus());
+        }
 
         application.setStatus(req.getStatus());
         applicationRepo.saveAndFlush(application);
@@ -201,10 +210,30 @@ public class ApplicationServiceImpl implements ApplicationService {
         return applicationMapper.toDetailResponse(application);
     }
 
+    private void checkUpdateStatusPermission(Account account, Long applicationId) {
+        Set<String> roles = account.getRoles();
+        boolean isAdmin = roles != null && roles.contains(Role.ADMIN.name());
+        if (isAdmin) {
+            return;
+        }
+
+        boolean isHeadhunter = roles != null && roles.contains(Role.HEADHUNTER.name());
+        if (!isHeadhunter) {
+            throw new AppException(ErrorCode.UNAUTHORIZED_ACTION);
+        }
+
+        boolean isOwnerByApplication = applicationRepo.existsByIdAndJob_Headhunter_Id(applicationId, account.getId());
+        if (!isOwnerByApplication) {
+            throw new AppException(ErrorCode.UNAUTHORIZED_ACTION);
+        }
+    }
+
     private void checkPermissions(Account account, Job job) {
-        boolean isAdmin = account.getRoles().contains("ADMIN");
-        boolean isJobOwner = job.getHeadhunter().getId().equals(account.getId());
-        if (!isAdmin && !isJobOwner) {
+        Set<String> roles = account.getRoles();
+        boolean isAdmin = roles != null && roles.contains(Role.ADMIN.name());
+        boolean isHeadhunter = roles != null && roles.contains(Role.HEADHUNTER.name());
+        boolean isJobOwner = job.getHeadhunter() != null && job.getHeadhunter().getId().equals(account.getId());
+        if (!isAdmin && !(isHeadhunter && isJobOwner)) {
             throw new AppException(ErrorCode.UNAUTHORIZED_ACTION);
         }
     }
@@ -219,19 +248,14 @@ public class ApplicationServiceImpl implements ApplicationService {
     private void sendStatusUpdateEmail(Application application, ApplicationStatus newStatus) {
         try {
             Job job = application.getJob();
+            String subject = translator.toLocale("email.status.update.subject", job.getTitle());
+            String content = translator.toLocale("email.status.update.content",
+                    application.getFullName(), job.getTitle(), newStatus.name());
+
             otpService.sendNormalEmail(SendNormalEmailReq.builder()
                     .email(application.getEmail())
-                    .subject("Cập nhật trạng thái ứng tuyển - " + job.getTitle())
-                    .content("""
-                            Xin chào %s,
-                            Đơn ứng tuyển của bạn cho vị trí "%s" đã được cập nhật.
-                            Trạng thái mới: %s
-
-                            Vui lòng đăng nhập hệ thống để xem chi tiết.
-
-                            Trân trọng,
-                            Đội ngũ tuyển dụng HeadHunt
-                            """.formatted(application.getFullName(), job.getTitle(), newStatus.name()))
+                    .subject(subject)
+                    .content(content)
                     .build());
         } catch (Exception e) {
             log.warn("Failed to send status update email for application {}: {}",
