@@ -150,7 +150,9 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
           // Error State with Selected File
           <div className="space-y-4">
             <div className="flex justify-center">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${getSemanticClass('danger', 'bg', true)}`}>
+              <div
+                className={`w-16 h-16 rounded-2xl flex items-center justify-center ${getSemanticClass("danger", "bg", true)}`}
+              >
                 <span className="material-symbols-outlined text-white text-3xl fill">
                   error
                 </span>
@@ -163,16 +165,22 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
               {t("cv.management.error.fileFormatInvalid")}
             </p>
             {/* File Preview with Error */}
-            <div className={`rounded-lg p-4 mx-auto max-w-sm mt-4 border ${getSemanticClass('danger', 'bg', true)} ${getSemanticClass('danger', 'border', true)}`}>
+            <div
+              className={`rounded-lg p-4 mx-auto max-w-sm mt-4 border ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
+            >
               <div className="flex items-center gap-3">
-                <span className={`material-symbols-outlined text-2xl fill ${getSemanticClass('danger', 'text', true)}`}>
+                <span
+                  className={`material-symbols-outlined text-2xl fill ${getSemanticClass("danger", "text", true)}`}
+                >
                   description
                 </span>
                 <div className="text-left flex-1">
                   <p className="text-sm font-semibold text-slate-900">
                     {selectedFile.name}
                   </p>
-                  <p className={`text-xs font-semibold ${getSemanticClass('danger', 'text', true)}`}>
+                  <p
+                    className={`text-xs font-semibold ${getSemanticClass("danger", "text", true)}`}
+                  >
                     {getFormattedSize(selectedFile.size)} • {displayError}
                     {selectedFile.size} •{" "}
                     {displayError === "validation.fileTooLarge"
@@ -184,7 +192,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                   variant="ghost"
                   size="icon"
                   onClick={() => setSelectedFile(null)}
-                  className={getSemanticClass('danger', 'text', true)}
+                  className={getSemanticClass("danger", "text", true)}
                   title={t("cv.management.validation.clear")}
                   aria-label={t("cv.management.validation.clear")}
                 >
@@ -209,7 +217,9 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
             {/* Icon */}
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 bg-primary-container rounded-2xl flex items-center justify-center">
-                <span className={`material-symbols-outlined text-3xl fill ${getSemanticClass('success', 'icon', true)}`}>
+                <span
+                  className={`material-symbols-outlined text-3xl fill ${getSemanticClass("success", "icon", true)}`}
+                >
                   upload_file
                 </span>
               </div>

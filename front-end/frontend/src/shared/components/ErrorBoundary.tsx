@@ -96,10 +96,16 @@ export class ErrorBoundary extends React.Component<
           >
             <div className="flex justify-center mb-4">
               <div
-                className={cn("p-3 rounded-full", getSemanticClass('danger', 'bg', true))}
+                className={cn(
+                  "p-3 rounded-full",
+                  getSemanticClass("danger", "bg", true)
+                )}
               >
                 <AlertCircle
-                  className={cn("w-8 h-8", getSemanticClass('danger', 'icon', true))}
+                  className={cn(
+                    "w-8 h-8",
+                    getSemanticClass("danger", "icon", true)
+                  )}
                 />
               </div>
             </div>

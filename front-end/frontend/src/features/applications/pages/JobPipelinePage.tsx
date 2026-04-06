@@ -255,7 +255,9 @@ const JobPipelineContent: React.FC<{
                     {new Date(app.appliedAt).toLocaleDateString()}
                   </td>
                   <td className="p-5">
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${getSemanticClass('success', 'bg', true)} ${getSemanticClass('success', 'text', true)}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`}
+                    >
                       {app.status}
                     </span>
                   </td>
