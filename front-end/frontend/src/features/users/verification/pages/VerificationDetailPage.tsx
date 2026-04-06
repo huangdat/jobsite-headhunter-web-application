@@ -23,7 +23,7 @@ import {
   SectionCard,
   ApprovalSuccessBanner,
 } from "../components";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, AlertCircle } from "lucide-react";
 
 export const VerificationDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
