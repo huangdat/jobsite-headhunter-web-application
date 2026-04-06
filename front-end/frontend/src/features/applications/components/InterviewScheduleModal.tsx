@@ -30,6 +30,7 @@ import {
 import { INTERVIEW_TYPE } from "@/shared/types/enums";
 import type { InterviewType, InterviewScheduleFormData } from "../types";
 import { Calendar, Clock, Video, MapPin, FileText, X } from "lucide-react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface InterviewScheduleModalProps {
   isOpen: boolean;
@@ -147,7 +148,7 @@ export const InterviewScheduleModal = ({
                       }}
                     >
                       <FormControl>
-                        <SelectTrigger className="rounded-xl border-slate-100 bg-slate-50 h-11 focus:ring-lime-400 px-4">
+                        <SelectTrigger className="rounded-xl border-slate-100 bg-slate-50 h-11 focus:ring-brand-primary px-4">
                           <SelectValue
                             placeholder={t("applications.interview.selectType")}
                           />
@@ -193,7 +194,7 @@ export const InterviewScheduleModal = ({
                       <FormControl>
                         <Input
                           type="datetime-local"
-                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-lime-400 px-4"
+                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-brand-primary px-4"
                           {...field}
                         />
                       </FormControl>
@@ -221,7 +222,7 @@ export const InterviewScheduleModal = ({
                       <FormControl>
                         <Input
                           type="number"
-                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-lime-400 px-4"
+                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-brand-primary px-4"
                           {...field}
                         />
                       </FormControl>
@@ -253,7 +254,7 @@ export const InterviewScheduleModal = ({
                           placeholder={t(
                             "applications.interview.meetingLinkPlaceholder"
                           )}
-                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-lime-400 px-4"
+                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-brand-primary px-4"
                           {...field}
                         />
                       </FormControl>
@@ -285,7 +286,7 @@ export const InterviewScheduleModal = ({
                           placeholder={t(
                             "applications.interview.locationPlaceholder"
                           )}
-                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-lime-400 px-4"
+                          className="rounded-xl border-slate-100 bg-slate-50 h-11 focus-visible:ring-brand-primary px-4"
                           {...field}
                         />
                       </FormControl>
@@ -313,7 +314,7 @@ export const InterviewScheduleModal = ({
                     <FormControl>
                       <Textarea
                         rows={3}
-                        className="rounded-xl border-slate-100 bg-slate-50 focus-visible:ring-lime-400 resize-none p-4"
+                        className="rounded-xl border-slate-100 bg-slate-50 focus-visible:ring-brand-primary resize-none p-4"
                         {...field}
                       />
                     </FormControl>
@@ -331,7 +332,7 @@ export const InterviewScheduleModal = ({
                   variant="ghost"
                   type="button"
                   onClick={onClose}
-                  className="px-8 border-none hover:bg-red-50 h-12 rounded-xl transition-all text-xs uppercase tracking-widest text-red-500 hover:text-red-600 cursor-pointer"
+                  className={`px-8 border-none h-12 rounded-xl transition-all text-xs uppercase tracking-widest ${getSemanticClass('danger', 'text', true)} hover:${getSemanticClass('danger', 'bg', true)} cursor-pointer`}
                 >
                   {t("common.cancel")}
                 </Button>
