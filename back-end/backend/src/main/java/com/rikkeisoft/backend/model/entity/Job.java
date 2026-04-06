@@ -72,7 +72,7 @@ public class Job {
     @Column(name = "salary_max")
     Double salaryMax;
 
-    boolean negotiable;
+    Boolean negotiable;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -114,5 +114,13 @@ public class Job {
 
     public Boolean isVisible() {
         return visible;
+    }
+
+    public Boolean isFeatured() {
+        return featured;
+    }
+
+    public Boolean isNegotiable() {
+        return negotiable;
     }
 }
