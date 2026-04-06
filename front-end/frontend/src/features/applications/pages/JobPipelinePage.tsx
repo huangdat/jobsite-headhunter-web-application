@@ -18,6 +18,8 @@ import {
   SmallText,
 } from "@/shared/components/typography/Typography";
 import { useAppTranslation, useHeadhunterTranslation } from "@/shared/hooks";
+import { PageSkeleton } from "@/shared/components/states";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { useApplications } from "../hooks";
 import type { ApplicationStatus } from "../types";
 import { APPLICATION_STATUS_LABELS } from "../utils";
@@ -32,17 +34,12 @@ const JobPipelineContent: React.FC<{
 
   const pageSize = 20;
 
-  const {
-    applications,
-    isLoading,
-    error,
-    pagination,
-    fetchApplications,
-  } = useApplications({
-    jobId: jobIdNumber,
-    isCandidateView: false,
-    autoFetch: false,
-  });
+  const { applications, isLoading, error, pagination, fetchApplications } =
+    useApplications({
+      jobId: jobIdNumber,
+      isCandidateView: false,
+      autoFetch: false,
+    });
 
   const allStatusValue = "ALL" as const;
   const [keyword, setKeyword] = useState("");
@@ -70,7 +67,14 @@ const JobPipelineContent: React.FC<{
       status: status === allStatusValue ? undefined : status,
       keyword: debouncedKeyword || undefined,
     });
-  }, [jobIdNumber, page, pageSize, status, debouncedKeyword, fetchApplications]);
+  }, [
+    jobIdNumber,
+    page,
+    pageSize,
+    status,
+    debouncedKeyword,
+    fetchApplications,
+  ]);
 
   const handleResetFilters = () => {
     setKeyword("");
@@ -81,6 +85,26 @@ const JobPipelineContent: React.FC<{
 
   const totalCandidates = pagination.totalElements || applications.length;
   const isInitialLoading = isLoading && applications.length === 0;
+
+  if (isInitialLoading) {
+    return (
+      <PageContainer variant="white" maxWidth="6xl">
+        <PageSkeleton variant="list" count={3} />
+      </PageContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageContainer variant="white" maxWidth="6xl">
+        <ErrorState
+          error={new Error(error)}
+          onRetry={() => window.location.reload()}
+          title={t("applications.errorLoading")}
+        />
+      </PageContainer>
+    );
+  }
 
   return (
     <PageContainer variant="white" maxWidth="6xl">
@@ -255,7 +279,8 @@ const JobPipelineContent: React.FC<{
       {pagination.totalPages > 1 && (
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
           <SmallText variant="muted">
-            {t("common.page")} {pagination.page + 1} {t("common.of")} {pagination.totalPages}
+            {t("common.page")} {pagination.page + 1} {t("common.of")}{" "}
+            {pagination.totalPages}
           </SmallText>
           <div className="flex gap-2">
             <Button
