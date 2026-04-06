@@ -1,12 +1,16 @@
 import { useMemo, type KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import { Badge } from "@/components/ui/badge";
 import type { JobSummary } from "../types";
 import { formatSalary, formatDeadlineDate } from "../utils";
+import { getJobDetail } from "../services/jobsApi";
+import { jobKeys } from "@/shared/utils/queryKeys";
+import { SmallText, Caption } from "@/shared/components/typography/Typography";
 
 interface JobCardProps {
   job: JobSummary & { negotiable?: boolean };
@@ -15,6 +19,7 @@ interface JobCardProps {
 export function JobCard({ job }: JobCardProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const deadlineLabel = useMemo(() => {
     return formatDeadlineDate(job.deadline);
@@ -29,22 +34,34 @@ export function JobCard({ job }: JobCardProps) {
     }
   };
 
+  // P2-7: Prefetch job detail on hover for instant navigation
+  const handleMouseEnter = () => {
+    queryClient.prefetchQuery({
+      queryKey: jobKeys.detail(job.id),
+      queryFn: () => getJobDetail(job.id),
+      staleTime: 1000 * 60 * 10, // Match SEMI_STATIC_DATA_CONFIG
+    });
+  };
+
   return (
     <div
       role="button"
       tabIndex={0}
       onClick={handleNavigate}
       onKeyDown={handleKeyDown}
-      className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none cursor-pointer"
-      aria-label={t("jobs.list.viewJobLabel", { title: job.title })}
+      onMouseEnter={handleMouseEnter}
+      className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none cursor-pointer"
+      aria-label={t("list.viewJobLabel", { title: job.title })}
     >
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+          <SmallText weight="semibold" className="block text-lg">
             {job.title}
-          </h3>
+          </SmallText>
           {job.headhunterName && (
-            <p className="text-sm text-slate-500">{job.headhunterName}</p>
+            <SmallText variant="muted" className="block">
+              {job.headhunterName}
+            </SmallText>
           )}
         </div>
         <Badge variant="secondary" className="uppercase tracking-wide">
@@ -68,17 +85,17 @@ export function JobCard({ job }: JobCardProps) {
         </span>
         {deadlineLabel && (
           <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-800 dark:bg-amber-900/30 dark:text-amber-100">
-            {t("jobs.list.applyBefore")} {deadlineLabel}
+            {t("list.applyBefore")} {deadlineLabel}
           </span>
         )}
       </div>
       <div className="mt-6 flex items-center justify-between">
-        <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
+        <Caption className="uppercase tracking-[0.2em] text-slate-400">
           #{job.jobCode}
-        </span>
-        <span className="text-sm font-semibold text-emerald-600">
-          {t("jobs.list.viewDetails")} →
-        </span>
+        </Caption>
+        <SmallText weight="semibold" className="text-lime-500">
+          {t("list.viewDetails")}
+        </SmallText>
       </div>
     </div>
   );

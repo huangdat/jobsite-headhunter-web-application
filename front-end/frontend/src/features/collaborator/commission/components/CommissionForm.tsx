@@ -5,8 +5,10 @@
  */
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useCommissionManagement } from "../hooks/useCommissionManagement";
-import { useTranslation } from "react-i18next";
+import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getDarkClasses } from "@/lib/theme-classes";
 
 /**
  * CommissionForm Component
@@ -15,7 +17,7 @@ import { useTranslation } from "react-i18next";
  * - Banking Information
  */
 export function CommissionForm() {
-  const { t } = useTranslation("commission");
+  const { t } = useCommissionTranslation();
   const {
     formData,
     saving,
@@ -72,7 +74,7 @@ export function CommissionForm() {
   if (!formData) {
     return (
       <div className="flex items-center justify-center h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-primary"></div>
       </div>
     );
   }
@@ -89,13 +91,14 @@ export function CommissionForm() {
             <div>
               <h3 className="font-medium text-red-900">{t("errors.title")}</h3>
               <p className="text-sm text-red-700 mt-1">{error}</p>
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={clearError}
-                className="mt-2 text-sm font-medium text-red-600 hover:text-red-700 underline"
+                className="mt-2 text-red-600 hover:text-red-700 px-0 underline"
               >
                 {t("button.dismiss")}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -103,13 +106,13 @@ export function CommissionForm() {
 
       {/* Success Alert */}
       {success && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
+        <div className="p-4 bg-brand-primary/10 border border-brand-primary/30 rounded-lg">
           <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-emerald-600">
+            <span className="material-symbols-outlined text-brand-primary">
               check_circle
             </span>
             <div>
-              <p className="font-medium text-emerald-900">
+              <p className="font-medium text-black">
                 {t("success.profileUpdated")}
               </p>
             </div>
@@ -142,10 +145,10 @@ export function CommissionForm() {
               type="text"
               value={formData.fullName}
               onChange={(e) => updateField("fullName", e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.fullName
-                  ? "border-red-300 bg-red-50"
-                  : "border-slate-300 bg-white"
+                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  : ""
               }`}
               placeholder={t("form.placeholder.fullName")}
             />
@@ -170,10 +173,10 @@ export function CommissionForm() {
               type="tel"
               value={formData.phoneNumber}
               onChange={(e) => updateField("phoneNumber", e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.phoneNumber
-                  ? "border-red-300 bg-red-50"
-                  : "border-slate-300 bg-white"
+                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  : ""
               }`}
               placeholder={t("form.placeholder.phoneNumber")}
             />
@@ -211,10 +214,10 @@ export function CommissionForm() {
               type="text"
               value={formData.bankName}
               onChange={(e) => updateField("bankName", e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.bankName
-                  ? "border-red-300 bg-red-50"
-                  : "border-slate-300 bg-white"
+                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  : ""
               }`}
               placeholder={t("form.placeholder.bankName")}
             />
@@ -239,10 +242,10 @@ export function CommissionForm() {
               type="text"
               value={formData.accountNumber}
               onChange={(e) => updateField("accountNumber", e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.accountNumber
-                  ? "border-red-300 bg-red-50"
-                  : "border-slate-300 bg-white"
+                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  : ""
               }`}
               placeholder={t("form.placeholder.accountNumber")}
             />
@@ -267,10 +270,10 @@ export function CommissionForm() {
               type="text"
               value={formData.accountHolderName}
               onChange={(e) => updateField("accountHolderName", e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.accountHolderName
-                  ? "border-red-300 bg-red-50"
-                  : "border-slate-300 bg-white"
+                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  : ""
               }`}
               placeholder={t("form.placeholder.accountHolderName")}
             />
@@ -294,7 +297,7 @@ export function CommissionForm() {
               type="text"
               value={formData.swiftCode || ""}
               onChange={(e) => updateField("swiftCode", e.target.value)}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")}`}
               placeholder={t("form.placeholder.swiftCode")}
             />
             <p className="text-xs text-slate-500 mt-1">
@@ -309,7 +312,7 @@ export function CommissionForm() {
         <button
           type="submit"
           disabled={saving}
-          className="flex items-center gap-2 px-6 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-medium rounded-lg transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
         >
           {saving ? (
             <>

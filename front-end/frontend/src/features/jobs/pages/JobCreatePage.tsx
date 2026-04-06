@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useJobsTranslation } from "@/shared/hooks";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { RichTextEditor } from "@/components/RichTextEditor";
+import { RichTextEditor } from "@/components/RichTextEditor.lazy";
 import { createJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
+import { ChevronLeft } from "lucide-react";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
+import {
+  LabelText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export function JobCreatePage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const navigate = useNavigate();
   const [skills, setSkills] = useState<SkillOption[]>([]);
   const [isLoadingSkills, setIsLoadingSkills] = useState(true);
@@ -61,20 +67,19 @@ export function JobCreatePage() {
   const onSubmit = async (values: JobFormValues) => {
     // Basic client-side validations according to ACs
     if (!values.title || values.title.trim().length === 0) {
-      toast.error(t("validation.titleRequired"));
+      toast.error(t("create.validation.titleRequired"));
       return;
     }
 
     const stripMarkdown = (s = "") =>
       s
         .replace(/<[^>]*>/g, "")
-        // eslint-disable-next-line no-useless-escape
-        .replace(/[*_~`>#\-\[\(\)!]/g, "")
+        .replace(/[*_~`>#\-[()!]/g, "")
         .replace(/\s+/g, " ")
         .trim();
 
     if (!values.description || stripMarkdown(values.description).length === 0) {
-      toast.error(t("validation.descriptionRequired"));
+      toast.error(t("create.validation.descriptionRequired"));
       return;
     }
 
@@ -97,8 +102,7 @@ export function JobCreatePage() {
     const strip = (s = "") =>
       s
         .replace(/<[^>]*>/g, "")
-        // eslint-disable-next-line no-useless-escape
-        .replace(/[*_~`>#\-\[\(\)!]/g, "")
+        .replace(/[*_~`>#\-[()!]/g, "")
         .trim();
     if (
       strip(values.responsibilities).length < 50 ||
@@ -122,8 +126,7 @@ export function JobCreatePage() {
     setIsSubmitting(true);
     try {
       const res = await createJob(values as JobFormValues);
-      console.log("Job creation response:", res);
-      if (res && (res.status === 201 || res.status === 200)) {
+      if (res) {
         toast.success(t("messages.jobCreatedSuccess"));
         reset({
           title: "",
@@ -136,7 +139,7 @@ export function JobCreatePage() {
           postImage: undefined,
           rankLevel: "JUNIOR",
           workingType: "ONSITE",
-          location: t("auth.defaults.location"),
+          location: t("defaults.location"),
           experience: 1,
           salaryMin: 15000000,
           salaryMax: 30000000,
@@ -144,50 +147,69 @@ export function JobCreatePage() {
           currency: "VND",
           quantity: 1,
           deadline: "",
-          workingTime: t("auth.defaults.workingTime"),
+          workingTime: t("defaults.workingTime"),
         });
         setTimeout(() => {
           navigate("/headhunter/jobs");
         }, 500);
       } else {
-        console.error("Unexpected response:", res);
-        toast.error(t("create.failedToCreate"));
+        toast.error(t("create.messages.failedToCreate"));
       }
-    } catch (error) {
-      console.error("Job creation error:", error);
-      toast.error(t("create.failedToCreate"));
+    } catch {
+      toast.error(t("create.messages.failedToCreate"));
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10">
+    <PageContainer variant="white" maxWidth="5xl">
+      <PageHeader
+        variant="bordered"
+        title={t("create.messages.publishJob")}
+        description={t("create.messages.subtitle")}
+        actions={
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate("/home")}
+            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary dark:hover:border-brand-primary hover:bg-brand-primary/10 dark:hover:bg-brand-primary/10 font-bold px-6 h-12 flex gap-2 transition-all cursor-pointer"
+          >
+            <ChevronLeft size={18} className="text-brand-primary" />
+            {t("detail.backToJobs")}
+          </Button>
+        }
+      />
+
       <form
-        className="mt-10 space-y-8 rounded-3xl border border-slate-100 bg-white/80 p-8 shadow-lg dark:border-slate-800 dark:bg-slate-900/70"
+        className="mt-10 space-y-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 shadow-lg dark:shadow-slate-900/30"
         onSubmit={handleSubmit(onSubmit)}
       >
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.jobTitle")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.jobTitle")}
+            </LabelText>
             <Input
-              placeholder={t("create.jobTitlePlaceholder")}
-              {...register("title", { required: t("create.titleRequired") })}
+              placeholder={t("create.placeholders.jobTitle")}
+              {...register("title", {
+                required: t("create.validation.titleRequired"),
+              })}
             />
             {errors.title && (
-              <p className="text-sm text-destructive">{errors.title.message}</p>
+              <SmallText className="text-destructive">
+                {errors.title.message}
+              </SmallText>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.location")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.location")}
+            </LabelText>
             <Input
-              placeholder={t("create.locationPlaceholder")}
+              placeholder={t("create.placeholders.location")}
               {...register("location", {
-                required: t("create.locationRequired"),
+                required: t("create.validation.locationRequired"),
               })}
             />
             {errors.location && (
@@ -197,31 +219,31 @@ export function JobCreatePage() {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.addressDetail")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.addressDetail")}
+            </LabelText>
             <Input
-              placeholder={t("create.addressDetailPlaceholder")}
+              placeholder={t("create.placeholders.addressDetail")}
               {...register("addressDetail", {
-                required: t("create.addressDetailRequired"),
+                required: t("create.validation.addressDetailRequired"),
               })}
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.deadline")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.deadline")}
+            </LabelText>
             <Input type="date" {...register("deadline", { required: true })} />
           </div>
         </section>
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.rankLevel")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.rankLevel")}
+            </LabelText>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20 dark:bg-slate-900"
               {...register("rankLevel", { required: true })}
             >
               <option value="INTERN">Intern</option>
@@ -234,11 +256,11 @@ export function JobCreatePage() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.workingType")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.workingType")}
+            </LabelText>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("workingType", { required: true })}
             >
               <option value="ONSITE">Onsite</option>
@@ -247,9 +269,9 @@ export function JobCreatePage() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.experience")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.experience")}
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -261,9 +283,9 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.quantity")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.quantity")}
+            </LabelText>
             <Input
               type="number"
               min={1}
@@ -274,9 +296,9 @@ export function JobCreatePage() {
 
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.salaryMin")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.salaryMin")}
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -287,9 +309,9 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.salaryMax")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.salaryMax")}
+            </LabelText>
             <Input
               type="number"
               min={0}
@@ -300,11 +322,11 @@ export function JobCreatePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.currency")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.currency")}
+            </LabelText>
             <select
-              className="h-10 w-full rounded-lg border border-input bg-white px-3 text-sm shadow-sm focus-visible:border-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-200 dark:bg-slate-900"
+              className="h-10 w-full rounded-lg border border-input bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 text-sm shadow-sm focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/20"
               {...register("currency", { required: true })}
             >
               <option value="VND">VND</option>
@@ -317,53 +339,52 @@ export function JobCreatePage() {
               id="negotiable"
               {...register("negotiable")}
             />
-            <label htmlFor="negotiable" className="text-sm text-slate-600">
-              {t("create.salaryNegotiable")}
+            <label htmlFor="negotiable" className="text-sm font-medium">
+              {t("create.labels.salaryNegotiable")}
             </label>
           </div>
         </section>
 
         <section className="grid gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.description")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.description")}
+            </LabelText>
             <Controller
               control={control}
               name="description"
-              rules={{ required: t("create.descriptionRequired") }}
+              rules={{ required: t("create.validation.descriptionRequired") }}
               render={({ field }) => (
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("create.descriptionPlaceholder")}
+                  placeholder={t("create.placeholders.description")}
                 />
               )}
             />
             {errors.description && (
-              <p className="text-sm text-destructive">
+              <SmallText className="text-destructive">
                 {errors.description.message}
-              </p>
+              </SmallText>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.responsibilities")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.responsibilities")}
+            </LabelText>
             <Controller
               control={control}
               name="responsibilities"
               rules={{
-                required: t("create.responsibilitiesRequired"),
+                required: t("create.validation.responsibilitiesRequired"),
                 validate: (v) => {
                   const stripped = (v || "")
                     .replace(/<[^>]*>/g, "")
-                    // eslint-disable-next-line no-useless-escape
-                    .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
+                    .replace(/[*_~`>#\-[]()!]/g, "")
                     .trim();
                   return (
                     (v && stripped.length >= 50) ||
-                    t("create.responsibilitiesMinLength")
+                    t("create.validation.responsibilitiesMinLength")
                   );
                 },
               }}
@@ -371,34 +392,33 @@ export function JobCreatePage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("create.responsibilitiesPlaceholder")}
+                  placeholder={t("create.placeholders.responsibilities")}
                 />
               )}
             />
             {errors.responsibilities && (
-              <p className="text-sm text-destructive">
+              <SmallText className="text-destructive">
                 {errors.responsibilities.message}
-              </p>
+              </SmallText>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.requirements")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.requirements")}
+            </LabelText>
             <Controller
               control={control}
               name="requirements"
               rules={{
-                required: t("create.requirementsRequired"),
+                required: t("create.validation.requirementsRequired"),
                 validate: (v) => {
                   const stripped = (v || "")
                     .replace(/<[^>]*>/g, "")
-                    // eslint-disable-next-line no-useless-escape
-                    .replace(/[*_~`>#\-\[\]\(\)!]/g, "")
+                    .replace(/[*_~`>#\-[]()!]/g, "")
                     .trim();
                   return (
                     (v && stripped.length >= 50) ||
-                    t("create.requirementsMinLength")
+                    t("create.validation.requirementsMinLength")
                   );
                 },
               }}
@@ -406,39 +426,39 @@ export function JobCreatePage() {
                 <RichTextEditor
                   value={field.value}
                   onChange={field.onChange}
-                  placeholder={t("create.requirementsPlaceholder")}
+                  placeholder={t("create.placeholders.requirements")}
                 />
               )}
             />
             {errors.requirements && (
-              <p className="text-sm text-destructive">
+              <SmallText className="text-destructive">
                 {errors.requirements.message}
-              </p>
+              </SmallText>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.benefits")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.benefits")}
+            </LabelText>
             <Textarea rows={3} {...register("benefits", { required: true })} />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.workingTime")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.workingTime")}
+            </LabelText>
             <Input {...register("workingTime", { required: true })} />
           </div>
         </section>
 
         <section className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-slate-500">
-              {t("create.requiredSkills")}
-            </label>
+            <LabelText className="block">
+              {t("create.labels.requiredSkills")}
+            </LabelText>
             {errors.skillIds && (
-              <span className="text-xs text-destructive">
-                {t("create.pickAtLeastOneSkill")}
-              </span>
+              <SmallText className="text-destructive">
+                {t("create.messages.pickAtLeastOneSkill")}
+              </SmallText>
             )}
           </div>
           <SkillMultiSelect
@@ -455,21 +475,38 @@ export function JobCreatePage() {
         </section>
 
         <section className="space-y-2">
-          <label className="text-sm font-semibold text-slate-500">
-            {t("create.coverImage")}
-          </label>
+          <LabelText className="block">
+            {t("create.labels.coverImage")}
+          </LabelText>
           <Input type="file" accept="image/*" {...register("postImage")} />
         </section>
 
-        <div className="flex justify-end gap-3">
-          <Button type="button" variant="ghost" onClick={() => reset()}>
-            Clear
+        <div className="flex justify-end items-center gap-3 pt-6">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => reset()}
+            className="rounded-xl font-bold text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-11 px-6 cursor-pointer transition-colors"
+          >
+            {t("edit.buttons.cancel") || "Clear"}
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? t("create.publishingJob") : t("create.publishJob")}
+
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="rounded-xl border border-lime-500 bg-white text-lime-600 hover:bg-lime-50 dark:bg-slate-900 dark:border-lime-500 dark:text-lime-400 dark:hover:bg-lime-500/10 font-bold px-6 h-12 flex items-center justify-center gap-2 transition-all cursor-pointer"
+          >
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                {t("create.messages.publishingJob")}
+              </div>
+            ) : (
+              t("create.messages.publishJob")
+            )}
           </Button>
         </div>
       </form>
-    </div>
+    </PageContainer>
   );
 }

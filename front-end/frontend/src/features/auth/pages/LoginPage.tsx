@@ -6,6 +6,7 @@ import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import { AnimatedCheckbox } from "@/features/auth/components/AnimatedCheckbox";
 import { useLogin } from "@/features/auth/hooks";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import {
   getSocialConfig,
   googleLogin,
@@ -15,6 +16,12 @@ import { toast } from "sonner";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 import type { LoginResult, SocialAuthResponse } from "@/features/auth/types";
+import {
+  Display,
+  SectionTitle,
+  BodyText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -58,6 +65,7 @@ export function LoginPage() {
   const {
     formData,
     errors,
+    generalError,
     isLoading,
     handleSubmit,
     handleChange,
@@ -169,7 +177,7 @@ export function LoginPage() {
     return () => {
       active = false;
     };
-  }, [t]);
+  }, []);
 
   // Handle OAuth callback for Google (hash fragment) and LinkedIn (query params).
   useEffect(() => {
@@ -213,7 +221,7 @@ export function LoginPage() {
       try {
         if (linkedInCode) {
           if (provider !== "linkedin" || linkedInState !== expectedState) {
-            throw new Error(t("auth.messages.invalidLinkedInCallbackState"));
+            throw new Error(t("messages.invalidLinkedInCallbackState"));
           }
 
           setLoadingProvider("linkedin");
@@ -226,7 +234,7 @@ export function LoginPage() {
 
         if (googleIdToken) {
           if (provider !== "google" || googleState !== expectedState) {
-            throw new Error(t("auth.messages.invalidGoogleCallbackState"));
+            throw new Error(t("messages.invalidGoogleCallbackState"));
           }
 
           setLoadingProvider("google");
@@ -282,24 +290,29 @@ export function LoginPage() {
 
   return (
     <AuthLayout ctaButton={{ to: "/select-role", label: t("pages.signup") }}>
-      <div className="w-full max-w-5xl min-h-150 bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
+      <div className="w-full max-w-5xl min-h-150 bg-white dark:bg-slate-900 rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
-          <h1 className="text-5xl font-bold leading-tight">
+          <Display size="md" className="text-white">
+            {" "}
             {t("pages.login.heroTitlePart1")} <br />
             {t("pages.login.heroTitlePart2")}
-          </h1>
+          </Display>
 
-          <p className="text-gray-300 mt-6">{t("pages.login.heroSubtitle")}</p>
+          <BodyText className="text-white mt-6 opacity-90">
+            {t("pages.login.heroSubtitle")}
+          </BodyText>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10">
-          <h2 className="text-3xl font-bold mb-2">
+          <SectionTitle className="mb-2">
             {t("pages.login.welcomeBack")}
-          </h2>
+          </SectionTitle>
 
-          <p className="text-gray-500 mb-8">{t("pages.login.subtitle")}</p>
+          <BodyText variant="muted" className="mb-8">
+            {t("pages.login.subtitle")}
+          </BodyText>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -307,6 +320,16 @@ export function LoginPage() {
             }}
             className="space-y-6"
           >
+            {/* ERROR STATE - Display general login errors */}
+            {generalError && (
+              <ErrorState
+                variant="card"
+                title={t("pages.login.signInFailed")}
+                message={generalError}
+                className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/40"
+              />
+            )}
+
             {/* USERNAME OR EMAIL */}
             <FormField label={t("labels.username")} error={errors.email}>
               <Input
@@ -331,9 +354,11 @@ export function LoginPage() {
                 value={formData.password}
                 onChange={(e) => handleChange("password")(e.target.value)}
                 rightIcon={
-                  <button
+                  <Button
                     type="button"
-                    className="cursor-pointer"
+                    variant="ghost"
+                    size="icon"
+                    className="h-10 w-10"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -341,7 +366,7 @@ export function LoginPage() {
                     ) : (
                       <AiOutlineEye />
                     )}
-                  </button>
+                  </Button>
                 }
               />
             </FormField>
@@ -354,7 +379,10 @@ export function LoginPage() {
                 label={t("pages.login.rememberMe")}
               />
 
-              <Link to="/forgot-password" className="text-lime-500">
+              <Link
+                to="/forgot-password"
+                className="text-brand-primary hover:underline text-lime-500"
+              >
                 {t("pages.login.forgotPasswordLink")}
               </Link>
             </div>
@@ -373,11 +401,11 @@ export function LoginPage() {
 
             {/* DIVIDER */}
             <div className="flex items-center gap-4 my-6">
-              <div className="flex-1 h-px bg-slate-200"></div>
-              <span className="text-sm text-gray-400">
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+              <SmallText variant="muted">
                 {t("pages.login.orContinueWith")}
-              </span>
-              <div className="flex-1 h-px bg-slate-200"></div>
+              </SmallText>
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
             </div>
 
             {/* SOCIAL LOGIN */}
@@ -389,13 +417,16 @@ export function LoginPage() {
               loadingProvider={loadingProvider}
             />
             {/* REGISTER LINK */}
-            <div className="text-center mt-6 text-sm">
-              <span className="text-slate-500">
+            <div className="text-center mt-6">
+              <SmallText variant="muted">
                 {t("pages.login.noAccount")}{" "}
-              </span>
-              <Link to="/select-role" className="text-lime-500 hover:underline">
-                {t("pages.login.registerLink")}
-              </Link>
+                <Link
+                  to="/select-role"
+                  className="text-brand-primary hover:underline"
+                >
+                  {t("pages.login.registerLink")}
+                </Link>
+              </SmallText>
             </div>
           </form>
         </div>

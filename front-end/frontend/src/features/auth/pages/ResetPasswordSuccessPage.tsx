@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
 import { useAuthTranslation } from "@/shared/hooks";
 import { AuthLayout } from "@/shared/components";
+import {
+  Display,
+  SectionTitle,
+  BodyText,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export function ResetPasswordSuccessPage() {
   const { t } = useAuthTranslation();
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: t("auth.pages.login") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <main className="max-w-5xl mx-auto px-4 pt-12">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}
@@ -17,34 +23,34 @@ export function ResetPasswordSuccessPage() {
                 </span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+              <Display size="md" className="mb-6">
                 {t("pages.resetPasswordSuccess.titleLeft")} <br />
                 <span className="text-brand-primary">
                   {t("pages.resetPasswordSuccess.titleHighlight")}
                 </span>
-              </h1>
+              </Display>
 
-              <p className="text-gray-300 text-lg leading-relaxed max-w-sm">
+              <BodyText className="text-gray-300 leading-relaxed max-w-sm">
                 {t("pages.resetPasswordSuccess.subtitleLeft")}
-              </p>
+              </BodyText>
 
               <div className="mt-12 space-y-4">
                 <div className="flex items-center gap-3">
                   <span className="material-symbols-outlined text-green-400">
                     check_circle
                   </span>
-                  <span className="text-sm text-slate-300">
+                  <SmallText className="text-slate-300">
                     {t("pages.resetPasswordSuccess.checkItem1")}
-                  </span>
+                  </SmallText>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <span className="material-symbols-outlined text-brand-primary">
                     shield
                   </span>
-                  <span className="text-sm text-slate-300">
+                  <SmallText className="text-slate-300">
                     {t("pages.resetPasswordSuccess.checkItem2")}
-                  </span>
+                  </SmallText>
                 </div>
               </div>
             </div>
@@ -60,18 +66,20 @@ export function ResetPasswordSuccessPage() {
                   </span>
                 </div>
               </div>
-              <h2 className="text-3xl font-bold mb-4">
+              <SectionTitle className="mb-4">
                 {t("pages.resetPasswordSuccess.title")}
-              </h2>
-              <p className="text-slate-500 dark:text-slate-400 text-lg mb-10 leading-relaxed">
+              </SectionTitle>
+              <BodyText className="mb-10 leading-relaxed">
                 {t("pages.resetPasswordSuccess.subtitle")}
-              </p>
+              </BodyText>
               <Link
                 to="/login"
-                className="success-button-gradient w-full py-4 text-black font-bold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 mb-8"
+                className="success-button-gradient w-full py-4 text-black rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 mb-8"
               >
                 <span className="material-symbols-outlined text-xl">login</span>
-                {t("pages.resetPasswordSuccess.signInButton")}
+                <SmallText weight="bold" className="text-black">
+                  {t("pages.resetPasswordSuccess.signInButton")}
+                </SmallText>
               </Link>
             </div>
           </div>

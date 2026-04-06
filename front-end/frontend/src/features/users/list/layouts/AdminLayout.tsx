@@ -28,14 +28,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const isRouteActive = (route: string): boolean => {
     const pathname = window.location.pathname;
 
-    if (route === "/users") {
-      // Only active on /users or /users?... (not on child routes like /users/classification or /users/:id)
-      return pathname === "/users" || !!pathname.match(/^\/users\?/);
+    if (route === "/admin/users") {
+      // Only active on /admin/users or /admin/users?... (not on child routes)
+      return pathname === "/admin/users" || !!pathname.match(/^\/admin\/users\?/);
     }
 
-    if (route === "/users/classification") {
-      // Active on /users/classification exactly
-      return pathname === "/users/classification";
+    if (route === "/admin/users/classification") {
+      // Active on /admin/users/classification exactly
+      return pathname === "/admin/users/classification";
     }
 
     // Default exact match

@@ -8,8 +8,9 @@ import {
   Mail,
   KeyRound,
 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
 export interface UnlockUserModalProps {
   isOpen: boolean;
@@ -44,7 +45,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
   onConfirm,
 }) => {
   const { t } = useUsersTranslation();
-  const { t: tCommon } = useTranslation("auth");
+  const { t: tCommon } = useAppTranslation();
   const [step, setStep] = useState<ModalStep>("form");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<UnlockResult | null>(null);
@@ -185,19 +186,16 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
 
               {/* Buttons */}
               <div className="flex gap-3 justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
                   onClick={handleClose}
-                  className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
                 >
                   {t("unlock.cancel")}
-                </button>
-                <button
-                  type="submit"
-                  className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
-                >
+                </Button>
+                <Button>
                   {t("unlock.next")}
-                </button>
+                </Button>
+                
               </div>
             </form>
           </div>
@@ -286,21 +284,20 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
 
             {/* Buttons */}
             <div className="flex gap-3 justify-end">
-              <button
+              <Button
+                variant="outline"
                 onClick={() => setStep("form")}
                 disabled={loading}
-                className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition font-medium"
               >
-                {t("unlock.back")}
-              </button>
-              <button
+                {t("buttons.back")}
+              </Button>
+              <Button
                 onClick={handleConfirmUnlock}
                 disabled={loading}
-                className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:bg-green-400 transition font-medium flex items-center gap-2"
               >
-                {loading && <Loader className="w-4 h-4 animate-spin" />}
+                {loading && <Loader className="w-4 h-4 animate-spin mr-2" />}
                 {loading ? t("unlock.processing") : t("unlock.confirmAction")}
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -319,12 +316,11 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
               {t("unlock.successDescription")}
             </p>
 
-            <button
+            <Button
               onClick={handleClose}
-              className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium"
             >
               {t("unlock.close")}
-            </button>
+            </Button>
           </div>
         )}
 
@@ -343,18 +339,18 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
             </p>
 
             <div className="flex gap-3 justify-center">
-              <button
+              <Button
+                variant="outline"
                 onClick={() => setStep("form")}
-                className="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition font-medium"
               >
                 {t("unlock.tryAgain")}
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="outline"
                 onClick={handleClose}
-                className="px-6 py-2 rounded-lg bg-gray-700 dark:bg-gray-600 text-white hover:bg-gray-800 dark:hover:bg-gray-700 transition font-medium"
               >
                 {t("unlock.close")}
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -364,3 +360,4 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
 };
 
 export default UnlockUserModal;
+

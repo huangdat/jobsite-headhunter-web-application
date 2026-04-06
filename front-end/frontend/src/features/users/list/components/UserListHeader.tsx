@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import { FilterBadge } from "./FilterBadge";
 
@@ -40,28 +41,32 @@ export const UserListHeader: React.FC<UserListHeaderProps> = ({
           <h2 className="text-xl font-bold">{t("list.pageTitle")}</h2>
         </div>
         <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
+          <Button variant="ghost" size="sm" className="p-2 relative">
             <span className="material-symbols-outlined text-slate-600 dark:text-slate-400">
               notifications
             </span>
-            <span className="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-white dark:border-background-dark"></span>
-          </button>
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+            <span className="absolute top-2 right-2 size-2 bg-brand-primary rounded-full border-2 border-white dark:border-background-dark"></span>
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2 px-3 py-1.5"
+          >
             <span className="material-symbols-outlined text-sm">help</span>
             <span className="text-sm font-medium">
               {t("list.documentation")}
             </span>
-          </button>
+          </Button>
           <div className="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
-          <button
+          <Button
             onClick={onAddUserClick}
-            className="bg-primary hover:bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2 text-sm font-bold transition-all shadow-sm"
+            className="bg-brand-primary hover:bg-brand-hover text-white px-4 py-2 flex items-center gap-2 text-sm font-bold"
           >
             <span className="material-symbols-outlined text-lg">
               person_add
             </span>
             {t("list.addUserButton")}
-          </button>
+          </Button>
         </div>
       </header>
 

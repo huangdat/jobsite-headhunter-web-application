@@ -1,7 +1,6 @@
-import { apiClient } from "@/shared/utils/axios";
+import { apiCall, apiPost, apiGet, apiPut } from "@/shared/api/apiWrapper";
 import { API_ENDPOINTS } from "@/lib/constants";
 import type {
-  ApiResponse,
   LoginRequest,
   LoginResult,
   ValidateTokenRequest,
@@ -22,34 +21,55 @@ import type {
   SocialRegisterRequest,
 } from "@/features/auth/types";
 
-export const login = async (data: LoginRequest) => {
-  const res = await apiClient.post<ApiResponse<LoginResult>>(
-    API_ENDPOINTS.AUTH.LOGIN,
-    data
-  );
+/**
+ * Authentication Service
+ * Handles login, registration, OTP verification, and password reset
+ */
 
-  return res.data.result;
+/**
+ * Login with email and password
+ * POST /api/auth/login
+ */
+export const login = async (data: LoginRequest): Promise<LoginResult> => {
+  return apiPost<LoginResult>(API_ENDPOINTS.AUTH.LOGIN, data, {
+    service: "auth",
+    action: "login",
+  });
 };
 
-export const validateToken = async (data: ValidateTokenRequest) => {
-  const res = await apiClient.post<ApiResponse<ValidateTokenResult>>(
-    API_ENDPOINTS.AUTH.VALIDATE_TOKEN,
-    data
-  );
-
-  return res.data.result;
+/**
+ * Validate authentication token
+ * POST /api/auth/validate-token
+ */
+export const validateToken = async (
+  data: ValidateTokenRequest
+): Promise<ValidateTokenResult> => {
+  return apiPost<ValidateTokenResult>(API_ENDPOINTS.AUTH.VALIDATE_TOKEN, data, {
+    service: "auth",
+    action: "validateToken",
+    silent: true, // Don't show error toast for validation calls
+  });
 };
 
-export const logout = async (data: LogoutRequest) => {
-  const res = await apiClient.post<ApiResponse<void>>(
-    API_ENDPOINTS.AUTH.LOGOUT,
-    data
-  );
-
-  return res.data.result;
+/**
+ * Logout user
+ * POST /api/auth/logout
+ */
+export const logout = async (data: LogoutRequest): Promise<void> => {
+  return apiPost<void>(API_ENDPOINTS.AUTH.LOGOUT, data, {
+    service: "auth",
+    action: "logout",
+  });
 };
 
-export const register = async (data: RegisterFormData) => {
+/**
+ * Register new user account
+ * Supports multiple roles: candidate, collaborator, headhunter
+ * POST /api/account/signup/{role}
+ */
+export const register = async (
+  data: RegisterFormData
+): Promise<AccountResp> => {
   // Create FormData instead of sending JSON
   const formData = new FormData();
 
@@ -76,19 +96,14 @@ export const register = async (data: RegisterFormData) => {
   if (data.role === "headhunter") {
     endpoint = API_ENDPOINTS.ACCOUNT.SIGNUP_HEADHUNTER;
     formData.append("taxCode", data.taxCode);
-    // companyName and addressMain are NOT sent — backend derives them from the taxCode MST lookup
-    // Optional headhunter fields
     if (data.websiteUrl) formData.append("websiteUrl", data.websiteUrl);
     if (data.companyScale) formData.append("companyScale", data.companyScale);
   } else if (data.role === "collaborator") {
     endpoint = API_ENDPOINTS.ACCOUNT.SIGNUP_COLLABORATOR;
-
-    // Optional collaborator fields
     if (data.commissionRate !== undefined) {
       formData.append("commissionRate", data.commissionRate.toString());
     }
   } else if (data.role === "candidate") {
-    // Optional candidate fields
     if (data.currentTitle) formData.append("currentTitle", data.currentTitle);
     if (data.yearsOfExperience !== undefined) {
       formData.append("yearsOfExperience", data.yearsOfExperience.toString());
@@ -106,116 +121,199 @@ export const register = async (data: RegisterFormData) => {
     }
   }
 
-  // Send to correct endpoint with FormData
-  const res = await apiClient.post<ApiResponse<AccountResp>>(
+  return apiCall<AccountResp>({
     endpoint,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-
-  return res.data.result;
+    method: "post",
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    context: { service: "auth", action: "register" },
+  });
 };
 
-export const changePassword = async (data: ChangePasswordFormData) => {
+/**
+ * Change password for authenticated user
+ * PUT /api/account/change-password
+ */
+export const changePassword = async (
+  data: ChangePasswordFormData
+): Promise<string> => {
   const payload = {
     oldPassword: data.currentPassword,
     newPassword: data.newPassword,
     reNewPassword: data.confirmPassword,
   };
 
-  const res = await apiClient.put<ApiResponse<string>>(
-    API_ENDPOINTS.ACCOUNT.CHANGE_PASSWORD,
-    payload
-  );
-
-  return res.data.result;
+  return apiPut<string>(API_ENDPOINTS.ACCOUNT.CHANGE_PASSWORD, payload, {
+    service: "auth",
+    action: "changePassword",
+  });
 };
 
-// OTP Functions
-export const sendOtpSignup = async (data: SendOtpRequest) => {
-  const res = await apiClient.post<ApiResponse<OtpSendResp>>(
-    API_ENDPOINTS.OTP.SEND_SIGNUP,
-    data
-  );
-
-  return res.data.result;
+/**
+ * Get authenticated user's profile information
+ * GET /api/account/profile
+ */
+export const getMyInfo = async (): Promise<AccountResp> => {
+  return apiGet<AccountResp>(API_ENDPOINTS.ACCOUNT.GET_PROFILE, undefined, {
+    service: "auth",
+    action: "getMyInfo",
+  });
 };
 
-export const verifyOtpSignup = async (data: VerifyOtpRequest) => {
-  const res = await apiClient.post<ApiResponse<OtpVerifyResp>>(
-    API_ENDPOINTS.OTP.VERIFY_SIGNUP,
-    data
-  );
+/**
+ * OTP Functions
+ */
 
-  return res.data.result;
+/**
+ * Send OTP for signup
+ * POST /api/otp/send/signup
+ */
+export const sendOtpSignup = async (
+  data: SendOtpRequest
+): Promise<OtpSendResp> => {
+  return apiPost<OtpSendResp>(API_ENDPOINTS.OTP.SEND_SIGNUP, data, {
+    service: "auth",
+    action: "sendOtpSignup",
+  });
 };
 
-export const sendOtpForgotPassword = async (data: SendOtpRequest) => {
-  const res = await apiClient.post<ApiResponse<OtpSendResp>>(
-    API_ENDPOINTS.OTP.SEND_FORGOT_PASSWORD,
-    data
-  );
-
-  return res.data.result;
+/**
+ * Verify OTP for signup
+ * POST /api/otp/verify/signup
+ */
+export const verifyOtpSignup = async (
+  data: VerifyOtpRequest
+): Promise<OtpVerifyResp> => {
+  return apiPost<OtpVerifyResp>(API_ENDPOINTS.OTP.VERIFY_SIGNUP, data, {
+    service: "auth",
+    action: "verifyOtpSignup",
+  });
 };
 
+/**
+ * Send OTP for forgot password
+ * POST /api/otp/send/forgot-password
+ */
+export const sendOtpForgotPassword = async (
+  data: SendOtpRequest
+): Promise<OtpSendResp> => {
+  return apiPost<OtpSendResp>(API_ENDPOINTS.OTP.SEND_FORGOT_PASSWORD, data, {
+    service: "auth",
+    action: "sendOtpForgotPassword",
+  });
+};
+
+/**
+ * Verify OTP and reset password
+ * POST /api/otp/verify/reset-password
+ */
 export const verifyAndResetPassword = async (
   data: VerifyOtpAndResetPasswordRequest
-) => {
-  const res = await apiClient.post<ApiResponse<OtpVerifyAndResetPasswordResp>>(
+): Promise<OtpVerifyAndResetPasswordResp> => {
+  return apiPost<OtpVerifyAndResetPasswordResp>(
     API_ENDPOINTS.OTP.VERIFY_AND_RESET,
-    data
+    data,
+    {
+      service: "auth",
+      action: "verifyAndResetPassword",
+    }
   );
-
-  return res.data.result;
 };
-// API for social login (Google, LinkedIn)
-export const getSocialConfig = async () => {
-  const res = await apiClient.get<ApiResponse<Record<string, string>>>(
-    API_ENDPOINTS.AUTH.SOCIAL_CONFIG
+
+/**
+ * Social Authentication Functions
+ */
+
+/**
+ * Get social login configuration
+ * GET /api/auth/social/config
+ */
+export const getSocialConfig = async (): Promise<Record<string, string>> => {
+  return apiGet<Record<string, string>>(
+    API_ENDPOINTS.AUTH.SOCIAL_CONFIG,
+    undefined,
+    {
+      service: "auth",
+      action: "getSocialConfig",
+    }
   );
-  return res.data.result;
 };
 
-export const googleLogin = async (data: GoogleTokenRequest) => {
-  const res = await apiClient.post<
-    ApiResponse<LoginResult | SocialAuthResponse>
-  >(API_ENDPOINTS.AUTH.GOOGLE_LOGIN, data);
-  return res.data.result;
-};
-
-export const linkedinLogin = async (data: LinkedInTokenRequest) => {
-  const res = await apiClient.post<
-    ApiResponse<LoginResult | SocialAuthResponse>
-  >(API_ENDPOINTS.AUTH.LINKEDIN_LOGIN, data);
-  return res.data.result;
-};
-
-export const registerSocial = async (data: SocialRegisterRequest) => {
-  const res = await apiClient.post<ApiResponse<LoginResult>>(
-    API_ENDPOINTS.AUTH.REGISTER_SOCIAL,
-    data
+/**
+ * Google login
+ * POST /api/auth/google/login
+ */
+export const googleLogin = async (
+  data: GoogleTokenRequest
+): Promise<LoginResult | SocialAuthResponse> => {
+  return apiPost<LoginResult | SocialAuthResponse>(
+    API_ENDPOINTS.AUTH.GOOGLE_LOGIN,
+    data,
+    {
+      service: "auth",
+      action: "googleLogin",
+    }
   );
-  return res.data.result;
 };
 
-// Check if email or username already exists
+/**
+ * LinkedIn login
+ * POST /api/auth/linkedin/login
+ */
+export const linkedinLogin = async (
+  data: LinkedInTokenRequest
+): Promise<LoginResult | SocialAuthResponse> => {
+  return apiPost<LoginResult | SocialAuthResponse>(
+    API_ENDPOINTS.AUTH.LINKEDIN_LOGIN,
+    data,
+    {
+      service: "auth",
+      action: "linkedinLogin",
+    }
+  );
+};
+
+/**
+ * Social account registration
+ * POST /api/auth/social/register
+ */
+export const registerSocial = async (
+  data: SocialRegisterRequest
+): Promise<LoginResult> => {
+  return apiPost<LoginResult>(API_ENDPOINTS.AUTH.REGISTER_SOCIAL, data, {
+    service: "auth",
+    action: "registerSocial",
+  });
+};
+
+/**
+ * Check if email or username already exists
+ * POST /api/auth/check-email-username?email={email}&username={username}
+ *
+ * @param email - Email address to check (optional)
+ * @param username - Username to check (optional)
+ * @returns true if exists, false if not exists
+ */
 export const checkEmailUsernameExist = async (
   email?: string,
   username?: string
 ): Promise<boolean> => {
-  const params = new URLSearchParams();
-  if (email) params.append("email", email);
-  if (username) params.append("username", username);
+  const queryParams: Record<string, string> = {};
+  if (email) queryParams.email = email;
+  if (username) queryParams.username = username;
 
-  // Replace post method instead of get to match backend api design
-  const res = await apiClient.post<ApiResponse<boolean>>(
-    `${API_ENDPOINTS.AUTH.CHECK_EMAIL_USERNAME}?${params.toString()}`
+  return apiPost<boolean>(
+    API_ENDPOINTS.AUTH.CHECK_EMAIL_USERNAME,
+    undefined,
+    {
+      service: "auth",
+      action: "checkEmailUsernameExist",
+      silent: true, // Don't show error toast for validation calls
+    },
+    {
+      params: queryParams,
+    }
   );
-
-  return res.data.result;
 };

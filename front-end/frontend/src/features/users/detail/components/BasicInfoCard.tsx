@@ -90,7 +90,7 @@ const BasicInfoCard: React.FC<BasicInfoCardProps> = ({ user }) => {
               value={user.biography}
               readOnly
               disabled
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-900 cursor-not-allowed h-24 resize-none"
+              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-slate-50 cursor-not-allowed h-24 resize-none"
             />
           </div>
         )}

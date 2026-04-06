@@ -9,6 +9,7 @@ import {
 } from "@/features/users/list/components";
 import { UserFilters } from "@/features/users/components/common/UserFilters";
 import { useUsers } from "@/features/users/list/hooks/useUsers";
+import { PageContainer } from "@/shared/components/layout";
 
 interface UserListPageProps {
   onAddNewUser?: () => void;
@@ -107,7 +108,7 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
   };
 
   return (
-    <main className="flex-1 flex flex-col overflow-hidden bg-background-light dark:bg-background-dark">
+    <PageContainer variant="default" maxWidth="7xl">
       {/* Header with inline filters */}
       <UserListHeader
         searchValue={searchValue}
@@ -158,7 +159,7 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
       />
 
       {/* Content Area */}
-      <div className="flex-1 overflow-auto px-6 pb-6 pt-6">
+      <div className="mt-6">
         {error && (
           <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
             <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
@@ -200,7 +201,7 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
           </>
         )}
       </div>
-    </main>
+    </PageContainer>
   );
 };
 

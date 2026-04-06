@@ -1,0 +1,183 @@
+{
+  "verification": {
+    "title": "Xác Minh Doanh Nghiệp",
+    "subtitle": "Quản lý và xác minh các hồ sơ doanh nghiệp",
+
+    "status": {
+      "pending": "Chờ Xác Minh",
+      "approved": "Đã Duyệt",
+      "rejected": "Bị Từ Chối"
+    },
+
+    "pages": {
+      "list": {
+        "title": "Xác Minh Doanh Nghiệp",
+        "subtitle": "Xem xét và quản lý các yêu cầu xác minh doanh nghiệp",
+        "search": "Tìm kiếm theo tên công ty hoặc mã số thuế...",
+        "filter": "Lọc",
+        "noResults": "Không có yêu cầu xác minh nào",
+        "noResultsDescription": "Tất cả các hồ sơ doanh nghiệp đều được cập nhật!"
+      },
+      "detail": {
+        "title": "Chi Tiết Xác Minh",
+        "back": "Quay Lại Xác Minh",
+        "tabs": {
+          "overview": "Tổng Quan",
+          "documents": "Tài Liệu",
+          "timeline": "Dòng Thời Gian",
+          "checklist": "Danh Sách Kiểm Tra"
+        }
+      }
+    },
+
+    "cards": {
+      "stats": {
+        "pending": "Chờ Xác Minh",
+        "approved": "Đã Duyệt",
+        "completionRate": "Tỷ Lệ Hoàn Thành"
+      },
+      "queueItem": {
+        "submitted": "Được Gửi",
+        "submittedBy": "bởi {{name}}"
+      },
+      "approvalDetails": {
+        "officer": "Cán Bộ Xác Minh",
+        "score": "Điểm Tuân Thủ",
+        "automatedActions": "Hành Động Tự Động",
+        "whatNext": "Bước Tiếp Theo?"
+      },
+      "businessInfo": {
+        "identity": "Danh Tính Công Ty",
+        "operations": "Hoạt Động & Liên Hệ",
+        "documents": "Tài Liệu"
+      }
+    },
+
+    "fields": {
+      "companyName": "Tên Công Ty",
+      "taxId": "Mã Số Thuế",
+      "email": "Email",
+      "phone": "Điện Thoại",
+      "website": "Trang Web",
+      "industry": "Ngành Nghề",
+      "employeeCount": "Số Lượng Nhân Viên",
+      "yearEstablished": "Năm Thành Lập",
+      "description": "Mô Tả Công Ty",
+      "address": "Địa Chỉ",
+      "city": "Thành Phố",
+      "state": "Tỉnh/Thành Phố",
+      "postalCode": "Mã Bưu Điện",
+      "country": "Quốc Gia",
+      "submittedAt": "Được Gửi Lúc",
+      "submittedBy": "Được Gửi Bởi",
+      "approvedAt": "Được Duyệt Lúc",
+      "approvedBy": "Được Duyệt Bởi",
+      "rejectedAt": "Bị Từ Chối Lúc",
+      "rejectionReason": "Lý Do Từ Chối",
+      "complianceScore": "Điểm Tuân Thủ",
+      "notes": "Ghi Chú"
+    },
+
+    "documents": {
+      "title": "Tài Liệu",
+      "count": "{{count}} tài liệu",
+      "status": {
+        "verified": "Đã Xác Minh",
+        "locked": "Bị Khóa",
+        "pending": "Chờ Xử Lý"
+      },
+      "download": "Tải Xuống",
+      "viewDetails": "Xem Chi Tiết",
+      "uploadedAt": "Tải Lên {{date}}"
+    },
+
+    "timeline": {
+      "title": "Vòng Đời Phê Duyệt",
+      "submitted": "Được Gửi",
+      "reviewed": "Được Xem Xét",
+      "approved": "Được Duyệt",
+      "rejected": "Bị Từ Chối",
+      "by": "bởi {{actor}}"
+    },
+
+    "checklist": {
+      "title": "Danh Sách Kiểm Tra Xác Minh",
+      "progress": "{{completed}} trên {{total}} hoàn thành",
+      "item": {
+        "completed": "Hoàn Thành",
+        "pending": "Chờ Xử Lý"
+      }
+    },
+
+    "buttons": {
+      "approve": "Duyệt",
+      "reject": "Từ Chối",
+      "cancel": "Hủy",
+      "confirm": "Xác Nhận",
+      "next": "Ứng Dụng Tiếp Theo",
+      "viewLog": "Xem Nhật Ký",
+      "download": "Tải Xuống"
+    },
+
+    "modal": {
+      "reject": {
+        "title": "Từ Chối Xác Minh Doanh Nghiệp",
+        "warning": "⚠️ Cảnh Báo",
+        "warningText": "Doanh nghiệp sẽ bị khóa nộp lại trong 7 ngày. Hãy chắc chắn bạn có lý do chính đáng trước khi từ chối.",
+        "reason": "Lý Do Từ Chối",
+        "reasonPlaceholder": "Cung cấp lý do rõ ràng cho việc từ chối...",
+        "reasonHint": "Tối thiểu 20 ký tự, tối đa 500",
+        "quickReasons": "Lý do nhanh:",
+        "submit": "Xác Nhận Từ Chối",
+        "reasonRequired": "Vui lòng cung cấp lý do từ chối",
+        "reasonMinLength": "Lý do phải có ít nhất 20 ký tự",
+        "reasonMaxLength": "Lý do không được vượt quá 500 ký tự"
+      }
+    },
+
+    "approval": {
+      "success": "✓ Doanh Nghiệp Đã Được Xác Minh",
+      "successMessage": "Hồ sơ doanh nghiệp đã được phê duyệt thành công và hiện đã hoạt động.",
+      "dismissible": true
+    },
+
+    "compliance": {
+      "high": "Tuân Thủ Cao",
+      "medium": "Tuân Thủ Trung Bình",
+      "low": "Tuân Thủ Thấp",
+      "score": "{{score}}% Điểm Tuân Thủ"
+    },
+
+    "recentEvents": {
+      "title": "Hoạt Động Gần Đây",
+      "empty": "Không có hoạt động gần đây",
+      "actions": {
+        "approved": "Được Duyệt",
+        "rejected": "Bị Từ Chối",
+        "submitted": "Được Gửi"
+      }
+    },
+
+    "errors": {
+      "fetchFailed": "Không thể tải các xác minh",
+      "loadDetailFailed": "Không thể tải chi tiết xác minh",
+      "approvalFailed": "Không thể phê duyệt xác minh",
+      "rejectionFailed": "Không thể từ chối xác minh",
+      "noVerificationSelected": "Không có xác minh được chọn",
+      "notFound": "Không tìm thấy xác minh",
+      "unauthorized": "Bạn không có quyền truy cập xác minh này"
+    },
+
+    "success": {
+      "approvalSuccess": "Xác minh đã được phê duyệt thành công",
+      "rejectionSuccess": "Xác minh đã bị từ chối thành công"
+    },
+
+    "emptyState": {
+      "title": "Không Có Xác Minh Chờ",
+      "description": "Tất cả các hồ sơ doanh nghiệp đều được cập nhật. Hãy quay lại sau để xem các nộp mới.",
+      "viewApproved": "Xem Đã Duyệt",
+      "viewRejected": "Xem Bị Từ Chối"
+    }
+  }
+}

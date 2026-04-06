@@ -1,4 +1,6 @@
 import React from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
+import { LabelText, Caption } from "./typography/Typography";
 
 interface FormFieldProps {
   label: string;
@@ -15,19 +17,18 @@ export const FormField: React.FC<FormFieldProps> = ({
 }) => {
   return (
     <div className="mb-2">
-      <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-        {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
-      </label>
+      <LabelText required={required}>{label}</LabelText>
 
       {children}
 
       {error && (
-        <div className="flex items-center gap-1 text-red-500">
+        <div
+          className={`flex items-center gap-1 ${getSemanticClass("danger", "text", true)}`}
+        >
           <span className="material-symbols-outlined text-[calc(12px)]!">
             error
           </span>
-          <p className="text-xs font-medium">{error}</p>
+          <Caption variant="error">{error}</Caption>
         </div>
       )}
     </div>

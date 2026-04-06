@@ -1,269 +1,404 @@
-import { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { getMyJobs, toggleJobStatus, deleteJobSoft } from "../services/jobsApi";
+import {
+  useJobsTranslation,
+  useMyJobsQuery,
+  useToggleJobStatusMutation,
+  useDeleteJobMutation,
+} from "@/shared/hooks";
+import { SmallText } from "@/shared/components/typography/Typography";
 import type { JobSummary } from "../types";
-import { useAuth } from "@/features/auth/context/useAuth";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { CandidateInstantSearch } from "@/features/headhunter/candidates/components/CandidateInstantSearch";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  Plus,
+  Edit3,
+  Users,
+  Eye,
+  EyeOff,
+  Lock,
+  Unlock,
+  MapPin,
+  Building2,
+  Calendar,
+  Briefcase,
+  AlertTriangle,
+} from "lucide-react";
+
+const getErrorMessage = (err: Error, fallback: string): string => {
+  const apiError = err as unknown as {
+    response?: { data?: { message?: string } };
+  };
+  return apiError?.response?.data?.message || err?.message || fallback;
+};
 
 export function JobManagePage() {
-  const { t } = useTranslation("jobs");
-  const [jobs, setJobs] = useState<JobSummary[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [processingId, setProcessingId] = useState<number | null>(null);
-  const { user } = useAuth();
+  const { t } = useJobsTranslation();
   const navigate = useNavigate();
 
-  console.log("[JobManagePage] Current user:", user);
+  const { data: response, isLoading, refetch } = useMyJobsQuery(1, 50);
+  const jobs = response?.data ?? [];
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      console.log("[JobManagePage] Loading with user ID:", user?.id);
-      const res = await getMyJobs(1, 50);
-      console.log("My jobs response:", res);
-      setJobs(res.data ?? res);
-    } catch (err) {
-      console.error("Error loading my jobs:", err);
-      toast.error(t("jobs.messages.unableToLoadYourJobs"));
-    } finally {
-      setLoading(false);
-    }
-  }, [t, user?.id]);
+  const toggleJobStatusMutation = useToggleJobStatusMutation();
+  const deleteJobMutation = useDeleteJobMutation();
 
-  useEffect(() => {
-    // Load jobs after `user` is available so returned jobs include headhunter-specific fields
-    if (user?.id) void load();
-  }, [user?.id, load]);
+  // State cho Deadline Dialog
+  const [deadlineDialogOpen, setDeadlineDialogOpen] = useState(false);
+
+  // State cho Close Confirmation Dialog
+  const [closeDialogOpen, setCloseDialogOpen] = useState(false);
+
+  const [dialogJob, setDialogJob] = useState<JobSummary | null>(null);
+  const [dialogDeadline, setDialogDeadline] = useState<string>("");
 
   const handleEdit = (id: number) => navigate(`/headhunter/jobs/${id}/edit`);
 
-  const handleOpen = async (job: JobSummary) => {
-    // open modal instead of prompt
+  // Mở Dialog chọn Deadline (để Re-open job)
+  const handleOpen = (job: JobSummary) => {
     setDialogJob(job);
     setDialogDeadline(job.deadline ?? "");
     setDeadlineDialogOpen(true);
   };
 
-  const handleClose = async (job: JobSummary) => {
-    if (!confirm(t("jobs.messages.closeJobConfirm"))) return;
-    setProcessingId(job.id);
-    try {
-      await toggleJobStatus(job.id);
-      toast.success(t("jobs.messages.jobClosed"));
-      await load();
-    } catch (err) {
-      console.error("Failed to close job:", err);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const e: any = err;
-      const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || t("jobs.messages.failedToCloseJob"));
-    } finally {
-      setProcessingId(null);
-    }
+  // Thay vì confirm(), giờ ta mở Dialog xác nhận đóng job
+  const handleCloseTrigger = (job: JobSummary) => {
+    setDialogJob(job);
+    setCloseDialogOpen(true);
   };
 
-  // Dialog state and handlers
-  const [deadlineDialogOpen, setDeadlineDialogOpen] = useState(false);
-  const [dialogJob, setDialogJob] = useState<JobSummary | null>(null);
-  const [dialogDeadline, setDialogDeadline] = useState<string>("");
-
-  const confirmOpenFromDialog = async () => {
+  const confirmCloseJob = () => {
     if (!dialogJob) return;
-    setProcessingId(dialogJob.id);
-    try {
-      if (!dialogDeadline) {
-        alert(t("jobs.messages.pleaseChooseDeadline"));
-        return;
+
+    toggleJobStatusMutation.mutate(
+      { jobId: dialogJob.id },
+      {
+        onSuccess: () => {
+          toast.success(t("messages.jobClosed"));
+          setCloseDialogOpen(false);
+          setDialogJob(null);
+          refetch();
+        },
+        onError: (err: Error) =>
+          toast.error(getErrorMessage(err, t("messages.failedToCloseJob"))),
       }
-      const parsed = new Date(dialogDeadline);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (isNaN(parsed.getTime()) || parsed <= today) {
-        alert(t("jobs.messages.invalidDeadlineMessage"));
-        return;
-      }
-      await toggleJobStatus(dialogJob.id, dialogDeadline);
-      toast.success(t("jobs.messages.jobOpened"));
-      setDeadlineDialogOpen(false);
-      setDialogJob(null);
-      await load();
-    } catch (err) {
-      console.error("Failed to open job:", err);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const e: any = err;
-      const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || t("jobs.messages.failedToOpenJob"));
-    } finally {
-      setProcessingId(null);
-    }
+    );
   };
 
-  const handleHide = async (id: number) => {
-    if (!confirm(t("jobs.messages.toggleVisibilityConfirm"))) return;
-    setProcessingId(id);
-    try {
-      await deleteJobSoft(id);
-      toast.success(t("jobs.messages.jobVisibilityToggled"));
-      await load();
-    } catch (err) {
-      console.error("Failed to change visibility:", err);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const e: any = err;
-      const msg = e?.response?.data?.message || e?.message;
-      toast.error(msg || t("jobs.messages.failedToChangeVisibility"));
-    } finally {
-      setProcessingId(null);
+  const confirmOpenFromDialog = () => {
+    if (!dialogJob || !dialogDeadline) {
+      alert(t("messages.pleaseChooseDeadline"));
+      return;
     }
+    const parsed = new Date(dialogDeadline);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (isNaN(parsed.getTime()) || parsed <= today) {
+      alert(t("messages.invalidDeadlineMessage"));
+      return;
+    }
+    toggleJobStatusMutation.mutate(
+      { jobId: dialogJob.id, deadline: dialogDeadline },
+      {
+        onSuccess: () => {
+          toast.success(t("messages.jobOpened"));
+          setDeadlineDialogOpen(false);
+          setDialogJob(null);
+          refetch();
+        },
+        onError: (err: Error) =>
+          toast.error(getErrorMessage(err, t("messages.failedToOpenJob"))),
+      }
+    );
   };
 
-  if (loading) return <div className="p-8">{t("jobs.manage.loadingJobs")}</div>;
+  const handleHide = (id: number) => {
+    if (!confirm(t("messages.toggleVisibilityConfirm"))) return;
+    deleteJobMutation.mutate(id, {
+      onSuccess: () => {
+        toast.success(t("messages.jobVisibilityToggled"));
+        refetch();
+      },
+      onError: (err: Error) =>
+        toast.error(
+          getErrorMessage(err, t("messages.failedToChangeVisibility"))
+        ),
+    });
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (refetch) refetch();
+  }, [refetch]);
+
+  if (isLoading)
+    return (
+      <PageContainer variant="white" maxWidth="7xl">
+        <div className="flex justify-center items-center min-h-100">
+          <SmallText variant="muted" weight="bold" className="animate-pulse">
+            {t("manage.loadingJobs")}
+          </SmallText>
+        </div>
+      </PageContainer>
+    );
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold">{t("jobs.manage.pageTitle")}</h2>
-        <Button onClick={() => navigate("/headhunter/jobs/new")}>
-          {t("jobs.manage.createNewButton")}
-        </Button>
+    <PageContainer variant="white" maxWidth="7xl">
+      <PageHeader
+        variant="default"
+        title={t("manage.pageTitle")}
+        description={`${t("common.total")}: ${jobs.length}`}
+        actions={
+          <button
+            onClick={() => navigate("/headhunter/jobs/new")}
+            className="bg-slate-700 cursor-pointer hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 text-white font-bold px-6 py-6 rounded-2xl shadow-lg shadow-slate-700/30 transition-all active:scale-95 flex items-center gap-2"
+          >
+            <Plus size={20} />
+            <SmallText className="text-white">
+              {t("manage.createNewButton")}
+            </SmallText>
+          </button>
+        }
+      />
+
+      <div className="mt-6">
+        <CandidateInstantSearch />
       </div>
 
       {jobs.length === 0 ? (
-        <div>{t("jobs.manage.noJobsYet")}</div>
+        <Card className="p-20 text-center border-dashed border-2 bg-transparent dark:bg-slate-900/50 dark:border-slate-700 rounded-3xl">
+          <div className="text-slate-400 dark:text-slate-500 mb-4 flex justify-center">
+            <Briefcase size={48} />
+          </div>
+          <SmallText
+            weight="bold"
+            className="text-slate-500 dark:text-slate-400"
+          >
+            {t("manage.noJobsYet")}
+          </SmallText>
+        </Card>
       ) : (
-        <div className="space-y-4">
+        <div className="grid gap-5">
           {jobs.map((job) => (
             <div
               key={job.id}
-              className="flex items-center justify-between rounded-lg border p-4"
+              className="group flex flex-col lg:flex-row lg:items-center justify-between rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm dark:shadow-slate-900/20 transition-all duration-300 hover:border-slate-400 dark:hover:border-slate-600 hover:shadow-md hover:shadow-slate-500/10"
             >
-              <div>
-                <div className="flex items-center gap-3">
-                  <div className="text-lg font-medium">{job.title}</div>
-                  {/* Visibility badge */}
-                  <div
-                    className={`text-xs px-2 py-0.5 rounded ${job.visible === false ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
-                  >
-                    {job.visible === false
-                      ? t("jobs.manage.hidden")
-                      : t("jobs.manage.visible")}
+              <div className="flex gap-4 items-center">
+                <div className="w-14 h-14 bg-slate-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:bg-slate-500/10 group-hover:text-slate-600 dark:group-hover:text-slate-400 transition-colors shrink-0 border border-slate-100 dark:border-slate-700">
+                  <Building2 size={28} />
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white group-hover:text-slate-900 dark:group-hover:text-slate-100 transition-colors">
+                      {job.title}
+                    </h3>
+                    <div
+                      className={`flex items-center gap-1.5 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${
+                        job.visible === false
+                          ? "bg-slate-100 text-slate-500 border-slate-200"
+                          : "bg-brand-primary/20 text-brand-primary border-brand-primary/30 font-bold"
+                      }`}
+                    >
+                      {job.visible === false ? (
+                        <EyeOff size={12} />
+                      ) : (
+                        <Eye size={12} />
+                      )}
+                      {job.visible === false
+                        ? t("manage.hidden")
+                        : t("manage.visible")}
+                    </div>
+                    <div
+                      className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${job.status === "CLOSED" ? "bg-red-50 text-red-600 border-red-100" : "bg-emerald-50 text-emerald-600 border-emerald-100"}`}
+                    >
+                      {job.status}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center gap-1.5">
+                      <MapPin size={14} className="text-lime-500" />
+                      {job.location}
+                    </div>
+                    {job.deadline && (
+                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border border-red-100">
+                        <Calendar size={14} />
+                        <SmallText className="text-[12px]">
+                          {job.deadline}
+                        </SmallText>
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className="text-sm text-slate-500">
-                  {job.companyName ?? ""} • {job.location}
-                </div>
-                <div className="text-sm text-slate-400">
-                  {t("jobs.manage.statusDeadline", {
-                    status: job.status,
-                    deadline: job.deadline ?? "—",
-                  })}
-                </div>
               </div>
-              <div className="flex items-center gap-2">
-                {((user &&
-                  (user.role?.toString().toLowerCase() === "headhunter" ||
-                    user.role?.toString().toLowerCase() === "admin")) ||
-                  user?.id === job.headhunterId) && (
-                  <>
+
+              <div className="flex flex-wrap items-center gap-2 mt-6 lg:mt-0 pt-6 lg:pt-0 border-t lg:border-t-0 border-slate-100 dark:border-slate-700">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex gap-1.5 cursor-pointer"
+                  onClick={() => handleEdit(job.id)}
+                >
+                  <Edit3 size={16} />
+                  <SmallText className="text-inherit">
+                    {t("manage.editButton")}
+                  </SmallText>
+                </Button>
+
+                <Button
+                  size="sm"
+                  className="bg-slate-900 dark:bg-slate-700 text-white hover:bg-slate-800 dark:hover:bg-slate-600 cursor-pointer rounded-xl font-bold flex gap-1.5 px-4 transition-all active:scale-95"
+                  onClick={() =>
+                    navigate(`/headhunter/jobs/${job.id}/applications`)
+                  }
+                >
+                  <Users size={16} />
+                  <SmallText className="text-white">
+                    {t("manage.viewCandidates")}
+                  </SmallText>
+                </Button>
+
+                <div className="flex items-center bg-slate-50 dark:bg-slate-700/50 rounded-xl p-1 gap-1 border border-slate-100 dark:border-slate-700">
+                  {job.status !== "OPEN" && (
                     <Button
                       size="sm"
-                      variant="ghost"
-                      onClick={() => handleEdit(job.id)}
+                      onClick={() => handleOpen(job)}
+                      disabled={toggleJobStatusMutation.isPending}
+                      className="bg-lime-500 text-white hover:bg-lime-600 cursor-pointer rounded-lg shadow-sm font-black h-8 text-[11px] px-3"
                     >
-                      {t("jobs.manage.editButton")}
+                      <Unlock size={14} className="mr-1" />
+                      {t("manage.openButton")}
                     </Button>
-                    <div
-                      className="inline-flex rounded-md shadow-sm"
-                      role="group"
-                    >
-                      {job.status !== "OPEN" && (
-                        <Button
-                          size="sm"
-                          onClick={() => handleOpen(job)}
-                          disabled={processingId === job.id}
-                          className="bg-emerald-500 text-white hover:bg-emerald-600"
-                        >
-                          {processingId === job.id
-                            ? t("jobs.manage.updatingButton")
-                            : t("jobs.manage.openButton")}
-                        </Button>
-                      )}
-                      {job.status !== "CLOSED" && (
-                        <Button
-                          size="sm"
-                          onClick={() => handleClose(job)}
-                          disabled={processingId === job.id}
-                          className="bg-red-500 text-white hover:bg-red-600"
-                        >
-                          {processingId === job.id
-                            ? t("jobs.manage.updatingButton")
-                            : t("jobs.manage.closeButton")}
-                        </Button>
-                      )}
-                    </div>
+                  )}
+                  {job.status !== "CLOSED" && (
                     <Button
                       size="sm"
-                      variant="destructive"
-                      onClick={() => handleHide(job.id)}
-                      disabled={processingId === job.id}
-                      title={
-                        job.visible === false
-                          ? t("jobs.manage.currentlyHidden")
-                          : t("jobs.manage.currentlyVisible")
-                      }
+                      onClick={() => handleCloseTrigger(job)}
+                      disabled={toggleJobStatusMutation.isPending}
+                      className="bg-white dark:bg-slate-800 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg cursor-pointer border border-red-100 dark:border-red-800 font-black h-8 text-[11px] px-3"
                     >
-                      {processingId === job.id
-                        ? t("jobs.manage.updatingButton")
-                        : job.visible === false
-                          ? t("jobs.manage.unhideButton")
-                          : t("jobs.manage.hideButton")}
+                      <Lock size={14} className="mr-1" />
+                      {t("manage.closeButton")}
                     </Button>
-                  </>
-                )}
+                  )}
+                </div>
+
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleHide(job.id)}
+                  disabled={deleteJobMutation.isPending}
+                  className={`rounded-xl cursor-pointer font-bold h-9 w-9 p-0 transition-colors ${job.visible === false ? "text-lime-500 hover:bg-lime-500/10" : "text-slate-300 dark:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700"}`}
+                >
+                  {job.visible === false ? (
+                    <Eye size={18} />
+                  ) : (
+                    <EyeOff size={18} />
+                  )}
+                </Button>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Deadline modal for opening a job */}
       <Dialog open={deadlineDialogOpen} onOpenChange={setDeadlineDialogOpen}>
-        <DialogContent>
-          <DialogTitle>{t("jobs.manage.setNewDeadlineTitle")}</DialogTitle>
-          <DialogDescription>
-            {t("jobs.manage.setNewDeadlineDescription")}
-          </DialogDescription>
-          <div className="mt-2">
-            <Input
-              type="date"
-              value={dialogDeadline}
-              onChange={(e) => setDialogDeadline(e.target.value)}
-            />
+        <DialogContent className="rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white dark:bg-slate-800 max-w-[400px] [&>button]:right-8 [&>button]:top-8 [&>button]:cursor-pointer [&>button]:hover:bg-transparent [&>button]:dark:hover:bg-transparent [&>button]:focus:ring-0 [&>button]:outline-none">
+          <div className="bg-lime-500 p-8 pt-10 text-white">
+            <DialogTitle className="text-2xl font-black">
+              {t("manage.setNewDeadlineTitle")}
+            </DialogTitle>
+            <DialogDescription className="font-medium text-white/90 mt-1">
+              {t("manage.setNewDeadlineDescription")}
+            </DialogDescription>
           </div>
-          <DialogFooter>
-            <DialogClose>
-              <Button variant="outline">{t("jobs.manage.cancelButton")}</Button>
-            </DialogClose>
-            <Button
-              onClick={confirmOpenFromDialog}
-              disabled={processingId === dialogJob?.id}
-            >
-              {t("jobs.manage.confirmButton")}
-            </Button>
-          </DialogFooter>
+
+          <div className="p-8 space-y-6 bg-white dark:bg-slate-800">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">
+                {t("applications.interview.scheduledAt")}
+              </label>
+              <Input
+                type="date"
+                className="rounded-2xl border-slate-200 dark:border-slate-700 dark:bg-slate-900 focus:ring-lime-500 focus:border-lime-500 h-14 font-bold text-slate-700 dark:text-white"
+                value={dialogDeadline}
+                onChange={(e) => setDialogDeadline(e.target.value)}
+              />
+            </div>
+
+            <div className="flex gap-3 pt-2 bg-white dark:bg-slate-800">
+              <Button
+                variant="ghost"
+                className="flex-1 rounded-2xl font-bold h-12 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-all cursor-pointer"
+                onClick={() => setDeadlineDialogOpen(false)}
+              >
+                {t("manage.cancelButton")}
+              </Button>
+
+              <Button
+                className="flex-1 bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 rounded-2xl h-12 font-bold transition-all active:scale-95 cursor-pointer border border-slate-300 dark:border-slate-600 shadow-sm shadow-slate-700/10"
+                onClick={confirmOpenFromDialog}
+                disabled={toggleJobStatusMutation.isPending}
+              >
+                {t("manage.confirmButton")}
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
-    </div>
+
+      <Dialog open={closeDialogOpen} onOpenChange={setCloseDialogOpen}>
+        <DialogContent
+          className="rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden 
+        bg-white dark:bg-slate-800 max-w-[400px] [&>button]:right-8 [&>button]:top-8 
+        [&>button]:cursor-pointer [&>button]:hover:bg-transparent [&>button]:dark:hover:bg-transparent 
+        c[&>button]:focus:ring-0 [&>button]:outline-none"
+        >
+          <div className="p-8 pt-10 flex flex-col items-center text-center">
+            <div className="bg-red-50 dark:bg-red-500/10 p-4 rounded-full mb-6">
+              <AlertTriangle size={40} className="text-red-500" />
+            </div>
+
+            <DialogTitle className="text-2xl font-black text-slate-900 dark:text-white">
+              {t("messages.closeJobConfirm")}
+            </DialogTitle>
+
+            <DialogDescription className="font-medium text-slate-500 dark:text-slate-400 mt-3 px-4">
+              {t("messages.closeJobWarning")}
+            </DialogDescription>
+          </div>
+
+          <div className="px-8 pb-10 pt-2 bg-white dark:bg-slate-800">
+            <div className="flex gap-3 w-full">
+              <Button
+                variant="ghost"
+                className="flex-1 rounded-2xl font-bold h-12 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 cursor-pointer"
+                onClick={() => setCloseDialogOpen(false)}
+              >
+                {t("manage.cancelButton")}
+              </Button>
+              <Button
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl h-12 font-bold shadow-lg shadow-red-500/25 transition-all active:scale-95 cursor-pointer"
+                onClick={confirmCloseJob}
+                disabled={toggleJobStatusMutation.isPending}
+              >
+                {t("manage.confirmButton")}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </PageContainer>
   );
 }
 

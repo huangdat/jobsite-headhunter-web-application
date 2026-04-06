@@ -1,0 +1,183 @@
+{
+  "verification": {
+    "title": "Business Verification",
+    "subtitle": "Manage and verify business profiles",
+
+    "status": {
+      "pending": "Pending Verification",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+
+    "pages": {
+      "list": {
+        "title": "Business Verifications",
+        "subtitle": "Review and manage pending business verification requests",
+        "search": "Search by company name or tax ID...",
+        "filter": "Filter",
+        "noResults": "No pending verifications",
+        "noResultsDescription": "All business profiles are up to date!"
+      },
+      "detail": {
+        "title": "Verification Details",
+        "back": "Back to Verifications",
+        "tabs": {
+          "overview": "Overview",
+          "documents": "Documents",
+          "timeline": "Timeline",
+          "checklist": "Checklist"
+        }
+      }
+    },
+
+    "cards": {
+      "stats": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "completionRate": "Completion Rate"
+      },
+      "queueItem": {
+        "submitted": "Submitted",
+        "submittedBy": "by {{name}}"
+      },
+      "approvalDetails": {
+        "officer": "Verification Officer",
+        "score": "Compliance Score",
+        "automatedActions": "Automated Actions",
+        "whatNext": "What's Next?"
+      },
+      "businessInfo": {
+        "identity": "Company Identity",
+        "operations": "Operations & Contacts",
+        "documents": "Documents"
+      }
+    },
+
+    "fields": {
+      "companyName": "Company Name",
+      "taxId": "Tax ID",
+      "email": "Email",
+      "phone": "Phone",
+      "website": "Website",
+      "industry": "Industry",
+      "employeeCount": "Number of Employees",
+      "yearEstablished": "Year Established",
+      "description": "Company Description",
+      "address": "Address",
+      "city": "City",
+      "state": "State/Province",
+      "postalCode": "Postal Code",
+      "country": "Country",
+      "submittedAt": "Submitted At",
+      "submittedBy": "Submitted By",
+      "approvedAt": "Approved At",
+      "approvedBy": "Approved By",
+      "rejectedAt": "Rejected At",
+      "rejectionReason": "Rejection Reason",
+      "complianceScore": "Compliance Score",
+      "notes": "Notes"
+    },
+
+    "documents": {
+      "title": "Documents",
+      "count": "{{count}} documents",
+      "status": {
+        "verified": "Verified",
+        "locked": "Locked",
+        "pending": "Pending"
+      },
+      "download": "Download",
+      "viewDetails": "View Details",
+      "uploadedAt": "Uploaded {{date}}"
+    },
+
+    "timeline": {
+      "title": "Approval Lifecycle",
+      "submitted": "Submitted",
+      "reviewed": "Reviewed",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "by": "by {{actor}}"
+    },
+
+    "checklist": {
+      "title": "Verification Checklist",
+      "progress": "{{completed}} of {{total}} completed",
+      "item": {
+        "completed": "Completed",
+        "pending": "Pending"
+      }
+    },
+
+    "buttons": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "next": "Next Application",
+      "viewLog": "View Log",
+      "download": "Download"
+    },
+
+    "modal": {
+      "reject": {
+        "title": "Reject Business Verification",
+        "warning": "⚠️ Warning",
+        "warningText": "The business will be locked out from reapplying for 7 days. Make sure you have valid reasons before rejecting.",
+        "reason": "Rejection Reason",
+        "reasonPlaceholder": "Provide a clear reason for rejection...",
+        "reasonHint": "Min 20 characters, max 500",
+        "quickReasons": "Quick reasons:",
+        "submit": "Confirm Rejection",
+        "reasonRequired": "Please provide a rejection reason",
+        "reasonMinLength": "Reason must be at least 20 characters",
+        "reasonMaxLength": "Reason must not exceed 500 characters"
+      }
+    },
+
+    "approval": {
+      "success": "✓ Business Verified",
+      "successMessage": "The business profile has been successfully approved and is now active.",
+      "dismissible": true
+    },
+
+    "compliance": {
+      "high": "High Compliance",
+      "medium": "Medium Compliance",
+      "low": "Low Compliance",
+      "score": "{{score}}% Compliance Score"
+    },
+
+    "recentEvents": {
+      "title": "Recent Activity",
+      "empty": "No recent activity",
+      "actions": {
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "submitted": "Submitted"
+      }
+    },
+
+    "errors": {
+      "fetchFailed": "Failed to load verifications",
+      "loadDetailFailed": "Failed to load verification details",
+      "approvalFailed": "Failed to approve verification",
+      "rejectionFailed": "Failed to reject verification",
+      "noVerificationSelected": "No verification selected",
+      "notFound": "Verification not found",
+      "unauthorized": "You don't have permission to access this verification"
+    },
+
+    "success": {
+      "approvalSuccess": "Verification approved successfully",
+      "rejectionSuccess": "Verification rejected successfully"
+    },
+
+    "emptyState": {
+      "title": "No Pending Verifications",
+      "description": "All business profiles are up to date. Check back later for new submissions.",
+      "viewApproved": "View Approved",
+      "viewRejected": "View Rejected"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
 import type { ClassificationGroupBy } from "@/features/users/classification/types/classification.types";
 import { groupingConfigs } from "@/features/users/classification/utils/groupingConfig";
 
@@ -43,9 +44,10 @@ export const UserClassificationHeader: React.FC<
             {t("classification.groupBy")}
           </span>
           <div className="relative">
-            <button
+            <Button
+              variant="ghost"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center gap-2 text-slate-900 dark:text-white font-semibold cursor-pointer hover:text-primary transition-colors"
+              className="flex items-center gap-2"
             >
               <span className="material-symbols-outlined text-primary text-lg">
                 filter_list
@@ -57,19 +59,20 @@ export const UserClassificationHeader: React.FC<
               <span className="material-symbols-outlined text-slate-400 text-lg">
                 expand_more
               </span>
-            </button>
+            </Button>
 
             {/* Dropdown Menu */}
             {isDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50">
                 {groupByOptions.map((option) => (
-                  <button
+                  <Button
                     key={option}
+                    variant="ghost"
                     onClick={() => {
                       onGroupByChange(option);
                       setIsDropdownOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-3 flex items-center gap-3 border-b border-slate-100 dark:border-slate-700 last:border-b-0 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors ${
+                    className={`w-full justify-start px-4 py-3 flex items-center gap-3 border-b border-slate-100 dark:border-slate-700 last:border-b-0 rounded-none ${
                       groupBy === option
                         ? "bg-primary/10 dark:bg-primary/20 text-primary"
                         : "text-slate-700 dark:text-slate-300"
@@ -92,7 +95,7 @@ export const UserClassificationHeader: React.FC<
                         {t(groupingConfigs[option]?.description || "")}
                       </p>
                     </div>
-                  </button>
+                  </Button>
                 ))}
               </div>
             )}
@@ -128,26 +131,28 @@ export const UserClassificationHeader: React.FC<
       {/* Action Buttons */}
       <div className="flex gap-2">
         {onExpandAll && (
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={onExpandAll}
-            className="px-3 py-1.5 rounded-lg text-xs font-bold bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
             title={t("classification.expandAll")}
           >
             <span className="material-symbols-outlined text-sm">
               unfold_more
             </span>
-          </button>
+          </Button>
         )}
         {onCollapseAll && (
-          <button
+          <Button
+            variant="outline"
+            size="sm"
             onClick={onCollapseAll}
-            className="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
             title={t("classification.collapseAll")}
           >
             <span className="material-symbols-outlined text-sm">
               unfold_less
             </span>
-          </button>
+          </Button>
         )}
       </div>
     </div>

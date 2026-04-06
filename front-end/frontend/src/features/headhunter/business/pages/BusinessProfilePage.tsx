@@ -1,272 +1,140 @@
-import React, { useEffect, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import type { VerificationStatus as VerificationStatusType } from "../types/business.types";
-import { useBusinessVerification } from "../hooks/useBusinessVerification";
-import {
-  BusinessIdentityForm,
-  VerificationStatus,
-  SubmittedDocuments,
-  ProfileStrengthCard,
-  OptimizationTips,
-  CompanyBestPractices,
-  SuccessBanner,
-  ErrorBanner,
-} from "../components";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { Toaster } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { getDarkClasses } from "@/lib/theme-classes";
+import { useBusinessProfile } from "../hooks/useBusinessProfile";
+import { BusinessProfileDisplay } from "../components";
 
 /**
- * Main page for business profile management and verification
- * Layout: 8-column main content + 4-column sidebar
- * States: form-filling → submitted → error
+ * Business Profile Page (Read-only version)
+ * Displays company information set during registration
  */
 export const BusinessProfilePage: React.FC = () => {
-  const { t } = useTranslation();
-  const {
-    // Profile state
-    formData,
-    verificationSteps,
-    documents,
-    profileStrength,
-    isLoading,
-    isSubmitting,
-    errorMessage,
-    successMessage,
+  const { t } = useAppTranslation();
+  const navigate = useNavigate();
 
-    // Form state
-    formErrors,
-    touchedFields,
-
-    // Form actions
-    handleFieldChange,
-    handleFieldBlur,
-    submitProfile,
-
-    // UI management
-    clearMessages,
-  } = useBusinessVerification();
-
-  // Auto-dismiss success message after 5 seconds
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(clearMessages, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage, clearMessages]);
-
-  // Form submission handler
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    submitProfile();
-  };
-
-  // Map VerificationStepStatus to VerificationStatus
-  const mapStepStatusToVerification = (
-    stepStatus?: string
-  ): VerificationStatusType => {
-    switch (stepStatus) {
-      case "completed":
-        return "APPROVED";
-      case "in_progress":
-        return "PENDING";
-      default:
-        return "PENDING";
-    }
-  };
-
-  const currentVerificationStatus = useMemo(
-    () => mapStepStatusToVerification(verificationSteps?.[0]?.status),
-    [verificationSteps]
-  );
-
-  // Determine page state
-  const isSubmitted = verificationSteps && verificationSteps.length > 0;
-  const hasError = errorMessage !== null;
-  const hasDocuments = documents && documents.length > 0;
+  const { profile, isLoading, errorMessage } = useBusinessProfile();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Page Header */}
-      <div className="border-b border-gray-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          {/* Breadcrumbs */}
-          <nav className="mb-4 flex items-center gap-2 text-sm">
-            <span className="text-gray-500">
-              {t("business.breadcrumb.business")}
-            </span>
-            <span className="text-gray-300">{">"}</span>
-            <span className="font-medium text-gray-900">
-              {t("business.breadcrumb.profile")}
-            </span>
-          </nav>
+    <div
+      className={getDarkClasses(
+        "min-h-screen bg-slate-50",
+        "min-h-screen bg-slate-950"
+      )}
+    >
+      <Toaster position="top-right" richColors closeButton />
 
-          {/* Title Section */}
-          <div className="flex items-start justify-between">
+      {/* Header Profile */}
+      <div
+        className={`relative h-40 ${getDarkClasses("bg-linear-to-r from-slate-700 to-slate-800", "bg-linear-to-r from-slate-900 to-slate-950")}`}
+      >
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[size:20px_20px]" />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative h-full flex flex-col justify-end pb-8">
+          <div className="mb-4 flex items-center justify-between">
+            <nav
+              className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] ${getDarkClasses("text-slate-600", "text-slate-400")}`}
+            >
+              <span>{t("business.breadcrumb.business")}</span>
+              <span>/</span>
+              <span className="text-white">
+                {t("business.breadcrumb.profile")}
+              </span>
+            </nav>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate(-1)}
+              className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-widest 
+              h-auto p-1 cursor-pointer transition-colors ${getDarkClasses("text-slate-700 hover:text-slate-900", "text-slate-300 hover:text-slate-100")}`}
+            >
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2.5"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              {t("common.back")}
+            </Button>
+          </div>
+
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1
+                className={`text-4xl font-black tracking-tight ${getDarkClasses("text-slate-900", "text-white")}`}
+              >
                 {t("business.page.title")}
               </h1>
-              <p className="mt-2 text-gray-600">
+              <p
+                className={`mt-2 max-w-2xl font-medium opacity-90 text-sm italic ${getDarkClasses("text-slate-700", "text-slate-300")}`}
+              >
                 {t("business.page.description")}
               </p>
-            </div>
-            <div className="flex gap-3">
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
-              >
-                {t("business.button.documentation")}
-              </button>
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
-              >
-                {t("business.button.preview")}
-              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Page Content */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {/* Error Banner */}
-        {hasError && (
-          <div className="mb-6">
-            <ErrorBanner
-              message={errorMessage || ""}
-              onDismiss={clearMessages}
-            />
-          </div>
-        )}
-
-        {/* Success Banner */}
-        {successMessage && (
-          <div className="mb-6">
-            <SuccessBanner message={successMessage} onDismiss={clearMessages} />
-          </div>
-        )}
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-12 gap-8">
-          {/* Main Content (8 columns) */}
-          <div className="col-span-12 lg:col-span-8">
-            <div className="space-y-8">
-              {/* Company Identity Form - Show in default or error state */}
-              {!isSubmitted || hasError ? (
-                <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <div className="mb-6">
-                    <h2 className="text-xl font-semibold text-slate-900">
-                      {t("business.form.title")}
-                    </h2>
-                    <p className="mt-1 text-sm text-slate-600">
-                      {t("business.form.subtitle")}
-                    </p>
-                  </div>
-
-                  <BusinessIdentityForm
-                    formData={formData}
-                    errors={formErrors}
-                    touchedFields={touchedFields}
-                    isSubmitting={isSubmitting}
-                    onFieldChange={handleFieldChange}
-                    onFieldBlur={handleFieldBlur}
-                    onSubmit={handleSubmit}
-                  />
-                </div>
-              ) : null}
-
-              {/* Verification Timeline - Show in submitted state */}
-              {isSubmitted &&
-                verificationSteps &&
-                verificationSteps.length > 0 && (
-                  <div className="rounded-lg border border-slate-200 bg-white p-6">
-                    <h2 className="mb-6 text-xl font-semibold text-slate-900">
-                      {t("business.verification.title")}
-                    </h2>
-                    <VerificationStatus
-                      currentStatus={currentVerificationStatus}
-                    />
-                  </div>
-                )}
-
-              {/* Submitted Documents - Show when documents exist */}
-              {hasDocuments && documents && (
-                <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <h2 className="mb-6 text-xl font-semibold text-slate-900">
-                    {t("business.documents.title")}
-                  </h2>
-                  <SubmittedDocuments documents={documents} />
-                </div>
-              )}
-
-              {/* Bottom Sections - Privacy & Best Practices */}
-              <div className="grid grid-cols-2 gap-6">
-                {/* Privacy Control Card */}
-                <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="font-semibold text-slate-900">
-                        {t("business.privacy.title")}
-                      </h3>
-                      <p className="mt-2 text-sm text-slate-600">
-                        {t("business.privacy.description")}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="mt-4 text-sm font-medium text-emerald-600 transition-colors hover:text-emerald-700"
-                  >
-                    {t("business.action.configure")} →
-                  </button>
-                </div>
-
-                {/* Best Practices Card */}
-                <div className="rounded-lg border border-slate-200 bg-white p-6">
-                  <CompanyBestPractices />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar (4 columns) */}
-          <div className="col-span-12 lg:col-span-4">
-            <div className="space-y-6">
-              {/* Profile Strength Card */}
-              <ProfileStrengthCard strengthData={profileStrength} />
-
-              {/* Optimization Tips Card */}
-              <OptimizationTips tips={[]} />
-
-              {/* Premium Services Card */}
-              <div className="rounded-lg border border-gray-200 bg-linear-to-b from-gray-900 to-gray-800 p-6 text-white">
-                <h3 className="text-lg font-semibold">
-                  {t("business.premium.title")}
-                </h3>
-                <p className="mt-2 text-sm text-gray-300">
-                  {t("business.premium.description")}
-                </p>
-                <button
-                  type="button"
-                  className="mt-4 w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
+      <div className="mx-auto max-w-4xl px-4 pb-16 sm:px-6 lg:px-8 pt-8">
+        <section
+          className={`rounded-3xl border overflow-hidden transition-all min-h-[400px] ${getDarkClasses("border-slate-200 bg-white shadow-xl shadow-slate-200/50", "border-slate-700 bg-slate-900 shadow-xl shadow-slate-900/50")}`}
+        >
+          {isLoading ? (
+            // Loading state
+            <div className="flex h-[400px] items-center justify-center">
+              <div className="flex flex-col items-center gap-4">
+                <div
+                  className={`h-12 w-12 animate-spin rounded-full border-4 ${getDarkClasses("border-slate-200 border-t-slate-700", "border-slate-700 border-t-slate-300")}`}
+                />
+                <p
+                  className={`text-xs font-bold uppercase tracking-widest animate-pulse ${getDarkClasses("text-slate-400", "text-slate-500")}`}
                 >
-                  {t("business.button.upgrade")}
-                </button>
+                  {t("business.state.loading")}
+                </p>
               </div>
-
-              {/* Loading State for Verification Check */}
-              {isLoading && (
-                <div className="flex items-center justify-center rounded-lg border border-gray-200 bg-white p-8">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-green-600" />
-                    <p className="text-sm text-gray-600">
-                      {t("business.state.loading")}
-                    </p>
-                  </div>
-                </div>
-              )}
             </div>
-          </div>
-        </div>
+          ) : errorMessage ? (
+            // Error state
+            <div className="p-12 text-center space-y-4">
+              <div
+                className={`mx-auto h-16 w-16 rounded-full flex items-center justify-center ${getDarkClasses("bg-rose-50 text-rose-500", "bg-rose-900/20 text-rose-400")}`}
+              >
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+              </div>
+              <h3
+                className={`text-xl font-bold ${getDarkClasses("text-slate-900", "text-slate-100")}`}
+              >
+                {t("business.error.fetch_title")}
+              </h3>
+              <p className="text-slate-500 max-w-sm mx-auto">{errorMessage}</p>
+            </div>
+          ) : profile ? (
+            <div className="p-8 md:p-12">
+              <BusinessProfileDisplay profile={profile} />
+            </div>
+          ) : null}
+        </section>
       </div>
     </div>
   );

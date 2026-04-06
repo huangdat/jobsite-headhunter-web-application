@@ -1,0 +1,76 @@
+{
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "System Statistics & Overview",
+      "totalUsers": "Total Users",
+      "totalJobs": "Total Jobs",
+      "applications": "Applications",
+      "activeHeadhunters": "Active Headhunters",
+      "activeCandidates": "Active Candidates",
+      "userRoleDistribution": "User Role Distribution",
+      "jobStatusStatistics": "Job Status Statistics",
+      "jobStatusNote": "Note: Headhunter users see only their own jobs; Admins see all jobs.",
+      "filter": {
+        "timeRange": "Filter by Date Range",
+        "from": "From",
+        "to": "To",
+        "apply": "Apply",
+        "fromPlaceholder": "From date",
+        "toPlaceholder": "To date"
+      }
+    }
+  },
+  "roles": {
+    "ADMIN": "Admin",
+    "CANDIDATE": "Candidate",
+    "HEADHUNTER": "Headhunter",
+    "COLLABORATOR": "Collaborator"
+  },
+  "jobStatus": {
+    "OPEN": "Open",
+    "CLOSED": "Closed",
+    "DRAFT": "Draft",
+    "openDescription": "Active listings",
+    "closedDescription": "Closed positions",
+    "draftDescription": "Work in progress"
+  },
+  "headhunter": {
+    "dashboard": {
+      "title": "Headhunter Dashboard",
+      "subtitle": "Personal Performance & Metrics",
+      "totalJobs": "Total Jobs",
+      "activeApplications": "Active Applications",
+      "timeToHire": "Avg Time-to-Hire",
+      "hiringFunnel": "Hiring Funnel",
+      "upcomingInterviews": "Upcoming Interviews",
+      "noUpcomingInterviews": "No interviews scheduled",
+      "pendingCandidates": "Pending Candidates",
+      "noPendingCandidates": "No candidates awaiting review",
+      "filter": {
+        "jobFilter": "Filter by Job",
+        "allJobs": "All Jobs"
+      },
+      "interviewDetails": {
+        "candidate": "Candidate",
+        "job": "Job",
+        "time": "Time",
+        "location": "Location",
+        "type": "Interview Type"
+      },
+      "candidateDetails": {
+        "submitted": "Submitted",
+        "status": "Status",
+        "pending": "Pending Review",
+        "rejected": "Rejected",
+        "approved": "Approved"
+      },
+      "emptyStateJobFilter": "No application data for this job. Keep tracking!",
+      "refresh": "Refresh",
+      "days": "days"
+    }
+  },
+  "error": {
+    "failedToLoad": "Error loading dashboard"
+  }
+}

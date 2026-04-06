@@ -21,6 +21,7 @@ const mapProfileResponse = (payload: unknown): CandidateProfile => {
     expectedSalaryMax: raw.expectedSalaryMax ?? null,
     bio: raw.bio ?? "",
     city: raw.city ?? "",
+    cvUrl: raw.cvUrl ?? "",
     openForWork: raw.openForWork ?? true,
   };
 };
@@ -33,15 +34,68 @@ export const profileApi = {
 
     return mapProfileResponse(response.data?.result);
   },
+  getCurrentCvUrl: async (): Promise<string> => {
+    try {
+      const response = await apiClient.get<ApiResponse<{ cvUrl?: string }>>(
+        API_ENDPOINTS.CANDIDATE.CV_LIST
+      );
+
+      return response.data?.result?.cvUrl ?? "";
+    } catch {
+      return "";
+    }
+  },
 
   updateProfile: async (
     payload: CandidateProfilePayload
   ): Promise<CandidateProfile> => {
+    const formData = new FormData();
+
+    const appendIfPresent = (key: string, value: unknown) => {
+      if (value === undefined || value === null || value === "") {
+        return;
+      }
+
+      formData.append(key, String(value));
+    };
+
+    appendIfPresent("currentTitle", payload.currentTitle?.trim());
+    appendIfPresent("yearsOfExperience", payload.yearsOfExperience);
+    appendIfPresent("expectedSalaryMin", payload.expectedSalaryMin);
+    appendIfPresent("expectedSalaryMax", payload.expectedSalaryMax);
+    appendIfPresent("bio", payload.bio?.trim());
+    appendIfPresent("city", payload.city?.trim());
+    appendIfPresent("openForWork", payload.openForWork);
+    appendIfPresent("cvUrl", payload.cvUrl?.trim());
+
     const response = await apiClient.put<ApiResponse<CandidateProfile>>(
       API_ENDPOINTS.ACCOUNT.UPDATE_PROFILE,
-      payload
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
     );
 
     return mapProfileResponse(response.data?.result);
   },
+  // Upload CV: send multipart/form-data to backend controller /api/cv/MyCv
+  uploadCV: async (file: File): Promise<string> => {
+    const form = new FormData();
+    form.append("cvFile", file);
+
+    const response = await apiClient.put<ApiResponse<{ cvUrl: string }>>(
+      API_ENDPOINTS.CANDIDATE.CV_UPLOAD,
+      form,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
+
+    return response.data?.result?.cvUrl ?? "";
+  },
+
+  fetchCVs: async (): Promise<{ id: string; name: string; url: string }[]> => {
+    const response = await apiClient.get<
+      ApiResponse<{ id: string; name: string; url: string }[]>
+    >(API_ENDPOINTS.CANDIDATE.CV_LIST);
+    return response.data?.result || [];
+  },
 };
+
+export default profileApi;

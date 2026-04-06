@@ -10,14 +10,12 @@
     "signUp": "Sign Up",
     "postJob": "Post a Job",
     "profile": "PROFILE",
-    "changePassword": "CHANGE PASSWORD",
     "settings": "Settings",
     "logout": "Logout",
     "savedJobs": "Saved Jobs",
     "notifications": "Notifications",
     "dashboard": "Dashboard",
     "adminDashboard": "Admin Dashboard",
-    "userManagement": "User Management",
     "classification": "Classification"
   },
   "hero": {
@@ -30,7 +28,7 @@
   },
   "featuredJobs": {
     "title": "Featured Jobs",
-    "viewMore": "VIEW MORE JOBS →"
+    "viewMore": "VIEW MORE JOBS"
   },
   "recommendedJobs": {
     "title": "Recommended for you",
@@ -39,7 +37,7 @@
   "topCompanies": {
     "title": "Top Companies",
     "openJobs": "12 Open Jobs",
-    "viewCompany": "View Company →"
+    "viewCompany": "View Company"
   },
   "footer": {
     "copyright": "© {year} JobSite. All rights reserved."
@@ -53,11 +51,13 @@
     "noRecommendedJobs": "No recommended jobs found",
     "noCompanies": "No companies found"
   },
-  "jobTypes": {
-    "fullTime": "FULL-TIME",
-    "remote": "REMOTE"
-  },
   "badges": {
     "new": "NEW"
+  },
+  "jobTypes": {
+    "full-time": "Full-time",
+    "remote": "Remote",
+    "onsite": "On-site",
+    "hybrid": "Hybrid"
   }
 }

@@ -4,7 +4,9 @@
  */
 
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
+import { Button } from "@/components/ui/button";
 import {
   Download,
   Trash2,
@@ -71,7 +73,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
   onDownload,
   className = "",
 }) => {
-  const { t } = useTranslation();
+  const { t } = useBusinessTranslation();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -86,9 +88,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
       setDeleteError(null);
     } catch (error) {
       console.error("Delete failed:", error);
-      setDeleteError(
-        t("business.document.delete_error", "Failed to delete document")
-      );
+      setDeleteError(t("business.document.delete_error"));
     } finally {
       setDeletingId(null);
     }
@@ -101,13 +101,10 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
       >
         <FileText className="mx-auto h-12 w-12 text-slate-400" />
         <p className="mt-4 text-sm font-medium text-slate-900">
-          {t("business.document.no_documents", "No documents uploaded")}
+          {t("business.document.no_documents")}
         </p>
         <p className="mt-1 text-sm text-slate-600">
-          {t(
-            "business.document.no_documents_desc",
-            "Start by uploading required business documents"
-          )}
+          {t("business.document.no_documents_desc")}
         </p>
       </div>
     );
@@ -122,27 +119,34 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            {t("business.document.submitted", "Submitted Documents")}
+            {t("business.document.submitted")}
           </h3>
           <p className="text-sm text-slate-600">
-            {t(
-              "business.document.submitted_desc",
-              "Your uploaded business documents"
-            )}
+            {t("business.document.submitted_desc")}
           </p>
         </div>
       </div>
 
       {/* Delete Error Alert */}
       {deleteError && (
-        <div className="mb-4 flex gap-3 rounded-lg border border-red-200 bg-red-50 p-4">
-          <AlertCircle className="h-5 w-5 flex-0 text-red-600" />
+        <div
+          className={`mb-4 flex gap-3 rounded-lg border p-4 ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
+        >
+          <AlertCircle
+            className={`h-5 w-5 flex-0 ${getSemanticClass("danger", "icon")}`}
+          />
           <div className="flex-1">
-            <p className="text-sm font-medium text-red-900">{deleteError}</p>
+            <p
+              className={`text-sm font-medium ${getSemanticClass("danger", "text", false)}`}
+            >
+              {deleteError}
+            </p>
           </div>
           <button
             onClick={() => setDeleteError(null)}
-            className="text-red-600 hover:text-red-700"
+            className={
+              getSemanticClass("danger", "text", false) + ` hover:opacity-75`
+            }
           >
             ×
           </button>
@@ -162,9 +166,11 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                 {doc.documentType && getDocumentIcon(doc.documentType)}
               </div>
               {doc.verificationStatus === "verified" && (
-                <div className="flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-800">
+                <div
+                  className={`flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold ${getSemanticClass("success", "bg")} ${getSemanticClass("success", "text", false)}`}
+                >
                   <CheckCircle2 className="h-3 w-3" />
-                  {t("business.document.verified", "Verified")}
+                  {t("business.document.verified")}
                 </div>
               )}
             </div>
@@ -175,13 +181,13 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                 {doc.filename}
               </p>
               <p className="mt-1 text-xs text-slate-600">
-                {t(getDocumentTypeLabel(doc.documentType))} •{" "}
+                {t(getDocumentTypeLabel(doc.documentType || "document"))} •{" "}
                 {formatFileSize(doc.fileSize)}
               </p>
 
               {doc.uploadedAt && (
                 <p className="mt-2 text-xs text-slate-500">
-                  {t("business.document.uploaded", "Uploaded")}:{" "}
+                  {t("business.document.uploaded")}:{" "}
                   {new Date(doc.uploadedAt).toLocaleDateString()}
                 </p>
               )}
@@ -190,48 +196,56 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
             {/* Actions */}
             <div className="mt-4 flex gap-2">
               {onDownload && (
-                <button
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => onDownload(doc.id)}
                   disabled={isLoading || deletingId === doc.id}
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
-                  title={t("business.document.download", "Download")}
+                  className="flex-1"
+                  title={t("business.document.download")}
                 >
-                  <Download className="h-4 w-4" />
-                  {t("business.document.download", "Download")}
-                </button>
+                  <Download className="h-4 w-4 mr-2" />
+                  {t("business.document.download")}
+                </Button>
               )}
 
               {onDelete && (
                 <div className="relative flex-1">
                   {confirmDeleteId === doc.id ? (
                     <div className="absolute inset-0 z-50 flex items-center gap-2">
-                      <button
+                      <Button
+                        variant="destructive"
+                        size="sm"
                         onClick={() => handleDelete(doc.id)}
                         disabled={deletingId === doc.id}
-                        className="flex-1 rounded-lg bg-red-600 px-2 py-2 text-xs font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+                        className="flex-1"
                       >
                         {deletingId === doc.id
-                          ? t("business.document.deleting", "Deleting...")
-                          : t("business.document.confirm", "Confirm")}
-                      </button>
-                      <button
+                          ? t("business.document.deleting")
+                          : t("business.document.confirm")}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setConfirmDeleteId(null)}
                         disabled={deletingId === doc.id}
-                        className="flex-1 rounded-lg border border-slate-300 bg-white px-2 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                        className="flex-1"
                       >
-                        {t("business.document.cancel", "Cancel")}
-                      </button>
+                        {t("business.document.cancel")}
+                      </Button>
                     </div>
                   ) : (
-                    <button
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => setConfirmDeleteId(doc.id)}
                       disabled={isLoading}
-                      className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
-                      title={t("business.document.delete", "Delete")}
+                      className="w-full text-red-700 hover:text-red-800"
+                      title={t("business.document.delete")}
                     >
-                      <Trash2 className="h-4 w-4" />
-                      {t("business.document.delete", "Delete")}
-                    </button>
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      {t("business.document.delete")}
+                    </Button>
                   )}
                 </div>
               )}
@@ -245,7 +259,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
         <div className="rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center">
           <FileText className="mx-auto h-12 w-12 text-slate-400" />
           <p className="mt-4 text-sm font-medium text-slate-900">
-            {t("business.document.no_documents", "No documents uploaded yet")}
+            {t("business.document.no_documents")}
           </p>
         </div>
       )}

@@ -2,13 +2,18 @@ import { useEffect, useState } from "react";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRecommendedJobs } from "@/shared/utils/jobService";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { MATCH_BADGE_COLORS, HOME_ICONS } from "../constants";
+import {
+  SubsectionTitle,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export function RecommendedJobs() {
-  const { t } = useHomeTranslation();
+  const { t, currentLanguage } = useHomeTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -20,22 +25,24 @@ export function RecommendedJobs() {
         setInfoMessage(data.message || null);
       } catch (err) {
         console.error("Failed to fetch recommended jobs:", err);
-        setError(t("messages.errorLoadJobs"));
+        setError(
+          err instanceof Error ? err : new Error(t("messages.errorLoadJobs"))
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchJobs();
-  }, [t]);
+  }, [currentLanguage?.code]);
   return (
     <section id="recommended" className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold">{t("recommendedJobs.title")}</h2>
-          <p className="text-gray-500 text-sm">
+          <SubsectionTitle>{t("recommendedJobs.title")}</SubsectionTitle>
+          <SmallText variant="muted" className="mt-1 block">
             {t("recommendedJobs.description")}
-          </p>
+          </SmallText>
         </div>
         <span className="text-gray-400 text-sm">
           {HOME_ICONS.CHEVRON_RIGHT}
@@ -44,25 +51,33 @@ export function RecommendedJobs() {
 
       {loading && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.loadingJobs")}</p>
+          <SmallText variant="muted">{t("messages.loadingJobs")}</SmallText>
         </div>
       )}
 
       {!loading && infoMessage && (
         <div className="text-center py-4">
-          <p className="text-gray-500">{infoMessage}</p>
+          <SmallText variant="muted">{infoMessage}</SmallText>
         </div>
       )}
 
       {error && (
-        <div className="text-center py-12">
-          <p className="text-red-500">{error}</p>
-        </div>
+        <ErrorState
+          error={error}
+          onRetry={() => window.location.reload()}
+          variant="inline"
+          title={
+            t("recommendedJobs.errorTitle") ||
+            "Không thể tải công việc được đề xuất"
+          }
+        />
       )}
 
       {!loading && !error && jobs.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.noRecommendedJobs")}</p>
+          <SmallText variant="muted">
+            {t("messages.noRecommendedJobs")}
+          </SmallText>
         </div>
       )}
 
@@ -81,8 +96,12 @@ export function RecommendedJobs() {
                 </span>
               </div>
 
-              <h3 className="font-semibold mt-4">{job.title}</h3>
-              <p className="text-gray-500 text-sm">{job.company}</p>
+              <SmallText weight="semibold" className="mt-4 block">
+                {job.title}
+              </SmallText>
+              <SmallText variant="muted" className="block">
+                {job.company}
+              </SmallText>
 
               <div className="flex justify-between mt-6 text-sm">
                 <span>{job.salary}</span>

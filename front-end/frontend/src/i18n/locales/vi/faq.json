@@ -1,0 +1,14 @@
+{
+  "item1": {
+    "question": "Câu hỏi 1",
+    "answer": "Trả lời câu hỏi 1"
+  },
+  "item2": {
+    "question": "Câu hỏi 2",
+    "answer": "Trả lời câu hỏi 2"
+  },
+  "item3": {
+    "question": "Câu hỏi 3",
+    "answer": "Trả lời câu hỏi 3"
+  }
+}

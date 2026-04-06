@@ -1,280 +1,183 @@
 /**
  * Business Profile & Verification TypeScript Definitions
- * All types and interfaces for PROF-03 Epic
+ * Updated for Read-only mode & Swagger API compatibility
  */
 
 /* ============================================
-   ENUMS & UNION TYPES
+    ENUMS & UNION TYPES
    ============================================ */
 
 export type VerificationStatus = "PENDING" | "APPROVED" | "REJECTED";
-export type CompanySize = "STARTUP" | "SMALL" | "MEDIUM" | "LARGE";
-export type DocumentType =
-  | "business_license"
-  | "tax_clearance"
-  | "registration_cert"
-  | "other";
-export type DocumentFileType = "pdf" | "doc" | "docx" | "jpg" | "png";
-export type VerificationStepStatus = "completed" | "in_progress" | "pending";
-export type StrengthItemStatus = "completed" | "incomplete" | "in_progress";
 
-/* ============================================
-   CORE BUSINESS PROFILE
-   ============================================ */
+export type CompanyScale =
+  | "Startup (1-10 employees)"
+  | "Small (10-50 employees)"
+  | "Medium (50-200 employees)"
+  | "Large (200+ employees)";
 
-export interface BusinessProfile {
-  id: string;
-  companyName: string;
-  taxId: string; // 10 or 13 digits
-  companySize: CompanySize;
-  website: string; // Valid URL with http/https
-  headquartersAddress: string;
-  verificationStatus: VerificationStatus;
-  submittedAt?: string; // ISO date string
-  approvedAt?: string;
-  rejectedAt?: string;
-  rejectionReason?: string;
-  logoUrl?: string;
-  userId: string; // Recruiter/business user ID
-}
-
-/* ============================================
-   VERIFICATION & STATUS
-   ============================================ */
-
-export interface VerificationStep {
-  id: string;
-  label: string; // i18n key: 'submitted' | 'admin_review' | 'complete'
-  status: VerificationStepStatus;
-  completedAt?: string; // ISO date
-  estimatedTime?: string; // e.g., "24-48 hours"
-  notes?: string;
-}
-
-export interface VerificationTimeline {
-  steps: VerificationStep[];
-  currentStep: number;
-  percentageComplete: number;
-}
-
-/* ============================================
-   DOCUMENTS
-   ============================================ */
-
-export interface SubmittedDocument {
-  id: string;
-  filename: string;
-  fileSize: number; // bytes
-  fileType: DocumentFileType;
-  documentType: DocumentType;
-  uploadedAt: string; // ISO date
-  verificationStatus: "verified" | "pending_review" | "rejected";
-  rejectionReason?: string;
-  businessProfileId: string;
-}
-
-/* ============================================
-   PROFILE STRENGTH
-   ============================================ */
-
-export interface StrengthItem {
-  id: string;
-  label: string; // i18n key
-  description?: string;
-  completed: boolean;
-  impact: number; // percentage contribution (e.g., 5, 10)
-  status: StrengthItemStatus;
-}
-
-export interface ProfileStrengthData {
-  percentage: number;
-  items: StrengthItem[];
-  nextAction?: string; // i18n key for next recommended action
-  lastUpdatedAt: string;
-}
-
-/* ============================================
-   FORM & VALIDATION
-   ============================================ */
-
-export interface BusinessFormData {
-  companyName: string;
-  taxId: string;
-  companySize: CompanySize;
-  website: string;
-  headquartersAddress: string;
-}
-
-export interface BusinessFormErrors {
-  companyName?: string;
-  taxId?: string;
-  companySize?: string;
-  website?: string;
-  headquartersAddress?: string;
-  [key: string]: string | undefined; // Allow dynamic error keys
-}
-
-export interface FormValidationResults {
-  isValid: boolean;
-  errors: BusinessFormErrors;
-  touchedFields: Set<keyof BusinessFormData>;
-}
-
-/* ============================================
-   API RESPONSES
-   ============================================ */
-
-export interface SubmitProfileResponse {
-  success: boolean;
-  message: string;
-  profile?: BusinessProfile;
-  verificationSteps?: VerificationStep[];
-  error?: {
-    code: string;
-    message: string;
-    details?: Record<string, string>;
-  };
-}
-
-export interface GetProfileStatusResponse {
-  profile: BusinessProfile;
-  verificationSteps: VerificationStep[];
-  documents: SubmittedDocument[];
-  profileStrength: ProfileStrengthData;
-}
-
-export interface ValidateFieldResponse {
-  valid: boolean;
-  error?: string;
-  suggestions?: string[];
-}
-
-/* ============================================
-   STATE MANAGEMENT
-   ============================================ */
-
-export interface BusinessProfileState {
-  // Profile data
-  profile: BusinessProfile | null;
-  documents: SubmittedDocument[];
-  verificationSteps: VerificationStep[];
-  profileStrength: ProfileStrengthData | null;
-
-  // Form state
-  formData: BusinessFormData;
-  formErrors: BusinessFormErrors;
-  touchedFields: Set<keyof BusinessFormData>;
-
-  // UI state
-  isLoading: boolean;
-  isSubmitting: boolean;
-  isValidating: boolean;
-  successMessage?: string;
-  errorMessage?: string;
-
-  // Timestamps
-  lastFetchedAt?: string;
-  lastSubmittedAt?: string;
-}
-
-/* ============================================
-   VALIDATION RULES
-   ============================================ */
-
-export const VALIDATION_RULES = {
-  companyName: {
-    minLength: 2,
-    maxLength: 255,
-    pattern: /^[a-zA-Z0-9\s\-&.,()]+$/, // Allow alphanumeric, spaces, and basic symbols
-    required: true,
-  },
-  taxId: {
-    pattern: /^\d{10}$|^\d{13}$/, // 10 or 13 digits only
-    required: true,
-  },
-  website: {
-    pattern: /^(https?:\/\/)/, // Must start with http:// or https://
-    required: true,
-  },
-  headquartersAddress: {
-    minLength: 10,
-    maxLength: 500,
-    required: true,
-  },
-  companySize: {
-    options: ["50-100", "100-500", "500-1000", "1000+", "other"],
-    required: true,
-  },
-} as const;
-
-/* ============================================
-   ERROR MESSAGES (i18n keys)
-   ============================================ */
-
-export const ERROR_MESSAGE_KEYS = {
-  companyName: {
-    required: "business.validation.company_name_required",
-    minLength: "business.validation.company_name_min",
-    maxLength: "business.validation.company_name_max",
-    pattern: "business.validation.company_name_pattern",
-  },
-  taxId: {
-    required: "business.validation.tax_id_required",
-    pattern: "business.validation.tax_id_pattern", // "Mã số thuế phải là 10 hoặc 13 chữ số"
-    invalid: "business.validation.tax_id_invalid",
-  },
-  website: {
-    required: "business.validation.website_required",
-    pattern: "business.validation.website_pattern", // "Website không hợp lệ (Missing http/https prefix)"
-    invalid: "business.validation.website_invalid",
-  },
-  headquartersAddress: {
-    required: "business.validation.address_required",
-    minLength: "business.validation.address_min",
-    maxLength: "business.validation.address_max",
-  },
-  companySize: {
-    required: "business.validation.company_size_required",
-  },
-  submission: {
-    networkError: "business.error.network",
-    serverError: "business.error.server",
-    validationError: "business.error.validation",
-    timeoutError: "business.error.timeout",
-  },
-} as const;
-
-/* ============================================
-   API REQUEST/RESPONSE TYPES
-   ============================================ */
-
-export interface SubmitProfileRequest extends BusinessFormData {
-  documents?: File[];
-}
-
-export interface ValidateFieldRequest {
-  field: keyof BusinessFormData;
-  value: string;
-}
-
-export interface ValidateFieldRequest2 {
-  field: string;
-  value: string | number | boolean;
-}
-
-/* ============================================
-   CONSTANTS
-   ============================================ */
-
-export const COMPANY_SIZE_OPTIONS: Record<CompanySize, string> = {
+export const COMPANY_SIZE_OPTIONS: Record<string, string> = {
   STARTUP: "business.form.size_startup",
   SMALL: "business.form.size_small",
   MEDIUM: "business.form.size_medium",
   LARGE: "business.form.size_large",
 };
 
-export const VERIFICATION_STEP_LABELS: Record<number, string> = {
-  0: "business.verification.submitted",
-  1: "business.verification.under_review",
-  2: "business.verification.approved",
+/* ============================================
+    CORE BUSINESS PROFILE (Updated to match Swagger)
+   ============================================ */
+
+export interface BusinessAccount {
+  id: string;
+  username: string;
+  email: string;
+  fullName: string;
+  phone: string;
+  imageUrl?: string;
+  gender: "MALE" | "FEMALE" | "OTHER";
+  currentTitle?: string;
+  status: string;
+  roles: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BusinessProfile {
+  id: number;
+  companyName: string;
+  taxCode: string;
+  websiteUrl: string;
+  addressMain: string;
+  companyScale: string;
+  verificationStatus: VerificationStatus;
+  noteByAdmin?: string;
+  accounts?: BusinessAccount[];
+}
+
+/* ============================================
+    FORM TYPES & VALIDATION
+   ============================================ */
+
+export interface BusinessFormData {
+  companyName: string;
+  taxId: string;
+  website: string;
+  companySize: string;
+  headquartersAddress: string;
+}
+
+export interface BusinessFormErrors extends Record<string, string | undefined> {
+  companyName?: string | undefined;
+  taxId?: string | undefined;
+  website?: string | undefined;
+  companySize?: string | undefined;
+  headquartersAddress?: string | undefined;
+}
+
+export const ERROR_MESSAGE_KEYS = {
+  companyName: {
+    required: "business.form.errors.companyName.required",
+    minLength: "business.form.errors.companyName.minLength",
+    maxLength: "business.form.errors.companyName.maxLength",
+    pattern: "business.form.errors.companyName.pattern",
+  },
+  taxId: {
+    required: "business.form.errors.taxId.required",
+    pattern: "business.form.errors.taxId.pattern",
+    invalid: "business.form.errors.taxId.invalid",
+  },
+  website: {
+    required: "business.form.errors.website.required",
+    invalid: "business.form.errors.website.invalid",
+    minLength: "business.form.errors.website.minLength",
+    pattern: "business.form.errors.website.pattern",
+  },
+  companySize: {
+    required: "business.form.errors.companySize.required",
+  },
+  headquartersAddress: {
+    required: "business.form.errors.headquartersAddress.required",
+    minLength: "business.form.errors.headquartersAddress.minLength",
+    maxLength: "business.form.errors.headquartersAddress.maxLength",
+  },
+} as const;
+
+/* ============================================
+    PROFILE STRENGTH (Giữ lại để hiển thị dashboard)
+   ============================================ */
+
+export type StrengthItemStatus = "completed" | "in_progress" | "incomplete";
+
+export interface StrengthItem {
+  id: string;
+  label: string; // i18n key
+  description?: string; // i18n key
+  completed: boolean;
+  status?: StrengthItemStatus;
+  impact: number;
+}
+
+export interface ProfileStrengthData {
+  percentage: number;
+  items: StrengthItem[];
+  lastUpdatedAt: string;
+  nextAction?: string; // i18n key
+}
+
+/**
+ * Submitted document (for business verification/profile)
+ */
+export interface SubmittedDocument {
+  id: string;
+  fileName?: string;
+  filename?: string; // Alias for fileName
+  fileUrl: string;
+  fileSize: number; // bytes
+  mimeType: string;
+  category?: string;
+  documentType?: string; // "LICENSE", "TAX_CERTIFICATE", "BUSINESS_REGISTRATION", etc
+  uploadedAt: string; // ISO datetime
+  status?: "VERIFIED" | "PENDING" | "REJECTED";
+  verificationStatus?: "verified" | "pending" | "rejected"; // Alias for status
+  notes?: string;
+}
+
+/* ============================================
+    STATE MANAGEMENT (Simplified for Read-only)
+   ============================================ */
+
+export interface BusinessProfileState {
+  profile: BusinessProfile | null;
+  profileStrength: ProfileStrengthData | null;
+  isLoading: boolean;
+  errorMessage?: string;
+  lastFetchedAt?: string;
+}
+
+/* ============================================
+    CONSTANTS
+   ============================================ */
+
+/**
+ * Verification status colors
+ * @deprecated Use getStatusBadgeClass() from @/lib/design-tokens instead
+ * This constant is kept for backward compatibility but should not be used in new code
+ *
+ * Replaced by design-tokens.ts statusColors which includes dark mode support
+ */
+export const VERIFICATION_STATUS_COLORS: Record<VerificationStatus, string> = {
+  PENDING:
+    "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-900/50",
+  APPROVED:
+    "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-900/50",
+  REJECTED:
+    "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-900/50",
 };
+
+export const GENERAL_ERROR_KEYS = {
+  REQUIRED: "validation.required",
+  INVALID_EMAIL: "validation.invalidEmail",
+  INVALID_PHONE: "validation.invalidPhone",
+  INVALID_URL: "validation.invalidUrl",
+  MIN_LENGTH: "validation.minLength",
+  MAX_LENGTH: "validation.maxLength",
+} as const;

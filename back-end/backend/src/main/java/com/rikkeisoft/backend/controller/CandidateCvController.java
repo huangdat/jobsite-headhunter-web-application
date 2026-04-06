@@ -59,7 +59,7 @@ public class CandidateCvController {
         return resp;
     }
 
-    @PutMapping("/MyCv")
+    @PutMapping({"/MyCv", ""})
     public APIResponse<CandidateCvResp> updateMyCv(@ModelAttribute CandidateCvUpdateReq req) {
         CandidateCvResp candidateCv = candidateCvService.updateMyCv(req);
         APIResponse<CandidateCvResp> resp = new APIResponse<>();

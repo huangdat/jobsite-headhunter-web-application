@@ -67,7 +67,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     }
 
     @Override
-    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
+    //@PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
     public BusinessProfileResp getBusinessProfileById(Long businessProfileId) {
         BusinessProfile businessProfile = businessProfileRepo.findById(businessProfileId)
                 .orElseThrow(() -> new AppException(ErrorCode.BUSINESS_PROFILE_NOT_FOUND));

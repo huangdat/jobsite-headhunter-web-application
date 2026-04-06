@@ -4,7 +4,8 @@
  * Displays commission statistics in sidebar
  */
 
-import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button";
+import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type { CommissionStats } from "../types/commission.types";
 
 interface CommissionStatsProps {
@@ -22,7 +23,7 @@ export function CommissionStats({
   stats,
   onRequestPayout,
 }: CommissionStatsProps) {
-  const { t } = useTranslation("commission");
+  const { t } = useCommissionTranslation();
 
   if (!stats) {
     return (
@@ -44,21 +45,21 @@ export function CommissionStats({
   return (
     <div className="space-y-4">
       {/* Total Earnings Card */}
-      <div className="bg-linear-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-lg p-4">
+      <div className="bg-linear-to-br from-brand-primary/10 to-brand-primary/20 border border-brand-primary/30 rounded-lg p-4">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-emerald-700 mb-1">
+            <p className="text-sm text-brand-primary mb-1">
               {t("stats.totalEarnings")}
             </p>
-            <p className="text-2xl font-bold text-emerald-900">
+            <p className="text-2xl font-bold text-black">
               {formatCurrency(stats.totalEarnings)}
             </p>
-            <p className="text-xs text-emerald-600 mt-2">
+            <p className="text-xs text-brand-primary/80 mt-2">
               {t("stats.lifetimeTotal")}
             </p>
           </div>
-          <div className="p-3 bg-emerald-200 rounded-lg">
-            <span className="material-symbols-outlined text-emerald-700">
+          <div className="p-3 bg-brand-primary/30 rounded-lg">
+            <span className="material-symbols-outlined text-brand-primary">
               trending_up
             </span>
           </div>
@@ -75,7 +76,7 @@ export function CommissionStats({
           </p>
           <div className="mt-2 flex items-center gap-1 text-xs text-amber-600">
             <span className="material-symbols-outlined text-sm">schedule</span>
-            {t("stats.processingDays", { days: 3 })}
+            {t("stats.processingDays")}
           </div>
         </div>
 
@@ -149,7 +150,7 @@ export function CommissionStats({
               </p>
               <div className="mt-2 w-full bg-slate-200 rounded-full h-2">
                 <div
-                  className="bg-emerald-600 h-2 rounded-full transition-all"
+                  className="bg-brand-primary h-2 rounded-full transition-all"
                   style={{ width: `${Math.min(stats.conversionRate, 100)}%` }}
                 ></div>
               </div>
@@ -160,13 +161,15 @@ export function CommissionStats({
 
       {/* Payout Button */}
       {onRequestPayout && stats.pendingCommissions > 0 && (
-        <button
+        <Button
           onClick={() => onRequestPayout(stats.pendingCommissions)}
-          className="w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+          className="w-full"
         >
-          <span className="material-symbols-outlined">account_balance</span>
+          <span className="material-symbols-outlined mr-2">
+            account_balance
+          </span>
           {t("button.requestPayout")}
-        </button>
+        </Button>
       )}
 
       {/* Empty State */}

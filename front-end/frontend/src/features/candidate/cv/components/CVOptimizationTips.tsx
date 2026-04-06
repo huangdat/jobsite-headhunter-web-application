@@ -105,7 +105,7 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
       {displayTips.length > 0 && (
         <div className="pt-4 border-t border-surface-variant">
           <p className="text-xs text-slate-600 text-center">
-            {t("candidate.tips.optimizationTitle")}
+            {t("tips.optimizationTitle")}
           </p>
         </div>
       )}
@@ -114,3 +114,4 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
 };
 
 export default CVOptimizationTips;
+

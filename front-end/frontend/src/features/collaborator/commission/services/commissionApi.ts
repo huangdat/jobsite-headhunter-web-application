@@ -1,10 +1,13 @@
 /**
  * Commission API Service
  * PROF-04: Collaborator Commission
+ * Uses shared utilities for consistent response handling
  */
 
 import { apiClient } from "@/shared/utils/axios";
 import { API_ENDPOINTS } from "@/lib/constants";
+import { extractResult } from "@/shared/api/responseAdapter";
+import type { ApiResponse } from "@/features/auth/types/api.types";
 import type {
   CommissionProfile,
   CommissionFormData,
@@ -16,10 +19,10 @@ export const commissionApi = {
    * Fetch current collaborator's commission profile
    */
   async getCommissionProfile(): Promise<CommissionProfile> {
-    const response = await apiClient.get<CommissionProfile>(
+    const response = await apiClient.get<ApiResponse<CommissionProfile>>(
       API_ENDPOINTS.COLLABORATOR.GET_COMMISSION_PROFILE
     );
-    return response.data;
+    return extractResult(response);
   },
 
   /**
@@ -28,21 +31,21 @@ export const commissionApi = {
   async updateCommissionProfile(
     data: CommissionFormData
   ): Promise<CommissionProfile> {
-    const response = await apiClient.put<CommissionProfile>(
+    const response = await apiClient.put<ApiResponse<CommissionProfile>>(
       API_ENDPOINTS.COLLABORATOR.UPDATE_COMMISSION_PROFILE,
       data
     );
-    return response.data;
+    return extractResult(response);
   },
 
   /**
    * Fetch commission statistics
    */
   async getCommissionStats(): Promise<CommissionStats> {
-    const response = await apiClient.get<CommissionStats>(
+    const response = await apiClient.get<ApiResponse<CommissionStats>>(
       API_ENDPOINTS.COLLABORATOR.GET_COMMISSION_STATS
     );
-    return response.data;
+    return extractResult(response);
   },
 
   /**
@@ -52,11 +55,11 @@ export const commissionApi = {
     bankName: string,
     accountNumber: string
   ): Promise<{ verified: boolean }> {
-    const response = await apiClient.post<{ verified: boolean }>(
+    const response = await apiClient.post<ApiResponse<{ verified: boolean }>>(
       API_ENDPOINTS.COLLABORATOR.VERIFY_BANKING_INFO,
       { bankName, accountNumber }
     );
-    return response.data;
+    return extractResult(response);
   },
 
   /**
@@ -65,10 +68,9 @@ export const commissionApi = {
   async requestPayout(
     amount: number
   ): Promise<{ success: boolean; payoutId: string }> {
-    const response = await apiClient.post<{
-      success: boolean;
-      payoutId: string;
-    }>("/collaborator/commission/payout", { amount });
-    return response.data;
+    const response = await apiClient.post<
+      ApiResponse<{ success: boolean; payoutId: string }>
+    >(API_ENDPOINTS.COLLABORATOR.REQUEST_PAYOUT, { amount });
+    return extractResult(response);
   },
 };

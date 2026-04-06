@@ -2,12 +2,21 @@
  * API Configuration & Constants
  * ❌ NEVER hardcode URLs, endpoints, or sensitive data
  * ✅ Always use environment variables or constants here
+ *
+ * NOTE: For better code organization, feature-specific endpoints are defined in:
+ * - src/features/auth/api/constants.ts
+ * - src/features/jobs/api/constants.ts
+ * - src/features/candidate/api/constants.ts
+ * - src/features/headhunter/api/constants.ts
+ * - src/features/collaborator/api/constants.ts
+ * - src/shared/api/constants.ts
+ *
+ * This file maintains the full API_ENDPOINTS for backward compatibility.
  */
 
 // API Base URLs
 export const API_CONFIG = {
-  BASE_URL:
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/headhunt",
+  BASE_URL: import.meta.env.VITE_API_URL || "http://localhost:8080/headhunt",
   TIMEOUT: 15000,
   RETRY_COUNT: 3,
   RETRY_DELAY: 1000,
@@ -21,7 +30,6 @@ export const API_ENDPOINTS = {
     REGISTER: "/api/auth/register",
     LOGOUT: "/api/auth/logout",
     VALIDATE_TOKEN: "/api/auth/token-validate",
-    REFRESH_TOKEN: "/api/auth/refresh-token",
     SOCIAL_CONFIG: "/api/auth/social-config",
     GOOGLE_LOGIN: "/api/auth/google/login",
     LINKEDIN_LOGIN: "/api/auth/linkedin/oauth",
@@ -42,10 +50,9 @@ export const API_ENDPOINTS = {
     SIGNUP_CANDIDATE: "/api/account/signup-candidate",
     SIGNUP_HEADHUNTER: "/api/account/signup-headhunter",
     SIGNUP_COLLABORATOR: "/api/account/signup-collaborator",
-    GET_PROFILE: "/api/account/profile",
-    UPDATE_PROFILE: "/api/account/profile",
+    GET_PROFILE: "/api/account/myInfo",
+    UPDATE_PROFILE: "/api/account/myInfo",
     CHANGE_PASSWORD: "/api/account/changeMyPassword",
-    SEARCH: "/api/account/search", // Admin: Search/Classification - requires ADMIN role
   },
 
   // Users (Admin Management)
@@ -70,21 +77,20 @@ export const API_ENDPOINTS = {
     GET_SAVED: "/api/jobs/saved",
     CREATE: "/api/jobs",
     UPDATE: "/api/jobs/{id}",
-    DELETE_SOFT: "/api/jobs/{id}",
-    TOGGLE_STATUS: "/api/jobs/{id}/toggle-status",
+    DELETE_SOFT: "/api/jobs/{id}/toggle-active",
+    TOGGLE_STATUS: "/api/jobs/{id}/toggle-job-status",
     SAVE: "/api/jobs/{id}/save",
     REMOVE_SAVED: "/api/jobs/{id}/saved",
   },
 
-  // Business Profiles (View)
+  // Business Profiles
   BUSINESS_PROFILE: {
     GET_TOP_10: "/api/business-profile/10-best",
     GET_ALL: "/api/business-profile",
     GET_BY_ID: "/api/business-profile/{id}",
   },
 
-  // Business Verification (Submission & Management)
-  // NOTE: Uses relative paths (without "/api/") because businessApi.ts has baseURL="/api"
+  // Business Verification
   BUSINESS: {
     SUBMIT_PROFILE: "/business/profile/submit",
     GET_STATUS: "/business/profile/status",
@@ -98,30 +104,80 @@ export const API_ENDPOINTS = {
     GET_OPTIMIZATION_TIPS: "/business/profile/optimization-tips",
   },
 
-  // Collaborator Commission Management
+  // Collaborator
   COLLABORATOR: {
-    GET_COMMISSION_PROFILE: "/api/collaborator/commission/profile",
-    UPDATE_COMMISSION_PROFILE: "/api/collaborator/commission/profile",
-    GET_COMMISSION_STATS: "/api/collaborator/commission/stats",
-    VERIFY_BANKING_INFO: "/api/collaborator/commission/verify-banking",
+    GET_COMMISSION_PROFILE: "/api/collaborators/commission/profile",
+    UPDATE_COMMISSION_PROFILE: "/api/collaborators/commission/profile",
+    GET_COMMISSION_STATS: "/api/collaborators/commission/stats",
+    VERIFY_BANKING_INFO: "/api/collaborators/commission/verify-banking",
+    REQUEST_PAYOUT: "/api/collaborators/commission/payout",
   },
 
-  // Candidate CV & Profile Management
+  // Candidate
   CANDIDATE: {
-    CV_UPLOAD: "/api/candidate/cv/upload",
-    CV_LIST: "/api/candidate/cv/list",
-    CV_DETAIL: "/api/candidate/cv/{id}",
-    CV_DOWNLOAD: "/api/candidate/cv/{id}/download",
-    CV_DELETE: "/api/candidate/cv/{id}",
-    CV_MAKE_ACTIVE: "/api/candidate/cv/{id}/make-active",
+    CV_UPLOAD: "/api/cv",
+    CV_LIST: "/api/cv/myCv",
+    CV_DETAIL: "/api/cv/{id}",
+    CV_DOWNLOAD: "/api/cv/{id}/download",
+    CV_DELETE: "/api/cv/{id}",
+    CV_MAKE_ACTIVE: "/api/cv/MyCv",
     PROFILE_STRENGTH: "/api/candidate/profile/strength",
     PRIVACY_SETTINGS: "/api/candidate/profile/privacy",
+    APPLY_JOB: "/api/jobs/{jobId}/applications",
+    GET_MY_APPLICATIONS: "/api/candidates/me/applications",
   },
 
-  // Add more endpoints as needed
+  // Headhunter
+  HEADHUNTER: {
+    GET_JOB_APPLICATIONS: "/api/headhunter/jobs/{jobId}/applications",
+    GET_APPLICATION_DETAIL: "/api/headhunter/applications/{id}",
+    UPDATE_APPLICATION_STATUS: "/api/headhunter/applications/{id}/status",
+    SCHEDULE_INTERVIEW: "/api/headhunter/applications/{id}/interview",
+    CANDIDATE_SEARCH: "/api/v1/headhunter/candidates/search",
+    CANDIDATE_FILTER: "/api/v1/headhunter/candidates",
+  },
+
+  // Interview
+  INTERVIEW: {
+    SCHEDULE: "/api/interviews",
+    GET_LIST: "/api/interviews",
+    GET_DETAIL: "/api/interviews/{id}",
+    UPDATE: "/api/interviews/{id}",
+    CANCEL: "/api/interviews/{id}/cancel",
+  },
+
+  // Forum Categories
+  FORUM: {
+    CATEGORIES: {
+      GET_LIST: "/api/forum/categories",
+      GET_BY_ID: "/api/forum/categories/{id}",
+      CREATE: "/api/forum/categories",
+      UPDATE: "/api/forum/categories/{id}",
+      DELETE: "/api/forum/categories/{id}",
+      TOGGLE_STATUS: "/api/forum/categories/{id}/toggle-status",
+    },
+    POSTS: {
+      GET_LIST: "/api/forum/posts",
+      GET_BY_ID: "/api/forum/posts/{id}",
+      CREATE: "/api/forum/posts",
+      UPDATE: "/api/forum/posts/{id}",
+      DELETE: "/api/forum/posts/{id}",
+    },
+    UPLOAD_IMAGE: "/api/forum/upload-image",
+  },
+
+  // Verification (Admin)
+  VERIFICATION: {
+    GET_LIST: "/api/admin/verifications",
+    GET_DETAIL: "/api/admin/verifications/{id}",
+    APPROVE: "/api/admin/verifications/{id}/approve",
+    REJECT: "/api/admin/verifications/{id}/reject",
+    GET_STATS: "/api/admin/verification-stats",
+    GET_EVENTS: "/api/admin/verification-events",
+  },
 };
 
-// Feature Flags (for A/B testing, feature toggles)
+// Feature Flags
 export const FEATURE_FLAGS = {
   ENABLE_SOCIAL_LOGIN: import.meta.env.VITE_ENABLE_SOCIAL_LOGIN === "true",
   ENABLE_OTP_VERIFICATION:
@@ -135,7 +191,7 @@ export const UI_CONSTANTS = {
   TOAST_DURATION: 3000,
   DEBOUNCE_DELAY: 300,
   PAGINATION_SIZE: 10,
-  MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB
+  MAX_FILE_SIZE: 5 * 1024 * 1024,
   ALLOWED_IMAGE_TYPES: ["image/jpeg", "image/png", "image/webp"],
 };
 
@@ -159,8 +215,7 @@ export const VALIDATION_RULES = {
   },
 };
 
-// User Roles - MUST match backend Role enum (UPPERCASE)
-// Use types from features/users/types/user.types.ts for type safety
+// User Roles
 export const USER_ROLES = {
   ADMIN: "ADMIN",
   HEADHUNTER: "HEADHUNTER",
@@ -170,7 +225,7 @@ export const USER_ROLES = {
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
 
-// Job Status - MUST match backend JobStatus enum
+// Job Status
 export const JOB_STATUSES = {
   DRAFT: "DRAFT",
   OPEN: "OPEN",
@@ -179,7 +234,7 @@ export const JOB_STATUSES = {
 
 export type JobStatus = (typeof JOB_STATUSES)[keyof typeof JOB_STATUSES];
 
-// User Account Status - MUST match backend AccountStatus enum
+// Account Status
 export const ACCOUNT_STATUSES = {
   PENDING: "PENDING",
   ACTIVE: "ACTIVE",
@@ -190,7 +245,7 @@ export const ACCOUNT_STATUSES = {
 export type AccountStatus =
   (typeof ACCOUNT_STATUSES)[keyof typeof ACCOUNT_STATUSES];
 
-// Working Type - MUST match backend WorkingType enum
+// Working Type
 export const WORKING_TYPES = {
   ONSITE: "ONSITE",
   REMOTE: "REMOTE",
@@ -199,7 +254,7 @@ export const WORKING_TYPES = {
 
 export type WorkingType = (typeof WORKING_TYPES)[keyof typeof WORKING_TYPES];
 
-// OAuth Provider URLs
+// OAuth Provider URLs (Giữ lại từ Version 1 & 2)
 export const OAUTH_URLS = {
   GOOGLE_AUTH: "https://accounts.google.com/o/oauth2/v2/auth",
   LINKEDIN_AUTH: "https://www.linkedin.com/oauth/v2/authorization",
@@ -207,14 +262,11 @@ export const OAUTH_URLS = {
 
 // Admin Features & Routes
 export const ADMIN_FEATURES = {
-  // Admin Dashboard Routes
   USERS_MANAGEMENT: "/users",
   USER_CLASSIFICATION: "/users/classification",
   USER_DETAIL: (userId: string) => `/users/${userId}`,
-
-  // Admin-only API Endpoints (require SCOPE_ADMIN authority)
   ENDPOINTS: {
-    SEARCH_USERS: "/api/account/search", // Search & Classification feature
+    SEARCH_USERS: "/api/account/search",
     LOCK_USER: (userId: string) => `/api/account/${userId}/lock`,
     UNLOCK_USER: (userId: string) => `/api/account/${userId}/unlock`,
     SOFT_DELETE_USER: (userId: string) => `/api/account/${userId}/soft-delete`,

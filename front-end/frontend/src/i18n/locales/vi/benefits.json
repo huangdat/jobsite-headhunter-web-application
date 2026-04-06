@@ -1,0 +1,26 @@
+{
+  "quickPayout": {
+    "title": "Thanh toán nhanh",
+    "description": "Thanh toán nhanh"
+  },
+  "highRate": {
+    "title": "Tỷ lệ cao",
+    "description": "Tỷ lệ cao"
+  },
+  "support": {
+    "title": "Hỗ trợ",
+    "description": "Hỗ trợ"
+  },
+  "transparent": {
+    "title": "Minh bạch",
+    "description": "Minh bạch"
+  },
+  "noLimit": {
+    "title": "Không giới hạn",
+    "description": "Không giới hạn"
+  },
+  "tools": {
+    "title": "Công cụ",
+    "description": "Công cụ"
+  }
+}

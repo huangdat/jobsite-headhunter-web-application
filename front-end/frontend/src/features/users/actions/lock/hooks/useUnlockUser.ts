@@ -1,7 +1,8 @@
 import { usersApi } from "@/features/users/services/usersApi";
 import { useState } from "react";
-import { STORAGE_KEYS, AUDIT_LOG_ACTIONS } from "@/features/users/constants";
+import { AUDIT_LOG_ACTIONS } from "@/features/users/constants";
 import { useUsersTranslation } from "@/shared/hooks";
+import { useAuthUser } from "@/shared/hooks/useAuthUser";
 
 interface UnlockUserOptions {
   userId: string;
@@ -29,6 +30,7 @@ interface UnlockErrorResponse {
 
 export const useUnlockUser = () => {
   const { t } = useUsersTranslation();
+  const { userId: currentUserId } = useAuthUser();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,8 +47,6 @@ export const useUnlockUser = () => {
     setError(null);
 
     try {
-      const currentUserId = localStorage.getItem(STORAGE_KEYS.USER_ID);
-
       // Call API to unlock user (status = ACTIVE)
       await usersApi.unlockUser(userId);
 

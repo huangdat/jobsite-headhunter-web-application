@@ -1,4 +1,19 @@
 {
+  "buttons": {
+    "cancel": "Cancel",
+    "next": "Next",
+    "back": "Back"
+  },
+  "fields": {
+    "userInfo": "User",
+    "userId": "User ID",
+    "reason": "Reason",
+    "sendEmail": "Send Email Notification",
+    "requirePasswordChange": "Require Password Change"
+  },
+  "admin": {
+    "label": "Admin"
+  },
   "aria": {
     "goBack": "Go back to previous page",
     "editProfile": "Edit user profile",
@@ -24,20 +39,21 @@
     "rowsPerPage": "Rows per page:",
     "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} users"
   },
+  "user": {
+    "list": {
+      "empty": {
+        "description": "No users found"
+      }
+    }
+  },
   "filters": {
     "filterUsers": "Filter Users",
     "filterRole": "Role",
     "filterAllRoles": "All Roles",
     "filterStatus": "Status",
     "filterAllStatus": "All Status",
-    "filterCompany": "Company",
-    "filterAllCompanies": "All Companies",
     "applyFilter": "Apply Filter",
     "resetFilter": "Reset"
-  },
-  "status": {
-    "active": "Active",
-    "inactive": "Inactive"
   },
   "columns": {
     "user": "USER",
@@ -52,24 +68,20 @@
     "unlockAccount": "Unlock Account",
     "deleteUser": "Delete User"
   },
+  "failedToLoadUsers": "Failed to load users",
+  "noPermissionAccess": "You don't have permission to access this",
+  "sessionExpiredLoginAgain": "Your session has expired. Please login again.",
   "common": {
-    "loading": "Loading users...",
-    "noDataAvailable": "No data available",
     "failedToFetchUsers": "Failed to fetch users",
-    "failedToFetchUserDetails": "Failed to fetch user details",
-    "featureComingSoon": "Feature coming soon",
     "permanentDelete": "Permanent Delete",
     "loading": "Loading...",
-    "noDataAvailable": "No data available"
+    "noDataAvailable": "No data available",
+    "tryAgain": "Try Again"
   },
   "detail": {
     "userDetails": "User Details",
     "personalInfo": "Personal Information",
-    "accountInfo": "Account Information",
     "activityLog": "Activity Log",
-    "backToList": "Back to List",
-    "editUser": "Edit User",
-    "saveChanges": "Save Changes",
     "basicInformation": "Basic Information",
     "fullName": "Full Name",
     "email": "Email",
@@ -87,7 +99,6 @@
     "editProfile": "Edit Profile",
     "exportData": "Export Data",
     "loginHistory": "Login History",
-    "dateAndTime": "Date & Time",
     "dateTime": "Date & Time",
     "ipAddress": "IP Address",
     "deviceBrowser": "Device / Browser",
@@ -97,6 +108,8 @@
     "dangerZoneDesc": "The actions below will directly affect user access and system data.",
     "lockAccount": "Lock Account",
     "lockAccountDesc": "Temporarily block access. User can unlock when needed.",
+    "unlockAccount": "Unlock Account",
+    "unlockAccountDesc": "Click to unlock this account",
     "softDelete": "Soft Delete",
     "softDeleteDesc": "Mark for deletion. Data is kept for 30 days for recovery.",
     "hardDelete": "Hard Delete",
@@ -109,41 +122,21 @@
     "PENDING": "Pending",
     "ACTIVE": "Active",
     "SUSPENDED": "Suspended",
-    "DELETED": "Deleted",
-    "pending": "Pending",
-    "active": "Active",
-    "suspended": "Suspended",
-    "deleted": "Deleted"
+    "DELETED": "Deleted"
   },
   "loginStatus": {
-    "successful": "Successful",
     "success": "Success",
-    "failed": "Failed Attempt",
-    "failedAttempt": "Failed",
-    "failedLabel": "Failed"
+    "failedAttempt": "Failed"
   },
   "roles": {
-    "admin": "Administrator",
-    "headhunter": "Head Hunter",
-    "collaborator": "Collaborator",
-    "candidate": "Candidate",
     "ADMIN": "Administrator",
     "HEADHUNTER": "Head Hunter",
     "COLLABORATOR": "Collaborator",
     "CANDIDATE": "Candidate"
   },
-  "confirmations": {
-    "lockAccount": "Are you sure you want to lock this account?",
-    "softDelete": "Are you sure you want to soft delete this account? Data will be kept for 30 days.",
-    "hardDelete": "⚠️ ARE YOU SURE? This action cannot be undone! All data will be permanently deleted."
-  },
   "messages": {
-    "lockSuccess": "Account has been locked",
-    "lockError": "Unable to lock account",
-    "softDeleteSuccess": "Account has been deleted (can be recovered within 30 days)",
-    "softDeleteError": "Unable to delete account",
-    "hardDeleteSuccess": "Account has been permanently deleted",
-    "hardDeleteError": "Unable to delete account"
+    "failedToLockUser": "Failed to lock user",
+    "failedToUnlockUser": "Failed to unlock user"
   },
   "sections": {
     "loginHistory": "🛡️ Login History",
@@ -195,7 +188,6 @@
     "errorInsufficientPermission": "Insufficient Permission",
     "errorInsufficientPermissionDescription": "You do not have permission to lock this account.",
     "cancel": "Cancel",
-    "next": "Next",
     "back": "Back",
     "confirmAction": "Confirm Lock",
     "processing": "Processing...",
@@ -209,9 +201,6 @@
     "title": "Unlock User Account",
     "description": "Unlock a locked user account and restore access",
     "userInfo": "User",
-    "reasonLabel": "Unlock Reason",
-    "reasonPlaceholder": "Provide reason for unlock...",
-    "reasonHint": "Briefly explain why this account is being unlocked",
     "notificationSettings": "Notification Settings",
     "sendEmailLabel": "Send Email Notification",
     "sendEmailDescription": "Notify user of account unlock via email",
@@ -234,7 +223,6 @@
     "errorDescription": "An error occurred while unlocking the account",
     "cancel": "Cancel",
     "next": "Next",
-    "back": "Back",
     "confirmAction": "Confirm Unlock",
     "processing": "Processing...",
     "close": "Close",
@@ -246,7 +234,6 @@
   "delete": {
     "title": "Delete User",
     "selectMethod": "Select a deletion method for this user account",
-    "userInfo": "User",
     "relatedDataWarning": "⚠️ This user has associated data:",
     "applicationsCount": "Job Applications",
     "jobsCount": "Job Posts",
@@ -286,7 +273,6 @@
     "relatedDataFound": "Related data found:",
     "conflictResolution": "Please use Soft Delete to lock this account while keeping the related data intact.",
     "cancel": "Cancel",
-    "next": "Next",
     "back": "Back",
     "confirmAction": "Confirm Deletion",
     "processing": "Processing...",
@@ -300,10 +286,7 @@
     "errorSoftDelete": "Failed to soft delete user",
     "errorHardDelete": "Failed to hard delete user",
     "errorConflict": "User has related data. Please use Soft Delete instead",
-    "errorGeneral": "An error occurred during deletion",
-    "errorNotFound": "User not found",
-    "errorUnauthorized": "You are not authorized to perform this action",
-    "errorNetwork": "Network error. Please try again"
+    "errorGeneral": "An error occurred during deletion"
   },
   "classification": {
     "pageTitle": "User Classification",
@@ -349,29 +332,14 @@
       "candidate": "Job Seekers"
     },
     "statuses": {
-      "active": "Active",
-      "locked": "Locked",
-      "suspended": "Suspended",
       "pending": "Pending"
     },
     "statusSubtitles": {
-      "active": "Verified and accessible accounts",
-      "locked": "Disabled accounts",
-      "suspended": "Temporarily suspended accounts",
       "pending": "Waiting for email verification"
     },
-    "companyEmployees": "employees and representatives",
-    "usersRegisteredIn": "Users registered in",
     "unknown": "Unknown",
-    "active": "Active",
-    "inactive": "Inactive",
     "error": {
-      "permissionDenied": "Permission Denied",
-      "permissionDeniedDescription": "You do not have permission to access the classification feature. Only administrators can view user classifications.",
-      "unauthorized": "Unauthorized",
-      "unauthorizedDescription": "Your session has expired. Please login again to continue.",
-      "loadFailed": "Failed to Load Users",
-      "loadFailedDescription": "Unable to load user data. Please try again later."
+      "permissionDenied": "Permission Denied"
     }
   }
 }

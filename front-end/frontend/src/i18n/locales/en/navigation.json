@@ -1,5 +1,4 @@
 {
-  "home": "Home",
   "profile": "Profile",
   "settings": "Settings",
   "logout": "Logout",
@@ -7,6 +6,7 @@
   "signUp": "Sign Up",
   "postJob": "Post a Job",
   "dashboard": "Dashboard",
+  "forum": "Forum",
   "adminDashboard": "Admin Dashboard",
   "jobs": "Jobs",
   "referrals": "Referrals",
@@ -15,5 +15,9 @@
   "notifications": "Notifications",
   "logs": "Logs",
   "users": "Users",
-  "classification": "Classification"
+  "classification": "Classification",
+  "featuredJobs": "Featured Jobs",
+  "recommended": "Recommended",
+  "topCompanies": "Top Companies",
+  "openMenu": "Open Menu"
 }

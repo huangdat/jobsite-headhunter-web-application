@@ -52,11 +52,11 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
           <div className="border border-slate-200 rounded-lg p-4">
             <div className="flex items-center gap-3 mb-3">
               <Lock className="w-5 h-5 text-slate-700" />
-              <h3 className="font-semibold text-slate-900">
+              <h3 className="font-semibold text-slate-900 dark:text-slate-50">
                 {t("detail.lockAccount")}
               </h3>
             </div>
-            <p className="text-slate-600 text-sm mb-4">
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
               {t("detail.lockAccountDesc")}
             </p>
             <button
@@ -80,11 +80,11 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
           <div className="border border-emerald-200 rounded-lg p-4 bg-emerald-50">
             <div className="flex items-center gap-3 mb-3">
               <Unlock className="w-5 h-5 text-emerald-700" />
-              <h3 className="font-semibold text-slate-900">
+              <h3 className="font-semibold text-slate-900 dark:text-slate-50">
                 {t("detail.unlockAccount")}
               </h3>
             </div>
-            <p className="text-slate-600 text-sm mb-4">
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
               {t("detail.unlockAccountDesc")}
             </p>
             <button
@@ -106,11 +106,11 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
         <div className="border border-red-200 rounded-lg p-4 bg-red-50">
           <div className="flex items-center gap-3 mb-3">
             <AlertCircle className="w-5 h-5 text-red-700" />
-            <h3 className="font-semibold text-slate-900">
+            <h3 className="font-semibold text-slate-900 dark:text-slate-50">
               {t("detail.softDelete")}
             </h3>
           </div>
-          <p className="text-slate-600 text-sm mb-4">
+          <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
             {t("detail.softDeleteDesc")}
           </p>
           <button
@@ -131,11 +131,11 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
         <div className="border border-red-200 rounded-lg p-4 bg-red-50">
           <div className="flex items-center gap-3 mb-3">
             <AlertTriangle className="w-5 h-5 text-red-700" />
-            <h3 className="font-semibold text-slate-900">
+            <h3 className="font-semibold text-slate-900 dark:text-slate-50">
               {t("detail.hardDelete")}
             </h3>
           </div>
-          <p className="text-slate-600 text-sm mb-4">
+          <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
             {t("detail.hardDeleteDesc")}
           </p>
           <button

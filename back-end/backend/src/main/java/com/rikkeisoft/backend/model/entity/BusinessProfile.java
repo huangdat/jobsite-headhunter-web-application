@@ -4,6 +4,7 @@ import com.rikkeisoft.backend.enums.VerificationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.BatchSize;
 
 @Data
 @Entity
@@ -12,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "business_profile")
+@BatchSize(size = 50)
 public class BusinessProfile {
 
     @Id

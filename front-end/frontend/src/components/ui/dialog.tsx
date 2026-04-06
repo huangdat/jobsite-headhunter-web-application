@@ -1,41 +1,41 @@
 import * as React from "react";
-import { Dialog as DialogPrimitive } from "radix-ui";
+import * as DialogRadix from "@radix-ui/react-dialog";
 import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 
-function Dialog({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Root>) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />;
+function Dialog({ ...props }: React.ComponentProps<typeof DialogRadix.Root>) {
+  return <DialogRadix.Root data-slot="dialog" {...props} />;
 }
 
 function DialogTrigger({
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
-  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
+}: React.ComponentProps<typeof DialogRadix.Trigger>) {
+  return <DialogRadix.Trigger data-slot="dialog-trigger" {...props} />;
 }
 
 function DialogPortal({
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Portal>) {
-  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
+}: React.ComponentProps<typeof DialogRadix.Portal>) {
+  return <DialogRadix.Portal data-slot="dialog-portal" {...props} />;
 }
 
 function DialogClose({
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>) {
-  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
+}: React.ComponentProps<typeof DialogRadix.Close>) {
+  return <DialogRadix.Close data-slot="dialog-close" {...props} />;
 }
 
-function DialogOverlay({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
+// 1. ADDED forwardRef HERE
+const DialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogRadix.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogRadix.Overlay>
+>(({ className, ...props }, ref) => {
   return (
-    <DialogPrimitive.Overlay
+    <DialogRadix.Overlay
+      ref={ref}
       data-slot="dialog-overlay"
       className={cn(
         "fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
@@ -44,20 +44,21 @@ function DialogOverlay({
       {...props}
     />
   );
-}
+});
+DialogOverlay.displayName = DialogRadix.Overlay.displayName;
 
-function DialogContent({
-  className,
-  children,
-  showCloseButton = true,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content> & {
-  showCloseButton?: boolean;
-}) {
+// 2. ADDED forwardRef HERE
+const DialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogRadix.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogRadix.Content> & {
+    showCloseButton?: boolean;
+  }
+>(({ className, children, showCloseButton = true, ...props }, ref) => {
   return (
     <DialogPortal>
       <DialogOverlay />
-      <DialogPrimitive.Content
+      <DialogRadix.Content
+        ref={ref}
         data-slot="dialog-content"
         className={cn(
           "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-background p-4 text-sm ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
@@ -67,7 +68,7 @@ function DialogContent({
       >
         {children}
         {showCloseButton && (
-          <DialogPrimitive.Close data-slot="dialog-close" asChild>
+          <DialogRadix.Close data-slot="dialog-close" asChild>
             <Button
               variant="ghost"
               className="absolute top-2 right-2"
@@ -76,12 +77,13 @@ function DialogContent({
               <XIcon />
               <span className="sr-only">Close</span>
             </Button>
-          </DialogPrimitive.Close>
+          </DialogRadix.Close>
         )}
-      </DialogPrimitive.Content>
+      </DialogRadix.Content>
     </DialogPortal>
   );
-}
+});
+DialogContent.displayName = DialogRadix.Content.displayName;
 
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -113,33 +115,38 @@ function DialogFooter({
     >
       {children}
       {showCloseButton && (
-        <DialogPrimitive.Close asChild>
+        <DialogRadix.Close asChild>
           <Button variant="outline">{t("dialogs.closeDialog")}</Button>
-        </DialogPrimitive.Close>
+        </DialogRadix.Close>
       )}
     </div>
   );
 }
 
-function DialogTitle({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Title>) {
+// 3. ADDED forwardRef HERE to be safe
+const DialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogRadix.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogRadix.Title>
+>(({ className, ...props }, ref) => {
   return (
-    <DialogPrimitive.Title
+    <DialogRadix.Title
+      ref={ref}
       data-slot="dialog-title"
       className={cn("text-base leading-none font-medium", className)}
       {...props}
     />
   );
-}
+});
+DialogTitle.displayName = DialogRadix.Title.displayName;
 
-function DialogDescription({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Description>) {
+// 4. ADDED forwardRef HERE to be safe
+const DialogDescription = React.forwardRef<
+  React.ElementRef<typeof DialogRadix.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogRadix.Description>
+>(({ className, ...props }, ref) => {
   return (
-    <DialogPrimitive.Description
+    <DialogRadix.Description
+      ref={ref}
       data-slot="dialog-description"
       className={cn(
         "text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
@@ -148,7 +155,8 @@ function DialogDescription({
       {...props}
     />
   );
-}
+});
+DialogDescription.displayName = DialogRadix.Description.displayName;
 
 export {
   Dialog,

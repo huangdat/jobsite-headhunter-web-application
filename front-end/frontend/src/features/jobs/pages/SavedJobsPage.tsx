@@ -1,102 +1,82 @@
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-
+import {
+  useJobsTranslation,
+  useSavedJobsQuery,
+  useRemoveSavedJobMutation,
+} from "@/shared/hooks";
+import {
+  SmallText,
+  MetaText,
+  SubsectionTitle,
+} from "@/shared/components/typography/Typography";
+import { useAuth } from "@/features/auth/context/useAuth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { fetchSavedJobs, removeSavedJob } from "../services/jobsApi";
-import type { SavedJob } from "../types";
 import { formatSalaryRange } from "../utils";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { EmptyState } from "@/shared/components/EmptyState";
+import { Bookmark } from "lucide-react";
+
+// Helper function to extract error message from API errors
+const getErrorMessage = (err: Error, fallback: string): string => {
+  const apiError = err as unknown as {
+    response?: { data?: { message?: string } };
+  };
+  return apiError?.response?.data?.message || err?.message || fallback;
+};
 
 export function SavedJobsPage() {
-  const { t } = useTranslation("jobs");
+  const { t } = useJobsTranslation();
   const navigate = useNavigate();
-  const [jobs, setJobs] = useState<SavedJob[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [removingId, setRemovingId] = useState<number | null>(null);
+  const { isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    let active = true;
-    setIsLoading(true);
-    fetchSavedJobs()
-      .then((data) => {
-        if (!active) return;
-        setJobs(data);
-        setError(null);
-      })
-      .catch(() => {
-        if (!active) return;
-        setError(t("jobs.saved.unableToLoadSavedJobs"));
-      })
-      .finally(() => {
-        if (active) {
-          setIsLoading(false);
-        }
-      });
+  // React Query: fetch and cache saved jobs
+  const {
+    data: jobs = [],
+    isLoading,
+    error,
+  } = useSavedJobsQuery(isAuthenticated);
 
-    return () => {
-      active = false;
-    };
-  }, [t]);
+  // Mutation: remove a saved job
+  const removeJobMutation = useRemoveSavedJobMutation();
 
-  const handleRemove = async (jobId: number) => {
-    setRemovingId(jobId);
-    try {
-      await removeSavedJob(jobId);
-      setJobs((prev) => prev.filter((job) => job.jobId !== jobId));
-      toast.success(t("jobs.saved.jobRemovedSuccess"));
-    } catch (error) {
-      const err = error as Error & {
-        response?: { data?: { message: string } };
-      };
-      console.error("Failed to remove saved job:", err);
-      const serverMessage = err?.response?.data?.message || err?.message;
-      toast.error(serverMessage || t("jobs.saved.unableToRemoveJob"));
-    } finally {
-      setRemovingId(null);
-    }
+  const handleRemove = (jobId: number) => {
+    removeJobMutation.mutate(jobId, {
+      onSuccess: () => {
+        toast.success(t("saved.jobRemovedSuccess"));
+      },
+      onError: (err: Error) => {
+        toast.error(getErrorMessage(err, t("saved.unableToRemoveJob")));
+      },
+    });
   };
 
   const renderContent = () => {
     if (isLoading) {
-      return (
-        <div className="space-y-4">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div
-              key={index}
-              className="h-32 animate-pulse rounded-3xl bg-white"
-            />
-          ))}
-        </div>
-      );
+      return <PageSkeleton variant="list" count={3} />;
     }
 
     if (error) {
       return (
-        <div className="rounded-3xl bg-white p-10 text-center shadow">
-          <p className="text-slate-600">{error}</p>
-          <Button className="mt-4" onClick={() => window.location.reload()}>
-            {t("jobs.saved.tryAgainButton")}
-          </Button>
-        </div>
+        <ErrorState
+          variant="card"
+          title={t("saved.unableToLoadSavedJobs")}
+          onRetry={() => window.location.reload()}
+        />
       );
     }
 
     if (jobs.length === 0) {
       return (
-        <div className="rounded-3xl bg-white p-10 text-center shadow">
-          <p className="text-lg font-semibold text-slate-900">
-            {t("jobs.saved.noSavedJobs")}
-          </p>
-          <p className="mt-2 text-sm text-slate-500">
-            {t("jobs.saved.emptyStateHint")}
-          </p>
-          <Button className="mt-6" onClick={() => navigate("/jobs")}>
-            {t("jobs.saved.browseJobsButton")}
-          </Button>
-        </div>
+        <EmptyState
+          icon={Bookmark}
+          title={t("saved.noSavedJobs")}
+          description={t("saved.emptyStateHint")}
+          actionLabel={t("saved.browseJobsButton")}
+          onAction={() => navigate("/jobs")}
+        />
       );
     }
 
@@ -108,50 +88,48 @@ export function SavedJobsPage() {
             className="flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between"
           >
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">
-                {job.companyName ?? t("jobs.saved.confidentialCompany")}
-              </p>
-              <h3 className="mt-1 text-lg font-semibold text-slate-900">
-                {job.title}
-              </h3>
-              <div className="mt-2 flex flex-wrap gap-3 text-sm text-slate-500">
-                <span>{job.location}</span>
-                <span>
-                  {t("jobs.saved.postedText")}{" "}
+              <MetaText className="text-lime-500">
+                {job.companyName ?? t("saved.confidentialCompany")}
+              </MetaText>
+              <SubsectionTitle className="mt-1">{job.title}</SubsectionTitle>
+              <div className="mt-2 flex flex-wrap gap-3">
+                <SmallText variant="muted">{job.location}</SmallText>
+                <SmallText variant="muted">
+                  {t("saved.postedText")}{" "}
                   {job.postedDate
                     ? new Date(job.postedDate).toLocaleDateString("en-US")
-                    : t("jobs.saved.recentlyPosted")}
-                </span>
+                    : t("saved.recentlyPosted")}
+                </SmallText>
               </div>
-              <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+              <div className="mt-3 flex flex-wrap items-center gap-3">
                 <Badge variant="secondary">{job.status}</Badge>
-                <span className="font-semibold text-slate-900">
+                <SmallText weight="bold" className="text-slate-900">
                   {formatSalaryRange(
                     job.salaryMin,
                     job.salaryMax,
                     job.currency
                   )}
-                </span>
+                </SmallText>
               </div>
             </div>
 
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button
                 variant="outline"
-                className="sm:min-w-[calc(140px)]"
+                className="sm:min-w-[calc(140px)] cursor-pointer"
                 onClick={() => navigate(`/jobs/${job.jobId}`)}
               >
-                {t("jobs.saved.viewJobButton")}
+                {t("saved.viewJobButton")}
               </Button>
               <Button
                 variant="ghost"
-                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700"
+                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700 cursor-pointer"
                 onClick={() => handleRemove(job.jobId)}
-                disabled={removingId === job.jobId}
+                disabled={removeJobMutation.isPending}
               >
-                {removingId === job.jobId
-                  ? t("jobs.saved.removingButton")
-                  : t("jobs.saved.removeButton")}
+                {removeJobMutation.isPending
+                  ? t("saved.removingButton")
+                  : t("saved.removeButton")}
               </Button>
             </div>
           </div>
@@ -161,20 +139,14 @@ export function SavedJobsPage() {
   };
 
   return (
-    <div className="bg-slate-50 pb-16 pt-10">
-      <div className="mx-auto max-w-6xl space-y-6 px-4">
-        <div>
-          <p className="text-sm text-slate-500">{t("jobs.saved.breadcrumb")}</p>
-          <h1 className="mt-1 text-3xl font-bold text-slate-900">
-            {t("jobs.saved.pageTitle")}
-          </h1>
-          <p className="mt-2 text-sm text-slate-500">
-            {t("jobs.saved.description")}
-          </p>
-        </div>
+    <PageContainer variant="white">
+      <PageHeader
+        variant="default"
+        title={t("saved.pageTitle")}
+        description={t("saved.description")}
+      />
 
-        {renderContent()}
-      </div>
-    </div>
+      {renderContent()}
+    </PageContainer>
   );
 }

@@ -115,6 +115,7 @@ export interface AccountResp {
   phone: string;
   imageUrl?: string;
   gender?: "MALE" | "FEMALE" | "OTHER";
+  businessProfileId?: number | null;
   authProvider: "LOCAL" | "GOOGLE" | "FACEBOOK";
   status: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
   roles: string[];

@@ -68,6 +68,7 @@ public class SecurityConfig {
                         "/docs", // because springdoc.swagger-ui.path = /docs
                         "/oauth2-login-test.html" // Allow access to test page
                 ).permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/jobs/my", "/api/jobs/saved").authenticated()
                 .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
                 .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                 .requestMatchers(HttpMethod.PUT, PUBLIC_PUT_ENDPOINTS).permitAll()

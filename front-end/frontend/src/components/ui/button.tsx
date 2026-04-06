@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Slot } from "radix-ui";
+import * as Slot from "@radix-ui/react-slot";
 
 import { cn } from "@/lib/utils";
 
@@ -12,6 +12,15 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
         primary:
           "w-full text-black font-bold rounded-2xl shadow-lg shadow-green-500/25 bg-gradient-to-r from-[#00C853] to-[#39FF14] hover:opacity-90 hover:-translate-y-0.5 disabled:opacity-50",
+        // Brand variants using design tokens
+        "brand-primary":
+          "bg-brand-primary text-black font-bold rounded-xl shadow-lg shadow-brand-primary/20 hover:bg-brand-hover transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed dark:bg-brand-primary dark:hover:bg-brand-hover",
+        "brand-secondary":
+          "bg-brand-primary/10 text-black font-semibold rounded-xl border border-brand-primary/20 hover:bg-brand-primary/20 transition-all disabled:opacity-50",
+        "brand-outline":
+          "border-2 border-brand-primary bg-transparent text-black font-semibold rounded-xl hover:bg-brand-primary/10 transition-all disabled:opacity-50",
+        "brand-ghost":
+          "bg-transparent text-brand-primary font-semibold hover:bg-brand-primary/10 transition-all disabled:opacity-50",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
@@ -26,17 +35,16 @@ const buttonVariants = cva(
       },
       size: {
         default:
-          "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
-        xl: "py-4 px-4 gap-2",
-        icon: "size-8",
-        "icon-xs":
-          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm":
-          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
-        "icon-lg": "size-9",
+          "h-10 gap-1.5 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
+        xs: "h-8 gap-1 rounded-lg px-3 text-xs has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3.5",
+        sm: "h-9 gap-1 rounded-lg px-3.5 text-sm has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-4",
+        lg: "h-11 gap-2 px-5 text-base has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
+        xl: "h-12 gap-2 px-6 text-base font-bold has-data-[icon=inline-end]:pr-5 has-data-[icon=inline-start]:pl-5",
+        icon: "size-10",
+        "icon-xs": "size-8 rounded-lg [&_svg:not([class*='size-'])]:size-3.5",
+        "icon-sm": "size-9 rounded-lg [&_svg:not([class*='size-'])]:size-4",
+        "icon-lg": "size-11",
+        "icon-xl": "size-12",
       },
     },
     defaultVariants: {

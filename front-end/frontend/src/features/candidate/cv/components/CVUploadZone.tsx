@@ -5,6 +5,8 @@
 
 import React, { useState, useCallback } from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { Button } from "@/components/ui/button";
+import { validateCVFile } from "../services/cvApi";
 import type { CVUploadZoneProps } from "../types";
 import { CVErrorBanner } from "./CVErrorBanner";
 
@@ -20,7 +22,7 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 }) => {
   const { t } = useCandidateTranslation();
   const [isDragging, setIsDragging] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); //new
   const [localError, setLocalError] = useState<string | null>(null);
 
   const getFormattedSize = (bytes: number) => {
@@ -33,22 +35,16 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 
   const validateFile = useCallback(
     (file: File): boolean => {
-      // Check file size
-      if (file.size > maxFileSize) {
-        setLocalError("validation.fileTooLarge");
+      const result = validateCVFile(
+        file,
+        maxFileSize,
+        supportedFormats as string[]
+      );
+      if (!result.valid) {
+        setLocalError(result.error ?? "");
         setSelectedFile(file);
         return false;
       }
-
-      // Check file format
-      const fileExtension = (file.name.split(".").pop()?.toLowerCase() ||
-        "") as string;
-      if (!supportedFormats.includes(fileExtension as never)) {
-        setLocalError("validation.invalidFileFormat");
-        setSelectedFile(file);
-        return false;
-      }
-
       return true;
     },
     [maxFileSize, supportedFormats]
@@ -159,14 +155,12 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                 </span>
               </div>
             </div>
-
             <h3 className="text-lg font-bold text-slate-900">
               {t("cv.management.error.banner")}
             </h3>
             <p className="text-sm text-slate-600">
               {t("cv.management.error.fileFormatInvalid")}
             </p>
-
             {/* File Preview with Error */}
             <div className="bg-red-50/10 border border-red-200/20 rounded-lg p-4 mx-auto max-w-sm mt-4">
               <div className="flex items-center gap-3">
@@ -178,33 +172,35 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                     {selectedFile.name}
                   </p>
                   <p className="text-xs text-red-700 font-semibold">
+                    {getFormattedSize(selectedFile.size)} • {displayError}
                     {selectedFile.size} •{" "}
                     {displayError === "validation.fileTooLarge"
-                      ? t("candidate.validation.fileTooLargeShort")
-                      : t("candidate.validation.invalidFileFormatShort")}
+                      ? t("validation.fileTooLargeShort")
+                      : t("validation.invalidFileFormatShort")}
                   </p>
                 </div>
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => setSelectedFile(null)}
-                  className="text-red-700 hover:bg-red-50/10 p-1 rounded transition-colors"
+                  className="text-red-700"
                   title={t("cv.management.validation.clear")}
                   aria-label={t("cv.management.validation.clear")}
                 >
                   <span className="material-symbols-outlined text-lg">
                     close
                   </span>
-                </button>
+                </Button>
               </div>
-            </div>
-
+            </div>{" "}
             {/* Retry Button */}
-            <button
+            <Button
               onClick={handleBrowseClick}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-dim transition-colors text-sm"
+              className="inline-flex items-center gap-2"
             >
-              <span className="material-symbols-outlined">refresh</span>
+              <span className="material-symbols-outlined mr-2">refresh</span>
               {t("cv.management.error.tryAnother")}
-            </button>
+            </Button>
           </div>
         ) : (
           // Upload Ready State
@@ -225,18 +221,20 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
 
             {/* Description */}
             <p className="text-sm text-slate-600 max-w-md mx-auto">
-              {t("candidate.tips.uploadPlaceholder")}
+              {t("tips.uploadPlaceholder")}
             </p>
 
             {/* Actions */}
             <div className="flex flex-col items-center gap-3 pt-2">
-              <button
+              <Button
                 onClick={handleBrowseClick}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-dim transition-colors text-sm"
+                className="inline-flex items-center gap-2"
               >
-                <span className="material-symbols-outlined">folder_open</span>
+                <span className="material-symbols-outlined mr-2">
+                  folder_open
+                </span>
                 {t("cv.management.success.browseFiles")}
-              </button>
+              </Button>
 
               {/* Hidden File Input */}
               <input

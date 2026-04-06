@@ -4,7 +4,7 @@
  */
 
 import { useState, useCallback, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 import type {
   CommissionProfile,
   CommissionFormData,
@@ -23,7 +23,7 @@ interface CommissionManagementState {
 }
 
 export function useCommissionManagement() {
-  const { t } = useTranslation();
+  const { t } = useCommissionTranslation();
   const [state, setState] = useState<CommissionManagementState>({
     profile: null,
     stats: null,
@@ -65,9 +65,7 @@ export function useCommissionManagement() {
         setState((prev) => ({
           ...prev,
           error:
-            err instanceof Error
-              ? err.message
-              : t("messages.failedToLoadCommission"),
+            err instanceof Error ? err.message : t("failedToLoadCommission"),
           loading: false,
         }));
       }
@@ -115,10 +113,7 @@ export function useCommissionManagement() {
     } catch (err) {
       setState((prev) => ({
         ...prev,
-        error:
-          err instanceof Error
-            ? err.message
-            : t("messages.failedToSaveProfile"),
+        error: err instanceof Error ? err.message : t("failedToSaveProfile"),
         saving: false,
       }));
     }

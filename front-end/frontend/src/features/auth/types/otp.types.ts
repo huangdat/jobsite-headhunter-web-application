@@ -8,7 +8,7 @@ export interface SendOtpRequest {
 }
 
 export interface OtpSendResp {
-  accountId: string;
+  accountId?: string; // Optional - backend may return null
   email: string;
   tokenType: OtpTokenType;
   createdAt: string;
@@ -16,7 +16,7 @@ export interface OtpSendResp {
 }
 
 export interface VerifyOtpRequest {
-  accountId: string;
+  accountId?: string; // Optional - not required by backend
   email: string;
   code: string;
   tokenType: OtpTokenType;

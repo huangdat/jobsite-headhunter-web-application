@@ -4,6 +4,7 @@ import { useUsersTranslation } from "@/shared/hooks";
 import { usersApi } from "@/features/users/services/usersApi";
 import type { PagedResponse } from "@/features/users/services/usersApi";
 import type { UserDetail } from "@/features/users/types/user.types";
+import { PageContainer, PageHeader } from "@/shared/components/layout";
 
 export const AdminDashboardPage: React.FC = () => {
   const { t } = useUsersTranslation();
@@ -46,146 +47,140 @@ export const AdminDashboardPage: React.FC = () => {
   }, []);
 
   return (
-    <main className="flex-1 flex flex-col overflow-hidden bg-background-light dark:bg-background-dark">
-      {/* Header */}
-      <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-          {t("classification.pageTitle")} - {t("adminFeatures.adminLabel")}
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-1">
-          {t("classification.description")}
-        </p>
-      </div>
+    <PageContainer variant="default" maxWidth="7xl">
+      <PageHeader
+        variant="bordered"
+        title={t("classification.pageTitle") + " - " + t("admin.label")}
+        description={t("classification.description")}
+      />
 
       {/* Stats Grid */}
-      <div className="flex-1 overflow-auto px-6 pb-6 pt-6">
-        {loading ? (
-          <div className="flex items-center justify-center h-64">
-            <div className="text-center">
-              <div className="w-12 h-12 rounded-full border-4 border-slate-200 dark:border-slate-700 border-t-primary mx-auto mb-4 animate-spin" />
-              <p className="text-slate-600 dark:text-slate-400">
-                {t("common.loading")}
-              </p>
+      {loading ? (
+        <div className="flex items-center justify-center min-h-100">
+          <div className="text-center">
+            <div className="w-12 h-12 rounded-full border-4 border-slate-200 dark:border-slate-700 border-t-brand-primary mx-auto mb-4 animate-spin" />
+            <p className="text-slate-600 dark:text-slate-400">
+              {t("common.loading")}
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {/* Total Users Card */}
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    {t("classification.totalUsers")}
+                  </p>
+                  <p className="text-3xl font-bold text-slate-900 dark:text-white">
+                    {stats.totalUsers}
+                  </p>
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                  <span className="text-2xl">👥</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Active Users Card */}
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    {t("statuses.ACTIVE")}
+                  </p>
+                  <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+                    {stats.activeUsers}
+                  </p>
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                  <span className="text-2xl">✅</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Suspended Users Card */}
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    {t("statuses.SUSPENDED")}
+                  </p>
+                  <p className="text-3xl font-bold text-red-600 dark:text-red-400">
+                    {stats.suspendedUsers}
+                  </p>
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                  <span className="text-2xl">🔒</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Pending Users Card */}
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    {t("statuses.PENDING")}
+                  </p>
+                  <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
+                    {stats.pendingUsers}
+                  </p>
+                </div>
+                <div className="w-12 h-12 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
+                  <span className="text-2xl">⏳</span>
+                </div>
+              </div>
             </div>
           </div>
-        ) : (
-          <>
-            {/* Statistics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              {/* Total Users Card */}
-              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                      {t("classification.totalUsers")}
-                    </p>
-                    <p className="text-3xl font-bold text-slate-900 dark:text-white">
-                      {stats.totalUsers}
-                    </p>
-                  </div>
-                  <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                    <span className="text-2xl">👥</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* Active Users Card */}
-              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                <div className="flex items-start justify-between">
+          {/* Quick Actions */}
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+              {t("classification.quickNavigation")}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button
+                onClick={() => navigate("/admin/users")}
+                className="p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">👥</span>
                   <div>
-                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                      {t("statuses.active")}
+                    <p className="font-semibold text-slate-900 dark:text-white">
+                      {t("classification.userManagementTitle")}
                     </p>
-                    <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-                      {stats.activeUsers}
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      {t("classification.userManagementDesc")}
                     </p>
-                  </div>
-                  <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="text-2xl">✅</span>
                   </div>
                 </div>
-              </div>
+              </button>
 
-              {/* Suspended Users Card */}
-              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                <div className="flex items-start justify-between">
+              <button
+                onClick={() => navigate("/admin/users/classification")}
+                className="p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-900/10 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">📊</span>
                   <div>
-                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                      {t("statuses.suspended")}
+                    <p className="font-semibold text-slate-900 dark:text-white">
+                      {t("classification.classificationTitle")}
                     </p>
-                    <p className="text-3xl font-bold text-red-600 dark:text-red-400">
-                      {stats.suspendedUsers}
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      {t("classification.classificationDesc")}
                     </p>
-                  </div>
-                  <div className="w-12 h-12 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                    <span className="text-2xl">🔒</span>
                   </div>
                 </div>
-              </div>
-
-              {/* Pending Users Card */}
-              <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                      {t("statuses.pending")}
-                    </p>
-                    <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
-                      {stats.pendingUsers}
-                    </p>
-                  </div>
-                  <div className="w-12 h-12 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
-                    <span className="text-2xl">⏳</span>
-                  </div>
-                </div>
-              </div>
+              </button>
             </div>
-
-            {/* Quick Actions */}
-            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-                {t("classification.quickNavigation")}
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button
-                  onClick={() => navigate("/users")}
-                  className="p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl">👥</span>
-                    <div>
-                      <p className="font-semibold text-slate-900 dark:text-white">
-                        {t("classification.userManagementTitle")}
-                      </p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        {t("classification.userManagementDesc")}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => navigate("/users/classification")}
-                  className="p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-900/10 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl">📊</span>
-                    <div>
-                      <p className="font-semibold text-slate-900 dark:text-white">
-                        {t("classification.classificationTitle")}
-                      </p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        {t("classification.classificationDesc")}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    </main>
+          </div>
+        </div>
+      )}
+    </PageContainer>
   );
 };
 

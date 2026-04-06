@@ -19,7 +19,9 @@ export function AnimatedCheckbox({ checked, onChange, label }: Props) {
         <svg
           viewBox="0 0 22 22"
           className={`w-5 h-5 border-2 rounded ${
-            checked ? "text-lime-500 border-lime-500" : "border-gray-400"
+            checked
+              ? "text-brand-primary border-brand-primary"
+              : "border-gray-400"
           }`}
         >
           <path

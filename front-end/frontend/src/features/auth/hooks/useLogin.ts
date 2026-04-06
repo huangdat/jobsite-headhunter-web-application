@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { login } from "@/features/auth/services/authApi";
@@ -19,6 +19,7 @@ export const useLogin = () => {
     rememberMe: false,
   });
   const [errors, setErrors] = useState<Partial<LoginFormData>>({});
+  const [generalError, setGeneralError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = (data: LoginFormData): boolean => {
@@ -56,6 +57,7 @@ export const useLogin = () => {
 
     setIsLoading(true);
     setErrors({});
+    setGeneralError(null);
 
     try {
       // Send username/email as 'username' field (backend expects username)
@@ -131,10 +133,14 @@ export const useLogin = () => {
       // Set form error for the appropriate field
       if (errorField === "email") {
         setErrors({ email: errorMessage });
+        setGeneralError(null);
       } else if (errorField === "password") {
         setErrors({ password: errorMessage });
+        setGeneralError(null);
       } else {
-        setErrors({ email: errorMessage });
+        // General error - not field-specific
+        setErrors({});
+        setGeneralError(errorMessage);
       }
 
       console.error("Login detail error:", error);
@@ -143,7 +149,7 @@ export const useLogin = () => {
     }
   };
 
-  const handleChange =
+  const handleChange = useCallback(
     (field: keyof LoginFormData) => (value: string | boolean) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
@@ -156,9 +162,11 @@ export const useLogin = () => {
       if (field === "rememberMe" && value === false) {
         localStorage.removeItem(REMEMBERED_LOGIN_KEY);
       }
-    };
+    },
+    [errors]
+  );
 
-  const loadRememberedEmail = () => {
+  const loadRememberedEmail = useCallback(() => {
     const rememberedLogin = localStorage.getItem(REMEMBERED_LOGIN_KEY);
     if (rememberedLogin) {
       setFormData((prev) => ({
@@ -167,11 +175,12 @@ export const useLogin = () => {
         rememberMe: true,
       }));
     }
-  };
+  }, []);
 
   return {
     formData,
     errors,
+    generalError,
     isLoading,
     handleSubmit,
     handleChange,

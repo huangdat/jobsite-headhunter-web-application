@@ -3,6 +3,7 @@ package com.rikkeisoft.backend.service.impl;
 import com.github.slugify.Slugify;
 import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
+import com.rikkeisoft.backend.enums.ForumCategorySortField;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.ForumCategoryMapper;
 import com.rikkeisoft.backend.model.dto.req.forum.ForumCategoryCreateReq;
@@ -10,13 +11,18 @@ import com.rikkeisoft.backend.model.dto.req.forum.ForumCategoryUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.forum.ForumCategoryResp;
 import com.rikkeisoft.backend.model.entity.ForumCategory;
 import com.rikkeisoft.backend.repository.ForumCategoryRepo;
+import com.rikkeisoft.backend.repository.ForumPostRepo;
 import com.rikkeisoft.backend.service.ForumCategoryService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+
+import com.rikkeisoft.backend.enums.SortDirection;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,8 +51,8 @@ import java.time.LocalDateTime;
 public class ForumCategoryServiceImpl implements ForumCategoryService {
 
     ForumCategoryRepo forumCategoryRepo;
-    MessageSource messageSource;
     ForumCategoryMapper forumCategoryMapper;
+    ForumPostRepo forumPostRepo;
 
     /**
      * {@inheritDoc}
@@ -78,8 +84,7 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
                 .updatedAt(LocalDateTime.now())
                 .build();
         ForumCategory savedForumCategory = forumCategoryRepo.save(newForumCategory);
-        ForumCategoryResp forumCategoryResp = forumCategoryMapper.toForumCategoryResp(savedForumCategory);
-        return forumCategoryResp;
+        return forumCategoryMapper.toForumCategoryResp(savedForumCategory);
     }
 
     /**
@@ -111,19 +116,21 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
     /**
      * {@inheritDoc}
      *
-     * <p>Implementation steps:
-     * <ol>
-     *   <li>Load the category; throw {@code CATEGORY_NOT_FOUND} if absent or already soft-deleted.</li>
-     *   <li>Set {@code softDeleted = true} and {@code updatedAt} to now.</li>
-     *   <li>Persist the entity.</li>
-     * </ol>
-     *
      * @param categoryId the surrogate primary key of the category to soft-delete.
      */
     @Override
     @Transactional
+    @PreAuthorize(SecurityConstants.ADMIN)
     public void deleteCategory(Long categoryId) {
-        // stub — no return value
+        ForumCategory forumCategory = forumCategoryRepo.findById(categoryId).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        if(forumCategory.isSoftDeleted()){
+            throw new AppException(ErrorCode.CATEGORY_NOT_FOUND);
+        }
+        if(forumPostRepo.existsByForumCategory(forumCategory)){
+            throw new AppException(ErrorCode.CATEGORY_NOT_EMPTY);
+        }
+        forumCategory.setSoftDeleted(true);
+        forumCategory.setUpdatedAt(LocalDateTime.now());
     }
 
     /**
@@ -145,6 +152,9 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
     @PreAuthorize(SecurityConstants.ADMIN)
     public ForumCategoryResp toggleCategoryStatus(Long categoryId) {
         ForumCategory forumCategory = forumCategoryRepo.findById(categoryId).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        if(forumCategory.isSoftDeleted()){
+            throw new AppException(ErrorCode.CATEGORY_NOT_FOUND);
+        }
         forumCategory.setActive(!forumCategory.isActive());
         return forumCategoryMapper.toForumCategoryResp(forumCategory);
     }
@@ -154,20 +164,36 @@ public class ForumCategoryServiceImpl implements ForumCategoryService {
      *
      * <p>Implementation steps:
      * <ol>
-     *   <li>Build a {@link org.springframework.data.domain.PageRequest} from {@code page} and {@code size}.</li>
+     *   <li>Build a {@link org.springframework.data.domain.PageRequest} from {@code page}, {@code size}, {@code sortBy}, and {@code direction}.</li>
      *   <li>Delegate to {@link ForumCategoryRepo#searchByKeyword(String, org.springframework.data.domain.Pageable)}.</li>
      *   <li>Map each entity in the page to a {@link ForumCategoryResp} and return the mapped page.</li>
      * </ol>
      *
-     * @param keyword the search term; may be {@code null} to retrieve all.
-     * @param page    zero-indexed page number.
-     * @param size    records per page.
-     * @return a paginated result of category response DTOs, or {@code null} (stub).
+     * @param keyword   the search term; may be {@code null} to retrieve all.
+     * @param page      zero-indexed page number.
+     * @param size      records per page.
+     * @param sortBy    the field to sort by; allowed values: {@code name} (default),
+ *                  {@code createdAt}, {@code updatedAt}.
+     * @param direction the sort direction; allowed values: {@code asc} (default), {@code desc}.
+     * @return a paginated result of category response DTOs.
      */
     @Override
-    public Page<ForumCategoryResp> searchCategories(String keyword, int page, int size) {
-        return null;
+    public Page<ForumCategoryResp> searchCategories(
+            String keyword, int page, int size, String sortBy, String direction) {
+
+        // Validate & resolve — throws AppException(400) for bad values
+        ForumCategorySortField sortField = ForumCategorySortField.fromString(sortBy);
+        SortDirection sortDirection = SortDirection.fromString(direction);
+
+        PageRequest pageRequest = PageRequest.of(
+                page, size,
+                Sort.by(sortDirection.getSpringDirection(), sortField.getFieldName()));
+
+        return forumCategoryRepo
+                .searchByKeyword(keyword, pageRequest)
+                .map(forumCategoryMapper::toForumCategoryResp);
     }
+
 
     /**
      * Utility method that transliterates a Vietnamese {@code name} string into a

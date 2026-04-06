@@ -1,0 +1,62 @@
+{
+  "management": {
+    "breadcrumb": "Đường dẫn",
+    "title": "Tiêu đề",
+    "success": {
+      "banner": "Thành công",
+      "bannerDetail": "Chi tiết thành công",
+      "addAnother": "Thêm CV khác",
+      "browseFiles": "Duyệt tệp",
+      "activeResumes": "CV hoạt động",
+      "filesUsed": "Tệp đã sử dụng"
+    },
+    "upload": {
+      "selectFile": "Chọn tệp"
+    },
+    "profileStrength": {
+      "title": "Mức độ mạnh của hồ sơ"
+    },
+    "premiumServices": {
+      "premiumTitle": "Dịch vụ cao cấp",
+      "auditTitle": "Kiểm toán CV chuyên môn",
+      "auditDesc": "Mô tả kiểm toán dịch vụ cao cấp",
+      "bookAudit": "Đặt kiểm toán CV",
+      "reviewTitle": "Xem lại dịch vụ cao cấp",
+      "reviewDesc": "Mô tả xem lại dịch vụ cao cấp",
+      "getReview": "Nhận xem lại"
+    },
+    "error": {
+      "banner": "Lỗi",
+      "fileFormatInvalid": "Định dạng tệp không hợp lệ",
+      "tryAnother": "Thử tệp khác"
+    },
+    "validation": {
+      "clear": "Xóa",
+      "retry": "Thử lại",
+      "dismiss": "Đóng"
+    },
+    "empty": {
+      "headline": "Không có CV nào được tải lên",
+      "description": "Không có CV nào được tải lên",
+      "button": "Tải lên CV",
+      "supported": "Hỗ trợ các định dạng tệp: PDF, DOC, DOCX"
+    },
+    "tips": {
+      "title": "Mẹo"
+    },
+    "fileList": {
+      "uploadedLabel": "Đã tải lên",
+      "actions": {
+        "view": "Xem",
+        "download": "Tải xuống",
+        "makeActive": "Đặt làm hoạt động",
+        "delete": "Xóa"
+      }
+    },
+    "bestPractices": {
+      "privacyTitle": "Kiểm soát quyền riêng tư",
+      "practicesTitle": "Thực hành tốt nhất",
+      "privacyDesc": "Kiểm soát quyền riêng tư"
+    }
+  }
+}

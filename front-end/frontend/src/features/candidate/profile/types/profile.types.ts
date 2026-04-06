@@ -10,6 +10,7 @@ export interface CandidateProfile {
   email?: string;
   phone?: string;
   currentTitle: string;
+  cvUrl?: string;
   yearsOfExperience: number | null;
   currentStatus: CandidateAvailabilityStatus;
   expectedSalaryMin: number | null;
@@ -38,6 +39,7 @@ export interface CandidateProfilePayload {
   bio?: string;
   city?: string;
   openForWork?: boolean;
+  cvUrl?: string; // Đảm bảo trường này tồn tại
 }
 
 export interface UseProfileUpdateReturn {
@@ -72,6 +74,7 @@ export const DEFAULT_PROFILE_VALUES: CandidateProfileFormValues = {
   email: "",
   phone: "",
   currentTitle: "",
+  cvUrl: "",
   yearsOfExperience: null,
   currentStatus: "OPEN_FOR_WORK",
   expectedSalaryMin: null,

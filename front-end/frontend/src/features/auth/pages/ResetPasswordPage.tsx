@@ -17,6 +17,11 @@ import type { OtpSendResp } from "@/features/auth/types";
 import { MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsShieldLock } from "react-icons/bs";
+import {
+  Display,
+  SectionTitle,
+  BodyText,
+} from "@/shared/components/typography/Typography";
 
 interface ResetPasswordFormData {
   otp: string;
@@ -114,35 +119,33 @@ export function ResetPasswordPage() {
   };
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: tAuth("auth.pages.login") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: tAuth("pages.login") }}>
       <main className="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-0">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}
           <div className="md:w-5/12 bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-8 flex flex-col justify-center">
-            <h1 className="text-5xl font-bold leading-tight">
-              {tAuth("pages.resetPassword.title")}
-            </h1>
+            <Display size="md">{tAuth("pages.resetPassword.title")}</Display>
 
-            <p className="text-gray-300 mt-6">
+            <BodyText className="text-slate-300 mt-6">
               {tAuth("pages.resetPassword.subtitle")}
-            </p>
+            </BodyText>
           </div>
 
           {/* Right Panel - Form */}
           <div className="md:w-7/12 p-8 md:p-8 bg-white dark:bg-slate-900">
             <div className="max-w-2xl mx-auto">
-              <h2 className="text-3xl font-bold mb-2">
+              <SectionTitle className="mb-2">
                 {tAuth("pages.resetPassword.formTitle")}
-              </h2>
-              <p className="text-slate-500 dark:text-slate-400 mb-2">
+              </SectionTitle>
+              <BodyText variant="muted" className="mb-2">
                 {tAuth("pages.resetPassword.instruction")}{" "}
-                <span className="font-semibold text-lime-500">
+                <span className="font-semibold text-brand-primary">
                   {otpData?.email}
                 </span>
-              </p>
-              <p className="text-slate-500 dark:text-slate-400 mb-3">
+              </BodyText>
+              <BodyText variant="muted" className="mb-3">
                 {tAuth("pages.resetPassword.instruction2")}
-              </p>
+              </BodyText>
 
               <form onSubmit={handleFormSubmit(onSubmit)} className="space-y-4">
                 <FormField
@@ -171,17 +174,19 @@ export function ResetPasswordPage() {
                       {...register("password")}
                       error={!!errors.password}
                       rightIcon={
-                        <button
+                        <Button
                           type="button"
+                          variant="ghost"
+                          size="icon"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="cursor-pointer text-slate-400 hover:text-slate-600"
+                          className="h-10 w-10"
                         >
                           {showPassword ? (
                             <AiOutlineEyeInvisible />
                           ) : (
                             <AiOutlineEye />
                           )}
-                        </button>
+                        </Button>
                       }
                     />
                   </FormField>
@@ -197,19 +202,21 @@ export function ResetPasswordPage() {
                       {...register("confirmPassword")}
                       error={!!errors.confirmPassword}
                       rightIcon={
-                        <button
+                        <Button
                           type="button"
+                          variant="ghost"
+                          size="icon"
                           onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
                           }
-                          className="cursor-pointer text-slate-400 hover:text-slate-600"
+                          className="h-10 w-10"
                         >
                           {showConfirmPassword ? (
                             <AiOutlineEyeInvisible />
                           ) : (
                             <AiOutlineEye />
                           )}
-                        </button>
+                        </Button>
                       }
                     />
                   </FormField>
@@ -238,7 +245,7 @@ export function ResetPasswordPage() {
               <div className="mt-4 text-center">
                 <Link
                   to="/login"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-lime-900 transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 dark:text-slate-500 hover:text-brand-primary dark:hover:text-brand-primary transition-colors"
                 >
                   <span className="material-symbols-outlined text-lg">
                     arrow_back

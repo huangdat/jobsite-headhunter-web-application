@@ -203,9 +203,6 @@ public class JobController {
 
     @GetMapping("/recommended")
     public APIResponse<RecommendationResp> getRecommendedJobs(@AuthenticationPrincipal Jwt jwt) {
-        if (jwt == null || jwt.getSubject() == null) {
-            throw new com.rikkeisoft.backend.exception.AppException(com.rikkeisoft.backend.enums.ErrorCode.UNAUTHORIZED);
-        }
         String username = jwt.getSubject();
         RecommendationResp result = jobManageService.getRecommendedJobs(username);
 

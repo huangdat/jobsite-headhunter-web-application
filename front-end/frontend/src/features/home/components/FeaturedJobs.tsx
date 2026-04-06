@@ -3,13 +3,18 @@ import { Link } from "react-router-dom";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRandomLatestJobs } from "@/shared/utils/jobService";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { JOB_TYPE_COLORS } from "../constants";
+import {
+  SubsectionTitle,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 
 export function FeaturedJobs() {
-  const { t } = useHomeTranslation();
+  const { t, currentLanguage } = useHomeTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -19,33 +24,44 @@ export function FeaturedJobs() {
         setJobs(data.jobs || []);
       } catch (err) {
         console.error("Failed to fetch featured jobs:", err);
-        setError(t("messages.errorLoadJobs"));
+        setError(
+          err instanceof Error ? err : new Error(t("messages.errorLoadJobs"))
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchJobs();
-  }, [t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentLanguage?.code]);
+
   return (
     <section id="featured-jobs" className="max-w-7xl mx-auto px-6 py-20">
-      <h2 className="text-2xl font-bold mb-10">{t("featuredJobs.title")}</h2>
+      <SubsectionTitle className="mb-10">
+        {t("featuredJobs.title")}
+      </SubsectionTitle>
 
       {loading && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.loadingJobs")}</p>
+          <SmallText variant="muted">{t("messages.loadingJobs")}</SmallText>
         </div>
       )}
 
       {error && (
-        <div className="text-center py-12">
-          <p className="text-red-500">{error}</p>
-        </div>
+        <ErrorState
+          error={error}
+          onRetry={() => window.location.reload()}
+          variant="inline"
+          title={
+            t("featuredJobs.errorTitle") || "Không thể tải công việc nổi bật"
+          }
+        />
       )}
 
       {!loading && !error && jobs.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">{t("messages.noFeaturedJobs")}</p>
+          <SmallText variant="muted">{t("messages.noFeaturedJobs")}</SmallText>
         </div>
       )}
 
@@ -57,8 +73,12 @@ export function FeaturedJobs() {
                 key={job.id}
                 className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition"
               >
-                <h3 className="font-semibold">{job.title}</h3>
-                <p className="text-gray-500 text-sm">{job.company}</p>
+                <SmallText weight="semibold" className="block">
+                  {job.title}
+                </SmallText>
+                <SmallText variant="muted" className="block">
+                  {job.company}
+                </SmallText>
 
                 <div className="flex gap-2 mt-3 text-xs">
                   {job.workingType && (

@@ -1,6 +1,7 @@
 import { ParticleBackground } from "./ParticleBackground";
 import { SearchBar } from "./SearchBar";
 import { useHomeTranslation } from "@/shared/hooks";
+import { Display, BodyText } from "@/shared/components/typography/Typography";
 
 export function HeroSection() {
   const { t } = useHomeTranslation();
@@ -14,14 +15,14 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-        <h1 className="text-5xl font-bold leading-tight text-slate-900">
+        <Display>
           {t("hero.title")}{" "}
           <span className="text-emerald-600">{t("hero.highlight")}</span>
-        </h1>
+        </Display>
 
-        <p className="mt-6 text-lg text-slate-900 max-w-2xl mx-auto">
+        <BodyText className="mt-6 max-w-2xl mx-auto">
           {t("hero.description")}
-        </p>
+        </BodyText>
 
         <SearchBar />
       </div>
@@ -34,7 +35,7 @@ export function HeroSection() {
         >
           <path
             d="M0,64L60,69.3C120,75,240,85,360,80C480,75,600,53,720,53.3C840,53,960,75,1080,85.3C1200,96,1320,96,1380,96L1440,96L1440,120L0,120Z"
-            className="fill-white"
+            className="fill-slate-50"
           />
         </svg>
       </div>

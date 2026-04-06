@@ -30,6 +30,7 @@ public enum ErrorCode {
 
     // Custom error codes for Account module
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, "error.account_not_found"),
+    CANDIDATE_PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "error.candidate_profile_not_found"),
     NO_ACCOUNTS_STORED(HttpStatus.NOT_FOUND, "error.no_accounts_stored"),
     USER_EXISTED(HttpStatus.CONFLICT, "error.user_existed"),
     EMAIL_EXISTED(HttpStatus.CONFLICT, "error.email_existed"),
@@ -135,6 +136,7 @@ public enum ErrorCode {
     INTERVIEW_TIME_FUTURE(HttpStatus.BAD_REQUEST, "error.interview_time_future"),
     INTERVIEW_LINK_REQUIRED(HttpStatus.BAD_REQUEST, "error.interview_link_required"),
     INTERVIEW_LOCATION_REQUIRED(HttpStatus.BAD_REQUEST, "error.interview_location_required"),
+    INTERVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "error.interview_not_found"),
 
     // Custom error codes for candidate CV module
     CV_NOT_FOUND(HttpStatus.NOT_FOUND, "error.cv_not_found"),
@@ -151,6 +153,9 @@ public enum ErrorCode {
     CATEGORY_NAME_REQUIRED(HttpStatus.BAD_REQUEST, "error.category_name_required"),
     CATEGORY_NAME_SIZE(HttpStatus.BAD_REQUEST, "error.category_name_size_constraint"),
     CATEGORY_DESCRIPTION_SIZE_CONSTRAINT(HttpStatus.BAD_REQUEST, "error.category_description_size_constraint"),
+    CATEGORY_NOT_EMPTY(HttpStatus.BAD_REQUEST, "error.category_not_empty"),
+    INVALID_SORT_FIELD(HttpStatus.BAD_REQUEST, "error.invalid_sort_field"),
+    INVALID_SORT_DIRECTION(HttpStatus.BAD_REQUEST, "error.invalid_sort_direction"),
 
     // Forum Post module
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "error.post.not.found"),

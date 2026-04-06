@@ -50,8 +50,17 @@ export const useProfileUpdate = (): UseProfileUpdateReturn => {
     setFetchError(null);
 
     try {
-      const response = await profileApi.getProfile();
-      const normalized = sanitizeProfileDraft(toFormValues(response));
+      const [response, cvUrl] = await Promise.all([
+        profileApi.getProfile(),
+        profileApi.getCurrentCvUrl(),
+      ]);
+
+      const normalized = sanitizeProfileDraft(
+        toFormValues({
+          ...response,
+          cvUrl,
+        })
+      );
 
       setProfile(normalized);
       setDraft(normalized);
@@ -144,13 +153,10 @@ export const useProfileUpdate = (): UseProfileUpdateReturn => {
     setSaving(true);
 
     try {
-      const updated = await profileApi.updateProfile(
-        toProfilePayload(sanitized)
-      );
-      const normalized = sanitizeProfileDraft(toFormValues(updated));
+      await profileApi.updateProfile(toProfilePayload(sanitized));
 
-      setProfile(normalized);
-      setDraft(normalized);
+      setProfile(sanitized);
+      setDraft(sanitized);
       setErrors({});
       setSuccess(true);
 

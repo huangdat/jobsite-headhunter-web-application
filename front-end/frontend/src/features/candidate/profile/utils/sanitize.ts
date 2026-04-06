@@ -1,7 +1,7 @@
 import type {
   CandidateProfileFormValues,
   CandidateProfilePayload,
-} from "@/features/candidate/profile/types/profile.types";
+} from "../types/profile.types";
 
 const collapseSpaces = (value: string): string =>
   value.replace(/\s+/g, " ").trim();
@@ -13,7 +13,6 @@ export const sanitizeText = (value: string): string => {
     value
       .replace(/<script.*?>.*?<\/script>/gi, "")
       .replace(/[<>]/g, "")
-      // eslint-disable-next-line no-control-regex
       .replace(/[\u0000-\u001F\u007F]/g, "")
   );
 };
@@ -22,7 +21,6 @@ export const sanitizeInteger = (value: number | null): number | null => {
   if (value === null || Number.isNaN(value)) {
     return null;
   }
-
   return Math.trunc(value);
 };
 
@@ -30,7 +28,6 @@ export const sanitizeCurrency = (value: number | null): number | null => {
   if (value === null || Number.isNaN(value)) {
     return null;
   }
-
   return Number(value.toFixed(2));
 };
 
@@ -46,6 +43,7 @@ export const sanitizeProfileDraft = (
     currentStatus: draft.currentStatus,
     bio: sanitizeText(draft.bio),
     city: sanitizeText(draft.city),
+    cvUrl: draft.cvUrl || "",
     yearsOfExperience: sanitizeInteger(draft.yearsOfExperience),
     expectedSalaryMin: sanitizeCurrency(draft.expectedSalaryMin),
     expectedSalaryMax: sanitizeCurrency(draft.expectedSalaryMax),
@@ -66,5 +64,6 @@ export const toProfilePayload = (
     bio: sanitized.bio || undefined,
     city: sanitized.city || undefined,
     openForWork: sanitized.openForWork,
+    cvUrl: sanitized.cvUrl || undefined,
   };
 };

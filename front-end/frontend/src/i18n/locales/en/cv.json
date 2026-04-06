@@ -1,0 +1,62 @@
+{
+  "management": {
+    "breadcrumb": "Breadcrumb",
+    "title": "Title",
+    "success": {
+      "banner": "Success banner",
+      "bannerDetail": "Success banner detail",
+      "addAnother": "Success add another",
+      "browseFiles": "Success browse files",
+      "activeResumes": "Success active resumes",
+      "filesUsed": "Success files used"
+    },
+    "upload": {
+      "selectFile": "Upload select file"
+    },
+    "profileStrength": {
+      "title": "Profile strength title"
+    },
+    "premiumServices": {
+      "premiumTitle": "Premium services premium title",
+      "auditTitle": "Premium services audit title",
+      "auditDesc": "Premium services audit desc",
+      "bookAudit": "Premium services book audit",
+      "reviewTitle": "Premium services review title",
+      "reviewDesc": "Premium services review desc",
+      "getReview": "Premium services get review"
+    },
+    "error": {
+      "banner": "Error banner",
+      "fileFormatInvalid": "Error file format invalid",
+      "tryAnother": "Error try another"
+    },
+    "validation": {
+      "clear": "Validation clear",
+      "retry": "Validation retry",
+      "dismiss": "Validation dismiss"
+    },
+    "empty": {
+      "headline": "Empty headline",
+      "description": "Empty description",
+      "button": "Empty button",
+      "supported": "Empty supported"
+    },
+    "tips": {
+      "title": "Tips title"
+    },
+    "fileList": {
+      "uploadedLabel": "File list uploaded label",
+      "actions": {
+        "view": "File list actions view",
+        "download": "File list actions download",
+        "makeActive": "File list actions make active",
+        "delete": "File list actions delete"
+      }
+    },
+    "bestPractices": {
+      "privacyTitle": "Best practices privacy title",
+      "practicesTitle": "Best practices practices title",
+      "privacyDesc": "Best practices privacy desc"
+    }
+  }
+}

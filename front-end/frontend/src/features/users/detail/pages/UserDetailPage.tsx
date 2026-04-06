@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  Display,
+  SubsectionTitle,
+  SmallText,
+} from "@/shared/components/typography/Typography";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useUserDetail } from "@/features/users/detail/hooks/useUserDetail";
 import { userMapper } from "@/features/users/utils/userMapper";
 import { useDeleteUser } from "@/features/users/actions/delete/hooks";
 import { useLockUser } from "@/features/users/actions/lock/hooks/useLockUser";
 import { useUnlockUser } from "@/features/users/actions/lock/hooks/useUnlockUser";
+import { PageContainer } from "@/shared/components/layout";
 import {
   ROUTES,
   REDIRECT_DELAY,
@@ -213,46 +219,55 @@ const UserDetailPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white border-b sticky top-0 z-10 w-full">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+        <div className="bg-white dark:bg-slate-800 border-b dark:border-slate-700 sticky top-0 z-10 w-full">
           <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
                 aria-label={t("aria.goBack")}
                 onClick={() => navigate(-1)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition text-slate-900 dark:text-white"
                 title={t("aria.goBack")}
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div>
-                <h1 className="text-2xl font-bold">
+                <Display className="text-2xl">
                   {t("detail.userDetails")}
-                </h1>
-                <p className="text-gray-600 text-sm mt-1">
+                </Display>
+                <SmallText variant="muted" className="mt-1">
                   {t("detail.personalInfo")}
-                </p>
+                </SmallText>
               </div>
             </div>
             <button
               aria-label={t("aria.editProfile")}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-medium"
+              className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition"
             >
-              ✎ {t("detail.editProfile")}
+              ✎{" "}
+              <SmallText weight="medium" className="text-white">
+                {t("detail.editProfile")}
+              </SmallText>
             </button>
           </div>
 
           {isViewingOtherAdmin && (
-            <div className="bg-yellow-50 border-t border-yellow-200 w-full">
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border-t border-yellow-200 dark:border-yellow-800 w-full">
               <div className="max-w-7xl mx-auto px-8 py-3 flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-yellow-600 shrink-0 mt-0.5" />
+                <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-yellow-900 font-medium">
+                  <SmallText
+                    weight="bold"
+                    className="text-yellow-900 dark:text-yellow-200"
+                  >
                     {t("warnings.adminWarning")}
-                  </p>
-                  <p className="text-yellow-800 text-sm mt-1">
+                  </SmallText>
+                  <SmallText
+                    variant="muted"
+                    className="text-yellow-800 dark:text-yellow-400 mt-1"
+                  >
                     {t("warnings.adminWarningDesc")}
-                  </p>
+                  </SmallText>
                 </div>
               </div>
             </div>
@@ -285,12 +300,10 @@ const UserDetailPage: React.FC = () => {
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 flex items-start gap-4">
             <AlertCircle className="w-6 h-6 text-red-500 shrink-0 mt-1" />
             <div>
-              <h3 className="font-semibold text-red-900">
-                {t("detail.errorLoadingData")}
-              </h3>
-              <p className="text-red-700 mt-1">
+              <SubsectionTitle>{t("detail.errorLoadingData")}</SubsectionTitle>
+              <SmallText variant="muted" className="mt-1">
                 {error || t("list.noResults")}
-              </p>
+              </SmallText>
             </div>
           </div>
         </div>
@@ -299,21 +312,23 @@ const UserDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 w-full">
-      <div className="bg-white border-b sticky top-0 z-10 w-full">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+    <PageContainer variant="white" maxWidth="7xl">
+      <div className="bg-white dark:bg-slate-800 border-b dark:border-slate-700 sticky top-0 z-10 w-full -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8">
+        <div className="py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate(-1)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition"
+              className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition text-slate-900 dark:text-white"
               title={t("aria.goBack")}
               aria-label={t("aria.goBack")}
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>
-              <h1 className="text-2xl font-bold">{t("detail.userDetails")}</h1>
-              <p className="text-gray-600 text-sm mt-1">
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+                {t("detail.userDetails")}
+              </h1>
+              <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">
                 {t("detail.personalInfo")}
               </p>
             </div>
@@ -321,14 +336,14 @@ const UserDetailPage: React.FC = () => {
         </div>
 
         {isViewingOtherAdmin && (
-          <div className="bg-yellow-50 border-t border-yellow-200 w-full">
-            <div className="max-w-7xl mx-auto px-8 py-3 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-yellow-600 shrink-0 mt-0.5" />
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border-t border-yellow-200 dark:border-yellow-800 w-full -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8">
+            <div className="py-3 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-500 shrink-0 mt-0.5" />
               <div>
-                <p className="text-yellow-900 font-medium">
+                <p className="text-yellow-900 dark:text-yellow-200 font-medium">
                   {t("warnings.adminWarning")}
                 </p>
-                <p className="text-yellow-800 text-sm mt-1">
+                <p className="text-yellow-800 dark:text-yellow-300 text-sm mt-1">
                   {t("warnings.adminWarningDesc")}
                 </p>
               </div>
@@ -340,7 +355,9 @@ const UserDetailPage: React.FC = () => {
       {toast && (
         <div
           className={`fixed top-4 right-4 px-6 py-3 rounded-lg text-white flex items-center gap-2 z-50 ${
-            toast.type === "success" ? "bg-green-500" : "bg-red-500"
+            toast.type === "success"
+              ? "bg-green-500 dark:bg-green-600"
+              : "bg-red-500 dark:bg-red-600"
           }`}
         >
           {toast.type === "success" ? (
@@ -352,7 +369,7 @@ const UserDetailPage: React.FC = () => {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-8 py-8 space-y-6">
+      <div className="py-8 space-y-6">
         <UserHeader user={user} />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -360,16 +377,18 @@ const UserDetailPage: React.FC = () => {
           <AccountInfoCard user={user} />
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow dark:shadow-slate-900/20 border dark:border-slate-700 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold flex items-center gap-2">
+            <SubsectionTitle className="flex items-center gap-2">
               {t("sections.loginHistory")}
-            </h2>
+            </SubsectionTitle>
             <button
               type="button"
-              className="text-blue-500 hover:text-blue-700 text-sm font-medium bg-transparent border-none cursor-pointer"
+              className="text-brand-primary hover:text-brand-primary/80 bg-transparent border-none cursor-pointer"
             >
-              {t("sections.viewAllSessions")}
+              <SmallText weight="bold" className="text-brand-primary">
+                {t("sections.viewAllSessions")}
+              </SmallText>
             </button>
           </div>
           <LoginHistoryTable sessions={loginHistory} />
@@ -429,7 +448,7 @@ const UserDetailPage: React.FC = () => {
           onConfirm={handleUnlockConfirm}
         />
       </div>
-    </div>
+    </PageContainer>
   );
 };
 

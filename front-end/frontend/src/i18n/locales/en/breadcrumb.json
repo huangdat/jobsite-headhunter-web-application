@@ -1,0 +1,18 @@
+{
+  "navigation": "Breadcrumb Navigation",
+  "home": "Home",
+  "jobs": "Jobs",
+  "jobDetail": "Job Details",
+  "applications": "Applications",
+  "applicationDetail": "Application Details",
+  "forum": "Forum",
+  "forumDetail": "Forum Post",
+  "companies": "Companies",
+  "companyDetail": "Company Details",
+  "users": "Users",
+  "userDetail": "User Profile",
+  "candidates": "Candidates",
+  "candidateDetail": "Candidate Profile",
+  "verification": "Verification",
+  "verificationDetail": "Verification Details"
+}

@@ -12,6 +12,7 @@ import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.BusinessProfile;
 import com.rikkeisoft.backend.model.entity.CandidateCv;
+import com.rikkeisoft.backend.model.entity.CandidateProfile;
 import com.rikkeisoft.backend.model.entity.CollaboratorProfile;
 import com.rikkeisoft.backend.repository.*;
 import com.rikkeisoft.backend.service.AccountService;
@@ -28,9 +29,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -72,12 +76,7 @@ public class AccountServiceImpl implements AccountService {
         // find all accounts
         List<Account> accounts = accountRepo.findAll();
 
-        // map to resp
-        List<AccountResp> accountResps = new ArrayList<>();
-        for (Account account : accounts) {
-            accountResps.add(accountMapper.toAccountResp(account));
-        }
-        return accountResps;
+        return toAccountResps(accounts);
     }
 
     @Override
@@ -87,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepo.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
 
         // map to resp
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     /**
@@ -103,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
         // Fetch a user by username from the repository
         Account account = accountRepo.findByUsername(contextName)
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     @Override
@@ -145,10 +144,11 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepo.save(account);
 
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     @Override
+    @Transactional
     public AccountResp updateMyAccount(AccountUpdateReq req) {
         // get current account
         var context = SecurityContextHolder.getContext();
@@ -163,13 +163,48 @@ public class AccountServiceImpl implements AccountService {
             String imageUrl = uploadService.uploadFile(req.getAvatar());
             account.setImageUrl(imageUrl);
         }
-        account.setFullName(req.getFullName());
-        account.setPhone(req.getPhone());
-        account.setGender(req.getGender());
+        if (req.getEmail() != null) {
+            account.setEmail(req.getEmail());
+        }
+        if (req.getFullName() != null) {
+            account.setFullName(req.getFullName());
+        }
+        if (req.getPhone() != null) {
+            account.setPhone(req.getPhone());
+        }
+        if (req.getGender() != null) {
+            account.setGender(req.getGender());
+        }
         account.setUpdatedAt(LocalDateTime.now());
 
+        CandidateProfile candidateProfile = candidateProfileRepo.findByAccount_Id(account.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.CANDIDATE_PROFILE_NOT_FOUND));
+
+        if (req.getCurrentTitle() != null) {
+            candidateProfile.setCurrentTitle(req.getCurrentTitle());
+        }
+        if (req.getYearsOfExperience() != null) {
+            candidateProfile.setYearsOfExperience(req.getYearsOfExperience());
+        }
+        if (req.getExpectedSalaryMin() != null) {
+            candidateProfile.setExpectedSalaryMin(req.getExpectedSalaryMin());
+        }
+        if (req.getExpectedSalaryMax() != null) {
+            candidateProfile.setExpectedSalaryMax(req.getExpectedSalaryMax());
+        }
+        if (req.getBio() != null) {
+            candidateProfile.setBio(req.getBio());
+        }
+        if (req.getCity() != null) {
+            candidateProfile.setCity(req.getCity());
+        }
+        if (req.getOpenForWork() != null) {
+            candidateProfile.setOpenForWork(req.getOpenForWork());
+        }
+
         accountRepo.save(account);
-        return accountMapper.toAccountResp(account);
+        candidateProfileRepo.save(candidateProfile);
+        return toAccountResp(account);
     }
 
     /**
@@ -188,7 +223,7 @@ public class AccountServiceImpl implements AccountService {
             account.setStatus(newStatus);
             account.setUpdatedAt(LocalDateTime.now());
             accountRepo.save(account);
-            return accountMapper.toAccountResp(account);
+            return toAccountResp(account);
         } catch (Exception e) {
             throw new AppException(ErrorCode.INVALID_ACCOUNT_STATUS);
         }
@@ -226,7 +261,7 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepo.save(account);
 
-        accountMapper.toAccountResp(account);
+        toAccountResp(account);
 
         return "Change password successfully";
 
@@ -284,7 +319,7 @@ public class AccountServiceImpl implements AccountService {
 
         Page<Account> result = accountRepo.findAll(spec, pageable);
 
-        List<AccountResp> data = result.stream().map(accountMapper::toAccountResp).collect(Collectors.toList());
+        List<AccountResp> data = toAccountResps(result.getContent());
 
         PagedResponse<AccountResp> resp = new PagedResponse<>();
         resp.setPage(pageIndex + 1);
@@ -365,7 +400,7 @@ public class AccountServiceImpl implements AccountService {
         account.setBusinessProfile(businessProfile);
         accountRepo.save(account);
 
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     /**
@@ -409,7 +444,7 @@ public class AccountServiceImpl implements AccountService {
         collaboratorProfileRepo.save(collaboratorProfile);
         accountRepo.save(account);
 
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     @Override
@@ -461,8 +496,9 @@ public class AccountServiceImpl implements AccountService {
                 .cvUrl(null)
                 .createdAt(LocalDateTime.now())
                 .build();
+        candidateCvRepo.save(candidateCv);
 
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     @Override
@@ -485,4 +521,37 @@ public class AccountServiceImpl implements AccountService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return accountRepo.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
     }
+
+    private AccountResp toAccountResp(Account account) {
+        CandidateProfile candidateProfile = candidateProfileRepo.findByAccount_Id(account.getId()).orElse(null);
+        return accountMapper.toAccountResp(account, candidateProfile);
+    }
+
+        private List<AccountResp> toAccountResps(List<Account> accounts) {
+        if (accounts == null || accounts.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<String> accountIds = accounts.stream()
+            .map(Account::getId)
+            .filter(id -> id != null && !id.isBlank())
+            .collect(Collectors.toList());
+
+        Map<String, CandidateProfile> profilesByAccountId = candidateProfileRepo
+            .findByAccount_IdIn(accountIds)
+            .stream()
+            .filter(profile -> profile.getAccount() != null)
+            .collect(Collectors.toMap(
+                profile -> profile.getAccount().getId(),
+                Function.identity(),
+                (existing, replacement) -> existing
+            ));
+
+        return accounts.stream()
+            .map(account -> accountMapper.toAccountResp(
+                account,
+                profilesByAccountId.get(account.getId())
+            ))
+            .collect(Collectors.toList());
+        }
 }
