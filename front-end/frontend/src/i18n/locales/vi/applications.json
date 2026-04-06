@@ -16,6 +16,9 @@
   "applications.myApplications": "Việc làm đã ứng tuyển",
   "applications.pipeline": "Pipeline tuyển dụng",
 
+  "applications.errorLoading": "Không thể tải thông tin ứng tuyển",
+  "applications.notFound": "Không tìm thấy ứng tuyển",
+
   "applications.status.applied": "Đã nộp đơn",
   "applications.status.screening": "Duyệt hồ sơ",
   "applications.status.interview": "Phỏng vấn",
