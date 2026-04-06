@@ -6,6 +6,7 @@
 import React, { useEffect } from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
 import { PageContainer } from "@/shared/components/layout";
+import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import {
   CVErrorBanner,
   CVEmptyState,
@@ -17,11 +18,7 @@ import {
   PremiumServices,
 } from "../components";
 import { useCVManagement } from "../hooks";
-import {
-  Display,
-  MetaText,
-  SmallText,
-} from "@/shared/components/typography/Typography";
+import { Display, SmallText } from "@/shared/components/typography/Typography";
 
 export const CVManagementPage: React.FC = () => {
   const { t } = useCandidateTranslation();
@@ -46,22 +43,13 @@ export const CVManagementPage: React.FC = () => {
     <PageContainer variant="default" maxWidth="6xl">
       {/* Breadcrumbs & Page Title */}
       <div className="mb-8">
-        {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-slate-500 dark:text-slate-400 uppercase mb-3">
-          <a
-            href="/profile"
-            className="hover:text-brand-primary transition-colors"
-          >
-            <MetaText as="span">{t("profile.page.eyebrow")}</MetaText>
-          </a>
-          <span className="material-symbols-outlined text-[12px]">
-            chevron_right
-          </span>
-          <MetaText as="span" className="text-brand-primary">
-            {t("cv.management.breadcrumb")}
-          </MetaText>
-        </nav>
-
+        <Breadcrumb
+          items={[
+            { label: t("breadcrumb.dashboard") || "Dashboard", href: "/" },
+            { label: t("candidate.cv") || "CV Management" },
+          ]}
+          className="mb-4"
+        />
         {/* Page Title */}
         <Display size="md" className="tracking-tight">
           {t("cv.management.title")}

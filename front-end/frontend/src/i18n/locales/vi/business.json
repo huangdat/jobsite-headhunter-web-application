@@ -79,7 +79,13 @@
     "rejected_desc": "Hồ sơ của bạn cần được sửa đổi",
     "rejected_title": "Xác Minh Bị Từ Chối",
     "in_progress": "Đang Xác Minh",
-    "title": "Xác minh"
+    "title": "Xác minh",
+    "automatedAction": {
+      "initiated": "Bắt đầu",
+      "completed": "Hoàn thành",
+      "type": "Loại",
+      "id": "ID"
+    }
   },
   "documents": {
     "title": "Tài Liệu Đã Gửi",

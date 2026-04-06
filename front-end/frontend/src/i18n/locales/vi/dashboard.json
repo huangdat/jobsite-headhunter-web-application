@@ -67,7 +67,10 @@
       },
       "emptyStateJobFilter": "Chưa có dữ liệu ứng tuyển cho công việc này. Tiếp tục theo dõi!",
       "refresh": "Làm mới",
-      "days": "ngày"
+      "days": "ngày",
+      "industryAvg": "Trung bình ngành: 28 ngày",
+      "hiringSuccess": "Tỷ lệ Tuyển dụng Thành công",
+      "chartComponent": "Biểu đồ"
     }
   },
   "error": {

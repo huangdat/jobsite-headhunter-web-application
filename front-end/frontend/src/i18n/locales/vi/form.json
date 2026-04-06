@@ -37,5 +37,8 @@
     "signIn": "Đăng nhập",
     "joinNetwork": "Tham gia mạng lưới",
     "professional": "Đăng ký chuyên nghiệp"
+  },
+  "skill": {
+    "selectSkills": "Chọn kỹ năng..."
   }
 }

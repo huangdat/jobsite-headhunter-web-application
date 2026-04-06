@@ -2,7 +2,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Display, SmallText } from "@/shared/components/typography/Typography";
+import { SmallText } from "@/shared/components/typography/Typography";
+import { PageSkeleton } from "@/shared/components/states";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { useCompanyDetail } from "../hooks/useCompanyDetail";
 import { CompanyHeader } from "../components/CompanyHeader";
 import { CompanyAbout } from "../components/CompanyAbout";
@@ -17,27 +19,16 @@ export function CompanyDetailPage() {
   const { company, loading, error } = useCompanyDetail(id);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <SmallText variant="muted" weight="bold" className="animate-pulse">
-          {t("business.state.loading")}
-        </SmallText>
-      </div>
-    );
+    return <PageSkeleton variant="grid" count={2} />;
   }
 
   if (error || !company) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Display className="text-red-500">
-          {error || t("business.strength.no_data")}
-        </Display>
-        <Button onClick={() => navigate(-1)}>
-          <SmallText weight="bold" className="text-white">
-            {t("business.form.back")}
-          </SmallText>
-        </Button>
-      </div>
+      <ErrorState
+        error={new Error(error || t("business.strength.no_data"))}
+        onRetry={() => window.location.reload()}
+        title={t("applications.errorLoading")}
+      />
     );
   }
 

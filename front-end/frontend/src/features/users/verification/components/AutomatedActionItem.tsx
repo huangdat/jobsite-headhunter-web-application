@@ -10,6 +10,7 @@
  */
 
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { CheckCircle, Circle, AlertCircle, Clock } from "lucide-react";
 import type { AutomatedAction } from "../types";
 
@@ -39,6 +40,7 @@ export const AutomatedActionItem: React.FC<AutomatedActionItemProps> = ({
   showDetails = false,
   className = "",
 }) => {
+  const { t } = useTranslation("business");
   const { icon: StatusIcon, color, bgColor } = getStatusIcon(action.status);
 
   return (
@@ -73,14 +75,16 @@ export const AutomatedActionItem: React.FC<AutomatedActionItemProps> = ({
             <div className="flex items-center gap-1">
               <Clock size={14} />
               <span>
-                Initiated: {new Date(action.initiatedAt).toLocaleDateString()}
+                {t("verification.automatedAction.initiated")}:{" "}
+                {new Date(action.initiatedAt).toLocaleDateString()}
               </span>
             </div>
             {action.completedAt && (
               <div className="flex items-center gap-1">
                 <Clock size={14} />
                 <span>
-                  Completed: {new Date(action.completedAt).toLocaleDateString()}
+                  {t("verification.automatedAction.completed")}:{" "}
+                  {new Date(action.completedAt).toLocaleDateString()}
                 </span>
               </div>
             )}
@@ -90,11 +94,15 @@ export const AutomatedActionItem: React.FC<AutomatedActionItemProps> = ({
           {showDetails && (
             <div className="mt-3 pt-3 border-t border-slate-300 space-y-1 text-xs">
               <p>
-                <span className="text-slate-600">Type:</span>{" "}
+                <span className="text-slate-600">
+                  {t("verification.automatedAction.type")}:
+                </span>{" "}
                 <span className="font-mono text-slate-700">{action.type}</span>
               </p>
               <p>
-                <span className="text-slate-600">ID:</span>{" "}
+                <span className="text-slate-600">
+                  {t("verification.automatedAction.id")}:
+                </span>{" "}
                 <span className="font-mono text-slate-700">{action.id}</span>
               </p>
             </div>

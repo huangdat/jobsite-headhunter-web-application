@@ -36,6 +36,9 @@
   "applications.pipeline": "Recruitment Pipeline",
   "applications.actions.cancel": "Cancel Application",
 
+  "applications.errorLoading": "Failed to load application",
+  "applications.notFound": "Application not found",
+
   "applications.status.applied": "Applied",
   "applications.status.screening": "Approve",
   "applications.status.interviewing": "Interview",

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 import {
-  Display,
   SubsectionTitle,
   SmallText,
 } from "@/shared/components/typography/Typography";
@@ -13,6 +12,8 @@ import { useDeleteUser } from "@/features/users/actions/delete/hooks";
 import { useLockUser } from "@/features/users/actions/lock/hooks/useLockUser";
 import { useUnlockUser } from "@/features/users/actions/lock/hooks/useUnlockUser";
 import { PageContainer } from "@/shared/components/layout";
+import { PageSkeleton } from "@/shared/components/states";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import {
   ROUTES,
   REDIRECT_DELAY,
@@ -24,7 +25,6 @@ import {
   AccountInfoCard,
   LoginHistoryTable,
   DangerZoneCard,
-  LoadingSkeletons,
   DeleteConfirmationModal,
 } from "@/features/users/detail/components";
 import LockUserModal from "@/features/users/actions/lock/components/LockUserModal";
@@ -217,97 +217,17 @@ const UserDetailPage: React.FC = () => {
 
   const isViewingOtherAdmin = user?.role === "Administrator";
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-        <div className="bg-white dark:bg-slate-800 border-b dark:border-slate-700 sticky top-0 z-10 w-full">
-          <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                aria-label={t("aria.goBack")}
-                onClick={() => navigate(-1)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition text-slate-900 dark:text-white"
-                title={t("aria.goBack")}
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <div>
-                <Display className="text-2xl">
-                  {t("detail.userDetails")}
-                </Display>
-                <SmallText variant="muted" className="mt-1">
-                  {t("detail.personalInfo")}
-                </SmallText>
-              </div>
-            </div>
-            <button
-              aria-label={t("aria.editProfile")}
-              className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition"
-            >
-              ✎{" "}
-              <SmallText weight="medium" className="text-white">
-                {t("detail.editProfile")}
-              </SmallText>
-            </button>
-          </div>
-
-          {isViewingOtherAdmin && (
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 border-t border-yellow-200 dark:border-yellow-800 w-full">
-              <div className="max-w-7xl mx-auto px-8 py-3 flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-500 shrink-0 mt-0.5" />
-                <div>
-                  <SmallText
-                    weight="bold"
-                    className="text-yellow-900 dark:text-yellow-200"
-                  >
-                    {t("warnings.adminWarning")}
-                  </SmallText>
-                  <SmallText
-                    variant="muted"
-                    className="text-yellow-800 dark:text-yellow-400 mt-1"
-                  >
-                    {t("warnings.adminWarningDesc")}
-                  </SmallText>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <LoadingSkeletons />
-      </div>
-    );
+  if (loading && !user) {
+    return <PageSkeleton variant="grid" count={1} />;
   }
 
   if (error || !user) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white border-b sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                aria-label={t("aria.goBack")}
-                onClick={() => navigate(-1)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <h1 className="text-2xl font-bold">{t("detail.userDetails")}</h1>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-8 py-8">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 flex items-start gap-4">
-            <AlertCircle className="w-6 h-6 text-red-500 shrink-0 mt-1" />
-            <div>
-              <SubsectionTitle>{t("detail.errorLoadingData")}</SubsectionTitle>
-              <SmallText variant="muted" className="mt-1">
-                {error || t("list.noResults")}
-              </SmallText>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ErrorState
+        error={new Error(error || t("list.noResults"))}
+        onRetry={() => window.location.reload()}
+        title={t("detail.errorLoadingData")}
+      />
     );
   }
 
