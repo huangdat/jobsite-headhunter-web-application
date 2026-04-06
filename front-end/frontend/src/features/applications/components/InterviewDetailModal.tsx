@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { formatInterviewType, formatDate, formatDuration } from "../utils";
 import type { Interview, InterviewType } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   MetaText,
   SmallText,
@@ -43,11 +44,23 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
       case "SCHEDULED":
         return "bg-blue-100 text-blue-700 hover:bg-blue-100 border-none";
       case "DONE":
-        return "bg-green-100 text-green-700 hover:bg-green-100 border-none";
+        return `bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-none`;
       case "CANCELLED":
-        return "bg-red-100 text-red-700 hover:bg-red-100 border-none";
+        return `bg-red-100 text-red-700 hover:bg-red-100 border-none`;
       default:
         return "secondary";
+    }
+  };
+
+  // Hàm helper để render màu icon cho interview type
+  const getInterviewTypeIconColor = (type: string) => {
+    switch (type) {
+      case "ONLINE":
+        return "text-blue-500";
+      case "IN_PERSON":
+        return "text-orange-500";
+      default:
+        return "text-slate-500";
     }
   };
 
@@ -95,9 +108,9 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
               <MetaText as="div">{t("applications.interview.type")}</MetaText>
               <SmallText weight="bold" className="flex items-center gap-2">
                 {interview.interviewType === "ONLINE" ? (
-                  <Video size={16} className="text-blue-500" />
+                  <Video size={16} className={getInterviewTypeIconColor("ONLINE")} />
                 ) : (
-                  <MapPin size={16} className="text-orange-500" />
+                  <MapPin size={16} className={getInterviewTypeIconColor("IN_PERSON")} />
                 )}
                 {formatInterviewType(
                   interview.interviewType as InterviewType,
@@ -161,7 +174,7 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
                 weight="medium"
                 className="flex items-start gap-2 italic"
               >
-                <MapPin size={16} className="text-red-500 shrink-0 mt-0.5" />
+                <MapPin size={16} className={`${getSemanticClass('danger', 'icon', true)} shrink-0 mt-0.5`} />
                 {interview.location}
               </SmallText>
             </div>
@@ -173,8 +186,8 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
               <MetaText as="div" className="flex items-center gap-1">
                 <FileText size={12} /> {t("applications.interview.notes")}
               </MetaText>
-              <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4">
-                <BodyText variant="muted" className="text-amber-900 italic">
+              <div className={`rounded-2xl p-4 ${getSemanticClass('warning', 'bg', true)} border ${getSemanticClass('warning', 'border', true)}`}>
+                <BodyText variant="muted" className={`italic ${getSemanticClass('warning', 'text', true)}`}>
                   "{interview.notes}"
                 </BodyText>
               </div>

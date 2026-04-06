@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageSkeleton } from "@/shared/components/states";
 import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import { useVerifications, useVerificationFilters } from "../hooks";
 import type { Verification } from "../types";
@@ -78,19 +78,17 @@ export const VerificationListPage: React.FC = () => {
       {stats && <VerificationStatsCard stats={stats} isLoading={isLoading} />}
 
       {/* VERIFICATIONS GRID */}
-      {isLoading ? (
-        <div className="space-y-4">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 w-full rounded-xl" />
-          ))}
-        </div>
-      ) : verifications.length === 0 ? (
+      {isLoading && <PageSkeleton variant="list" count={3} />}
+
+      {!isLoading && verifications.length === 0 && (
         <EmptyStateView
           icon={AlertCircle}
           title={t("verification.pages.list.noResults")}
           description={t("verification.pages.list.noResultsDescription")}
         />
-      ) : (
+      )}
+
+      {!isLoading && verifications.length > 0 && (
         <div className="space-y-4 mb-8">
           {verifications.map((verification: Verification) => (
             <VerificationQueueCard

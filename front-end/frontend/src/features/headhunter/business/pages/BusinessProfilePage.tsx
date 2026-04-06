@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getDarkClasses } from "@/lib/theme-classes";
 import { useBusinessProfile } from "../hooks/useBusinessProfile";
 import { BusinessProfileDisplay } from "../components";
+import { PageSkeleton, ErrorState } from "@/shared/components/states";
 
 /**
  * Business Profile Page (Read-only version)
@@ -85,56 +86,25 @@ export const BusinessProfilePage: React.FC = () => {
       </div>
 
       <div className="mx-auto max-w-4xl px-4 pb-16 sm:px-6 lg:px-8 pt-8">
-        <section
-          className={`rounded-3xl border overflow-hidden transition-all min-h-[400px] ${getDarkClasses("border-slate-200 bg-white shadow-xl shadow-slate-200/50", "border-slate-700 bg-slate-900 shadow-xl shadow-slate-900/50")}`}
-        >
-          {isLoading ? (
-            // Loading state
-            <div className="flex h-[400px] items-center justify-center">
-              <div className="flex flex-col items-center gap-4">
-                <div
-                  className={`h-12 w-12 animate-spin rounded-full border-4 ${getDarkClasses("border-slate-200 border-t-slate-700", "border-slate-700 border-t-slate-300")}`}
-                />
-                <p
-                  className={`text-xs font-bold uppercase tracking-widest animate-pulse ${getDarkClasses("text-slate-400", "text-slate-500")}`}
-                >
-                  {t("business.state.loading")}
-                </p>
-              </div>
-            </div>
-          ) : errorMessage ? (
-            // Error state
-            <div className="p-12 text-center space-y-4">
-              <div
-                className={`mx-auto h-16 w-16 rounded-full flex items-center justify-center ${getDarkClasses("bg-rose-50 text-rose-500", "bg-rose-900/20 text-rose-400")}`}
-              >
-                <svg
-                  className="w-8 h-8"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-              </div>
-              <h3
-                className={`text-xl font-bold ${getDarkClasses("text-slate-900", "text-slate-100")}`}
-              >
-                {t("business.error.fetch_title")}
-              </h3>
-              <p className="text-slate-500 max-w-sm mx-auto">{errorMessage}</p>
-            </div>
-          ) : profile ? (
+        {isLoading && <PageSkeleton variant="grid" count={1} />}
+
+        {errorMessage && (
+          <ErrorState
+            error={new Error(errorMessage)}
+            onRetry={() => window.location.reload()}
+            title={t("business.error.fetch_title")}
+          />
+        )}
+
+        {!isLoading && !errorMessage && profile && (
+          <section
+            className={`rounded-3xl border overflow-hidden transition-all ${getDarkClasses("border-slate-200 bg-white shadow-xl shadow-slate-200/50", "border-slate-700 bg-slate-900 shadow-xl shadow-slate-900/50")}`}
+          >
             <div className="p-8 md:p-12">
               <BusinessProfileDisplay profile={profile} />
             </div>
-          ) : null}
-        </section>
+          </section>
+        )}
       </div>
     </div>
   );

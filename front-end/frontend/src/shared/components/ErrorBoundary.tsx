@@ -2,6 +2,7 @@ import React, { type ReactNode } from "react";
 import { AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 // Development mode detection - works in Vite and browser
 const isDevelopment = !import.meta.env.PROD;
@@ -95,10 +96,10 @@ export class ErrorBoundary extends React.Component<
           >
             <div className="flex justify-center mb-4">
               <div
-                className={cn("p-3 rounded-full", "bg-red-50 dark:bg-red-950")}
+                className={cn("p-3 rounded-full", getSemanticClass('danger', 'bg', true))}
               >
                 <AlertCircle
-                  className={cn("w-8 h-8", "text-red-600 dark:text-red-400")}
+                  className={cn("w-8 h-8", getSemanticClass('danger', 'icon', true))}
                 />
               </div>
             </div>

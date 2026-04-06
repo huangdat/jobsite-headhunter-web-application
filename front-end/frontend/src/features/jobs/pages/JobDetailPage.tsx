@@ -6,7 +6,6 @@ import {
   useJobsTranslation,
   useJobDetailQuery,
 } from "@/shared/hooks";
-import { SmallText } from "@/shared/components/typography/Typography";
 import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -15,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { PageContainer } from "@/shared/components/layout";
+import { PageSkeleton, ErrorState } from "@/shared/components/states";
 import {
   fetchSavedJobs,
   removeSavedJob,
@@ -105,7 +105,7 @@ export function JobDetailPage() {
   if (isLoading) {
     return (
       <PageContainer variant="default" maxWidth="5xl">
-        <div className="h-52 animate-pulse rounded-3xl bg-slate-100 dark:bg-slate-800" />
+        <PageSkeleton variant="grid" count={1} />
       </PageContainer>
     );
   }
@@ -113,18 +113,11 @@ export function JobDetailPage() {
   if (error || !job || !jobId) {
     return (
       <PageContainer variant="default" maxWidth="4xl">
-        <div className="text-center py-10">
-          <SmallText variant="muted" className="text-lg">
-            {error ? t("detail.unableToLoad") : t("detail.notFound")}
-          </SmallText>
-          <Button
-            variant="link"
-            className="mt-4"
-            onClick={() => navigate("/jobs")}
-          >
-            {t("detail.backToListings")}
-          </Button>
-        </div>
+        <ErrorState
+          error={new Error(error?.message || t("detail.unableToLoad"))}
+          onRetry={() => window.location.reload()}
+          title={error ? t("detail.unableToLoad") : t("detail.notFound")}
+        />
       </PageContainer>
     );
   }

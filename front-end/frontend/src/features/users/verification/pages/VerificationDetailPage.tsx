@@ -10,10 +10,10 @@ import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import { PageContainer } from "@/shared/components/layout";
+import { PageSkeleton, ErrorState } from "@/shared/components/states";
 import { useVerificationDetail, useRejectModal } from "../hooks";
 import { VerificationStatus } from "../types";
 import {
@@ -22,7 +22,6 @@ import {
   DetailsGrid,
   SectionCard,
   ApprovalSuccessBanner,
-  EmptyStateView,
 } from "../components";
 import { ChevronLeft, AlertCircle } from "lucide-react";
 
@@ -82,17 +81,7 @@ export const VerificationDetailPage: React.FC = () => {
   if (isLoading) {
     return (
       <PageContainer variant="default" maxWidth="6xl">
-        <Skeleton className="h-10 w-40 mb-8" />
-        <div className="grid grid-cols-12 gap-8">
-          <div className="col-span-8 space-y-6">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Skeleton key={i} className="h-40 w-full rounded-xl" />
-            ))}
-          </div>
-          <div className="col-span-4">
-            <Skeleton className="h-60 w-full rounded-xl" />
-          </div>
-        </div>
+        <PageSkeleton variant="grid" count={1} />
       </PageContainer>
     );
   }
@@ -100,13 +89,10 @@ export const VerificationDetailPage: React.FC = () => {
   if (!verification) {
     return (
       <PageContainer variant="default" maxWidth="6xl">
-        <EmptyStateView
-          icon={AlertCircle}
+        <ErrorState
+          error={new Error(t("verification.errors.notFound"))}
+          onRetry={() => fetchDetail(verificationId)}
           title={t("verification.errors.notFound")}
-          primaryAction={{
-            label: t("verification.pages.detail.back"),
-            onClick: () => navigate("/admin/verifications"),
-          }}
         />
       </PageContainer>
     );

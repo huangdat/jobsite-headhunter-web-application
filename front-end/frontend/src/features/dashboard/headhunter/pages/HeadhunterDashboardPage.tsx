@@ -11,6 +11,7 @@ import { JobDashboardFilter } from "../components/JobDashboardFilter";
 import type { DashboardFilterOptions } from "../../types";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { Button } from "@/components/ui/button";
+import { ErrorState } from "@/shared/components/states";
 
 /**
  * HeadhunterDashboardPage
@@ -44,22 +45,11 @@ export const HeadhunterDashboardPage: React.FC = () => {
   if (error) {
     return (
       <PageContainer variant="white" maxWidth="5xl">
-        <div className="flex items-center justify-center min-h-100">
-          <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-xl max-w-md">
-            <SmallText weight="bold" className="text-red-800 dark:text-red-400">
-              {t("error.failedToLoad", "Error loading dashboard")}
-            </SmallText>
-            <SmallText
-              variant="muted"
-              className="text-red-600 dark:text-red-300 mt-1"
-            >
-              {error}
-            </SmallText>
-            <Button variant="destructive" onClick={refetch}>
-              {t("common.retry", "Retry")}
-            </Button>
-          </div>
-        </div>
+        <ErrorState
+          error={new Error(error)}
+          onRetry={refetch}
+          title={t("error.failedToLoad", "Error loading dashboard")}
+        />
       </PageContainer>
     );
   }
