@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   Display,
   SmallText,
@@ -336,9 +337,9 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
+                className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass('danger', 'border', true)} ${getSemanticClass('danger', 'text', true)} hover:${getSemanticClass('danger', 'bg', true)}`}
               >
-                <MetaText className="text-red-500">
+                <MetaText className={getSemanticClass('danger', 'text', true)}>
                   {t("common.reject")}
                 </MetaText>
               </Button>
@@ -363,9 +364,9 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
+                className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass('danger', 'border', true)} ${getSemanticClass('danger', 'text', true)} hover:${getSemanticClass('danger', 'bg', true)}`}
               >
-                <MetaText className="text-red-500">
+                <MetaText className={getSemanticClass('danger', 'text', true)}>
                   {t("common.reject")}
                 </MetaText>
               </Button>
@@ -392,9 +393,9 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
+                className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass('danger', 'border', true)} ${getSemanticClass('danger', 'text', true)} hover:${getSemanticClass('danger', 'bg', true)}`}
               >
-                <MetaText className="text-red-500">
+                <MetaText className={getSemanticClass('danger', 'text', true)}>
                   {t("common.reject")}
                 </MetaText>
               </Button>
