@@ -67,7 +67,10 @@
       },
       "emptyStateJobFilter": "No application data for this job. Keep tracking!",
       "refresh": "Refresh",
-      "days": "days"
+      "days": "days",
+      "industryAvg": "Industry avg: 28 days",
+      "hiringSuccess": "Hiring Success",
+      "chartComponent": "Chart Component"
     }
   },
   "error": {

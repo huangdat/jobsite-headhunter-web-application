@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import type { ChartDataPoint } from "../../types";
 
 interface BaseChartProps {
@@ -19,6 +20,7 @@ export const BaseChart: React.FC<BaseChartProps> = ({
   type = "bar",
   height = 300,
 }) => {
+  const { t } = useTranslation("dashboard");
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
       <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
@@ -27,7 +29,8 @@ export const BaseChart: React.FC<BaseChartProps> = ({
       <div className="chart-container overflow-auto" data-chart-height={height}>
         {/* TODO: Implement chart rendering using Recharts or Chart.js */}
         <p className="text-slate-500 dark:text-slate-400">
-          Chart Component (type: {type})
+          {t("headhunter.dashboard.chartComponent", "Chart Component")} (type:{" "}
+          {type})
         </p>
         <pre className="text-xs text-slate-400 dark:text-slate-500 mt-2 overflow-auto max-h-48">
           {JSON.stringify(data, null, 2)}

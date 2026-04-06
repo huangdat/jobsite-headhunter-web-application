@@ -62,7 +62,13 @@
     "rejected_reason": "Reason",
     "rejected_title": "Verification Rejected",
     "in_progress": "Verification in Progress",
-    "title": "Business verification title"
+    "title": "Business verification title",
+    "automatedAction": {
+      "initiated": "Initiated",
+      "completed": "Completed",
+      "type": "Type",
+      "id": "ID"
+    }
   },
   "documents": {
     "title": "Submitted Documents",

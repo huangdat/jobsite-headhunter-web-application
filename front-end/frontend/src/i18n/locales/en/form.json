@@ -37,5 +37,8 @@
     "signIn": "Form register sign in",
     "joinNetwork": "Form register join network",
     "professional": "Form register professional"
+  },
+  "skill": {
+    "selectSkills": "Select skills..."
   }
 }
