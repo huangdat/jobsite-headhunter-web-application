@@ -100,15 +100,19 @@ public class Job {
 
     @Builder.Default
     @Column(name = "visible")
-    boolean visible = true;
+    Boolean visible = true;
 
     @Builder.Default
     @Column(name = "featured")
-    boolean featured = false;
+    Boolean featured = false;
 
     @Column(name = "deleted_at")
     LocalDateTime deletedAt;
 
     @Column(name = "highlight_until")
     LocalDateTime highlightUntil;
+
+    public Boolean isVisible() {
+        return visible;
+    }
 }
