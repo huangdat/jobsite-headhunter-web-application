@@ -8,11 +8,12 @@ import {
   useDeleteJobMutation,
 } from "@/shared/hooks";
 import { SmallText } from "@/shared/components/typography/Typography";
-import type { JobSummary } from "../types";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageSkeleton } from "@/shared/components/states";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CandidateInstantSearch } from "@/features/headhunter/candidates/components/CandidateInstantSearch";
+import type { JobSummary } from "../types";
 import {
   Dialog,
   DialogContent,
@@ -143,11 +144,7 @@ export function JobManagePage() {
   if (isLoading)
     return (
       <PageContainer variant="white" maxWidth="7xl">
-        <div className="flex justify-center items-center min-h-100">
-          <SmallText variant="muted" weight="bold" className="animate-pulse">
-            {t("manage.loadingJobs")}
-          </SmallText>
-        </div>
+        <PageSkeleton variant="list" count={4} />
       </PageContainer>
     );
 
