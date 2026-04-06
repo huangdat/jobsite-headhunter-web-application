@@ -116,4 +116,12 @@ public class Job {
     public Boolean isVisible() {
         return visible;
     }
+
+    public Boolean isFeatured() {
+        return featured;
+    }
+
+    public Boolean isNegotiable() {
+        return negotiable;
+    }
 }
