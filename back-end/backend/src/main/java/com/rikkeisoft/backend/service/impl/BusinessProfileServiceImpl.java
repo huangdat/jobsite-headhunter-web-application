@@ -5,6 +5,9 @@ import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.dto.resp.business.VietQRBusinessResp;
+import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
+import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
+import com.rikkeisoft.backend.model.entity.Job;
 import com.rikkeisoft.backend.repository.*;
 import com.rikkeisoft.backend.mapper.AccountMapper;
 import com.rikkeisoft.backend.mapper.BusinessProfileMapper;
@@ -24,6 +27,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -37,6 +41,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     AccountMapper accountMapper;
     ForumPostRepo forumPostRepo;
     ApplicationRepo applicationRepo;
+    JobRepo jobRepo;
 
     @Override
     public List<BusinessProfileResp> getAllBusinessProfiles() {
@@ -93,6 +98,48 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
                     resp.setAccounts(accountResps);
                     return resp;
                 })
+                .toList();
+    }
+
+    @Override
+    public List<JobDetailResp> getJobsByBusinessProfileId(Long businessProfileId) {
+        // find all account that has field businessProfileId = businessProfileId
+        List<String> accountIds = accountRepo.findByBusinessProfileId(businessProfileId).stream()
+                .map(account -> account.getId().toString())
+                .toList();
+        // find all jobs that has field headhunterAccountId in accountIds and map to list of JobDetailResp
+        List<Job> jobs = new ArrayList<>();
+        for (int i = 0; i < accountIds.size(); i++) {
+            //find all jobs that has field headhunterAccountId = accountIds.get(i) and add to jobs list
+            jobs.addAll(jobRepo.findByHeadhunterId(accountIds.get(i)));
+        }
+
+        // map to list of JobDetailResp
+        return jobs.stream()
+                .map(job -> JobDetailResp.builder()
+                        .id(job.getId())
+                        .jobCode(job.getJobCode())
+                        .title(job.getTitle())
+                        .description(job.getDescription())
+                        .responsibilities(job.getResponsibilities())
+                        .requirements(job.getRequirements())
+                        .benefits(job.getBenefits())
+                        .workingTime(job.getWorkingTime())
+                        .location(job.getLocation())
+                        .addressDetail(job.getAddressDetail())
+                        .experience(job.getExperience())
+                        .salaryMin(job.getSalaryMin())
+                        .salaryMax(job.getSalaryMax())
+                        .negotiable(job.isNegotiable())
+                        .currency(job.getCurrency().name())
+                        .quantity(job.getQuantity())
+                        .rankLevel(job.getRankLevel())
+                        .workingType(job.getWorkingType())
+                        .deadline(job.getDeadline())
+                        .status(job.getStatus())
+                        .createdAt(job.getCreatedAt())
+                        .imageUrl(job.getImageUrl())
+                        .build())
                 .toList();
     }
 

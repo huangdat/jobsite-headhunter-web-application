@@ -112,4 +112,16 @@ public class Job {
 
     @Column(name = "highlight_until")
     LocalDateTime highlightUntil;
+
+    public Boolean isVisible() {
+        return visible;
+    }
+
+    public Boolean isFeatured() {
+        return featured;
+    }
+
+    public Boolean isNegotiable() {
+        return negotiable;
+    }
 }

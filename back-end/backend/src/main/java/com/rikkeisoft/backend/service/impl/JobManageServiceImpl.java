@@ -268,7 +268,7 @@ public class JobManageServiceImpl implements JobManageService {
             throw new AppException(ErrorCode.UNAUTHORIZED_ACTION);
         }
 
-        boolean currentlyVisible = job.getVisible();
+        Boolean currentlyVisible = job.isVisible();
         if (currentlyVisible) {
             job.setVisible(false);
             job.setDeletedAt(java.time.LocalDateTime.now());

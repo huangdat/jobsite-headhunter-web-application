@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -57,4 +58,7 @@ public interface JobRepo extends JpaRepository<Job, Long>, JpaSpecificationExecu
     List<Job> findHighlightedJobs(@Param("status") JobStatus status,
                                   @Param("now") LocalDateTime now,
                                   Pageable pageable);
+
+
+    List<Job> findByHeadhunterId(String headhunterId);
 }
