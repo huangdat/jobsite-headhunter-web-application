@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { fetchMyCurrentCV } from "@/features/applications/services/applicationsApi";
 import { FileText, Loader, AlertCircle } from "lucide-react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface CVSelectorProps {
   onCVSelect: (cvId: string, cvUrl: string) => void;
@@ -129,7 +130,7 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
       )}
 
       {error && (
-        <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-100 rounded-xl text-xs text-red-600 font-bold animate-in duration-500">
+        <div className={`flex items-center gap-2 p-3 rounded-xl text-xs font-bold animate-in duration-500 ${getSemanticClass('danger', 'bg', true)} border ${getSemanticClass('danger', 'border', true)} ${getSemanticClass('danger', 'text', true)}`}>
           <AlertCircle className="w-4 h-4" />
           {t(error)}
         </div>
