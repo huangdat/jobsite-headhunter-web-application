@@ -87,7 +87,6 @@ export const ApplyJobPage: React.FC = () => {
           error={profileError}
           onRetry={() => window.location.reload()}
           title={t("errors.failedToLoadProfile", "Failed to load your profile")}
-          description={t("errors.tryAgainLater", "Please try again later")}
         />
       </PageContainer>
     );

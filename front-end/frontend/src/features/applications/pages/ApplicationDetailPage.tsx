@@ -85,7 +85,8 @@ export const ApplicationDetailPage: React.FC = () => {
         const data = await getApplicationDetail(applicationId);
         setApplication(data);
       } catch (err) {
-        const errorObj = err instanceof Error ? err : new Error(t("common.error"));
+        const errorObj =
+          err instanceof Error ? err : new Error(t("common.error"));
         setError(errorObj);
         toast.error(t("common.error"));
       } finally {
