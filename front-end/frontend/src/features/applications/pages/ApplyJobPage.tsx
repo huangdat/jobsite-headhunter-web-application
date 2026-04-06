@@ -4,6 +4,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { SmallText } from "@/shared/components/typography/Typography";
+import { ErrorState } from "@/shared/components/states/ErrorState";
+import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import { ApplicationForm } from "../components/ApplicationForm";
 import { useApplicationForm } from "../hooks/useApplicationForm";
 import type { ApplicationFormData } from "../types";
@@ -17,6 +19,8 @@ export const ApplyJobPage: React.FC = () => {
   const [defaultValues, setDefaultValues] = useState<
     Partial<ApplicationFormData> | undefined
   >(undefined);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const [profileError, setProfileError] = useState<Error | null>(null);
 
   const jobIdNum = jobId ? parseInt(jobId, 10) : 0;
 
@@ -35,6 +39,8 @@ export const ApplyJobPage: React.FC = () => {
 
     const loadProfile = async () => {
       try {
+        setIsLoadingProfile(true);
+        setProfileError(null);
         const profile = await profileApi.getProfile();
         if (!isActive) return;
 
@@ -44,7 +50,17 @@ export const ApplyJobPage: React.FC = () => {
           phone: profile.phone || "",
         });
       } catch (error) {
+        if (!isActive) return;
         console.error("Failed to load profile for application form", error);
+        setProfileError(
+          error instanceof Error
+            ? error
+            : new Error(t("errors.profileLoadFailed"))
+        );
+      } finally {
+        if (isActive) {
+          setIsLoadingProfile(false);
+        }
       }
     };
 
@@ -53,17 +69,46 @@ export const ApplyJobPage: React.FC = () => {
     return () => {
       isActive = false;
     };
-  }, []);
+  }, [t]);
+
+  // Show error state if profile loading failed
+  if (profileError) {
+    return (
+      <PageContainer variant="white" maxWidth="4xl">
+        <Breadcrumb
+          items={[
+            { label: t("breadcrumb.jobs") || "Jobs", href: "/jobs" },
+            { label: t("applications.form.title") || "Apply" },
+          ]}
+          className="mb-6"
+        />
+        <PageHeader variant="default" title={t("applications.form.title")} />
+        <ErrorState
+          error={profileError}
+          onRetry={() => window.location.reload()}
+          title={t("errors.failedToLoadProfile", "Failed to load your profile")}
+          description={t("errors.tryAgainLater", "Please try again later")}
+        />
+      </PageContainer>
+    );
+  }
 
   return (
     <PageContainer variant="white" maxWidth="4xl">
+      <Breadcrumb
+        items={[
+          { label: t("breadcrumb.jobs") || "Jobs", href: "/jobs" },
+          { label: t("applications.form.title") || "Apply" },
+        ]}
+        className="mb-6"
+      />
       <PageHeader variant="default" title={t("applications.form.title")} />
 
       {/* Form Card */}
       <Card className="p-8 border-none shadow-xl shadow-slate-200/60 rounded-3xl bg-white dark:bg-gray-800 dark:shadow-gray-900/20">
         <ApplicationForm
           onSubmit={handleSubmit}
-          isLoading={isSubmitting}
+          isLoading={isSubmitting || isLoadingProfile}
           defaultValues={defaultValues}
         />
       </Card>

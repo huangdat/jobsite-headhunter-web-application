@@ -1,11 +1,3 @@
-/**
- * VerificationListPage
- * PROF-05: Business Verification Admin Module - Page 1
- * URL: /admin/verifications
- *
- * Displays list of pending business verifications with KPIs and recent activity
- */
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -13,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import { useVerifications, useVerificationFilters } from "../hooks";
 import type { Verification } from "../types";
 import {
@@ -43,6 +36,15 @@ export const VerificationListPage: React.FC = () => {
 
   return (
     <PageContainer variant="default" maxWidth="6xl">
+      {/* BREADCRUMBS */}
+      <Breadcrumb
+        items={[
+          { label: t("breadcrumb.admin") || "Admin", href: "/admin" },
+          { label: t("breadcrumb.verifications") || "Verifications" },
+        ]}
+        className="mb-6"
+      />
+
       {/* HEADER */}
       <PageHeader
         variant="default"
