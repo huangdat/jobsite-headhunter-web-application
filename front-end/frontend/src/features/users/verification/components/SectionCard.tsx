@@ -12,6 +12,7 @@
 
 import React from "react";
 import type { LucideIcon } from "lucide-react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface SectionCardProps {
   title?: string;

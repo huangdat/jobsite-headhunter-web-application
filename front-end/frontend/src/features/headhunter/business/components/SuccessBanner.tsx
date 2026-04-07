@@ -99,7 +99,7 @@ export const SuccessBanner: React.FC<SuccessBannerProps> = ({
           {action && (
             <button
               onClick={action.onClick}
-              className={`mt-3 inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors ${getSemanticClass("success", "type", true)}`}
+              className={`mt-3 inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors ${getSemanticClass("success", "bg", true)}`}
             >
               {action.label}
             </button>

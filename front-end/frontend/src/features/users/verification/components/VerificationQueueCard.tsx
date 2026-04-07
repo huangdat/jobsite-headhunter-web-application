@@ -14,6 +14,7 @@ import React from "react";
 import { Calendar } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { Verification } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface VerificationQueueCardProps {
   verification: Verification;

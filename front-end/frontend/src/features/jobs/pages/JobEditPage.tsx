@@ -23,6 +23,7 @@ import {
 } from "@/shared/components/typography/Typography";
 import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
 import { ErrorState } from "@/shared/components/states/ErrorState";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export function JobEditPage() {
   const { t } = useJobsTranslation();
@@ -148,7 +149,7 @@ export function JobEditPage() {
       />
 
       <form
-        className="mt-10 space-y-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 shadow-lg dark:shadow-slate-900/30"
+        className={`mt-10 space-y-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 shadow-lg dark:shadow-slate-900/30 ${getSemanticClass("info", "border", true)}`}
         onSubmit={handleSubmit(onSubmit)}
       >
         <section className="grid gap-6 md:grid-cols-2">

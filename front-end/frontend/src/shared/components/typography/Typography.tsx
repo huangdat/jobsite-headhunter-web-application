@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface DisplayProps {
   children: ReactNode;

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Info, CheckCircle, XCircle } from "lucide-react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export type ConfirmationVariant = "danger" | "warning" | "info" | "success";
 

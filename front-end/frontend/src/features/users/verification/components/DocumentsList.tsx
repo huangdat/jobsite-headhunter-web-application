@@ -24,6 +24,7 @@ import {
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Button } from "@/components/ui/button";
 import type { Document } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface DocumentsListProps {
   documents: Document[];

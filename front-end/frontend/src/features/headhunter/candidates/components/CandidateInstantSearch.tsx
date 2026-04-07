@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useSearchBarTranslation } from "@/shared/hooks";
-import { getSemanticClass } from "@/utils/semantic-colors";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { CandidateSuggestion } from "../types";
 import { searchCandidates } from "../services/candidateSearchApi";
 

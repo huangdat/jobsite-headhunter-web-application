@@ -13,6 +13,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { CheckCircle, Circle, AlertCircle, Clock } from "lucide-react";
 import type { AutomatedAction } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface AutomatedActionItemProps {
   action: AutomatedAction;

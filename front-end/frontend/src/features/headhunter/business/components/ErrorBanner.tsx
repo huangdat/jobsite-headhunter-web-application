@@ -99,7 +99,7 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
           {action && (
             <button
               onClick={action.onClick}
-              className={`mt-3 inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors ${getSemanticClass("danger", "type", true)}`}
+              className={`mt-3 inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors ${getSemanticClass("danger", "bg", true)}`}
             >
               {action.label}
             </button>

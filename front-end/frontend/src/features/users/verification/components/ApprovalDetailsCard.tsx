@@ -14,6 +14,7 @@ import { CheckCircle, AlertCircle } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Button } from "@/components/ui/button";
 import type { Verification } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface ApprovalDetailsCardProps {
   verification: Verification;
@@ -37,7 +38,7 @@ export const ApprovalDetailsCard: React.FC<ApprovalDetailsCardProps> = ({
   // Determine score color
   const getScoreColor = (score: number) => {
     if (score >= 80) return getSemanticClass("success", "text", true);
-    if (score >= 50) return "text-amber-600";
+    if (score >= 50) return getSemanticClass("warning", "text", true);
     return getSemanticClass("danger", "text", true);
   };
 

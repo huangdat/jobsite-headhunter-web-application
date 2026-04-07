@@ -42,7 +42,7 @@ export const fetchCVList = async () => {
     const cv = response.data?.result;
     const files = cv ? [mapCandidateCvToFile(cv)] : [];
     return { success: true, data: { result: files } };
-  } catch (error) {
+  } catch {
     return { success: false, data: { result: [] } };
   }
 };
@@ -60,7 +60,7 @@ export const uploadCVFile = async (file: File) => {
 
     const cv = response.data?.result;
     return { success: true, file: cv ? mapCandidateCvToFile(cv) : undefined };
-  } catch (error) {
+  } catch {
     return { success: false, error: { message: "messages.uploadFailed" } };
   }
 };

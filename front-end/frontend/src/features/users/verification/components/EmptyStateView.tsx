@@ -12,6 +12,7 @@
 import React from "react";
 import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface EmptyStateViewProps {
   icon?: LucideIcon;

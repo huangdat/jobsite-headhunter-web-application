@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { getSemanticClass } from "@/utils/semantic-colors";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   useJobsTranslation,
   useSavedJobsQuery,

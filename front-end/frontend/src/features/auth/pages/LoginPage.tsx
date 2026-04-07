@@ -382,7 +382,7 @@ export function LoginPage() {
 
               <Link
                 to="/forgot-password"
-                className="text-brand-primary hover:underline text-lime-500"
+                className="text-brand-primary hover:underline text-info-600"
               >
                 {t("pages.login.forgotPasswordLink")}
               </Link>

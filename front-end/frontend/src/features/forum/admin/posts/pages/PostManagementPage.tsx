@@ -10,6 +10,7 @@ import { PostCreateForm } from "../components/PostCreateForm";
 import { Button } from "@/components/ui/button";
 import { BiPlus } from "react-icons/bi";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export function PostManagementPage() {
   const { t } = useTranslation();

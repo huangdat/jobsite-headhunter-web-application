@@ -1,6 +1,7 @@
 import React from "react";
 import { Lock } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface AccountInfoCardProps {
   user: {

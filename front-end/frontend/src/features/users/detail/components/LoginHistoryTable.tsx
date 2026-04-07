@@ -2,6 +2,7 @@
 import React from "react";
 import { CheckCircle, AlertCircle } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface LoginSession {
   dateTime: string;

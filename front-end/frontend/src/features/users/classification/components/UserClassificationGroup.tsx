@@ -6,6 +6,7 @@ import {
   formatPercentage,
   formatCount,
 } from "@/features/users/classification/utils/classificationUtils";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface UserClassificationGroupProps {
   group: ClassificationGroupData;

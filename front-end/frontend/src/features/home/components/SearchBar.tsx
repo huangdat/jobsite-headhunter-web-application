@@ -1,5 +1,5 @@
 import { useHomeTranslation } from "@/shared/hooks";
-import { getSemanticClass } from "@/utils/semantic-colors";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export function SearchBar() {
   const { t } = useHomeTranslation();

@@ -1,7 +1,7 @@
 import React from "react";
 import { AlertTriangle, Lock, Unlock, Trash2, AlertCircle } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
-import { getSemanticClass } from "@/utils/semantic-colors";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface DangerZoneSectionProps {
   onLockAccount: () => void;

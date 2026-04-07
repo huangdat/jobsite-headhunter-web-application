@@ -1,5 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface FilterBadgeProps {
   filterType: "role" | "status";

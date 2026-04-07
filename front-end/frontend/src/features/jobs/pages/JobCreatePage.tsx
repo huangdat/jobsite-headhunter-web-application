@@ -17,6 +17,7 @@ import {
   LabelText,
   SmallText,
 } from "@/shared/components/typography/Typography";
+import { ChevronLeft } from "lucide-react";
 
 export function JobCreatePage() {
   const { t } = useJobsTranslation();

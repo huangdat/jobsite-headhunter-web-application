@@ -31,7 +31,7 @@ export const BusinessProfilePage: React.FC = () => {
       <div
         className={`relative h-40 ${getDarkClasses("bg-linear-to-r from-slate-700 to-slate-800", "bg-linear-to-r from-slate-900 to-slate-950")}`}
       >
-        <div className="absolute inset-0 bg-grid-white/[0.1] bg-[size:20px_20px]" />
+        <div className="absolute inset-0 bg-grid-white/[0.1] bg-size:20px_20px" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative h-full flex flex-col justify-end pb-8">
           <div className="mb-4 flex items-center justify-between">
             <nav

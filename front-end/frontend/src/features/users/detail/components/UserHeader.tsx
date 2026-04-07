@@ -2,7 +2,7 @@ import React from "react";
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
-import { getSemanticClass } from "@/utils/semantic-colors";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface UserHeaderProps {
   user: {
@@ -35,8 +35,8 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
       label: t("statuses.SUSPENDED"),
     },
     DELETED: {
-      bg: "bg-slate-100",
-      text: "text-slate-800",
+      bg: getSemanticClass("danger", "bg", true),
+      text: getSemanticClass("danger", "text", true),
       label: t("statuses.DELETED"),
     },
   };
@@ -56,7 +56,7 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
         getSemanticClass("info", "text", true),
       icon: "📊",
     },
-    User: { color: "bg-gray-100 text-gray-800", icon: "👥" },
+    User: { color: getSemanticClass("info", "bg", true) + " " + getSemanticClass("info", "text", true), icon: "👥" },
   };
 
   const status = statusConfig[user.status];

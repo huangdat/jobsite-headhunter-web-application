@@ -13,6 +13,7 @@ import React from "react";
 import { CheckCircle2, Circle } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { ChecklistItem } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface VerificationChecklistCardProps {
   items: ChecklistItem[];

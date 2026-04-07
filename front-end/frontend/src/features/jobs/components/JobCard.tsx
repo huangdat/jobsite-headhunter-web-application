@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import { Badge } from "@/components/ui/badge";
-import { getSemanticClass } from "@/utils/semantic-colors";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { JobSummary } from "../types";
 import { formatSalary, formatDeadlineDate } from "../utils";
 import { getJobDetail } from "../services/jobsApi";

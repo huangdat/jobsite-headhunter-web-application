@@ -11,6 +11,7 @@
 import React from "react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { VerificationStats } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface VerificationStatsCardProps {
   stats: VerificationStats | null;

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useAppTranslation } from "@/shared/hooks";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { getSemanticClass } from "@/utils/semantic-colors";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   getAdminFeatures,
   type AdminFeature,

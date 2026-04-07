@@ -1,5 +1,6 @@
 import React from "react";
 import { useHeadhunterTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface CandidateFilterTagProps {
   label: string;

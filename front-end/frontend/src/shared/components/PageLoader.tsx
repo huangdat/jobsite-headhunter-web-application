@@ -5,6 +5,7 @@
  */
 
 import { Loader } from "lucide-react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export function PageLoader() {
   return (

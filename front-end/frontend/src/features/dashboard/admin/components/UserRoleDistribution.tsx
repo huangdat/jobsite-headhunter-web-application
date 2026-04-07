@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { UserRoleStats } from "../../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface UserRoleDistributionProps {
   data: UserRoleStats | undefined;

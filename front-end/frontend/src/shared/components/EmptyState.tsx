@@ -7,6 +7,7 @@ import React, { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Inbox, Search, FileX, AlertCircle } from "lucide-react";
 import { SubsectionTitle, SmallText } from "./typography/Typography";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export type EmptyStateVariant = "default" | "search" | "error" | "no-data";
 

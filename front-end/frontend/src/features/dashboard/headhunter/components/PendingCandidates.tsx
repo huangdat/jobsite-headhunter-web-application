@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { PendingCandidate } from "../../types";
 import { dashboardFormatters } from "../../shared/utils/dashboardFormatters";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface PendingCandidatesProps {
   data: PendingCandidate[] | undefined;

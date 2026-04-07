@@ -1,6 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
-import { getSemanticClass } from "@/utils/semantic-colors";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { Button } from "@/components/ui/button";
 import type {
   ClassificationGroupData,

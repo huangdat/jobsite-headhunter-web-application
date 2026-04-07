@@ -2,6 +2,7 @@ import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
 import type { UserStatus } from "@/features/users/types/user.types";
 import { UserListLoading } from "./UserListLoading";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export interface UserTableRow {
   id: string;
