@@ -52,6 +52,10 @@
   "applications.filter.all": "All",
 
   "applications.form.title": "Submit Application",
+  "applications.form.cvRequired": "CV is required",
+  "applications.form.cvUploadHint": "Please select or upload a CV before submitting your application",
+
+  "applications.form.selectCvFirst": "Please select a CV first",
   "applications.form.selectCV": "Select CV",
   "applications.form.uploadCV": "Upload New CV",
   "applications.form.fullName": "Full Name",

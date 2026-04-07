@@ -69,9 +69,10 @@ export function FeaturedJobs() {
         <>
           <div className="grid md:grid-cols-3 gap-6">
             {jobs.map((job) => (
-              <div
+              <Link
                 key={job.id}
-                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition"
+                to={`/jobs/${job.id}`}
+                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition block text-inherit no-underline"
               >
                 <SmallText weight="semibold" className="block">
                   {job.title}
@@ -94,7 +95,7 @@ export function FeaturedJobs() {
                   <span>{job.location}</span>
                   <span className="font-semibold">{job.salary}</span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -111,4 +112,3 @@ export function FeaturedJobs() {
     </section>
   );
 }
-
