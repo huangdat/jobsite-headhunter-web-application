@@ -6,6 +6,7 @@
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { BiListUl, BiNews, BiMessageDetail } from "react-icons/bi";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface ForumAdminSidebarProps {
   onItemClick?: () => void;
@@ -46,7 +47,9 @@ export function ForumAdminSidebar({ onItemClick }: ForumAdminSidebarProps) {
       {/* Forum Header */}
       <div className="mb-8 pb-6 border-b border-slate-100">
         <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <BiNews className="w-5 h-5 text-emerald-600" />
+          <BiNews
+            className={`w-5 h-5 ${getSemanticClass("success", "icon")}`}
+          />
           {t("forum.sidebar.management") || "Forum Management"}
         </h2>
         <p className="text-xs text-slate-500 mt-1">
@@ -74,7 +77,7 @@ export function ForumAdminSidebar({ onItemClick }: ForumAdminSidebarProps) {
                     transition-all duration-200 border border-transparent group
                     ${
                       isActive
-                        ? "bg-emerald-50 text-emerald-700 shadow-sm border-emerald-100 ring-1 ring-emerald-500/10"
+                        ? `${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)} shadow-sm ${getSemanticClass("success", "border", true)} ring-1 ring-emerald-500/10`
                         : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                     }
                     ${item.disabled ? "opacity-50 cursor-not-allowed" : ""}`
@@ -89,7 +92,7 @@ export function ForumAdminSidebar({ onItemClick }: ForumAdminSidebarProps) {
                       <item.icon
                         className={`w-5 h-5 mt-0.5 shrink-0 transition-colors ${
                           isActive
-                            ? "text-emerald-600"
+                            ? getSemanticClass("success", "icon")
                             : "text-slate-400 group-hover:text-slate-600"
                         }`}
                       />

@@ -17,7 +17,7 @@ export const CandidateFilterTag: React.FC<CandidateFilterTagProps> = ({
 
   return (
     <div
-      className={`inline-flex items-center gap-2 rounded-full ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)} px-3 py-1 text-xs font-semibold text-emerald-700`}
+      className={`inline-flex items-center gap-2 rounded-full ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)} px-3 py-1 text-xs font-semibold ${getSemanticClass("success", "text", true)}`}
     >
       <span>
         {label}: {value}
@@ -26,7 +26,7 @@ export const CandidateFilterTag: React.FC<CandidateFilterTagProps> = ({
         <button
           type="button"
           onClick={onRemove}
-          className="rounded-full text-emerald-600 hover:text-emerald-900"
+          className={`rounded-full ${getSemanticClass("success", "text", false)} hover:${getSemanticClass("success", "text", true)}`}
           aria-label={t("filters.actions.remove")}
         >
           <span className="material-symbols-outlined text-sm">close</span>

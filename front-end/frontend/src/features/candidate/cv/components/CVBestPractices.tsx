@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { CVBestPracticesProps } from "../types";
 
 export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
@@ -41,7 +42,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
         <div className="bg-slate-50 rounded-xl p-6 space-y-4">
           {/* Icon & Title */}
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
+            <span className={`material-symbols-outlined ${getSemanticClass("success", "text", true)} text-lg fill`}>
               security
             </span>
             <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
@@ -59,7 +60,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
             {/* Note: Array translations not supported by feature hooks */}
             {([] as string[])?.map((item: string, index: number) => (
               <li key={index} className="flex gap-2 text-sm text-slate-600">
-                <span className="text-emerald-600 font-bold flex-0">•</span>
+                <span className={`${getSemanticClass("success", "text", true)} font-bold flex-0`}>•</span>
                 <span>{item}</span>
               </li>
             ))}
@@ -70,7 +71,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
         <div className="bg-slate-50 rounded-xl p-6 space-y-4">
           {/* Icon & Title */}
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
+            <span className={`material-symbols-outlined ${getSemanticClass("success", "text", true)} text-lg fill`}>
               verified_user
             </span>
             <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
@@ -83,7 +84,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
             {([] as string[])?.map(
               (item: string, index: number) => (
                 <li key={index} className="flex gap-2 text-sm text-slate-600">
-                  <span className="text-emerald-600 font-bold flex-0">✓</span>
+                  <span className={`${getSemanticClass("success", "text", true)} font-bold flex-0`}>✓</span>
                   <span>{item}</span>
                 </li>
               )
@@ -102,7 +103,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
         {/* Privacy Control Column */}
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
+            <span className={`material-symbols-outlined ${getSemanticClass("success", "text", true)} text-lg fill`}>
               security
             </span>
             <h3 className="text-xs font-bold uppercase tracking-widest text-slate-600">
@@ -118,7 +119,7 @@ export const CVBestPractices: React.FC<CVBestPracticesProps> = ({
             {([] as string[])?.map(
               (item: string, index: number) => (
                 <li key={index} className="flex gap-2 text-slate-600">
-                  <span className="text-emerald-600 flex-0">→</span>
+                  <span className={`${getSemanticClass("success", "text", false)} flex-0`}>→</span>
                   <span>{item}</span>
                 </li>
               )

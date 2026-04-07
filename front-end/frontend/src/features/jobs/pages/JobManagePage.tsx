@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { getSemanticClass } from "@/lib/design-tokens";
+import { getSemanticClass, brandColors } from "@/lib/design-tokens";
+import { jobStatusColors } from "@/lib/statusColorMap";
 import {
   useJobsTranslation,
   useMyJobsQuery,
@@ -218,14 +219,14 @@ export function JobManagePage() {
                         : t("manage.visible")}
                     </div>
                     <div
-                      className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${job.status === "CLOSED" ? `${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)} ${getSemanticClass("danger", "border", true)}` : "bg-emerald-50 text-emerald-600 border-emerald-100"}`}
+                      className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${job.status === "CLOSED" ? `${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)} ${getSemanticClass("danger", "border", true)}` : `${jobStatusColors.OPEN.bg} ${jobStatusColors.OPEN.text} ${jobStatusColors.OPEN.border}`}`}
                     >
                       {job.status}
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium text-slate-500 dark:text-slate-400">
                     <div className="flex items-center gap-1.5">
-                      <MapPin size={14} className="text-lime-500" />
+                      <MapPin size={14} className={brandColors.primary.text} />
                       {job.location}
                     </div>
                     {job.deadline && (
@@ -298,7 +299,7 @@ export function JobManagePage() {
                   variant="ghost"
                   onClick={() => handleHide(job.id)}
                   disabled={deleteJobMutation.isPending}
-                  className={`rounded-xl cursor-pointer font-bold h-9 w-9 p-0 transition-colors ${job.visible === false ? "text-lime-500 hover:bg-lime-500/10" : "text-slate-300 dark:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700"}`}
+                  className={`rounded-xl cursor-pointer font-bold h-9 w-9 p-0 transition-colors ${job.visible === false ? `${brandColors.primary.text} hover:bg-opacity-10` : "text-slate-300 dark:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700"}`}
                 >
                   {job.visible === false ? (
                     <Eye size={18} />

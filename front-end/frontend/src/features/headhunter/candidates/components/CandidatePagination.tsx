@@ -87,7 +87,7 @@ export const CandidatePagination: React.FC<CandidatePaginationProps> = ({
           type="button"
           onClick={() => onPageChange?.(currentPage - 1)}
           disabled={currentPage === 1}
-          className="size-8 rounded-lg border border-slate-200 bg-white text-slate-400 transition-colors hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+          className={`size-8 rounded-lg border border-slate-200 bg-white text-slate-400 transition-colors hover:${getSemanticClass("success", "text", false)} disabled:cursor-not-allowed disabled:opacity-50`}
           aria-label={t("filters.pagination.prev")}
         >
           <span className="material-symbols-outlined text-sm">
@@ -106,7 +106,7 @@ export const CandidatePagination: React.FC<CandidatePaginationProps> = ({
                 className={`size-8 rounded-lg text-xs font-bold transition-colors ${
                   currentPage === page
                     ? `${getSemanticClass("success", "bg", true)} text-white`
-                    : "text-slate-600 hover:bg-emerald-50"
+                    : `text-slate-600 hover:${getSemanticClass("success", "bg", false)}`
                 }`}
               >
                 {page}
@@ -119,7 +119,7 @@ export const CandidatePagination: React.FC<CandidatePaginationProps> = ({
           type="button"
           onClick={() => onPageChange?.(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="size-8 rounded-lg border border-slate-200 bg-white text-slate-400 transition-colors hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+          className={`size-8 rounded-lg border border-slate-200 bg-white text-slate-400 transition-colors hover:${getSemanticClass("success", "text", false)} disabled:cursor-not-allowed disabled:opacity-50`}
           aria-label={t("filters.pagination.next")}
         >
           <span className="material-symbols-outlined text-sm">

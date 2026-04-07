@@ -6,6 +6,7 @@ import {
   useJobsTranslation,
   useJobDetailQuery,
 } from "@/shared/hooks";
+import { brandColors } from "@/lib/design-tokens";
 import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -199,7 +200,7 @@ export function JobDetailPage() {
       <div className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-8 shadow-xl dark:shadow-slate-900/30 mt-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-lime-500">
+            <p className={`text-sm font-semibold uppercase tracking-wide ${brandColors.primary.text}`}>
               {job.companyName ?? t("messages.confidentialCompany")}
             </p>
             <h1 className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
@@ -282,7 +283,7 @@ export function JobDetailPage() {
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
               {t("detail.jobDetailsSection")}
             </h2>
-            <p className="text-sm text-lime-500">
+            <p className={`text-sm ${brandColors.primary.text}`}>
               {t("detail.jobCodeLabel")} {job.jobCode}
             </p>
           </div>
@@ -347,7 +348,7 @@ export function JobDetailPage() {
                   job.skills.map((skill) => (
                     <span
                       key={skill.id}
-                      className="rounded-full bg-brand-primary/10 px-4 py-1 text-sm font-medium text-lime-500"
+                      className={`rounded-full bg-brand-primary/10 px-4 py-1 text-sm font-medium ${brandColors.primary.text}`}
                     >
                       {skill.name}
                     </span>
@@ -388,7 +389,7 @@ export function JobDetailPage() {
                   <dd>
                     <a
                       href={job.companyWebsite}
-                      className="font-semibold text-lime-500 hover:underline"
+                      className={`font-semibold ${brandColors.primary.text} hover:underline`}
                       target="_blank"
                       rel="noreferrer"
                     >
