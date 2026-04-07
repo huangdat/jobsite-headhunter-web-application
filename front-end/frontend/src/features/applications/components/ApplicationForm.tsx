@@ -17,6 +17,7 @@ import { createValidationSchema } from "../utils/validation";
 import type { Resolver } from "react-hook-form";
 import { CVSelector } from "./CVSelector";
 import type { ApplicationFormData } from "../types";
+import { AlertCircle } from "lucide-react";
 
 interface ApplicationFormProps {
   onSubmit: (data: ApplicationFormData) => Promise<void>;
@@ -83,7 +84,28 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
             selectedId={form.watch("cvSnapshotUrl")}
             error={form.formState.errors.cvSnapshotUrl?.message}
           />
+          {form.formState.errors.cvSnapshotUrl && (
+            <FormMessage>
+              {form.formState.errors.cvSnapshotUrl.message}
+            </FormMessage>
+          )}
         </FormItem>
+
+        {/* CV Warning Alert - Real-time */}
+        {!form.watch("cvSnapshotUrl") && (
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-red-700 dark:text-red-300">
+                {t("applications.form.cvRequired") || "CV is required"}
+              </p>
+              <p className="text-xs text-red-600 dark:text-red-400 mt-1">
+                {t("applications.form.cvUploadHint") ||
+                  "Please select or upload a CV before submitting your application"}
+              </p>
+            </div>
+          </div>
+        )}
 
         <FormField
           control={form.control}
@@ -209,9 +231,15 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
         <div className="flex gap-3 pt-6">
           <Button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || !form.watch("cvSnapshotUrl")}
             size="xl"
-            className="flex-1 cursor-pointer bg-slate-700 hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 text-white font-bold transition-colors"
+            className="flex-1 cursor-pointer bg-slate-700 hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 text-white font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            title={
+              !form.watch("cvSnapshotUrl")
+                ? t("applications.form.selectCvFirst") ||
+                  "Please select a CV first"
+                : ""
+            }
           >
             {isLoading ? t("common.processing") : t("applications.form.submit")}
           </Button>
@@ -220,4 +248,3 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     </Form>
   );
 };
-
