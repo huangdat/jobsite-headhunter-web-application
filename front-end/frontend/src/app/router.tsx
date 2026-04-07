@@ -19,7 +19,7 @@ import { AdminOnlyRoute } from "@/features/auth/components/AdminOnlyRoute";
 import { MainLayout } from "@/shared/layouts/MainLayout";
 import { AdminLayout } from "@/features/users/list/layouts/AdminLayout";
 import { ForumAdminLayout } from "@/shared/layouts/ForumAdminLayout";
-import { PageLoader } from "@/shared/components/PageLoader";
+import { PageLoader } from "@/shared/common-blocks/PageLoader";
 
 // Lazy-loaded pages (code splitting for better performance)
 const HomePage = lazy(() =>
@@ -548,3 +548,4 @@ export function AppRouter() {
     </Suspense>
   );
 }
+

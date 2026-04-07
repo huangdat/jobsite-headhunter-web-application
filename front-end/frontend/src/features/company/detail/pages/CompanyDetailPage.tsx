@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { SmallText } from "@/shared/components/typography/Typography";
-import { PageSkeleton } from "@/shared/components/states";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { Button } from "@/shared/ui-primitives/button";
+import { SmallText } from "@/shared/common-blocks/typography/Typography";
+import { PageSkeleton } from "@/shared/common-blocks/states";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { useCompanyDetail } from "../hooks/useCompanyDetail";
 import { CompanyHeader } from "../components/CompanyHeader";
 import { CompanyAbout } from "../components/CompanyAbout";
@@ -52,3 +52,4 @@ export function CompanyDetailPage() {
     </div>
   );
 }
+

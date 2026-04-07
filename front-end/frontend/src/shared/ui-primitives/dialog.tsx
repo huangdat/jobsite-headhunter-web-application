@@ -3,7 +3,7 @@ import * as DialogRadix from "@radix-ui/react-dialog";
 import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { XIcon } from "lucide-react";
 
 function Dialog({ ...props }: React.ComponentProps<typeof DialogRadix.Root>) {
@@ -170,3 +170,4 @@ export {
   DialogTitle,
   DialogTrigger,
 };
+

@@ -3,22 +3,22 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useJobsTranslation } from "@/shared/hooks";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { RichTextEditor } from "@/components/RichTextEditor.lazy";
+import { Input } from "@/shared/ui-primitives/input";
+import { Textarea } from "@/shared/ui-primitives/textarea";
+import { Button } from "@/shared/ui-primitives/button";
+import { RichTextEditor } from "@/shared/common-blocks/RichTextEditor.lazy";
 import { createJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
-import { SkillMultiSelect } from "@/components/SkillMultiSelect";
+import { SkillMultiSelect } from "@/shared/common-blocks/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
 import { getSemanticClass } from "@/lib/design-tokens";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
 import {
   LabelText,
   SmallText,
-} from "@/shared/components/typography/Typography";
-import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+} from "@/shared/common-blocks/typography/Typography";
+import { PageSkeleton } from "@/shared/common-blocks/states/PageSkeleton";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { ChevronLeft } from "lucide-react";
 
 export function JobCreatePage() {
@@ -553,3 +553,5 @@ export function JobCreatePage() {
     </PageContainer>
   );
 }
+
+

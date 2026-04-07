@@ -141,8 +141,6 @@ export const useUploadPostImageMutation = () => {
 
 /* Legacy export for backwards compatibility */
 export function usePostManagement() {
-  // TODO: Deprecated - use individual hooks instead
-
   return {
     posts: [],
     isLoading: false,

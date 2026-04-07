@@ -1,16 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/shared/ui-primitives/card";
+import { Button } from "@/shared/ui-primitives/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { SmallText } from "@/shared/components/typography/Typography";
-import { ErrorState } from "@/shared/components/states/ErrorState";
-import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
+import { SmallText } from "@/shared/common-blocks/typography/Typography";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
+import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
 import { ApplicationForm } from "../components/ApplicationForm";
 import { useApplicationForm } from "../hooks/useApplicationForm";
 import type { ApplicationFormData } from "../types";
 import { profileApi } from "@/features/candidate/profile/services/profileApi";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
 
 export const ApplyJobPage: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -123,3 +123,4 @@ export const ApplyJobPage: React.FC = () => {
     </PageContainer>
   );
 };
+

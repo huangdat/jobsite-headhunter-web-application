@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthTranslation } from "@/shared/hooks";
 import { getSemanticClass } from "@/lib/design-tokens";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import {
   sendOtpSignup,
   verifyOtpSignup,
@@ -11,14 +11,14 @@ import { toast } from "sonner";
 import { MdOutlineMail, MdTimer } from "react-icons/md";
 import type { RegisterFormData } from "@/features/auth/types";
 import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
-import { AuthLayout } from "@/shared/components";
-import { Button } from "@/components/ui/button";
+import { AuthLayout } from "@/shared/common-blocks";
+import { Button } from "@/shared/ui-primitives/button";
 import {
   SectionTitle,
   BodyText,
   SmallText,
   Caption,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 interface LocationState {
   accountId?: string;
@@ -330,3 +330,5 @@ export function OTPVerificationPage() {
     </AuthLayout>
   );
 }
+
+

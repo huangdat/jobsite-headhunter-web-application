@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/shared/ui-primitives/input";
+import { Button } from "@/shared/ui-primitives/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/ui-primitives/select";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { ApplicationStatus } from "../types";
 import { APPLICATION_STATUS_LABELS } from "../utils";
@@ -94,3 +94,4 @@ export const ApplicationFilters: React.FC<ApplicationFiltersProps> = ({
     </div>
   );
 };
+

@@ -1,6 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import type { ClassificationGroupBy } from "@/features/users/classification/types/classification.types";
 import { groupingConfigs } from "@/features/users/classification/utils/groupingConfig";
 
@@ -158,3 +158,4 @@ export const UserClassificationHeader: React.FC<
     </div>
   );
 };
+

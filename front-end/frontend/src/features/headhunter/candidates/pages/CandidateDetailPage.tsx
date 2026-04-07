@@ -1,9 +1,9 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { ErrorState, PageSkeleton } from "@/shared/components/states";
+import { Button } from "@/shared/ui-primitives/button";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { ErrorState, PageSkeleton } from "@/shared/common-blocks/states";
 import type { CandidateSuggestion } from "../types";
 import { getCandidateDetail } from "../services/candidateSearchApi";
 
@@ -133,3 +133,4 @@ export function CandidateDetailPage() {
     </PageContainer>
   );
 }
+

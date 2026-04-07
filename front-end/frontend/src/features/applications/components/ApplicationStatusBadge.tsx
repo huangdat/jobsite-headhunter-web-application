@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/shared/ui-primitives/badge";
 import { getStatusBadgeClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { formatApplicationStatus } from "../utils";
@@ -26,3 +26,4 @@ export const ApplicationStatusBadge: React.FC<ApplicationStatusBadgeProps> = ({
     </Badge>
   );
 };
+

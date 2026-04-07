@@ -23,7 +23,7 @@
 
 import { useRef, useCallback, memo } from "react";
 import { Upload, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { toast } from "sonner";
 
@@ -221,3 +221,4 @@ export const ImageUploadField = memo(function ImageUploadField({
 });
 
 ImageUploadField.displayName = "ImageUploadField";
+

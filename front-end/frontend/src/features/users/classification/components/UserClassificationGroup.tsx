@@ -1,6 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import type { ClassificationGroupData } from "@/features/users/classification/types/classification.types";
 import {
   formatPercentage,
@@ -213,3 +213,4 @@ export const UserClassificationGroup: React.FC<
     </div>
   );
 };
+

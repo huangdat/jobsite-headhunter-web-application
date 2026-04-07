@@ -10,14 +10,14 @@ import {
   SmallText,
   MetaText,
   SubsectionTitle,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/shared/ui-primitives/button";
+import { Badge } from "@/shared/ui-primitives/badge";
 import { formatSalaryRange } from "../utils";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { PageSkeleton, ErrorState } from "@/shared/components/states";
-import { EmptyState } from "@/shared/components/EmptyState";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
+import { EmptyState } from "@/shared/common-blocks/EmptyState";
 import { Bookmark } from "lucide-react";
 
 // Helper function to extract error message from API errors
@@ -151,3 +151,4 @@ export function SavedJobsPage() {
     </PageContainer>
   );
 }
+

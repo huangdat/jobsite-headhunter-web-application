@@ -22,7 +22,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import type { Document } from "../types";
 import { getSemanticClass } from "@/lib/design-tokens";
 
@@ -161,3 +161,4 @@ export const DocumentsList: React.FC<DocumentsListProps> = ({
     </div>
   );
 };
+

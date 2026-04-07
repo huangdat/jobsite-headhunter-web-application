@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import { getSemanticClass } from "@/lib/design-tokens";
 
@@ -126,3 +126,4 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
 };
 
 export default UserHeader;
+

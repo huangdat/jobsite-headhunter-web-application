@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/shared/ui-primitives/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+} from "@/shared/ui-primitives/form";
+import { Input } from "@/shared/ui-primitives/input";
+import { Textarea } from "@/shared/ui-primitives/textarea";
+import { Button } from "@/shared/ui-primitives/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/ui-primitives/select";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -26,7 +26,7 @@ import {
   MetaText,
   Caption,
   Display,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 import { INTERVIEW_TYPE } from "@/shared/types/enums";
 import type { InterviewType, InterviewScheduleFormData } from "../types";
 import { Calendar, Clock, Video, MapPin, FileText, X } from "lucide-react";
@@ -357,3 +357,4 @@ export const InterviewScheduleModal = ({
     </Dialog>
   );
 };
+

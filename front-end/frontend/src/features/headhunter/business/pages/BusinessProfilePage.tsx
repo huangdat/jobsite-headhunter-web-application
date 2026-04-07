@@ -1,12 +1,12 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { getDarkClasses } from "@/lib/theme-classes";
 import { useBusinessProfile } from "../hooks/useBusinessProfile";
 import { BusinessProfileDisplay } from "../components";
-import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
 
 /**
  * Business Profile Page (Read-only version)
@@ -111,3 +111,4 @@ export const BusinessProfilePage: React.FC = () => {
 };
 
 export default BusinessProfilePage;
+

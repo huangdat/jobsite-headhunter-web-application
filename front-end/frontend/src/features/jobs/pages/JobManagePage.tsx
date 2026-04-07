@@ -9,11 +9,11 @@ import {
   useToggleJobStatusMutation,
   useDeleteJobMutation,
 } from "@/shared/hooks";
-import { SmallText } from "@/shared/components/typography/Typography";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { PageSkeleton } from "@/shared/components/states";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { SmallText } from "@/shared/common-blocks/typography/Typography";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { PageSkeleton } from "@/shared/common-blocks/states";
+import { Button } from "@/shared/ui-primitives/button";
+import { Card } from "@/shared/ui-primitives/card";
 import { CandidateInstantSearch } from "@/features/headhunter/candidates/components/CandidateInstantSearch";
 import type { JobSummary } from "../types";
 import {
@@ -21,8 +21,8 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+} from "@/shared/ui-primitives/dialog";
+import { Input } from "@/shared/ui-primitives/input";
 import {
   Plus,
   Edit3,
@@ -411,3 +411,4 @@ export function JobManagePage() {
 }
 
 export default JobManagePage;
+

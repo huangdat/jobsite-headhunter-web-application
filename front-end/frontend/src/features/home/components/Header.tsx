@@ -6,7 +6,7 @@ import { getSemanticClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { Navbar } from "./Navbar";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 
 // Thêm Interface cho Props
 interface HeaderProps {
@@ -200,3 +200,4 @@ export function Header({ onMenuClick }: HeaderProps) {
     </header>
   );
 }
+

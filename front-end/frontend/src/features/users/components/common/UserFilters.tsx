@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import {
   USERS_LIST_ROLE_VALUES,
@@ -99,3 +99,4 @@ export const UserFilters: React.FC<UserFiltersProps> = ({
     </div>
   );
 };
+

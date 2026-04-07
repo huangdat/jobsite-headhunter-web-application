@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { AuthLayout } from "@/shared/components";
+import { Button } from "@/shared/ui-primitives/button";
+import { AuthLayout } from "@/shared/common-blocks";
 import { useAuthTranslation } from "@/shared/hooks";
 import type { RegistrationUserRole } from "@/features/auth/types";
 import {
@@ -10,7 +10,7 @@ import {
   SubsectionTitle,
   BodyText,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 import { MdPersonSearch, MdGroups, MdWorkHistory } from "react-icons/md";
 import { HiOutlineArrowRight } from "react-icons/hi";
@@ -153,3 +153,5 @@ export function SelectRolePage() {
     </AuthLayout>
   );
 }
+
+

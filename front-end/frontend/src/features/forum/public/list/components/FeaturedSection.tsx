@@ -14,7 +14,7 @@ import {
   MetaText,
   SmallText,
   Caption,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 export function FeaturedSection() {
   const navigate = useNavigate();
@@ -98,3 +98,4 @@ export function FeaturedSection() {
     </section>
   );
 }
+

@@ -1,6 +1,6 @@
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { FormField } from "@/shared/components";
+import { Input } from "@/shared/ui-primitives/input";
+import { Textarea } from "@/shared/ui-primitives/textarea";
+import { FormField } from "@/shared/common-blocks";
 import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import {
@@ -101,3 +101,5 @@ export function CandidateDetailsStep({ form }: CandidateDetailsStepProps) {
     </div>
   );
 }
+
+

@@ -8,7 +8,7 @@ import { PostGrid } from "../components/PostGrid";
 import { PostFilters } from "../components/PostFilters";
 import { PostPagination } from "../components/PostPagination";
 import { useTranslation } from "react-i18next";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
 
 export function PostListPage() {
   const { t } = useTranslation();
@@ -31,3 +31,4 @@ export function PostListPage() {
     </PageContainer>
   );
 }
+

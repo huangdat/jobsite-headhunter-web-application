@@ -5,12 +5,12 @@ import {
   getTop10Companies,
   type BusinessProfileResp,
 } from "@/shared/utils/businessProfileService";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { COMPANY_LOGO_COLORS, HOME_SIZES } from "../constants";
 import {
   SubsectionTitle,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 export function TopCompanies() {
   const { t, currentLanguage } = useHomeTranslation();
@@ -104,3 +104,4 @@ export function TopCompanies() {
     </section>
   );
 }
+

@@ -16,9 +16,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogClose,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from "@/shared/ui-primitives/dialog";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
 import { AlertCircle, Loader2 } from "lucide-react";
 import type { CreateCategoryRequest } from "../types";
 
@@ -214,3 +214,4 @@ export function CategoryCreateForm({
     </Dialog>
   );
 }
+

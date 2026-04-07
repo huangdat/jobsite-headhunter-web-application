@@ -6,10 +6,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+} from "@/shared/ui-primitives/form";
+import { Input } from "@/shared/ui-primitives/input";
+import { Textarea } from "@/shared/ui-primitives/textarea";
+import { Button } from "@/shared/ui-primitives/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
@@ -220,3 +220,4 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
     </Form>
   );
 };
+

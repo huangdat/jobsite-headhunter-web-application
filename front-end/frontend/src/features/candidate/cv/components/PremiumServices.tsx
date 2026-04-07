@@ -5,7 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import type { PremiumServicesProps } from "../types";
 
 export const PremiumServices: React.FC<PremiumServicesProps> = ({
@@ -106,3 +106,4 @@ export const PremiumServices: React.FC<PremiumServicesProps> = ({
 };
 
 export default PremiumServices;
+

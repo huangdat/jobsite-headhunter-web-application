@@ -5,16 +5,16 @@ import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 import {
   SubsectionTitle,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useUserDetail } from "@/features/users/detail/hooks/useUserDetail";
 import { userMapper } from "@/features/users/utils/userMapper";
 import { useDeleteUser } from "@/features/users/actions/delete/hooks";
 import { useLockUser } from "@/features/users/actions/lock/hooks/useLockUser";
 import { useUnlockUser } from "@/features/users/actions/lock/hooks/useUnlockUser";
-import { PageContainer } from "@/shared/components/layout";
-import { PageSkeleton } from "@/shared/components/states";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { PageSkeleton } from "@/shared/common-blocks/states";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import {
   ROUTES,
   REDIRECT_DELAY,
@@ -382,3 +382,4 @@ const UserDetailPage: React.FC = () => {
 };
 
 export default UserDetailPage;
+

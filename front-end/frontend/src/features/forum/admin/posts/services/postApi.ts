@@ -165,35 +165,19 @@ export const uploadPostImage = async (file: File): Promise<string> => {
 /* Legacy export for backwards compatibility */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export const postApi = {
-  /**
-   * Fetch all posts (admin)
-   */
   getPosts: async () => {
-    // TODO: Deprecated - use getPosts function instead
     return { data: [] };
   },
 
-  /**
-   * Create new post
-   */
   createPost: async (_data: unknown) => {
-    // TODO: Deprecated - use createPost function instead
     return { data: _data };
   },
 
-  /**
-   * Delete post
-   */
   deletePost: async (_id: number) => {
-    // TODO: Implement API call
     return { success: true };
   },
 
-  /**
-   * Update post status
-   */
   updateStatus: async (_id: number, _status: string) => {
-    // TODO: Implement API call
     return { success: true };
   },
 };

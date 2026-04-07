@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 
 interface SkillOption {
   id: number;
@@ -106,3 +106,4 @@ export function SkillMultiSelect({
     </div>
   );
 }
+

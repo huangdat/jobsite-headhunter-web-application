@@ -5,8 +5,8 @@ import { getSemanticClass } from "@/lib/design-tokens";
 import { usersApi } from "@/features/users/services/usersApi";
 import type { PagedResponse } from "@/features/users/services/usersApi";
 import type { UserDetail } from "@/features/users/types/user.types";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { PageSkeleton } from "@/shared/components/states";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { PageSkeleton } from "@/shared/common-blocks/states";
 
 export const AdminDashboardPage: React.FC = () => {
   const { t } = useUsersTranslation();
@@ -194,3 +194,4 @@ export const AdminDashboardPage: React.FC = () => {
 };
 
 export default AdminDashboardPage;
+

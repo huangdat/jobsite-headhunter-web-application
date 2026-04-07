@@ -2,7 +2,7 @@ import { HeroSection } from "../components/HeroSection";
 import { RecommendedJobs } from "../components/RecommendedJobs";
 import { TopCompanies } from "../components/TopCompanies";
 import { FeaturedJobs } from "../components/FeaturedJobs";
-import { ErrorBoundary } from "@/shared/components/ErrorBoundary";
+import { ErrorBoundary } from "@/shared/common-blocks/ErrorBoundary";
 import { useAuth } from "@/features/auth/context/useAuth";
 
 export function HomePage() {
@@ -21,3 +21,4 @@ export function HomePage() {
     </ErrorBoundary>
   );
 }
+
