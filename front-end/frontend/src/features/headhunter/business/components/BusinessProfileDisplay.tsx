@@ -4,7 +4,7 @@
  * Information cannot be edited after registration
  */
 
-import React from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { BusinessProfile } from "../types/business.types";
 
@@ -25,7 +25,7 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
   if (isLoading) {
     return (
       <div className="flex flex-col items-center gap-3 py-12 bg-slate-100/50 rounded-3xl border border-dashed border-slate-300">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-emerald-600" />
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-brand-primary" />
         <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">
           {t("business.state.loading")}
         </p>
@@ -35,9 +35,11 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
 
   if (!profile) {
     return (
-      <div className="flex flex-col items-center gap-3 py-12 bg-yellow-50 rounded-3xl border border-yellow-200">
+      <div
+        className={`flex flex-col items-center gap-3 py-12 rounded-3xl border ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)}`}
+      >
         <svg
-          className="w-8 h-8 text-yellow-600"
+          className={`w-8 h-8 ${getSemanticClass("warning", "icon", true)}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -49,7 +51,9 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
             d="M12 9v2m0 4v2m0 0v2m0-6v-2m0 0v-2"
           />
         </svg>
-        <p className="text-sm font-semibold text-yellow-900">
+        <p
+          className={`text-sm font-semibold ${getSemanticClass("warning", "text", true)}`}
+        >
           {t("business.error.no_profile")}
         </p>
       </div>
@@ -119,7 +123,7 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
               href={profile.websiteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-base font-medium text-lime-500 hover:text-brand-hover break-all"
+              className="text-base font-medium text-brand-primary hover:underline break-all"
             >
               {profile.websiteUrl}
             </a>
@@ -149,18 +153,28 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
         </div>
 
         {/* Verification Status - spans 2 columns on desktop */}
-        <div className="md:col-span-2 bg-emerald-50 rounded-lg p-4 border border-emerald-200">
-          <label className="block text-xs font-semibold uppercase tracking-wide text-emerald-700 mb-2">
+        <div
+          className={`md:col-span-2 rounded-lg p-4 border ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "border", true)}`}
+        >
+          <label
+            className={`block text-xs font-semibold uppercase tracking-wide ${getSemanticClass("success", "text", true)} mb-2`}
+          >
             {t("business.verification.status")}
           </label>
           <div className="flex items-center gap-2">
             <span
               className={`inline-flex px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                 profile.verificationStatus === "PENDING"
-                  ? "bg-yellow-100 text-yellow-700"
+                  ? getSemanticClass("warning", "bg", true) +
+                    " " +
+                    getSemanticClass("warning", "text", true)
                   : profile.verificationStatus === "APPROVED"
-                    ? "bg-emerald-100 text-emerald-700"
-                    : "bg-red-100 text-red-700"
+                    ? getSemanticClass("success", "bg", true) +
+                      " " +
+                      getSemanticClass("success", "text", true)
+                    : getSemanticClass("danger", "bg", true) +
+                      " " +
+                      getSemanticClass("danger", "text", true)
               }`}
             >
               {t(
@@ -172,10 +186,12 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
       </div>
 
       {/* Info Box */}
-      <div className="relative overflow-hidden rounded-2xl bg-blue-50 p-6 border border-blue-200">
+      <div
+        className={`relative overflow-hidden rounded-2xl p-6 border ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "border", true)}`}
+      >
         <div className="flex gap-3">
           <svg
-            className="w-5 h-5 text-blue-600 shrink-0 mt-0.5"
+            className={`w-5 h-5 shrink-0 mt-0.5 ${getSemanticClass("info", "icon", true)}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -188,10 +204,14 @@ export const BusinessProfileDisplay: React.FC<BusinessProfileDisplayProps> = ({
             />
           </svg>
           <div>
-            <p className="text-sm font-semibold text-blue-900">
+            <p
+              className={`text-sm font-semibold ${getSemanticClass("info", "text", true)}`}
+            >
               {t("business.profile.info_title")}
             </p>
-            <p className="text-xs text-blue-700 mt-1">
+            <p
+              className={`text-xs ${getSemanticClass("info", "text", true)} mt-1`}
+            >
               {t("business.profile.info_description")}
             </p>
           </div>

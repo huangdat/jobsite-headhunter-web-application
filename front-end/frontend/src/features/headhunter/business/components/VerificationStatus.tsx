@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { CheckCircle2, Circle } from "lucide-react";
 import type { VerificationStatus as VerificationStatusType } from "../types/business.types";
 
@@ -34,12 +35,18 @@ const getStatusIcon = (
 ) => {
   switch (status) {
     case "APPROVED":
-      return <CheckCircle2 className="h-10 w-10 text-emerald-600" />;
+      return (
+        <CheckCircle2
+          className={`h-10 w-10 ${getSemanticClass("success", "icon")}`}
+        />
+      );
     case "REJECTED":
       return (
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-full ${getSemanticClass("danger", "bg", true)}`}
+        >
           <svg
-            className="h-6 w-6 text-red-600"
+            className={`h-6 w-6 ${getSemanticClass("danger", "icon")}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -56,7 +63,9 @@ const getStatusIcon = (
     case "PENDING":
     default:
       return isCompleted ? (
-        <CheckCircle2 className="h-10 w-10 text-emerald-600" />
+        <CheckCircle2
+          className={`h-10 w-10 ${getSemanticClass("success", "icon")}`}
+        />
       ) : (
         <Circle className="h-10 w-10 text-slate-300" />
       );
@@ -66,9 +75,9 @@ const getStatusIcon = (
 const getStatusBadgeColor = (status: VerificationStatusType): string => {
   switch (status) {
     case "APPROVED":
-      return "bg-emerald-100 text-emerald-800";
+      return `${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`;
     case "REJECTED":
-      return "bg-red-100 text-red-800";
+      return `${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)}`;
     case "PENDING":
     default:
       return "bg-slate-100 text-slate-800";
@@ -135,7 +144,13 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
               {/* Icon */}
               <div className="flex flex-col items-center">
                 <div
-                  className={`rounded-full p-1 ${isCurrent ? "bg-emerald-100" : isCompleted ? "bg-emerald-100" : "bg-slate-100"}`}
+                  className={`rounded-full p-1 ${
+                    isCurrent
+                      ? getSemanticClass("warning", "bg", true)
+                      : isCompleted
+                        ? getSemanticClass("success", "bg", true)
+                        : "bg-slate-100"
+                  }`}
                 >
                   {getStatusIcon(step.status, isCompleted)}
                 </div>
@@ -145,7 +160,7 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
                   <div
                     className={`my-2 w-1 flex-1 min-h-10 ${
                       isCompleted
-                        ? "bg-emerald-600"
+                        ? getSemanticClass("success", "bg", true)
                         : isCurrent
                           ? "bg-amber-400"
                           : "bg-slate-200"
@@ -158,23 +173,35 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
               <div
                 className={`flex-1 rounded-lg border px-4 py-3 transition-colors ${
                   isCurrent
-                    ? "border-amber-200 bg-amber-50"
+                    ? `${getSemanticClass("warning", "border", true)} ${getSemanticClass("warning", "bg", true)}`
                     : isCompleted
-                      ? "border-emerald-200 bg-emerald-50"
+                      ? `${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)}`
                       : "border-slate-200 bg-slate-50"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <p
-                    className={`font-semibold ${isCurrent ? "text-amber-900" : isCompleted ? "text-emerald-900" : "text-slate-700"}`}
+                    className={`font-semibold ${
+                      isCurrent
+                        ? "text-amber-900"
+                        : isCompleted
+                          ? getSemanticClass("success", "text", true)
+                          : "text-slate-700"
+                    }`}
                   >
                     {step.label}
                   </p>
                   {isCurrent && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-amber-200 px-2 py-1 text-xs font-semibold text-amber-800">
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-full ${getSemanticClass("warning", "bg", true)} px-2 py-1 text-xs font-semibold ${getSemanticClass("warning", "text", true)}`}
+                    >
                       <span className="relative flex h-2 w-2">
-                        <span className="absolute inline-flex h-full w-full animate-pulse rounded-full bg-amber-600"></span>
-                        <span className="inline-flex h-2 w-2 rounded-full bg-amber-600"></span>
+                        <span
+                          className={`absolute inline-flex h-full w-full animate-pulse rounded-full ${getSemanticClass("warning", "text", true)}`}
+                        ></span>
+                        <span
+                          className={`inline-flex h-2 w-2 rounded-full ${getSemanticClass("warning", "text", true)}`}
+                        ></span>
                       </span>
                       {t("business.verification.in_progress")}
                     </span>
@@ -183,7 +210,13 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
 
                 {showDescription && step.description && (
                   <p
-                    className={`mt-2 text-sm ${isCurrent ? "text-amber-800" : isCompleted ? "text-emerald-800" : "text-slate-600"}`}
+                    className={`mt-2 text-sm ${
+                      isCurrent
+                        ? "text-amber-800"
+                        : isCompleted
+                          ? getSemanticClass("success", "text", false)
+                          : "text-slate-600"
+                    }`}
                   >
                     {step.description}
                   </p>
@@ -203,9 +236,11 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
 
       {/* Info Box for Current Status */}
       {currentStatus === "REJECTED" && (
-        <div className="mt-6 flex gap-3 rounded-lg border border-red-200 bg-red-50 p-4">
+        <div
+          className={`mt-6 flex gap-3 rounded-lg border p-4 ${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`}
+        >
           <svg
-            className="h-6 w-6 shrink-0 text-red-600"
+            className={`h-6 w-6 shrink-0 ${getSemanticClass("danger", "icon")}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -218,10 +253,14 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
             />
           </svg>
           <div className="flex-1">
-            <p className="font-semibold text-red-900">
+            <p
+              className={`font-semibold ${getSemanticClass("danger", "text", true)}`}
+            >
               {t("business.verification.rejected_title")}
             </p>
-            <p className="mt-1 text-sm text-red-800">
+            <p
+              className={`mt-1 text-sm ${getSemanticClass("danger", "text", false)}`}
+            >
               {t("business.verification.rejected_desc")}
             </p>
           </div>
@@ -229,13 +268,21 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
       )}
 
       {currentStatus === "APPROVED" && (
-        <div className="mt-6 flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
-          <CheckCircle2 className="h-6 w-6 shrink-0 text-emerald-600" />
+        <div
+          className={`mt-6 flex gap-3 rounded-lg border p-4 ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)}`}
+        >
+          <CheckCircle2
+            className={`h-6 w-6 shrink-0 ${getSemanticClass("success", "icon")}`}
+          />
           <div className="flex-1">
-            <p className="font-semibold text-emerald-900">
+            <p
+              className={`font-semibold ${getSemanticClass("success", "text", true)}`}
+            >
               {t("business.verification.approved_title")}
             </p>
-            <p className="mt-1 text-sm text-emerald-800">
+            <p
+              className={`mt-1 text-sm ${getSemanticClass("success", "text", false)}`}
+            >
               {t("business.verification.approved_message")}
             </p>
           </div>

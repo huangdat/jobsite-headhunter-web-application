@@ -7,6 +7,7 @@ import React, { useEffect } from "react";
 import { AlertCircle, X } from "lucide-react";
 import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export interface ErrorBannerProps {
   message?: string;
@@ -58,31 +59,47 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
   if (!visible) return null;
 
   return (
-    <div className="relative mb-6 rounded-lg border border-red-200 bg-red-50 p-4 shadow-sm">
+    <div
+      className={`relative mb-6 rounded-lg border p-4 shadow-sm ${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`}
+    >
       <div className="flex gap-4">
         {/* Icon */}
         <div className="shrink-0">
-          <AlertCircle className="h-6 w-6 text-red-600" />
+          <AlertCircle
+            className={`h-6 w-6 ${getSemanticClass("danger", "icon")}`}
+          />
         </div>
 
         {/* Content */}
         <div className="flex-1">
           {/* Title */}
-          <h3 className="font-semibold text-red-900">
+          <h3
+            className={`font-semibold ${getSemanticClass("danger", "text", true)}`}
+          >
             {message || t(messageKey)}
           </h3>
 
           {/* Detail */}
-          {detail && <p className="mt-1 text-sm text-red-700">{detail}</p>}
+          {detail && (
+            <p
+              className={`mt-1 text-sm ${getSemanticClass("danger", "text", false)}`}
+            >
+              {detail}
+            </p>
+          )}
           {detailKey && (
-            <p className="mt-1 text-sm text-red-700">{t(detailKey)}</p>
+            <p
+              className={`mt-1 text-sm ${getSemanticClass("danger", "text", false)}`}
+            >
+              {t(detailKey)}
+            </p>
           )}
 
           {/* Action button */}
           {action && (
             <button
               onClick={action.onClick}
-              className="mt-3 inline-flex items-center gap-2 rounded-md bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-700 transition-colors"
+              className={`mt-3 inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors ${getSemanticClass("danger", "type", true)}`}
             >
               {action.label}
             </button>
@@ -92,7 +109,7 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
         {/* Dismiss button */}
         <button
           onClick={handleDismiss}
-          className="shrink-0 text-red-400 hover:text-red-600 transition-colors"
+          className={`shrink-0 transition-colors ${getSemanticClass("danger", "text", false)} hover:opacity-75`}
           aria-label={tApp("dismiss")}
         >
           <X className="h-5 w-5" />
@@ -100,7 +117,9 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
       </div>
 
       {/* Left accent border */}
-      <div className="absolute bottom-0 left-0 top-0 w-1 bg-red-600 rounded-l-lg" />
+      <div
+        className={`absolute bottom-0 left-0 top-0 w-1 rounded-l-lg ${getSemanticClass("danger", "bg", true)}`}
+      />
     </div>
   );
 };

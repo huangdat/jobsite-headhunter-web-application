@@ -7,6 +7,7 @@ import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useCreateCategoryMutation } from "../hooks/useCategoryManagement";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   Dialog,
   DialogContent,
@@ -157,7 +158,9 @@ export function CategoryCreateForm({
               disabled={createMutation.isPending}
             />
             {errors.name && (
-              <div className="flex gap-2 text-red-600 text-sm">
+              <div
+                className={`flex gap-2 ${getSemanticClass("danger", "text", true)} text-sm`}
+              >
                 <AlertCircle size={14} />
                 {errors.name}
               </div>
@@ -195,7 +198,7 @@ export function CategoryCreateForm({
           <Button
             onClick={handleSubmit}
             disabled={createMutation.isPending}
-            className="bg-emerald-500 hover:bg-emerald-600"
+            className={getSemanticClass("success", "bg", true)}
           >
             {createMutation.isPending ? (
               <>

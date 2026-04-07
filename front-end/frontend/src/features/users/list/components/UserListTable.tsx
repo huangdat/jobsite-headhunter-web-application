@@ -185,8 +185,8 @@ export const UserListTable: React.FC<UserListTableProps> = ({
                     onClick={() => handleLockClick(user.id, user.status)}
                     className={`p-1.5 rounded-lg transition-all ${
                       user.status === "SUSPENDED"
-                        ? "text-amber-500 bg-amber-50"
-                        : "text-slate-400 hover:text-amber-500 hover:bg-amber-50"
+                        ? `${getSemanticClass("warning", "text", true)} ${getSemanticClass("warning", "bg", true)}`
+                        : `text-slate-400 ${getSemanticClass("warning", "text", true).replace("text-", "hover:text-")} ${getSemanticClass("warning", "bg", true).replace("bg-", "hover:bg-")}`
                     }`}
                     title={
                       user.status === "SUSPENDED"
@@ -200,7 +200,7 @@ export const UserListTable: React.FC<UserListTableProps> = ({
                   </button>
                   <button
                     onClick={() => onDeleteUser?.(user.id)}
-                    className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                    className={`p-1.5 text-slate-400 ${getSemanticClass("danger", "text", true).replace("text-", "hover:text-")} hover:bg-red-50 rounded-lg transition-all`}
                     title={t("actions.deleteUser")}
                   >
                     <span className="material-symbols-outlined text-lg">

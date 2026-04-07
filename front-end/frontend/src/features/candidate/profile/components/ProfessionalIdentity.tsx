@@ -1,10 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
-  AVAILABILITY_OPTIONS,
   type CandidateProfileFormValues,
   type ProfileValidationErrors,
+  AVAILABILITY_OPTIONS,
 } from "@/features/candidate/profile/types/profile.types";
 
 interface ProfessionalIdentityProps {
@@ -23,7 +24,9 @@ const FieldError = ({ message }: { message?: string }) => {
   }
 
   return (
-    <div className="mt-2 flex items-center gap-1.5 text-red-600">
+    <div
+      className={`mt-2 flex items-center gap-1.5 ${getSemanticClass("danger", "text", true)}`}
+    >
       <span className="material-symbols-outlined text-sm!">error</span>
       <span className="text-xs font-medium">{message}</span>
     </div>
@@ -50,7 +53,9 @@ export function ProfessionalIdentity({
           </p>
         </div>
 
-        <label className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700">
+        <label
+          className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-bold ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`}
+        >
           <input
             type="checkbox"
             checked={values.openForWork}
@@ -100,7 +105,14 @@ export function ProfessionalIdentity({
             aria-label={t("profile.form.currentStatusAria")}
             value={values.currentStatus}
             disabled={disabled}
-            className="h-11 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-200"
+            className={`h-11 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm font-medium outline-none transition focus:border-green-500 focus:ring-2 ${getSemanticClass(
+              "success",
+              "bg",
+              true
+            )
+              .split(" ")
+              .filter((c) => c.includes("ring"))
+              .join(" ")}`}
             onChange={(event) =>
               onFieldChange(
                 "currentStatus",

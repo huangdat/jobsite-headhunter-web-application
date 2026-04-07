@@ -48,7 +48,7 @@ const AccountInfoCard: React.FC<AccountInfoCardProps> = ({ user }) => {
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-lg font-semibold flex items-center gap-2 mb-6">
-        <Lock className="w-5 h-5 text-blue-500" />
+        <Lock className={`w-5 h-5 ${getSemanticClass("info", "icon", true)}`} />
         {t("detail.accountInformation")}
       </h2>
 

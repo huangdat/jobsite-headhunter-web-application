@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   MdOutlineMail,
   MdLockOutline,
@@ -91,7 +92,7 @@ export function CandidateRegister({
             <select
               value={formData.gender || ""}
               onChange={(e) => handleChange("gender")(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
               aria-label={t("aria.selectGender")}
             >
               <option value="">{t("selectOptions.selectGender")}</option>
@@ -114,7 +115,7 @@ export function CandidateRegister({
                 const file = e.target.files?.[0];
                 handleChange("avatar")(file || null);
               }}
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className={`w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm ${getSemanticClass("info", "bg", true).split(" ")[0]} ${getSemanticClass("info", "text", true).split(" ")[0]}`}
               aria-label={t("aria.uploadProfilePicture")}
             />
           </div>

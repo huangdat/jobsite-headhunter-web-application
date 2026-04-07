@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineHandshake } from "react-icons/md";
-import { HiMenu } from "react-icons/hi"; // Thêm icon Menu
-import { useAuth } from "@/features/auth/context/useAuth";
+import { HiMenu } from "react-icons/hi";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useAuth } from "@/features/auth/context/useAuth";
 import { Navbar } from "./Navbar";
 import { Button } from "@/components/ui/button";
 
@@ -86,7 +87,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             <div className="flex items-center gap-3">
               <Link
                 to="/login"
-                className="text-sm font-medium hover:text-emerald-600 transition"
+                className="text-sm font-medium hover:text-brand-primary transition"
               >
                 {t("navigation.login")}
               </Link>
@@ -121,7 +122,9 @@ export function Header({ onMenuClick }: HeaderProps) {
                       <p className="text-sm font-medium text-slate-900 dark:text-slate-50 truncate">
                         {user?.username}
                       </p>
-                      <span className="inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700 uppercase">
+                      <span
+                        className={`inline-block mt-1 text-[11px] px-2 py-0.5 rounded-full font-medium ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)} uppercase`}
+                      >
                         {normalizedRole}
                       </span>
                     </div>
@@ -183,7 +186,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                     <div className="border-t border-border my-1" />
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition cursor-pointer"
+                      className={`w-full text-left px-4 py-2 text-sm ${getSemanticClass("danger", "text", true)} hover:opacity-80 transition cursor-pointer`}
                     >
                       {t("navigation.logout")}
                     </button>

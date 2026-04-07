@@ -70,15 +70,23 @@ const LoginHistoryTable: React.FC<LoginHistoryTableProps> = ({ sessions }) => {
                 <div className="flex items-center gap-2">
                   {session.status === "Successful" ? (
                     <>
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-green-700 font-medium">
+                      <CheckCircle
+                        className={`w-4 h-4 ${getSemanticClass("success", "icon", true)}`}
+                      />
+                      <span
+                        className={`${getSemanticClass("success", "text", true)} font-medium`}
+                      >
                         {t("loginStatus.success")}
                       </span>
                     </>
                   ) : (
                     <>
-                      <AlertCircle className="w-4 h-4 text-red-500" />
-                      <span className="text-red-700 font-medium">
+                      <AlertCircle
+                        className={`w-4 h-4 ${getSemanticClass("danger", "icon", true)}`}
+                      />
+                      <span
+                        className={`${getSemanticClass("danger", "text", true)} font-medium`}
+                      >
                         {t("loginStatus.failedAttempt")}
                       </span>
                     </>

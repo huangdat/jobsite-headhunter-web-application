@@ -41,7 +41,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
       variantClasses = "bg-amber-50 border-amber-200";
       break;
     case "error":
-      variantClasses = "bg-red-50 border-red-200";
+      variantClasses = `${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`;
       break;
     default:
       variantClasses = "bg-white border-slate-200";

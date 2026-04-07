@@ -388,7 +388,7 @@ export function JobEditPage() {
             type="button"
             variant="ghost"
             onClick={() => navigate(-1)}
-            className="rounded-xl text-red-400 font-bold px-6 h-12 transition-all cursor-pointer hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+            className={`rounded-xl ${getSemanticClass("danger", "text", true)} font-bold px-6 h-12 transition-all cursor-pointer ${getSemanticClass("danger", "bg", true).replace("bg-", "hover:bg-")} ${getSemanticClass("danger", "text", true).replace("text-", "hover:text-")} dark:hover:bg-red-500/10`}
           >
             {t("edit.buttons.cancel")}
           </Button>
@@ -396,7 +396,7 @@ export function JobEditPage() {
           <Button
             type="submit"
             disabled={submitting}
-            className="rounded-xl border border-lime-500 bg-white text-lime-600 hover:bg-lime-50 dark:bg-slate-900 dark:border-lime-500 dark:text-lime-400 dark:hover:bg-lime-500/10 font-bold px-6 h-12 transition-all cursor-pointer"
+            className={`rounded-xl ${getSemanticClass("success", "border", true).replace("border-", "border ")} bg-white ${getSemanticClass("success", "text", true)} hover:bg-lime-50 dark:bg-slate-900 dark:border-lime-500 dark:text-lime-400 dark:hover:bg-lime-500/10 font-bold px-6 h-12 transition-all cursor-pointer`}
           >
             {submitting ? t("edit.buttons.saving") : t("edit.buttons.save")}
           </Button>

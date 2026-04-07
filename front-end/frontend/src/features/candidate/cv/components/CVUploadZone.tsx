@@ -131,9 +131,9 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-200 ${
           dragging
-            ? "border-emerald-300 bg-emerald-50 shadow-lg"
+            ? `border-emerald-300 ${getSemanticClass("success", "bg", true)} shadow-lg`
             : displayError
-              ? "border-red-200 bg-red-50/5"
+              ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`
               : "border-slate-200 bg-slate-50"
         }`}
       >

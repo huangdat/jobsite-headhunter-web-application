@@ -65,7 +65,9 @@ const LoadingSkeletons: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border-2 border-red-200 p-6 space-y-4">
+      <div
+        className={`bg-white rounded-lg ${getSemanticClass("danger", "border", true)} p-6 space-y-4`}
+      >
         <div className="h-6 bg-gray-200 rounded animate-pulse w-1/4" />
         <div className="h-4 bg-gray-200 rounded animate-pulse w-2/3" />
 

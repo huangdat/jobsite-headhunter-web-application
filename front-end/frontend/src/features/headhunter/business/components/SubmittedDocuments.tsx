@@ -28,13 +28,25 @@ export interface SubmittedDocumentsProps {
 const getDocumentIcon = (type: string) => {
   switch (type) {
     case "tax_certificate":
-      return <FileText className="h-8 w-8 text-red-600" />;
+      return (
+        <FileText className={`h-8 w-8 ${getSemanticClass("danger", "icon")}`} />
+      );
     case "business_license":
-      return <FileText className="h-8 w-8 text-blue-600" />;
+      return (
+        <FileText className={`h-8 w-8 ${getSemanticClass("info", "icon")}`} />
+      );
     case "registration_certificate":
-      return <FileText className="h-8 w-8 text-emerald-600" />;
+      return (
+        <FileText
+          className={`h-8 w-8 ${getSemanticClass("success", "icon")}`}
+        />
+      );
     case "bank_statement":
-      return <FileText className="h-8 w-8 text-purple-600" />;
+      return (
+        <FileText
+          className={`h-8 w-8 ${getSemanticClass("info", "icon", true)}`}
+        />
+      );
     case "other":
     default:
       return <File className="h-8 w-8 text-slate-600" />;
@@ -114,7 +126,9 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
     <div className={className}>
       {/* Section Header */}
       <div className="mb-6 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-lg ${getSemanticClass("info", "bg", true)}`}
+        >
           <FileText className="h-6 w-6 text-white" />
         </div>
         <div>
@@ -240,7 +254,7 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
                       size="sm"
                       onClick={() => setConfirmDeleteId(doc.id)}
                       disabled={isLoading}
-                      className="w-full text-red-700 hover:text-red-800"
+                      className={`w-full ${getSemanticClass("danger", "text", false)} hover:opacity-75`}
                       title={t("business.document.delete")}
                     >
                       <Trash2 className="h-4 w-4 mr-2" />

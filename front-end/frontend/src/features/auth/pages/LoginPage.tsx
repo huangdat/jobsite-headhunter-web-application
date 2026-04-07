@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { AnimatedCheckbox } from "@/features/auth/components/AnimatedCheckbox";
 import { useLogin } from "@/features/auth/hooks";
 import { ErrorState } from "@/shared/components/states/ErrorState";
@@ -326,7 +327,7 @@ export function LoginPage() {
                 variant="card"
                 title={t("pages.login.signInFailed")}
                 message={generalError}
-                className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/40"
+                className={`mb-4 ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
               />
             )}
 

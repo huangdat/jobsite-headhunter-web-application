@@ -52,8 +52,8 @@ const getStatusIcon = (
     case "LOCKED":
       return {
         icon: CheckCircle,
-        color: "text-green-600",
-        bgColor: "bg-green-50",
+        color: getSemanticClass("success", "text", true),
+        bgColor: getSemanticClass("success", "bg", true),
       };
     case "PENDING":
       return {

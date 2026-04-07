@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { useAuthUser } from "@/shared/hooks/useAuthUser";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface RelatedDataCount {
   applications?: number;
@@ -159,17 +160,25 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
         {step === "choice" && (
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
-              <AlertTriangle className="w-8 h-8 text-red-600" />
+              <AlertTriangle
+                className={`w-8 h-8 ${getSemanticClass("danger", "icon", true)}`}
+              />
               <h2 className="text-2xl font-bold text-gray-900">
                 {t("delete.title")}
               </h2>
             </div>
 
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-              <p className="text-red-900 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("danger", "text", true)}`}
+              >
                 {t("delete.selectMethod")}
               </p>
-              <p className="text-red-800 text-sm mt-2">
+              <p
+                className={`text-sm mt-2 ${getSemanticClass("danger", "text", true)}`}
+              >
                 {t("fields.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
@@ -177,21 +186,31 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
             {/* Related Data Warning */}
             {hasRelatedData && (
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
-                <p className="font-semibold text-orange-900 mb-3">
+              <div
+                className={`rounded-lg p-4 mb-6 ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)}`}
+              >
+                <p
+                  className={`font-semibold mb-3 ${getSemanticClass("warning", "text", true)}`}
+                >
                   {t("delete.relatedDataWarning")}
                 </p>
-                <ul className="space-y-2 text-orange-800 text-sm">
+                <ul
+                  className={`space-y-2 text-sm ${getSemanticClass("warning", "text", true)}`}
+                >
                   {applications > 0 && (
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-orange-600 rounded-full" />
+                      <span
+                        className={`w-2 h-2 rounded-full ${getSemanticClass("warning", "bg", true)}`}
+                      />
                       {t("delete.applicationsCount")}:{" "}
                       <span className="font-semibold">{applications}</span>
                     </li>
                   )}
                   {jobs > 0 && (
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-orange-600 rounded-full" />
+                      <span
+                        className={`w-2 h-2 rounded-full ${getSemanticClass("warning", "bg", true)}`}
+                      />
                       {t("delete.jobsCount")}:{" "}
                       <span className="font-semibold">{jobs}</span>
                     </li>
@@ -221,7 +240,9 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <Lock className="w-5 h-5 text-blue-600" />
+                    <Lock
+                      className={`w-5 h-5 ${getSemanticClass("info", "icon", true)}`}
+                    />
                     <h3 className="font-semibold text-gray-900">
                       {t("delete.softDeleteTitle")}
                     </h3>
@@ -231,15 +252,21 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   </p>
                   <ul className="mt-3 space-y-1 text-sm text-gray-600">
                     <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle
+                        className={`w-4 h-4 ${getSemanticClass("success", "icon", true)}`}
+                      />
                       {t("delete.softDeleteBenefit1")}
                     </li>
                     <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle
+                        className={`w-4 h-4 ${getSemanticClass("success", "icon", true)}`}
+                      />
                       {t("delete.softDeleteBenefit2")}
                     </li>
                     <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle
+                        className={`w-4 h-4 ${getSemanticClass("success", "icon", true)}`}
+                      />
                       {t("delete.softDeleteBenefit3")}
                     </li>
                   </ul>
@@ -251,7 +278,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
             <div
               className={`border-2 rounded-lg p-4 mb-6 cursor-pointer transition ${
                 selectedType === "hard"
-                  ? "border-red-500 bg-red-50"
+                  ? `${getSemanticClass("danger", "border", true).split(" ")[0]} ${getSemanticClass("danger", "bg", true)}`
                   : hasRelatedData
                     ? "border-gray-200 opacity-50 cursor-not-allowed"
                     : "border-gray-200 hover:border-gray-300"
@@ -275,7 +302,9 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <Trash2 className="w-5 h-5 text-red-600" />
+                    <Trash2
+                      className={`w-5 h-5 ${getSemanticClass("danger", "icon", true)}`}
+                    />
                     <h3 className="font-semibold text-gray-900">
                       {t("delete.hardDeleteTitle")}
                     </h3>
@@ -285,7 +314,9 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   </p>
 
                   {hasRelatedData && (
-                    <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded text-yellow-800 text-sm">
+                    <div
+                      className={`mt-3 p-3 rounded text-sm ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)} ${getSemanticClass("warning", "text", true)}`}
+                    >
                       <p className="font-medium">
                         {t("delete.hardDeleteDisabled")}
                       </p>
@@ -297,11 +328,15 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
                   {!hasRelatedData && (
                     <ul className="mt-3 space-y-1 text-sm text-gray-600">
-                      <li className="flex items-center gap-2 text-red-600">
+                      <li
+                        className={`flex items-center gap-2 ${getSemanticClass("danger", "text", true)}`}
+                      >
                         <AlertTriangle className="w-4 h-4" />
                         {t("delete.hardDeleteWarning1")}
                       </li>
-                      <li className="flex items-center gap-2 text-red-600">
+                      <li
+                        className={`flex items-center gap-2 ${getSemanticClass("danger", "text", true)}`}
+                      >
                         <AlertTriangle className="w-4 h-4" />
                         {t("delete.hardDeleteWarning2")}
                       </li>
@@ -330,17 +365,25 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
         {step === "reason" && selectedType === "soft" && (
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
-              <Lock className="w-8 h-8 text-blue-600" />
+              <Lock
+                className={`w-8 h-8 ${getSemanticClass("info", "icon", true)}`}
+              />
               <h2 className="text-2xl font-bold text-gray-900">
                 {t("delete.softDeleteReasonTitle")}
               </h2>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <p className="text-blue-900 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("info", "text", true)}`}
+              >
                 {t("delete.softDeleteReasonDesc")}
               </p>
-              <p className="text-blue-800 text-sm mt-2">
+              <p
+                className={`text-sm mt-2 ${getSemanticClass("info", "text", true)}`}
+              >
                 {t("fields.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
@@ -350,7 +393,9 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
                   {t("delete.reasonLabel")}{" "}
-                  <span className="text-red-600">*</span>
+                  <span className={getSemanticClass("danger", "text", true)}>
+                    *
+                  </span>
                 </label>
                 <textarea
                   value={reason}
@@ -358,7 +403,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   placeholder={t("delete.reasonPlaceholder")}
                   required
                   rows={4}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-primary transition"
                   aria-label={t("delete.reasonLabel")}
                 />
                 <p className="text-xs text-gray-600 mt-1">
@@ -392,14 +437,20 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
         {step === "confirmation" && selectedType && (
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
-              <AlertTriangle className="w-8 h-8 text-orange-600" />
+              <AlertTriangle
+                className={`w-8 h-8 ${getSemanticClass("warning", "icon", true)}`}
+              />
               <h2 className="text-2xl font-bold text-gray-900">
                 {t("delete.confirmTitle")}
               </h2>
             </div>
 
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
-              <p className="text-orange-900 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("warning", "text", true)}`}
+              >
                 {selectedType === "soft"
                   ? t("delete.confirmSoftDelete")
                   : t("delete.confirmHardDelete")}
@@ -463,7 +514,9 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
         {/* Step 3: Success */}
         {step === "success" && (
           <div className="p-8 text-center">
-            <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+            <CheckCircle
+              className={`w-16 h-16 mx-auto mb-4 ${getSemanticClass("success", "icon", true)}`}
+            />
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               {selectedType === "soft"
                 ? t("delete.successSoftDelete")
@@ -482,7 +535,9 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
         {/* Step 4: Error */}
         {step === "error" && result?.type === "error" && (
           <div className="p-8 text-center">
-            <XCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
+            <XCircle
+              className={`w-16 h-16 mx-auto mb-4 ${getSemanticClass("danger", "icon", true)}`}
+            />
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               {t("delete.errorTitle")}
             </h2>
@@ -506,14 +561,20 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
         {step === "conflict" && (
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
-              <AlertTriangle className="w-8 h-8 text-orange-600" />
+              <AlertTriangle
+                className={`w-8 h-8 ${getSemanticClass("warning", "icon", true)}`}
+              />
               <h2 className="text-2xl font-bold text-gray-900">
                 {t("delete.conflictTitle")}
               </h2>
             </div>
 
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
-              <p className="text-orange-900 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("warning", "text", true)}`}
+              >
                 {t("delete.conflictMessage")}
               </p>
             </div>
@@ -525,14 +586,18 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
               <ul className="space-y-2 text-gray-600">
                 {applications > 0 && (
                   <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-red-600 rounded-full" />
+                    <span
+                      className={`w-2 h-2 rounded-full ${getSemanticClass("danger", "bg", true)}`}
+                    />
                     {t("delete.applicationsCount")}:{" "}
                     <span className="font-semibold">{applications}</span>
                   </li>
                 )}
                 {jobs > 0 && (
                   <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-red-600 rounded-full" />
+                    <span
+                      className={`w-2 h-2 rounded-full ${getSemanticClass("danger", "bg", true)}`}
+                    />
                     {t("delete.jobsCount")}:{" "}
                     <span className="font-semibold">{jobs}</span>
                   </li>
@@ -540,8 +605,12 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
               </ul>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <p className="text-blue-900 text-sm">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "border", true)}`}
+            >
+              <p
+                className={`text-sm ${getSemanticClass("info", "text", true)}`}
+              >
                 {t("delete.conflictResolution")}
               </p>
             </div>

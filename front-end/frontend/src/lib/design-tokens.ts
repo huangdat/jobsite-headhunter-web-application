@@ -131,6 +131,20 @@ export const brandColors = {
     borderDark: "dark:border-red-900/50",
     icon: "text-red-600 dark:text-red-400",
   },
+
+  /**
+   * Semantic info colors
+   * Use for informational messages, neutral information
+   */
+  info: {
+    bg: "bg-blue-50",
+    bgDark: "dark:bg-blue-900/20",
+    text: "text-blue-600",
+    textDark: "dark:text-blue-400",
+    border: "border-blue-100",
+    borderDark: "dark:border-blue-800",
+    icon: "text-blue-600 dark:text-blue-400",
+  },
 } as const;
 
 /**
@@ -186,7 +200,7 @@ export const getBrandClass = (
  * ```
  */
 export const getSemanticClass = (
-  semantic: "success" | "warning" | "danger",
+  semantic: "success" | "warning" | "danger" | "info",
   type: "bg" | "text" | "border" | "icon",
   includeDark = true
 ): string => {

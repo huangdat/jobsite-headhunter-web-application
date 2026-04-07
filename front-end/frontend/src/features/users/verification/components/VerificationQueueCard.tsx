@@ -28,17 +28,17 @@ export const VerificationQueueCard: React.FC<VerificationQueueCardProps> = ({
 
   const statusColor =
     verification.status === "PENDING"
-      ? "bg-amber-100 text-amber-700"
+      ? `${getSemanticClass("warning", "bg", true)} text-amber-700`
       : verification.status === "APPROVED"
-        ? "bg-green-100 text-green-700"
-        : "bg-red-100 text-red-700";
+        ? `${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`
+        : `${getSemanticClass("danger", "bg", true)} text-red-700`;
 
   const complianceColor =
     verification.complianceScore >= 80
-      ? "text-green-700"
+      ? getSemanticClass("success", "text", true)
       : verification.complianceScore >= 50
         ? "text-amber-700"
-        : "text-red-700";
+        : getSemanticClass("danger", "text", true);
 
   return (
     <div

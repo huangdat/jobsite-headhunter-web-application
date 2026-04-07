@@ -36,9 +36,9 @@ export const ApprovalDetailsCard: React.FC<ApprovalDetailsCardProps> = ({
 
   // Determine score color
   const getScoreColor = (score: number) => {
-    if (score >= 80) return "text-green-600";
+    if (score >= 80) return getSemanticClass("success", "text", true);
     if (score >= 50) return "text-amber-600";
-    return "text-red-600";
+    return getSemanticClass("danger", "text", true);
   };
 
   const getProgressColor = (score: number) => {
@@ -121,7 +121,7 @@ export const ApprovalDetailsCard: React.FC<ApprovalDetailsCardProps> = ({
                   size={16}
                   className={
                     action.status === "COMPLETED"
-                      ? "text-green-400"
+                      ? getSemanticClass("success", "text", true)
                       : "text-slate-600"
                   }
                 />

@@ -6,6 +6,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { CommissionStats } from "../types/commission.types";
 
 interface CommissionStatsProps {
@@ -81,12 +82,22 @@ export function CommissionStats({
         </div>
 
         {/* Paid Commissions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-xs text-blue-600 mb-1">{t("stats.paid")}</p>
-          <p className="text-xl font-bold text-blue-900">
+        <div
+          className={`rounded-lg p-4 ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "border", true)}`}
+        >
+          <p
+            className={`text-xs mb-1 ${getSemanticClass("info", "text", true)}`}
+          >
+            {t("stats.paid")}
+          </p>
+          <p
+            className={`text-xl font-bold ${getSemanticClass("info", "text", true)}`}
+          >
             {formatCurrency(stats.paidCommissions)}
           </p>
-          <div className="mt-2 flex items-center gap-1 text-xs text-blue-600">
+          <div
+            className={`mt-2 flex items-center gap-1 text-xs ${getSemanticClass("info", "text", true)}`}
+          >
             <span className="material-symbols-outlined text-sm">
               check_circle
             </span>
@@ -174,11 +185,17 @@ export function CommissionStats({
 
       {/* Empty State */}
       {stats.totalEarnings === 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
-          <span className="material-symbols-outlined text-blue-600 mx-auto block mb-2">
+        <div
+          className={`rounded-lg p-4 text-center ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "border", true)}`}
+        >
+          <span
+            className={`material-symbols-outlined mx-auto block mb-2 ${getSemanticClass("info", "icon", true)}`}
+          >
             info
           </span>
-          <p className="text-sm text-blue-700">{t("stats.noEarningsYet")}</p>
+          <p className={`text-sm ${getSemanticClass("info", "text", true)}`}>
+            {t("stats.noEarningsYet")}
+          </p>
         </div>
       )}
     </div>

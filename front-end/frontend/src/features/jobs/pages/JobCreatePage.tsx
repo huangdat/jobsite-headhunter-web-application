@@ -11,7 +11,7 @@ import { createJob, fetchSkills } from "../services/jobsApi";
 import type { JobFormValues, SkillOption } from "../types";
 import { SkillMultiSelect } from "@/components/SkillMultiSelect";
 import { JOB_FORM_DEFAULTS, calculateDefaultDeadline } from "../utils";
-import { ChevronLeft } from "lucide-react";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import {
   LabelText,
@@ -486,7 +486,7 @@ export function JobCreatePage() {
             type="button"
             variant="ghost"
             onClick={() => reset()}
-            className="rounded-xl font-bold text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 h-11 px-6 cursor-pointer transition-colors"
+            className={`rounded-xl font-bold text-slate-400 dark:text-slate-500 ${getSemanticClass("danger", "text", true).replace("text-", "hover:text-")} ${getSemanticClass("danger", "text", true).replace("text-", "dark:hover:text-")} ${getSemanticClass("danger", "bg", true).replace("bg-", "hover:bg-")} dark:hover:bg-red-900/20 h-11 px-6 cursor-pointer transition-colors`}
           >
             {t("edit.buttons.cancel") || "Clear"}
           </Button>
@@ -494,7 +494,7 @@ export function JobCreatePage() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="rounded-xl border border-lime-500 bg-white text-lime-600 hover:bg-lime-50 dark:bg-slate-900 dark:border-lime-500 dark:text-lime-400 dark:hover:bg-lime-500/10 font-bold px-6 h-12 flex items-center justify-center gap-2 transition-all cursor-pointer"
+            className={`rounded-xl ${getSemanticClass("success", "border", true).replace("border-", "border ")} bg-white ${getSemanticClass("success", "text", true)} hover:bg-lime-50 dark:bg-slate-900 dark:border-lime-500 ${getSemanticClass("success", "text", true)} dark:hover:bg-lime-500/10 font-bold px-6 h-12 flex items-center justify-center gap-2 transition-all cursor-pointer`}
           >
             {isSubmitting ? (
               <div className="flex items-center gap-2">

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
@@ -224,12 +225,18 @@ const ModalContent: React.FC<{
         </div>
 
         {app.status === "INTERVIEW" && (
-          <div className="bg-blue-50/50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-xl p-4 space-y-4">
-            <div className="flex justify-between items-center text-blue-700 dark:text-blue-400 font-bold text-sm">
+          <div
+            className={`rounded-xl p-4 space-y-4 border ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "border", true)}`}
+          >
+            <div
+              className={`flex justify-between items-center font-bold text-sm ${getSemanticClass("info", "text", true)}`}
+            >
               <span className="flex items-center gap-2">
                 <Calendar size={14} /> {t("applications.interview.title")}
               </span>
-              <span className="text-[10px] bg-blue-100 dark:bg-blue-900 dark:text-blue-300 px-2 py-0.5 rounded font-mono">
+              <span
+                className={`text-[10px] px-2 py-0.5 rounded font-mono ${getSemanticClass("info", "bg", true)}`}
+              >
                 #{interview?.interviewCode}
               </span>
             </div>
@@ -255,14 +262,16 @@ const ModalContent: React.FC<{
                     {formatDuration(interview.durationMinutes)}
                   </p>
                 </div>
-                <div className="col-span-2 pt-2 border-t border-blue-100/50 dark:border-blue-800">
+                <div
+                  className={`col-span-2 pt-2 border-t ${getSemanticClass("info", "border", true)}`}
+                >
                   <p className="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">
                     {t("applications.interview.location")}
                   </p>
                   {interview.interviewType === "ONLINE" ? (
                     <Button
                       variant="link"
-                      className="p-0 h-auto text-blue-600 text-xs truncate w-full justify-start hover:no-underline font-medium"
+                      className={`p-0 h-auto text-xs truncate w-full justify-start hover:no-underline font-medium ${getSemanticClass("info", "text", true)}`}
                       asChild
                     >
                       <a
@@ -276,7 +285,10 @@ const ModalContent: React.FC<{
                     </Button>
                   ) : (
                     <p className="text-xs font-medium flex items-center gap-1">
-                      <MapPin size={14} className="text-red-400" />{" "}
+                      <MapPin
+                        size={14}
+                        className={getSemanticClass("danger", "icon", true)}
+                      />
                       {interview.location}
                     </p>
                   )}
@@ -319,11 +331,10 @@ const StatCard: React.FC<{
   color: "lime" | "amber" | "blue" | "red";
 }> = ({ label, value, icon, color }) => {
   const colorClasses = {
-    lime: "bg-lime-50 text-lime-600 dark:bg-lime-900/30 dark:text-lime-400",
-    amber:
-      "bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
-    blue: "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
-    red: "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400",
+    lime: `${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`,
+    amber: `${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "text", true)}`,
+    blue: `${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "text", true)}`,
+    red: `${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)}`,
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   AlertTriangle,
   CheckCircle,
@@ -7,7 +8,6 @@ import {
   Lock,
   Calendar,
   Mail,
-  LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
@@ -174,11 +174,17 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               </h2>
             </div>
 
-            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
-              <p className="text-amber-900 dark:text-amber-200 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("warning", "text", true)}`}
+              >
                 {t("lock.selectReason")} *
               </p>
-              <p className="text-amber-800 dark:text-amber-300 text-sm mt-2">
+              <p
+                className={`text-sm mt-2 ${getSemanticClass("warning", "text", true)}`}
+              >
                 {t("fields.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
@@ -189,13 +195,15 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               <div>
                 <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
                   {t("lock.reasonLabel")}{" "}
-                  <span className="text-red-600">*</span>
+                  <span className={getSemanticClass("danger", "text", true)}>
+                    *
+                  </span>
                 </label>
                 <select
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition"
+                  className={`w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 ${getSemanticClass("warning", "ring", true)} transition`}
                   aria-label={t("lock.reasonLabel")}
                 >
                   <option value="">{t("lock.selectReasonPlaceholder")}</option>
@@ -223,14 +231,9 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   min={new Date().toISOString().slice(0, 16)}
                   placeholder={t("lock.autoUnlockDatePlaceholder")}
                   aria-label={t("lock.autoUnlockDateLabel")}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition"
+                  className={`w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 ${getSemanticClass("warning", "ring", true)} transition`}
                 />
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {t("lock.autoUnlockDateHint")}
-                </p>
               </div>
-
-              {/* Divider */}
               <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
                 <p className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
                   {t("lock.notificationSettings")}
@@ -243,7 +246,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     id="sendEmail"
                     checked={sendEmail}
                     onChange={(e) => setSendEmail(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                    className={`mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 ${getSemanticClass("warning", "text", true)} ${getSemanticClass("warning", "ring", true)} cursor-pointer`}
                     aria-label={t("lock.sendEmailLabel")}
                   />
                   <label htmlFor="sendEmail" className="flex-1 cursor-pointer">
@@ -264,25 +267,22 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                     id="logoutCurrentSession"
                     checked={logoutCurrentSession}
                     onChange={(e) => setLogoutCurrentSession(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 cursor-pointer"
-                    aria-label={t("lock.logoutSessionLabel")}
+                    className={`mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 ${getSemanticClass("warning", "text", true)} ${getSemanticClass("warning", "ring", true)} cursor-pointer`}
+                    aria-label={t("lock.logoutCurrentSessionLabel")}
                   />
                   <label
                     htmlFor="logoutCurrentSession"
                     className="flex-1 cursor-pointer"
                   >
-                    <p className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
-                      <LogOut className="w-4 h-4" />
-                      {t("lock.logoutSessionLabel")}
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {t("lock.logoutCurrentSessionLabel")}
                     </p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      {t("lock.logoutSessionDescription")}
+                      {t("lock.logoutCurrentSessionDescription")}
                     </p>
                   </label>
                 </div>
               </div>
-
-              {/* Buttons */}
               <div className="flex gap-3 justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
                 <Button variant="outline" onClick={handleClose}>
                   {t("buttons.cancel")}
@@ -297,17 +297,25 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
         {step === "other-reason" && (
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
-              <Lock className="w-8 h-8 text-blue-600" />
+              <Lock
+                className={`w-8 h-8 ${getSemanticClass("info", "icon", true)}`}
+              />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {t("lock.otherReasonTitle")}
               </h2>
             </div>
 
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
-              <p className="text-blue-900 dark:text-blue-200 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("info", "text", true)}`}
+              >
                 {t("lock.otherReasonDesc")}
               </p>
-              <p className="text-blue-800 dark:text-blue-300 text-sm mt-2">
+              <p
+                className={`text-sm mt-2 ${getSemanticClass("info", "text", true)}`}
+              >
                 {t("lock.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
@@ -317,7 +325,9 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
                   {t("lock.reasonLabel")}{" "}
-                  <span className="text-red-600">*</span>
+                  <span className={getSemanticClass("danger", "text", true)}>
+                    *
+                  </span>
                 </label>
                 <textarea
                   value={otherReasonText}
@@ -325,7 +335,7 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
                   placeholder={t("lock.otherReasonPlaceholder")}
                   required
                   rows={4}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-primary transition"
                   aria-label={t("lock.reasonLabel")}
                 />
                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
@@ -356,14 +366,20 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
         {step === "confirmation" && (
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
-              <AlertTriangle className="w-8 h-8 text-orange-600" />
+              <AlertTriangle
+                className={`w-8 h-8 ${getSemanticClass("warning", "icon", true)}`}
+              />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {t("lock.confirmTitle")}
               </h2>
             </div>
 
-            <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-6">
-              <p className="text-orange-900 dark:text-orange-200 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("warning", "text", true)}`}
+              >
                 {t("lock.confirmMessage")}
               </p>
             </div>
@@ -465,7 +481,9 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
         {/* Step 3: Success */}
         {step === "success" && (
           <div className="p-8 text-center">
-            <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+            <CheckCircle
+              className={`w-16 h-16 mx-auto mb-4 ${getSemanticClass("success", "icon", true)}`}
+            />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {t("lock.successTitle")}
             </h2>
@@ -483,7 +501,9 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
         {/* Step 4: Error */}
         {step === "error" && result?.type === "error" && (
           <div className="p-8 text-center">
-            <XCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
+            <XCircle
+              className={`w-16 h-16 mx-auto mb-4 ${getSemanticClass("danger", "icon", true)}`}
+            />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {t("lock.errorTitle")}
             </h2>
@@ -508,7 +528,9 @@ const LockUserModal: React.FC<LockUserModalProps> = ({
         {/* Step 5: Permission Error */}
         {step === "permission-error" && result?.type === "permission-error" && (
           <div className="p-8 text-center">
-            <AlertTriangle className="w-16 h-16 text-red-600 mx-auto mb-4" />
+            <AlertTriangle
+              className={`w-16 h-16 mx-auto mb-4 ${getSemanticClass("danger", "icon", true)}`}
+            />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {result.errorCode === "CANNOT_LOCK_YOURSELF"
                 ? t("lock.errorCannotLockYourself")

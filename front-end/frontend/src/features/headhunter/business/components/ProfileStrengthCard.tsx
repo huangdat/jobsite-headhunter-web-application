@@ -5,6 +5,7 @@
 
 import React, { useMemo } from "react";
 import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { CheckCircle2, Circle, AlertCircle } from "lucide-react";
 import type {
   ProfileStrengthData,
@@ -21,11 +22,17 @@ export interface ProfileStrengthCardProps {
 const getStatusIcon = (status: StrengthItemStatus) => {
   switch (status) {
     case "completed":
-      return <CheckCircle2 className="h-5 w-5 text-emerald-600" />;
+      return (
+        <CheckCircle2
+          className={`h-5 w-5 ${getSemanticClass("success", "icon")}`}
+        />
+      );
     case "in_progress":
       return (
         <div className="relative flex h-5 w-5 items-center justify-center">
-          <div className="absolute h-5 w-5 animate-spin rounded-full border-2 border-amber-300 border-t-amber-600"></div>
+          <div
+            className={`absolute h-5 w-5 animate-spin rounded-full border-2 ${getSemanticClass("warning", "border", true).split(" ")[0]} ${getSemanticClass("warning", "border", true).split(" ")[0]}-t-amber-600`}
+          ></div>
         </div>
       );
     case "incomplete":
@@ -35,15 +42,15 @@ const getStatusIcon = (status: StrengthItemStatus) => {
 };
 
 const getStrengthColor = (percentage: number) => {
-  if (percentage >= 80) return "text-emerald-600";
+  if (percentage >= 80) return getSemanticClass("success", "text", true);
   if (percentage >= 60) return "text-amber-600";
-  return "text-red-600";
+  return getSemanticClass("danger", "text", true);
 };
 
 const getStrengthBgColor = (percentage: number) => {
-  if (percentage >= 80) return "bg-emerald-100";
-  if (percentage >= 60) return "bg-amber-100";
-  return "bg-red-100";
+  if (percentage >= 80) return getSemanticClass("success", "bg", true);
+  if (percentage >= 60) return getSemanticClass("warning", "bg", true);
+  return getSemanticClass("danger", "bg", true);
 };
 
 /**
@@ -207,13 +214,21 @@ export const ProfileStrengthCard: React.FC<ProfileStrengthCardProps> = ({
 
       {/* Next Action */}
       {strengthData.nextAction && strengthData.percentage < 100 && (
-        <div className="mt-6 flex gap-3 rounded-lg border border-blue-200 bg-blue-50 p-4">
-          <AlertCircle className="h-5 w-5 shrink-0 text-blue-600" />
+        <div
+          className={`mt-6 flex gap-3 rounded-lg border p-4 ${getSemanticClass("info", "border", true)} ${getSemanticClass("info", "bg", true)}`}
+        >
+          <AlertCircle
+            className={`h-5 w-5 shrink-0 ${getSemanticClass("info", "icon")}`}
+          />
           <div>
-            <p className="text-sm font-semibold text-blue-900">
+            <p
+              className={`text-sm font-semibold ${getSemanticClass("info", "text", true)}`}
+            >
               {t("business.strength.next_action")}
             </p>
-            <p className="mt-1 text-sm text-blue-800">
+            <p
+              className={`mt-1 text-sm ${getSemanticClass("info", "text", false)}`}
+            >
               {t(strengthData.nextAction)}
             </p>
           </div>

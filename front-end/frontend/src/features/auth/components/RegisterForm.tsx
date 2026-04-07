@@ -407,7 +407,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                     </label>
                   </div>
                   {form.getError("agreeToTerms") && (
-                    <p className="text-red-500 text-xs mt-2">
+                    <p className={`text-xs mt-2 ${getSemanticClass('danger', 'text', true)}`}>
                       {typeof form.getError("agreeToTerms") === "string"
                         ? form.getError("agreeToTerms")
                         : (

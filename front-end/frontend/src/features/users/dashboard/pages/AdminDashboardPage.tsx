@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsersTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { usersApi } from "@/features/users/services/usersApi";
 import type { PagedResponse } from "@/features/users/services/usersApi";
 import type { UserDetail } from "@/features/users/types/user.types";
@@ -73,7 +74,9 @@ export const AdminDashboardPage: React.FC = () => {
                     {stats.totalUsers}
                   </p>
                 </div>
-                <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                <div
+                  className={`w-12 h-12 rounded-lg flex items-center justify-center ${getSemanticClass("info", "bg", true)}`}
+                >
                   <span className="text-2xl">👥</span>
                 </div>
               </div>
@@ -86,11 +89,15 @@ export const AdminDashboardPage: React.FC = () => {
                   <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
                     {t("statuses.ACTIVE")}
                   </p>
-                  <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+                  <p
+                    className={`text-3xl font-bold ${getSemanticClass("success", "text", true)}`}
+                  >
                     {stats.activeUsers}
                   </p>
                 </div>
-                <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                <div
+                  className={`w-12 h-12 rounded-lg flex items-center justify-center ${getSemanticClass("success", "bg", true)}`}
+                >
                   <span className="text-2xl">✅</span>
                 </div>
               </div>
@@ -103,11 +110,15 @@ export const AdminDashboardPage: React.FC = () => {
                   <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
                     {t("statuses.SUSPENDED")}
                   </p>
-                  <p className="text-3xl font-bold text-red-600 dark:text-red-400">
+                  <p
+                    className={`text-3xl font-bold ${getSemanticClass("danger", "text", true)}`}
+                  >
                     {stats.suspendedUsers}
                   </p>
                 </div>
-                <div className="w-12 h-12 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <div
+                  className={`w-12 h-12 rounded-lg flex items-center justify-center ${getSemanticClass("danger", "bg", true)}`}
+                >
                   <span className="text-2xl">🔒</span>
                 </div>
               </div>
@@ -120,11 +131,15 @@ export const AdminDashboardPage: React.FC = () => {
                   <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
                     {t("statuses.PENDING")}
                   </p>
-                  <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
+                  <p
+                    className={`text-3xl font-bold ${getSemanticClass("warning", "text", true)}`}
+                  >
                     {stats.pendingUsers}
                   </p>
                 </div>
-                <div className="w-12 h-12 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
+                <div
+                  className={`w-12 h-12 rounded-lg flex items-center justify-center ${getSemanticClass("warning", "bg", true)}`}
+                >
                   <span className="text-2xl">⏳</span>
                 </div>
               </div>
@@ -139,7 +154,7 @@ export const AdminDashboardPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => navigate("/admin/users")}
-                className="p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors"
+                className={`p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-amber-500 transition-colors ${getSemanticClass("info", "bg", true).split(" ")[0]} dark:hover:bg-blue-900/10`}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-3xl">👥</span>
@@ -156,7 +171,7 @@ export const AdminDashboardPage: React.FC = () => {
 
               <button
                 onClick={() => navigate("/admin/users/classification")}
-                className="p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-900/10 transition-colors"
+                className={`p-4 text-left rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition-colors ${getSemanticClass("success", "bg", true).split(" ")[0]} dark:hover:bg-green-900/10`}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-3xl">📊</span>

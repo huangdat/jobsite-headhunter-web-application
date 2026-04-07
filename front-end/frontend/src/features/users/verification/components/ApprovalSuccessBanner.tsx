@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { CheckCircle, X } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/utils/semantic-colors";
 
 interface ApprovalSuccessBannerProps {
   show?: boolean;
@@ -44,16 +45,31 @@ export const ApprovalSuccessBanner: React.FC<ApprovalSuccessBannerProps> = ({
   if (!isVisible || !show) return null;
 
   return (
-    <div className="bg-green-50 border-l-4 border-green-500 rounded-lg p-4 mb-6">
+    <div
+      className={`${getSemanticClass("success", "bg", true)} border-l-4 ${getSemanticClass("success", "border", true)} rounded-lg p-4 mb-6`}
+    >
       <div className="flex items-start justify-between gap-4">
         {/* Success Message */}
         <div className="flex items-start gap-3 flex-1">
-          <CheckCircle className="text-green-600 shrink-0 mt-0.5" size={20} />
+          <CheckCircle
+            className={
+              getSemanticClass("success", "text", true) + " shrink-0 mt-0.5"
+            }
+            size={20}
+          />
           <div>
-            <h3 className="font-semibold text-green-900">
+            <h3
+              className={
+                "font-semibold " + getSemanticClass("success", "text", true)
+              }
+            >
               {t("verification.approval.success")}
             </h3>
-            <p className="text-sm text-green-800 mt-1">
+            <p
+              className={
+                "text-sm " + getSemanticClass("success", "text", true) + " mt-1"
+              }
+            >
               {t("verification.approval.successMessage")}
             </p>
           </div>
@@ -67,7 +83,12 @@ export const ApprovalSuccessBanner: React.FC<ApprovalSuccessBannerProps> = ({
             setIsVisible(false);
             onDismiss?.();
           }}
-          className="text-green-600 hover:text-green-700 shrink-0"
+          className={
+            getSemanticClass("success", "text", true) +
+            " hover:" +
+            getSemanticClass("success", "text", true) +
+            " shrink-0"
+          }
           title={t("verification.approval.dismiss")}
           aria-label={t("verification.approval.dismiss")}
         >
@@ -90,7 +111,11 @@ export const ApprovalSuccessBanner: React.FC<ApprovalSuccessBannerProps> = ({
           </Button>
           <Button
             size="sm"
-            className="bg-green-600 hover:bg-green-700"
+            className={
+              getSemanticClass("success", "bg", true) +
+              " hover:" +
+              getSemanticClass("success", "bg", true)
+            }
             onClick={() => {
               setIsVisible(false);
               onNext();

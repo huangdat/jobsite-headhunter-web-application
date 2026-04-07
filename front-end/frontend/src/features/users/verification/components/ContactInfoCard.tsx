@@ -89,7 +89,7 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
             </p>
             <a
               href={`mailto:${business.email}`}
-              className="text-sm font-medium text-lime-600 dark:text-lime-400 hover:underline"
+              className={`text-sm font-medium ${getSemanticClass("success", "text", true)} hover:underline`}
             >
               {business.email}
             </a>

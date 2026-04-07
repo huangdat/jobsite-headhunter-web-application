@@ -33,7 +33,7 @@ export interface ConfirmationDialogProps {
 const variantConfig = {
   danger: {
     icon: XCircle,
-    iconColor: "text-red-600",
+    iconColor: getSemanticClass("danger", "text", true),
     buttonVariant: "destructive" as const,
   },
   warning: {
@@ -43,7 +43,7 @@ const variantConfig = {
   },
   info: {
     icon: Info,
-    iconColor: "text-blue-600",
+    iconColor: getSemanticClass("info", "icon", true),
     buttonVariant: "default" as const,
   },
   success: {

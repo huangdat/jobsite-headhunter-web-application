@@ -35,7 +35,7 @@ const variantConfig = {
   },
   error: {
     icon: AlertCircle,
-    iconColor: "text-red-400",
+    iconColor: getSemanticClass("danger", "text", true),
   },
 };
 

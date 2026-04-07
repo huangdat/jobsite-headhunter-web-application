@@ -4,6 +4,7 @@
  */
 
 import { useTranslation } from "react-i18next";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -55,7 +56,7 @@ export function PostDeleteModal({
               onConfirm();
             }}
             disabled={isDeleting}
-            className="bg-red-600 hover:bg-red-700"
+            className={getSemanticClass("danger", "bg", true)}
           >
             {isDeleting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
             {t("forum.posts.actions.delete") || "Delete"}

@@ -24,6 +24,7 @@
 import { useRef, useCallback, memo } from "react";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { toast } from "sonner";
 
 const ALLOWED_IMAGE_TYPES = [
@@ -138,7 +139,14 @@ export const ImageUploadField = memo(function ImageUploadField({
       {label && (
         <label className="text-sm font-medium text-gray-700">
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && (
+            <span
+              className={getSemanticClass("danger", "text", true)}
+              style={{ marginLeft: "0.25rem" }}
+            >
+              *
+            </span>
+          )}
         </label>
       )}
 
@@ -175,7 +183,7 @@ export const ImageUploadField = memo(function ImageUploadField({
                   ? "bg-gray-50 border-gray-200 cursor-not-allowed"
                   : "border-gray-300 hover:border-gray-400 hover:bg-gray-50"
               }
-              ${error ? "border-red-300" : ""}
+              ${error ? getSemanticClass("danger", "border", true) : ""}
             `}
           >
             <Upload className="h-10 w-10 text-gray-400" />
@@ -203,7 +211,11 @@ export const ImageUploadField = memo(function ImageUploadField({
       </div>
 
       {/* Error Message */}
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <p className={`text-sm ${getSemanticClass("danger", "text", true)}`}>
+          {error}
+        </p>
+      )}
     </div>
   );
 });
