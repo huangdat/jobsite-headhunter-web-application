@@ -47,9 +47,7 @@ export function CompanyDetailPage() {
         <CompanyAbout description={company.noteByAdmin} />
 
         <CompanyJobs businessProfileId={company.id} />
-        <CompanyReviews />
       </div>
     </div>
   );
 }
-

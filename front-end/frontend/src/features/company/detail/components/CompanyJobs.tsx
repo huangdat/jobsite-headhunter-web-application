@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { getSemanticClass } from "@/lib/design-tokens";
 import {
   getJobsByBusinessProfileId,
@@ -64,9 +65,10 @@ export function CompanyJobs({ businessProfileId }: CompanyJobsProps) {
       {!loading && !error && jobs.length > 0 && (
         <div className="space-y-4">
           {jobs.map((job) => (
-            <div
+            <Link
               key={job.id}
-              className="border border-slate-200 rounded-2xl p-4 hover:shadow-md transition-shadow"
+              to={`/jobs/${job.id}`}
+              className="block border border-slate-200 rounded-2xl p-4 hover:shadow-md hover:border-brand-primary transition-all cursor-pointer"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
@@ -107,7 +109,7 @@ export function CompanyJobs({ businessProfileId }: CompanyJobsProps) {
                   </div>
                 )}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
