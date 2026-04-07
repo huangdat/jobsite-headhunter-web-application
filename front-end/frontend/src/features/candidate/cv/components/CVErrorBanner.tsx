@@ -6,6 +6,7 @@
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { CVErrorBannerProps } from "../types";
 
 export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
@@ -19,19 +20,31 @@ export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
   if (!error) return null;
 
   return (
-    <div className="bg-red-50 border-l-4 border-red-200 p-5 rounded-xl flex items-start gap-4 shadow-sm animate-in fade-in slide-in-from-top-2 duration-200">
+    <div
+      className={`border-l-4 p-5 rounded-xl flex items-start gap-4 shadow-sm animate-in fade-in slide-in-from-top-2 duration-200 ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
+    >
       {/* Error Icon */}
       <div className="bg-error rounded-full p-1 shrink-0 mt-0.5">
-        <span className="material-symbols-outlined text-red-700 text-lg fill">
+        <span
+          className={`material-symbols-outlined text-lg fill ${getSemanticClass("danger", "icon", true)}`}
+        >
           error
         </span>
       </div>
 
       {/* Error Content */}
       <div className="flex-1">
-        <p className="text-red-700 font-bold text-sm">{t(error) || error}</p>
+        <p
+          className={`font-bold text-sm ${getSemanticClass("danger", "text", true)}`}
+        >
+          {t(error) || error}
+        </p>
         {details && (
-          <p className="text-red-600 text-sm mt-1">{t(details) || details}</p>
+          <p
+            className={`text-sm mt-1 ${getSemanticClass("danger", "text", true)}`}
+          >
+            {t(details) || details}
+          </p>
         )}
       </div>
 
@@ -42,7 +55,7 @@ export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
             variant="ghost"
             size="icon"
             onClick={onRetry}
-            className="text-red-700 hover:text-red-700/80"
+            className={`${getSemanticClass("danger", "text", true)} hover:opacity-80`}
             title={t("cv.management.validation.retry")}
             aria-label={t("cv.management.validation.retry")}
           >
@@ -54,7 +67,7 @@ export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
             variant="ghost"
             size="icon"
             onClick={onDismiss}
-            className="text-red-700 hover:text-red-700/80"
+            className={`${getSemanticClass("danger", "text", true)} hover:opacity-80`}
             title={t("cv.management.validation.dismiss")}
             aria-label={t("cv.management.validation.dismiss")}
           >

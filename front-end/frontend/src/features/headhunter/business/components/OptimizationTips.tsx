@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { Lightbulb, ChevronRight } from "lucide-react";
 
 export interface OptimizationTip {
@@ -26,24 +27,24 @@ export interface OptimizationTipsProps {
 const getPriorityColor = (priority: string) => {
   switch (priority) {
     case "high":
-      return "border-red-200 bg-red-50";
+      return `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`;
     case "medium":
-      return "border-amber-200 bg-amber-50";
+      return `${getSemanticClass("warning", "border", true)} ${getSemanticClass("warning", "bg", true)}`;
     case "low":
     default:
-      return "border-blue-200 bg-blue-50";
+      return `${getSemanticClass("info", "border", true)} ${getSemanticClass("info", "bg", true)}`;
   }
 };
 
 const getPriorityBadgeColor = (priority: string) => {
   switch (priority) {
     case "high":
-      return "bg-red-100 text-red-800";
+      return `${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)}`;
     case "medium":
-      return "bg-amber-100 text-amber-800";
+      return `${getSemanticClass("warning", "bg", true)} text-amber-800`;
     case "low":
     default:
-      return "bg-blue-100 text-blue-800";
+      return `${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "text", true)}`;
   }
 };
 
@@ -125,7 +126,9 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
     >
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100">
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-lg ${getSemanticClass("warning", "bg", true)}`}
+        >
           <Lightbulb className="h-6 w-6 text-amber-600" />
         </div>
         <div>
@@ -210,8 +213,12 @@ export const OptimizationTips: React.FC<OptimizationTipsProps> = ({
       </div>
 
       {/* Info Box */}
-      <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
-        <p className="text-xs font-medium text-blue-900">
+      <div
+        className={`mt-6 rounded-lg border p-4 ${getSemanticClass("info", "border", true)} ${getSemanticClass("info", "bg", true)}`}
+      >
+        <p
+          className={`text-xs font-medium ${getSemanticClass("info", "text", true)}`}
+        >
           💡 {t("business.optimization.info")}
         </p>
       </div>

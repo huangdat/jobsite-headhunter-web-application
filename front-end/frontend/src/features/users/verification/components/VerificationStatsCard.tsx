@@ -11,6 +11,7 @@
 import React from "react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { VerificationStats } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface VerificationStatsCardProps {
   stats: VerificationStats | null;
@@ -54,7 +55,9 @@ export const VerificationStatsCard: React.FC<VerificationStatsCardProps> = ({
         <div className="text-sm text-slate-400 mb-1">
           {t("verification.cards.stats.approved")}
         </div>
-        <div className="text-3xl font-bold text-green-400">
+        <div
+          className={`text-3xl font-bold ${getSemanticClass("success", "text", true)}`}
+        >
           {stats.totalApproved}
         </div>
         <div className="text-xs text-slate-500 mt-2">

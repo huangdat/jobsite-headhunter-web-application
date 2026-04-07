@@ -12,6 +12,7 @@ import React from "react";
 import { MapPin, User, Clock, Mail } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { Business } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface ContactInfoCardProps {
   business: Business;
@@ -89,7 +90,7 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
             </p>
             <a
               href={`mailto:${business.email}`}
-              className="text-sm font-medium text-lime-600 dark:text-lime-400 hover:underline"
+              className={`text-sm font-medium ${getSemanticClass("success", "text", true)} hover:underline`}
             >
               {business.email}
             </a>

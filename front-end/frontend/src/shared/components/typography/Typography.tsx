@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface DisplayProps {
   children: ReactNode;
@@ -161,7 +162,11 @@ export function LabelText({ children, required, className }: LabelTextProps) {
       )}
     >
       {children}
-      {required && <span className="ml-1 text-red-500">*</span>}
+      {required && (
+        <span className={`ml-1 ${getSemanticClass("danger", "text", true)}`}>
+          *
+        </span>
+      )}
     </label>
   );
 }
@@ -235,7 +240,7 @@ export function Caption({
       className={cn(
         "text-xs",
         variant === "default" && "text-slate-500 dark:text-slate-400",
-        variant === "error" && "text-red-600 dark:text-red-400",
+        variant === "error" && getSemanticClass("danger", "text", true),
         variant === "success" && "text-emerald-600 dark:text-emerald-400",
         className
       )}

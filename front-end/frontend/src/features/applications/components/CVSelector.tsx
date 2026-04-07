@@ -130,7 +130,9 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
       )}
 
       {error && (
-        <div className={`flex items-center gap-2 p-3 rounded-xl text-xs font-bold animate-in duration-500 ${getSemanticClass('danger', 'bg', true)} border ${getSemanticClass('danger', 'border', true)} ${getSemanticClass('danger', 'text', true)}`}>
+        <div
+          className={`flex items-center gap-2 p-3 rounded-xl text-xs font-bold animate-in duration-500 ${getSemanticClass("danger", "bg", true)} border ${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "text", true)}`}
+        >
           <AlertCircle className="w-4 h-4" />
           {t(error)}
         </div>

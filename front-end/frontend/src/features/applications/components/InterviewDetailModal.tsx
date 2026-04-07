@@ -1,11 +1,11 @@
 import React from "react";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { formatInterviewType, formatDate, formatDuration } from "../utils";
 import type { Interview, InterviewType } from "../types";
-import { getSemanticClass } from "@/lib/design-tokens";
 import {
   MetaText,
   SmallText,
@@ -42,11 +42,28 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
   const getStatusVariant = (status: string) => {
     switch (status) {
       case "SCHEDULED":
-        return "bg-blue-100 text-blue-700 hover:bg-blue-100 border-none";
+        return (
+          getSemanticClass("info", "bg", true) +
+          " " +
+          getSemanticClass("info", "text", true) +
+          " hover:" +
+          getSemanticClass("info", "bg", true).split(" ")[0] +
+          " border-none"
+        );
       case "DONE":
-        return `bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-none`;
+        return (
+          getSemanticClass("success", "bg", true) +
+          " " +
+          getSemanticClass("success", "text", true) +
+          ` hover:${getSemanticClass("success", "bg", true).split(" ")[0]} border-none`
+        );
       case "CANCELLED":
-        return `bg-red-100 text-red-700 hover:bg-red-100 border-none`;
+        return (
+          getSemanticClass("danger", "bg", true) +
+          " " +
+          getSemanticClass("danger", "text", true) +
+          ` hover:${getSemanticClass("danger", "bg", true).split(" ")[0]} border-none`
+        );
       default:
         return "secondary";
     }
@@ -56,7 +73,7 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
   const getInterviewTypeIconColor = (type: string) => {
     switch (type) {
       case "ONLINE":
-        return "text-blue-500";
+        return getSemanticClass("info", "icon", true);
       case "IN_PERSON":
         return "text-orange-500";
       default:
@@ -108,9 +125,15 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
               <MetaText as="div">{t("applications.interview.type")}</MetaText>
               <SmallText weight="bold" className="flex items-center gap-2">
                 {interview.interviewType === "ONLINE" ? (
-                  <Video size={16} className={getInterviewTypeIconColor("ONLINE")} />
+                  <Video
+                    size={16}
+                    className={getInterviewTypeIconColor("ONLINE")}
+                  />
                 ) : (
-                  <MapPin size={16} className={getInterviewTypeIconColor("IN_PERSON")} />
+                  <MapPin
+                    size={16}
+                    className={getInterviewTypeIconColor("IN_PERSON")}
+                  />
                 )}
                 {formatInterviewType(
                   interview.interviewType as InterviewType,
@@ -174,7 +197,10 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
                 weight="medium"
                 className="flex items-start gap-2 italic"
               >
-                <MapPin size={16} className={`${getSemanticClass('danger', 'icon', true)} shrink-0 mt-0.5`} />
+                <MapPin
+                  size={16}
+                  className={`${getSemanticClass("danger", "icon", true)} shrink-0 mt-0.5`}
+                />
                 {interview.location}
               </SmallText>
             </div>
@@ -186,8 +212,13 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
               <MetaText as="div" className="flex items-center gap-1">
                 <FileText size={12} /> {t("applications.interview.notes")}
               </MetaText>
-              <div className={`rounded-2xl p-4 ${getSemanticClass('warning', 'bg', true)} border ${getSemanticClass('warning', 'border', true)}`}>
-                <BodyText variant="muted" className={`italic ${getSemanticClass('warning', 'text', true)}`}>
+              <div
+                className={`rounded-2xl p-4 ${getSemanticClass("warning", "bg", true)} border ${getSemanticClass("warning", "border", true)}`}
+              >
+                <BodyText
+                  variant="muted"
+                  className={`italic ${getSemanticClass("warning", "text", true)}`}
+                >
                   "{interview.notes}"
                 </BodyText>
               </div>

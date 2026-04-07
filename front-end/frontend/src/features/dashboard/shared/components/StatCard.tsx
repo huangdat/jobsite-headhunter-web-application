@@ -1,4 +1,5 @@
 import React from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface StatCardProps {
   title: string;
@@ -26,40 +27,40 @@ export const StatCard: React.FC<StatCardProps> = ({
 }) => {
   const colorConfig = {
     blue: {
-      bg: "bg-blue-100 dark:bg-blue-900/30",
-      text: "text-blue-600 dark:text-blue-400",
-      trendUp: "text-green-600 dark:text-green-400",
-      trendDown: "text-red-600 dark:text-red-400",
+      bg: getSemanticClass("info", "bg"),
+      text: getSemanticClass("info", "text"),
+      trendUp: getSemanticClass("success", "text", true),
+      trendDown: getSemanticClass("danger", "text"),
     },
     green: {
-      bg: "bg-green-100 dark:bg-green-900/30",
-      text: "text-green-600 dark:text-green-400",
-      trendUp: "text-green-600 dark:text-green-400",
-      trendDown: "text-red-600 dark:text-red-400",
+      bg: getSemanticClass("success", "bg"),
+      text: getSemanticClass("success", "text"),
+      trendUp: getSemanticClass("success", "text", true),
+      trendDown: getSemanticClass("danger", "text"),
     },
     red: {
-      bg: "bg-red-100 dark:bg-red-900/30",
-      text: "text-red-600 dark:text-red-400",
-      trendUp: "text-green-600 dark:text-green-400",
-      trendDown: "text-red-600 dark:text-red-400",
+      bg: getSemanticClass("danger", "bg"),
+      text: getSemanticClass("danger", "text"),
+      trendUp: getSemanticClass("success", "text", true),
+      trendDown: getSemanticClass("danger", "text"),
     },
     yellow: {
-      bg: "bg-yellow-100 dark:bg-yellow-900/30",
-      text: "text-yellow-600 dark:text-yellow-400",
-      trendUp: "text-green-600 dark:text-green-400",
-      trendDown: "text-red-600 dark:text-red-400",
+      bg: getSemanticClass("warning", "bg"),
+      text: getSemanticClass("warning", "text"),
+      trendUp: getSemanticClass("success", "text", true),
+      trendDown: getSemanticClass("danger", "text"),
     },
     purple: {
       bg: "bg-purple-100 dark:bg-purple-900/30",
-      text: "text-purple-600 dark:text-purple-400",
-      trendUp: "text-green-600 dark:text-green-400",
-      trendDown: "text-red-600 dark:text-red-400",
+      text: `${getSemanticClass("info", "text", true)}`,
+      trendUp: getSemanticClass("success", "text", true),
+      trendDown: getSemanticClass("danger", "text"),
     },
     emerald: {
-      bg: "bg-emerald-100 dark:bg-emerald-900/30",
-      text: "text-emerald-600 dark:text-emerald-400",
-      trendUp: "text-green-600 dark:text-green-400",
-      trendDown: "text-red-600 dark:text-red-400",
+      bg: getSemanticClass("success", "bg"),
+      text: getSemanticClass("success", "text"),
+      trendUp: getSemanticClass("success", "text", true),
+      trendDown: getSemanticClass("danger", "text"),
     },
   };
 

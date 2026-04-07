@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { CVOptimizationTipsProps, OptimizationTip } from "../types";
 
 export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
@@ -87,11 +88,17 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
             {/* Completed Badge */}
             {tip.completed && (
               <div className="mt-3 ml-7">
-                <div className="inline-flex items-center gap-2 bg-primary/10 border border-emerald-300/20 rounded px-2 py-1">
-                  <span className="material-symbols-outlined text-emerald-600 text-sm fill">
+                <div
+                  className={`inline-flex items-center gap-2 bg-primary/10 rounded px-2 py-1 ${getSemanticClass("success", "border", true)}`}
+                >
+                  <span
+                    className={`material-symbols-outlined text-sm fill ${getSemanticClass("success", "icon", true)}`}
+                  >
                     check_circle
                   </span>
-                  <span className="text-xs font-semibold text-emerald-600">
+                  <span
+                    className={`text-xs font-semibold ${getSemanticClass("success", "text", true)}`}
+                  >
                     Completed
                   </span>
                 </div>
@@ -114,4 +121,3 @@ export const CVOptimizationTips: React.FC<CVOptimizationTipsProps> = ({
 };
 
 export default CVOptimizationTips;
-

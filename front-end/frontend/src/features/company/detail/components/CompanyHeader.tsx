@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { MapPin, Users, Globe } from "lucide-react";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { BusinessProfileResp } from "@/shared/utils/businessProfileService";
 
 interface Props {
@@ -48,9 +49,7 @@ export function CompanyHeader({ company }: Props) {
               }
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 bg-lime-400 text-gray-700 hover:bg-lime-500 
-              border border-lime-500 px-3 py-1.5 rounded-lg transition-all 
-              font-bold shadow-sm cursor-pointer"
+              className={`flex items-center gap-2 text-gray-700 px-3 py-1.5 rounded-lg transition-all font-bold shadow-sm cursor-pointer ${getSemanticClass("success", "bg", true)} hover:bg-emerald-500 ${getSemanticClass("success", "border", true)}`}
             >
               <Globe className="w-4 h-4 text-black" />
               <span>{t("business.form.website")}</span>

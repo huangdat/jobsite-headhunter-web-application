@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuthTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { AuthLayout } from "@/shared/components";
 import {
   Display,
@@ -36,7 +37,9 @@ export function ResetPasswordSuccessPage() {
 
               <div className="mt-12 space-y-4">
                 <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-green-400">
+                  <span
+                    className={`material-symbols-outlined ${getSemanticClass("success", "icon", true)}`}
+                  >
                     check_circle
                   </span>
                   <SmallText className="text-slate-300">
@@ -60,7 +63,9 @@ export function ResetPasswordSuccessPage() {
           <div className="md:w-7/12 p-8 md:p-14 bg-white dark:bg-slate-900 flex items-center">
             <div className="max-w-md mx-auto text-center">
               <div className="mb-8 flex justify-center">
-                <div className="w-24 h-24 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center">
+                <div
+                  className={`w-24 h-24 rounded-full flex items-center justify-center ${getSemanticClass("success", "bg", true)}`}
+                >
                   <span className="material-symbols-outlined text-7xl text-brand-primary success-icon-glow">
                     check_circle
                   </span>

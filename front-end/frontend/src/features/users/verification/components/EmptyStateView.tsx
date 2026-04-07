@@ -12,6 +12,7 @@
 import React from "react";
 import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface EmptyStateViewProps {
   icon?: LucideIcon;
@@ -68,7 +69,7 @@ export const EmptyStateView: React.FC<EmptyStateViewProps> = ({
           {primaryAction && (
             <Button
               size="sm"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              className={`${getSemanticClass("success", "bg", true)} hover:${getSemanticClass("success", "bg", true).split(" ")[0]}-700 text-white`}
               onClick={primaryAction.onClick}
             >
               {primaryAction.label}

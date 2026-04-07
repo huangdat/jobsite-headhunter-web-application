@@ -2,6 +2,7 @@ import React from "react";
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUsersTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface UserHeaderProps {
   user: {
@@ -19,31 +20,43 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
 
   const statusConfig = {
     PENDING: {
-      bg: "bg-yellow-100",
-      text: "text-yellow-800",
+      bg: getSemanticClass("warning", "bg", true),
+      text: getSemanticClass("warning", "text", true),
       label: t("statuses.PENDING"),
     },
     ACTIVE: {
-      bg: "bg-green-100",
-      text: "text-green-800",
+      bg: getSemanticClass("success", "bg", true),
+      text: getSemanticClass("success", "text", true),
       label: t("statuses.ACTIVE"),
     },
     SUSPENDED: {
-      bg: "bg-red-100",
-      text: "text-red-800",
+      bg: getSemanticClass("danger", "bg", true),
+      text: getSemanticClass("danger", "text", true),
       label: t("statuses.SUSPENDED"),
     },
     DELETED: {
-      bg: "bg-slate-100",
-      text: "text-slate-800",
+      bg: getSemanticClass("danger", "bg", true),
+      text: getSemanticClass("danger", "text", true),
       label: t("statuses.DELETED"),
     },
   };
 
   const roleConfig = {
-    Administrator: { color: "bg-purple-100 text-purple-800", icon: "👤" },
-    Manager: { color: "bg-blue-100 text-blue-800", icon: "📊" },
-    User: { color: "bg-gray-100 text-gray-800", icon: "👥" },
+    Administrator: {
+      color:
+        getSemanticClass("info", "bg", true) +
+        " " +
+        getSemanticClass("info", "text", true),
+      icon: "👤",
+    },
+    Manager: {
+      color:
+        getSemanticClass("info", "bg", true) +
+        " " +
+        getSemanticClass("info", "text", true),
+      icon: "📊",
+    },
+    User: { color: getSemanticClass("info", "bg", true) + " " + getSemanticClass("info", "text", true), icon: "👥" },
   };
 
   const status = statusConfig[user.status];
@@ -58,7 +71,7 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
             <img
               src={user.avatar}
               alt={user.fullName}
-              className="w-24 h-24 rounded-full border-4 border-green-300 object-cover"
+              className={`w-24 h-24 rounded-full border-4 ${getSemanticClass("success", "border", true)} object-cover`}
             />
           </div>
 
@@ -74,7 +87,9 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
 
             <div className="flex items-center gap-4 mt-4 flex-wrap">
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
+                <CheckCircle
+                  className={`w-4 h-4 ${getSemanticClass("success", "text", true)}`}
+                />
                 <span
                   className={`px-3 py-1 rounded-full text-xs font-medium ${status.bg} ${status.text}`}
                 >
@@ -93,7 +108,9 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
 
         {/* Buttons */}
         <div className="flex gap-2 flex-0 lg:w-full lg:mt-4">
-          <Button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium whitespace-nowrap">
+          <Button
+            className={`px-4 py-2 ${getSemanticClass("success", "bg", true)} hover:${getSemanticClass("success", "bg", true)} text-white font-medium whitespace-nowrap`}
+          >
             ✎ {t("detail.editProfile")}
           </Button>
           <Button

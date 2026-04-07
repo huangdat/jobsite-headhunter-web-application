@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   getJobsByBusinessProfileId,
   type JobDetailResp,
@@ -48,7 +49,11 @@ export function CompanyJobs({ businessProfileId }: CompanyJobsProps) {
         <p className="text-slate-500 italic">{t("business.state.loading")}</p>
       )}
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && (
+        <p className={`text-sm ${getSemanticClass("danger", "text", true)}`}>
+          {error}
+        </p>
+      )}
 
       {!loading && !error && jobs.length === 0 && (
         <p className="text-slate-500 italic">

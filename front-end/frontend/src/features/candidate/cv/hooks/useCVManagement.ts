@@ -63,17 +63,25 @@ export const useCVManagement = (): UseCVManagementReturn => {
         ]);
 
         if (isActive) {
-          setState((prev) => ({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setState((prev: any) => ({
             ...prev,
             // Sửa lỗi: Bóc tách trường result từ data của ApiResponse
             files: cvResponse.success
-              ? (cvResponse as any).data?.result || []
+              ? (
+                  (cvResponse as Record<string, unknown>).data as Record<
+                    string,
+                    unknown
+                  >
+                )?.result || []
               : [],
             profile: {
               ...prev.profile,
               strength: strengthResponse.success
-                ? (strengthResponse as any).data?.result ||
-                  strengthResponse.data
+                ? (
+                    (strengthResponse as unknown as Record<string, unknown>)
+                      .data as Record<string, unknown>
+                  )?.result || strengthResponse.data
                 : prev.profile.strength,
             },
             isLoading: false,
@@ -110,17 +118,30 @@ export const useCVManagement = (): UseCVManagementReturn => {
         fetchProfileStrength(),
       ]);
 
-      setState((prev) => ({
-        ...prev,
-        files: cvResponse.success ? (cvResponse as any).data?.result || [] : [],
-        profile: {
-          ...prev.profile,
-          strength: strengthResponse.success
-            ? (strengthResponse as any).data?.result || strengthResponse.data
-            : prev.profile.strength,
-        },
-        isLoading: false,
-      }));
+      setState(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (prev: any) => ({
+          ...prev,
+          files: cvResponse.success
+            ? (
+                (cvResponse as Record<string, unknown>).data as Record<
+                  string,
+                  unknown
+                >
+              )?.result || []
+            : [],
+          profile: {
+            ...prev.profile,
+            strength: strengthResponse.success
+              ? (
+                  (strengthResponse as unknown as Record<string, unknown>)
+                    .data as Record<string, unknown>
+                )?.result || strengthResponse.data
+              : prev.profile.strength,
+          },
+          isLoading: false,
+        })
+      );
     } catch (error) {
       console.error("Error refreshing CV data:", error);
       setState((prev) => ({
@@ -213,6 +234,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
       if (response.success) {
         setState((prev) => ({
           ...prev,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           files: prev.files.filter((f: any) => f.id !== fileId),
           isLoading: false,
         }));
@@ -276,6 +298,7 @@ export const useCVManagement = (): UseCVManagementReturn => {
         // Update file active status
         setState((prev) => ({
           ...prev,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           files: prev.files.map((f: any) => ({
             ...f,
             isActive: f.id === fileId,

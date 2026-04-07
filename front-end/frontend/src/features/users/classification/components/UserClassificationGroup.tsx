@@ -6,6 +6,7 @@ import {
   formatPercentage,
   formatCount,
 } from "@/features/users/classification/utils/classificationUtils";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface UserClassificationGroupProps {
   group: ClassificationGroupData;
@@ -27,18 +28,18 @@ const COLOR_CLASSES: Record<
 > = {
   blue: {
     bg: "bg-blue-100 dark:bg-blue-900/30",
-    text: "text-blue-600 dark:text-blue-400",
-    icon: "text-blue-600",
+    text: getSemanticClass("info", "text", true),
+    icon: getSemanticClass("info", "icon", true),
   },
   purple: {
     bg: "bg-purple-100 dark:bg-purple-900/30",
-    text: "text-purple-600 dark:text-purple-400",
-    icon: "text-purple-600",
+    text: `${getSemanticClass("info", "text", true)}`,
+    icon: `${getSemanticClass("info", "icon", true)}`,
   },
   green: {
     bg: "bg-green-100 dark:bg-green-900/30",
-    text: "text-green-600 dark:text-green-400",
-    icon: "text-green-600",
+    text: getSemanticClass("success", "text", true),
+    icon: getSemanticClass("success", "icon", true),
   },
   orange: {
     bg: "bg-orange-100 dark:bg-orange-900/30",
@@ -46,9 +47,9 @@ const COLOR_CLASSES: Record<
     icon: "text-orange-600",
   },
   red: {
-    bg: "bg-red-100 dark:bg-red-900/30",
-    text: "text-red-600 dark:text-red-400",
-    icon: "text-red-600",
+    bg: getSemanticClass("danger", "bg", true),
+    text: getSemanticClass("danger", "text", true),
+    icon: getSemanticClass("danger", "icon", true),
   },
   slate: {
     bg: "bg-slate-100 dark:bg-slate-800",
@@ -189,8 +190,8 @@ export const UserClassificationGroup: React.FC<
                     <span
                       className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${
                         user.status === "ACTIVE"
-                          ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
-                          : "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"
+                          ? `${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`
+                          : `${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)}`
                       }`}
                     >
                       <span className="material-symbols-outlined text-sm">

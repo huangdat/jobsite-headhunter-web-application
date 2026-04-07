@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { ErrorState } from "@/shared/components/states/ErrorState";
 import {
   sendOtpSignup,
@@ -84,7 +85,9 @@ export function OTPVerificationPage() {
             registrationDataStr
           ) as RegisterFormData;
           username = registrationData.username;
-        } catch {}
+        } catch {
+          // Silently ignore parsing errors - optional data
+        }
       }
 
       sessionStorage.removeItem("pendingRegistration");
@@ -220,7 +223,7 @@ export function OTPVerificationPage() {
                 "Xác thực thất bại"
               }
               message={generalError}
-              className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/40"
+              className={`mb-4 ${getSemanticClass("danger", "bg", true)} border ${getSemanticClass("danger", "border", true)}`}
             />
           )}
 
@@ -255,7 +258,7 @@ export function OTPVerificationPage() {
             <MdTimer
               className={
                 timeLeft <= 60
-                  ? "text-red-600"
+                  ? getSemanticClass("danger", "icon", true)
                   : "text-slate-500 dark:text-slate-400"
               }
               size={18}
@@ -263,7 +266,7 @@ export function OTPVerificationPage() {
             <span
               className={
                 timeLeft <= 60
-                  ? "text-red-600 font-semibold"
+                  ? `${getSemanticClass("danger", "text", true)} font-semibold`
                   : "text-slate-600 dark:text-slate-400"
               }
             >

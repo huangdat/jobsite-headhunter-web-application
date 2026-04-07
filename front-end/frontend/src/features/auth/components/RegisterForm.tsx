@@ -6,6 +6,7 @@ import { AuthLayout } from "@/shared/components";
 import { useAuthTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { useDebounce } from "@/shared/hooks/useDebounce";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type {
   RegistrationUserRole,
   RegisterFormData,
@@ -466,7 +467,9 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                     </label>
                   </div>
                   {form.getError("agreeToTerms") && (
-                    <p className="text-red-500 text-xs mt-2">
+                    <p
+                      className={`text-xs mt-2 ${getSemanticClass("danger", "text", true)}`}
+                    >
                       {typeof form.getError("agreeToTerms") === "string"
                         ? form.getError("agreeToTerms")
                         : (

@@ -332,7 +332,7 @@ export const InterviewScheduleModal = ({
                   variant="ghost"
                   type="button"
                   onClick={onClose}
-                  className={`px-8 border-none h-12 rounded-xl transition-all text-xs uppercase tracking-widest ${getSemanticClass('danger', 'text', true)} hover:${getSemanticClass('danger', 'bg', true)} cursor-pointer`}
+                  className={`px-8 border-none h-12 rounded-xl transition-all text-xs uppercase tracking-widest ${getSemanticClass("danger", "text", true)} hover:${getSemanticClass("danger", "bg", true)} cursor-pointer`}
                 >
                   {t("common.cancel")}
                 </Button>

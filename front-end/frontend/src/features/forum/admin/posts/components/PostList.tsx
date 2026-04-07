@@ -6,6 +6,7 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   usePostsQuery,
   useUpdatePostStatusMutation,
@@ -311,7 +312,7 @@ export function PostList() {
                               variant="ghost"
                               size="sm"
                               onClick={() => setDeleteId(post.id)}
-                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                              className={`h-8 w-8 p-0 ${getSemanticClass("danger", "text", true)} hover:${getSemanticClass("danger", "text", true)} ${getSemanticClass("danger", "bg", true).replace("bg-", "hover:bg-")}`}
                             >
                               <Trash2 className="w-4 h-4" />
                             </Button>

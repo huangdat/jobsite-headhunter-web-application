@@ -1,5 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface FilterBadgeProps {
   filterType: "role" | "status";
@@ -41,7 +42,7 @@ export const FilterBadge: React.FC<FilterBadgeProps> = ({
       {getFilterTypeLabel()}: {getFilterLabel()}
       <span
         onClick={onRemove}
-        className="material-symbols-outlined text-sm cursor-pointer hover:text-red-500 transition-colors"
+        className={`material-symbols-outlined text-sm cursor-pointer ${getSemanticClass("danger", "text", true).replace("text-", "hover:text-")} transition-colors`}
       >
         close
       </span>

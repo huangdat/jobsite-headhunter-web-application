@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { useCandidateTranslation } from "@/shared/hooks";
 import { Button } from "@/components/ui/button";
 import type { CVListProps } from "../types";
@@ -151,7 +152,7 @@ export const CVList: React.FC<CVListProps> = ({
                   variant="ghost"
                   size="icon"
                   onClick={() => onDelete(file.id)}
-                  className="text-red-600 hover:text-red-700"
+                  className={`${getSemanticClass("danger", "text", true)} hover:opacity-80 transition-opacity`}
                   title={t("cv.management.fileList.actions.delete")}
                   aria-label={t("cv.management.fileList.actions.delete")}
                 >
@@ -167,11 +168,15 @@ export const CVList: React.FC<CVListProps> = ({
 
       {/* Max Files Reached Info */}
       {files.length >= maxFiles && (
-        <div className="px-6 py-4 bg-yellow-50 dark:bg-yellow-500/10 border-t border-slate-200/10 flex items-start gap-3">
-          <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400 text-lg shrink-0 mt-0.5 fill">
+        <div
+          className={`px-6 py-4 border-t border-slate-200/10 flex items-start gap-3 ${getSemanticClass("warning", "bg", true)}`}
+        >
+          <span
+            className={`material-symbols-outlined text-lg shrink-0 mt-0.5 fill ${getSemanticClass("warning", "icon", true)}`}
+          >
             info
           </span>
-          <p className="text-sm text-yellow-800 dark:text-yellow-200">
+          <p className={`text-sm ${getSemanticClass("warning", "text", true)}`}>
             {t("validation.maxFilesReached")}.{" "}
             {t("validation.deleteExistingToUpload")}
           </p>

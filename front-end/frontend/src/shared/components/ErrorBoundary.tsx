@@ -81,7 +81,7 @@ export class ErrorBoundary extends React.Component<
         <div
           className={cn(
             "flex items-center justify-center min-h-screen",
-            "bg-gradient-to-br from-slate-50 to-slate-100",
+            "bg-linear-to-br from-slate-50 to-slate-100",
             "dark:from-slate-950 dark:to-slate-900"
           )}
         >
@@ -96,10 +96,16 @@ export class ErrorBoundary extends React.Component<
           >
             <div className="flex justify-center mb-4">
               <div
-                className={cn("p-3 rounded-full", getSemanticClass('danger', 'bg', true))}
+                className={cn(
+                  "p-3 rounded-full",
+                  getSemanticClass("danger", "bg", true)
+                )}
               >
                 <AlertCircle
-                  className={cn("w-8 h-8", getSemanticClass('danger', 'icon', true))}
+                  className={cn(
+                    "w-8 h-8",
+                    getSemanticClass("danger", "icon", true)
+                  )}
                 />
               </div>
             </div>
@@ -135,7 +141,7 @@ export class ErrorBoundary extends React.Component<
                   className={cn(
                     "text-xs font-mono",
                     "text-slate-700 dark:text-slate-300",
-                    "break-words"
+                    "wrap-break-word"
                   )}
                 >
                   {this.state.error.message}

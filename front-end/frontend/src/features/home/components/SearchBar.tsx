@@ -1,4 +1,5 @@
 import { useHomeTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export function SearchBar() {
   const { t } = useHomeTranslation();
@@ -21,9 +22,9 @@ export function SearchBar() {
       />
 
       <button
-        className="bg-green-500 hover:bg-green-600 text-white 
+        className={`${getSemanticClass("success", "bg", true)} hover:${getSemanticClass("success", "bg", true)} text-white 
                          px-8 py-3 rounded-xl font-semibold 
-                         w-full md:w-auto"
+                         w-full md:w-auto`}
       >
         {t("searchBar.search")}
       </button>

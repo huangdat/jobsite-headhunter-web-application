@@ -4,6 +4,7 @@ import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdBusiness, MdReceipt, MdLanguage, MdGroups } from "react-icons/md";
 import type { RegisterFormData } from "@/features/auth/types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface HeadhunterDetailsStepProps {
   form: UseAppFormReturn<RegisterFormData>;
@@ -18,7 +19,9 @@ export function HeadhunterDetailsStep({ form }: HeadhunterDetailsStepProps) {
         {t("descriptions.headhunterDetails")}
       </p>
 
-      <div className="flex items-start gap-2 rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-700">
+      <div
+        className={`flex items-start gap-2 rounded-lg px-4 py-3 text-sm ${getSemanticClass("info", "border", true)} ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "text", true)}`}
+      >
         <MdBusiness className="mt-0.5 shrink-0 text-base" />
         <span>
           {t("descriptions.taxCodeInfo")}
@@ -54,7 +57,7 @@ export function HeadhunterDetailsStep({ form }: HeadhunterDetailsStepProps) {
           <MdGroups className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
           <select
             {...register("companyScale")}
-            className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
             aria-label={t("aria.selectCompanyScale")}
           >
             <option value="">{t("selectOptions.selectCompanyScale")}</option>

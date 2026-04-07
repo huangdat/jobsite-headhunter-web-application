@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   AlertTriangle,
   CheckCircle,
@@ -107,17 +108,25 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
         {step === "form" && (
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
-              <Unlock className="w-8 h-8 text-green-600" />
+              <Unlock
+                className={`w-8 h-8 ${getSemanticClass("success", "icon", true)}`}
+              />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {t("unlock.title")}
               </h2>
             </div>
 
-            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-6">
-              <p className="text-green-900 dark:text-green-200 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("success", "text", true)}`}
+              >
                 {t("unlock.description")}
               </p>
-              <p className="text-green-800 dark:text-green-300 text-sm mt-2">
+              <p
+                className={`text-sm mt-2 ${getSemanticClass("success", "text", true)}`}
+              >
                 {t("unlock.userInfo")}:{" "}
                 <span className="font-semibold">{userName}</span>
               </p>
@@ -139,7 +148,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                     id="sendEmail"
                     checked={sendEmail}
                     onChange={(e) => setSendEmail(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-green-600 focus:ring-green-500 cursor-pointer"
+                    className={`mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 ${getSemanticClass("success", "text", true)} ${getSemanticClass("success", "ring", true)} cursor-pointer`}
                   />
                   <label htmlFor="sendEmail" className="flex-1 cursor-pointer">
                     <p className="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
@@ -159,7 +168,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
                     id="requirePasswordChange"
                     checked={requirePasswordChange}
                     onChange={(e) => setRequirePasswordChange(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-green-600 focus:ring-green-500 cursor-pointer"
+                    className={`mt-1 w-4 h-4 rounded border-gray-300 dark:border-gray-600 ${getSemanticClass("success", "text", true)} ${getSemanticClass("success", "ring", true)} cursor-pointer`}
                   />
                   <label
                     htmlFor="requirePasswordChange"
@@ -177,8 +186,12 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
               </div>
 
               {/* Security Notice */}
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <p className="text-xs text-blue-900 dark:text-blue-200">
+              <div
+                className={`rounded-lg p-4 ${getSemanticClass("info", "bg", true)} ${getSemanticClass("info", "border", true)}`}
+              >
+                <p
+                  className={`text-xs ${getSemanticClass("info", "text", true)}`}
+                >
                   <strong>{t("unlock.securityNotice")}:</strong>{" "}
                   {t("unlock.securityNoticeDescription")}
                 </p>
@@ -186,16 +199,10 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
 
               {/* Buttons */}
               <div className="flex gap-3 justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
-                <Button
-                  variant="outline"
-                  onClick={handleClose}
-                >
+                <Button variant="outline" onClick={handleClose}>
                   {t("unlock.cancel")}
                 </Button>
-                <Button>
-                  {t("unlock.next")}
-                </Button>
-                
+                <Button>{t("unlock.next")}</Button>
               </div>
             </form>
           </div>
@@ -205,14 +212,20 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
         {step === "confirmation" && (
           <div className="p-8">
             <div className="flex items-center gap-3 mb-6">
-              <AlertTriangle className="w-8 h-8 text-orange-600" />
+              <AlertTriangle
+                className={`w-8 h-8 ${getSemanticClass("warning", "icon", true)}`}
+              />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {t("unlock.confirmTitle")}
               </h2>
             </div>
 
-            <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-6">
-              <p className="text-orange-900 dark:text-orange-200 font-medium">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)}`}
+            >
+              <p
+                className={`font-medium ${getSemanticClass("warning", "text", true)}`}
+              >
                 {t("unlock.confirmMessage")}
               </p>
             </div>
@@ -291,10 +304,7 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
               >
                 {t("buttons.back")}
               </Button>
-              <Button
-                onClick={handleConfirmUnlock}
-                disabled={loading}
-              >
+              <Button onClick={handleConfirmUnlock} disabled={loading}>
                 {loading && <Loader className="w-4 h-4 animate-spin mr-2" />}
                 {loading ? t("unlock.processing") : t("unlock.confirmAction")}
               </Button>
@@ -305,7 +315,9 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
         {/* Step 3: Success */}
         {step === "success" && (
           <div className="p-8 text-center">
-            <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+            <CheckCircle
+              className={`w-16 h-16 mx-auto mb-4 ${getSemanticClass("success", "icon", true)}`}
+            />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {t("unlock.successTitle")}
             </h2>
@@ -316,18 +328,16 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
               {t("unlock.successDescription")}
             </p>
 
-            <Button
-              onClick={handleClose}
-            >
-              {t("unlock.close")}
-            </Button>
+            <Button onClick={handleClose}>{t("unlock.close")}</Button>
           </div>
         )}
 
         {/* Step 4: Error */}
         {step === "error" && result?.type === "error" && (
           <div className="p-8 text-center">
-            <XCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
+            <XCircle
+              className={`w-16 h-16 mx-auto mb-4 ${getSemanticClass("danger", "icon", true)}`}
+            />
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {t("unlock.errorTitle")}
             </h2>
@@ -339,16 +349,10 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
             </p>
 
             <div className="flex gap-3 justify-center">
-              <Button
-                variant="outline"
-                onClick={() => setStep("form")}
-              >
+              <Button variant="outline" onClick={() => setStep("form")}>
                 {t("unlock.tryAgain")}
               </Button>
-              <Button
-                variant="outline"
-                onClick={handleClose}
-              >
+              <Button variant="outline" onClick={handleClose}>
                 {t("unlock.close")}
               </Button>
             </div>
@@ -360,4 +364,3 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
 };
 
 export default UnlockUserModal;
-
