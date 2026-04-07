@@ -10,6 +10,7 @@ import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
 import { PageContainer } from "@/shared/components/layout";
@@ -212,10 +213,10 @@ export const VerificationDetailPage: React.FC = () => {
                   <div
                     className={`h-full rounded-full ${
                       verification.complianceScore >= 80
-                        ? "w-5/6 bg-emerald-500 dark:bg-emerald-600"
+                        ? "w-5/6 " + getSemanticClass("success", "bg")
                         : verification.complianceScore >= 50
-                          ? "w-3/5 bg-amber-500 dark:bg-amber-600"
-                          : "w-2/5 bg-red-500 dark:bg-red-600"
+                          ? "w-3/5 " + getSemanticClass("warning", "bg")
+                          : "w-2/5 " + getSemanticClass("danger", "bg")
                     }`}
                   />
                 </div>
@@ -228,7 +229,7 @@ export const VerificationDetailPage: React.FC = () => {
                 <Button
                   onClick={handleApprove}
                   disabled={isApproving}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+                  className={`w-full text-white ${getSemanticClass("success", "bg", true)} hover:opacity-90`}
                 >
                   {isApproving
                     ? "Approving..."
@@ -258,14 +259,23 @@ export const VerificationDetailPage: React.FC = () => {
               {t("verification.modal.reject.title")}
             </h2>
 
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div
+              className={`rounded-lg p-4 mb-6 ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
+            >
               <div className="flex gap-3">
-                <AlertCircle className="text-red-600 shrink-0" size={20} />
+                <AlertCircle
+                  className={`shrink-0 ${getSemanticClass("danger", "icon", true)}`}
+                  size={20}
+                />
                 <div>
-                  <p className="font-semibold text-red-900 text-sm">
+                  <p
+                    className={`font-semibold text-sm ${getSemanticClass("danger", "text", true)}`}
+                  >
                     {t("verification.modal.reject.warning")}
                   </p>
-                  <p className="text-sm text-red-800 mt-1">
+                  <p
+                    className={`text-sm mt-1 ${getSemanticClass("danger", "text", true)}`}
+                  >
                     {t("verification.modal.reject.warningText")}
                   </p>
                 </div>
@@ -299,7 +309,7 @@ export const VerificationDetailPage: React.FC = () => {
               <Button
                 onClick={handleRejectSubmit}
                 disabled={isRejecting || rejectModal.reason.length < 20}
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                className={`flex-1 text-white ${getSemanticClass("danger", "bg", true)} hover:opacity-90`}
               >
                 {t("verification.modal.reject.submit")}
               </Button>

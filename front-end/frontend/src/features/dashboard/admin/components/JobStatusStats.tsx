@@ -40,7 +40,7 @@ export const JobStatusStatsComponent: React.FC<
     },
     CLOSED: {
       label: t("jobStatus.CLOSED", "Closed"),
-      color: "text-red-600 dark:text-red-400",
+      color: getSemanticClass("danger", "text", true),
       bgColor: "bg-red-100",
       darkBgColor: "dark:bg-red-900/30",
       icon: "🔒",

@@ -6,6 +6,7 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   useCategoriesQuery,
   useUpdateCategoryMutation,
@@ -271,7 +272,7 @@ export function CategoryList() {
         </div>
         <Button
           onClick={() => setCreateOpen(true)}
-          className="bg-emerald-500 hover:bg-emerald-600"
+          className={getSemanticClass("success", "bg", true)}
         >
           + {t("forum.actions.createNew") || "Create New"}
         </Button>
@@ -366,7 +367,7 @@ export function CategoryList() {
                           }
                           className={
                             category.status === "ACTIVE"
-                              ? "bg-emerald-500"
+                              ? getSemanticClass("success", "bg", true)
                               : "bg-slate-400"
                           }
                         >
@@ -418,7 +419,7 @@ export function CategoryList() {
                           }
                           className={
                             category.status === "ACTIVE"
-                              ? "bg-emerald-500"
+                              ? getSemanticClass("success", "bg", true)
                               : "bg-slate-400"
                           }
                         >
@@ -454,7 +455,7 @@ export function CategoryList() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            className={`${getSemanticClass("danger", "text", true)} hover:${getSemanticClass("danger", "text", true)} ${getSemanticClass("danger", "bg", true).replace("bg-", "hover:bg-")}`}
                             onClick={() => setDeleteId(category.id)}
                           >
                             <Trash2 size={16} />
@@ -509,7 +510,7 @@ export function CategoryList() {
                     onClick={() => handlePageChange(pageNum)}
                     className={
                       pageNum === meta.page
-                        ? "bg-emerald-500 hover:bg-emerald-600"
+                        ? `${getSemanticClass("success", "bg", true)} hover:${getSemanticClass("success", "bg", true).split(" ")[0]}-700`
                         : ""
                     }
                   >

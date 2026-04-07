@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 import {
@@ -256,14 +257,22 @@ const UserDetailPage: React.FC = () => {
         </div>
 
         {isViewingOtherAdmin && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border-t border-yellow-200 dark:border-yellow-800 w-full -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8">
+          <div
+            className={`border-t ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "border", true)} w-full -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8`}
+          >
             <div className="py-3 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-500 shrink-0 mt-0.5" />
+              <AlertCircle
+                className={`w-5 h-5 shrink-0 mt-0.5 ${getSemanticClass("warning", "icon", true)}`}
+              />
               <div>
-                <p className="text-yellow-900 dark:text-yellow-200 font-medium">
+                <p
+                  className={`font-medium ${getSemanticClass("warning", "text", true)}`}
+                >
                   {t("warnings.adminWarning")}
                 </p>
-                <p className="text-yellow-800 dark:text-yellow-300 text-sm mt-1">
+                <p
+                  className={`text-sm mt-1 ${getSemanticClass("warning", "text", true)}`}
+                >
                   {t("warnings.adminWarningDesc")}
                 </p>
               </div>
@@ -276,7 +285,7 @@ const UserDetailPage: React.FC = () => {
         <div
           className={`fixed top-4 right-4 px-6 py-3 rounded-lg text-white flex items-center gap-2 z-50 ${
             toast.type === "success"
-              ? "bg-green-500 dark:bg-green-600"
+              ? `${getSemanticClass("success", "bg", true)}`
               : "bg-red-500 dark:bg-red-600"
           }`}
         >

@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { PendingCandidate } from "../../types";
 import { dashboardFormatters } from "../../shared/utils/dashboardFormatters";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface PendingCandidatesProps {
   data: PendingCandidate[] | undefined;
@@ -89,7 +90,8 @@ export const PendingCandidates: React.FC<PendingCandidatesProps> = ({
               borderColor: "border-red-500 dark:border-red-400",
               bgColor: "bg-red-50 dark:bg-red-950/20",
               badge:
-                "bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-300",
+                getSemanticClass("danger", "bg", true) +
+                " text-red-800 dark:text-red-300",
               icon: "❌",
             },
           };

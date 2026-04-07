@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { ProfileStrengthIndicatorProps } from "../types";
 
 export const ProfileStrengthIndicator: React.FC<
@@ -13,14 +14,14 @@ export const ProfileStrengthIndicator: React.FC<
   const { t } = useCandidateTranslation();
 
   const getStrengthColor = (percent: number) => {
-    if (percent < 40) return "bg-error";
-    if (percent < 70) return "bg-yellow-500";
+    if (percent < 40) return getSemanticClass('danger', 'bg');
+    if (percent < 70) return getSemanticClass('warning', 'bg');
     return "bg-primary";
   };
 
   const getStrengthTextColor = (percent: number) => {
-    if (percent < 40) return "text-red-700";
-    if (percent < 70) return "text-yellow-600";
+    if (percent < 40) return getSemanticClass('danger', 'text');
+    if (percent < 70) return getSemanticClass('warning', 'text');
     return "text-emerald-600";
   };
 
@@ -113,7 +114,7 @@ export const ProfileStrengthIndicator: React.FC<
 
       {/* Info Message */}
       {percentage < 100 && (
-        <div className="bg-primary/10 border border-emerald-300/20 rounded-lg p-3 text-xs text-slate-600">
+        <div className="bg-primary/10 rounded-lg p-3 text-xs text-slate-600">
           <span className="material-symbols-outlined text-sm align-middle mr-2 fill">
             info
           </span>

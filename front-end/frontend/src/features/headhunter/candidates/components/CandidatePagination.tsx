@@ -1,5 +1,6 @@
 import React from "react";
 import { useHeadhunterTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface CandidatePaginationProps {
   currentPage: number;
@@ -64,7 +65,7 @@ export const CandidatePagination: React.FC<CandidatePaginationProps> = ({
           <select
             value={itemsPerPage}
             onChange={(e) => onItemsPerPageChange?.(parseInt(e.target.value))}
-            className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-emerald-500"
+            className={`rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs outline-none focus:ring-1 ${getSemanticClass("success", "ring", true)}`}
             title={t("filters.pagination.rowsPerPage")}
             aria-label={t("filters.pagination.rowsPerPage")}
           >
@@ -89,7 +90,9 @@ export const CandidatePagination: React.FC<CandidatePaginationProps> = ({
           className="size-8 rounded-lg border border-slate-200 bg-white text-slate-400 transition-colors hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
           aria-label={t("filters.pagination.prev")}
         >
-          <span className="material-symbols-outlined text-sm">chevron_left</span>
+          <span className="material-symbols-outlined text-sm">
+            chevron_left
+          </span>
         </button>
 
         {getPageNumbers().map((page, index) => (
@@ -102,7 +105,7 @@ export const CandidatePagination: React.FC<CandidatePaginationProps> = ({
                 onClick={() => onPageChange?.(page as number)}
                 className={`size-8 rounded-lg text-xs font-bold transition-colors ${
                   currentPage === page
-                    ? "bg-emerald-600 text-white"
+                    ? `${getSemanticClass("success", "bg", true)} text-white`
                     : "text-slate-600 hover:bg-emerald-50"
                 }`}
               >
@@ -119,7 +122,9 @@ export const CandidatePagination: React.FC<CandidatePaginationProps> = ({
           className="size-8 rounded-lg border border-slate-200 bg-white text-slate-400 transition-colors hover:text-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
           aria-label={t("filters.pagination.next")}
         >
-          <span className="material-symbols-outlined text-sm">chevron_right</span>
+          <span className="material-symbols-outlined text-sm">
+            chevron_right
+          </span>
         </button>
       </div>
     </div>

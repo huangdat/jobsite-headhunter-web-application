@@ -1,5 +1,6 @@
 import React from "react";
 import { useHeadhunterTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface CandidateFilterTagProps {
   label: string;
@@ -15,7 +16,9 @@ export const CandidateFilterTag: React.FC<CandidateFilterTagProps> = ({
   const { t } = useHeadhunterTranslation();
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+    <div
+      className={`inline-flex items-center gap-2 rounded-full ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)} px-3 py-1 text-xs font-semibold text-emerald-700`}
+    >
       <span>
         {label}: {value}
       </span>

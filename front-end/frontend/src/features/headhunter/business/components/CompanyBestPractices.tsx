@@ -5,6 +5,7 @@
 
 import React from "react";
 import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { TrendingUp, CheckCircle2 } from "lucide-react";
 
 export interface BestPractice {
@@ -91,8 +92,12 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
     >
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100">
-          <TrendingUp className="h-6 w-6 text-emerald-600" />
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-lg ${getSemanticClass("success", "bg", true)}`}
+        >
+          <TrendingUp
+            className={`h-6 w-6 ${getSemanticClass("success", "icon")}`}
+          />
         </div>
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
@@ -127,9 +132,11 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
                 {practice.tips.map((tip, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-2 text-sm text-slate-700"
+                    className={`flex items-start gap-2 text-sm text-slate-700`}
                   >
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                    <CheckCircle2
+                      className={`mt-0.5 h-4 w-4 shrink-0 ${getSemanticClass("success", "icon")}`}
+                    />
                     <span>{t(tip)}</span>
                   </li>
                 ))}
@@ -140,13 +147,21 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
       </div>
 
       {/* Footer Info */}
-      <div className="mt-6 flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
-        <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />
+      <div
+        className={`mt-6 flex gap-3 rounded-lg border p-4 ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)}`}
+      >
+        <CheckCircle2
+          className={`h-5 w-5 shrink-0 ${getSemanticClass("success", "icon")}`}
+        />
         <div>
-          <p className="text-xs font-semibold text-emerald-900">
+          <p
+            className={`text-xs font-semibold ${getSemanticClass("success", "text", true)}`}
+          >
             {t("business.bestpractice.follow_tips")}
           </p>
-          <p className="mt-1 text-xs text-emerald-800">
+          <p
+            className={`mt-1 text-xs ${getSemanticClass("success", "text", false)}`}
+          >
             {t("business.bestpractice.follow_tips_desc")}
           </p>
         </div>
@@ -156,4 +171,3 @@ export const CompanyBestPractices: React.FC<CompanyBestPracticesProps> = ({
 };
 
 export default CompanyBestPractices;
-

@@ -41,7 +41,7 @@ export function PersonalStep({ form }: PersonalStepProps) {
             <MdWc className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <select
               {...register("gender")}
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary"
               aria-label={t("aria.selectGender")}
             >
               <option value="">{t("selectOptions.selectGender")}</option>
@@ -61,7 +61,7 @@ export function PersonalStep({ form }: PersonalStepProps) {
               {...register("avatar")}
               type="file"
               accept="image/*"
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-sm file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
               aria-label={t("aria.uploadProfilePicture")}
             />
           </div>

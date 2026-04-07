@@ -1,11 +1,12 @@
 import React from "react";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 const LoadingSkeletons: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-8 py-8 space-y-6">
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className={`bg-white rounded-lg shadow p-6 ${getSemanticClass("info", "border", true)}`}>
         <div className="flex items-start gap-6">
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <div className="w-24 h-24 rounded-full bg-gray-200 animate-pulse" />
           </div>
 
@@ -65,7 +66,9 @@ const LoadingSkeletons: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border-2 border-red-200 p-6 space-y-4">
+      <div
+        className={`bg-white rounded-lg ${getSemanticClass("danger", "border", true)} p-6 space-y-4`}
+      >
         <div className="h-6 bg-gray-200 rounded animate-pulse w-1/4" />
         <div className="h-4 bg-gray-200 rounded animate-pulse w-2/3" />
 

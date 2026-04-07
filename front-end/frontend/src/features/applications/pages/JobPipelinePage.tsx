@@ -118,7 +118,7 @@ const JobPipelineContent: React.FC<{
             <Button
               variant="outline"
               onClick={() => navigate(-1)}
-              className={`rounded-xl border-slate-200 dark:border-slate-700 font-bold px-5 flex gap-2 cursor-pointer transition-all hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-slate-800`}
+              className={`rounded-xl border-slate-200 dark:border-slate-700 font-bold px-5 flex gap-2 cursor-pointer transition-all ${`hover:${getSemanticClass("success", "border", true).split(" ")[0]}`} hover:bg-emerald-50 dark:hover:bg-slate-800`}
             >
               <ChevronLeft size={18} />
               {t("common.back")}
@@ -176,7 +176,7 @@ const JobPipelineContent: React.FC<{
           <Button
             variant="outline"
             onClick={handleResetFilters}
-            className={`rounded-xl border-slate-200 dark:border-slate-700 font-bold px-5 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-slate-800`}
+            className={`rounded-xl border-slate-200 dark:border-slate-700 font-bold px-5 ${`hover:${getSemanticClass("success", "border", true).split(" ")[0]}`} hover:bg-emerald-50 dark:hover:bg-slate-800`}
           >
             {tHeadhunter("filters.actions.clearAll")}
           </Button>
@@ -255,7 +255,9 @@ const JobPipelineContent: React.FC<{
                     {new Date(app.appliedAt).toLocaleDateString()}
                   </td>
                   <td className="p-5">
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${getSemanticClass('success', 'bg', true)} ${getSemanticClass('success', 'text', true)}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`}
+                    >
                       {app.status}
                     </span>
                   </td>

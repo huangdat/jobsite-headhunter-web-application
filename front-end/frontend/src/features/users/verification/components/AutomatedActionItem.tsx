@@ -13,6 +13,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { CheckCircle, Circle, AlertCircle, Clock } from "lucide-react";
 import type { AutomatedAction } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface AutomatedActionItemProps {
   action: AutomatedAction;
@@ -25,11 +26,15 @@ const getStatusIcon = (status: string) => {
     case "COMPLETED":
       return {
         icon: CheckCircle,
-        color: "text-green-600",
-        bgColor: "bg-green-50",
+        color: getSemanticClass("success", "text", true),
+        bgColor: getSemanticClass("success", "bg", true),
       };
     case "FAILED":
-      return { icon: AlertCircle, color: "text-red-600", bgColor: "bg-red-50" };
+      return {
+        icon: AlertCircle,
+        color: getSemanticClass("danger", "text", true),
+        bgColor: getSemanticClass("danger", "bg", true),
+      };
     default:
       return { icon: Circle, color: "text-amber-600", bgColor: "bg-amber-50" };
   }
@@ -60,10 +65,10 @@ export const AutomatedActionItem: React.FC<AutomatedActionItemProps> = ({
             <span
               className={`text-xs font-semibold px-2 py-1 rounded-full ${
                 action.status === "COMPLETED"
-                  ? "bg-green-100 text-green-700"
+                  ? `${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`
                   : action.status === "FAILED"
-                    ? "bg-red-100 text-red-700"
-                    : "bg-amber-100 text-amber-700"
+                    ? `${getSemanticClass("danger", "bg", true)} text-red-700`
+                    : `${getSemanticClass("warning", "bg", true)} text-amber-700`
               }`}
             >
               {action.status.toLowerCase()}

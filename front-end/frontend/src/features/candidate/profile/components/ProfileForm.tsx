@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -72,7 +73,9 @@ export function ProfileForm({
   return (
     <div className="space-y-6">
       {saveError && (
-        <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
+        <div
+          className={`flex items-start gap-3 rounded-xl border ${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)} p-4 ${getSemanticClass("danger", "text", true)}`}
+        >
           <AlertCircle className="h-5 w-5 mt-0.5" />
           <div>
             <p className="font-bold">{t("profile.alerts.saveErrorTitle")}</p>
@@ -82,7 +85,9 @@ export function ProfileForm({
       )}
 
       {hasValidationError && (
-        <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
+        <div
+          className={`flex items-start gap-3 rounded-xl border ${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)} p-4 ${getSemanticClass("danger", "text", true)}`}
+        >
           <AlertCircle className="h-5 w-5 mt-0.5" />
           <div>
             <p className="font-bold">
@@ -93,7 +98,9 @@ export function ProfileForm({
       )}
 
       {success && (
-        <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-700">
+        <div
+          className={`flex items-start gap-3 rounded-xl p-4 ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`}
+        >
           <CheckCircle2 className="h-5 w-5 mt-0.5" />
           <div>
             <p className="font-bold">{t("profile.alerts.saveSuccessTitle")}</p>
@@ -153,9 +160,13 @@ export function ProfileForm({
             </div>
 
             {hasCV ? (
-              <div className="mb-6 p-4 rounded-2xl border border-emerald-100 bg-emerald-50/40 flex items-center justify-between group transition-all">
+              <div
+                className={`mb-6 p-4 rounded-2xl flex items-center justify-between group transition-all border ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)}`}
+              >
                 <div className="flex items-center gap-3 overflow-hidden">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                  <div
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "icon", true)}`}
+                  >
                     <FileText size={24} />
                   </div>
                   <div className="overflow-hidden">
@@ -223,7 +234,7 @@ export function ProfileForm({
                 className={`h-11 px-6 font-bold cursor-pointer rounded-xl shadow-md transition-all active:scale-95 flex-1 ${
                   !hasCV
                     ? "bg-brand-primary hover:bg-brand-hover text-black"
-                    : "border-lime-400 text-black hover:bg-brand-primary/10"
+                    : "border-slate-300 text-black hover:bg-slate-100"
                 }`}
                 onClick={() =>
                   document.getElementById("profile-cv-input")?.click()

@@ -13,6 +13,7 @@ import React from "react";
 import { CheckCircle2, Circle } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import type { ChecklistItem } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface VerificationChecklistCardProps {
   items: ChecklistItem[];
@@ -67,7 +68,10 @@ export const VerificationChecklistCard: React.FC<
               {/* Checkbox Icon */}
               <div className="mt-1 shrink-0">
                 {item.isCompleted ? (
-                  <CheckCircle2 className="text-green-600" size={20} />
+                  <CheckCircle2
+                    className={`${getSemanticClass("success", "icon", true)}`}
+                    size={20}
+                  />
                 ) : (
                   <Circle className="text-slate-300" size={20} />
                 )}
@@ -99,9 +103,16 @@ export const VerificationChecklistCard: React.FC<
       {/* Completion Summary */}
       {completionPercentage === 100 && (
         <div className="mt-6 pt-6 border-t border-slate-200">
-          <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg p-3 text-white">
-            <CheckCircle2 size={18} className="text-green-600" />
-            <span className="font-medium text-green-700">
+          <div
+            className={`flex items-center gap-2 text-sm ${getSemanticClass("success", "text", true)} ${getSemanticClass("success", "bg", true)} rounded-lg p-3 text-white`}
+          >
+            <CheckCircle2
+              size={18}
+              className={getSemanticClass("success", "icon", true)}
+            />
+            <span
+              className={`font-medium ${getSemanticClass("success", "text", true)}`}
+            >
               {t("verification.cards.checklist.allItemsComplete")}
             </span>
           </div>

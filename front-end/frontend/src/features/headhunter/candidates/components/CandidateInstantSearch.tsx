@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useSearchBarTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { CandidateSuggestion } from "../types";
 import { searchCandidates } from "../services/candidateSearchApi";
 
@@ -113,7 +114,7 @@ const renderHighlighted = (value: string, query: string) => {
     parts.push(
       <mark
         key={`${start}-${end}-${idx}`}
-        className="rounded bg-yellow-200 px-0.5 font-semibold text-slate-900"
+        className={`rounded ${getSemanticClass("warning", "bg", true)} px-0.5 font-semibold text-slate-900`}
       >
         {value.slice(start, end)}
       </mark>
@@ -391,138 +392,146 @@ export function CandidateInstantSearch() {
           <div className="relative z-10 flex items-start justify-center p-4">
             <div className="mt-16 w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl">
               <div className="flex items-center gap-2 border-b border-slate-100 px-4 py-3">
-              <Search className="h-4 w-4 text-slate-400" />
-              <Input
-                ref={inputRef}
-                value={keyword}
-                onChange={(event) => setKeyword(event.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
-                    handleSubmit();
-                  }
-                }}
-                placeholder={t("candidatePlaceholder")}
-                className="border-none px-0 text-lg focus-visible:ring-0 w-full h-12"
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => handleSearch(sanitizedKeyword)}
-                disabled={!sanitizedKeyword || loading}
-              >
-                {t("search")}
-              </Button>
-              {keyword && (
+                <Search className="h-4 w-4 text-slate-400" />
+                <Input
+                  ref={inputRef}
+                  value={keyword}
+                  onChange={(event) => setKeyword(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      handleSubmit();
+                    }
+                  }}
+                  placeholder={t("candidatePlaceholder")}
+                  className="border-none px-0 text-lg focus-visible:ring-0 w-full h-12"
+                />
                 <Button
                   type="button"
                   variant="ghost"
-                  size="icon"
-                  aria-label={t("clear")}
-                  onClick={() => {
-                    setKeyword("");
-                    runSearch("");
-                  }}
+                  size="sm"
+                  onClick={() => handleSearch(sanitizedKeyword)}
+                  disabled={!sanitizedKeyword || loading}
                 >
-                  <X className="h-4 w-4" />
+                  {t("search")}
                 </Button>
-              )}
+                {keyword && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    aria-label={t("clear")}
+                    onClick={() => {
+                      setKeyword("");
+                      runSearch("");
+                    }}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
 
               <div className="max-h-[60vh] overflow-auto px-4 py-3">
-              {!sanitizedKeyword && (
-                <div className="space-y-3">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                    {t("recent")}
-                  </div>
-                  {recent.length === 0 ? (
-                    <p className="text-sm text-slate-500">{t("noRecent")}</p>
-                  ) : (
-                    <div className="flex flex-wrap gap-2">
-                      {recent.map((term) => (
-                        <button
-                          key={term}
-                          type="button"
-                          onClick={() => {
-                            setKeyword(term);
-                            handleSearch(term);
-                          }}
-                          className="flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-600 hover:border-slate-300 hover:text-slate-800"
-                        >
-                          <Clock className="h-3 w-3" />
-                          {term}
-                        </button>
-                      ))}
+                {!sanitizedKeyword && (
+                  <div className="space-y-3">
+                    <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                      {t("recent")}
                     </div>
+                    {recent.length === 0 ? (
+                      <p className="text-sm text-slate-500">{t("noRecent")}</p>
+                    ) : (
+                      <div className="flex flex-wrap gap-2">
+                        {recent.map((term) => (
+                          <button
+                            key={term}
+                            type="button"
+                            onClick={() => {
+                              setKeyword(term);
+                              handleSearch(term);
+                            }}
+                            className="flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-600 hover:border-slate-300 hover:text-slate-800"
+                          >
+                            <Clock className="h-3 w-3" />
+                            {term}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {sanitizedKeyword && isQueryDirty && (
+                  <p className="text-sm text-slate-500">{t("searchHint")}</p>
+                )}
+
+                {activeQuery && !isQueryDirty && loading && (
+                  <p className="text-sm text-slate-500">{t("loading")}</p>
+                )}
+
+                {activeQuery && !isQueryDirty && error && (
+                  <p
+                    className={`text-sm ${getSemanticClass("danger", "text", true)}`}
+                  >
+                    {error}
+                  </p>
+                )}
+
+                {activeQuery &&
+                  !isQueryDirty &&
+                  !loading &&
+                  !error &&
+                  results.length === 0 && (
+                    <p className="text-sm text-slate-500">{t("noResults")}</p>
                   )}
-                </div>
-              )}
 
-              {sanitizedKeyword && isQueryDirty && (
-                <p className="text-sm text-slate-500">{t("searchHint")}</p>
-              )}
-
-              {activeQuery && !isQueryDirty && loading && (
-                <p className="text-sm text-slate-500">{t("loading")}</p>
-              )}
-
-              {activeQuery && !isQueryDirty && error && (
-                <p className="text-sm text-red-500">{error}</p>
-              )}
-
-              {activeQuery && !isQueryDirty && !loading && !error && results.length === 0 && (
-                <p className="text-sm text-slate-500">{t("noResults")}</p>
-              )}
-
-              {activeQuery && !isQueryDirty && results.length > 0 && (
-                <ul className="mt-2 space-y-2">
-                  {results.map((candidate) => (
-                    <li key={candidate.id}>
-                      <button
-                        type="button"
-                        onClick={() => handleSelect(candidate)}
-                        className="w-full rounded-xl border border-slate-100 px-4 py-3 text-left transition hover:border-emerald-200 hover:bg-emerald-50/40"
-                      >
-                        <div className="text-sm font-semibold text-slate-900">
-                          {renderHighlighted(
-                            candidate.fullName || "",
-                            activeQuery
-                          )}
-                        </div>
-                        <div className="mt-1 flex flex-wrap gap-3 text-xs text-slate-500">
-                          <span>
+                {activeQuery && !isQueryDirty && results.length > 0 && (
+                  <ul className="mt-2 space-y-2">
+                    {results.map((candidate) => (
+                      <li key={candidate.id}>
+                        <button
+                          type="button"
+                          onClick={() => handleSelect(candidate)}
+                          className={`w-full rounded-xl border border-slate-100 px-4 py-3 text-left transition ${`hover:${getSemanticClass("success", "border", true).split(" ")[0]}`} hover:bg-emerald-50/40`}
+                        >
+                          <div className="text-sm font-semibold text-slate-900">
                             {renderHighlighted(
-                              candidate.email || "",
+                              candidate.fullName || "",
                               activeQuery
                             )}
-                          </span>
-                          {candidate.phone && (
+                          </div>
+                          <div className="mt-1 flex flex-wrap gap-3 text-xs text-slate-500">
                             <span>
                               {renderHighlighted(
-                                candidate.phone,
+                                candidate.email || "",
                                 activeQuery
                               )}
                             </span>
-                          )}
-                        </div>
-                        {candidate.skills && candidate.skills.length > 0 && (
-                          <div className="mt-2 flex flex-wrap gap-2">
-                            {candidate.skills.slice(0, 5).map((skill) => (
-                              <span
-                                key={skill}
-                                className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-600"
-                              >
-                                {renderHighlighted(skill, activeQuery)}
+                            {candidate.phone && (
+                              <span>
+                                {renderHighlighted(
+                                  candidate.phone,
+                                  activeQuery
+                                )}
                               </span>
-                            ))}
+                            )}
                           </div>
-                        )}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                          {candidate.skills && candidate.skills.length > 0 && (
+                            <div className="mt-2 flex flex-wrap gap-2">
+                              {candidate.skills.slice(0, 5).map((skill) => (
+                                <span
+                                  key={skill}
+                                  className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-600"
+                                >
+                                  {renderHighlighted(skill, activeQuery)}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           </div>

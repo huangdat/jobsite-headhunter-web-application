@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { JobFilterParams } from "../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   EXPERIENCE_PRESETS,
   SALARY_PRESETS,
@@ -150,7 +151,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
           {EXPERIENCE_PRESETS.map((option) => (
             <label
               key={option.value}
-              className="flex items-center gap-2 rounded-xl border border-slate-100 px-3 py-2 text-sm text-slate-700 hover:border-emerald-300 dark:border-slate-700 dark:text-slate-200"
+              className={`flex items-center gap-2 rounded-xl border border-slate-100 px-3 py-2 text-sm text-slate-700 ${`hover:${getSemanticClass("success", "border", true).split(" ")[0]}`} dark:border-slate-700 dark:text-slate-200`}
             >
               <input
                 type="radio"
@@ -175,7 +176,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
           {SALARY_PRESETS.map((option) => (
             <label
               key={option.value}
-              className="flex items-center gap-2 rounded-xl border border-slate-100 px-3 py-2 text-sm text-slate-700 hover:border-emerald-300 dark:border-slate-700 dark:text-slate-200"
+              className={`flex items-center gap-2 rounded-xl border border-slate-100 px-3 py-2 text-sm text-slate-700 ${`hover:${getSemanticClass("success", "border", true).split(" ")[0]}`} dark:border-slate-700 dark:text-slate-200`}
             >
               <input
                 type="radio"

@@ -17,7 +17,7 @@ export function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <Display>
           {t("hero.title")}{" "}
-          <span className="text-emerald-600">{t("hero.highlight")}</span>
+          <span className="text-brand-primary">{t("hero.highlight")}</span>
         </Display>
 
         <BodyText className="mt-6 max-w-2xl mx-auto">

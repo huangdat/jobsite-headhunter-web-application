@@ -13,7 +13,7 @@ export default [
     ignores: [
       "dist", "eslint-rules", "node_modules", "**/*.d.ts",
       "src/i18n/locales/**", "src/i18n/config.ts", "public/**",
-      "scripts/**", "*.config.js", "*.config.mjs", "build/**",
+      "scripts/**", "*.config.js", "*.config.mjs", "*.config.ts", "build/**",
     ],
   },
   js.configs.recommended,

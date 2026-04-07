@@ -6,6 +6,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { useCommissionManagement } from "../hooks/useCommissionManagement";
 import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { getDarkClasses } from "@/lib/theme-classes";
@@ -83,19 +84,31 @@ export function CommissionForm() {
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Error Alert */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div
+          className={`p-4 ${getSemanticClass("danger", "bg", true)} border ${getSemanticClass("danger", "border", true)} rounded-lg`}
+        >
           <div className="flex items-start gap-3">
-            <span className="material-symbols-outlined text-red-600 shrink-0">
+            <span
+              className={`material-symbols-outlined ${getSemanticClass("danger", "text", true)} shrink-0`}
+            >
               error
             </span>
             <div>
-              <h3 className="font-medium text-red-900">{t("errors.title")}</h3>
-              <p className="text-sm text-red-700 mt-1">{error}</p>
+              <h3
+                className={`font-medium ${getSemanticClass("danger", "text", true)}`}
+              >
+                {t("errors.title")}
+              </h3>
+              <p
+                className={`text-sm ${getSemanticClass("danger", "text", true)} mt-1`}
+              >
+                {error}
+              </p>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={clearError}
-                className="mt-2 text-red-600 hover:text-red-700 px-0 underline"
+                className={`mt-2 ${getSemanticClass("danger", "text", true)} hover:opacity-80 px-0 underline`}
               >
                 {t("button.dismiss")}
               </Button>
@@ -138,7 +151,10 @@ export function CommissionForm() {
               htmlFor="fullName"
               className="block text-sm font-medium text-slate-700 mb-2"
             >
-              {t("form.label.fullName")} <span className="text-red-500">*</span>
+              {t("form.label.fullName")}{" "}
+              <span className={getSemanticClass("danger", "text", true)}>
+                *
+              </span>
             </label>
             <input
               id="fullName"
@@ -147,13 +163,15 @@ export function CommissionForm() {
               onChange={(e) => updateField("fullName", e.target.value)}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.fullName
-                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`
                   : ""
               }`}
               placeholder={t("form.placeholder.fullName")}
             />
             {validationErrors.fullName && (
-              <p className="text-sm text-red-600 mt-1">
+              <p
+                className={`text-sm ${getSemanticClass("danger", "text", true)} mt-1`}
+              >
                 {validationErrors.fullName}
               </p>
             )}
@@ -166,7 +184,9 @@ export function CommissionForm() {
               className="block text-sm font-medium text-slate-700 mb-2"
             >
               {t("form.label.phoneNumber")}{" "}
-              <span className="text-red-500">*</span>
+              <span className={getSemanticClass("danger", "text", true)}>
+                *
+              </span>
             </label>
             <input
               id="phoneNumber"
@@ -175,13 +195,15 @@ export function CommissionForm() {
               onChange={(e) => updateField("phoneNumber", e.target.value)}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.phoneNumber
-                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`
                   : ""
               }`}
               placeholder={t("form.placeholder.phoneNumber")}
             />
             {validationErrors.phoneNumber && (
-              <p className="text-sm text-red-600 mt-1">
+              <p
+                className={`text-sm ${getSemanticClass("danger", "text", true)} mt-1`}
+              >
                 {validationErrors.phoneNumber}
               </p>
             )}
@@ -207,7 +229,10 @@ export function CommissionForm() {
               htmlFor="bankName"
               className="block text-sm font-medium text-slate-700 mb-2"
             >
-              {t("form.label.bankName")} <span className="text-red-500">*</span>
+              {t("form.label.bankName")}{" "}
+              <span className={getSemanticClass("danger", "text", true)}>
+                *
+              </span>
             </label>
             <input
               id="bankName"
@@ -216,13 +241,15 @@ export function CommissionForm() {
               onChange={(e) => updateField("bankName", e.target.value)}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.bankName
-                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`
                   : ""
               }`}
               placeholder={t("form.placeholder.bankName")}
             />
             {validationErrors.bankName && (
-              <p className="text-sm text-red-600 mt-1">
+              <p
+                className={`text-sm ${getSemanticClass("danger", "text", true)} mt-1`}
+              >
                 {validationErrors.bankName}
               </p>
             )}
@@ -235,7 +262,9 @@ export function CommissionForm() {
               className="block text-sm font-medium text-slate-700 mb-2"
             >
               {t("form.label.accountNumber")}{" "}
-              <span className="text-red-500">*</span>
+              <span className={getSemanticClass("danger", "text", true)}>
+                *
+              </span>
             </label>
             <input
               id="accountNumber"
@@ -244,13 +273,15 @@ export function CommissionForm() {
               onChange={(e) => updateField("accountNumber", e.target.value)}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.accountNumber
-                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`
                   : ""
               }`}
               placeholder={t("form.placeholder.accountNumber")}
             />
             {validationErrors.accountNumber && (
-              <p className="text-sm text-red-600 mt-1">
+              <p
+                className={`text-sm ${getSemanticClass("danger", "text", true)} mt-1`}
+              >
                 {validationErrors.accountNumber}
               </p>
             )}
@@ -263,7 +294,9 @@ export function CommissionForm() {
               className="block text-sm font-medium text-slate-700 mb-2"
             >
               {t("form.label.accountHolderName")}{" "}
-              <span className="text-red-500">*</span>
+              <span className={getSemanticClass("danger", "text", true)}>
+                *
+              </span>
             </label>
             <input
               id="accountHolderName"
@@ -272,13 +305,15 @@ export function CommissionForm() {
               onChange={(e) => updateField("accountHolderName", e.target.value)}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getDarkClasses("focus:ring-slate-500 border-slate-300 bg-white", "focus:ring-slate-400 border-slate-700 bg-slate-900")} ${
                 validationErrors.accountHolderName
-                  ? "border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-700"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)}`
                   : ""
               }`}
               placeholder={t("form.placeholder.accountHolderName")}
             />
             {validationErrors.accountHolderName && (
-              <p className="text-sm text-red-600 mt-1">
+              <p
+                className={`text-sm ${getSemanticClass("danger", "text", true)} mt-1`}
+              >
                 {validationErrors.accountHolderName}
               </p>
             )}
@@ -312,7 +347,7 @@ export function CommissionForm() {
         <button
           type="submit"
           disabled={saving}
-          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+          className="flex items-center gap-2 px-6 py-2 rounded-lg bg-brand-primary hover:bg-brand-hover text-black disabled:opacity-50"
         >
           {saving ? (
             <>

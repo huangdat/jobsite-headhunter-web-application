@@ -102,6 +102,8 @@ export const brandColors = {
     border: "border-emerald-200",
     borderDark: "dark:border-emerald-900/50",
     icon: "text-emerald-600 dark:text-emerald-400",
+    ring: "ring-emerald-500",
+    ringDark: "dark:ring-emerald-400",
   },
 
   /**
@@ -116,6 +118,8 @@ export const brandColors = {
     border: "border-amber-200",
     borderDark: "dark:border-amber-900/50",
     icon: "text-amber-600 dark:text-amber-400",
+    ring: "ring-amber-500",
+    ringDark: "dark:ring-amber-400",
   },
 
   /**
@@ -130,6 +134,24 @@ export const brandColors = {
     border: "border-red-200",
     borderDark: "dark:border-red-900/50",
     icon: "text-red-600 dark:text-red-400",
+    ring: "ring-red-500",
+    ringDark: "dark:ring-red-400",
+  },
+
+  /**
+   * Semantic info colors
+   * Use for informational messages, neutral information
+   */
+  info: {
+    bg: "bg-blue-50",
+    bgDark: "dark:bg-blue-900/20",
+    text: "text-blue-600",
+    textDark: "dark:text-blue-400",
+    border: "border-blue-100",
+    borderDark: "dark:border-blue-800",
+    icon: "text-blue-600 dark:text-blue-400",
+    ring: "ring-blue-500",
+    ringDark: "dark:ring-blue-400",
   },
 } as const;
 
@@ -186,31 +208,35 @@ export const getBrandClass = (
  * ```
  */
 export const getSemanticClass = (
-  semantic: "success" | "warning" | "danger",
-  type: "bg" | "text" | "border" | "icon",
+  semantic: "success" | "warning" | "danger" | "info",
+  type: "bg" | "text" | "border" | "icon" | "ring",
   includeDark = true
 ): string => {
   // eslint-disable-next-line security/detect-object-injection
   const color = brandColors[semantic];
 
-  if (!includeDark) {
-    // eslint-disable-next-line security/detect-object-injection
-    return color[type];
-  }
-
-  // Combine light and dark mode classes
   if (type === "bg") {
-    return `${color.bg} ${color.bgDark || ""}`.trim();
+    return includeDark ? `${color.bg} ${color.bgDark || ""}`.trim() : color.bg;
   }
   if (type === "text") {
-    return `${color.text} ${color.textDark || ""}`.trim();
+    return includeDark
+      ? `${color.text} ${color.textDark || ""}`.trim()
+      : color.text;
   }
   if (type === "border") {
-    return `${color.border} ${color.borderDark || ""}`.trim();
+    return includeDark
+      ? `${color.border} ${color.borderDark || ""}`.trim()
+      : color.border;
   }
   if (type === "icon") {
     const iconClass = (color as Record<string, string>).icon;
     return iconClass || color.text;
+  }
+  if (type === "ring") {
+    const ringClass = (color as Record<string, string>).ring;
+    return includeDark
+      ? `${ringClass} ${(color as Record<string, string>).ringDark || ""}`.trim()
+      : ringClass;
   }
 
   return "";

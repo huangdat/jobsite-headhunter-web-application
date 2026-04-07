@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
 import { ErrorState, PageSkeleton } from "@/shared/components/states";
 import { EmptyState } from "@/shared/components/EmptyState";
@@ -116,9 +117,7 @@ const buildSearchParams = (
   const params = new URLSearchParams();
 
   filters.statuses.forEach((status) => params.append("status", status));
-  filters.locations.forEach((location) =>
-    params.append("locations", location)
-  );
+  filters.locations.forEach((location) => params.append("locations", location));
   filters.industries.forEach((industry) =>
     params.append("industries", industry)
   );
@@ -136,10 +135,7 @@ const buildSearchParams = (
     );
   }
   if (filters.registeredTo) {
-    params.set(
-      CANDIDATE_FILTER_QUERY_KEYS.REGISTERED_TO,
-      filters.registeredTo
-    );
+    params.set(CANDIDATE_FILTER_QUERY_KEYS.REGISTERED_TO, filters.registeredTo);
   }
 
   params.set("page", String(page));
@@ -160,11 +156,11 @@ const isAbortError = (error: unknown) => {
 const getStatusTone = (status?: CandidateAccountStatus | null) => {
   switch (status) {
     case "ACTIVE":
-      return "border-emerald-200 bg-emerald-50 text-emerald-700";
+      return `${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`;
     case "PENDING":
-      return "border-amber-200 bg-amber-50 text-amber-700";
+      return `${getSemanticClass("warning", "border", true)} ${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "text", true)}`;
     case "SUSPENDED":
-      return "border-red-200 bg-red-50 text-red-700";
+      return `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)}`;
     case "DELETED":
       return "border-slate-200 bg-slate-100 text-slate-500";
     default:
@@ -454,10 +450,7 @@ export function ApplicantsPage() {
       />
 
       <div className="grid gap-6 lg:grid-cols-4">
-        <CandidateFilterPanel
-          filters={filters}
-          onFilterChange={applyFilters}
-        />
+        <CandidateFilterPanel filters={filters} onFilterChange={applyFilters} />
 
         <div className="lg:col-span-3">
           {activeTags.length > 0 && (
@@ -526,7 +519,7 @@ export function ApplicantsPage() {
                   return (
                     <div
                       key={candidate.id}
-                      className="rounded-2xl border border-emerald-100/70 bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none"
+                      className={`rounded-2xl ${getSemanticClass("success", "border", true)} bg-white/80 p-5 shadow-sm shadow-emerald-50 transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none`}
                     >
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div>
@@ -535,7 +528,8 @@ export function ApplicantsPage() {
                               t("candidateList.unknownName")}
                           </h3>
                           <p className="text-sm text-slate-500">
-                            {candidate.currentTitle || t("candidateList.noTitle")}
+                            {candidate.currentTitle ||
+                              t("candidateList.noTitle")}
                           </p>
                           <div className="mt-2 flex flex-wrap gap-3 text-xs text-slate-500">
                             {candidate.email && <span>{candidate.email}</span>}
@@ -546,7 +540,7 @@ export function ApplicantsPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                          className={`border ${getSemanticClass("success", "text", true)} hover:${getSemanticClass("success", "bg", true).split(" ")[0]}`}
                           onClick={() => handleViewCandidate(candidate)}
                         >
                           {t("candidateList.viewProfile")}
@@ -564,7 +558,9 @@ export function ApplicantsPage() {
                           </span>
                         )}
                         {candidate.city && (
-                          <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">
+                          <span
+                            className={`rounded-full ${getSemanticClass("success", "bg", true)} px-3 py-1 ${getSemanticClass("success", "text", true)}`}
+                          >
                             {candidate.city}
                           </span>
                         )}
@@ -574,12 +570,16 @@ export function ApplicantsPage() {
                           </span>
                         )}
                         {candidate.openForWork && (
-                          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-emerald-700">
+                          <span
+                            className={`rounded-full ${getSemanticClass("success", "border", true)} ${getSemanticClass("success", "bg", true)} px-2.5 py-1 ${getSemanticClass("success", "text", true)}`}
+                          >
                             {t("candidateList.openForWork")}
                           </span>
                         )}
                         {registeredLabel && (
-                          <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-800 dark:bg-amber-900/30 dark:text-amber-100">
+                          <span
+                            className={`rounded-full ${getSemanticClass("warning", "bg", true)} px-3 py-1 text-amber-800 dark:text-amber-100`}
+                          >
                             {registeredLabel}
                           </span>
                         )}

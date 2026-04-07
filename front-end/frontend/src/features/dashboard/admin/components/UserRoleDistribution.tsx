@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { UserRoleStats } from "../../types";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 interface UserRoleDistributionProps {
   data: UserRoleStats | undefined;
@@ -32,14 +33,14 @@ export const UserRoleDistribution: React.FC<UserRoleDistributionProps> = ({
   > = {
     ADMIN: {
       label: t("roles.ADMIN", "Admin"),
-      color: "text-purple-600 dark:text-purple-400",
+      color: `${getSemanticClass("info", "text", true)}`,
       bgColor: "bg-purple-100",
       darkBgColor: "dark:bg-purple-900/30",
       icon: "👨‍💼",
     },
     CANDIDATE: {
       label: t("roles.CANDIDATE", "Candidate"),
-      color: "text-blue-600 dark:text-blue-400",
+      color: getSemanticClass("info", "text", true),
       bgColor: "bg-blue-100",
       darkBgColor: "dark:bg-blue-900/30",
       icon: "👤",

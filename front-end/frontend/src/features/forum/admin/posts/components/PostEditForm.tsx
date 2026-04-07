@@ -6,6 +6,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   usePostQuery,
   useUpdatePostMutation,
@@ -301,7 +302,9 @@ export function PostEditForm({
             />
             <div className="flex justify-between mt-1">
               {errors.title && (
-                <span className="text-sm text-red-600 flex items-center gap-1">
+                <span
+                  className={`text-sm ${getSemanticClass("danger", "text", true)} flex items-center gap-1`}
+                >
                   <AlertCircle className="w-4 h-4" />
                   {errors.title}
                 </span>
@@ -368,7 +371,9 @@ export function PostEditForm({
               </SelectContent>
             </Select>
             {errors.categoryId && (
-              <span className="text-sm text-red-600 flex items-center gap-1 mt-1">
+              <span
+                className={`text-sm ${getSemanticClass("danger", "text", true)} flex items-center gap-1 mt-1`}
+              >
                 <AlertCircle className="w-4 h-4" />
                 {errors.categoryId}
               </span>
@@ -393,7 +398,7 @@ export function PostEditForm({
                   variant="ghost"
                   size="sm"
                   onClick={() => setImagePreview("")}
-                  className="absolute top-2 right-2 bg-red-600/90 hover:bg-red-700 text-white rounded-full"
+                  className={`absolute top-2 right-2 ${getSemanticClass("danger", "bg", true)} text-white rounded-full`}
                 >
                   <X className="w-4 h-4" />
                 </Button>
@@ -435,7 +440,7 @@ export function PostEditForm({
                   variant="ghost"
                   size="sm"
                   onClick={handleRemoveImage}
-                  className="absolute top-2 right-2 bg-red-600/90 hover:bg-red-700 text-white rounded-full"
+                  className={`absolute top-2 right-2 ${getSemanticClass("danger", "bg", true)} text-white rounded-full`}
                 >
                   <X className="w-4 h-4" />
                 </Button>
@@ -452,7 +457,9 @@ export function PostEditForm({
             />
 
             {errors.featuredImage && (
-              <span className="text-sm text-red-600 flex items-center gap-1 mt-2">
+              <span
+                className={`text-sm ${getSemanticClass("danger", "text", true)} flex items-center gap-1 mt-2`}
+              >
                 <AlertCircle className="w-4 h-4" />
                 {errors.featuredImage}
               </span>
@@ -478,7 +485,9 @@ export function PostEditForm({
               disabled={isLoading}
             />
             {errors.content && (
-              <span className="text-sm text-red-600 flex items-center gap-1 mt-1">
+              <span
+                className={`text-sm ${getSemanticClass("danger", "text", true)} flex items-center gap-1 mt-1`}
+              >
                 <AlertCircle className="w-4 h-4" />
                 {errors.content}
               </span>
@@ -523,7 +532,7 @@ export function PostEditForm({
             <Button
               type="submit"
               disabled={isLoading}
-              className="bg-emerald-600 hover:bg-emerald-700"
+              className={getSemanticClass("success", "bg", true)}
             >
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {t("forum.posts.actions.save") || "Save Changes"}

@@ -4,6 +4,7 @@
  */
 
 import { useTranslation } from "react-i18next";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   Dialog,
   DialogContent,
@@ -38,7 +39,10 @@ export function CategoryDeleteModal({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex gap-3 items-start">
-            <AlertTriangle className="text-red-600 mt-1 shrink-0" size={24} />
+            <AlertTriangle
+              className={`${getSemanticClass("danger", "text", true)} mt-1 shrink-0`}
+              size={24}
+            />
             <div>
               <DialogTitle>
                 {t("forum.actions.deleteCategory") || "Delete Category"}
@@ -51,7 +55,9 @@ export function CategoryDeleteModal({
           </div>
         </DialogHeader>
 
-        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-800">
+        <div
+          className={`${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)} rounded-lg p-3 text-sm ${getSemanticClass("danger", "text", true)}`}
+        >
           <strong>{categoryName}</strong>
           <p className="mt-1">
             {t("forum.messages.deleteWarning") ||
@@ -68,7 +74,7 @@ export function CategoryDeleteModal({
           <Button
             onClick={onConfirm}
             disabled={isLoading}
-            className="bg-red-600 hover:bg-red-700"
+            className={getSemanticClass("danger", "bg", true)}
           >
             {isLoading ? (
               <>

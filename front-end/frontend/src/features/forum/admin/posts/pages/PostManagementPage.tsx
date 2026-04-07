@@ -10,6 +10,7 @@ import { PostCreateForm } from "../components/PostCreateForm";
 import { Button } from "@/components/ui/button";
 import { BiPlus } from "react-icons/bi";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export function PostManagementPage() {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ export function PostManagementPage() {
         actions={
           <Button
             onClick={() => setIsCreateModalOpen(true)}
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700"
+            className={`flex items-center gap-2 text-white ${getSemanticClass("success", "bg", true)} hover:opacity-90`}
           >
             <BiPlus className="w-5 h-5" />
             {t("forum.posts.actions.createNew") || "Create New Post"}

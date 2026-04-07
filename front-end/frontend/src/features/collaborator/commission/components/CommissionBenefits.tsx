@@ -5,6 +5,7 @@
  */
 
 import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 /**
  * CommissionBenefits Component
@@ -67,12 +68,14 @@ export function CommissionBenefits() {
         {benefits.map((benefit) => (
           <div
             key={benefit.id}
-            className="bg-white border border-slate-200 rounded-lg p-4 hover:border-emerald-300 hover:shadow-md transition-all"
+            className={`bg-white border border-slate-200 rounded-lg p-4 hover:shadow-md transition-all ${`hover:border-${getSemanticClass("success", "border", true).split("-")[1]}-300`}`}
           >
             <div className="flex items-start gap-4">
               {/* Icon */}
-              <div className="shrink-0 p-3 bg-emerald-50 rounded-lg">
-                <span className="material-symbols-outlined text-emerald-600">
+              <div
+                className={`shrink-0 p-3 rounded-lg ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "icon", true)}`}
+              >
+                <span className="material-symbols-outlined">
                   {benefit.icon}
                 </span>
               </div>
@@ -100,8 +103,14 @@ export function CommissionBenefits() {
         <div className="space-y-4">
           {/* Step 1 */}
           <div className="flex gap-4">
-            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full shrink-0">
-              <span className="text-sm font-bold text-emerald-600">1</span>
+            <div
+              className={`flex items-center justify-center w-8 h-8 rounded-full shrink-0 ${getSemanticClass("success", "bg", true)}`}
+            >
+              <span
+                className={`text-sm font-bold ${getSemanticClass("success", "text", true)}`}
+              >
+                1
+              </span>
             </div>
             <div>
               <h4 className="font-medium text-slate-900">
@@ -115,8 +124,14 @@ export function CommissionBenefits() {
 
           {/* Step 2 */}
           <div className="flex gap-4">
-            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full shrink-0">
-              <span className="text-sm font-bold text-emerald-600">2</span>
+            <div
+              className={`flex items-center justify-center w-8 h-8 rounded-full shrink-0 ${getSemanticClass("success", "bg", true)}`}
+            >
+              <span
+                className={`text-sm font-bold ${getSemanticClass("success", "text", true)}`}
+              >
+                2
+              </span>
             </div>
             <div>
               <h4 className="font-medium text-slate-900">
@@ -130,8 +145,14 @@ export function CommissionBenefits() {
 
           {/* Step 3 */}
           <div className="flex gap-4">
-            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full shrink-0">
-              <span className="text-sm font-bold text-emerald-600">3</span>
+            <div
+              className={`flex items-center justify-center w-8 h-8 rounded-full shrink-0 ${getSemanticClass("success", "bg", true)}`}
+            >
+              <span
+                className={`text-sm font-bold ${getSemanticClass("success", "text", true)}`}
+              >
+                3
+              </span>
             </div>
             <div>
               <h4 className="font-medium text-slate-900">
@@ -145,8 +166,14 @@ export function CommissionBenefits() {
 
           {/* Step 4 */}
           <div className="flex gap-4">
-            <div className="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-full shrink-0">
-              <span className="text-sm font-bold text-emerald-600">4</span>
+            <div
+              className={`flex items-center justify-center w-8 h-8 rounded-full shrink-0 ${getSemanticClass("success", "bg", true)}`}
+            >
+              <span
+                className={`text-sm font-bold ${getSemanticClass("success", "text", true)}`}
+              >
+                4
+              </span>
             </div>
             <div>
               <h4 className="font-medium text-slate-900">

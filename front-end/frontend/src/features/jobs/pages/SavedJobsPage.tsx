@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   useJobsTranslation,
   useSavedJobsQuery,
@@ -88,7 +89,7 @@ export function SavedJobsPage() {
             className="flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between"
           >
             <div>
-              <MetaText className="text-lime-500">
+              <MetaText className={getSemanticClass("success", "text", true)}>
                 {job.companyName ?? t("saved.confidentialCompany")}
               </MetaText>
               <SubsectionTitle className="mt-1">{job.title}</SubsectionTitle>
@@ -123,7 +124,7 @@ export function SavedJobsPage() {
               </Button>
               <Button
                 variant="ghost"
-                className="sm:min-w-[calc(140px)] text-red-600 hover:text-red-700 cursor-pointer"
+                className={`sm:min-w-[calc(140px)] ${getSemanticClass("danger", "text", true)} hover:${getSemanticClass("danger", "text", true)} cursor-pointer`}
                 onClick={() => handleRemove(job.jobId)}
                 disabled={removeJobMutation.isPending}
               >

@@ -1,5 +1,6 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 import { Button } from "@/components/ui/button";
 import type {
   ClassificationGroupData,
@@ -55,13 +56,21 @@ export const UserClassificationOverview: React.FC<
 
   if (error) {
     return (
-      <div className="p-8 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 rounded-xl">
+      <div
+        className={`p-8 ${getSemanticClass("danger", "bg", true)} dark:${getSemanticClass("danger", "bg", true)}/10 border ${getSemanticClass("danger", "border", true)} dark:${getSemanticClass("danger", "border", true)} rounded-xl`}
+      >
         <div className="text-center space-y-4">
           <div>
-            <p className="text-red-600 dark:text-red-400 font-bold mb-2">
+            <p
+              className={`${getSemanticClass("danger", "text", true)} dark:${getSemanticClass("danger", "text", true)} font-bold mb-2`}
+            >
               {t("classification.error.permissionDenied")}
             </p>
-            <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            <p
+              className={`${getSemanticClass("danger", "text", true)} dark:${getSemanticClass("danger", "text", true)} text-sm`}
+            >
+              {error}
+            </p>
           </div>
           {onRetry && (
             <Button variant="destructive" onClick={onRetry}>
@@ -201,7 +210,9 @@ export const UserClassificationOverview: React.FC<
               <span className="text-xs text-slate-500 dark:text-slate-400">
                 {t("classification.inactiveUsers")}
               </span>
-              <span className="font-bold text-lg text-red-600 dark:text-red-400">
+              <span
+                className={`font-bold text-lg ${getSemanticClass("danger", "text", true)}`}
+              >
                 {overviewStats.totalInactiveUsers.toLocaleString()}
               </span>
             </div>

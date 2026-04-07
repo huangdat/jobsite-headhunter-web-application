@@ -1,3 +1,4 @@
+/* global module */
 /**
  * ESLint Rule: no-hardcoded-colors
  *
