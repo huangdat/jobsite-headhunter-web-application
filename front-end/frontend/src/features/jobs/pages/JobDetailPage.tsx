@@ -45,6 +45,23 @@ export function JobDetailPage() {
   // React Query handles loading and error states automatically
   const { data: job, isLoading, error } = useJobDetailQuery(jobId);
 
+  // Redirect if access is forbidden (job is closed/hidden and not authorized)
+  useEffect(() => {
+    if (error) {
+      const status = (error as any)?.response?.status;
+      const statusCode = (error as any)?.status;
+
+      // Check for 403 Forbidden error
+      if (status === 403 || statusCode === 403) {
+        toast.error(
+          t("detail.accessDenied") ||
+            "You don't have permission to view this job"
+        );
+        navigate("/jobs", { replace: true });
+      }
+    }
+  }, [error, navigate, t]);
+
   // Fetch saved jobs status when authenticated
   useEffect(() => {
     if (!jobId || !isAuthenticated || !job) {
@@ -200,7 +217,9 @@ export function JobDetailPage() {
       <div className="rounded-3xl bg-white dark:bg-slate-800 border dark:border-slate-700 p-8 shadow-xl dark:shadow-slate-900/30 mt-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className={`text-sm font-semibold uppercase tracking-wide ${brandColors.primary.text}`}>
+            <p
+              className={`text-sm font-semibold uppercase tracking-wide ${brandColors.primary.text}`}
+            >
               {job.companyName ?? t("messages.confidentialCompany")}
             </p>
             <h1 className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
@@ -421,4 +440,3 @@ export function JobDetailPage() {
     </PageContainer>
   );
 }
-

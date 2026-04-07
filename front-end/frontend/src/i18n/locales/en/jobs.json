@@ -66,6 +66,13 @@
       "clearAllFilters": "Clear all filters",
       "salaryVND": "Jobs list filters salary v n d"
     },
+
+    "detail": {
+      "accessDenied": "Access denied. Please sign in to view job details.",
+      "status": "Status: {{status}}",
+      "deadline": "Deadline: {{deadline}}"
+    },
+
     "viewDetails": "View details →",
     "noJobsFound": "No jobs found with the selected filters.",
     "unableToLoad": "Unable to load jobs. Please try again later.",
@@ -127,6 +134,7 @@
     "status": "Status",
     "applicants": "Applicants",
     "notFound": "Job not found",
+    "accessDenied": "You don't have permission to view this job.",
     "unableToLoad": "Unable to load job detail. Please try again later.",
     "backToJobs": "Back to jobs",
     "backToListings": "Back to listings",

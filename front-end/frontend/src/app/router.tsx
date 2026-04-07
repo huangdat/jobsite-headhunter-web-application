@@ -332,6 +332,14 @@ export function AppRouter() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/headhunter/jobs/:jobId/applications"
+            element={
+              <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
+                <JobPipelinePage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/forum-posts" element={<PostListPage />} />
           <Route path="/forum-posts/:id" element={<PostDetailPage />} />
         </Route>
@@ -488,15 +496,6 @@ export function AppRouter() {
           }
         />
 
-        <Route
-          path="/headhunter/jobs/:jobId/applications"
-          element={
-            <ProtectedRoute allowedRoles={["headhunter", "admin"]}>
-              <JobPipelinePage />
-            </ProtectedRoute>
-          }
-        />
-
         {/* APPL-03, APPL-04, APPL-05: Headhunter Application Detail */}
         <Route
           path="/headhunter/applications/:id"
@@ -548,4 +547,3 @@ export function AppRouter() {
     </Suspense>
   );
 }
-
