@@ -396,8 +396,9 @@ public class AccountServiceImpl implements AccountService {
                     });
         }
 
-        // Link the profile and persist
+        // Link the profile and set status to PENDING (require admin approval)
         account.setBusinessProfile(businessProfile);
+        account.setStatus(AccountStatus.PENDING);
         accountRepo.save(account);
 
         return toAccountResp(account);

@@ -161,27 +161,46 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     }
 
     private MSTLookupResp lookupFromVietQR(String taxCode) {
-        VietQRBusinessResp response;
-        try {
-            response = restTemplate.getForObject(VIETQR_BUSINESS_URL, VietQRBusinessResp.class, taxCode);
-        } catch (HttpClientErrorException.NotFound e) {
-            throw new AppException(ErrorCode.MST_NOT_FOUND);
-        } catch (RestClientException e) {
-            log.error("Failed to call VietQR API for taxCode={}: {}", taxCode, e.getMessage());
-            throw new AppException(ErrorCode.MST_LOOKUP_FAILED);
+        int maxRetries = 3;
+        long initialDelay = 100; // milliseconds
+        
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                VietQRBusinessResp response = restTemplate.getForObject(VIETQR_BUSINESS_URL, VietQRBusinessResp.class, taxCode);
+                
+                if (response == null || !VIETQR_SUCCESS_CODE.equals(response.getCode()) || response.getData() == null) {
+                    throw new AppException(ErrorCode.MST_NOT_FOUND);
+                }
+                
+                VietQRBusinessResp.BusinessData data = response.getData();
+                return MSTLookupResp.builder()
+                        .companyName(data.getName())
+                        .taxCode(data.getId())
+                        .headquarterAddress(data.getAddress())
+                        .build();
+            } catch (HttpClientErrorException.NotFound e) {
+                throw new AppException(ErrorCode.MST_NOT_FOUND);
+            } catch (RestClientException e) {
+                log.warn("VietQR API call failed for taxCode={} (attempt {}/{}): {}", taxCode, attempt + 1, maxRetries, e.getMessage());
+                
+                if (attempt < maxRetries - 1) {
+                    // Exponential backoff: delay = initialDelay * (2^attempt)
+                    long delayMs = initialDelay * (long) Math.pow(2, attempt);
+                    try {
+                        Thread.sleep(delayMs);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        log.error("Retry sleep interrupted for taxCode={}", taxCode);
+                        throw new AppException(ErrorCode.MST_LOOKUP_FAILED);
+                    }
+                } else {
+                    log.error("All retry attempts failed for VietQR API lookup of taxCode={}", taxCode);
+                    throw new AppException(ErrorCode.MST_LOOKUP_FAILED);
+                }
+            }
         }
-
-        if (response == null || !VIETQR_SUCCESS_CODE.equals(response.getCode()) || response.getData() == null) {
-            throw new AppException(ErrorCode.MST_NOT_FOUND);
-        }
-
-        VietQRBusinessResp.BusinessData data = response.getData();
-
-        return MSTLookupResp.builder()
-                .companyName(data.getName())
-                .taxCode(data.getId())
-                .headquarterAddress(data.getAddress())
-                .build();
+        
+        throw new AppException(ErrorCode.MST_LOOKUP_FAILED);
     }
 
 }
