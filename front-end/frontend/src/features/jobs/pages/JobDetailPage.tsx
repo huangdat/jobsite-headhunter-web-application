@@ -7,15 +7,15 @@ import {
   useJobDetailQuery,
 } from "@/shared/hooks";
 import { brandColors } from "@/lib/design-tokens";
-import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
+import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/shared/ui-primitives/button";
+import { Badge } from "@/shared/ui-primitives/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { PageContainer } from "@/shared/components/layout";
-import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
 import {
   fetchSavedJobs,
   removeSavedJob,
@@ -421,3 +421,4 @@ export function JobDetailPage() {
     </PageContainer>
   );
 }
+

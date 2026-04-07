@@ -12,7 +12,7 @@ import {
   SubsectionTitle,
   SmallText,
   Caption,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 interface RelatedPostsProps {
   categoryId: number;
@@ -86,3 +86,4 @@ export function RelatedPosts({ categoryId, excludeId }: RelatedPostsProps) {
     </section>
   );
 }
+

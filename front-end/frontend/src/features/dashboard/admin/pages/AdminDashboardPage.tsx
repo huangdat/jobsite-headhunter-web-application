@@ -5,13 +5,13 @@ import { DashboardSkeleton } from "../../shared/components/DashboardSkeleton";
 import { UserRoleDistribution } from "../components/UserRoleDistribution";
 import { JobStatusStatsComponent } from "../components/JobStatusStats";
 import { SystemOverviewCards } from "../components/SystemOverviewCards";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { Button } from "@/components/ui/button";
-import { ErrorState } from "@/shared/components/states";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { Button } from "@/shared/ui-primitives/button";
+import { ErrorState } from "@/shared/common-blocks/states";
 import {
   SectionTitle,
   LabelText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 /**
  * AdminDashboardPage
@@ -174,3 +174,4 @@ export const AdminDashboardPage: React.FC = () => {
     </PageContainer>
   );
 };
+

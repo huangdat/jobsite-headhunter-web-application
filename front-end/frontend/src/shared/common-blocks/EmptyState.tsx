@@ -4,7 +4,7 @@
  */
 
 import React, { memo } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { Inbox, Search, FileX, AlertCircle } from "lucide-react";
 import { SubsectionTitle, SmallText } from "./typography/Typography";
 import { getSemanticClass } from "@/lib/design-tokens";
@@ -95,3 +95,4 @@ export const EmptyState = memo<EmptyStateProps>(function EmptyState({
 });
 
 EmptyState.displayName = "EmptyState";
+

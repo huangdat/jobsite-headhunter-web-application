@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { FcGoogle } from "react-icons/fc";
 import { FaLinkedin } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 
 interface SocialLoginButtonsProps {
   onGoogleClick?: () => void;
@@ -57,3 +57,4 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
     </div>
   );
 };
+

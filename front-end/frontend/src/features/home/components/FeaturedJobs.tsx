@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRandomLatestJobs } from "@/shared/utils/jobService";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { JOB_TYPE_COLORS } from "../constants";
 import {
   SubsectionTitle,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 export function FeaturedJobs() {
   const { t, currentLanguage } = useHomeTranslation();
@@ -111,3 +111,4 @@ export function FeaturedJobs() {
     </section>
   );
 }
+

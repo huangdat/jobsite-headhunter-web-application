@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { ErrorState, PageSkeleton } from "@/shared/components/states";
-import { EmptyState } from "@/shared/components/EmptyState";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { ErrorState, PageSkeleton } from "@/shared/common-blocks/states";
+import { EmptyState } from "@/shared/common-blocks/EmptyState";
 import { getErrorMessage } from "@/shared/api/errorHandler";
 import { useHeadhunterTranslation } from "@/shared/hooks";
 import { CANDIDATE_FILTER_QUERY_KEYS } from "@/features/headhunter/api/constants";
@@ -613,3 +613,4 @@ export function ApplicantsPage() {
 }
 
 export default ApplicantsPage;
+

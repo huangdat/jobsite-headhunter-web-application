@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
+import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/common-blocks";
 import { useAuthTranslation } from "@/shared/hooks";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { AnimatedCheckbox } from "@/features/auth/components/AnimatedCheckbox";
 import { useLogin } from "@/features/auth/hooks";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import {
   getSocialConfig,
   googleLogin,
@@ -22,7 +22,7 @@ import {
   SectionTitle,
   BodyText,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -450,3 +450,5 @@ export function LoginPage() {
     </AuthLayout>
   );
 }
+
+

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useAuthTranslation } from "@/shared/hooks";
 import { getSemanticClass } from "@/lib/design-tokens";
-import { AuthLayout } from "@/shared/components";
+import { AuthLayout } from "@/shared/common-blocks";
 import {
   Display,
   SectionTitle,
   BodyText,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 export function ResetPasswordSuccessPage() {
   const { t } = useAuthTranslation();
@@ -93,3 +93,5 @@ export function ResetPasswordSuccessPage() {
     </AuthLayout>
   );
 }
+
+

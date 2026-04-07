@@ -1,7 +1,7 @@
 import React from "react";
 import { useUsersTranslation } from "@/shared/hooks";
 import { getSemanticClass } from "@/lib/design-tokens";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import type {
   ClassificationGroupData,
   ClassificationOverviewStats,
@@ -222,3 +222,4 @@ export const UserClassificationOverview: React.FC<
     </div>
   );
 };
+

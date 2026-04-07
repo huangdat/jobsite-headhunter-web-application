@@ -1,7 +1,7 @@
 import { ParticleBackground } from "./ParticleBackground";
 import { SearchBar } from "./SearchBar";
 import { useHomeTranslation } from "@/shared/hooks";
-import { Display, BodyText } from "@/shared/components/typography/Typography";
+import { Display, BodyText } from "@/shared/common-blocks/typography/Typography";
 
 export function HeroSection() {
   const { t } = useHomeTranslation();
@@ -42,3 +42,4 @@ export function HeroSection() {
     </section>
   );
 }
+

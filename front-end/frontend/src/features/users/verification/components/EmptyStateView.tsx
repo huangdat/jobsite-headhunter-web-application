@@ -11,7 +11,7 @@
 
 import React from "react";
 import type { LucideIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 
 interface EmptyStateViewProps {
@@ -80,3 +80,4 @@ export const EmptyStateView: React.FC<EmptyStateViewProps> = ({
     </div>
   );
 };
+

@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { LabelText } from "@/shared/components/typography/Typography";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
+import { LabelText } from "@/shared/common-blocks/typography/Typography";
 import { useHeadhunterTranslation } from "@/shared/hooks";
 import {
   CANDIDATE_EDUCATION_OPTIONS,
@@ -192,3 +192,4 @@ export function CandidateFilterPanel({
     </aside>
   );
 }
+

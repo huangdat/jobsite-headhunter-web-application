@@ -12,7 +12,7 @@
 import React from "react";
 import { CheckCircle, AlertCircle } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import type { Verification } from "../types";
 import { getSemanticClass } from "@/lib/design-tokens";
 
@@ -182,3 +182,4 @@ export const ApprovalDetailsCard: React.FC<ApprovalDetailsCardProps> = ({
     </div>
   );
 };
+

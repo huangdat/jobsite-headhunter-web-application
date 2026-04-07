@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/shared/ui-primitives/input";
+import { Button } from "@/shared/ui-primitives/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { PageSkeleton } from "@/shared/components/states";
-import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { PageSkeleton } from "@/shared/common-blocks/states";
+import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
 import { useVerifications, useVerificationFilters } from "../hooks";
 import type { Verification } from "../types";
 import {
@@ -118,3 +118,4 @@ export const VerificationListPage: React.FC = () => {
     </PageContainer>
   );
 };
+

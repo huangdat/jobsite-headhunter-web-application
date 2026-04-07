@@ -1,6 +1,6 @@
 import React, { type ReactNode } from "react";
 import { AlertCircle, RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { cn } from "@/lib/utils";
 import { getSemanticClass } from "@/lib/design-tokens";
 
@@ -174,3 +174,4 @@ export class ErrorBoundary extends React.Component<
     return this.props.children;
   }
 }
+

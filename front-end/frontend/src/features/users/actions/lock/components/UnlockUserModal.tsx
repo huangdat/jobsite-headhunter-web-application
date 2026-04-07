@@ -9,7 +9,7 @@ import {
   Mail,
   KeyRound,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 
@@ -364,3 +364,4 @@ const UnlockUserModal: React.FC<UnlockUserModalProps> = ({
 };
 
 export default UnlockUserModal;
+

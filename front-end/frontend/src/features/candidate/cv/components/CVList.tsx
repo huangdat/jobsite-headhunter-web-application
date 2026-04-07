@@ -6,7 +6,7 @@
 import React from "react";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { useCandidateTranslation } from "@/shared/hooks";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import type { CVListProps } from "../types";
 import { formatFileSize, formatUploadDate } from "../services";
 
@@ -187,3 +187,4 @@ export const CVList: React.FC<CVListProps> = ({
 };
 
 export default CVList;
+

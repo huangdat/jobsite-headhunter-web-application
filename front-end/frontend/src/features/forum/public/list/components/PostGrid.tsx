@@ -8,16 +8,16 @@
 import { MessageCircle, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { usePostList } from "../hooks/usePostList";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useTranslation } from "react-i18next";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import {
   BodyText,
   MetaText,
   SubsectionTitle,
   SmallText,
   Caption,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 export function PostGrid() {
   const navigate = useNavigate();
@@ -119,3 +119,4 @@ export function PostGrid() {
     </div>
   );
 }
+

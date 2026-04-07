@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
 import {
   FormField,
   AuthLayout,
   PasswordRequirements,
-} from "@/shared/components";
+} from "@/shared/common-blocks";
 import { verifyAndResetPassword } from "@/features/auth/services/authApi";
 import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
@@ -21,7 +21,7 @@ import {
   Display,
   SectionTitle,
   BodyText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 interface ResetPasswordFormData {
   otp: string;
@@ -262,3 +262,5 @@ export function ResetPasswordPage() {
     </AuthLayout>
   );
 }
+
+

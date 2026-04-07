@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useJobsTranslation, useJobsQuery } from "@/shared/hooks";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import type { JobFilterParams, JobSummary } from "../types";
 import { FilterSidebar, JobCard } from "../components";
 import { INITIAL_PAGE_SIZE } from "../utils";
 import { getJobs } from "../services/jobsApi";
 import { jobKeys } from "@/shared/utils/queryKeys";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
 import { Briefcase } from "lucide-react";
-import { EmptyState } from "@/shared/components/EmptyState";
+import { EmptyState } from "@/shared/common-blocks/EmptyState";
 
 export function JobListPage() {
   const { t } = useJobsTranslation();
@@ -128,3 +128,4 @@ export function JobListPage() {
     </PageContainer>
   );
 }
+

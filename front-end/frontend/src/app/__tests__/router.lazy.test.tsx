@@ -154,7 +154,7 @@ describe("Router - Lazy Loading", () => {
 
 describe("Lazy Component - RichTextEditor", () => {
   it("should show ComponentLoader while RichTextEditor loads", async () => {
-    const { RichTextEditor } = await import("@/components/RichTextEditor.lazy");
+    const { RichTextEditor } = await import("@/shared/common-blocks/RichTextEditor.lazy");
 
     const { container } = render(
       <RichTextEditor value="" onChange={() => {}} />
@@ -171,7 +171,7 @@ describe("Lazy Component - RichTextEditor", () => {
 
 describe("PageLoader Component", () => {
   it("should render loading spinner", async () => {
-    const { PageLoader } = await import("@/shared/components/PageLoader");
+    const { PageLoader } = await import("@/shared/common-blocks/PageLoader");
 
     render(<PageLoader />);
 
@@ -185,7 +185,7 @@ describe("PageLoader Component", () => {
 
 describe("ComponentLoader", () => {
   it("should render inline loading spinner", async () => {
-    const { ComponentLoader } = await import("@/shared/components/PageLoader");
+    const { ComponentLoader } = await import("@/shared/common-blocks/PageLoader");
 
     render(<ComponentLoader />);
 
@@ -229,7 +229,7 @@ describe("Code Splitting Verification", () => {
 describe("Memoization - Component Re-render Prevention", () => {
   it("should prevent ImageUploadField re-renders with unchanged props", async () => {
     const { ImageUploadField } =
-      await import("@/shared/components/ImageUploadField");
+      await import("@/shared/common-blocks/ImageUploadField");
 
     const mockOnChange = vi.fn();
     const mockOnRemove = vi.fn();
@@ -259,7 +259,7 @@ describe("Memoization - Component Re-render Prevention", () => {
   });
 
   it("should prevent EmptyState re-renders with unchanged props", async () => {
-    const { EmptyState } = await import("@/shared/components/EmptyState");
+    const { EmptyState } = await import("@/shared/common-blocks/EmptyState");
 
     const { rerender } = render(
       <EmptyState title="No Data" description="Try again" />
@@ -272,7 +272,7 @@ describe("Memoization - Component Re-render Prevention", () => {
 
   it("should prevent LoadingSpinner re-renders with unchanged props", async () => {
     const { LoadingSpinner } =
-      await import("@/shared/components/LoadingSpinner");
+      await import("@/shared/common-blocks/LoadingSpinner");
 
     const { rerender } = render(<LoadingSpinner size="md" text="Loading..." />);
 
@@ -285,7 +285,7 @@ describe("Memoization - Component Re-render Prevention", () => {
 describe("Performance - Suspense Boundaries", () => {
   it("should provide fallback UI during lazy component load", async () => {
     const { Suspense, lazy } = await import("react");
-    const { PageLoader } = await import("@/shared/components/PageLoader");
+    const { PageLoader } = await import("@/shared/common-blocks/PageLoader");
 
     const LazyComponent = lazy(
       () =>
@@ -318,3 +318,5 @@ describe("Performance - Suspense Boundaries", () => {
     );
   });
 });
+
+

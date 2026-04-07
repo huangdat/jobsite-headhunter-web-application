@@ -8,13 +8,13 @@
 
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/shared/ui-primitives/card";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
-import { PageContainer } from "@/shared/components/layout";
-import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
 import { useVerificationDetail, useRejectModal } from "../hooks";
 import { VerificationStatus } from "../types";
 import {
@@ -320,3 +320,4 @@ export const VerificationDetailPage: React.FC = () => {
     </PageContainer>
   );
 };
+

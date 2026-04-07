@@ -5,13 +5,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/shared/ui-primitives/badge";
 import { getSemanticClass } from "@/lib/design-tokens";
 import type { JobSummary } from "../types";
 import { formatSalary, formatDeadlineDate } from "../utils";
 import { getJobDetail } from "../services/jobsApi";
 import { jobKeys } from "@/shared/utils/queryKeys";
-import { SmallText, Caption } from "@/shared/components/typography/Typography";
+import { SmallText, Caption } from "@/shared/common-blocks/typography/Typography";
 
 interface JobCardProps {
   job: JobSummary & { negotiable?: boolean };
@@ -108,3 +108,4 @@ export function JobCard({ job }: JobCardProps) {
     </div>
   );
 }
+

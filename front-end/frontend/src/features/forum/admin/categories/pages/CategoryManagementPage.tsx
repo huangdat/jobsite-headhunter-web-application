@@ -5,7 +5,7 @@
 
 import { useTranslation } from "react-i18next";
 import { CategoryList } from "../components/CategoryList";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
 
 export function CategoryManagementPage() {
   const { t } = useTranslation();
@@ -26,3 +26,4 @@ export function CategoryManagementPage() {
     </PageContainer>
   );
 }
+

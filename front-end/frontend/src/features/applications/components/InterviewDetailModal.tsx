@@ -1,8 +1,8 @@
 import React from "react";
 import { getSemanticClass } from "@/lib/design-tokens";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { Badge } from "@/shared/ui-primitives/badge";
+import { Button } from "@/shared/ui-primitives/button";
+import { Dialog, DialogContent, DialogHeader } from "@/shared/ui-primitives/dialog";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { formatInterviewType, formatDate, formatDuration } from "../utils";
 import type { Interview, InterviewType } from "../types";
@@ -12,7 +12,7 @@ import {
   PageTitle,
   BodyText,
   Display,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 import {
   Video,
   MapPin,
@@ -236,3 +236,4 @@ export const InterviewDetailModal: React.FC<InterviewDetailModalProps> = ({
     </Dialog>
   );
 };
+

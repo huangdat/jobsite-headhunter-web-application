@@ -1,5 +1,5 @@
 import { AlertCircle, RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
@@ -101,3 +101,4 @@ export function ErrorState({
     </div>
   );
 }
+

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import { FilterBadge } from "./FilterBadge";
 
@@ -147,3 +147,4 @@ export const UserListHeader: React.FC<UserListHeaderProps> = ({
     </>
   );
 };
+

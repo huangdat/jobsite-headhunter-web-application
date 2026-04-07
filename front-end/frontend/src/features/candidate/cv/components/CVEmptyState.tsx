@@ -5,7 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 import type { CVEmptyStateProps } from "../types";
 import {
@@ -13,7 +13,7 @@ import {
   BodyText,
   Caption,
   MetaText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
   const { t } = useCandidateTranslation();
@@ -106,3 +106,4 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 };
 
 export default CVEmptyState;
+

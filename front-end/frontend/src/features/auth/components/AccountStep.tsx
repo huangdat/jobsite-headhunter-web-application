@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { Input } from "@/components/ui/input";
-import { FormField, PasswordRequirements } from "@/shared/components";
+import { Input } from "@/shared/ui-primitives/input";
+import { FormField, PasswordRequirements } from "@/shared/common-blocks";
 import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdOutlineMail, MdLockOutline, MdAccountCircle } from "react-icons/md";
@@ -122,3 +122,5 @@ export function AccountStep({
     </>
   );
 }
+
+

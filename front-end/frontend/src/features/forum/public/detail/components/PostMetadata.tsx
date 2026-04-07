@@ -6,7 +6,7 @@
 
 import type { ForumPost } from "@/features/forum/admin/posts/types";
 import { useTranslation } from "react-i18next";
-import { Display, SmallText } from "@/shared/components/typography/Typography";
+import { Display, SmallText } from "@/shared/common-blocks/typography/Typography";
 
 interface PostMetadataProps {
   post: ForumPost;
@@ -73,3 +73,4 @@ export function PostMetadata({ post }: PostMetadataProps) {
     </div>
   );
 }
+

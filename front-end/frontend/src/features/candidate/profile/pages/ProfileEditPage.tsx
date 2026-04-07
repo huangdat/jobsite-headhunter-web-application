@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { ProfileForm } from "@/features/candidate/profile/components/ProfileForm";
 import { useProfileUpdate } from "@/features/candidate/profile/hooks/useProfileUpdate";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
-import { PageContainer } from "@/shared/components/layout";
-import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
-import { Button } from "@/components/ui/button";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
+import { Button } from "@/shared/ui-primitives/button";
 import { ChevronLeft } from "lucide-react";
 
 export function ProfileEditPage() {
@@ -94,3 +94,4 @@ export function ProfileEditPage() {
 }
 
 export default ProfileEditPage;
+

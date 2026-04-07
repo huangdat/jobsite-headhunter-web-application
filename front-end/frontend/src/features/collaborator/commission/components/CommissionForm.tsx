@@ -5,7 +5,7 @@
  */
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { useCommissionManagement } from "../hooks/useCommissionManagement";
 import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
@@ -369,3 +369,4 @@ export function CommissionForm() {
     </form>
   );
 }
+

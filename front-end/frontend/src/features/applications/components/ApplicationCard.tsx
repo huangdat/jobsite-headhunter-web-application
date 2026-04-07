@@ -1,12 +1,12 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/shared/ui-primitives/card";
+import { Badge } from "@/shared/ui-primitives/badge";
+import { Button } from "@/shared/ui-primitives/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import {
   SubsectionTitle,
   SmallText,
   Caption,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 import {
   formatDate,
   formatApplicationStatus,
@@ -82,3 +82,4 @@ export const ApplicationCard: React.FC<ApplicationCardProps> = ({
     </Card>
   );
 };
+
