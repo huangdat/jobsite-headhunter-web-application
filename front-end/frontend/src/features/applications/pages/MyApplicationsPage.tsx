@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getSemanticClass } from "@/lib/design-tokens";
@@ -25,6 +26,7 @@ import {
 
 export const MyApplicationsPage: React.FC = () => {
   const { t } = useAppTranslation();
+  const navigate = useNavigate();
   const [viewingApp, setViewingApp] = useState<Application | null>(null);
 
   const {
@@ -52,11 +54,34 @@ export const MyApplicationsPage: React.FC = () => {
 
   return (
     <PageContainer variant="default" maxWidth="4xl">
-      <PageHeader
-        variant="default"
-        title={t("applications.myApplications")}
-        description={t("applications.subtitle")}
-      />
+      <div className="mb-6 flex items-center justify-between">
+        <PageHeader
+          variant="default"
+          title={t("applications.myApplications")}
+          description={t("applications.subtitle")}
+        />
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate("/")}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          {t("common.back")}
+        </Button>
+      </div>
 
       <div className="flex flex-wrap gap-2 mb-8">
         <StatCard
