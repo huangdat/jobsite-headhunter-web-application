@@ -11,6 +11,7 @@ import type {
   RegisterFormData,
 } from "@/features/auth/types";
 import {
+  register,
   sendOtpSignup,
   checkEmailUsernameExist,
 } from "@/features/auth/services/authApi";
@@ -271,27 +272,9 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     }
 
     try {
-      // Save registration data to sessionStorage
-      const dataToStore = { ...data, avatar: undefined };
-      sessionStorage.setItem(
-        "pendingRegistration",
-        JSON.stringify(dataToStore)
-      );
-
-      if (data.avatar) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          sessionStorage.setItem(
-            "pendingRegistrationAvatar",
-            reader.result as string
-          );
-        };
-        reader.readAsDataURL(data.avatar);
-      }
-
-      // Send OTP
-      const otpResponse = await Promise.race([
-        sendOtpSignup({ email: data.email, tokenType: "SIGN_UP" }),
+      // Step 1: Create account via register API
+      const registerResponse = await Promise.race([
+        register(data),
         new Promise<never>((_, reject) =>
           setTimeout(
             () => reject(new Error(t("messages.requestTimedOut"))),
@@ -300,19 +283,68 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         ),
       ]);
 
-      toast.success(t("messages.otpSent"));
+      // Step 2: Check account status from response
+      if (registerResponse.status === "PENDING") {
+        // For PENDING accounts (Headhunter), show success message and redirect to login
+        toast.success(
+          t("messages.accountPendingApproval") ||
+            "Account created successfully! Your account is pending approval. You will receive an email notification once approved."
+        );
+        // Clear registration data from sessionStorage
+        sessionStorage.removeItem("pendingRegistration");
+        sessionStorage.removeItem("pendingRegistrationAvatar");
+        // Redirect to login page
+        setTimeout(() => {
+          navigate("/login", { replace: true });
+        }, 2000);
+        return;
+      }
 
-      navigate("/verify-otp", {
-        state: {
-          email: otpResponse.email,
-          expiresAt: otpResponse.expiresAt,
-        },
-      });
+      // Step 3: For ACTIVE accounts, send OTP and navigate to verification
+      if (registerResponse.status === "ACTIVE") {
+        // Save registration data to sessionStorage (for avatar)
+        const dataToStore = { ...data, avatar: undefined };
+        sessionStorage.setItem(
+          "pendingRegistration",
+          JSON.stringify(dataToStore)
+        );
+
+        if (data.avatar) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            sessionStorage.setItem(
+              "pendingRegistrationAvatar",
+              reader.result as string
+            );
+          };
+          reader.readAsDataURL(data.avatar);
+        }
+
+        // Send OTP
+        const otpResponse = await Promise.race([
+          sendOtpSignup({ email: data.email, tokenType: "SIGN_UP" }),
+          new Promise<never>((_, reject) =>
+            setTimeout(
+              () => reject(new Error(t("messages.requestTimedOut"))),
+              15000
+            )
+          ),
+        ]);
+
+        toast.success(t("messages.otpSent"));
+
+        navigate("/verify-otp", {
+          state: {
+            email: otpResponse.email,
+            expiresAt: otpResponse.expiresAt,
+          },
+        });
+      }
     } catch (error: unknown) {
       console.error("Registration error:", error);
       const errorMessage = extractApiErrorMessage(
         error,
-        t("messages.failedToSendOtp")
+        t("messages.failedToRegister") || t("messages.failedToSendOtp")
       );
       toast.error(errorMessage);
     }
@@ -345,9 +377,12 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
 
           <form
             onSubmit={form.handleSubmit(
-              (data) => {
-                console.log("Form values are valid. Starting submission:", data);
-                onSubmit(data);
+              async (data) => {
+                console.log(
+                  "Form values are valid. Starting submission:",
+                  data
+                );
+                await onSubmit(data);
               },
               (errors) => {
                 console.error("Form validation errors:", errors);
@@ -454,7 +489,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   variant="primary"
                   size="xl"
                   type="submit"
-                  disabled={isSubmitButtonDisabled}
+                  disabled={isSubmitButtonDisabled || isSubmitting}
                   className="flex-1 flex justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting

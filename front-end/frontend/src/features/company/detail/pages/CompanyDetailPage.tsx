@@ -46,7 +46,7 @@ export function CompanyDetailPage() {
 
         <CompanyAbout description={company.noteByAdmin} />
 
-        <CompanyJobs />
+        <CompanyJobs businessProfileId={company.id} />
         <CompanyReviews />
       </div>
     </div>
