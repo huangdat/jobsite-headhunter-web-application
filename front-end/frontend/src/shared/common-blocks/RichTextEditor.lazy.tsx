@@ -4,9 +4,9 @@
  */
 
 import { lazy, Suspense } from "react";
-import { ComponentLoader } from "@/shared/components/PageLoader";
+import { ComponentLoader } from "@/shared/common-blocks/PageLoader";
 
-const RichTextEditorLazy = lazy(() => import("@/components/RichTextEditor").then(m => ({ default: m.RichTextEditor })));
+const RichTextEditorLazy = lazy(() => import("@/shared/common-blocks/RichTextEditor").then(m => ({ default: m.RichTextEditor })));
 
 interface RichTextEditorProps {
   value: string;
@@ -23,3 +23,5 @@ export function RichTextEditor(props: RichTextEditorProps) {
     </Suspense>
   );
 }
+
+

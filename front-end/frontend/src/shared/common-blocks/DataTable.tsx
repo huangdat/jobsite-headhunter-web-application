@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/shared/ui-primitives/table";
 
 export interface Column<T> {
   key: string;
@@ -148,3 +148,4 @@ export function DataTable<T extends Record<string, any>>({
     </div>
   );
 }
+

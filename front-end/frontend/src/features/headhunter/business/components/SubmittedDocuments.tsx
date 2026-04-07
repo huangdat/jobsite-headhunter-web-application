@@ -6,7 +6,7 @@
 import React, { useState } from "react";
 import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { getSemanticClass } from "@/lib/design-tokens";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import {
   Download,
   Trash2,
@@ -282,3 +282,4 @@ export const SubmittedDocuments: React.FC<SubmittedDocumentsProps> = ({
 };
 
 export default SubmittedDocuments;
+

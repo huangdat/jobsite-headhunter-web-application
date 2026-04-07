@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SmallText } from "@/shared/components/typography/Typography";
+import { SmallText } from "@/shared/common-blocks/typography/Typography";
 import { useHeadhunterDashboard } from "../hooks/useHeadhunterDashboard";
 import { DashboardSkeleton } from "../../shared/components/DashboardSkeleton";
 import { PerformanceKPIs } from "../components/PerformanceKPIs";
@@ -9,9 +9,9 @@ import { UpcomingInterviews } from "../components/UpcomingInterviews";
 import { PendingCandidates } from "../components/PendingCandidates";
 import { JobDashboardFilter } from "../components/JobDashboardFilter";
 import type { DashboardFilterOptions } from "../../types";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { Button } from "@/components/ui/button";
-import { ErrorState } from "@/shared/components/states";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { Button } from "@/shared/ui-primitives/button";
+import { ErrorState } from "@/shared/common-blocks/states";
 
 /**
  * HeadhunterDashboardPage
@@ -136,3 +136,4 @@ export const HeadhunterDashboardPage: React.FC = () => {
     </PageContainer>
   );
 };
+

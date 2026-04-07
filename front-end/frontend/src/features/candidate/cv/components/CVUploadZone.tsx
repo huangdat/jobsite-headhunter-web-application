@@ -5,7 +5,7 @@
 
 import React, { useState, useCallback } from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { validateCVFile } from "../services/cvApi";
 import type { CVUploadZoneProps } from "../types";
 import { CVErrorBanner } from "./CVErrorBanner";
@@ -164,7 +164,6 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
             <p className="text-sm text-slate-600">
               {t("cv.management.error.fileFormatInvalid")}
             </p>
-            {/* File Preview with Error */}
             <div
               className={`rounded-lg p-4 mx-auto max-w-sm mt-4 border ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
             >
@@ -202,7 +201,6 @@ export const CVUploadZone: React.FC<CVUploadZoneProps> = ({
                 </Button>
               </div>
             </div>{" "}
-            {/* Retry Button */}
             <Button
               onClick={handleBrowseClick}
               className="inline-flex items-center gap-2"

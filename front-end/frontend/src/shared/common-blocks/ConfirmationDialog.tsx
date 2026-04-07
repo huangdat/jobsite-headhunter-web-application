@@ -11,8 +11,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "@/shared/ui-primitives/dialog";
+import { Button } from "@/shared/ui-primitives/button";
 import { AlertTriangle, Info, CheckCircle, XCircle } from "lucide-react";
 import { getSemanticClass } from "@/lib/design-tokens";
 
@@ -139,3 +139,4 @@ export function ConfirmationDialog({
     </Dialog>
   );
 }
+

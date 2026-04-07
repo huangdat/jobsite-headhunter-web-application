@@ -1,6 +1,6 @@
 import { getSemanticClass } from "@/lib/design-tokens";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -265,3 +265,4 @@ export function ProfileForm({
     </div>
   );
 }
+

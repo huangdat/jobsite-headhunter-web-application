@@ -7,22 +7,22 @@ import {
   useJobDetailQuery,
   useSkillsQuery,
 } from "@/shared/hooks/useJobsQueries";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { RichTextEditor } from "@/components/RichTextEditor.lazy";
-import { SkillMultiSelect } from "@/components/SkillMultiSelect";
+import { Input } from "@/shared/ui-primitives/input";
+import { Textarea } from "@/shared/ui-primitives/textarea";
+import { Button } from "@/shared/ui-primitives/button";
+import { RichTextEditor } from "@/shared/common-blocks/RichTextEditor.lazy";
+import { SkillMultiSelect } from "@/shared/common-blocks/SkillMultiSelect";
 import { updateJob } from "../services/jobsApi";
 import type { JobFormValues } from "../types";
 import { JOB_FORM_DEFAULTS } from "../utils";
 import { useQueryClient } from "@tanstack/react-query";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
 import {
   LabelText,
   SmallText,
-} from "@/shared/components/typography/Typography";
-import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+} from "@/shared/common-blocks/typography/Typography";
+import { PageSkeleton } from "@/shared/common-blocks/states/PageSkeleton";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { getSemanticClass } from "@/lib/design-tokens";
 
 export function JobEditPage() {
@@ -408,3 +408,5 @@ export function JobEditPage() {
 }
 
 export default JobEditPage;
+
+

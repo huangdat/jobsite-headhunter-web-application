@@ -23,10 +23,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+} from "@/shared/ui-primitives/table";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
+import { Badge } from "@/shared/ui-primitives/badge";
 import {
   AlertCircle,
   Edit2,
@@ -566,3 +566,4 @@ export function CategoryList() {
     </div>
   );
 }
+

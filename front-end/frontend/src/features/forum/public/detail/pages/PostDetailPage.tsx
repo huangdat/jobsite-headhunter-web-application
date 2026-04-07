@@ -10,9 +10,9 @@ import { PostMetadata } from "../components/PostMetadata";
 import { ReactionsBar } from "../components/ReactionsBar";
 import { RelatedPosts } from "../components/RelatedPosts";
 import { useTranslation } from "react-i18next";
-import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
-import { PageContainer } from "@/shared/components/layout";
-import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
 
 export function PostDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -70,3 +70,4 @@ export function PostDetailPage() {
     </PageContainer>
   );
 }
+

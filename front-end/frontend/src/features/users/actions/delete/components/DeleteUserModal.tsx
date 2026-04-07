@@ -7,7 +7,7 @@ import {
   XCircle,
   Loader,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useUsersTranslation } from "@/shared/hooks";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { useAuthUser } from "@/shared/hooks/useAuthUser";
@@ -636,3 +636,4 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 };
 
 export default DeleteUserModal;
+

@@ -1,12 +1,13 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { getDarkClasses } from "@/lib/theme-classes";
 import { useBusinessProfile } from "../hooks/useBusinessProfile";
 import { BusinessProfileDisplay } from "../components";
-import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { PageSkeleton } from "@/shared/common-blocks/states/PageSkeleton";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { ChevronLeft } from "lucide-react"; // Đã import thêm icon giống bên Candidate
 
 /**

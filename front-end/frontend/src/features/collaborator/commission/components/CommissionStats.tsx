@@ -4,7 +4,7 @@
  * Displays commission statistics in sidebar
  */
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useCommissionTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { getSemanticClass } from "@/lib/design-tokens";
 import type { CommissionStats } from "../types/commission.types";
@@ -201,3 +201,4 @@ export function CommissionStats({
     </div>
   );
 }
+

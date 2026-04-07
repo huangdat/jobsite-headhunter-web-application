@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRecommendedJobs } from "@/shared/utils/jobService";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { MATCH_BADGE_COLORS, HOME_ICONS } from "../constants";
 import {
   SubsectionTitle,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 export function RecommendedJobs() {
   const navigate = useNavigate();
@@ -116,3 +116,4 @@ export function RecommendedJobs() {
     </section>
   );
 }
+

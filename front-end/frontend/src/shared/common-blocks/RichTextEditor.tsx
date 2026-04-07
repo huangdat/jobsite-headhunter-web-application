@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import "./RichTextEditor.css";
 
 interface RichTextEditorProps {
@@ -150,3 +150,4 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
 RichTextEditorComponent.displayName = "RichTextEditor";
 
 export { RichTextEditorComponent as RichTextEditor };
+

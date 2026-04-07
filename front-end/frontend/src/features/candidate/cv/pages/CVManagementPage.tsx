@@ -5,8 +5,8 @@
 
 import React, { useEffect } from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
-import { PageContainer } from "@/shared/components/layout";
-import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
 import {
   CVErrorBanner,
   CVEmptyState,
@@ -18,7 +18,10 @@ import {
   PremiumServices,
 } from "../components";
 import { useCVManagement } from "../hooks";
-import { Display, SmallText } from "@/shared/components/typography/Typography";
+import {
+  Display,
+  SmallText,
+} from "@/shared/common-blocks/typography/Typography";
 
 export const CVManagementPage: React.FC = () => {
   const { t } = useCandidateTranslation();
@@ -32,7 +35,6 @@ export const CVManagementPage: React.FC = () => {
     refreshData,
   } = useCVManagement();
 
-  // Log state for debugging
   useEffect(() => {
     console.log("CV Management State:", state);
   }, [state]);

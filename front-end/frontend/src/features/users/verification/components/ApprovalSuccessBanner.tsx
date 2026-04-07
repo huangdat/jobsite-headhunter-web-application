@@ -12,7 +12,7 @@
 import React, { useEffect, useState } from "react";
 import { CheckCircle, X } from "lucide-react";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 
 interface ApprovalSuccessBannerProps {
@@ -128,3 +128,4 @@ export const ApprovalSuccessBanner: React.FC<ApprovalSuccessBannerProps> = ({
     </div>
   );
 };
+

@@ -5,7 +5,7 @@
 
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 import type { CVErrorBannerProps } from "../types";
 
@@ -80,3 +80,4 @@ export const CVErrorBanner: React.FC<CVErrorBannerProps> = ({
 };
 
 export default CVErrorBanner;
+

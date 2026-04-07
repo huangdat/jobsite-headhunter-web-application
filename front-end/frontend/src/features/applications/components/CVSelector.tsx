@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { fetchMyCurrentCV } from "@/features/applications/services/applicationsApi";
 import { FileText, Loader, AlertCircle } from "lucide-react";
@@ -140,3 +140,4 @@ export const CVSelector: React.FC<CVSelectorProps> = ({
     </div>
   );
 };
+

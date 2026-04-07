@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@/components/ui/button";
-import { AuthLayout } from "@/shared/components";
+import { Button } from "@/shared/ui-primitives/button";
+import { AuthLayout } from "@/shared/common-blocks";
 import { useAuthTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import { useDebounce } from "@/shared/hooks/useDebounce";
@@ -542,3 +542,5 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     </AuthLayout>
   );
 }
+
+

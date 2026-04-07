@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/shared/ui-primitives/input";
+import { Button } from "@/shared/ui-primitives/button";
 import type { JobFilterParams } from "../types";
 import { getSemanticClass } from "@/lib/design-tokens";
 import {
@@ -10,7 +10,7 @@ import {
   WORKING_TYPES,
 } from "../utils";
 import { useJobFilters } from "../hooks";
-import { LabelText } from "@/shared/components/typography/Typography";
+import { LabelText } from "@/shared/common-blocks/typography/Typography";
 
 interface FilterSidebarProps {
   filters: JobFilterParams;
@@ -229,3 +229,4 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
     </aside>
   );
 }
+

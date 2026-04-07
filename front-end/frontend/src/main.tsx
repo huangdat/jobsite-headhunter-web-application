@@ -8,7 +8,7 @@ import { AuthProvider } from "@/features/auth/context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fetchSkills } from "@/features/jobs/services/jobsApi";
 import { jobKeys } from "@/shared/utils/queryKeys";
-import { ErrorBoundary } from "@/shared/components/ErrorBoundary";
+import { ErrorBoundary } from "@/shared/common-blocks/ErrorBoundary";
 import "./i18n/config"; // Initialize i18next
 
 const queryClient = new QueryClient({
@@ -58,3 +58,4 @@ createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </ErrorBoundary>
 );
+

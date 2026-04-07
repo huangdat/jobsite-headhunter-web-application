@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/shared/ui-primitives/card";
+import { Button } from "@/shared/ui-primitives/button";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { PageSkeleton } from "@/shared/common-blocks/states/PageSkeleton";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { ApplicationStatusBadge } from "../components";
 import { useApplications, useInterviewSchedule } from "../hooks";
 import { formatDate, formatDuration } from "../utils";

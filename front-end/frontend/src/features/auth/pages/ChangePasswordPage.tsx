@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { FormField } from "@/shared/components";
+import { Input } from "@/shared/ui-primitives/input";
+import { Button } from "@/shared/ui-primitives/button";
+import { FormField } from "@/shared/common-blocks";
 import {
   Display,
   SmallText,
   MetaText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 import type { ChangePasswordFormData } from "@/features/auth/types";
 import { changePassword } from "@/features/auth/services/authApi";
 import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
@@ -379,3 +379,5 @@ export function ChangePasswordPage() {
     </div>
   );
 }
+
+

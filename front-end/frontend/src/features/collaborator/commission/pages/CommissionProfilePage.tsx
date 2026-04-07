@@ -12,8 +12,8 @@ import {
   CommissionBenefits,
 } from "../components";
 import { useCommissionManagement } from "../hooks/useCommissionManagement";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { PageSkeleton } from "@/shared/components/states";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { PageSkeleton } from "@/shared/common-blocks/states";
 
 /**
  * CommissionProfilePage Component
@@ -77,3 +77,4 @@ export function CommissionProfilePage() {
     </PageContainer>
   );
 }
+

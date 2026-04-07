@@ -8,8 +8,8 @@ import {
 import { UserFilters } from "@/features/users/components/common/UserFilters";
 import { useUsers } from "@/features/users/list/hooks/useUsers";
 import { useUsersTranslation } from "@/shared/hooks";
-import { PageContainer } from "@/shared/components/layout";
-import { PageSkeleton, ErrorState } from "@/shared/components/states";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
 
 interface UserListPageProps {
   onAddNewUser?: () => void;
@@ -211,3 +211,4 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
 };
 
 export default UserListPage;
+

@@ -7,9 +7,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PostList } from "../components/PostList";
 import { PostCreateForm } from "../components/PostCreateForm";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { BiPlus } from "react-icons/bi";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
 import { getSemanticClass } from "@/lib/design-tokens";
 
 export function PostManagementPage() {
@@ -47,3 +47,4 @@ export function PostManagementPage() {
     </PageContainer>
   );
 }
+

@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/shared/ui-primitives/input";
+import { Textarea } from "@/shared/ui-primitives/textarea";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { getSemanticClass } from "@/lib/design-tokens";
 import {
@@ -228,3 +228,4 @@ export function ProfessionalIdentity({
     </section>
   );
 }
+

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, X, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useSearchBarTranslation } from "@/shared/hooks";
 import { getSemanticClass } from "@/lib/design-tokens";
@@ -540,3 +540,4 @@ export function CandidateInstantSearch() {
     </>
   );
 }
+

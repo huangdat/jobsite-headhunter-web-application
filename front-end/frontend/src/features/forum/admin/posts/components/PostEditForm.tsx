@@ -20,17 +20,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/shared/ui-primitives/dialog";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
+import { Textarea } from "@/shared/ui-primitives/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/ui-primitives/select";
 import { AlertCircle, Loader2, Upload, X } from "lucide-react";
 import type { UpdatePostRequest, ForumCategory, PostStatus } from "../types";
 
@@ -545,3 +545,4 @@ export function PostEditForm({
 }
 
 export default PostEditForm;
+

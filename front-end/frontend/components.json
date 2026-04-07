@@ -13,9 +13,10 @@
   "iconLibrary": "lucide",
   "rtl": false,
   "aliases": {
-    "components": "@/components",
+    "components": "@/shared/ui-primitives",
     "utils": "@/lib/utils",
-    "ui": "@/components/ui",
+    "ui": "@/shared/ui-primitives",
+    "common-blocks": "@/shared/common-blocks",
     "lib": "@/lib",
     "hooks": "@/hooks"
   },

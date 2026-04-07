@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserClassification } from "@/features/users/classification/hooks/useUserClassification";
 import { UserClassificationOverview } from "@/features/users/classification/components/UserClassificationOverview";
 import { useUsersTranslation } from "@/shared/hooks";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
 
 /**
  * User Classification Page component.
@@ -67,3 +67,4 @@ export const UserClassificationPage: React.FC = () => {
     </PageContainer>
   );
 };
+

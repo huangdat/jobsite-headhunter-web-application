@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/shared/ui-primitives/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
+} from "@/shared/ui-primitives/select";
+import { Button } from "@/shared/ui-primitives/button";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
 import { ChevronLeft } from "lucide-react";
 import {
   MetaText,
   Caption,
   SubsectionTitle,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 import { useAppTranslation, useHeadhunterTranslation } from "@/shared/hooks";
-import { PageSkeleton } from "@/shared/components/states";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { PageSkeleton } from "@/shared/common-blocks/states";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { useApplications } from "../hooks";
 import type { ApplicationStatus } from "../types";
 import { APPLICATION_STATUS_LABELS } from "../utils";
@@ -323,3 +323,4 @@ export const JobPipelinePage: React.FC = () => {
 };
 
 export default JobPipelinePage;
+

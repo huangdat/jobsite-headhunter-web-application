@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
-import { FormField } from "@/shared/components";
+import { Input } from "@/shared/ui-primitives/input";
+import { FormField } from "@/shared/common-blocks";
 import { useAuthTranslation } from "@/shared/hooks";
 import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import { MdPercent } from "react-icons/md";
@@ -41,3 +41,5 @@ export function CollaboratorDetailsStep({
     </div>
   );
 }
+
+

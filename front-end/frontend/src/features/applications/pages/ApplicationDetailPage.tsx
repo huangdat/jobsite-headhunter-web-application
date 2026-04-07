@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/shared/ui-primitives/card";
+import { Button } from "@/shared/ui-primitives/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { getSemanticClass } from "@/lib/design-tokens";
 import {
@@ -9,14 +9,14 @@ import {
   SmallText,
   MetaText,
   BodyText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 import {
   InterviewScheduleModal,
   InterviewDetailModal,
   ApplicationStatusBadge,
 } from "../components";
 import { useInterviewSchedule } from "../hooks";
-import { Breadcrumb } from "@/shared/components/navigation/Breadcrumb";
+import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
 import { formatDate } from "../utils";
 import {
   getApplicationDetail,
@@ -33,9 +33,9 @@ import {
   FileText,
   Calendar,
 } from "lucide-react";
-import { PageContainer } from "@/shared/components/layout";
-import { PageSkeleton } from "@/shared/components/states";
-import { ErrorState } from "@/shared/components/states/ErrorState";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { PageSkeleton } from "@/shared/common-blocks/states";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 
 export const ApplicationDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -425,3 +425,4 @@ export const ApplicationDetailPage: React.FC = () => {
     </PageContainer>
   );
 };
+

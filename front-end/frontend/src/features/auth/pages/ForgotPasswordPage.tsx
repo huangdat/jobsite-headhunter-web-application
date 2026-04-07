@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { FormField, AuthLayout } from "@/shared/components";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
+import { FormField, AuthLayout } from "@/shared/common-blocks";
 import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import type { ForgotPasswordFormData } from "@/features/auth/types";
@@ -14,7 +14,7 @@ import {
   PageTitle,
   BodyText,
   SmallText,
-} from "@/shared/components/typography/Typography";
+} from "@/shared/common-blocks/typography/Typography";
 
 import { MdOutlineMail } from "react-icons/md";
 
@@ -149,3 +149,5 @@ export function ForgotPasswordPage() {
     </AuthLayout>
   );
 }
+
+

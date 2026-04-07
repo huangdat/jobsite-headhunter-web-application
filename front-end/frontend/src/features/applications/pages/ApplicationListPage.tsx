@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui-primitives/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
-import { SmallText } from "@/shared/components/typography/Typography";
+import { SmallText } from "@/shared/common-blocks/typography/Typography";
 import { ApplicationCard, ApplicationFilters } from "../components";
 import { useApplications, useApplicationFilters } from "../hooks";
-import { PageContainer, PageHeader } from "@/shared/components/layout";
-import { PageSkeleton } from "@/shared/components/states";
-import { ErrorState } from "@/shared/components/states/ErrorState";
-import { EmptyState } from "@/shared/components/EmptyState";
+import { PageContainer, PageHeader } from "@/shared/common-blocks/layout";
+import { PageSkeleton } from "@/shared/common-blocks/states";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
+import { EmptyState } from "@/shared/common-blocks/EmptyState";
 import { FileText } from "lucide-react";
 
 interface ApplicationListPageProps {
@@ -134,3 +134,4 @@ export const ApplicationListPage: React.FC<ApplicationListPageProps> = ({
     </PageContainer>
   );
 };
+

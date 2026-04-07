@@ -110,7 +110,7 @@ export const useBusinessVerification = (
   const fetchProfileStatus = useCallback(async () => {
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API when backend is ready
+      // Using mock data - business profile API still in development
       const profile = await businessApi.getBusinessProfile();
       setProfile(profile);
 
@@ -146,7 +146,7 @@ export const useBusinessVerification = (
 
   /**
    * Submit profile for verification
-   * TODO: Backend endpoints not yet implemented
+   * Using mock implementation - backend endpoints still in development
    */
   const submitProfile = useCallback(
     async (documents?: File[]) => {
@@ -163,8 +163,7 @@ export const useBusinessVerification = (
       setSuccessMessage(null);
 
       try {
-        // TODO: Replace with actual API when backend is ready
-        // For now, just simulate success
+        // Mock implementation until backend API is ready
         console.log("Submit profile (mock):", { formData, documents });
 
         // Simulate API delay
@@ -229,10 +228,10 @@ export const useBusinessVerification = (
 
   /**
    * Initial fetch - only run once on mount
+   * Commented out until backend endpoints are available
    */
   useEffect(() => {
     if (autoFetchStatus) {
-      // TODO: Enable when backend endpoints are ready
       // fetchProfileStatus();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
