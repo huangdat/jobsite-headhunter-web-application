@@ -275,7 +275,7 @@ export function JobManagePage() {
                       size="sm"
                       onClick={() => handleOpen(job)}
                       disabled={toggleJobStatusMutation.isPending}
-                      className={`${getSemanticClass("success", "bg", true)} text-white hover:opacity-80 cursor-pointer rounded-lg shadow-sm font-black h-8 text-[11px] px-3`}
+                      className={`bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-lg shadow-sm font-black h-8 text-[11px] px-3 cursor-pointer transition-all`}
                     >
                       <Unlock size={14} className="mr-1" />
                       {t("manage.openButton")}
@@ -314,10 +314,8 @@ export function JobManagePage() {
       )}
 
       <Dialog open={deadlineDialogOpen} onOpenChange={setDeadlineDialogOpen}>
-        <DialogContent className="rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white dark:bg-slate-800 max-w-100 [&>button]:right-8 [&>button]:top-8 [&>button]:cursor-pointer [&>button]:hover:bg-transparent [&>button]:dark:hover:bg-transparent [&>button]:focus:ring-0 [&>button]:outline-none">
-          <div
-            className={`${getSemanticClass("success", "bg", true)} p-8 pt-10 text-white`}
-          >
+        <DialogContent className="rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white dark:bg-slate-800 max-w-100 [&>button]:right-4 [&>button]:top-5 [&>button]:cursor-pointer [&>button]:hover:bg-transparent [&>button]:dark:hover:bg-transparent [&>button]:focus:ring-0 [&>button]:outline-none">
+          <div className="bg-lime-600 dark:bg-lime-700 p-8 pt-10 text-white">
             <DialogTitle className="text-2xl font-black">
               {t("manage.setNewDeadlineTitle")}
             </DialogTitle>
@@ -349,7 +347,7 @@ export function JobManagePage() {
               </Button>
 
               <Button
-                className="flex-1 bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 rounded-2xl h-12 font-bold transition-all active:scale-95 cursor-pointer border border-slate-300 dark:border-slate-600 shadow-sm shadow-slate-700/10"
+                className="flex-1 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-800 text-white rounded-2xl h-12 font-black shadow-lg transition-all active:scale-95 cursor-pointer"
                 onClick={confirmOpenFromDialog}
                 disabled={toggleJobStatusMutation.isPending}
               >
@@ -396,7 +394,7 @@ export function JobManagePage() {
                 {t("manage.cancelButton")}
               </Button>
               <Button
-                className={`flex-1 ${getSemanticClass("danger", "bg", true)} text-white rounded-2xl h-12 font-bold shadow-lg transition-all active:scale-95 cursor-pointer hover:opacity-90`}
+                className={`flex-1 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white rounded-2xl h-12 font-black shadow-lg transition-all active:scale-95 cursor-pointer`}
                 onClick={confirmCloseJob}
                 disabled={toggleJobStatusMutation.isPending}
               >
@@ -411,4 +409,3 @@ export function JobManagePage() {
 }
 
 export default JobManagePage;
-

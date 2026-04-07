@@ -2,6 +2,7 @@ package com.rikkeisoft.backend.service.impl;
 
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.enums.JobStatus;
+import com.rikkeisoft.backend.enums.Role;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.JobMapper;
 import com.rikkeisoft.backend.model.dto.PagedResponse;
@@ -9,6 +10,7 @@ import com.rikkeisoft.backend.model.dto.req.job.JobSearchCriteria;
 import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
 import com.rikkeisoft.backend.model.dto.resp.job.JobSkillResp;
+import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.BusinessProfile;
 import com.rikkeisoft.backend.model.entity.Job;
 import com.rikkeisoft.backend.model.entity.JobSkill;
@@ -27,6 +29,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
@@ -34,6 +37,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,6 +53,12 @@ public class JobQueryServiceImpl implements JobQueryService {
     public JobDetailResp getJobDetail(Long jobId) {
         Job job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new AppException(ErrorCode.JOB_NOT_FOUND));
+
+        // Check access permission for CLOSED or hidden jobs neww
+        // Only job owner (headhunter) or ADMIN can view CLOSED/hidden jobs
+        if (job.getStatus() == JobStatus.CLOSED || !job.getVisible()) {
+            validateJobDetailAccess(job);
+        }
 
         List<JobSkill> jobSkills = jobSkillRepo.findByJobId(job.getId());
         List<JobSkillResp> skillResps = new ArrayList<>();
@@ -80,7 +90,7 @@ public class JobQueryServiceImpl implements JobQueryService {
                 .experience(job.getExperience())
                 .salaryMin(job.getSalaryMin())
                 .salaryMax(job.getSalaryMax())
-                .negotiable(job.getNegotiable ())
+                .negotiable(job.getNegotiable())
                 .currency(job.getCurrency() != null ? job.getCurrency().name() : null)
                 .quantity(job.getQuantity())
                 .rankLevel(job.getRankLevel())
@@ -100,12 +110,43 @@ public class JobQueryServiceImpl implements JobQueryService {
                 .build();
     }
 
+    /**
+     * Validates if current user has permission to view CLOSED/hidden job detail
+     * Only job owner (headhunter) or ADMIN can view CLOSED or hidden
+     * (visible=false) jobs
+     */
+    private void validateJobDetailAccess(Job job) {
+        Account currentAccount;
+        try {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            currentAccount = accountRepo.findByUsername(username).orElse(null);
+        } catch (Exception e) {
+            // User not authenticated - cannot view CLOSED/hidden jobs
+            throw new AppException(ErrorCode.FORBIDDEN);
+        }
+
+        if (currentAccount == null) {
+            throw new AppException(ErrorCode.FORBIDDEN);
+        }
+
+        // Check if user is ADMIN
+        Set<String> roles = currentAccount.getRoles();
+        boolean isAdmin = roles != null && roles.contains(Role.ADMIN.name());
+
+        // Check if user is job owner (headhunter)
+        boolean isJobOwner = job.getHeadhunter() != null &&
+                job.getHeadhunter().getId().equals(currentAccount.getId());
+
+        // Allow access if user is admin OR job owner
+        if (!isAdmin && !isJobOwner) {
+            throw new AppException(ErrorCode.FORBIDDEN);
+        }
+    }
+
     @Override
     public PagedResponse<JobResp> searchJobs(JobSearchCriteria criteria) {
         int sanitizedPage = Math.max(criteria.getPage(), 1);
         int sanitizedSize = Math.min(Math.max(criteria.getSize(), 1), 50);
-
-        
 
         Pageable pageable = PageRequest.of(sanitizedPage - 1, sanitizedSize, Sort.by(Sort.Direction.DESC, "createdAt"));
 
@@ -120,8 +161,7 @@ public class JobQueryServiceImpl implements JobQueryService {
                 predicates.add(cb.or(
                         cb.like(cb.lower(root.get("title")), likeKeyword),
                         cb.like(cb.lower(root.get("description")), likeKeyword),
-                        cb.like(cb.lower(root.get("location")), likeKeyword)
-                ));
+                        cb.like(cb.lower(root.get("location")), likeKeyword)));
             }
 
             if (criteria.getLocation() != null && !criteria.getLocation().isBlank()) {
@@ -137,7 +177,8 @@ public class JobQueryServiceImpl implements JobQueryService {
                 predicates.add(cb.equal(root.get("workingType"), criteria.getWorkingType()));
             }
 
-            // If headhunterId is specified (viewing "My Jobs"), show all jobs regardless of status/visible
+            // If headhunterId is specified (viewing "My Jobs"), show all jobs regardless of
+            // status/visible
             // Otherwise, apply default filters for public job search
             boolean isMyJobsView = criteria.getHeadhunterId() != null && !criteria.getHeadhunterId().isBlank();
 
@@ -168,7 +209,7 @@ public class JobQueryServiceImpl implements JobQueryService {
                     resolvedHeadhunterAccountId = "__NO_SUCH_ID__";
                 }
             }
-            
+
             if (criteria.getStatus() != null) {
                 predicates.add(cb.equal(root.get("status"), criteria.getStatus()));
             } else if (!isMyJobsView) {
@@ -220,8 +261,6 @@ public class JobQueryServiceImpl implements JobQueryService {
         };
 
         Page<Job> result = jobRepo.findAll(specification, pageable);
-
-        
 
         List<JobResp> jobResps = result.getContent().stream()
                 .map(jobMapper::toJobResp)
