@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { JobStatusStats } from "../../types";
 
 interface JobStatusStatsComponentProps {

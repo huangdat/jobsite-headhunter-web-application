@@ -6,6 +6,7 @@
 import React from "react";
 import { useCandidateTranslation } from "@/shared/hooks";
 import { Button } from "@/components/ui/button";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { CVEmptyStateProps } from "../types";
 import {
   SectionTitle,
@@ -24,7 +25,7 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
         {/* Icon */}
         <div className="flex justify-center mb-4">
           <div className="w-20 h-20 bg-primary-container rounded-2xl flex items-center justify-center">
-            <span className="material-symbols-outlined text-emerald-600 text-4xl fill">
+            <span className={`material-symbols-outlined ${getSemanticClass("success", "text", true)} text-4xl fill`}>
               description
             </span>
           </div>
@@ -53,7 +54,7 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
         {/* Privacy Control */}
         <div className="bg-slate-50 rounded-xl p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
+            <span className={`material-symbols-outlined ${getSemanticClass("success", "text", true)} text-lg fill`}>
               security
             </span>
             <MetaText as="span">
@@ -66,7 +67,7 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
           <ul className="space-y-2">
             {([] as string[])?.map((item: string, index: number) => (
               <li key={index} className="flex gap-2">
-                <span className="text-emerald-600 shrink-0 text-sm">→</span>
+                <span className={`${getSemanticClass("success", "text", false)} shrink-0 text-sm`}>→</span>
                 <Caption>{item}</Caption>
               </li>
             ))}
@@ -76,7 +77,7 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
         {/* Best Practices */}
         <div className="bg-slate-50 rounded-xl p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-emerald-600 text-lg fill">
+            <span className={`material-symbols-outlined ${getSemanticClass("success", "text", true)} text-lg fill`}>
               verified_user
             </span>
             <MetaText as="span">
@@ -86,13 +87,13 @@ export const CVEmptyState: React.FC<CVEmptyStateProps> = ({ onUpload }) => {
 
           <ul className="space-y-2">
             <li className="flex gap-2">
-              <span className="text-emerald-600 font-bold shrink-0 text-sm">
+              <span className={`${getSemanticClass("success", "text", true)} font-bold shrink-0 text-sm`}>
                 •
               </span>
               <Caption>{t("tips.privacyTip2")}</Caption>
             </li>
             <li className="flex gap-2">
-              <span className="text-emerald-600 font-bold shrink-0 text-sm">
+              <span className={`${getSemanticClass("success", "text", true)} font-bold shrink-0 text-sm`}>
                 •
               </span>
               <Caption>{t("tips.privacyTip3")}</Caption>

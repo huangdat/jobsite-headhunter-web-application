@@ -162,7 +162,7 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
                       isCompleted
                         ? getSemanticClass("success", "bg", true)
                         : isCurrent
-                          ? "bg-amber-400"
+                          ? getSemanticClass("warning", "bg", true)
                           : "bg-slate-200"
                     }`}
                   />
@@ -183,7 +183,7 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
                   <p
                     className={`font-semibold ${
                       isCurrent
-                        ? "text-amber-900"
+                        ? getSemanticClass("warning", "text", true)
                         : isCompleted
                           ? getSemanticClass("success", "text", true)
                           : "text-slate-700"
@@ -212,7 +212,7 @@ export const VerificationStatus: React.FC<VerificationStatusProps> = ({
                   <p
                     className={`mt-2 text-sm ${
                       isCurrent
-                        ? "text-amber-800"
+                        ? getSemanticClass("warning", "text", false)
                         : isCompleted
                           ? getSemanticClass("success", "text", false)
                           : "text-slate-600"

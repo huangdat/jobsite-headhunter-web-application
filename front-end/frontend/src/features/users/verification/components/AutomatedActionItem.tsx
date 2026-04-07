@@ -36,7 +36,11 @@ const getStatusIcon = (status: string) => {
         bgColor: getSemanticClass("danger", "bg", true),
       };
     default:
-      return { icon: Circle, color: "text-amber-600", bgColor: "bg-amber-50" };
+      return {
+        icon: Circle,
+        color: getSemanticClass("warning", "text", true),
+        bgColor: getSemanticClass("warning", "bg", true),
+      };
   }
 };
 
@@ -67,8 +71,8 @@ export const AutomatedActionItem: React.FC<AutomatedActionItemProps> = ({
                 action.status === "COMPLETED"
                   ? `${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`
                   : action.status === "FAILED"
-                    ? `${getSemanticClass("danger", "bg", true)} text-red-700`
-                    : `${getSemanticClass("warning", "bg", true)} text-amber-700`
+                    ? `${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)}`
+                    : `${getSemanticClass("warning", "bg", true)} ${getSemanticClass("warning", "text", true)}`
               }`}
             >
               {action.status.toLowerCase()}

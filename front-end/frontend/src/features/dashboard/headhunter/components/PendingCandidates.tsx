@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { PendingCandidate } from "../../types";
 import { dashboardFormatters } from "../../shared/utils/dashboardFormatters";
-import { getSemanticClass } from "@/lib/design-tokens";
+import { applicationStatusColors } from "@/lib/statusColorMap";
 
 interface PendingCandidatesProps {
   data: PendingCandidate[] | undefined;
@@ -71,34 +71,22 @@ export const PendingCandidates: React.FC<PendingCandidatesProps> = ({
 
       <div className="space-y-3">
         {data.map((candidate) => {
+          const statusColorMap = {
+            PENDING: applicationStatusColors.PENDING,
+            APPROVED: applicationStatusColors.APPROVED,
+            REJECTED: applicationStatusColors.REJECTED,
+          };
+          
+          const colors = statusColorMap[candidate.status as keyof typeof statusColorMap] || applicationStatusColors.PENDING;
+          
           const statusConfig = {
-            PENDING: {
-              borderColor: "border-yellow-500 dark:border-yellow-400",
-              bgColor: "bg-yellow-50 dark:bg-yellow-950/20",
-              badge:
-                "bg-yellow-100 dark:bg-yellow-900/40 text-yellow-800 dark:text-yellow-300",
-              icon: "⏳",
-            },
-            APPROVED: {
-              borderColor: "border-emerald-500 dark:border-emerald-400",
-              bgColor: "bg-emerald-50 dark:bg-emerald-950/20",
-              badge:
-                "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300",
-              icon: "✅",
-            },
-            REJECTED: {
-              borderColor: "border-red-500 dark:border-red-400",
-              bgColor: "bg-red-50 dark:bg-red-950/20",
-              badge:
-                getSemanticClass("danger", "bg", true) +
-                " text-red-800 dark:text-red-300",
-              icon: "❌",
-            },
+            borderColor: colors.border,
+            bgColor: colors.bg,
+            badge: colors.badge,
+            icon: candidate.status === "PENDING" ? "⏳" : candidate.status === "APPROVED" ? "✅" : "❌",
           };
 
-          const config =
-            statusConfig[candidate.status as keyof typeof statusConfig] ||
-            statusConfig.PENDING;
+          const config = statusConfig;
 
           return (
             <div

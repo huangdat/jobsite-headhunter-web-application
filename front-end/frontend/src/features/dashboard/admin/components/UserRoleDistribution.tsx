@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { userRoleColors } from "@/lib/statusColorMap";
 import type { UserRoleStats } from "../../types";
-import { getSemanticClass } from "@/lib/design-tokens";
 
 interface UserRoleDistributionProps {
   data: UserRoleStats | undefined;
@@ -20,7 +20,7 @@ export const UserRoleDistribution: React.FC<UserRoleDistributionProps> = ({
 }) => {
   const { t } = useTranslation("dashboard");
 
-  // Role configuration with colors and icons
+  // Role configuration with colors from centralized userRoleColors system
   const roleConfig: Record<
     string,
     {
@@ -33,30 +33,30 @@ export const UserRoleDistribution: React.FC<UserRoleDistributionProps> = ({
   > = {
     ADMIN: {
       label: t("roles.ADMIN", "Admin"),
-      color: `${getSemanticClass("info", "text", true)}`,
-      bgColor: "bg-purple-100",
-      darkBgColor: "dark:bg-purple-900/30",
+      color: userRoleColors.ADMIN.text,
+      bgColor: "bg-red-50",
+      darkBgColor: "dark:bg-red-900/20",
       icon: "👨‍💼",
     },
     CANDIDATE: {
       label: t("roles.CANDIDATE", "Candidate"),
-      color: getSemanticClass("info", "text", true),
-      bgColor: "bg-blue-100",
-      darkBgColor: "dark:bg-blue-900/30",
+      color: userRoleColors.CANDIDATE.text,
+      bgColor: "bg-emerald-50",
+      darkBgColor: "dark:bg-emerald-900/20",
       icon: "👤",
     },
     HEADHUNTER: {
       label: t("roles.HEADHUNTER", "Headhunter"),
-      color: "text-emerald-600 dark:text-emerald-400",
-      bgColor: "bg-emerald-100",
-      darkBgColor: "dark:bg-emerald-900/30",
+      color: userRoleColors.HEADHUNTER.text,
+      bgColor: "bg-blue-50",
+      darkBgColor: "dark:bg-blue-900/20",
       icon: "🎯",
     },
     COLLABORATOR: {
       label: t("roles.COLLABORATOR", "Collaborator"),
-      color: "text-orange-600 dark:text-orange-400",
-      bgColor: "bg-orange-100",
-      darkBgColor: "dark:bg-orange-900/30",
+      color: userRoleColors.COLLABORATOR.text,
+      bgColor: "bg-purple-50",
+      darkBgColor: "dark:bg-purple-900/20",
       icon: "🤝",
     },
   };

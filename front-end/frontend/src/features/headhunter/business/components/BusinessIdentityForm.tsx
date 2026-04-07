@@ -5,6 +5,7 @@
 
 import React, { useMemo } from "react";
 import { useBusinessTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import type { BusinessFormData } from "../types/business.types";
 import { COMPANY_SIZE_OPTIONS } from "../types/business.types";
 import { FormValidationError } from "./FormValidationErrors";
@@ -110,7 +111,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               placeholder={t("business.form.company_name_placeholder")}
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.companyName && touchedFields.has("companyName")
-                  ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)} focus:${getSemanticClass("danger", "border", true)} focus:${getSemanticClass("danger", "ring", true)}`
                   : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
               required
@@ -139,7 +140,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               disabled={isDisabled}
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.companySize && touchedFields.has("companySize")
-                  ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)} focus:${getSemanticClass("danger", "border", true)} focus:${getSemanticClass("danger", "ring", true)}`
                   : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
             >
@@ -179,7 +180,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.headquartersAddress &&
                 touchedFields.has("headquartersAddress")
-                  ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)} focus:${getSemanticClass("danger", "border", true)} focus:${getSemanticClass("danger", "ring", true)}`
                   : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
               required
@@ -215,7 +216,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               maxLength={13}
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.taxId && touchedFields.has("taxId")
-                  ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)} focus:${getSemanticClass("danger", "border", true)} focus:${getSemanticClass("danger", "ring", true)}`
                   : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
               required
@@ -246,7 +247,7 @@ export const BusinessIdentityForm: React.FC<BusinessIdentityFormProps> = ({
               placeholder={t("business.form.website_placeholder")}
               className={`mt-2 block w-full rounded-lg border px-4 py-3 text-sm transition-colors ${
                 errors.website && touchedFields.has("website")
-                  ? "border-red-500 bg-red-50 text-red-900 focus:border-red-500 focus:ring-red-500"
+                  ? `${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "text", true)} focus:${getSemanticClass("danger", "border", true)} focus:${getSemanticClass("danger", "ring", true)}`
                   : "border-slate-300 bg-white text-slate-900 focus:border-brand-primary focus:ring-brand-primary"
               } ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
               required
