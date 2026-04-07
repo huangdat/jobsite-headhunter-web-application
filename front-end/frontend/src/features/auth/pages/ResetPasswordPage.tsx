@@ -119,12 +119,14 @@ export function ResetPasswordPage() {
   };
 
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: tAuth("pages.login") }}>
+    <AuthLayout ctaButton={{ to: "/login", label: tAuth("pages.login.label") }}>
       <main className="max-w-6xl mx-auto px-4 pt-8 md:pt-12 pb-0">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}
           <div className="md:w-5/12 bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-8 flex flex-col justify-center">
-            <Display size="md">{tAuth("pages.resetPassword.title")}</Display>
+            <Display size="md" className="text-white">
+              {tAuth("pages.resetPassword.title")}
+            </Display>
 
             <BodyText className="text-slate-300 mt-6">
               {tAuth("pages.resetPassword.subtitle")}
@@ -164,7 +166,7 @@ export function ResetPasswordPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
-                    label={tApp("password")}
+                    label={tAuth("password")}
                     error={errors.password?.message}
                   >
                     <Input

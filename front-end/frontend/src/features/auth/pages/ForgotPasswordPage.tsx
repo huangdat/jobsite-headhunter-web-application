@@ -67,7 +67,7 @@ export function ForgotPasswordPage() {
 
   return (
     <AuthLayout
-      ctaButton={{ to: "/login", label: tAuth("pages.login") }}
+      ctaButton={{ to: "/login", label: tAuth("pages.login.label") }}
       className="overflow-x-hidden"
     >
       <main className="max-w-5xl mx-auto px-4 py-8">
