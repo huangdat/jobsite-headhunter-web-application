@@ -49,7 +49,7 @@ export default [
       "custom/no-api-urls": "error",
       "custom/no-hardcoded-html-attributes": "error",
       "custom/no-hardcoded-toast-messages": "error",
-      "custom/no-hardcoded-colors": "off",          // TODO: Fix design token usage in Phase 3
+      "custom/no-hardcoded-colors": "error",        // Phase 3: Fix design token usage
       
       // SECURITY (WARN - Awareness)
       "security/detect-object-injection": "warn",

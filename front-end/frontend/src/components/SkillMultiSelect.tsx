@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -22,6 +23,7 @@ export function SkillMultiSelect({
   disabled = false,
 }: SkillMultiSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation("form");
 
   const skillsByCategory = useMemo(() => {
     const grouped: Record<string, SkillOption[]> = {};
@@ -64,7 +66,9 @@ export function SkillMultiSelect({
             {selectedSkillNames}
           </span>
         ) : (
-          <span className="text-slate-400">Select skills...</span>
+          <span className="text-slate-400">
+            {t("form.skill.selectSkills", "Select skills...")}
+          </span>
         )}
       </Button>
 

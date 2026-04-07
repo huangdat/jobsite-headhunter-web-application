@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { getSemanticClass } from "@/lib/design-tokens";
 import {
   Display,
   SmallText,
@@ -34,6 +35,7 @@ import {
 } from "lucide-react";
 import { PageContainer } from "@/shared/components/layout";
 import { PageSkeleton } from "@/shared/components/states";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 
 export const ApplicationDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,6 +44,7 @@ export const ApplicationDetailPage: React.FC = () => {
 
   const [application, setApplication] = useState<Application | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   const [selectedInterview, setSelectedInterview] = useState<Interview | null>(
     null
   );
@@ -79,11 +82,14 @@ export const ApplicationDetailPage: React.FC = () => {
     const fetchDetail = async () => {
       try {
         setIsLoading(true);
+        setError(null);
         const data = await getApplicationDetail(applicationId);
         setApplication(data);
-      } catch {
+      } catch (err) {
+        const errorObj =
+          err instanceof Error ? err : new Error(t("common.error"));
+        setError(errorObj);
         toast.error(t("common.error"));
-        navigate("/headhunter/applications");
       } finally {
         setIsLoading(false);
       }
@@ -118,14 +124,25 @@ export const ApplicationDetailPage: React.FC = () => {
       </PageContainer>
     );
 
+  if (error)
+    return (
+      <PageContainer variant="white" maxWidth="4xl">
+        <ErrorState
+          error={error}
+          onRetry={() => window.location.reload()}
+          title={t("applications.errorLoading")}
+        />
+      </PageContainer>
+    );
+
   if (!application)
     return (
       <PageContainer variant="white" maxWidth="4xl">
-        <div className="p-20 text-center">
-          <SmallText variant="muted" weight="bold">
-            {t("common.notFound")}
-          </SmallText>
-        </div>
+        <ErrorState
+          error={new Error(t("common.notFound"))}
+          onRetry={() => navigate("/my-applications")}
+          title={t("applications.notFound")}
+        />
       </PageContainer>
     );
 
@@ -320,9 +337,9 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
+                className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass('danger', 'border', true)} ${getSemanticClass('danger', 'text', true)} hover:${getSemanticClass('danger', 'bg', true)}`}
               >
-                <MetaText className="text-red-500">
+                <MetaText className={getSemanticClass('danger', 'text', true)}>
                   {t("common.reject")}
                 </MetaText>
               </Button>
@@ -347,9 +364,9 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
+                className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass('danger', 'border', true)} ${getSemanticClass('danger', 'text', true)} hover:${getSemanticClass('danger', 'bg', true)}`}
               >
-                <MetaText className="text-red-500">
+                <MetaText className={getSemanticClass('danger', 'text', true)}>
                   {t("common.reject")}
                 </MetaText>
               </Button>
@@ -376,9 +393,9 @@ export const ApplicationDetailPage: React.FC = () => {
                     "applications.success.rejected"
                   )
                 }
-                className="flex-1 border-red-200 text-red-500 hover:bg-red-50 h-12 rounded-xl transition-all cursor-pointer"
+                className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass('danger', 'border', true)} ${getSemanticClass('danger', 'text', true)} hover:${getSemanticClass('danger', 'bg', true)}`}
               >
-                <MetaText className="text-red-500">
+                <MetaText className={getSemanticClass('danger', 'text', true)}>
                   {t("common.reject")}
                 </MetaText>
               </Button>

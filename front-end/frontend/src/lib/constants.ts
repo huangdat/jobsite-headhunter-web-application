@@ -88,6 +88,7 @@ export const API_ENDPOINTS = {
     GET_TOP_10: "/api/business-profile/10-best",
     GET_ALL: "/api/business-profile",
     GET_BY_ID: "/api/business-profile/{id}",
+    GET_JOBS: "/api/business-profile/{id}/jobs",
   },
 
   // Business Verification

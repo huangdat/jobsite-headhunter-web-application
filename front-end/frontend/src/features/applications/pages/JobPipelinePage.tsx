@@ -18,9 +18,12 @@ import {
   SmallText,
 } from "@/shared/components/typography/Typography";
 import { useAppTranslation, useHeadhunterTranslation } from "@/shared/hooks";
+import { PageSkeleton } from "@/shared/components/states";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { useApplications } from "../hooks";
 import type { ApplicationStatus } from "../types";
 import { APPLICATION_STATUS_LABELS } from "../utils";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 const JobPipelineContent: React.FC<{
   jobId?: string;
@@ -32,17 +35,12 @@ const JobPipelineContent: React.FC<{
 
   const pageSize = 20;
 
-  const {
-    applications,
-    isLoading,
-    error,
-    pagination,
-    fetchApplications,
-  } = useApplications({
-    jobId: jobIdNumber,
-    isCandidateView: false,
-    autoFetch: false,
-  });
+  const { applications, isLoading, error, pagination, fetchApplications } =
+    useApplications({
+      jobId: jobIdNumber,
+      isCandidateView: false,
+      autoFetch: false,
+    });
 
   const allStatusValue = "ALL" as const;
   const [keyword, setKeyword] = useState("");
@@ -70,7 +68,14 @@ const JobPipelineContent: React.FC<{
       status: status === allStatusValue ? undefined : status,
       keyword: debouncedKeyword || undefined,
     });
-  }, [jobIdNumber, page, pageSize, status, debouncedKeyword, fetchApplications]);
+  }, [
+    jobIdNumber,
+    page,
+    pageSize,
+    status,
+    debouncedKeyword,
+    fetchApplications,
+  ]);
 
   const handleResetFilters = () => {
     setKeyword("");
@@ -81,6 +86,26 @@ const JobPipelineContent: React.FC<{
 
   const totalCandidates = pagination.totalElements || applications.length;
   const isInitialLoading = isLoading && applications.length === 0;
+
+  if (isInitialLoading) {
+    return (
+      <PageContainer variant="white" maxWidth="6xl">
+        <PageSkeleton variant="list" count={3} />
+      </PageContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageContainer variant="white" maxWidth="6xl">
+        <ErrorState
+          error={new Error(error)}
+          onRetry={() => window.location.reload()}
+          title={t("applications.errorLoading")}
+        />
+      </PageContainer>
+    );
+  }
 
   return (
     <PageContainer variant="white" maxWidth="6xl">
@@ -93,7 +118,7 @@ const JobPipelineContent: React.FC<{
             <Button
               variant="outline"
               onClick={() => navigate(-1)}
-              className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-lime-500 hover:bg-lime-50 dark:hover:bg-slate-800 font-bold px-5 flex gap-2 cursor-pointer transition-all"
+              className={`rounded-xl border-slate-200 dark:border-slate-700 font-bold px-5 flex gap-2 cursor-pointer transition-all hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-slate-800`}
             >
               <ChevronLeft size={18} />
               {t("common.back")}
@@ -151,7 +176,7 @@ const JobPipelineContent: React.FC<{
           <Button
             variant="outline"
             onClick={handleResetFilters}
-            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-lime-500 hover:bg-lime-50 dark:hover:bg-slate-800 font-bold px-5"
+            className={`rounded-xl border-slate-200 dark:border-slate-700 font-bold px-5 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-slate-800`}
           >
             {tHeadhunter("filters.actions.clearAll")}
           </Button>
@@ -230,7 +255,7 @@ const JobPipelineContent: React.FC<{
                     {new Date(app.appliedAt).toLocaleDateString()}
                   </td>
                   <td className="p-5">
-                    <span className="px-3 py-1 bg-lime-100 text-lime-700 dark:bg-lime-500/20 dark:text-lime-400 rounded-full text-[10px] font-black uppercase tracking-tight">
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${getSemanticClass('success', 'bg', true)} ${getSemanticClass('success', 'text', true)}`}>
                       {app.status}
                     </span>
                   </td>
@@ -255,7 +280,8 @@ const JobPipelineContent: React.FC<{
       {pagination.totalPages > 1 && (
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
           <SmallText variant="muted">
-            {t("common.page")} {pagination.page + 1} {t("common.of")} {pagination.totalPages}
+            {t("common.page")} {pagination.page + 1} {t("common.of")}{" "}
+            {pagination.totalPages}
           </SmallText>
           <div className="flex gap-2">
             <Button

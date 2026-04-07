@@ -5,6 +5,7 @@ import { usersApi } from "@/features/users/services/usersApi";
 import type { PagedResponse } from "@/features/users/services/usersApi";
 import type { UserDetail } from "@/features/users/types/user.types";
 import { PageContainer, PageHeader } from "@/shared/components/layout";
+import { PageSkeleton } from "@/shared/components/states";
 
 export const AdminDashboardPage: React.FC = () => {
   const { t } = useUsersTranslation();
@@ -56,14 +57,7 @@ export const AdminDashboardPage: React.FC = () => {
 
       {/* Stats Grid */}
       {loading ? (
-        <div className="flex items-center justify-center min-h-100">
-          <div className="text-center">
-            <div className="w-12 h-12 rounded-full border-4 border-slate-200 dark:border-slate-700 border-t-brand-primary mx-auto mb-4 animate-spin" />
-            <p className="text-slate-600 dark:text-slate-400">
-              {t("common.loading")}
-            </p>
-          </div>
-        </div>
+        <PageSkeleton variant="grid" count={4} />
       ) : (
         <div className="space-y-6">
           {/* Statistics Cards */}

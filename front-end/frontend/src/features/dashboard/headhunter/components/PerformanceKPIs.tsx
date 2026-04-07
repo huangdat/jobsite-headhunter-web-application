@@ -73,7 +73,10 @@ export const PerformanceKPIs: React.FC<PerformanceKPIsProps> = ({
         color="purple"
         trend="down"
         trendValue="-2 days"
-        subtitle="Industry avg: 28 days"
+        subtitle={t(
+          "headhunter.dashboard.industryAvg",
+          "Industry avg: 28 days"
+        )}
       />
 
       {/* Hiring Success Card */}

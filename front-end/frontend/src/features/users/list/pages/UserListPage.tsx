@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import {
   UserListHeader,
   UserListTable,
-  UserListEmpty,
-  UserListLoading,
   UserListPagination,
 } from "@/features/users/list/components";
 import { UserFilters } from "@/features/users/components/common/UserFilters";
 import { useUsers } from "@/features/users/list/hooks/useUsers";
+import { useUsersTranslation } from "@/shared/hooks";
 import { PageContainer } from "@/shared/components/layout";
+import { PageSkeleton, ErrorState } from "@/shared/components/states";
 
 interface UserListPageProps {
   onAddNewUser?: () => void;
@@ -17,6 +17,7 @@ interface UserListPageProps {
 
 export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
   const navigate = useNavigate();
+  const { t } = useUsersTranslation();
   const [showFilters, setShowFilters] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
 
@@ -161,16 +162,20 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
       {/* Content Area */}
       <div className="mt-6">
         {error && (
-          <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-          </div>
+          <ErrorState
+            error={new Error(error)}
+            onRetry={() => window.location.reload()}
+            title={t("users.list.error.loadingFailed")}
+          />
         )}
 
-        {loading ? (
-          <UserListLoading />
-        ) : users.length === 0 ? (
-          <UserListEmpty onClearFilters={clearFilters} />
-        ) : (
+        {!error && loading && <PageSkeleton variant="table" count={5} />}
+
+        {!error && !loading && users.length === 0 ? (
+          <div className="text-center py-20 border-2 border-dashed rounded-3xl text-slate-400 dark:text-slate-500 dark:border-slate-700">
+            <p>No users found. Try adjusting your filters.</p>
+          </div>
+        ) : !error && !loading ? (
           <>
             <UserListTable
               users={users}
@@ -199,7 +204,7 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
               onItemsPerPageChange={setItemsPerPage}
             />
           </>
-        )}
+        ) : null}
       </div>
     </PageContainer>
   );

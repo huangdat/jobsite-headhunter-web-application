@@ -1,5 +1,6 @@
 import React from "react";
 import { ErrorMessage } from "./ErrorMessage";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 type Props = { children: React.ReactNode };
 
@@ -24,7 +25,7 @@ export default class ErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="p-4 rounded bg-red-50 text-red-700">
+        <div className={`p-4 rounded ${getSemanticClass('danger', 'bg', true)} ${getSemanticClass('danger', 'text', true)}`}>
           <ErrorMessage />
         </div>
       );
