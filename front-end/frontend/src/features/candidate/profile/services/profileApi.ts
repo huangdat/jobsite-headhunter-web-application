@@ -14,6 +14,7 @@ const mapProfileResponse = (payload: unknown): CandidateProfile => {
     fullName: raw.fullName ?? "",
     email: raw.email ?? "",
     phone: raw.phone ?? "",
+    imageUrl: raw.imageUrl,
     currentTitle: raw.currentTitle ?? "",
     yearsOfExperience: raw.yearsOfExperience ?? null,
     currentStatus: raw.currentStatus ?? "OPEN_FOR_WORK",
@@ -67,6 +68,11 @@ export const profileApi = {
     appendIfPresent("city", payload.city?.trim());
     appendIfPresent("openForWork", payload.openForWork);
     appendIfPresent("cvUrl", payload.cvUrl?.trim());
+
+    // Add avatar file if provided
+    if (payload.avatar) {
+      formData.append("avatar", payload.avatar);
+    }
 
     const response = await apiClient.put<ApiResponse<CandidateProfile>>(
       API_ENDPOINTS.ACCOUNT.UPDATE_PROFILE,

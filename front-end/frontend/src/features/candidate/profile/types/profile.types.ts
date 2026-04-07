@@ -9,6 +9,7 @@ export interface CandidateProfile {
   fullName: string;
   email?: string;
   phone?: string;
+  imageUrl?: string;
   currentTitle: string;
   cvUrl?: string;
   yearsOfExperience: number | null;
@@ -20,7 +21,9 @@ export interface CandidateProfile {
   openForWork: boolean;
 }
 
-export type CandidateProfileFormValues = Omit<CandidateProfile, "id">;
+export type CandidateProfileFormValues = Omit<CandidateProfile, "id"> & {
+  avatar?: File;
+};
 
 export type ProfileValidationErrors = Partial<
   Record<keyof CandidateProfileFormValues, string>
@@ -39,7 +42,8 @@ export interface CandidateProfilePayload {
   bio?: string;
   city?: string;
   openForWork?: boolean;
-  cvUrl?: string; // Đảm bảo trường này tồn tại
+  cvUrl?: string;
+  avatar?: File;
 }
 
 export interface UseProfileUpdateReturn {
@@ -73,6 +77,7 @@ export const DEFAULT_PROFILE_VALUES: CandidateProfileFormValues = {
   fullName: "",
   email: "",
   phone: "",
+  imageUrl: "",
   currentTitle: "",
   cvUrl: "",
   yearsOfExperience: null,

@@ -190,7 +190,7 @@ export function AppRouter() {
   function RoleRedirect() {
     const { isAuthenticated, isInitializing, user } = useAuth();
 
-    if (isInitializing) return null;
+    if (isInitializing) return <PageLoader />;
 
     if (!isAuthenticated) return <Navigate to="/home" replace />;
 

@@ -73,6 +73,24 @@
       "currentTitle": "Kiến trúc sư kỹ thuật cấp cao"
     }
   },
+  "avatar": {
+    "messages": {
+      "selected": "Avatar selected. Click 'Save Changes' to upload."
+    },
+    "section": {
+      "title": "Avatar"
+    },
+    "upload": {
+      "button": "Upload Avatar",
+      "changeButton": "Change Avatar"
+    },
+    "validation": {
+      "maxSize": "Kích thước avatar không được vượt quá 5MB"
+    },
+    "selected": {
+      "filename": "Avatar mới: "
+    }
+  },
   "cv": {
     "management": {
       "breadcrumb": "QUẢN LÝ CV",
