@@ -17,6 +17,8 @@ import {
   LabelText,
   SmallText,
 } from "@/shared/components/typography/Typography";
+import { PageSkeleton } from "@/shared/components/states/PageSkeleton";
+import { ErrorState } from "@/shared/components/states/ErrorState";
 import { ChevronLeft } from "lucide-react";
 
 export function JobCreatePage() {
@@ -24,6 +26,7 @@ export function JobCreatePage() {
   const navigate = useNavigate();
   const [skills, setSkills] = useState<SkillOption[]>([]);
   const [isLoadingSkills, setIsLoadingSkills] = useState(true);
+  const [skillsError, setSkillsError] = useState<Error | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -44,12 +47,19 @@ export function JobCreatePage() {
   useEffect(() => {
     let active = true;
     setIsLoadingSkills(true);
+    setSkillsError(null);
     fetchSkills()
       .then((data) => {
         if (!active) return;
         setSkills(data);
       })
-      .catch(() => {
+      .catch((error) => {
+        if (!active) return;
+        const errorObj =
+          error instanceof Error
+            ? error
+            : new Error(t("validation.unableToLoadSkills"));
+        setSkillsError(errorObj);
         toast.error(t("validation.unableToLoadSkills"));
       })
       .finally(() => {
@@ -165,22 +175,52 @@ export function JobCreatePage() {
 
   return (
     <PageContainer variant="white" maxWidth="5xl">
-      <PageHeader
-        variant="bordered"
-        title={t("create.messages.publishJob")}
-        description={t("create.messages.subtitle")}
-        actions={
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => navigate("/home")}
-            className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary dark:hover:border-brand-primary hover:bg-brand-primary/10 dark:hover:bg-brand-primary/10 font-bold px-6 h-12 flex gap-2 transition-all cursor-pointer"
-          >
-            <ChevronLeft size={18} className="text-brand-primary" />
-            {t("detail.backToJobs")}
-          </Button>
-        }
-      />
+      {isLoadingSkills && <PageSkeleton variant="grid" columns={2} count={4} />}
+
+      {skillsError && (
+        <ErrorState
+          error={skillsError}
+          onRetry={() => {
+            setSkillsError(null);
+            setIsLoadingSkills(true);
+            fetchSkills()
+              .then((data) => {
+                setSkills(data);
+                setSkillsError(null);
+              })
+              .catch((error) => {
+                const errorObj =
+                  error instanceof Error
+                    ? error
+                    : new Error(t("validation.unableToLoadSkills"));
+                setSkillsError(errorObj);
+              })
+              .finally(() => {
+                setIsLoadingSkills(false);
+              });
+          }}
+          title={t("validation.unableToLoadSkills")}
+        />
+      )}
+
+      {!isLoadingSkills && !skillsError && (
+        <>
+          <PageHeader
+            variant="bordered"
+            title={t("create.messages.publishJob")}
+            description={t("create.messages.subtitle")}
+            actions={
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => navigate("/home")}
+                className="rounded-xl border-slate-200 dark:border-slate-700 hover:border-brand-primary dark:hover:border-brand-primary hover:bg-brand-primary/10 dark:hover:bg-brand-primary/10 font-bold px-6 h-12 flex gap-2 transition-all cursor-pointer"
+              >
+                <ChevronLeft size={18} className="text-brand-primary" />
+                {t("detail.backToJobs")}
+              </Button>
+            }
+          />
 
       <form
         className="mt-10 space-y-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 shadow-lg dark:shadow-slate-900/30"
@@ -508,6 +548,8 @@ export function JobCreatePage() {
           </Button>
         </div>
       </form>
+        </>
+      )}
     </PageContainer>
   );
 }

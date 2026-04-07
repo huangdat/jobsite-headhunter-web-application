@@ -244,3 +244,121 @@ export const cancelApplication = async (id: number): Promise<void> => {
     throw error;
   }
 };
+
+/**
+ * CONVENIENCE WRAPPERS FOR COMMON OPERATIONS
+ * These functions provide semantic shortcuts for frequent actions
+ */
+
+/**
+ * Move application to SCREENING phase (Headhunter action)
+ */
+export const screeningApplication = async (
+  applicationId: number,
+  notes?: string
+): Promise<Application> => {
+  return updateApplicationStatus(applicationId, "SCREENING", notes);
+};
+
+/**
+ * Move application to INTERVIEW phase and schedule interview (Headhunter action)
+ */
+export const scheduleInterviewPhase = async (
+  applicationId: number,
+  notes?: string
+): Promise<Application> => {
+  return updateApplicationStatus(applicationId, "INTERVIEW", notes);
+};
+
+/**
+ * Approve candidate - move to PASSED phase (Headhunter action)
+ */
+export const passCandidate = async (
+  applicationId: number,
+  notes?: string
+): Promise<Application> => {
+  return updateApplicationStatus(applicationId, "PASSED", notes);
+};
+
+/**
+ * Reject candidate application (Headhunter action)
+ * Equivalent to updateApplicationStatus with REJECTED status
+ */
+export const rejectCandidate = async (
+  applicationId: number,
+  reason?: string
+): Promise<Application> => {
+  return updateApplicationStatus(applicationId, "REJECTED", reason);
+};
+
+/**
+ * ALIAS EXPORTS FOR BACKWARD COMPATIBILITY & CLARITY
+ * Alternative names for the same functions to support different naming conventions
+ */
+
+/**
+ * Alias: Use submitApplication for job applications
+ */
+export const applyForJob = submitApplication;
+
+/**
+ * Alias: Get candidate's own applications
+ */
+export const getMyApplications = getCandidateApplications;
+
+/**
+ * Convenience method to fetch applications with default pagination
+ */
+export const fetchApplications = (
+  page = 0,
+  size = 10
+): Promise<PaginatedResponse<Application>> => {
+  return getCandidateApplications({ page, size });
+};
+
+/**
+ * SEMANTIC API GROUPINGS
+ * Organize functions by user role for clearer intent
+ */
+
+/**
+ * Candidate-facing application methods
+ * Use these methods when building features for job candidates
+ */
+export const candidateApi = {
+  apply: submitApplication,
+  getMyApplications: getCandidateApplications,
+  fetchWithParams: getCandidateApplications,
+  fetchByStatus: (status?: string) =>
+    getCandidateApplications({ status: status as any }),
+  getDetail: getApplicationDetail,
+  cancel: cancelApplication,
+  checkEligibility: validateApplicationEligibility,
+};
+
+/**
+ * Recruiter/Headhunter-facing application methods
+ * Use these methods when building features for recruiters
+ */
+export const recruitingApi = {
+  getJobPipeline: getApplicationsForJob,
+  getAllApplications: getHeadhunterApplications,
+  getDetail: getApplicationDetail,
+  updateStatus: updateApplicationStatus,
+  screen: screeningApplication,
+  scheduleInterview: scheduleInterviewPhase,
+  approve: passCandidate,
+  reject: rejectCandidate,
+  cancel: cancelApplication,
+};
+
+/**
+ * Interview management methods
+ * Centralized interview-related API calls
+ */
+export const interviewApi = {
+  create: createInterview,
+  update: updateInterview,
+  getByApplicationId: getInterviewByApplicationId,
+  getById: getInterviewById,
+};
