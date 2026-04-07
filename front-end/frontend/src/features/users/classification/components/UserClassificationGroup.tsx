@@ -86,10 +86,10 @@ export const UserClassificationGroup: React.FC<
           {/* Title & Subtitle */}
           <div className="text-left min-w-0">
             <h3 className="font-bold text-base text-slate-900 dark:text-white">
-              {group.displayName}
+              {t(group.displayName)}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-              {group.subtitle}
+              {t(group.subtitle)}
             </p>
           </div>
         </div>
@@ -213,4 +213,3 @@ export const UserClassificationGroup: React.FC<
     </div>
   );
 };
-

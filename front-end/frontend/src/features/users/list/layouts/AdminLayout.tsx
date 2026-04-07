@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { MdOutlineHandshake } from "react-icons/md";
 import { useAppTranslation } from "@/shared/hooks";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { getSemanticClass } from "@/lib/design-tokens";
@@ -50,19 +51,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       {/* Sidebar */}
       <aside className="w-64 bg-[#111827] hidden md:flex flex-col text-slate-300">
         <div className="p-6 flex items-center gap-3">
-          <div
-            className={
-              getSemanticClass("success", "bg", true) +
-              " p-2 rounded-lg text-white"
-            }
-          >
-            <span className="material-symbols-outlined">shield_person</span>
+          <div className="bg-brand-primary p-1.5 rounded-lg">
+            <MdOutlineHandshake className="text-black text-lg" />
           </div>
           <h1 className="font-bold text-xl tracking-tight text-white">
             Job
-            <span className={getSemanticClass("success", "text", true)}>
-              Site
-            </span>
+            <span className="text-brand-primary">Site</span>
           </h1>
         </div>
 
@@ -86,7 +80,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               href={feature.route}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
                 isRouteActive(feature.route)
-                  ? getSemanticClass("success", "bg", true) + " text-white"
+                  ? getSemanticClass("success", "bg", true) +
+                    " text-black font-semibold"
                   : "text-slate-400 hover:bg-white/5 hover:text-white"
               }`}
               title={feature.description ? t(feature.description) : undefined}
@@ -96,31 +91,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             </a>
           ))}
         </nav>
-
-        {/* Sidebar Footer */}
-        <div className="p-4 border-t border-white/10">
-          <div className="bg-white/5 p-4 rounded-xl flex items-center gap-3">
-            <div
-              className={
-                "size-10 rounded-full " +
-                getSemanticClass("success", "bg", true) +
-                "/20 flex items-center justify-center " +
-                getSemanticClass("success", "text", true) +
-                " font-bold"
-              }
-            >
-              AD
-            </div>
-            <div className="overflow-hidden">
-              <p className="text-xs font-bold truncate text-white">
-                {t("common.adminUserTitle")}
-              </p>
-              <p className="text-[10px] text-slate-400">
-                {t("common.appVersion")}
-              </p>
-            </div>
-          </div>
-        </div>
       </aside>
 
       {/* Main Content */}
