@@ -1,4 +1,13 @@
 {
+  "breadcrumb": {
+    "home": "Home",
+    "jobs": "Jobs",
+    "jobDetail": "Job Detail",
+    "editJob": "Edit Job",
+    "createJob": "Create Job",
+    "savedJobs": "Saved Jobs",
+    "managePostings": "Manage Postings"
+  },
   "jobs": {
     "common": {
       "total": "Total"

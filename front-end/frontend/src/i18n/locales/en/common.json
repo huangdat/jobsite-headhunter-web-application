@@ -10,6 +10,8 @@
     "home": "Home"
   },
   "common": {
+    "downloadCV": "Download CV",
+    "noCVAttached": "No CV attached",
     "loading": "Common loading",
     "actions": {
       "close": "Close"

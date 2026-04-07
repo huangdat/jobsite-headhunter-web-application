@@ -45,6 +45,7 @@
   },
   "validation": {},
   "verification": {
+    "status_approved": "Approved",
     "status": "Verification Status",
     "status_desc": "Track your profile verification progress",
     "PENDING": "Pending",

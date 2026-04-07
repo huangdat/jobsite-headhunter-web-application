@@ -27,20 +27,6 @@ export function ProfileEditPage() {
 
   return (
     <div className="min-h-screen bg-slate-50/30">
-      {/* BREADCRUMBS */}
-      <div className="mx-auto max-w-7xl px-8 py-4">
-        <Breadcrumb
-          items={[
-            { label: t("breadcrumb.dashboard") || "Dashboard", href: "/" },
-            {
-              label: t("breadcrumb.profile") || "Profile",
-              href: "/candidate/profile",
-            },
-            { label: t("breadcrumb.edit") || "Edit" },
-          ]}
-        />
-      </div>
-
       {/* PHẦN HEADER: Bây giờ nó sẽ tràn lề 100% vì không bị bọc bởi container */}
       <div className="mb-12 bg-[#069261] px-8 py-12">
         <div className="mx-auto max-w-7xl">

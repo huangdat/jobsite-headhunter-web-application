@@ -35,18 +35,13 @@ export const getBusinessProfile = async (): Promise<BusinessProfile> => {
     const account = await getMyInfo();
     const businessProfileId = account.businessProfileId;
 
-    console.log("Debug - Full account info:", account);
-    console.log("Debug - businessProfileId:", businessProfileId);
-
     if (!businessProfileId) {
       throw new Error("No business profile assigned to this account.");
     }
 
     const profile = await getBusinessProfileById(businessProfileId);
-    console.log("Debug - Fetched profile:", profile);
     return profile;
   } catch (error) {
-    console.error("Error fetching headhunter's business profile:", error);
     throw error;
   }
 };

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Job } from "../types";
 import { useHomeTranslation } from "@/shared/hooks";
 import { getRecommendedJobs } from "@/shared/utils/jobService";
@@ -10,6 +11,7 @@ import {
 } from "@/shared/common-blocks/typography/Typography";
 
 export function RecommendedJobs() {
+  const navigate = useNavigate();
   const { t, currentLanguage } = useHomeTranslation();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -86,7 +88,8 @@ export function RecommendedJobs() {
           {jobs.map((job) => (
             <div
               key={job.id}
-              className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition"
+              onClick={() => navigate(`/jobs/${job.id}`)}
+              className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition cursor-pointer"
             >
               <div className="flex justify-end">
                 <span

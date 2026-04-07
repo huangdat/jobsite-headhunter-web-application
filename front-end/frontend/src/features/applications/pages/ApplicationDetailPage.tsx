@@ -223,9 +223,6 @@ export const ApplicationDetailPage: React.FC = () => {
             <MetaText className="mb-1">{t("columns.status")}</MetaText>
             <div className="mt-2 flex items-center gap-3">
               <ApplicationStatusBadge status={application.status} />
-              <MetaText>
-                {t(`applications.status.${application.status.toLowerCase()}`)}
-              </MetaText>
             </div>
             <MetaText className="mt-4">
               {t("common.appliedAt")}:{" "}
@@ -248,12 +245,14 @@ export const ApplicationDetailPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <SmallText weight="bold">Open CV File</SmallText>
+                  <SmallText weight="bold">
+                    {t("common.downloadCV") || "Open CV File"}
+                  </SmallText>
                 </a>
               </Button>
             ) : (
               <SmallText variant="muted" className="italic mt-2">
-                No CV attached
+                {t("common.noCVAttached") || "No CV attached"}
               </SmallText>
             )}
           </Card>
@@ -327,7 +326,9 @@ export const ApplicationDetailPage: React.FC = () => {
                 size="xl"
                 className="flex-1 cursor-pointer"
               >
-                <MetaText>{t("common.approve") || "Approve"}</MetaText>
+                <MetaText className="text-white font-bold">
+                  {t("common.approve") || "Approve"}
+                </MetaText>
               </Button>
               <Button
                 variant="outline"
@@ -354,7 +355,9 @@ export const ApplicationDetailPage: React.FC = () => {
                 size="xl"
                 className="flex-1 cursor-pointer"
               >
-                <MetaText>{t("applications.interview.title")}</MetaText>
+                <MetaText className="text-white font-bold">
+                  {t("applications.interview.title")}
+                </MetaText>
               </Button>
               <Button
                 variant="outline"
@@ -383,7 +386,9 @@ export const ApplicationDetailPage: React.FC = () => {
                 size="xl"
                 className="flex-1 cursor-pointer"
               >
-                <MetaText>{t("applications.status.passed")}</MetaText>
+                <MetaText className="text-white font-bold">
+                  {t("applications.status.passed")}
+                </MetaText>
               </Button>
               <Button
                 variant="outline"

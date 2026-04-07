@@ -176,7 +176,7 @@ const JobPipelineContent: React.FC<{
           <Button
             variant="outline"
             onClick={handleResetFilters}
-            className={`rounded-xl border-slate-200 dark:border-slate-700 font-bold px-5 hover:${getSemanticClass("success", "border", true).split(" ")[0]} hover:${getSemanticClass("success", "bg", false)} dark:hover:bg-slate-800`}
+            className={`rounded-xl border-slate-200 cursor-pointer dark:border-slate-700 font-bold px-5 hover:${getSemanticClass("success", "border", true).split(" ")[0]} hover:${getSemanticClass("success", "bg", false)} dark:hover:bg-slate-800`}
           >
             {tHeadhunter("filters.actions.clearAll")}
           </Button>
@@ -266,7 +266,7 @@ const JobPipelineContent: React.FC<{
                       onClick={() =>
                         navigate(`/headhunter/applications/${app.id}`)
                       }
-                      className="bg-slate-700 text-white hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 shadow-sm shadow-slate-700/20"
+                      className="bg-slate-700 text-white cursor-pointer hover:bg-slate-800 dark:bg-slate-600 dark:hover:bg-slate-700 shadow-sm shadow-slate-700/20"
                       size="sm"
                     >
                       {t("actions.viewDetails")}
