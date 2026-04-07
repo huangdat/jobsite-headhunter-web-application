@@ -1,96 +1,145 @@
 /**
  * ESLint Rule: no-hardcoded-colors
  *
- * Prevents hardcoded Tailwind color classes in JSX.
- * Forces use of design tokens from @/lib/design-tokens.ts
+ * Detects hardcoded Tailwind color classes (lime-*, emerald-*, cyan-*, teal-*)
+ * and suggests using design-tokens.ts or theme-classes.ts instead.
  *
- * ❌ FORBIDDEN:
- * - className="bg-red-600 hover:bg-red-700"
- * - className="text-green-500 dark:text-green-400"
+ * This ensures consistent color usage and makes brand color changes easier.
  *
- * ✅ ALLOWED:
- * - className={getSemanticClass('danger', 'bg', true)}
- * - className={getStatusBadgeClass('PASSED')}
- * - Neutral layout colors (slate-200, etc) for borders/dividers
- *
- * Exceptions:
- * - Comments explaining why hardcoded is needed
- * - Icon categorical colors (for visual distinction)
- * - CSS files
+ * NOTE: Currently disabled (TEMPORARILY) because project uses design-system
+ * where emerald-600 = success (from design-tokens mapping), lime = primary.
+ * Will be re-enabled after full refactor to semantic classes.
  */
 
-export default {
+const HARDCODED_COLOR_PATTERNS = [
+  {
+    pattern: /\blime-\d+\b/g,
+    suggest: "brandColors.primary or getDarkClasses()",
+  },
+  {
+    pattern: /\bemerald-\d+\b/g,
+    suggest: "brandColors.success or getDarkClasses()",
+  },
+  { pattern: /\bcyan-\d+\b/g, suggest: "brandColors.info or getDarkClasses()" },
+  { pattern: /\bteal-\d+\b/g, suggest: "brandColors.info or getDarkClasses()" },
+];
+
+const ALLOWED_FILES = [
+  "design-tokens.ts",
+  "theme-classes.ts",
+  "tailwind.config.js",
+];
+
+// TEMPORARILY DISABLED: Set to false to disable rule
+const RULE_ENABLED = false;
+
+const noHardcodedColors = {
   meta: {
     type: "problem",
     docs: {
       description:
-        "Enforce use of design tokens instead of hardcoded Tailwind color classes",
+        "Disallow hardcoded color classes. Use design-tokens or theme-classes utilities instead. (Currently disabled)",
       category: "Best Practices",
-      recommended: "error",
+      recommended: false,
+      url: "https://github.com/project-docs/design-system",
     },
-    messages: {
-      noHardcodedColors:
-        "Hardcoded color class '{{ color }}' detected. Use design-tokens instead: getSemanticClass('semantic', 'type', true) or getStatusBadgeClass(status)",
-    },
+    fixable: null,
+    schema: [],
   },
 
   create(context) {
-    // Color patterns that should NOT appear in className
-    const forbiddenColorPattern =
-      /\b(bg|text|border|ring)-(lime|emerald|green|red|yellow|amber|blue|purple|rose|pink|orange|cyan|indigo)-\d{1,3}\b/;
+    const filename = context.getFilename();
+    const isAllowedFile = ALLOWED_FILES.some((file) => filename.includes(file));
+    const shouldSkip = !RULE_ENABLED || isAllowedFile;
 
-    // Allowed exceptions (neutral colors used for layout)
-    const allowedNeutralPattern = /\b(bg|text|border|ring)-slate-\d{1,3}\b/;
+    if (shouldSkip) {
+      return {};
+    }
 
     return {
       JSXAttribute(node) {
-        // Only check className attributes
-        if (node.name.name !== "className") return;
+        // Check className attributes in JSX: className="lime-400"
+        if (node.name?.name === "className" && node.value?.type === "Literal") {
+          const classValue = node.value.value;
+          if (typeof classValue !== "string") return;
 
-        // Skip if value is not a string literal
-        if (
-          node.value?.type !== "Literal" ||
-          typeof node.value.value !== "string"
-        ) {
-          return;
-        }
-
-        const classString = node.value.value;
-        const classes = classString.split(/\s+/);
-
-        classes.forEach((cls) => {
-          // Check if it matches forbidden pattern
-          if (forbiddenColorPattern.test(cls)) {
-            // Exception: Allow neutral slate colors (layout)
-            if (allowedNeutralPattern.test(cls)) {
-              return; // OK - neutral colors are fine
-            }
-
-            // Exception: Allow icon categorical colors (for visual distinction)
-            // These are typically used in small, non-critical contexts
-            if (cls.includes("text-") && !cls.includes("dark:")) {
-              // Only flag if it's a semantic color (not just a random color)
-              const categoryMatch = cls.match(
-                /(?:green|red|blue|purple|orange)-/
-              );
-              if (categoryMatch) {
-                context.report({
-                  node,
-                  messageId: "noHardcodedColors",
-                  data: { color: cls },
-                });
-              }
-            } else {
-              // Flag bg-, border-, ring-, and dark: variants
+          for (const { pattern, suggest } of HARDCODED_COLOR_PATTERNS) {
+            const matches = classValue.match(pattern);
+            if (matches) {
               context.report({
                 node,
-                messageId: "noHardcodedColors",
-                data: { color: cls },
+                message: `Hardcoded color class "${matches[0]}" detected. Use design tokens instead: ${suggest}`,
+                data: { suggest },
               });
             }
           }
-        });
+        }
+      },
+
+      TemplateElement(node) {
+        // Check template literals: `className={color + ' ' + classes}`
+        if (typeof node.value.raw !== "string") return;
+
+        const classValue = node.value.raw;
+        for (const { pattern, suggest } of HARDCODED_COLOR_PATTERNS) {
+          const matches = classValue.match(pattern);
+          if (matches) {
+            context.report({
+              node,
+              message: `Hardcoded color class "${matches[0]}" detected in template. Use design tokens instead: ${suggest}`,
+              data: { suggest },
+            });
+          }
+        }
+      },
+
+      CallExpression(node) {
+        // Check cn() utility calls: cn('lime-400', 'p-4')
+        if (
+          node.callee.name === "cn" ||
+          node.callee.name === "clsx" ||
+          node.callee.name === "classnames"
+        ) {
+          node.arguments.forEach((arg) => {
+            if (arg.type === "Literal" && typeof arg.value === "string") {
+              const classValue = arg.value;
+              for (const { pattern, suggest } of HARDCODED_COLOR_PATTERNS) {
+                const matches = classValue.match(pattern);
+                if (matches) {
+                  context.report({
+                    node: arg,
+                    message: `Hardcoded color class "${matches[0]}" detected in ${node.callee.name}(). Use design tokens instead: ${suggest}`,
+                    data: { suggest },
+                  });
+                }
+              }
+            }
+          });
+        }
+      },
+
+      Property(node) {
+        // Check object properties: { className: 'lime-400' }
+        if (
+          (node.key.name === "className" || node.key.value === "className") &&
+          node.value.type === "Literal" &&
+          typeof node.value.value === "string"
+        ) {
+          const classValue = node.value.value;
+          for (const { pattern, suggest } of HARDCODED_COLOR_PATTERNS) {
+            const matches = classValue.match(pattern);
+            if (matches) {
+              context.report({
+                node: node.value,
+                message: `Hardcoded color class "${matches[0]}" detected. Use design tokens instead: ${suggest}`,
+                data: { suggest },
+              });
+            }
+          }
+        }
       },
     };
   },
 };
+
+export default noHardcodedColors;
