@@ -130,11 +130,12 @@ export const useUserClassification = (): UseUserClassificationReturn => {
   }, [allUsers, groupBy]);
 
   /**
-   * Fetch users on mount and when fetchAllUsers changes
+   * Fetch users on mount only
    */
   useEffect(() => {
     fetchAllUsers();
-  }, [fetchAllUsers]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * Reclassify when groupBy or allUsers changes

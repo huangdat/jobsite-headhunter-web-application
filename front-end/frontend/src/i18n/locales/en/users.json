@@ -55,6 +55,12 @@
     "applyFilter": "Apply Filter",
     "resetFilter": "Reset"
   },
+  "statuses": {
+    "suspended": "Suspended",
+    "pending": "Pending",
+    "active": "Active"
+  },
+
   "columns": {
     "user": "USER",
     "role": "ROLE",
@@ -118,12 +124,7 @@
     "errorLoadingData": "Error Loading Data",
     "failedToFetchUserDetails": "Failed to fetch user details"
   },
-  "statuses": {
-    "PENDING": "Pending",
-    "ACTIVE": "Active",
-    "SUSPENDED": "Suspended",
-    "DELETED": "Deleted"
-  },
+
   "loginStatus": {
     "success": "Success",
     "failedAttempt": "Failed"
@@ -289,6 +290,8 @@
     "errorGeneral": "An error occurred during deletion"
   },
   "classification": {
+    "active": "Active Users",
+    "inactive": "Inactive Users",
     "pageTitle": "User Classification",
     "description": "Overview of system user distribution by organizational role",
     "groupBy": "Group Results By",
