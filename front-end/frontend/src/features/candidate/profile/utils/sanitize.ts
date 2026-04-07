@@ -40,6 +40,7 @@ export const sanitizeProfileDraft = (
     fullName: sanitizeText(draft.fullName),
     email: sanitizeText(draft.email || ""),
     phone: sanitizeText(draft.phone || ""),
+    imageUrl: draft.imageUrl,
     currentTitle: sanitizeText(draft.currentTitle),
     currentStatus: draft.currentStatus,
     bio: sanitizeText(draft.bio),
@@ -49,6 +50,7 @@ export const sanitizeProfileDraft = (
     expectedSalaryMin: sanitizeCurrency(draft.expectedSalaryMin),
     expectedSalaryMax: sanitizeCurrency(draft.expectedSalaryMax),
     openForWork: Boolean(draft.openForWork),
+    avatar: draft.avatar,
   };
 };
 
@@ -66,5 +68,6 @@ export const toProfilePayload = (
     city: sanitized.city || undefined,
     openForWork: sanitized.openForWork,
     cvUrl: sanitized.cvUrl || undefined,
+    avatar: sanitized.avatar,
   };
 };

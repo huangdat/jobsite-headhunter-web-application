@@ -43,5 +43,23 @@
     "salaryMax": "Lương tối đa",
     "professionalBio": "Hồ sơ bio chuyên nghiệp",
     "bioPlaceholder": "Sở thích của bạn"
+  },
+  "avatar": {
+    "section": {
+      "title": "Avatar"
+    },
+    "upload": {
+      "button": "Upload Avatar",
+      "changeButton": "Change Avatar"
+    },
+    "messages": {
+      "selected": "Avatar selected. Click 'Save Changes' to upload."
+    },
+    "validation": {
+      "maxSize": "Avatar size must be less than 5MB"
+    },
+    "selected": {
+      "filename": "New avatar: "
+    }
   }
 }

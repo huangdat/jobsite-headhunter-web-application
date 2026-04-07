@@ -1,7 +1,7 @@
 import { getSemanticClass } from "@/lib/design-tokens";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { Button } from "@/shared/ui-primitives/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import {
   AlertCircle,
@@ -62,6 +62,20 @@ export function ProfileForm({
 }: ProfileFormProps) {
   const { t } = useCandidateTranslation();
   const [isUploading, setIsUploading] = useState(false);
+  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
+
+  // Create preview URL when avatar file is selected
+  useEffect(() => {
+    if (values.avatar) {
+      const url = URL.createObjectURL(values.avatar);
+      setAvatarPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else if (values.imageUrl) {
+      setAvatarPreviewUrl(values.imageUrl);
+    } else {
+      setAvatarPreviewUrl(null);
+    }
+  }, [values.avatar, values.imageUrl]);
 
   if (loading) {
     return <ProfileFormSkeleton />;
@@ -150,6 +164,77 @@ export function ProfileForm({
 
         {/* Sidebar */}
         <aside className="space-y-4 xl:col-span-4">
+          {/* Avatar Upload Box */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <FileUp className="h-4 w-4 text-slate-500" />
+              <h3 className="text-sm font-black uppercase tracking-wide text-slate-600">
+                {t("avatar.section.title")}
+              </h3>
+            </div>
+
+            {/* Display current avatar */}
+            {avatarPreviewUrl ? (
+              <div className="mb-4 flex justify-center">
+                <img
+                  src={avatarPreviewUrl}
+                  alt="Avatar"
+                  className="w-24 h-24 rounded-xl object-cover border border-slate-200"
+                />
+              </div>
+            ) : (
+              <div className="mb-4 flex justify-center">
+                <div className="w-24 h-24 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400">
+                  <FileUp size={32} />
+                </div>
+              </div>
+            )}
+
+            <input
+              aria-label="Upload avatar"
+              id="profile-avatar-input"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+
+                // Validate file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                  toast.error(t("avatar.validation.maxSize"));
+                  return;
+                }
+
+                // Update field with file
+                onFieldChange("avatar" as const, file);
+                toast.success(t("avatar.messages.selected"));
+                (e.target as HTMLInputElement).value = "";
+              }}
+            />
+
+            <Button
+              variant="primary"
+              size="sm"
+              className="h-11 px-6 font-bold cursor-pointer rounded-xl shadow-md transition-all active:scale-95 w-full bg-brand-primary hover:bg-brand-hover text-black"
+              onClick={() =>
+                document.getElementById("profile-avatar-input")?.click()
+              }
+            >
+              <FileUp className="mr-2 h-4 w-4" />
+              {values.avatar
+                ? t("avatar.upload.changeButton")
+                : t("avatar.upload.button")}
+            </Button>
+
+            {values.avatar && (
+              <p className="text-xs text-slate-500 mt-2 text-center">
+                {t("avatar.selected.filename")}
+                {values.avatar.name}
+              </p>
+            )}
+          </div>
+
           {/* CV Management Box */}
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
@@ -265,4 +350,3 @@ export function ProfileForm({
     </div>
   );
 }
-

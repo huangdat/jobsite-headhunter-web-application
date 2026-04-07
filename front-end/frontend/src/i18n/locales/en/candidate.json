@@ -74,6 +74,24 @@
       "currentTitle": "Senior Technical Architect"
     }
   },
+  "avatar": {
+    "messages": {
+      "selected": "Avatar selected. Click 'Save Changes' to upload."
+    },
+    "section": {
+      "title": "Avatar"
+    },
+    "upload": {
+      "button": "Upload Avatar",
+      "changeButton": "Change Avatar"
+    },
+    "validation": {
+      "maxSize": "Avatar size must be less than 5MB"
+    },
+    "selected": {
+      "filename": "New avatar: "
+    }
+  },
   "cv": {
     "management": {
       "breadcrumb": "CV MANAGEMENT",

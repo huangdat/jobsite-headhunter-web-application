@@ -5,6 +5,7 @@ import { HiMenu } from "react-icons/hi";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { useAuth } from "@/features/auth/context/useAuth";
+import { useCandidateProfileQuery } from "@/shared/hooks/useCandidateQueries";
 import { Navbar } from "./Navbar";
 import { Button } from "@/shared/ui-primitives/button";
 
@@ -18,6 +19,15 @@ export function Header({ onMenuClick }: HeaderProps) {
   const navigate = useNavigate();
   const { isAuthenticated, signOut, user } = useAuth();
 
+  const normalizedRole = user?.role
+    ? user.role.replace(/^roles\./i, "").toLowerCase()
+    : "";
+
+  const isCandidate = normalizedRole === "candidate";
+
+  // Only fetch candidate profile for candidates
+  const { data: candidateProfile } = useCandidateProfileQuery();
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -25,10 +35,6 @@ export function Header({ onMenuClick }: HeaderProps) {
     () => user?.username?.charAt(0).toUpperCase() || "U",
     [user?.username]
   );
-
-  const normalizedRole = user?.role
-    ? user.role.replace(/^roles\./i, "").toLowerCase()
-    : "";
 
   const isHeadhunter = normalizedRole === "headhunter";
 
@@ -106,18 +112,34 @@ export function Header({ onMenuClick }: HeaderProps) {
                 variant="ghost"
                 size="icon"
                 onClick={() => setDropdownOpen((prev) => !prev)}
-                className="w-10 h-10 rounded-full bg-brand-primary text-black hover:bg-brand-primary/90 cursor-pointer"
+                className="w-10 h-10 rounded-full bg-brand-primary text-black hover:bg-brand-primary/90 cursor-pointer overflow-hidden"
               >
-                {userInitial}
+                {isCandidate && candidateProfile?.imageUrl ? (
+                  <img
+                    src={candidateProfile.imageUrl}
+                    alt="Avatar"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  userInitial
+                )}
               </Button>
 
               {dropdownOpen && (
                 <div className="absolute right-0 top-[calc(100%+8px)] w-56 bg-white border border-border rounded-xl shadow-xl overflow-hidden z-50">
                   {/* User Profile Info */}
                   <div className="px-4 py-3 bg-slate-50 border-b border-border flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-black font-semibold text-sm">
-                      {userInitial}
-                    </div>
+                    {isCandidate && candidateProfile?.imageUrl ? (
+                      <img
+                        src={candidateProfile.imageUrl}
+                        alt="Avatar"
+                        className="w-9 h-9 rounded-full object-cover flex-shrink-0"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-black font-semibold text-sm flex-shrink-0">
+                        {userInitial}
+                      </div>
+                    )}
                     <div className="overflow-hidden">
                       <p className="text-sm font-medium text-slate-900 dark:text-slate-50 truncate">
                         {user?.username}
@@ -200,4 +222,3 @@ export function Header({ onMenuClick }: HeaderProps) {
     </header>
   );
 }
-
