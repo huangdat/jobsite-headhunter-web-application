@@ -318,6 +318,21 @@ export function LoginPage() {
               e.preventDefault();
               handleSubmit(formData);
             }}
+            onKeyDown={(e) => {
+              // Submit form when Enter is pressed (but not on password field specifically)
+              if (e.key === "Enter") {
+                e.preventDefault();
+                // Check if there are no validation errors before submitting
+                if (
+                  !errors.email &&
+                  !errors.password &&
+                  formData.email &&
+                  formData.password
+                ) {
+                  handleSubmit(formData);
+                }
+              }
+            }}
             className="space-y-6"
           >
             {/* ERROR STATE - Display general login errors */}

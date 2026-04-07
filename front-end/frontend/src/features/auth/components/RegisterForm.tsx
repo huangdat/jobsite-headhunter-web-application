@@ -388,6 +388,30 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 console.error("Form validation errors:", errors);
               }
             )}
+            onKeyDown={(e) => {
+              // Handle Enter key for Next/Submit buttons
+              if (e.key === "Enter") {
+                e.preventDefault();
+                // Go to next step if not on last step
+                if (currentStep < steps.length) {
+                  handleNextStep();
+                } else {
+                  // Submit on last step
+                  form.handleSubmit(
+                    async (data) => {
+                      console.log(
+                        "Form values are valid. Starting submission:",
+                        data
+                      );
+                      await onSubmit(data);
+                    },
+                    (errors) => {
+                      console.error("Form validation errors:", errors);
+                    }
+                  )();
+                }
+              }
+            }}
             className="space-y-6"
           >
             {/* Step 1: Account Information */}
