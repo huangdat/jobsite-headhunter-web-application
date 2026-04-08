@@ -355,12 +355,12 @@ export const statusColors = {
    * Visual: Red danger state
    */
   REJECTED: {
-    bg: "bg-red-50",
-    bgDark: "dark:bg-red-900/30",
+    bg: "bg-red-100",
+    bgDark: "dark:bg-red-900/40",
     text: "text-red-700",
-    textDark: "dark:text-red-400",
-    border: "border-red-200",
-    borderDark: "dark:border-red-900/50",
+    textDark: "dark:text-red-300",
+    border: "border-red-300",
+    borderDark: "dark:border-red-700",
   },
 
   /**

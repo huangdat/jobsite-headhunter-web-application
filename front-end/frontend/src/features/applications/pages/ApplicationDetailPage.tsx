@@ -2,6 +2,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Card } from "@/shared/ui-primitives/card";
 import { Button } from "@/shared/ui-primitives/button";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/shared/ui-primitives/alert-dialog";
 import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { getSemanticClass } from "@/lib/design-tokens";
 import {
@@ -50,6 +60,8 @@ export const ApplicationDetailPage: React.FC = () => {
   );
   const [showInterviewModal, setShowInterviewModal] = useState(false);
   const [showInterviewDetail, setShowInterviewDetail] = useState(false);
+  const [showRejectConfirm, setShowRejectConfirm] = useState(false);
+  const [isRejectingPending, setIsRejectingPending] = useState(false);
 
   const applicationId = id ? parseInt(id, 10) : 0;
 
@@ -114,6 +126,20 @@ export const ApplicationDetailPage: React.FC = () => {
       toast.success(t(successKey));
     } catch {
       toast.error(t("applications.error.updateStatus"));
+    }
+  };
+
+  const handleOpenRejectConfirm = () => {
+    setShowRejectConfirm(true);
+  };
+
+  const handleConfirmReject = async () => {
+    setIsRejectingPending(true);
+    try {
+      await handleStatusUpdate("REJECTED", "applications.success.rejected");
+      setShowRejectConfirm(false);
+    } finally {
+      setIsRejectingPending(false);
     }
   };
 
@@ -332,12 +358,7 @@ export const ApplicationDetailPage: React.FC = () => {
               </Button>
               <Button
                 variant="outline"
-                onClick={() =>
-                  handleStatusUpdate(
-                    "REJECTED",
-                    "applications.success.rejected"
-                  )
-                }
+                onClick={handleOpenRejectConfirm}
                 className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "text", true)} hover:${getSemanticClass("danger", "bg", true)}`}
               >
                 <MetaText className={getSemanticClass("danger", "text", true)}>
@@ -361,12 +382,7 @@ export const ApplicationDetailPage: React.FC = () => {
               </Button>
               <Button
                 variant="outline"
-                onClick={() =>
-                  handleStatusUpdate(
-                    "REJECTED",
-                    "applications.success.rejected"
-                  )
-                }
+                onClick={handleOpenRejectConfirm}
                 className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "text", true)} hover:${getSemanticClass("danger", "bg", true)}`}
               >
                 <MetaText className={getSemanticClass("danger", "text", true)}>
@@ -392,12 +408,7 @@ export const ApplicationDetailPage: React.FC = () => {
               </Button>
               <Button
                 variant="outline"
-                onClick={() =>
-                  handleStatusUpdate(
-                    "REJECTED",
-                    "applications.success.rejected"
-                  )
-                }
+                onClick={handleOpenRejectConfirm}
                 className={`flex-1 h-12 rounded-xl transition-all cursor-pointer border ${getSemanticClass("danger", "border", true)} ${getSemanticClass("danger", "text", true)} hover:${getSemanticClass("danger", "bg", true)}`}
               >
                 <MetaText className={getSemanticClass("danger", "text", true)}>
@@ -422,7 +433,33 @@ export const ApplicationDetailPage: React.FC = () => {
           onClose={() => setShowInterviewDetail(false)}
         />
       )}
+
+      <AlertDialog open={showRejectConfirm} onOpenChange={setShowRejectConfirm}>
+        <AlertDialogContent className="rounded-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {t("applications.confirm.rejectTitle") || "Confirm Rejection"}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("applications.confirm.rejectDescription")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex gap-3">
+            <AlertDialogCancel className="cursor-pointer ">
+              {t("common.cancel")}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmReject}
+              disabled={isRejectingPending}
+              className="bg-red-600 cursor-pointer hover:bg-red-700 text-white"
+            >
+              {isRejectingPending
+                ? t("common.processing") || "Processing..."
+                : t("common.reject")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageContainer>
   );
 };
-

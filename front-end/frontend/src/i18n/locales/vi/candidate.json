@@ -75,20 +75,20 @@
   },
   "avatar": {
     "messages": {
-      "selected": "Avatar selected. Click 'Save Changes' to upload."
+      "selected": "Ảnh đại diện đã được chọn. Nhấp vào 'Lưu thay đổi' để tải lên."
     },
     "section": {
-      "title": "Avatar"
+      "title": "Ảnh Đại Diện"
     },
     "upload": {
-      "button": "Upload Avatar",
-      "changeButton": "Change Avatar"
+      "button": "Tải lên Ảnh Đại Diện",
+      "changeButton": "Thay đổi Ảnh Đại Diện"
     },
     "validation": {
-      "maxSize": "Kích thước avatar không được vượt quá 5MB"
+      "maxSize": "Kích thước ảnh đại diện không được vượt quá 5MB"
     },
     "selected": {
-      "filename": "Avatar mới: "
+      "filename": "Ảnh đại diện mới: "
     }
   },
   "cv": {

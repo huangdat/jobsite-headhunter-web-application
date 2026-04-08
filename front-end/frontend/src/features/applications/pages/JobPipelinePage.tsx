@@ -22,8 +22,8 @@ import { PageSkeleton } from "@/shared/common-blocks/states";
 import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import { useApplications } from "../hooks";
 import type { ApplicationStatus } from "../types";
-import { APPLICATION_STATUS_LABELS } from "../utils";
-import { getSemanticClass } from "@/lib/design-tokens";
+import { APPLICATION_STATUS_LABELS, formatApplicationStatus } from "../utils";
+import { getSemanticClass, getStatusBadgeClass } from "@/lib/design-tokens";
 
 const JobPipelineContent: React.FC<{
   jobId?: string;
@@ -256,9 +256,12 @@ const JobPipelineContent: React.FC<{
                   </td>
                   <td className="p-5">
                     <span
-                      className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${getSemanticClass("success", "bg", true)} ${getSemanticClass("success", "text", true)}`}
+                      className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${getStatusBadgeClass(app.status)}`}
                     >
-                      {app.status}
+                      {formatApplicationStatus(
+                        app.status as ApplicationStatus,
+                        t
+                      )}
                     </span>
                   </td>
                   <td className="p-5 text-right">
@@ -323,4 +326,3 @@ export const JobPipelinePage: React.FC = () => {
 };
 
 export default JobPipelinePage;
-
