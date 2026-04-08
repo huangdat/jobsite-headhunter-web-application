@@ -1,0 +1,21 @@
+# File này chạy test docker-compose khi ở local, xóa bỏ (LocalOnly)trong filename
+version: '3.8'
+services:
+  backend:
+    image: headhunt-backend:latest
+    ports:
+      - "8080:8080"
+    environment: # Đưa config local vào
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/headhunt
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # Map vào host IP
+
+  frontend:
+    image: headhunt-frontend:latest
+    ports:
+      - "80:80" # Map cổng 80 của máy vào cổng 80 của Nginx
+    depends_on:
+      - backend
