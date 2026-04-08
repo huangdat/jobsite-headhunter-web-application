@@ -1,4 +1,5 @@
 {
   "title": "Lỗi",
-  "editorFailedToLoad": "Trình chỉnh sửa không thể tải"
+  "editorFailedToLoad": "Trình chỉnh sửa không thể tải",
+  "chartContextError": "useChart phải được sử dụng trong <ChartContainer />"
 }

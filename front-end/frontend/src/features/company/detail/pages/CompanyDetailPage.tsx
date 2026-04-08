@@ -9,7 +9,6 @@ import { useCompanyDetail } from "../hooks/useCompanyDetail";
 import { CompanyHeader } from "../components/CompanyHeader";
 import { CompanyAbout } from "../components/CompanyAbout";
 import { CompanyJobs } from "../components/CompanyJobs";
-import { CompanyReviews } from "../components/CompanyReviews";
 
 export function CompanyDetailPage() {
   const { id } = useParams<{ id: string }>();

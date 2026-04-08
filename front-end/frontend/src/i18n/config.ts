@@ -242,7 +242,7 @@ i18n.use(initReactI18next).init({
   lng: getUserLanguage(),
   fallbackLng: "en",
   debug: true, // Enable debug mode to log missing keys in console
-  ns: ["translation"],
+  ns: ["translation", "auth"],
   defaultNS: "translation",
   interpolation: {
     escapeValue: false, // React already handles XSS

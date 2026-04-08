@@ -125,7 +125,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                 {isCandidate && candidateProfile?.imageUrl ? (
                   <img
                     src={candidateProfile.imageUrl}
-                    alt="Avatar"
+                    alt={t("candidate.avatar.section.title")}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -140,7 +140,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                     {isCandidate && candidateProfile?.imageUrl ? (
                       <img
                         src={candidateProfile.imageUrl}
-                        alt="Avatar"
+                        alt={t("candidate.avatar.section.title")}
                         className="w-9 h-9 rounded-full object-cover flex-shrink-0"
                       />
                     ) : (

@@ -116,11 +116,31 @@ export const UserListTable: React.FC<UserListTableProps> = ({
                     user.status === "SUSPENDED" ? "opacity-60" : ""
                   }`}
                 >
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-sm truncate">{user.name}</p>
-                    <p className="text-xs text-slate-500 truncate">
-                      {user.email}
-                    </p>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex-shrink-0">
+                      {user.avatar ? (
+                        <img
+                          src={user.avatar}
+                          alt={user.name}
+                          className="w-10 h-10 rounded-full object-cover bg-slate-200 dark:bg-slate-700"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
+                          {user.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .toUpperCase()
+                            .slice(0, 2)}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm truncate">{user.name}</p>
+                      <p className="text-xs text-slate-500 truncate">
+                        {user.email}
+                      </p>
+                    </div>
                   </div>
                 </td>
                 <td className="px-6 py-4">

@@ -8,9 +8,6 @@ import {
 } from "@/shared/hooks";
 import { brandColors } from "@/lib/design-tokens";
 import { Breadcrumb } from "@/shared/common-blocks/navigation/Breadcrumb";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeSanitize from "rehype-sanitize";
 import { Button } from "@/shared/ui-primitives/button";
 import { Badge } from "@/shared/ui-primitives/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
@@ -49,8 +46,9 @@ export function JobDetailPage() {
   // Redirect if access is forbidden (job is closed/hidden and not authorized)
   useEffect(() => {
     if (error) {
-      const status = (error as any)?.response?.status;
-      const statusCode = (error as any)?.status;
+      const status = (error as { response?: { status?: number } })?.response
+        ?.status;
+      const statusCode = (error as { status?: number })?.status;
 
       // Check for 403 Forbidden error
       if (status === 403 || statusCode === 403) {

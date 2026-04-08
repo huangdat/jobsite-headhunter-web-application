@@ -37,6 +37,7 @@
     "unknownError": "Unknown error occurred"
   },
   "messages": {
+    "accountNotFound": "Account not found with the provided credentials",
     "signedInSuccess": "Signed in successfully.",
     "failedToLoadCommission": "Failed to load commission data",
     "failedToSaveProfile": "Failed to save profile",
@@ -48,5 +49,15 @@
     "noPermissionAccess": "You do not have permission to access the classification feature.",
     "sessionExpiredLoginAgain": "Your session has expired. Please login again.",
     "myJobs": "My jobs"
+  },
+  "editor": {
+    "bold": "Bold (Ctrl+B)",
+    "italic": "Italic (Ctrl+I)",
+    "bulletList": "Bullet List",
+    "orderedList": "Ordered List",
+    "heading2": "Heading 2",
+    "undo": "Undo",
+    "redo": "Redo",
+    "enterText": "Enter text..."
   }
 }
