@@ -23,21 +23,21 @@ export function Navbar() {
         {t("navigation.forum")}
       </a>
       <a
-        href="#recommended"
+        href="/home#recommended"
         className="text-sm font-medium hover:text-brand-primary transition"
       >
         {t("navigation.recommended")}
       </a>
 
       <a
-        href="#top-companies"
+        href="/home#top-companies"
         className="text-sm font-medium hover:text-brand-primary transition"
       >
         {t("navigation.topCompanies")}
       </a>
 
       <a
-        href="#featured-jobs"
+        href="/home#featured-jobs"
         className="text-sm font-medium hover:text-brand-primary transition"
       >
         {t("navigation.featuredJobs")}

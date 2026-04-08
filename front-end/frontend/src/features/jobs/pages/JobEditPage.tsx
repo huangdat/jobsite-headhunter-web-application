@@ -59,6 +59,13 @@ export function JobEditPage() {
     },
   });
 
+  // Force refetch job details when entering page to get fresh data
+  useEffect(() => {
+    if (jobId) {
+      refetchJob();
+    }
+  }, [jobId, refetchJob]);
+
   // Populate form when job detail is loaded
   useEffect(() => {
     if (jobDetail) {
@@ -103,8 +110,12 @@ export function JobEditPage() {
     try {
       await updateJob(Number(id), values);
 
+      // Invalidate caches and refetch immediately
       await queryClient.invalidateQueries({ queryKey: ["my-jobs"] });
+      await queryClient.refetchQueries({ queryKey: ["my-jobs"] });
+
       await queryClient.invalidateQueries({ queryKey: ["job-detail", id] });
+      await queryClient.refetchQueries({ queryKey: ["job-detail", id] });
 
       toast.success(t("edit.messages.updatedSuccess"));
 
@@ -195,7 +206,11 @@ export function JobEditPage() {
 
           <div className="space-y-2">
             <LabelText className="block">{t("edit.labels.deadline")}</LabelText>
-            <Input type="date" {...register("deadline")} />
+            <Input
+              type="date"
+              min={new Date().toISOString().split("T")[0]}
+              {...register("deadline")}
+            />
           </div>
         </section>
 
@@ -408,5 +423,3 @@ export function JobEditPage() {
 }
 
 export default JobEditPage;
-
-

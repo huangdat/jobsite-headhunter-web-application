@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import { getSemanticClass } from "@/lib/design-tokens";
 import {
@@ -38,7 +39,15 @@ export function SavedJobsPage() {
     data: jobs = [],
     isLoading,
     error,
+    refetch: refetchSavedJobs,
   } = useSavedJobsQuery(isAuthenticated);
+
+  // Force refetch saved jobs when entering page to get fresh data
+  useEffect(() => {
+    if (isAuthenticated) {
+      refetchSavedJobs();
+    }
+  }, [isAuthenticated, refetchSavedJobs]);
 
   // Mutation: remove a saved job
   const removeJobMutation = useRemoveSavedJobMutation();
@@ -151,4 +160,3 @@ export function SavedJobsPage() {
     </PageContainer>
   );
 }
-
