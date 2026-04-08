@@ -285,10 +285,26 @@ export function AppRouter() {
           />
           <Route path="/jobs/:id" element={<JobDetailPage />} />
           <Route
+            path="/jobs/:jobId/apply"
+            element={
+              <ProtectedRoute allowedRoles={["CANDIDATE"]}>
+                <ApplyJobPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/saved-jobs"
             element={
               <ProtectedRoute>
                 <SavedJobsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-applications"
+            element={
+              <ProtectedRoute allowedRoles={["CANDIDATE"]}>
+                <MyApplicationsPage />
               </ProtectedRoute>
             }
           />
@@ -465,26 +481,6 @@ export function AppRouter() {
         </Route>
 
         {/* ==================== APPLICATIONS ROUTES (EPIC 5) ==================== */}
-
-        {/* APPL-01: Candidate Apply for Job */}
-        <Route
-          path="/jobs/:jobId/apply"
-          element={
-            <ProtectedRoute allowedRoles={["CANDIDATE"]}>
-              <ApplyJobPage />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* APPL-07: Candidate My Applications */}
-        <Route
-          path="/my-applications"
-          element={
-            <ProtectedRoute allowedRoles={["CANDIDATE"]}>
-              <MyApplicationsPage />
-            </ProtectedRoute>
-          }
-        />
 
         {/* APPL-02: Headhunter Applications List */}
         <Route

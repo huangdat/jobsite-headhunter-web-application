@@ -116,6 +116,7 @@
     "pageTitle": "Saved Jobs"
   },
   "detail": {
+    "viewMore": "View more",
     "jobDetailsSection": "Job details",
     "jobCodeLabel": "Job code:",
     "company": "Company",

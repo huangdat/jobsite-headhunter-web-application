@@ -16,6 +16,7 @@ import { Badge } from "@/shared/ui-primitives/badge";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { PageContainer } from "@/shared/common-blocks/layout";
 import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
+import { ExpandableText } from "@/shared/common-blocks/ExpandableText";
 import {
   fetchSavedJobs,
   removeSavedJob,
@@ -306,13 +307,8 @@ export function JobDetailPage() {
               {t("detail.jobCodeLabel")} {job.jobCode}
             </p>
           </div>
-          <div className="mt-4 text-slate-600 dark:text-slate-300">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeSanitize]}
-            >
-              {job.description ?? ""}
-            </ReactMarkdown>
+          <div className="mt-4">
+            <ExpandableText content={job.description ?? ""} maxLines={2} />
           </div>
 
           <div className="mt-8 space-y-8">
@@ -320,13 +316,11 @@ export function JobDetailPage() {
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
                 {t("detail.responsibilities")}
               </h3>
-              <div className="mt-3 whitespace-pre-line text-slate-600 dark:text-slate-300">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeSanitize]}
-                >
-                  {job.responsibilities ?? ""}
-                </ReactMarkdown>
+              <div className="mt-3">
+                <ExpandableText
+                  content={job.responsibilities ?? ""}
+                  maxLines={2}
+                />
               </div>
             </div>
 
@@ -334,13 +328,8 @@ export function JobDetailPage() {
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
                 {t("detail.requirements")}
               </h3>
-              <div className="mt-3 whitespace-pre-line text-slate-600 dark:text-slate-300">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeSanitize]}
-                >
-                  {job.requirements ?? ""}
-                </ReactMarkdown>
+              <div className="mt-3">
+                <ExpandableText content={job.requirements ?? ""} maxLines={2} />
               </div>
             </div>
 
@@ -348,13 +337,8 @@ export function JobDetailPage() {
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
                 {t("detail.benefits")}
               </h3>
-              <div className="mt-3 whitespace-pre-line text-slate-600 dark:text-slate-300">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeSanitize]}
-                >
-                  {job.benefits ?? ""}
-                </ReactMarkdown>
+              <div className="mt-3">
+                <ExpandableText content={job.benefits ?? ""} maxLines={2} />
               </div>
             </div>
 

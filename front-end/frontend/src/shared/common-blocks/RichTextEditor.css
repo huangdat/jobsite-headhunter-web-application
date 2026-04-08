@@ -1,6 +1,19 @@
+/* TipTap editor container - stretch to fill parent */
+.prose {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
 /* TipTap editor styles */
 .ProseMirror {
   outline: none;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  flex: 1;
+  display: block;
 }
 
 .ProseMirror p.is-editor-empty:first-child::before {
