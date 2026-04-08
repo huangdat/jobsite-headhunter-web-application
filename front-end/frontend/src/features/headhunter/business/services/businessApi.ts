@@ -31,19 +31,15 @@ export const getBusinessProfileById = async (
  * Uses /api/account/myInfo to read businessProfileId first, then loads that company.
  */
 export const getBusinessProfile = async (): Promise<BusinessProfile> => {
-  try {
-    const account = await getMyInfo();
-    const businessProfileId = account.businessProfileId;
+  const account = await getMyInfo();
+  const businessProfileId = account.businessProfileId;
 
-    if (!businessProfileId) {
-      throw new Error("No business profile assigned to this account.");
-    }
-
-    const profile = await getBusinessProfileById(businessProfileId);
-    return profile;
-  } catch (error) {
-    throw error;
+  if (!businessProfileId) {
+    throw new Error("No business profile assigned to this account.");
   }
+
+  const profile = await getBusinessProfileById(businessProfileId);
+  return profile;
 };
 
 // Export as namespace for backward compatibility

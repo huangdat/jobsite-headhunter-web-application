@@ -6,10 +6,16 @@ import {
   UserListPagination,
 } from "@/features/users/list/components";
 import { UserFilters } from "@/features/users/components/common/UserFilters";
+import { UserRoleChart } from "@/features/users/components/UserRoleChart";
+import { UserStatusChart } from "@/features/users/components/UserStatusChart";
 import { useUsers } from "@/features/users/list/hooks/useUsers";
 import { useUsersTranslation } from "@/shared/hooks";
 import { PageContainer } from "@/shared/common-blocks/layout";
 import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
+import {
+  mockUserRoleStats,
+  mockUserStatusStats,
+} from "@/features/users/utils/mockuserStatsData";
 
 interface UserListPageProps {
   onAddNewUser?: () => void;
@@ -159,6 +165,14 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
         }
       />
 
+      {/* Stats Charts Section */}
+      {!error && (
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <UserRoleChart data={mockUserRoleStats} />
+          <UserStatusChart data={mockUserStatusStats} />
+        </div>
+      )}
+
       {/* Content Area */}
       <div className="mt-6">
         {error && (
@@ -211,4 +225,3 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
 };
 
 export default UserListPage;
-
