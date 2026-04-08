@@ -94,6 +94,106 @@ export function JobEditPage() {
 
   const selectedSkillIds = watch("skillIds") ?? [];
 
+  // Working time checkbox handling (days of week) + per-day optional hours
+  const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
+  type Day = (typeof DAYS)[number];
+  const DEFAULT_START = "09:00";
+  const DEFAULT_END = "17:00";
+
+  const initialDayTimes = DAYS.reduce((acc, d) => {
+    acc[d] = { enabled: false, start: DEFAULT_START, end: DEFAULT_END };
+    return acc;
+  }, {} as Record<Day, { enabled: boolean; start: string; end: string }>);
+
+  const [dayTimes, setDayTimes] = useState<Record<Day, { enabled: boolean; start: string; end: string }>>(initialDayTimes);
+
+  const parseWorkingTimeString = (s?: string) => {
+    const res: Record<Day, { enabled: boolean; start: string; end: string }> = { ...initialDayTimes };
+    if (!s) return res;
+
+    const segRegex = /([A-Za-z]{3}(?:\s*-\s*[A-Za-z]{3})?)(?:\s*\(([^)]+)\))?/g;
+    let m: RegExpExecArray | null = null;
+    while ((m = segRegex.exec(s)) !== null) {
+      const dayPart = m[1].trim();
+      const timePart = m[2]?.trim();
+      let sTime = DEFAULT_START;
+      let eTime = DEFAULT_END;
+      if (timePart) {
+        const parts = timePart.split("-").map((p) => p.trim());
+        if (parts.length >= 2) {
+          sTime = parts[0];
+          eTime = parts[1];
+        }
+      }
+      const order = Array.from(DAYS);
+      if (dayPart.includes("-")) {
+        const [start, end] = dayPart.split("-").map((v) => v.trim());
+        const si = order.indexOf(start as Day);
+        const ei = order.indexOf(end as Day);
+        if (si >= 0 && ei >= si) {
+          for (let i = si; i <= ei; i++) {
+            const d = order[i] as Day;
+            res[d] = { enabled: true, start: sTime, end: eTime };
+          }
+          continue;
+        }
+      }
+      const day = dayPart as Day;
+      if (DAYS.includes(day)) {
+        res[day] = { enabled: true, start: sTime, end: eTime };
+      }
+    }
+    return res;
+  };
+
+  const joinWorkingTime = (map: Record<Day, { enabled: boolean; start: string; end: string }>) => {
+    const order = Array.from(DAYS) as Day[];
+    type Run = { startIdx: number; endIdx: number; start: string; end: string };
+    const runs: Run[] = [];
+    let i = 0;
+    while (i < order.length) {
+      const d = order[i];
+      const info = map[d];
+      if (!info || !info.enabled) {
+        i++;
+        continue;
+      }
+      let j = i;
+      while (j + 1 < order.length) {
+        const next = order[j + 1];
+        const nextInfo = map[next];
+        if (!nextInfo || !nextInfo.enabled) break;
+        if (nextInfo.start !== info.start || nextInfo.end !== info.end) break;
+        j++;
+      }
+      runs.push({ startIdx: i, endIdx: j, start: info.start, end: info.end });
+      i = j + 1;
+    }
+    if (runs.length === 0) return "";
+    const parts = runs.map((r) => {
+      const startDay = order[r.startIdx];
+      const endDay = order[r.endIdx];
+      if (r.startIdx === r.endIdx) return `${startDay} (${r.start} - ${r.end})`;
+      return `${startDay} - ${endDay} (${r.start} - ${r.end})`;
+    });
+    return parts.join(", ");
+  };
+
+  const watchedWorkingTime = watch("workingTime");
+  useEffect(() => {
+    try {
+      const parsed = parseWorkingTimeString(watchedWorkingTime);
+      setDayTimes(parsed);
+    } catch (err) {
+      // ignore parse errors
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchedWorkingTime]);
+
+  useEffect(() => {
+    setValue("workingTime", joinWorkingTime(dayTimes));
+  }, [dayTimes, setValue]);
+
   const handleSkillChange = (ids: number[]) => {
     setValue("skillIds", ids, { shouldDirty: true, shouldValidate: true });
   };
@@ -373,10 +473,53 @@ export function JobEditPage() {
           </div>
 
           <div className="space-y-2">
-            <LabelText className="block">
-              {t("edit.labels.workingTime")}
-            </LabelText>
-            <Input {...register("workingTime")} />
+            <LabelText className="block">{t("edit.labels.workingTime")}</LabelText>
+            <div className="space-y-2">
+              {DAYS.map((day) => {
+                const info = dayTimes[day as Day];
+                return (
+                  <div key={day} className="flex items-center justify-between gap-4 py-1">
+                    <div className="flex items-center gap-2">
+                      <input
+                        id={`day-${day}`}
+                        type="checkbox"
+                        checked={info?.enabled}
+                        onChange={(e) =>
+                          setDayTimes((prev) => ({
+                            ...prev,
+                            [day]: {
+                              ...prev[day as Day],
+                              enabled: e.target.checked,
+                              start: e.target.checked && !prev[day as Day].start ? DEFAULT_START : prev[day as Day].start,
+                              end: e.target.checked && !prev[day as Day].end ? DEFAULT_END : prev[day as Day].end,
+                            },
+                          }))
+                        }
+                        className="h-4 w-4 rounded border-input"
+                      />
+                      <label htmlFor={`day-${day}`} className="text-sm">{day}</label>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id={`start-${day}`}
+                        type="time"
+                        value={info?.start || DEFAULT_START}
+                        onChange={(e) => setDayTimes((prev) => ({ ...prev, [day]: { ...prev[day as Day], start: e.target.value } }))}
+                        disabled={!info?.enabled}
+                      />
+                      <span className="text-sm">—</span>
+                      <Input
+                        id={`end-${day}`}
+                        type="time"
+                        value={info?.end || DEFAULT_END}
+                        onChange={(e) => setDayTimes((prev) => ({ ...prev, [day]: { ...prev[day as Day], end: e.target.value } }))}
+                        disabled={!info?.enabled}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
 
