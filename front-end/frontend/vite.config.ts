@@ -22,6 +22,19 @@ export default ({ mode }: { mode: string }) => {
           target: env.VITE_API_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, "/api"),
+          configure: (proxy, _options) => {
+            (proxy.on("error", (err, _req, _res) => {
+              console.error("Proxy error:", err);
+            }),
+              proxy.on("proxyReq", (proxyReq, _req, _res) => {
+                console.log(`Proxying request to: ${proxyReq.path}`);
+              }),
+              proxy.on("proxyRes", (proxyRes, _req, _res) => {
+                console.log(
+                  `Received response with status: ${proxyRes.statusCode}`
+                );
+              }));
+          },
         },
       },
     },
