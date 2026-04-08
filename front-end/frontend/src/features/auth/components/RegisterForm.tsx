@@ -400,10 +400,10 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   // Submit on last step
                   form.handleSubmit(
                     async (data) => {
-                      console.log(
-                        "Form values are valid. Starting submission:",
-                        data
-                      );
+                      // console.log(
+                      //   "Form values are valid. Starting submission:",
+                      //   data
+                      // ); // Debug log to verify form data before submission
                       await onSubmit(data);
                     },
                     (errors) => {
