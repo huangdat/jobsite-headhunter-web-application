@@ -173,11 +173,7 @@ const UserDetailPage: React.FC = () => {
     }
   };
 
-  const handleSoftDelete = async () => {
-    setIsDeleteModalOpen(true);
-  };
-
-  const handleHardDelete = async () => {
+  const handleDeleteAccount = async () => {
     setIsDeleteModalOpen(true);
   };
 
@@ -327,8 +323,7 @@ const UserDetailPage: React.FC = () => {
           <DangerZoneCard
             onLockAccount={handleLockAccount}
             onUnlockAccount={handleUnlockAccount}
-            onSoftDelete={handleSoftDelete}
-            onHardDelete={handleHardDelete}
+            onDeleteAccount={handleDeleteAccount}
             isOtherAdmin={isViewingOtherAdmin}
             userStatus={user?.status}
           />
@@ -382,4 +377,3 @@ const UserDetailPage: React.FC = () => {
 };
 
 export default UserDetailPage;
-

@@ -1,13 +1,12 @@
 import React from "react";
-import { AlertTriangle, Lock, Unlock, Trash2, AlertCircle } from "lucide-react";
+import { AlertTriangle, Lock, Unlock, Trash2 } from "lucide-react";
 import { useUsersTranslation } from "@/shared/hooks";
 import { getSemanticClass } from "@/lib/design-tokens";
 
 interface DangerZoneSectionProps {
   onLockAccount: () => void;
   onUnlockAccount?: () => void;
-  onSoftDelete: () => void;
-  onHardDelete: () => void;
+  onDeleteAccount: () => void;
   isOtherAdmin: boolean;
   canLock?: boolean;
   userStatus?: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
@@ -16,8 +15,7 @@ interface DangerZoneSectionProps {
 const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
   onLockAccount,
   onUnlockAccount,
-  onSoftDelete,
-  onHardDelete,
+  onDeleteAccount,
   isOtherAdmin,
   canLock = true,
   userStatus,
@@ -53,7 +51,7 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
         {t("detail.dangerZoneDesc")}
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {/* Lock Account Section - Only show if user has lock permission and user is NOT locked */}
         {canLock && !isUserLocked && (
           <div
@@ -116,61 +114,37 @@ const DangerZoneSection: React.FC<DangerZoneSectionProps> = ({
           </div>
         )}
 
+        {/* Delete Account Section */}
         <div
           className={`border ${getSemanticClass("danger", "border", true)} rounded-lg p-4 ${getSemanticClass("danger", "bg", true)}`}
         >
           <div className="flex items-center gap-3 mb-3">
-            <AlertCircle
+            <Trash2
               className={`w-5 h-5 ${getSemanticClass("danger", "text", true)}`}
             />
             <h3 className="font-semibold text-slate-900 dark:text-slate-50">
-              {t("detail.softDelete")}
+              {t("detail.deleteAccount")}
             </h3>
           </div>
           <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
-            {t("detail.softDeleteDesc")}
+            {t("detail.deleteAccountDesc")}
           </p>
           <button
-            onClick={onSoftDelete}
+            onClick={onDeleteAccount}
             disabled={isOtherAdmin}
-            className={getButtonClass(isOtherAdmin)}
+            className={
+              isOtherAdmin
+                ? "px-4 py-3 rounded-lg font-medium opacity-50 cursor-not-allowed bg-slate-100 text-slate-500 flex items-center gap-2 justify-center w-full"
+                : "px-4 py-3 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 active:bg-red-800 transition flex items-center gap-2 justify-center w-full"
+            }
             title={
               isOtherAdmin
                 ? t("detail.cannotPerformOnAdmin")
-                : t("detail.softDelete")
+                : t("detail.deleteAccount")
             }
           >
             <Trash2 className="w-4 h-4" />
-            {t("detail.softDelete")}
-          </button>
-        </div>
-
-        <div
-          className={`border ${getSemanticClass("danger", "border", true)} rounded-lg p-4 ${getSemanticClass("danger", "bg", true)}`}
-        >
-          <div className="flex items-center gap-3 mb-3">
-            <AlertTriangle
-              className={`w-5 h-5 ${getSemanticClass("danger", "text", true)}`}
-            />
-            <h3 className="font-semibold text-slate-900 dark:text-slate-50">
-              {t("detail.hardDelete")}
-            </h3>
-          </div>
-          <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
-            {t("detail.hardDeleteDesc")}
-          </p>
-          <button
-            onClick={onHardDelete}
-            disabled={isOtherAdmin}
-            className={getButtonClass(isOtherAdmin, true)}
-            title={
-              isOtherAdmin
-                ? t("detail.cannotPerformOnAdmin")
-                : t("detail.hardDelete")
-            }
-          >
-            <Trash2 className="w-4 h-4" />
-            {t("common.permanentDelete")}
+            {t("detail.deleteAccount")}
           </button>
         </div>
       </div>

@@ -128,7 +128,11 @@
     "PENDING": "Đang chờ xử lý",
     "ACTIVE": "Hoạt động",
     "SUSPENDED": "Bị Tạm dừng",
-    "DELETED": "Đã xóa"
+    "DELETED": "Đã xóa",
+    "pending": "Đang chờ xử lý",
+    "active": "Hoạt động",
+    "suspended": "Bị Tạm dừng",
+    "deleted": "Đã xóa"
   },
   "loginStatus": {
     "success": "Thành công",
