@@ -57,9 +57,13 @@
     "resetFilter": "Reset"
   },
   "statuses": {
-    "suspended": "Suspended",
+    "SUSPENDED": "Suspended",
+    "PENDING": "Pending",
+    "ACTIVE": "Active",
     "pending": "Pending",
-    "active": "Active"
+    "suspended": "Suspended",
+    "active": "Active",
+    "deleted": "Deleted"
   },
 
   "columns": {
@@ -123,7 +127,9 @@
     "hardDeleteDesc": "Permanently remove user and all associated data. This cannot be undone.",
     "cannotPerformOnAdmin": "Cannot perform on other Admin",
     "errorLoadingData": "Error Loading Data",
-    "failedToFetchUserDetails": "Failed to fetch user details"
+    "failedToFetchUserDetails": "Failed to fetch user details",
+    "deleteAccount": "Delete Account",
+    "deleteAccountDesc": "Permanently delete this user and all associated data. This action cannot be undone."
   },
 
   "loginStatus": {
@@ -337,11 +343,13 @@
     },
     "statuses": {
       "ACTIVE": "Active",
-      "pending": "Pending"
+      "PENDING": "Pending",
+      "SUSPENDED": "Suspended"
     },
     "statusSubtitles": {
       "ACTIVE": "User account is active",
-      "pending": "Waiting for email verification"
+      "PENDING": "Waiting for email verification",
+      "SUSPENDED": "User account is suspended"
     },
     "unknown": "Unknown",
     "error": {

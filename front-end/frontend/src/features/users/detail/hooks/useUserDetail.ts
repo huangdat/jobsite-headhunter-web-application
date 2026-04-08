@@ -31,7 +31,8 @@ export const useUserDetail = (userId: string) => {
     if (userId) {
       fetchUserDetail();
     }
-  }, [userId, t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   return { data, loading, error };
 };

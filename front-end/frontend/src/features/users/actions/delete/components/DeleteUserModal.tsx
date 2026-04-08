@@ -65,7 +65,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   const { userId: currentUserId } = useAuthUser();
   const [step, setStep] = useState<ModalStep>("choice");
   const [selectedType, setSelectedType] = useState<"soft" | "hard" | null>(
-    null
+    "soft"
   );
   const [reason, setReason] = useState("");
   const [loading, setLoading] = useState(false);
@@ -73,12 +73,6 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
   const handleSelectType = (type: "soft" | "hard") => {
     setSelectedType(type);
-    // For soft delete, go to reason input first
-    if (type === "soft") {
-      setStep("reason");
-    } else {
-      setStep("confirmation");
-    }
   };
 
   const handleReasonSubmit = (e: React.FormEvent) => {
@@ -137,7 +131,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 
   const handleReset = () => {
     setStep("choice");
-    setSelectedType(null);
+    setSelectedType("soft");
     setReason("");
     setResult(null);
   };
@@ -352,7 +346,13 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                 {t("buttons.cancel")}
               </Button>
               <Button
-                onClick={() => setStep("confirmation")}
+                onClick={() => {
+                  if (selectedType === "soft") {
+                    setStep("reason");
+                  } else {
+                    setStep("confirmation");
+                  }
+                }}
                 disabled={!selectedType}
               >
                 {t("buttons.next")}
@@ -416,7 +416,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
                   variant="outline"
                   onClick={() => {
                     setReason("");
-                    setSelectedType(null);
+                    setSelectedType("soft");
                     setStep("choice");
                   }}
                 >
@@ -636,4 +636,3 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
 };
 
 export default DeleteUserModal;
-

@@ -87,7 +87,7 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                    {t("statuses.active")}
+                    {t("statuses.ACTIVE")}
                   </p>
                   <p
                     className={`text-3xl font-bold ${getSemanticClass("success", "text", true)}`}
@@ -108,7 +108,7 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                    {t("statuses.suspended")}
+                    {t("statuses.SUSPENDED")}
                   </p>
                   <p
                     className={`text-3xl font-bold ${getSemanticClass("danger", "text", true)}`}
@@ -129,7 +129,7 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                    {t("statuses.pending")}
+                    {t("statuses.PENDING")}
                   </p>
                   <p
                     className={`text-3xl font-bold ${getSemanticClass("warning", "text", true)}`}
