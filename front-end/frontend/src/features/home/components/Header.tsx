@@ -26,7 +26,15 @@ export function Header({ onMenuClick }: HeaderProps) {
   const isCandidate = normalizedRole === "candidate";
 
   // Only fetch candidate profile for candidates
-  const { data: candidateProfile } = useCandidateProfileQuery();
+  const { data: candidateProfile, refetch: refetchCandidateProfile } =
+    useCandidateProfileQuery();
+
+  // Force refetch candidate profile when authenticated to get fresh avatar
+  useEffect(() => {
+    if (isCandidate && isAuthenticated) {
+      refetchCandidateProfile();
+    }
+  }, [isCandidate, isAuthenticated, refetchCandidateProfile]);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
