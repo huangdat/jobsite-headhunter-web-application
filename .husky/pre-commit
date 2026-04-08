@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+npx lint-staged
+
+# Frontend i18n audit ONLY
+if git diff --staged --name-only | grep -q "^front-end/frontend/"; then
+  echo "🔍 Frontend i18n audit..."
+  cd front-end/frontend && npm run audit:i18n && cd ../..
+fi

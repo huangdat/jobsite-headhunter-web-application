@@ -6,7 +6,7 @@ import { useMemo } from "react";
  * Usage: const { t, i18n } = useAppTranslation();
  */
 export const useAppTranslation = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("translation");
 
   const changeLanguage = (lng: string) => {
     void i18n.changeLanguage(lng);
@@ -15,9 +15,9 @@ export const useAppTranslation = () => {
   const currentLanguage = useMemo(
     () => ({
       code: i18n.language,
-      nativeName: i18n.language === "vi" ? "Tiếng Việt" : "English",
+      nativeName: t(`common.languages.${i18n.language}`),
     }),
-    [i18n.language],
+    [i18n.language, t]
   );
 
   return {

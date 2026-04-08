@@ -1,0 +1,63 @@
+{
+  "error": "Error",
+  "success": "Success",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "dismiss": "Dismiss",
+  "id_token": "id_token",
+  "back": "Back",
+  "breadcrumb": {
+    "home": "Home"
+  },
+  "common": {
+    "downloadCV": "Download CV",
+    "noCVAttached": "No CV attached",
+    "loading": "Common loading",
+    "actions": {
+      "close": "Close"
+    },
+    "adminUserTitle": "Admin User",
+    "appVersion": "v2.4.0 Release",
+    "permanentDelete": "Permanent Delete",
+    "appName": "JobSite",
+    "allRightsReserved": "All rights reserved © 2026",
+    "section": {
+      "account": "Account"
+    },
+    "exampleEmail": "alex.n@referral.io",
+    "languages": {
+      "en": "English",
+      "vi": "Tiếng Việt"
+    },
+    "enterDetailsDescription": "Common enter details description",
+    "failedToFetchUsers": "Common failed to fetch users",
+    "tryAgain": "Common try again",
+    "retry": "Retry",
+    "noDataAvailable": "Common no data available",
+    "unknownError": "Unknown error occurred"
+  },
+  "messages": {
+    "accountNotFound": "Account not found with the provided credentials",
+    "signedInSuccess": "Signed in successfully.",
+    "failedToLoadCommission": "Failed to load commission data",
+    "failedToSaveProfile": "Failed to save profile",
+    "failedToRequestPayout": "Failed to request payout",
+    "failedToLoadProfile": "Failed to load profile",
+    "failedToLockUser": "Failed to lock user",
+    "failedToUnlockUser": "Failed to unlock user",
+    "failedToLoadUsers": "Failed to load users",
+    "noPermissionAccess": "You do not have permission to access the classification feature.",
+    "sessionExpiredLoginAgain": "Your session has expired. Please login again.",
+    "myJobs": "My jobs"
+  },
+  "editor": {
+    "bold": "Bold (Ctrl+B)",
+    "italic": "Italic (Ctrl+I)",
+    "bulletList": "Bullet List",
+    "orderedList": "Ordered List",
+    "heading2": "Heading 2",
+    "undo": "Undo",
+    "redo": "Redo",
+    "enterText": "Enter text..."
+  }
+}

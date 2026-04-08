@@ -1,4 +1,6 @@
 package com.rikkeisoft.backend.model.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rikkeisoft.backend.enums.Currency;
 import com.rikkeisoft.backend.enums.JobStatus;
 import com.rikkeisoft.backend.enums.RankLevel;
@@ -37,7 +39,7 @@ public class Job {
 
     @Column(columnDefinition = "TEXT")
     String description;
-        
+
     @Column(columnDefinition = "TEXT")
     String responsibilities;
 
@@ -54,11 +56,11 @@ public class Job {
     @Column(name = "rank_level")
     RankLevel rankLevel;
 
-    @Enumerated(EnumType.STRING) //ONSITE, REMOTE, HYBRID
+    @Enumerated(EnumType.STRING) // ONSITE, REMOTE, HYBRID
     @Column(name = "working_type")
     WorkingType workingType;
 
-    String location; //Ho Chi Minh city, Can Tho city
+    String location; // Ho Chi Minh city, Can Tho city
 
     @Column(name = "address_detail")
     String addressDetail; // detailed address
@@ -71,7 +73,7 @@ public class Job {
     @Column(name = "salary_max")
     Double salaryMax;
 
-    boolean negotiable;
+    Boolean negotiable;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -90,4 +92,36 @@ public class Job {
 
     @Column(name = "imageUrl")
     String imageUrl;
+
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    Set<JobSkill> jobSkills;
+
+    @Builder.Default
+    @Column(name = "visible")
+    Boolean visible = true;
+
+    @Builder.Default
+    @Column(name = "featured")
+    Boolean featured = false;
+
+    @Column(name = "deleted_at")
+    LocalDateTime deletedAt;
+
+    @Column(name = "highlight_until")
+    LocalDateTime highlightUntil;
+
+    public Boolean isVisible() {
+        return visible;
+    }
+
+    public Boolean isFeatured() {
+        return featured;
+    }
+
+    public Boolean isNegotiable() {
+        return negotiable;
+    }
 }

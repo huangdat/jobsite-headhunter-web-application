@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.resp.job.SavedJobResp;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class SavedJobServiceImpl implements SavedJobService {
     AccountRepo accountRepo;
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')")
+    @PreAuthorize(SecurityConstants.CANDIDATE)
     public void saveJob(Long jobId, String username) {
         Account account = accountRepo.findByUsername(username)
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
@@ -49,15 +51,16 @@ public class SavedJobServiceImpl implements SavedJobService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')")
-    public void removeSavedJob(Long jobId, String username) {
+    @PreAuthorize(SecurityConstants.CANDIDATE)
+        @Transactional
+        public void removeSavedJob(Long jobId, String username) {
         Account account = accountRepo.findByUsername(username)
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
         savedJobRepo.deleteByJobIdAndCandidateId(jobId, account.getId());
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')")
+    @PreAuthorize(SecurityConstants.CANDIDATE)
     public List<SavedJobResp> getSavedJobs(String username) {
         Account account = accountRepo.findByUsername(username)
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));

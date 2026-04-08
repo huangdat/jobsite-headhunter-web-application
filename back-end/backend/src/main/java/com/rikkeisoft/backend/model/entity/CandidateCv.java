@@ -25,8 +25,7 @@ public class CandidateCv {
     @Column(nullable = false, columnDefinition = "TEXT")
     String cvUrl;
 
-    @Builder.Default
-    Boolean isVisible = true;
+    Boolean isVisible;
 
     LocalDateTime createdAt;
 }

@@ -3,6 +3,7 @@ import com.rikkeisoft.backend.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -61,6 +62,11 @@ public class Application {
     @Column(name = "applied_at")
     LocalDateTime appliedAt;
 
+    // Interview is contained in a List because there may be Multiple Rounds procedure, when candidate goes through multiple interviews:
+    // 1st round: Culture fit interview with HR
+    // 2nd round: Technical interview with Tech lead
+    // 3rd round: interview with Director/Boss
+    // and in case of cancelled schedule, headhunter can create a new interview schedule
     @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Interview> interviews;
 }

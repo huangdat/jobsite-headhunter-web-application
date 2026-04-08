@@ -1,0 +1,242 @@
+{
+  "profile": {
+    "page": {
+      "eyebrow": "MY PROFILE",
+      "title": "Professional Identity",
+      "subtitleDefault": "Manage your executive presence and candidate market positioning.",
+      "subtitleSaving": "Saving your profile...",
+      "subtitleSuccess": "Your profile is up to date.",
+      "candidate": "Candidate Profile"
+    },
+    "alerts": {
+      "saveErrorTitle": "Action Required: Profile Validation Errors",
+      "validationErrorTitle": "Please fix highlighted fields before saving.",
+      "saveSuccessTitle": "Profile updated successfully.",
+      "saveSuccessBody": "All changes to your professional identity have been synced."
+    },
+    "actions": {
+      "discardChanges": "Discard Changes",
+      "saveChanges": "Save Changes",
+      "saving": "Saving..."
+    },
+    "sidebar": {
+      "strengthTitle": "Profile Strength",
+      "strengthHint": "Keep your title, salary range, and bio complete to maximize recruiter visibility.",
+      "tipsTitle": "Profile Tips",
+      "tipOne": "Add measurable impact in your bio.",
+      "tipTwo": "Keep salary expectations market-aligned.",
+      "tipThree": "Complete CV and portfolio links in next step.",
+      "insightEyebrow": "Data Insight",
+      "insightBody": "Profiles with complete professional identity details receive significantly more recruiter interactions."
+    },
+    "form": {
+      "sectionTitle": "Professional Identity",
+      "sectionSubtitle": "Shape how hiring teams evaluate your profile.",
+      "openForWork": "Open for work",
+      "fullName": "Legal Name",
+      "jobTitle": "Job Title",
+      "currentStatus": "Current Status",
+      "currentStatusAria": "Current Status",
+      "yearsOfExperience": "Years of Experience",
+      "city": "City",
+      "salaryMin": "Salary Min (USD)",
+      "salaryMax": "Salary Max (USD)",
+      "professionalBio": "Professional Bio",
+      "currentTitlePlaceholder": "e.g. Senior Technical Architect",
+      "cityPlaceholder": "Ho Chi Minh City",
+      "bioPlaceholder": "Summarize your professional impact and specialization."
+    },
+    "statuses": {
+      "ACTIVELY_INTERVIEWING": "Actively Interviewing",
+      "OPEN_FOR_WORK": "Open for Work",
+      "PASSIVELY_LOOKING": "Passively Looking",
+      "NOT_LOOKING": "Not Looking"
+    },
+    "validation": {
+      "currentTitleRequired": "Job title is required.",
+      "currentTitleMax": "Job title must be at most {{max}} characters.",
+      "yearsOfExperienceMin": "Years of experience must be 0 or greater.",
+      "yearsOfExperienceMax": "Years of experience must be {{max}} or below.",
+      "salaryMinNegative": "Salary Min cannot be negative.",
+      "salaryMinTooHigh": "Salary Min is too high.",
+      "salaryMaxNegative": "Salary Max cannot be negative.",
+      "salaryMaxTooHigh": "Salary Max is too high.",
+      "salaryMaxInvalidRange": "Salary Max must be greater than or equal to Salary Min.",
+      "bioMax": "Professional bio cannot exceed {{max}} characters.",
+      "cityMax": "City cannot exceed {{max}} characters."
+    },
+    "errors": {
+      "loadFailed": "Failed to load profile. Please try again.",
+      "saveFailed": "Unable to save profile changes. Please try again."
+    },
+    "fallback": {
+      "fullName": "Candidate",
+      "currentTitle": "Senior Technical Architect"
+    }
+  },
+  "avatar": {
+    "messages": {
+      "selected": "Avatar selected. Click 'Save Changes' to upload."
+    },
+    "section": {
+      "title": "Avatar"
+    },
+    "upload": {
+      "button": "Upload Avatar",
+      "changeButton": "Change Avatar"
+    },
+    "validation": {
+      "maxSize": "Avatar size must be less than 5MB"
+    },
+    "selected": {
+      "filename": "New avatar: "
+    }
+  },
+  "cv": {
+    "management": {
+      "breadcrumb": "CV MANAGEMENT",
+      "title": "CV Management",
+      "subtitle": "Manage your professional resumes and optimize your profile strength",
+      "empty": {
+        "headline": "No resumes uploaded yet",
+        "description": "Elevate your executive presence. Upload your latest CV to start matching with premium leadership roles.",
+        "button": "Upload Resume",
+        "supported": "Supported: PDF, DOC, DOCX (max 5MB)"
+      },
+      "success": {
+        "banner": "Resume uploaded successfully!",
+        "bannerDetail": "{{filename}} has been saved to your secure profile vault.",
+        "activeResumes": "Active Resumes",
+        "filesUsed": "{{current}} of {{total}} files used",
+        "addAnother": "Change CV",
+        "browseFiles": "Browse Files"
+      },
+      "error": {
+        "banner": "Upload Failed: Invalid File",
+        "fileFormatInvalid": "Định dạng file không hỗ trợ hoặc dung lượng vượt quá 5MB. Vui lòng kiểm tra lại yêu cầu của hệ thống.",
+        "tryAnother": "Try Another File"
+      },
+      "fileList": {
+        "actions": {
+          "view": "View",
+          "download": "Download",
+          "delete": "Delete",
+          "makeActive": "Make Active"
+        },
+        "uploadedLabel": "Uploaded"
+      },
+      "profileStrength": {
+        "title": "PROFILE STRENGTH"
+      },
+      "tips": {
+        "title": "CV Optimization Tips",
+        "bestPracticeTip1": "Quantify results with revenue, growth %, or team size.",
+        "bestPracticeTip2": "Keep your executive summary under 200 words.",
+        "bestPracticeTip3": "Focus on the last 10 years of your career path.",
+        "privacyTip1": "Take full command of your visibility. Choose who can view your credentials: keep them private, open to all verified recruiters, or only visible to targeted executive firms.",
+        "privacyTip2": "Optimize your impact. Use clean, professional formatting and ensure your executive summary highlights measurable ROI to stand out to global search partners.",
+        "privacyTip3": "Focus on the last 10 years of your career path, emphasizing your leadership impact and strategic accomplishments.",
+        "optimizationTitle": "Implement these tips to improve your CV match rate",
+        "uploadPlaceholder": "Drag and drop your professional CV here or click to browse files from your computer.",
+        "profileStrengthHint": "Complete remaining items to improve your profile visibility.",
+        "auditGuide": "Personalized guidance from industry experts",
+        "reviewGuide": "1:1 consultation with professional headhunters"
+      },
+      "bestPractices": {
+        "title": "CV BEST PRACTICES",
+        "privacyTitle": "PRIVACY CONTROL",
+        "privacyDesc": "Your CV visibility is currently set to Confidential. Only verified recruiters matching your seniority level and preferred industries can request access to your full details.",
+        "privacyItems": [
+          "You can set specific companies to \"Block List\" in settings.",
+          "Control exactly what personal data is shared initially."
+        ],
+        "practicesTitle": "CV BEST PRACTICES",
+        "practicesItems": [
+          "Quantify results with revenue, growth %, or team size.",
+          "Keep your executive summary under 200 words.",
+          "Focus on the last 10 years of your career path."
+        ]
+      },
+      "premiumServices": {
+        "premiumTitle": "PREMIUM SERVICES",
+        "auditTitle": "Professional CV Audit",
+        "auditDesc": "Get a comprehensive analysis of your resume by our senior executive coaches.",
+        "bookAudit": "Book CV Audit",
+        "reviewTitle": "Expert Review",
+        "reviewDesc": "Get a professional 1:1 review of your CV by a Headhunter to maximize your reach.",
+        "getReview": "Get Expert Review"
+      },
+      "validation": {
+        "fileTooLarge": "File is too large. Maximum size is 5MB.",
+        "fileTooLargeShort": "Too large",
+        "invalidFileFormatShort": "Invalid format",
+        "maxFilesReached": "You've reached the maximum number of resumes",
+        "deleteExistingToUpload": "Delete an existing one to upload a new version.",
+        "retry": "Retry",
+        "dismiss": "Dismiss",
+        "clear": "Clear"
+      },
+      "upload": {
+        "selectFile": "Select CV file"
+      }
+    }
+  },
+  "upload": {
+    "maxFileSizeLabel": "Max file size: 5 MB"
+  },
+  "messages": {
+    "uploading": "Uploading..."
+  },
+  "common": {
+    "back": "Back"
+  },
+  "candidate": {
+    "common": {
+      "view": "View Document"
+    },
+    "cv": {
+      "management": {
+        "messages": {
+          "uploading": "Uploading..."
+        }
+      }
+    },
+    "tips": {
+      "profileStrengthHint": "Candidate tips profile strength hint",
+      "auditGuide": "Candidate tips audit guide",
+      "reviewGuide": "Candidate tips review guide",
+      "uploadPlaceholder": "Candidate tips upload placeholder",
+      "optimizationTitle": "Candidate tips optimization title",
+      "privacyTip1": "Candidate tips privacy tip1",
+      "privacyTip2": "Candidate tips privacy tip2",
+      "privacyTip3": "Candidate tips privacy tip3",
+      "bestPracticeTip1": "Candidate tips best practice tip1",
+      "bestPracticeTip2": "Candidate tips best practice tip2",
+      "bestPracticeTip3": "Candidate tips best practice tip3"
+    },
+    "validation": {
+      "fileTooLargeShort": "Candidate validation file too large short",
+      "invalidFileFormatShort": "Candidate validation invalid file format short",
+      "deleteExistingToUpload": "Candidate validation delete existing to upload"
+    }
+  },
+  "tips": {
+    "profileStrengthHint": "Candidate tips profile strength hint",
+    "auditGuide": "Candidate tips audit guide",
+    "reviewGuide": "Candidate tips review guide",
+    "uploadPlaceholder": "Candidate tips upload placeholder",
+    "optimizationTitle": "Candidate tips optimization title",
+    "privacyTip1": "Candidate tips privacy tip1",
+    "privacyTip2": "Candidate tips privacy tip2",
+    "privacyTip3": "Candidate tips privacy tip3",
+    "bestPracticeTip1": "Candidate tips best practice tip1",
+    "bestPracticeTip2": "Candidate tips best practice tip2",
+    "bestPracticeTip3": "Candidate tips best practice tip3"
+  },
+  "validation": {
+    "fileTooLargeShort": "Candidate validation file too large short",
+    "invalidFileFormatShort": "Candidate validation invalid file format short",
+    "deleteExistingToUpload": "Candidate validation delete existing to upload",
+    "maxFilesReached": "Maximum number of files reached"
+  }
+}

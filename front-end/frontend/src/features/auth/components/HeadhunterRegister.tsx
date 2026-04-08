@@ -1,6 +1,6 @@
-import { Input } from "@/components/ui/input";
-import { FormField } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { Input } from "@/shared/ui-primitives/input";
+import { FormField } from "@/shared/common-blocks";
+import { useAuthTranslation } from "@/shared/hooks";
 import {
   MdOutlineMail,
   MdLockOutline,
@@ -47,59 +47,59 @@ export function HeadhunterRegister({
   setShowPassword,
   setShowConfirmPassword,
 }: Props) {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   return (
     <>
-      <FormField label="Username" error={errors.username}>
+      <FormField label={t("labels.username")} error={errors.username}>
         <Input
           icon={<MdAccountCircle />}
-          placeholder={t("auth.placeholders.username")}
+          placeholder={t("placeholders.username")}
           value={formData.username}
           onChange={(e) => handleChange("username")(e.target.value)}
         />
       </FormField>
 
-      <FormField label="Full Name" error={errors.fullName}>
+      <FormField label={t("labels.fullName")} error={errors.fullName}>
         <Input
           icon={<MdPerson />}
-          placeholder={t("auth.placeholders.name")}
+          placeholder={t("placeholders.name")}
           value={formData.fullName}
           onChange={(e) => handleChange("fullName")(e.target.value)}
         />
       </FormField>
 
-      <FormField label="Work Email" error={errors.email}>
+      <FormField label={t("labels.workEmail")} error={errors.email}>
         <Input
           icon={<MdOutlineMail />}
-          placeholder={t("auth.placeholders.email")}
+          placeholder={t("placeholders.email")}
           value={formData.email}
           onChange={(e) => handleChange("email")(e.target.value)}
         />
       </FormField>
 
-      <FormField label="Company Name" error={errors.companyName}>
+      <FormField label={t("labels.companyName")} error={errors.companyName}>
         <Input
           icon={<MdBusiness />}
-          placeholder={t("auth.placeholders.companyName")}
+          placeholder={t("placeholders.companyName")}
           value={formData.companyName}
           onChange={(e) => handleChange("companyName")(e.target.value)}
         />
       </FormField>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-0">
-        <FormField label="Phone Number" error={errors.phone}>
+        <FormField label={t("labels.phoneNumber")} error={errors.phone}>
           <Input
             icon={<MdPhone />}
-            placeholder={t("auth.placeholders.phone")}
+            placeholder={t("placeholders.phone")}
             value={formData.phone}
             onChange={(e) => handleChange("phone")(e.target.value)}
           />
         </FormField>
 
-        <FormField label="Tax Code (MST)" error={errors.taxCode}>
+        <FormField label={t("labels.taxCode")} error={errors.taxCode}>
           <Input
             icon={<MdBusiness />}
-            placeholder={t("auth.placeholders.taxId")}
+            placeholder={t("placeholders.taxId")}
             value={formData.taxCode}
             onChange={(e) => handleChange("taxCode")(e.target.value)}
           />
@@ -108,7 +108,7 @@ export function HeadhunterRegister({
 
       {/* GENDER & AVATAR (optional) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-0">
-        <FormField label="Gender (Optional)">
+        <FormField label={t("labels.gender")}>
           <div className="relative">
             <MdWc
               className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 z-10"
@@ -117,18 +117,20 @@ export function HeadhunterRegister({
             <select
               value={formData.gender || ""}
               onChange={(e) => handleChange("gender")(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm"
-              aria-label={t("auth.aria.selectGender")}
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary bg-white text-sm"
+              aria-label={t("aria.selectGender")}
             >
-              <option value="">Select gender</option>
-              <option value="MALE">Male</option>
-              <option value="FEMALE">Female</option>
-              <option value="OTHER">Other</option>
+              <option value="">{t("selectOptions.selectGender")}</option>
+              <option value="MALE">{t("selectOptions.genders.male")}</option>
+              <option value="FEMALE">
+                {t("selectOptions.genders.female")}
+              </option>
+              <option value="OTHER">{t("selectOptions.genders.other")}</option>
             </select>
           </div>
         </FormField>
 
-        <FormField label="Avatar (Optional)">
+        <FormField label={t("labels.avatar")}>
           <div className="relative">
             <MdCameraAlt
               className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 z-10"
@@ -140,8 +142,8 @@ export function HeadhunterRegister({
               onChange={(e) =>
                 handleChange("avatar")(e.target.files?.[0] || null)
               }
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
-              aria-label={t("auth.aria.uploadAvatar")}
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary bg-white text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-primary/20 file:text-black hover:file:bg-brand-primary/30"
+              aria-label={t("aria.uploadAvatar")}
             />
           </div>
         </FormField>
@@ -149,12 +151,12 @@ export function HeadhunterRegister({
 
       {/* PASSWORD */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
-        <FormField label="Password">
+        <FormField label={t("labels.password")}>
           <div className="relative">
             <Input
               icon={<MdLockOutline />}
               type={showPassword ? "text" : "password"}
-              placeholder={t("auth.placeholders.password")}
+              placeholder={t("placeholders.password")}
               value={formData.password}
               onChange={(e) => handleChange("password")(e.target.value)}
             />
@@ -169,12 +171,12 @@ export function HeadhunterRegister({
           </div>
         </FormField>
 
-        <FormField label="Confirm Password">
+        <FormField label={t("labels.confirmPassword")}>
           <div className="relative">
             <Input
               icon={<MdLockOutline />}
               type={showConfirmPassword ? "text" : "password"}
-              placeholder={t("auth.placeholders.confirmPassword")}
+              placeholder={t("placeholders.confirmPassword")}
               value={formData.confirmPassword}
               onChange={(e) => handleChange("confirmPassword")(e.target.value)}
             />
@@ -196,3 +198,5 @@ export function HeadhunterRegister({
     </>
   );
 }
+
+

@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.JobMapper;
@@ -73,7 +74,7 @@ public class JobManageServiceImpl implements JobManageService {
     static String MSG_NO_OPEN_JOBS = "The system currently has no job postings.";
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER')")
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER)
     public JobDetailResp createJobPost(JobReq jobReq) {
         var context = SecurityContextHolder.getContext();
         String contextName = context.getAuthentication().getName();
@@ -114,6 +115,8 @@ public class JobManageServiceImpl implements JobManageService {
                 Skill skill = skillRepo.findById(skillId)
                         .orElseThrow(() -> new AppException(ErrorCode.JOB_SKILL_IDS_INVALID));
                 updatedJobSkillsList.add(JobSkill.builder()
+                        .jobId(savedJob.getId())
+                        .skillId(skill.getId())
                         .job(savedJob)
                         .skill(skill)
                         .build());
@@ -145,6 +148,7 @@ public class JobManageServiceImpl implements JobManageService {
         }
 
         // update job post
+        // copy the changes from jobReq into job, as soon as updateJobPost() end, @Transactional will automatically save the job entity into repo
         jobMapper.updateJobFromRequest(jobReq, job);
 
         // Update Job Skills if provided
@@ -161,6 +165,8 @@ public class JobManageServiceImpl implements JobManageService {
                     Skill skill = skillRepo.findById(skillId)
                             .orElseThrow(() -> new AppException(ErrorCode.JOB_SKILL_IDS_INVALID));
                     updatedJobSkills.add(JobSkill.builder()
+                            .jobId(job.getId())
+                            .skillId(skill.getId())
                             .job(job)
                             .skill(skill)
                             .build());
@@ -246,6 +252,35 @@ public class JobManageServiceImpl implements JobManageService {
 
     }
 
+    @Override
+    @PreAuthorize("hasAuthority('SCOPE_HEADHUNTER') or hasAuthority('SCOPE_ADMIN')")
+    public JobResp toggleVisibility(Long jobId, String currentUsername) {
+        Job job = jobRepo.findById(jobId)
+                .orElseThrow(() -> new AppException(ErrorCode.JOB_NOT_FOUND));
+
+        Account currentAccount = accountRepo.findByUsername(currentUsername)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        boolean isOwner = job.getHeadhunter() != null && job.getHeadhunter().getId().equals(currentAccount.getId());
+        boolean isAdmin = currentAccount.getRoles() != null && currentAccount.getRoles().contains("ADMIN");
+
+        if (!isOwner && !isAdmin) {
+            throw new AppException(ErrorCode.UNAUTHORIZED_ACTION);
+        }
+
+        Boolean currentlyVisible = job.isVisible();
+        if (currentlyVisible) {
+            job.setVisible(false);
+            job.setDeletedAt(java.time.LocalDateTime.now());
+        } else {
+            job.setVisible(true);
+            job.setDeletedAt(null);
+        }
+
+        Job saved = jobRepo.save(job);
+        return jobMapper.toJobResp(saved);
+    }
+
     // recommendation job by skill
     @Override
     @PreAuthorize("hasAuthority('SCOPE_CANDIDATE')")
@@ -264,7 +299,7 @@ public class JobManageServiceImpl implements JobManageService {
                     .build();
         }
 
-        List<AccountSkill> accountSkills = accountSkillRepo.findByAccountId(account.getId());
+        List<AccountSkill> accountSkills = accountSkillRepo.findByAccount_Id(account.getId());
         if (accountSkills == null || accountSkills.isEmpty()) {
             return buildFallbackResponse(MSG_NO_CANDIDATE_SKILLS);
         }

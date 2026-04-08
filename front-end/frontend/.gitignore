@@ -31,10 +31,57 @@ my_local_backup.sql
 
 # Local temporary files
 .env
+!.env.example
 npm/
 lint-output.tmp
 *.tmp
 docs/**
 
+# Audit & verification reports - local development only
+audit-report.txt
+unused-keys-full.txt
+UNUSED_KEYS_VERIFICATION_REPORT.md
+CLEANUP_VERIFICATION_REPORT.txt
+keys-to-cleanup.txt
+UNUSED_KEYS_CLEANUP_ANALYSIS.md
+GREP_VERIFIED_CLEANUP_REPORT.txt
+confirmed-unused-keys.txt
+NATIVE_VERIFIED_CLEANUP_REPORT.txt
+native-confirmed-unused-keys.txt
+CLEANUP_LOG.txt
+
+# i18n development & verification scripts - local only
+# One-time cleanup/restore scripts
+scripts/cleanup-confirmed-unused-final.js
+scripts/cleanup-final-11-keys.js
+scripts/cleanup-native-verified.js
+scripts/restore-deleted-11-keys.js
+scripts/generate-all-translation-hooks.js
+scripts/test-aria-keys.js
+
+# Verification & audit scripts (local development)
+scripts/generate-audit-report.mjs
+scripts/find-direct-translation-issues.mjs
+scripts/inventory-hooks.mjs
+scripts/verify-complete.mjs
+scripts/verify-hook-key-match.js
+scripts/verify-hook-key-match.mjs
+scripts/verify-unused-grep.js
+scripts/verify-unused-native.js
+scripts/check-pattern.mjs
+
+# i18n report files
+missing-direct-translation-keys.json
+unused-keys-report.json
+src/shared/hooks/useFeatureTranslation.generated.ts
+
 # Refernces of AI designs
-**/assets/users/list/stitch_remix_of_ui_epics/
+**/assets/**
+
+# Local documentation and design files (not tracked)
+*.md
+!README.md
+
+../../.vscode/
+lint-output.txt
+**.txt

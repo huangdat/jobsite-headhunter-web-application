@@ -1,4 +1,12 @@
-import React from 'react';
+import React from "react";
+import { Button } from "@/shared/ui-primitives/button";
+import { useUsersTranslation } from "@/shared/hooks";
+import { FilterBadge } from "./FilterBadge";
+
+interface ActiveFilter {
+  type: "role" | "status";
+  value: string;
+}
 
 interface UserListHeaderProps {
   searchValue?: string;
@@ -6,85 +14,90 @@ interface UserListHeaderProps {
   onFilterClick?: () => void;
   onGroupByChange?: (value: string) => void;
   onAddUserClick?: () => void;
+  activeFilters?: ActiveFilter[];
+  onRemoveFilter?: (filterType: "role" | "status") => void;
+  onClearFilters?: () => void;
+  filterPanel?: React.ReactNode;
 }
 
 export const UserListHeader: React.FC<UserListHeaderProps> = ({
-  searchValue = '',
+  searchValue = "",
   onSearchChange,
   onFilterClick,
   onGroupByChange,
   onAddUserClick,
+  activeFilters = [],
+  onRemoveFilter,
+  onClearFilters,
+  filterPanel,
 }) => {
+  const { t } = useUsersTranslation();
+
   return (
-    <>
-      {/* Top Header Bar */}
-      <header className="h-16 border-b border-primary/10 bg-white dark:bg-background-dark px-8 flex items-center justify-between shrink-0">
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden mb-6">
+      {/* Top Header Bar: Thêm border-b nhẹ để tách biệt tiêu đề */}
+      <header className="h-16 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-background-dark px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-bold">User Management</h2>
-        </div>
-        <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
-            <span className="material-symbols-outlined text-slate-600 dark:text-slate-400">
-              notifications
-            </span>
-            <span className="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-white dark:border-background-dark"></span>
-          </button>
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-            <span className="material-symbols-outlined text-sm">help</span>
-            <span className="text-sm font-medium">Documentation</span>
-          </button>
-          <div className="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
-          <button
-            onClick={onAddUserClick}
-            className="bg-primary hover:bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2 text-sm font-bold transition-all shadow-sm"
-          >
-            <span className="material-symbols-outlined text-lg">person_add</span>
-            Add New User
-          </button>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">
+            {t("list.pageTitle")}
+          </h2>
         </div>
       </header>
 
-      {/* Search & Filter Controls */}
-      <div className="p-6 space-y-4 shrink-0 bg-white dark:bg-background-dark">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3 flex-1 min-w-[calc(300px)]">
+      {/* Search & Filter Controls: Phần này giờ nằm trong container có border và shadow */}
+      <div className="p-6 shrink-0 bg-white dark:bg-background-dark space-y-4">
+        {/* Row 1: Search, Filter, Group By */}
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="flex items-center gap-3 flex-1 min-w-75">
             <div className="relative flex-1 max-w-md">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                 search
               </span>
               <input
                 type="text"
-                placeholder="Search by name, email, or username..."
+                placeholder={t("list.searchPlaceholder")}
                 value={searchValue}
                 onChange={(e) => onSearchChange?.(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
               />
             </div>
-            <button
-              onClick={onFilterClick}
-              className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-            >
-              <span className="material-symbols-outlined text-slate-500">filter_list</span>
-              <span className="text-sm font-medium">Filters</span>
-            </button>
-            <div className="h-8 w-px bg-slate-200 dark:bg-slate-800 mx-2"></div>
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
-              <span>Group By:</span>
-              <select
-                onChange={(e) => onGroupByChange?.(e.target.value)}
-                className="bg-white dark:bg-slate-900 border-none rounded-lg text-sm focus:ring-0 cursor-pointer"
-                title="Group users by"
-                aria-label="Group users by"
+
+            <div className="relative">
+              <button
+                onClick={onFilterClick}
+                className="flex items-center gap-2 cursor-pointer px-5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm hover:border-slate-300 dark:hover:border-slate-600 text-sm font-semibold text-slate-700 dark:text-slate-200"
               >
-                <option>None</option>
-                <option>Role</option>
-                <option>Status</option>
-                <option>Company</option>
-              </select>
+                <span className="material-symbols-outlined text-slate-500">
+                  filter_list
+                </span>
+                <span>{t("list.filterButton")}</span>
+              </button>
+
+              {filterPanel}
             </div>
           </div>
         </div>
+
+        {/* Row 2: Active Filters */}
+        {activeFilters && activeFilters.length > 0 && (
+          <div className="flex flex-wrap gap-2 items-center pt-2">
+            {activeFilters.map((filter) => (
+              <FilterBadge
+                key={`${filter.type}-${filter.value}`}
+                filterType={filter.type}
+                value={filter.value}
+                onRemove={() => onRemoveFilter?.(filter.type)}
+              />
+            ))}
+            <button
+              onClick={onClearFilters}
+              className="text-xs text-slate-500 hover:text-primary font-medium underline underline-offset-4 ml-2"
+            >
+              {t("list.clearAllFilters")}
+            </button>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };

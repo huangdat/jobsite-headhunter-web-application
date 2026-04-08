@@ -1,23 +1,36 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
-import { AnimatedCheckbox } from "../components/AnimatedCheckbox";
-import { useLogin } from "../hooks";
+import { Button } from "@/shared/ui-primitives/button";
+import { Input } from "@/shared/ui-primitives/input";
+import {
+  FormField,
+  AuthLayout,
+  SocialLoginButtons,
+} from "@/shared/common-blocks";
+import { useAuthTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
+import { AnimatedCheckbox } from "@/features/auth/components/AnimatedCheckbox";
+import { useLogin } from "@/features/auth/hooks";
+import { ErrorState } from "@/shared/common-blocks/states/ErrorState";
 import {
   getSocialConfig,
   googleLogin,
   linkedinLogin,
-} from "../services/authApi";
+} from "@/features/auth/services/authApi";
 import { toast } from "sonner";
-import { useAuth } from "../context/useAuth";
-import { extractApiErrorMessage } from "../utils/apiError";
-import type { LoginResult, SocialAuthResponse } from "../types";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
+import type { LoginResult, SocialAuthResponse } from "@/features/auth/types";
+import {
+  Display,
+  SectionTitle,
+  BodyText,
+  SmallText,
+} from "@/shared/common-blocks/typography/Typography";
 
 import { MdAccountCircle, MdLockOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { OAUTH_URLS } from "@/lib/constants";
 import { HiOutlineArrowRight } from "react-icons/hi";
 
 const SOCIAL_STATE_KEY = "socialOAuthState";
@@ -50,13 +63,14 @@ const clearOAuthCallbackParams = () => {
 };
 
 export function LoginPage() {
-  const { t } = useAppTranslation();
+  const { t } = useAuthTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, isInitializing, signIn } = useAuth();
   const {
     formData,
     errors,
+    generalError,
     isLoading,
     handleSubmit,
     handleChange,
@@ -81,22 +95,20 @@ export function LoginPage() {
     async (result: LoginResult | SocialAuthResponse) => {
       if (isLoginResult(result) && result.authenticated && result.accessToken) {
         await signIn(result.accessToken);
-        toast.success(t("auth.messages.signedInSuccess"));
+        toast.success(t("messages.signedInSuccess"));
         navigate("/home", { replace: true });
         return;
       }
 
-      toast.info(t("auth.messages.socialAccountFound"));
+      toast.info(t("messages.socialAccountFound"));
       navigate("/select-role");
     },
-    [navigate, signIn]
+    [navigate, signIn, t]
   );
 
   const handleGoogleClick = () => {
     if (!googleEnabled) {
-      toast.error(
-        "Google sign-in is currently unavailable. Please contact support."
-      );
+      toast.error(t("messages.googleSignInUnavailable"));
       return;
     }
 
@@ -118,16 +130,12 @@ export function LoginPage() {
     });
 
     setLoadingProvider("google");
-    window.location.assign(
-      `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`
-    );
+    window.location.assign(`${OAUTH_URLS.GOOGLE_AUTH}?${params.toString()}`);
   };
 
   const handleLinkedInClick = () => {
     if (!linkedInEnabled) {
-      toast.error(
-        "LinkedIn sign-in is currently unavailable. Please contact support."
-      );
+      toast.error(t("messages.linkedinSignInUnavailable"));
       return;
     }
 
@@ -146,9 +154,7 @@ export function LoginPage() {
     });
 
     setLoadingProvider("linkedin");
-    window.location.assign(
-      `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`
-    );
+    window.location.assign(`${OAUTH_URLS.LINKEDIN_AUTH}?${params.toString()}`);
   };
 
   // Load social provider configuration once.
@@ -203,7 +209,7 @@ export function LoginPage() {
       }
 
       if (linkedInError || googleError) {
-        toast.error(t("auth.messages.socialSignInCancelled"));
+        toast.error(t("messages.socialSignInCancelled"));
         clearOAuthCallbackParams();
         sessionStorage.removeItem(SOCIAL_PROVIDER_KEY);
         sessionStorage.removeItem(SOCIAL_STATE_KEY);
@@ -211,7 +217,7 @@ export function LoginPage() {
       }
 
       if (!expectedState) {
-        toast.error(t("auth.messages.invalidSocialState"));
+        toast.error(t("messages.invalidSocialState"));
         clearOAuthCallbackParams();
         sessionStorage.removeItem(SOCIAL_PROVIDER_KEY);
         return;
@@ -220,7 +226,7 @@ export function LoginPage() {
       try {
         if (linkedInCode) {
           if (provider !== "linkedin" || linkedInState !== expectedState) {
-            throw new Error("Invalid LinkedIn callback state");
+            throw new Error(t("messages.invalidLinkedInCallbackState"));
           }
 
           setLoadingProvider("linkedin");
@@ -233,7 +239,7 @@ export function LoginPage() {
 
         if (googleIdToken) {
           if (provider !== "google" || googleState !== expectedState) {
-            throw new Error("Invalid Google callback state");
+            throw new Error(t("messages.invalidGoogleCallbackState"));
           }
 
           setLoadingProvider("google");
@@ -243,9 +249,9 @@ export function LoginPage() {
       } catch (error) {
         const message = extractApiErrorMessage(
           error,
-          "Unable to sign in with social account. Please try again."
+          t("messages.unableToSignIn")
         );
-        toast.error(message);
+        toast.error(t(message));
       } finally {
         clearOAuthCallbackParams();
         setLoadingProvider(null);
@@ -255,7 +261,7 @@ export function LoginPage() {
     };
 
     void runOAuthCallback();
-  }, [handleSocialLoginSuccess]);
+  }, [handleSocialLoginSuccess, t]);
 
   useEffect(() => {
     if (hasHandledState.current) return;
@@ -288,63 +294,91 @@ export function LoginPage() {
   }, [isAuthenticated, isInitializing, navigate]);
 
   return (
-    <AuthLayout ctaButton={{ to: "/select-role", label: "Sign Up" }}>
-      <div className="w-full max-w-5xl min-h-150 bg-white rounded-3xl shadow-xl grid md:grid-cols-2">
+    <AuthLayout ctaButton={{ to: "/select-role", label: t("pages.signup") }}>
+      <div className="w-full max-w-5xl min-h-150 bg-white dark:bg-slate-900 rounded-3xl shadow-xl grid md:grid-cols-2">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
-          <h1 className="text-5xl font-bold leading-tight">
-            Find Talent. <br />
-            Earn Rewards.
-          </h1>
+          <Display size="md" className="text-white">
+            {" "}
+            {t("pages.login.heroTitlePart1")} <br />
+            {t("pages.login.heroTitlePart2")}
+          </Display>
 
-          <p className="text-gray-300 mt-6">
-            Join JobSite’s professional referral network and connect great
-            talent with top companies.
-          </p>
+          <BodyText className="text-white mt-6 opacity-90">
+            {t("pages.login.heroSubtitle")}
+          </BodyText>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-10">
-          <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
+          <SectionTitle className="mb-2">
+            {t("pages.login.welcomeBack")}
+          </SectionTitle>
 
-          <p className="text-gray-500 mb-8">
-            Enter your credentials to access your account.
-          </p>
+          <BodyText variant="muted" className="mb-8">
+            {t("pages.login.subtitle")}
+          </BodyText>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit(formData);
             }}
+            onKeyDown={(e) => {
+              // Submit form when Enter is pressed (but not on password field specifically)
+              if (e.key === "Enter") {
+                e.preventDefault();
+                // Check if there are no validation errors before submitting
+                if (
+                  !errors.email &&
+                  !errors.password &&
+                  formData.email &&
+                  formData.password
+                ) {
+                  handleSubmit(formData);
+                }
+              }
+            }}
             className="space-y-6"
           >
+            {/* ERROR STATE - Display general login errors */}
+            {generalError && (
+              <ErrorState
+                variant="card"
+                title={t("pages.login.signInFailed")}
+                message={t(generalError)}
+                className={`mb-4 ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
+              />
+            )}
+
             {/* USERNAME OR EMAIL */}
-            <FormField label="Username" error={errors.email}>
+            <FormField label={t("labels.username")} error={errors.email}>
               <Input
                 name="username"
                 autoComplete="username"
                 icon={<MdAccountCircle />}
                 type="text"
-                placeholder="john_doe123"
+                placeholder={t("placeholders.username")}
                 value={formData.email}
                 onChange={(e) => handleChange("email")(e.target.value)}
               />
-              <p className="text-xs text-slate-500 mt-1">Enter your username</p>
             </FormField>
 
             {/* PASSWORD */}
-            <FormField label="Password" error={errors.password}>
+            <FormField label={t("labels.password")} error={errors.password}>
               <Input
                 name="password"
                 autoComplete="current-password"
                 icon={<MdLockOutline />}
                 type={showPassword ? "text" : "password"}
-                placeholder={t("auth.placeholders.password")}
+                placeholder={t("placeholders.password")}
                 value={formData.password}
                 onChange={(e) => handleChange("password")(e.target.value)}
                 rightIcon={
-                  <button
+                  <Button
                     type="button"
-                    className="cursor-pointer"
+                    variant="ghost"
+                    size="icon"
+                    className="h-10 w-10"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -352,7 +386,7 @@ export function LoginPage() {
                     ) : (
                       <AiOutlineEye />
                     )}
-                  </button>
+                  </Button>
                 }
               />
             </FormField>
@@ -362,11 +396,14 @@ export function LoginPage() {
               <AnimatedCheckbox
                 checked={formData.rememberMe ?? false}
                 onChange={(value: boolean) => handleChange("rememberMe")(value)}
-                label="Remember me"
+                label={t("pages.login.rememberMe")}
               />
 
-              <Link to="/forgot-password" className="text-lime-500">
-                Forgot password?
+              <Link
+                to="/forgot-password"
+                className="text-brand-primary hover:underline text-info-600"
+              >
+                {t("pages.login.forgotPasswordLink")}
               </Link>
             </div>
 
@@ -379,14 +416,16 @@ export function LoginPage() {
               className="w-full flex justify-center gap-2 cursor-pointer"
             >
               <HiOutlineArrowRight />
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? t("pages.login.signingIn") : t("buttons.signIn")}
             </Button>
 
             {/* DIVIDER */}
             <div className="flex items-center gap-4 my-6">
-              <div className="flex-1 h-px bg-slate-200"></div>
-              <span className="text-sm text-gray-400">or continue with</span>
-              <div className="flex-1 h-px bg-slate-200"></div>
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+              <SmallText variant="muted">
+                {t("pages.login.orContinueWith")}
+              </SmallText>
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
             </div>
 
             {/* SOCIAL LOGIN */}
@@ -398,13 +437,16 @@ export function LoginPage() {
               loadingProvider={loadingProvider}
             />
             {/* REGISTER LINK */}
-            <div className="text-center mt-6 text-sm">
-              <span className="text-slate-500">
-                Don't have an account yet?{" "}
-              </span>
-              <Link to="/select-role" className="text-lime-500 hover:underline">
-                Sign up
-              </Link>
+            <div className="text-center mt-6">
+              <SmallText variant="muted">
+                {t("pages.login.noAccount")}{" "}
+                <Link
+                  to="/select-role"
+                  className="text-brand-primary hover:underline"
+                >
+                  {t("pages.login.registerLink")}
+                </Link>
+              </SmallText>
             </div>
           </form>
         </div>

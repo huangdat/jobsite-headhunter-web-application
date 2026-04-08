@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
-import { AuthLayout } from "@/shared/components";
+import { useAuthTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
+import { AuthLayout } from "@/shared/common-blocks";
+import {
+  Display,
+  SectionTitle,
+  BodyText,
+  SmallText,
+} from "@/shared/common-blocks/typography/Typography";
 
 export function ResetPasswordSuccessPage() {
+  const { t } = useAuthTranslation();
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("buttons.signIn") }}>
       <main className="max-w-5xl mx-auto px-4 pt-12">
         <div className="bg-white dark:bg-slate-900 rounded-4xl overflow-hidden flex flex-col md:flex-row shadow-xl border border-slate-100 dark:border-slate-800">
           {/* Left Panel */}
@@ -15,34 +24,36 @@ export function ResetPasswordSuccessPage() {
                 </span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-                Account <br />
-                <span className="text-brand-primary">Secured</span>
-              </h1>
+              <Display size="md" className="mb-6">
+                {t("pages.resetPasswordSuccess.titleLeft")} <br />
+                <span className="text-brand-primary">
+                  {t("pages.resetPasswordSuccess.titleHighlight")}
+                </span>
+              </Display>
 
-              <p className="text-gray-300 text-lg leading-relaxed max-w-sm">
-                Your password has been successfully updated. We recommend
-                keeping your credentials secure and never sharing them with
-                anyone.
-              </p>
+              <BodyText className="text-gray-300 leading-relaxed max-w-sm">
+                {t("pages.resetPasswordSuccess.subtitleLeft")}
+              </BodyText>
 
               <div className="mt-12 space-y-4">
                 <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-green-400">
+                  <span
+                    className={`material-symbols-outlined ${getSemanticClass("success", "icon", true)}`}
+                  >
                     check_circle
                   </span>
-                  <span className="text-sm text-slate-300">
-                    Password Updated Successfully
-                  </span>
+                  <SmallText className="text-slate-300">
+                    {t("pages.resetPasswordSuccess.checkItem1")}
+                  </SmallText>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <span className="material-symbols-outlined text-brand-primary">
                     shield
                   </span>
-                  <span className="text-sm text-slate-300">
-                    Your Account is Protected
-                  </span>
+                  <SmallText className="text-slate-300">
+                    {t("pages.resetPasswordSuccess.checkItem2")}
+                  </SmallText>
                 </div>
               </div>
             </div>
@@ -52,23 +63,28 @@ export function ResetPasswordSuccessPage() {
           <div className="md:w-7/12 p-8 md:p-14 bg-white dark:bg-slate-900 flex items-center">
             <div className="max-w-md mx-auto text-center">
               <div className="mb-8 flex justify-center">
-                <div className="w-24 h-24 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center">
+                <div
+                  className={`w-24 h-24 rounded-full flex items-center justify-center ${getSemanticClass("success", "bg", true)}`}
+                >
                   <span className="material-symbols-outlined text-7xl text-brand-primary success-icon-glow">
                     check_circle
                   </span>
                 </div>
               </div>
-              <h2 className="text-3xl font-bold mb-4">Password Changed!</h2>
-              <p className="text-slate-500 dark:text-slate-400 text-lg mb-10 leading-relaxed">
-                Your password has been updated successfully. You can now log in
-                with your new credentials.
-              </p>
+              <SectionTitle className="mb-4">
+                {t("pages.resetPasswordSuccess.title")}
+              </SectionTitle>
+              <BodyText className="mb-10 leading-relaxed">
+                {t("pages.resetPasswordSuccess.subtitle")}
+              </BodyText>
               <Link
                 to="/login"
-                className="success-button-gradient w-full py-4 text-black font-bold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 mb-8"
+                className="success-button-gradient w-full py-4 text-black rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 mb-8"
               >
                 <span className="material-symbols-outlined text-xl">login</span>
-                Sign In Now
+                <SmallText weight="bold" className="text-black">
+                  {t("pages.resetPasswordSuccess.signInButton")}
+                </SmallText>
               </Link>
             </div>
           </div>
@@ -77,3 +93,5 @@ export function ResetPasswordSuccessPage() {
     </AuthLayout>
   );
 }
+
+

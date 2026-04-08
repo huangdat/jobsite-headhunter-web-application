@@ -1,19 +1,26 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { FormField } from "@/shared/components";
-import type { ChangePasswordFormData } from "../types";
-import { changePassword } from "../services/authApi";
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Input } from "@/shared/ui-primitives/input";
+import { Button } from "@/shared/ui-primitives/button";
+import { FormField } from "@/shared/common-blocks";
+import {
+  Display,
+  SmallText,
+  MetaText,
+} from "@/shared/common-blocks/typography/Typography";
+import type { ChangePasswordFormData } from "@/features/auth/types";
+import { changePassword } from "@/features/auth/services/authApi";
+import { useAuthTranslation, useAppTranslation } from "@/shared/hooks";
+import { useAppForm } from "@/shared/hooks/useAppForm";
 import { toast } from "sonner";
-import { extractApiErrorMessage } from "../utils/apiError";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 export function ChangePasswordPage() {
-  const { t } = useAppTranslation();
-  const [formData, setFormData] = useState<ChangePasswordFormData>({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  const { t } = useAuthTranslation();
+  const { t: tApp } = useAppTranslation();
+  const navigate = useNavigate();
 
   const [showPasswords, setShowPasswords] = useState({
     current: false,
@@ -21,79 +28,69 @@ export function ChangePasswordPage() {
     confirm: false,
   });
 
-  const [errors, setErrors] = useState<
-    Partial<Record<keyof ChangePasswordFormData, string>>
-  >({});
-  const [isLoading, setIsLoading] = useState(false);
+  const schema = yup.object().shape({
+    currentPassword: yup
+      .string()
+      .required(t("validation.currentPasswordRequired")),
+    newPassword: yup
+      .string()
+      .required(t("validation.newPasswordRequired"))
+      .min(8, t("validation.passwordBetween8and16"))
+      .max(16, t("validation.passwordBetween8and16"))
+      .matches(/[A-Z]/, t("validation.passwordUppercase"))
+      .matches(/[a-z]/, t("validation.passwordLowercase"))
+      .matches(/\d/, t("validation.passwordNumber"))
+      .matches(/^[a-zA-Z0-9_]+$/, t("validation.passwordSpecialChars")),
+    confirmPassword: yup
+      .string()
+      .required(t("validation.confirmPasswordRequired"))
+      .oneOf([yup.ref("newPassword")], t("validation.passwordsDoNotMatch")),
+  });
 
-  const handleChange =
-    (field: keyof ChangePasswordFormData) => (value: string) => {
-      setFormData((prev) => ({ ...prev, [field]: value }));
-      if (errors[field]) {
-        setErrors((prev) => ({ ...prev, [field]: undefined }));
-      }
-    };
+  const form = useAppForm<ChangePasswordFormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+
+  const {
+    register,
+    handleSubmit: handleFormSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setError,
+  } = form;
 
   const togglePasswordVisibility = (field: "current" | "new" | "confirm") => {
+    // eslint-disable-next-line security/detect-object-injection
     setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
-  const validateForm = (): boolean => {
-    const newErrors: Partial<Record<keyof ChangePasswordFormData, string>> = {};
-
-    if (!formData.currentPassword) {
-      newErrors.currentPassword = t("auth.validation.currentPasswordRequired");
-    }
-
-    if (!formData.newPassword) {
-      newErrors.newPassword = t("auth.validation.newPasswordRequired");
-    } else if (
-      formData.newPassword.length < 8 ||
-      formData.newPassword.length > 16
-    ) {
-      newErrors.newPassword = t("auth.validation.passwordBetween8and16");
-    } else if (!/[A-Z]/.test(formData.newPassword)) {
-      newErrors.newPassword = t("auth.validation.passwordUppercase");
-    } else if (!/[a-z]/.test(formData.newPassword)) {
-      newErrors.newPassword = t("auth.validation.passwordLowercase");
-    } else if (!/\d/.test(formData.newPassword)) {
-      newErrors.newPassword = t("auth.validation.passwordNumber");
-    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.newPassword)) {
-      newErrors.newPassword = t("auth.validation.passwordSpecialChars");
-    } else if (formData.newPassword === formData.currentPassword) {
-      newErrors.newPassword = t("auth.validation.newPasswordMustBeDifferent");
-    }
-
-    if (formData.newPassword !== formData.confirmPassword) {
-      newErrors.confirmPassword = t("auth.validation.passwordsDoNotMatch");
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      toast.error(t("auth.validation.fixErrorsForm"));
-      return;
-    }
-
-    setIsLoading(true);
-
+  const onSubmit = async (data: ChangePasswordFormData) => {
     try {
-      await changePassword(formData);
+      // Check if new password is same as current
+      if (data.newPassword === data.currentPassword) {
+        setError("newPassword", {
+          type: "custom",
+          message: t("validation.newPasswordMustBeDifferent"),
+        });
+        return;
+      }
+
+      await changePassword(data);
 
       // Success notification
-      toast.success(t("auth.messages.passwordChangedSuccess"));
+      toast.success(t("messages.passwordChangedSuccess"));
 
       // Clear form
       handleCancel();
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        t("auth.messages.failedToChangePassword")
+        t("messages.failedToChangePassword")
       );
 
       if (
@@ -111,133 +108,121 @@ export function ChangePasswordPage() {
         // Check if it's current password error
         if (
           response.status === 401 ||
-          responseMessage.toLowerCase().includes("current password") ||
-          responseMessage.toLowerCase().includes("incorrect password")
+          responseMessage
+            .toLowerCase()
+            .includes(t("validation.currentPasswordKey")) ||
+          responseMessage
+            .toLowerCase()
+            .includes(t("validation.incorrectPasswordKey"))
         ) {
-          setErrors({
-            currentPassword: responseMessage,
+          setError("currentPassword", {
+            type: "custom",
+            message: responseMessage,
           });
         }
       }
 
       // Error notification
-      toast.error(errorMessage);
-
-      if (!errors.currentPassword) {
-        setErrors({
-          currentPassword: errorMessage,
-        });
-      }
-    } finally {
-      setIsLoading(false);
+      toast.error(t("messages.failedToChangePassword"));
     }
   };
 
   const handleCancel = () => {
-    setFormData({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
-    setErrors({});
+    reset();
   };
 
-  const hasErrors = Object.keys(errors).length > 0;
-  const isFormValid =
-    formData.currentPassword &&
-    formData.newPassword &&
-    formData.confirmPassword &&
-    !hasErrors;
-
   return (
-    <div className="relative flex h-screen w-full overflow-hidden bg-slate-50">
+    <div className="relative flex h-screen w-full overflow-hidden bg-slate-50 dark:bg-slate-950">
       {/* Sidebar */}
-      <aside className="w-80 bg-slate-900 text-white flex flex-col border-r border-white/10 shrink-0">
+      <aside className="w-80 bg-slate-900 dark:bg-slate-950 text-white flex flex-col border-r border-white/10 shrink-0">
         <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-slate-900">
+          <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-slate-900 dark:text-slate-900">
             <span className="material-symbols-outlined font-bold">
               account_tree
             </span>
           </div>
           <h2 className="text-xl font-bold tracking-tight text-white">
-            JobSite
+            {tApp("common.appName")}
           </h2>
-        </div>
-
-        <nav className="flex-1 px-4 py-6 space-y-2">
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
+          <Button
+            variant="ghost"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 h-auto justify-start w-full"
+            onClick={() => navigate("/dashboard")}
           >
             <span className="material-symbols-outlined text-brand-primary">
               dashboard
             </span>
-            <span className="font-medium">Dashboard</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
+            <span className="font-medium">{tApp("navigation.dashboard")}</span>
+          </Button>
+          <Button
+            variant="ghost"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 h-auto justify-start w-full"
+            onClick={() => navigate("/jobs")}
           >
             <span className="material-symbols-outlined text-brand-primary">
               work
             </span>
-            <span className="font-medium">Jobs</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
+            <span className="font-medium">{tApp("navigation.jobs")}</span>
+          </Button>
+          <Button
+            variant="ghost"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 h-auto justify-start w-full"
+            onClick={() => navigate("/referrals")}
           >
             <span className="material-symbols-outlined text-brand-primary">
               group_add
             </span>
-            <span className="font-medium">Referrals</span>
-          </a>
+            <span className="font-medium">{tApp("navigation.referrals")}</span>
+          </Button>
 
-          <div className="pt-4 pb-2 px-4 text-xs font-semibold text-white/40 uppercase tracking-wider">
-            Account
+          <div className="pt-4 pb-2 px-4 uppercase tracking-wider">
+            <MetaText>{tApp("common.section.account")}</MetaText>
           </div>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary transition-colors border border-brand-primary/20"
+          <Button
+            variant="ghost"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-primary/10 text-brand-primary border border-brand-primary/20 h-auto justify-start w-full"
+            onClick={() => navigate("/settings")}
           >
             <span className="material-symbols-outlined">settings</span>
-            <span className="font-medium">Settings</span>
-          </a>
-        </nav>
+            <span className="font-medium">{tApp("navigation.settings")}</span>
+          </Button>
+        </div>
 
         <div className="p-4 border-t border-white/10">
           <div className="flex items-center gap-3 p-2">
             <div className="w-10 h-10 rounded-full bg-brand-primary/20 border border-brand-primary/30 bg-cover bg-center"></div>
             <div className="grow overflow-hidden">
-              <p className="text-sm font-semibold truncate">Alex Nguyen</p>
-              <p className="text-xs text-white/50 truncate">
-                alex.n@referral.io
-              </p>
+              <SmallText weight="bold" className="text-white truncate">
+                {tApp("common.currentUserName")}
+              </SmallText>
+              <SmallText variant="muted" className="text-white/50 truncate">
+                {tApp("common.exampleEmail")}
+              </SmallText>
             </div>
           </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col bg-white overflow-y-auto">
+      <main className="flex-1 flex flex-col bg-white dark:bg-slate-900 overflow-y-auto">
         {/* Header */}
-        <header className="h-16 border-b border-slate-100 flex items-center justify-between px-8 bg-white sticky top-0 z-10">
-          <div className="flex items-center gap-2 text-slate-500 text-sm">
-            <span>Settings</span>
+        <header className="h-16 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between px-8 bg-white dark:bg-slate-900 sticky top-0 z-10">
+          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+            <span>{tApp("navigation.settings")}</span>
             <span className="material-symbols-outlined text-xs">
               chevron_right
             </span>
-            <span className="text-slate-900 font-medium">
-              Security & Password
+            <span className="text-slate-900 dark:text-white font-medium">
+              {t("pages.changePassword.securitySectionLabel")}
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="p-2 text-slate-400 hover:text-slate-600">
+            <Button variant="ghost" size="sm" className="p-2">
               <span className="material-symbols-outlined">notifications</span>
-            </button>
-            <button className="p-2 text-slate-400 hover:text-slate-600">
+            </Button>
+            <Button variant="ghost" size="sm" className="p-2">
               <span className="material-symbols-outlined">help_outline</span>
-            </button>
+            </Button>
           </div>
         </header>
 
@@ -245,141 +230,145 @@ export function ChangePasswordPage() {
         <div className="flex-1 w-full py-12 px-12">
           <div className="w-full">
             <div className="mb-10">
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
-                {t("auth.pages.changePassword.title")}
-              </h1>
-              <p className="text-slate-500 max-w-3xl">
-                {t("auth.pages.changePassword.subtitle")}
-              </p>
+              <Display className="mb-2">
+                {t("pages.changePassword.title")}
+              </Display>
+              <SmallText variant="muted" className="max-w-3xl">
+                {t("pages.changePassword.subtitle")}
+              </SmallText>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form onSubmit={handleFormSubmit(onSubmit)} className="space-y-8">
                 <FormField
-                  label={t("auth.pages.changePassword.currentPasswordLabel")}
-                  error={errors.currentPassword}
+                  label={t("pages.changePassword.currentPasswordLabel")}
+                  error={errors.currentPassword?.message}
                 >
                   <Input
                     type={showPasswords.current ? "text" : "password"}
-                    placeholder={t("auth.placeholders.currentPassword")}
-                    value={formData.currentPassword}
-                    onChange={(e) =>
-                      handleChange("currentPassword")(e.target.value)
-                    }
+                    placeholder={t("placeholders.currentPassword")}
+                    {...register("currentPassword")}
                     error={!!errors.currentPassword}
                     rightIcon={
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={() => togglePasswordVisibility("current")}
-                        className="material-symbols-outlined text-slate-400 hover:text-slate-600"
+                        className="h-10 w-10 material-symbols-outlined"
                       >
                         {showPasswords.current
                           ? "visibility"
                           : "visibility_off"}
-                      </button>
+                      </Button>
                     }
                   />
                 </FormField>
 
                 <FormField
-                  label={t("auth.pages.changePassword.newPasswordLabel")}
-                  error={errors.newPassword}
+                  label={t("pages.changePassword.newPasswordLabel")}
+                  error={errors.newPassword?.message}
                 >
                   <Input
                     type={showPasswords.new ? "text" : "password"}
-                    placeholder={t("auth.placeholders.newPassword")}
-                    value={formData.newPassword}
-                    onChange={(e) =>
-                      handleChange("newPassword")(e.target.value)
-                    }
+                    placeholder={t("placeholders.newPassword")}
+                    {...register("newPassword")}
                     error={!!errors.newPassword}
                     rightIcon={
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={() => togglePasswordVisibility("new")}
-                        className="material-symbols-outlined text-slate-400 hover:text-slate-600"
+                        className="h-10 w-10 material-symbols-outlined"
                       >
                         {showPasswords.new ? "visibility" : "visibility_off"}
-                      </button>
+                      </Button>
                     }
                   />
                 </FormField>
 
                 <FormField
-                  label={t("auth.pages.changePassword.confirmPasswordLabel")}
-                  error={errors.confirmPassword}
+                  label={t("pages.changePassword.confirmPasswordLabel")}
+                  error={errors.confirmPassword?.message}
                 >
                   <Input
                     type={showPasswords.confirm ? "text" : "password"}
-                    placeholder={t("auth.placeholders.confirmPassword")}
-                    value={formData.confirmPassword}
-                    onChange={(e) =>
-                      handleChange("confirmPassword")(e.target.value)
-                    }
+                    placeholder={t("placeholders.confirmPassword")}
+                    {...register("confirmPassword")}
                     error={!!errors.confirmPassword}
                     rightIcon={
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={() => togglePasswordVisibility("confirm")}
-                        className="material-symbols-outlined text-slate-400 hover:text-slate-600"
+                        className="h-10 w-10 material-symbols-outlined"
                       >
                         {showPasswords.confirm
                           ? "visibility"
                           : "visibility_off"}
-                      </button>
+                      </Button>
                     }
                   />
                 </FormField>
 
                 <div className="pt-6 flex flex-col sm:flex-row gap-4">
-                  <button
+                  <Button
                     type="submit"
-                    disabled={!isFormValid || isLoading}
-                    className={`flex-1 h-12 font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
-                      isFormValid && !isLoading
-                        ? "bg-brand-primary text-slate-900 hover:bg-brand-hover"
-                        : "bg-slate-200 text-slate-400 cursor-not-allowed"
-                    }`}
+                    disabled={isSubmitting}
+                    className="flex-1"
                   >
-                    {isLoading
-                      ? t("common.loading")
-                      : t("auth.pages.changePassword.submitButton")}
-                  </button>
-                  <button
+                    <MetaText>
+                      {isSubmitting
+                        ? t("common.loading")
+                        : t("pages.changePassword.submitButton")}
+                    </MetaText>
+                  </Button>
+                  <Button
                     type="button"
+                    variant="outline"
                     onClick={handleCancel}
-                    disabled={isLoading}
-                    className="flex-1 h-12 bg-transparent text-slate-600 font-semibold rounded-xl hover:bg-slate-50 transition-all border border-slate-200"
+                    disabled={isSubmitting}
+                    className="flex-1"
                   >
-                    {t("auth.pages.changePassword.cancelButton")}
-                  </button>
+                    <MetaText>
+                      {t("pages.changePassword.cancelButton")}
+                    </MetaText>
+                  </Button>
                 </div>
               </form>
 
               {/* Password Requirements */}
-              <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 h-fit max-w-md">
-                <h3 className="text-sm font-bold text-slate-800 mb-6 uppercase tracking-wider">
-                  {t("auth.pages.changePassword.passwordRequirementsTitle")}
-                </h3>
+              <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 h-fit max-w-md">
+                <MetaText className="mb-6">
+                  {t("pages.changePassword.passwordRequirementsTitle")}
+                </MetaText>
                 <ul className="space-y-4">
-                  <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <li className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("auth.pages.changePassword.requirement1")}</span>
+                    <SmallText>
+                      {t("pages.changePassword.requirement1")}
+                    </SmallText>
                   </li>
-                  <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <li className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("auth.pages.changePassword.requirement2")}</span>
+                    <SmallText>
+                      {t("pages.changePassword.requirement2")}
+                    </SmallText>
                   </li>
-                  <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <li className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-brand-primary text-xl">
                       check_circle
                     </span>
-                    <span>{t("auth.pages.changePassword.requirement3")}</span>
+                    <SmallText>
+                      {t("pages.changePassword.requirement3")}
+                    </SmallText>
                   </li>
                 </ul>
               </div>
@@ -390,3 +379,5 @@ export function ChangePasswordPage() {
     </div>
   );
 }
+
+

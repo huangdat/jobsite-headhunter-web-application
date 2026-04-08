@@ -3,6 +3,8 @@ package com.rikkeisoft.backend.controller;
 import com.azure.core.annotation.Get;
 import com.rikkeisoft.backend.model.dto.APIResponse;
 import com.rikkeisoft.backend.model.dto.resp.business.BusinessProfileResp;
+import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
+import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
 import com.rikkeisoft.backend.service.BusinessProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,13 @@ public class BusinessProfileController {
     public APIResponse<List<BusinessProfileResp>> getTop10BestBusinessProfiles() {
         APIResponse<List<BusinessProfileResp>> resp = new APIResponse<>();
         resp.setResult(businessProfileService.getTop10BestBusinessProfiles());
+        return resp;
+    }
+
+    @GetMapping("/{businessProfileId}/jobs")
+    public APIResponse<List<JobDetailResp>> getJobsByBusinessProfileId(@PathVariable Long businessProfileId) {
+        APIResponse<List<JobDetailResp>> resp = new APIResponse<>();
+        resp.setResult(businessProfileService.getJobsByBusinessProfileId(businessProfileId));
         return resp;
     }
 }

@@ -1,13 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { AuthLayout } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
-import type { UserRole, RegisterFormData } from "../types";
-import { sendOtpSignup } from "../services/authApi";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@/shared/ui-primitives/button";
+import { AuthLayout } from "@/shared/common-blocks";
+import { useAuthTranslation } from "@/shared/hooks";
+import { useAppForm } from "@/shared/hooks/useAppForm";
+import { useDebounce } from "@/shared/hooks/useDebounce";
+import { getSemanticClass } from "@/lib/design-tokens";
+import type {
+  RegistrationUserRole,
+  RegisterFormData,
+} from "@/features/auth/types";
+import {
+  register,
+  sendOtpSignup,
+  checkEmailUsernameExist,
+} from "@/features/auth/services/authApi";
 import { toast } from "sonner";
-import { useAuth } from "../context/useAuth";
-import { extractApiErrorMessage } from "../utils/apiError";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
+import { createSchemaWithI18n } from "@/features/auth/utils/registerFormSchema";
+import { useStepValidation } from "@/features/auth/hooks/useStepValidation";
 
 import { StepIndicator } from "./StepIndicator";
 import { AccountStep } from "./AccountStep";
@@ -22,76 +35,91 @@ interface RegisterFormProps {
   role?: string;
 }
 
-const getRoleConfig = (role: UserRole) => {
+// Validate user role during registration (form uses lowercase for UI)
+const isValidRole = (role: string): role is RegistrationUserRole => {
+  return ["candidate", "collaborator", "headhunter"].includes(
+    role.toLowerCase()
+  );
+};
+
+const getRoleConfig = (role: RegistrationUserRole) => {
   const configs = {
     candidate: {
-      title: "Create Candidate Account",
-      subtitle: "Start your career journey with top companies.",
+      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.candidate.title"),
+      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.candidate.subtitle"),
     },
     collaborator: {
-      title: "Create Collaborator Account",
-      subtitle: "Refer top talent and earn commission.",
+      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.collaborator.title"),
+      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.collaborator.subtitle"),
     },
     headhunter: {
-      title: "Create Headhunter Account",
-      subtitle: "Join our professional recruitment network.",
+      title: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.headhunter.title"),
+      subtitle: (t: ReturnType<typeof useAuthTranslation>["t"]) =>
+        t("pages.register.headhunter.subtitle"),
     },
   };
-
+  // eslint-disable-next-line security/detect-object-injection
   return configs[role];
 };
 
 export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
-  const { t } = useAppTranslation();
-  const userRole = role as UserRole;
-  const config = getRoleConfig(userRole);
+  const { t } = useAuthTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing } = useAuth();
 
-  const [formData, setFormData] = useState({
+  const userRole: RegistrationUserRole = isValidRole(role) ? role : "candidate";
+  const config = getRoleConfig(userRole);
+
+  const [currentStep, setCurrentStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isCheckingDuplicate, setIsCheckingDuplicate] = useState(false);
+
+  const defaultValues: Partial<RegisterFormData> = {
+    role: userRole,
     username: "",
-    fullName: "",
     email: "",
-    phone: "",
-    taxCode: "",
     password: "",
     confirmPassword: "",
-    gender: "" as "MALE" | "FEMALE" | "OTHER" | "",
-    avatar: undefined as File | undefined,
-    // Headhunter optional fields
+    fullName: "",
+    phone: "",
+    gender: undefined,
+    avatar: undefined,
+    taxCode: "",
     websiteUrl: "",
     companyScale: "",
-    // Collaborator optional fields
-    commissionRate: undefined as number | undefined,
-    // Candidate optional fields
+    commissionRate: 0,
     currentTitle: "",
-    yearsOfExperience: undefined as number | undefined,
-    expectedSalaryMin: undefined as number | undefined,
-    expectedSalaryMax: undefined as number | undefined,
+    yearsOfExperience: 0,
+    expectedSalaryMin: 0,
+    expectedSalaryMax: 0,
     bio: "",
     city: "",
     openForWork: false,
-  });
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
-
-  // Password requirements validation — must match backend regex: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9_]+$, 8-16 chars
-  const passwordRequirements = {
-    minLength: formData.password.length >= 8 && formData.password.length <= 16,
-    hasUpperCase: /[A-Z]/.test(formData.password),
-    hasLowerCase: /[a-z]/.test(formData.password),
-    hasNumber: /\d/.test(formData.password),
+    agreeToTerms: false,
   };
 
-  const steps = [
-    { number: 1, title: "Account", description: "Login credentials" },
-    { number: 2, title: "Personal", description: "Your information" },
-    { number: 3, title: "Details", description: "Additional info" },
-  ];
+  // Create schema with i18n messages
+  const getSchema = useMemo(() => createSchemaWithI18n(t), [t]);
+
+  const form = useAppForm<RegisterFormData>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: yupResolver(getSchema(userRole)) as any,
+    defaultValues,
+  });
+
+  const { watch, trigger, setError, clearErrors } = form;
+  const watchEmail = watch("email");
+  const watchUsername = watch("username");
+
+  // Debounce email and username to stabilize dependencies
+  const debouncedEmail = useDebounce(watchEmail, 500);
+  const debouncedUsername = useDebounce(watchUsername, 500);
 
   useEffect(() => {
     if (!isInitializing && isAuthenticated) {
@@ -99,108 +127,132 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     }
   }, [isAuthenticated, isInitializing, navigate]);
 
-  const validateStep = (step: number): boolean => {
-    const newErrors = getStepErrors(step);
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  useEffect(() => {
+    if (!isValidRole(role)) {
+      navigate("/select-role", { replace: true });
+    }
+  }, [role, navigate]);
 
-  const validateForm = (): boolean => {
-    // Validate all steps and accumulate errors
-    const allErrors: Record<string, string> = {};
-
-    // Collect errors from all steps
-    const step1Errors = getStepErrors(1);
-    const step2Errors = getStepErrors(2);
-    const step3Errors = getStepErrors(3);
-
-    Object.assign(allErrors, step1Errors, step2Errors, step3Errors);
-    setErrors(allErrors);
-
-    return Object.keys(allErrors).length === 0;
-  };
-
-  const getStepErrors = (step: number): Record<string, string> => {
-    const newErrors: Record<string, string> = {};
-
-    // Step 1: Account Information
-    if (step === 1) {
-      // Username validation
-      if (!formData.username.trim()) {
-        newErrors.username = "Username is required";
-      } else if (
-        formData.username.length < 8 ||
-        formData.username.length > 32
-      ) {
-        newErrors.username = "Username must be between 8 and 32 characters";
-      } else if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(formData.username)) {
-        newErrors.username =
-          "Username must start with a letter and contain only letters, numbers, and underscores";
-      }
-
-      // Email validation
-      if (!formData.email.trim()) {
-        newErrors.email = "Email is required";
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        newErrors.email = "Please enter a valid email address";
-      }
-
-      // Password validation
-      if (!formData.password) {
-        newErrors.password = "Password is required";
-      } else if (!Object.values(passwordRequirements).every(Boolean)) {
-        newErrors.password = "Password does not meet requirements";
-      }
-
-      // Confirm password validation
-      if (!formData.confirmPassword) {
-        newErrors.confirmPassword = "Please confirm your password";
-      } else if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = "Passwords do not match";
-      }
+  // Async validation for email uniqueness
+  useEffect(() => {
+    if (!debouncedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(debouncedEmail)) {
+      return;
     }
 
-    // Step 2: Personal Information
-    if (step === 2) {
-      // Full name validation
-      if (!formData.fullName.trim()) {
-        newErrors.fullName = "Full name is required";
-      } else if (formData.fullName.trim().length < 2) {
-        newErrors.fullName = "Full name must be at least 2 characters";
-      } else if (!/^[a-zA-Z ]+$/.test(formData.fullName.trim())) {
-        newErrors.fullName = "Full name can only contain letters and spaces";
-      }
-
-      // Phone validation — must match Vietnamese format (e.g. 0912345678)
-      if (!formData.phone.trim()) {
-        newErrors.phone = "Phone number is required";
-      } else if (
-        !/^0[3-9]\d{8,9}$/.test(formData.phone.replace(/[\s-]/g, ""))
-      ) {
-        newErrors.phone =
-          "Please enter a valid Vietnamese phone number (e.g., 0912345678)";
-      }
-    }
-
-    // Step 3: Role-specific Information
-    if (step === 3) {
-      // Headhunter specific validation — only taxCode is required;
-      // company name & address are auto-fetched by the backend from the tax code
-      if (userRole === "headhunter") {
-        if (!formData.taxCode.trim()) {
-          newErrors.taxCode = "Tax code is required";
+    const checkEmail = async () => {
+      setIsCheckingDuplicate(true);
+      try {
+        const exists = await checkEmailUsernameExist(debouncedEmail);
+        if (exists) {
+          setError("email", {
+            type: "custom",
+            message: t("validation.emailExists"),
+          });
+        } else {
+          // Clear error if email is valid and doesn't exist
+          clearErrors("email");
         }
+      } catch {
+        setError("email", {
+          type: "custom",
+          message: t("validation.emailCheckFailed"),
+        });
+      } finally {
+        setIsCheckingDuplicate(false);
       }
+    };
+
+    checkEmail();
+    // Only depend on debouncedEmail - prevents infinite loops
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedEmail]);
+
+  // Async validation for username uniqueness
+  useEffect(() => {
+    if (
+      !debouncedUsername ||
+      debouncedUsername.length < 8 ||
+      !/^[a-zA-Z][a-zA-Z0-9_]*$/.test(debouncedUsername)
+    ) {
+      return;
     }
 
-    return newErrors;
+    const checkUsername = async () => {
+      setIsCheckingDuplicate(true);
+      try {
+        const exists = await checkEmailUsernameExist(
+          undefined,
+          debouncedUsername
+        );
+        if (exists) {
+          setError("username", {
+            type: "custom",
+            message: t("validation.usernameExists"),
+          });
+        } else {
+          // Clear error if username is valid and doesn't exist
+          clearErrors("username");
+        }
+      } catch {
+        setError("username", {
+          type: "custom",
+          message: t("validation.usernameCheckFailed"),
+        });
+      } finally {
+        setIsCheckingDuplicate(false);
+      }
+    };
+
+    checkUsername();
+    // Only depend on debouncedUsername - prevents infinite loops
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedUsername]);
+
+  const steps = [
+    {
+      number: 1,
+      title: t("steps.account.title"),
+      description: t("steps.account.desc"),
+    },
+    {
+      number: 2,
+      title: t("steps.personal.title"),
+      description: t("steps.personal.desc"),
+    },
+    {
+      number: 3,
+      title: t("steps.details.title"),
+      description: t("steps.details.desc"),
+    },
+  ];
+
+  // Get validation state for current step
+  const { isNextButtonDisabled, isSubmitButtonDisabled } = useStepValidation(
+    form,
+    currentStep,
+    userRole,
+    isCheckingDuplicate
+  );
+
+  const validateCurrentStep = async (): Promise<boolean> => {
+    const fieldsToValidate =
+      currentStep === 1
+        ? ["username", "email", "password", "confirmPassword"]
+        : currentStep === 2
+          ? ["fullName", "phone"]
+          : ["agreeToTerms"]; // All roles must agree to terms
+
+    const result = await trigger(
+      fieldsToValidate as unknown as Parameters<typeof trigger>[0]
+    );
+    return result;
   };
 
-  const handleNextStep = () => {
-    if (validateStep(currentStep)) {
+  const handleNextStep = async () => {
+    if (await validateCurrentStep()) {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length));
     } else {
-      toast.error(t("auth.validation.fixErrors"));
+      toast.error(t("validation.fixErrors"));
     }
   };
 
@@ -208,290 +260,226 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleChange =
-    (field: string) =>
-    (value: string | boolean | File | null | number | undefined) => {
-      setFormData((prev) => ({ ...prev, [field]: value }));
-
-      // Clear error when user starts typing
-      if (errors[field] || errors.submit) {
-        setErrors((prev) => {
-          const updated = { ...prev };
-          delete updated[field];
-          delete updated.submit;
-          return updated;
-        });
-      }
-    };
-
-  const handleFormKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      if (currentStep < steps.length) {
-        handleNextStep();
-      }
+  const onSubmit = async (data: RegisterFormData) => {
+    // Validate final step
+    if (currentStep !== steps.length) {
+      await handleNextStep();
+      return;
     }
-  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  // Guard: only allow actual submission on the last step
-  if (currentStep !== steps.length) {
-    return;
-  }
-
-  if (!validateForm()) {
-    const step1Errors = getStepErrors(1);
-    const step2Errors = getStepErrors(2);
-    const step3Errors = getStepErrors(3);
-
-    if (Object.keys(step1Errors).length > 0) {
-      toast.error(t("auth.validation.fixErrorsStep1"));
-      setCurrentStep(1);
-    } else if (Object.keys(step2Errors).length > 0) {
-      toast.error(t("auth.validation.fixErrorsStep2"));
-      setCurrentStep(2);
-    } else if (Object.keys(step3Errors).length > 0) {
-      toast.error(t("auth.validation.fixErrorsStep3"));
-      setCurrentStep(3);
-    } else {
-      toast.error(t("auth.validation.fixErrorsForm"));
+    if (isCheckingDuplicate) {
+      toast.error(t("validation.waitForValidation"));
+      return;
     }
-    return;
-  }
-
-    setIsLoading(true);
-    setErrors({});
 
     try {
-      // Build type-safe register data based on role
-      let registerData: RegisterFormData;
-
-      if (userRole === "headhunter") {
-        registerData = {
-          role: "headhunter" as const,
-          username: formData.username,
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
-          gender: formData.gender || undefined,
-          avatar: formData.avatar,
-          agreeToTerms: true,
-          taxCode: formData.taxCode,
-          // Optional fields (companyName & addressMain come from backend MST tax-code lookup)
-          websiteUrl: formData.websiteUrl || undefined,
-          companyScale: formData.companyScale || undefined,
-        };
-      } else if (userRole === "collaborator") {
-        registerData = {
-          role: "collaborator" as const,
-          username: formData.username,
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
-          gender: formData.gender || undefined,
-          avatar: formData.avatar,
-          agreeToTerms: true,
-          // Optional fields
-          commissionRate: formData.commissionRate,
-        };
-      } else {
-        registerData = {
-          role: "candidate" as const,
-          username: formData.username,
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
-          gender: formData.gender || undefined,
-          avatar: formData.avatar,
-          agreeToTerms: true,
-          // Optional fields
-          currentTitle: formData.currentTitle || undefined,
-          yearsOfExperience: formData.yearsOfExperience,
-          expectedSalaryMin: formData.expectedSalaryMin,
-          expectedSalaryMax: formData.expectedSalaryMax,
-          bio: formData.bio || undefined,
-          city: formData.city || undefined,
-          openForWork: formData.openForWork,
-        };
-      }
-
-      // Save registration data to sessionStorage (for use after OTP verification)
-      // Note: Avatar file cannot be serialized, need special handling
-      const dataToStore = {
-        ...registerData,
-        avatar: undefined, // Will handle avatar separately
-      };
-      sessionStorage.setItem(
-        "pendingRegistration",
-        JSON.stringify(dataToStore)
-      );
-
-      // If avatar exists, convert to base64 for storage
-      if (formData.avatar) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          sessionStorage.setItem(
-            "pendingRegistrationAvatar",
-            reader.result as string
-          );
-        };
-        reader.readAsDataURL(formData.avatar);
-      }
-
-      // Send OTP to email
-      // Wrap the API call with a timeout
-      const otpResponse = await Promise.race([
-        sendOtpSignup({ email: formData.email, tokenType: "SIGN_UP" }),
+      // Step 1: Create account via register API
+      const registerResponse = await Promise.race([
+        register(data),
         new Promise<never>((_, reject) =>
           setTimeout(
-            () => reject(new Error("Request timed out after 15s")),
+            () => reject(new Error(t("messages.requestTimedOut"))),
             15000
           )
         ),
       ]);
 
-      toast.success(t("auth.messages.otpSent"));
+      // Step 2: Check account status from response
+      if (registerResponse.status === "PENDING") {
+        // For PENDING accounts (Headhunter), show success message and redirect to login
+        toast.success(
+          t("messages.accountPendingApproval") ||
+            "Account created successfully! Your account is pending approval. You will receive an email notification once approved."
+        );
+        // Clear registration data from sessionStorage
+        sessionStorage.removeItem("pendingRegistration");
+        sessionStorage.removeItem("pendingRegistrationAvatar");
+        // Redirect to login page
+        setTimeout(() => {
+          navigate("/login", { replace: true });
+        }, 2000);
+        return;
+      }
 
-      // Redirect to OTP verification page
-      navigate("/verify-otp", {
-        state: {
-          accountId: otpResponse.accountId,
-          email: otpResponse.email,
-          expiresAt: otpResponse.expiresAt,
-        },
-      });
+      // Step 3: For ACTIVE accounts, send OTP and navigate to verification
+      if (registerResponse.status === "ACTIVE") {
+        // Save registration data to sessionStorage (for avatar)
+        const dataToStore = { ...data, avatar: undefined };
+        sessionStorage.setItem(
+          "pendingRegistration",
+          JSON.stringify(dataToStore)
+        );
+
+        if (data.avatar) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            sessionStorage.setItem(
+              "pendingRegistrationAvatar",
+              reader.result as string
+            );
+          };
+          reader.readAsDataURL(data.avatar);
+        }
+
+        // Send OTP
+        const otpResponse = await Promise.race([
+          sendOtpSignup({ email: data.email, tokenType: "SIGN_UP" }),
+          new Promise<never>((_, reject) =>
+            setTimeout(
+              () => reject(new Error(t("messages.requestTimedOut"))),
+              15000
+            )
+          ),
+        ]);
+
+        toast.success(t("messages.otpSent"));
+
+        navigate("/verify-otp", {
+          state: {
+            email: otpResponse.email,
+            expiresAt: otpResponse.expiresAt,
+          },
+        });
+      }
     } catch (error: unknown) {
-      // Extract error details from response
+      console.error("Registration error:", error);
       const errorMessage = extractApiErrorMessage(
         error,
-        "Failed to send OTP. Please try again."
+        t("messages.failedToRegister") || t("messages.failedToSendOtp")
       );
-      let errorField: string | null = null;
-
-      if (
-        error instanceof Error &&
-        "response" in error &&
-        typeof error.response === "object" &&
-        error.response !== null
-      ) {
-        const response = error.response as {
-          status?: number;
-          data?: { message?: string };
-        };
-
-        const responseMessage = response.data?.message || errorMessage;
-
-        // Categorize error based on message
-        const messageLower = responseMessage.toLowerCase();
-
-        if (messageLower.includes("email")) {
-          errorField = "email";
-        }
-      }
-
-      // Error notification
-      toast.error(errorMessage);
-
-      // Set form error for the appropriate field
-      if (errorField) {
-        setErrors({ [errorField]: errorMessage });
-      } else {
-        setErrors({ submit: errorMessage });
-      }
-
-      console.error("OTP send error:", error);
-    } finally {
-      setIsLoading(false);
+      toast.error(t(errorMessage));
     }
   };
 
+  const isSubmitting = form.formState.isSubmitting;
+
   return (
-    <AuthLayout ctaButton={{ to: "/login", label: "Sign In" }}>
+    <AuthLayout ctaButton={{ to: "/login", label: t("form.register.signIn") }}>
       <div className="w-full max-w-5xl min-h-125 bg-white rounded-3xl shadow-xl grid md:grid-cols-2 overflow-hidden">
         {/* LEFT PANEL */}
         <div className="bg-linear-to-br from-dark-panel-from to-dark-panel-to text-white p-10 flex flex-col justify-center">
           <h1 className="text-5xl font-bold leading-tight">
-            Join Our <br />
-            <span className="text-lime-400">Professional</span> <br />
+            {t("form.register.joinNetwork")} <br />
+            <span className="text-brand-primary">
+              {t("form.register.professional")}
+            </span>{" "}
+            <br />
             Network
           </h1>
-
-          <p className="text-gray-300 mt-1">
-            Create your account and start earning opportunities today.
-          </p>
+          <p className="text-gray-300 mt-1">{t("pages.register.subtitle")}</p>
         </div>
 
         {/* RIGHT PANEL */}
         <div className="p-6">
-          <h2 className="text-3xl font-bold">{config.title}</h2>
+          <h2 className="text-3xl font-bold">{config.title(t)}</h2>
+          <p className="text-gray-500 mb-3">{config.subtitle(t)}</p>
 
-          <p className="text-gray-500 mb-3">{config.subtitle}</p>
-
-          {/* Step Indicator */}
           <StepIndicator steps={steps} currentStep={currentStep} />
 
           <form
-            onSubmit={handleSubmit}
-            onKeyDown={handleFormKeyDown}
+            onSubmit={form.handleSubmit(
+              async (data) => {
+                console.log(
+                  "Form values are valid. Starting submission:",
+                  data
+                );
+                await onSubmit(data);
+              },
+              (errors) => {
+                console.error("Form validation errors:", errors);
+              }
+            )}
+            onKeyDown={(e) => {
+              // Handle Enter key for Next/Submit buttons
+              if (e.key === "Enter") {
+                e.preventDefault();
+                // Go to next step if not on last step
+                if (currentStep < steps.length) {
+                  handleNextStep();
+                } else {
+                  // Submit on last step
+                  form.handleSubmit(
+                    async (data) => {
+                      // console.log(
+                      //   "Form values are valid. Starting submission:",
+                      //   data
+                      // ); // Debug log to verify form data before submission
+                      await onSubmit(data);
+                    },
+                    (errors) => {
+                      console.error("Form validation errors:", errors);
+                    }
+                  )();
+                }
+              }
+            }}
             className="space-y-6"
           >
             {/* Step 1: Account Information */}
             {currentStep === 1 && (
               <AccountStep
-                formData={formData}
-                errors={errors}
-                handleChange={handleChange}
+                form={form}
                 showPassword={showPassword}
                 showConfirmPassword={showConfirmPassword}
                 setShowPassword={setShowPassword}
                 setShowConfirmPassword={setShowConfirmPassword}
-                passwordRequirements={passwordRequirements}
               />
             )}
 
             {/* Step 2: Personal Information */}
-            {currentStep === 2 && (
-              <PersonalStep
-                formData={formData}
-                errors={errors}
-                handleChange={handleChange}
-              />
-            )}
+            {currentStep === 2 && <PersonalStep form={form} />}
 
             {/* Step 3: Role-Specific Details */}
             {currentStep === 3 && (
               <>
                 {userRole === "candidate" && (
-                  <CandidateDetailsStep
-                    formData={formData}
-                    errors={errors}
-                    handleChange={handleChange}
-                  />
+                  <CandidateDetailsStep form={form} />
                 )}
-
                 {userRole === "headhunter" && (
-                  <HeadhunterDetailsStep
-                    formData={formData}
-                    errors={errors}
-                    handleChange={handleChange}
-                  />
+                  <HeadhunterDetailsStep form={form} />
+                )}
+                {userRole === "collaborator" && (
+                  <CollaboratorDetailsStep form={form} />
                 )}
 
-                {userRole === "collaborator" && (
-                  <CollaboratorDetailsStep
-                    formData={formData}
-                    errors={errors}
-                    handleChange={handleChange}
-                  />
-                )}
+                {/* Terms & Conditions Checkbox */}
+                <div className="border-t border-slate-200 pt-6">
+                  <div className="flex items-start gap-3">
+                    <input
+                      {...form.register("agreeToTerms")}
+                      type="checkbox"
+                      id="agreeToTerms"
+                      className="mt-1 w-4 h-4 rounded border-slate-300 text-brand-primary focus:ring-brand-primary cursor-pointer"
+                    />
+                    <label
+                      htmlFor="agreeToTerms"
+                      className="text-sm text-slate-700 leading-relaxed cursor-pointer flex-1"
+                    >
+                      {t("form.register.agreeToTerms")}{" "}
+                      <a
+                        href="/terms"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-brand-primary hover:underline font-medium"
+                      >
+                        {t("form.register.termsOfService")}
+                      </a>
+                    </label>
+                  </div>
+                  {form.getError("agreeToTerms") && (
+                    <p
+                      className={`text-xs mt-2 ${getSemanticClass("danger", "text", true)}`}
+                    >
+                      {typeof form.getError("agreeToTerms") === "string"
+                        ? form.getError("agreeToTerms")
+                        : (
+                            form.getError("agreeToTerms") as {
+                              message?: string;
+                            }
+                          )?.message}
+                    </p>
+                  )}
+                </div>
               </>
             )}
 
@@ -501,13 +489,13 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                 <Button
                   type="button"
                   onClick={handlePrevStep}
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                   variant="outline"
                   size="xl"
-                  className="flex-1 flex justify-center gap-2 border border-lime-500 text-black bg-transparent hover:bg-lime-50 cursor-pointer rounded-2xl"
+                  className="flex-1 flex justify-center gap-2 border border-brand-primary text-black bg-transparent hover:bg-brand-primary/10 cursor-pointer rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <HiOutlineArrowLeft />
-                  Previous
+                  {t("buttons.previous")}
                 </Button>
               )}
 
@@ -517,10 +505,10 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   size="xl"
                   type="button"
                   onClick={handleNextStep}
-                  disabled={isLoading}
-                  className="flex-1 flex justify-center gap-2 cursor-pointer"
+                  disabled={isNextButtonDisabled}
+                  className="flex-1 flex justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Next
+                  {t("buttons.next")}
                   <HiOutlineArrowRight />
                 </Button>
               ) : (
@@ -528,29 +516,25 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
                   variant="primary"
                   size="xl"
                   type="submit"
-                  disabled={isLoading}
-                  className="flex-1 flex justify-center gap-2 cursor-pointer"
+                  disabled={isSubmitButtonDisabled || isSubmitting}
+                  className="flex-1 flex justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoading ? "Sending OTP..." : "Create Account"}
+                  {isSubmitting
+                    ? t("buttons.sendingOtp")
+                    : t("buttons.createAccount")}
                   <HiOutlineArrowRight />
                 </Button>
               )}
             </div>
-
-            {errors.submit && (
-              <p className="text-sm text-red-500 text-center">
-                {errors.submit}
-              </p>
-            )}
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-3">
-            Already have an account?{" "}
+            {t("pages.register.haveAccount")}{" "}
             <Link
               to="/login"
-              className="text-lime-500 font-semibold hover:underline"
+              className="text-brand-primary font-semibold hover:underline"
             >
-              Sign in
+              {t("pages.register.signIn")}
             </Link>
           </p>
         </div>

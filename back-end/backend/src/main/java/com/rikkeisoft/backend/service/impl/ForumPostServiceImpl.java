@@ -1,25 +1,45 @@
 package com.rikkeisoft.backend.service.impl;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.rikkeisoft.backend.component.Translator;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.enums.PostStatus;
 import com.rikkeisoft.backend.enums.Role;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.ForumPostMapper;
+import com.rikkeisoft.backend.model.dto.PagedResponse;
+import com.rikkeisoft.backend.model.dto.req.forumpost.AuthorDto;
+import com.rikkeisoft.backend.model.dto.req.forumpost.ForumPostDetailResp;
+import com.rikkeisoft.backend.model.dto.req.forumpost.JobBasicDto;
 import com.rikkeisoft.backend.model.dto.resp.forumpost.ForumPostResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.ForumPost;
 import com.rikkeisoft.backend.repository.AccountRepo;
+import com.rikkeisoft.backend.repository.ForumCommentRepo;
 import com.rikkeisoft.backend.repository.ForumPostRepo;
 import com.rikkeisoft.backend.service.ForumPostService;
+
+import jakarta.persistence.criteria.Predicate;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -27,9 +47,21 @@ import java.util.Set;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ForumPostServiceImpl implements ForumPostService {
 
-    ForumPostRepo forumPostRepo;
-    AccountRepo accountRepo;
-    ForumPostMapper forumPostMapper;
+    private final ForumPostRepo forumPostRepo;
+    private final AccountRepo accountRepo;
+    private final ForumPostMapper forumPostMapper;
+    private final ForumCommentRepo forumCommentRepo;
+    private final Translator translator;
+    /**
+     * Valid status transitions:
+     * - ADMIN: can set any status freely
+     * - HEADHUNTER (own post only): DRAFT → PUBLISHED, PUBLISHED → ARCHIVED
+     * (HEADHUNTER cannot revert PUBLISHED → DRAFT or ARCHIVED → *)
+     */
+    private static final Map<PostStatus, Set<PostStatus>> HEADHUNTER_ALLOWED_TRANSITIONS = Map.of(
+            PostStatus.DRAFT, Set.of(PostStatus.PUBLISHED),
+            PostStatus.PUBLISHED, Set.of(PostStatus.ARCHIVED),
+            PostStatus.ARCHIVED, Set.of());
 
     @Override
     @Transactional
@@ -37,15 +69,41 @@ public class ForumPostServiceImpl implements ForumPostService {
         ForumPost post = findPostById(postId);
         Account currentAccount = getCurrentAccount();
 
-        validatePermission(currentAccount, post);
-
+        Set<String> roles = currentAccount.getRoles();
+        boolean isAdmin = roles.contains(Role.ADMIN.name());
+        boolean isHeadhunter = roles.contains(Role.HEADHUNTER.name());
+        boolean isPostOwner = post.getAuthor().getId().equals(currentAccount.getId());
+        if (!isAdmin && (!isHeadhunter || !isPostOwner)) {
+            throw new AppException(ErrorCode.FORBIDDEN);
+        }
         if (post.getStatus() == newStatus) {
             return forumPostMapper.toForumPostResp(post);
+        }
+        if (!isAdmin) {
+            Set<PostStatus> allowed = HEADHUNTER_ALLOWED_TRANSITIONS.getOrDefault(post.getStatus(), Set.of());
+            if (!allowed.contains(newStatus)) {
+                throw new AppException(ErrorCode.INVALID_POST_STATUS);
+            }
         }
 
         post.setStatus(newStatus);
         forumPostRepo.save(post);
         return forumPostMapper.toForumPostResp(post);
+    }
+
+    @Override
+    @Transactional
+    public void deletePost(Long postId) {
+        ForumPost post = findPostById(postId);
+        Account currentAccount = getCurrentAccount();
+        if (!currentAccount.getRoles().contains(Role.ADMIN.name())) {
+            throw new AppException(ErrorCode.FORBIDDEN);
+        }
+        if (post.getDeletedAt() != null) {
+            throw new AppException(ErrorCode.POST_ALREADY_DELETED);
+        }
+        post.setDeletedAt(java.time.LocalDateTime.now());
+        forumPostRepo.save(post);
     }
 
     private ForumPost findPostById(Long postId) {
@@ -72,4 +130,127 @@ public class ForumPostServiceImpl implements ForumPostService {
             throw new AppException(ErrorCode.FORBIDDEN);
         }
     }
+
+    @Override
+    @Transactional
+    public ForumPostDetailResp getPostDetail(Long postId) {
+        ForumPost post = forumPostRepo.findById(postId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
+
+        if (post.getStatus() == PostStatus.ARCHIVED || post.getStatus() == PostStatus.DRAFT) {
+            throw new AppException(ErrorCode.POST_NOT_FOUND);
+        }
+
+        // long commentCount = forumCommentRepo.countByPost_IdAndDeletedFalse(postId);
+
+        String sanitizedContent = sanitizeHtmlContent(post.getContent());
+
+        AuthorDto authorDto = buildAuthorDto(post);
+
+        JobBasicDto jobDto = buildJobDto(post);
+
+        ForumPostDetailResp response = ForumPostDetailResp.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(sanitizedContent)
+                .authorInfo(authorDto)
+                .createdAt(post.getCreatedAt())
+                // .commentCount(commentCount)
+                .status(post.getStatus())
+                .job(jobDto)
+                .build();
+
+        log.info("Post detail viewed: postId={}", postId);
+
+        return response;
+    }
+
+    private String sanitizeHtmlContent(String content) {
+        if (content == null || content.trim().isEmpty()) {
+            return translator.toLocale("post.content.empty");
+        }
+
+        return Jsoup.clean(content,
+                Safelist.basic()
+                        .addTags("h1", "h2", "h3", "h4", "h5", "h6", "img")
+                        .addAttributes("a", "href", "title")
+                        .addAttributes("img", "src", "alt", "title"));
+    }
+
+    private AuthorDto buildAuthorDto(ForumPost post) {
+        if (post.getAuthor() == null) {
+            return AuthorDto.builder()
+                    .id("SYSTEM")
+                    .username("Admin")
+                    .fullName("Admin")
+                    .imageUrl(null)
+                    .build();
+        }
+
+        return AuthorDto.builder()
+                .id(post.getAuthor().getId())
+                .username(post.getAuthor().getUsername())
+                .fullName(post.getAuthor().getFullName() != null ? post.getAuthor().getFullName() : "Unknown")
+                .imageUrl(post.getAuthor().getImageUrl())
+                .build();
+    }
+
+    private JobBasicDto buildJobDto(ForumPost post) {
+        if (post.getJob() == null) {
+            return null;
+        }
+
+        return JobBasicDto.builder()
+                .id(post.getJob().getId())
+                .title(post.getJob().getTitle())
+                .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PagedResponse<ForumPostResp> searchPosts(String keyword, Long categoryId, Pageable pageable) {
+        Specification<ForumPost> spec = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            predicates.add(cb.equal(root.get("status"), PostStatus.PUBLISHED));
+            predicates.add(cb.isNull(root.get("deletedAt")));
+            if (keyword != null && !keyword.isBlank()) {
+                String pattern = "%" + keyword.toLowerCase() + "%";
+                predicates.add(cb.or(
+                        cb.like(cb.lower(root.get("title")), pattern),
+                        cb.like(cb.lower(root.get("content")), pattern)));
+            }
+            if (categoryId != null) {
+                predicates.add(cb.equal(root.get("forumCategory").get("id"), categoryId));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+
+        Page<ForumPost> page = forumPostRepo.findAll(spec, pageable);
+
+        List<ForumPostResp> data = page.getContent().stream()
+                .map(forumPostMapper::toForumPostResp)
+                .collect(Collectors.toList());
+
+        return PagedResponse.<ForumPostResp>builder()
+                .data(data)
+                .page(page.getNumber())
+                .size(page.getSize())
+                .totalElements(page.getTotalElements())
+                .totalPages(page.getTotalPages())
+                .build();
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public List<ForumPostResp> getFeaturedPosts(int limit) {
+        List<ForumPost> featuredPosts = forumPostRepo.findFeaturedPosts(
+                LocalDateTime.now(),
+                PageRequest.of(0, limit));
+
+        return featuredPosts.stream()
+                .map(forumPostMapper::toForumPostResp)
+                .collect(Collectors.toList());
+    }
+
 }

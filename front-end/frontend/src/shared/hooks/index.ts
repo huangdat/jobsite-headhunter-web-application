@@ -1,2 +1,86 @@
 export { useAppForm } from "./useAppForm";
 export { useAppTranslation } from "./useAppTranslation";
+
+// AUTO-GENERATED: All 48 namespace translation hooks
+export {
+  useAriaTranslation,
+  useAuthTranslation,
+  useBadgesTranslation,
+  useBenefitsTranslation,
+  useBreadcrumbTranslation,
+  useBusinessTranslation,
+  useCandidateTranslation,
+  useCheckboxLabelsTranslation,
+  useClassificationTranslation,
+  useColumnsTranslation,
+  useCommissionTranslation,
+  useCommonTranslation,
+  useCvTranslation,
+  useDescriptionsTranslation,
+  useDetailTranslation,
+  useDialogsTranslation,
+  useErrorsTranslation,
+  useFaqTranslation,
+  useFeaturedJobsTranslation,
+  useFiltersTranslation,
+  useFooterTranslation,
+  useFormTranslation,
+  useHeadhunterTranslation,
+  useHeroTranslation,
+  useHomeTranslation,
+  useHowItWorksTranslation,
+  useJobsTranslation,
+  useLabelsTranslation,
+  useListTranslation,
+  useLoginStatusTranslation,
+  useMessagesTranslation,
+  useNavigationTranslation,
+  usePagesTranslation,
+  usePlaceholdersTranslation,
+  useProfileTranslation,
+  useRecommendedJobsTranslation,
+  useSearchBarTranslation,
+  useSectionTranslation,
+  useSelectOptionsTranslation,
+  useStatsTranslation,
+  useStatusesTranslation,
+  useStepsTranslation,
+  useSuccessTranslation,
+  useTopCompaniesTranslation,
+  useUploadTranslation,
+  useUsersTranslation,
+  useValidationTranslation,
+  useWarningsTranslation,
+} from "./useFeatureTranslation";
+export {
+  useSkillsQuery,
+  useJobsQuery,
+  useMyJobsQuery,
+  useJobDetailQuery,
+  useSavedJobsQuery,
+} from "./useJobsQueries";
+export {
+  useToggleJobStatusMutation,
+  useDeleteJobMutation,
+  useSaveJobMutation,
+  useRemoveSavedJobMutation,
+  useCreateJobMutation,
+  useUpdateJobMutation,
+} from "./useJobsMutations";
+export {
+  useUsersQuery,
+  useUserDetailQuery,
+  useUpdateUserStatusMutation,
+  useSoftDeleteUserMutation,
+} from "./useUsersQueries";
+export {
+  useCandidateProfileQuery,
+  useUpdateCandidateProfileMutation,
+} from "./useCandidateQueries";
+export {
+  useCommissionProfileQuery,
+  useCommissionStatsQuery,
+  useUpdateCommissionProfileMutation,
+  useVerifyBankingInfoMutation,
+  useRequestPayoutMutation,
+} from "./useCollaboratorQueries";

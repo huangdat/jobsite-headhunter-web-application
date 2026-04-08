@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.model.dto.req.application;
 
+import com.rikkeisoft.backend.annotation.ValidFileExtension;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,10 +20,6 @@ public class ApplicationCreateReq {
     @NotNull(message = "APPLICATION_JOB_ID_REQUIRED")
     Long jobId;
 
-    MultipartFile cvFile; // Or cvUrl if selected from their library
-
-    String coverLetter;
-
     @NotBlank(message = "APPLICATION_FULL_NAME_REQUIRED")
     String fullName;
 
@@ -32,6 +29,17 @@ public class ApplicationCreateReq {
 
     @NotBlank(message = "APPLICATION_PHONE_REQUIRED")
     String phone;
+
+//    @NotBlank(message = "APPLICATION_CV_URL_REQUIRED")
+//    String cvSnapshotUrl; // select from existing CV in profile
+
+//    @ValidFileExtension(
+//            allowedExtensions = {"pdf"},
+//            message = "Invalid file extension, please only upload .pdf"
+//    )
+//    MultipartFile cvFile; // upload a new CV
+
+    String coverLetter;
 
     String salaryExpectation;
 }

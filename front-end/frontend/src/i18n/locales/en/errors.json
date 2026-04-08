@@ -1,0 +1,5 @@
+{
+  "title": "Title",
+  "editorFailedToLoad": "Editor failed to load",
+  "chartContextError": "useChart must be used within a <ChartContainer />"
+}

@@ -1,0 +1,57 @@
+{
+  "error": "Lỗi",
+  "success": "Thành công",
+  "cancel": "Hủy",
+  "delete": "Xóa",
+  "dismiss": "Đóng",
+  "id_token": "id_token",
+  "back": "Quay Lại",
+  "breadcrumb": {
+    "home": "Trang chủ"
+  },
+  "common": {
+    "loading": "Common Đang tải...",
+    "adminUserTitle": "Quản trị viên",
+    "appVersion": "Phiên bản 2.4.0",
+    "permanentDelete": "Xóa vĩnh viễn",
+    "appName": "JobSite",
+    "allRightsReserved": "Bản quyền © 2026. Tất cả quyền được bảo lưu",
+    "section": {
+      "account": "Tài Khoản"
+    },
+    "exampleEmail": "alex.n@referral.io",
+    "languages": {
+      "en": "English",
+      "vi": "Tiếng Việt"
+    },
+    "enterDetailsDescription": "Nhập mô tả chi tiết",
+    "failedToFetchUsers": "Common failed to fetch Người dùngs",
+    "tryAgain": "Common Thử lại",
+    "retry": "Thử lại",
+    "noDataAvailable": "Common Không có dữ liệu available",
+    "unknownError": "Đã xảy ra lỗi không xác định"
+  },
+  "messages": {
+    "signedInSuccess": "Đã đăng nhập thành công.",
+    "failedToLoadCommission": "Không thể tải dữ liệu hoa hồng",
+    "failedToSaveProfile": "Không thể lưu hồ sơ",
+    "failedToRequestPayout": "Không thể yêu cầu thanh toán",
+    "failedToLoadProfile": "Không thể tải hồ sơ",
+    "failedToLockUser": "Không thể khóa người dùng",
+    "failedToUnlockUser": "Không thể mở khóa người dùng",
+    "failedToLoadUsers": "Không thể tải danh sách người dùng",
+    "noPermissionAccess": "Bạn không có quyền truy cập tính năng phân loại.",
+    "sessionExpiredLoginAgain": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.",
+    "myJobs": "Công việc của tôi"
+  },
+  "editor": {
+    "bold": "In đậm (Ctrl+B)",
+    "italic": "In nghiêng (Ctrl+I)",
+    "bulletList": "Danh sách dấu đầu dòng",
+    "orderedList": "Danh sách có thứ tự",
+    "heading2": "Tiêu đề 2",
+    "undo": "Hoàn tác",
+    "redo": "Làm lại",
+    "enterText": "Nhập văn bản..."
+  }
+}

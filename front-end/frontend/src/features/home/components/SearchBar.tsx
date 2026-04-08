@@ -1,7 +1,8 @@
-import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
+import { useHomeTranslation } from "@/shared/hooks";
+import { getSemanticClass } from "@/lib/design-tokens";
 
 export function SearchBar() {
-  const { t } = useAppTranslation();
+  const { t } = useHomeTranslation();
   return (
     <div
       className="bg-white rounded-2xl shadow-md p-4 
@@ -12,20 +13,20 @@ export function SearchBar() {
     >
       <input
         className="flex-1 px-4 py-3 outline-none text-sm border rounded-lg md:border-none"
-        placeholder={t("home.searchKeywords")}
+        placeholder={t("searchKeywords")}
       />
 
       <input
         className="flex-1 px-4 py-3 outline-none text-sm border rounded-lg md:border-none"
-        placeholder={t("home.searchLocation")}
+        placeholder={t("searchLocation")}
       />
 
       <button
-        className="bg-green-500 hover:bg-green-600 text-white 
+        className={`${getSemanticClass("success", "bg", true)} hover:${getSemanticClass("success", "bg", true)} text-white 
                          px-8 py-3 rounded-xl font-semibold 
-                         w-full md:w-auto"
+                         w-full md:w-auto`}
       >
-        {t("home.searchBar.search")}
+        {t("searchBar.search")}
       </button>
     </div>
   );

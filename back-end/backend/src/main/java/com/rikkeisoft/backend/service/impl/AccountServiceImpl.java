@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.service.impl;
 
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.AccountStatus;
 import com.rikkeisoft.backend.enums.AuthProvider;
 import com.rikkeisoft.backend.enums.ErrorCode;
@@ -10,11 +11,10 @@ import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
 import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.entity.Account;
 import com.rikkeisoft.backend.model.entity.BusinessProfile;
+import com.rikkeisoft.backend.model.entity.CandidateCv;
+import com.rikkeisoft.backend.model.entity.CandidateProfile;
 import com.rikkeisoft.backend.model.entity.CollaboratorProfile;
-import com.rikkeisoft.backend.repository.AccountRepo;
-import com.rikkeisoft.backend.repository.BusinessProfileRepo;
-import com.rikkeisoft.backend.repository.CandidateProfileRepo;
-import com.rikkeisoft.backend.repository.CollaboratorProfileRepo;
+import com.rikkeisoft.backend.repository.*;
 import com.rikkeisoft.backend.service.AccountService;
 import com.rikkeisoft.backend.service.BusinessProfileService;
 import com.rikkeisoft.backend.service.UploadService;
@@ -29,9 +29,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -60,9 +63,11 @@ public class AccountServiceImpl implements AccountService {
     BusinessProfileRepo businessProfileRepo;
     CollaboratorProfileRepo collaboratorProfileRepo;
     CandidateProfileRepo candidateProfileRepo;
+    JobRepo jobRepo;
+    CandidateCvRepo candidateCvRepo;
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize(SecurityConstants.ADMIN)
     public List<AccountResp> getAllAccounts() {
         if (accountRepo.count() == 0) {
             throw new AppException(ErrorCode.NO_ACCOUNTS_STORED);
@@ -71,22 +76,17 @@ public class AccountServiceImpl implements AccountService {
         // find all accounts
         List<Account> accounts = accountRepo.findAll();
 
-        // map to resp
-        List<AccountResp> accountResps = new ArrayList<>();
-        for (Account account : accounts) {
-            accountResps.add(accountMapper.toAccountResp(account));
-        }
-        return accountResps;
+        return toAccountResps(accounts);
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_HEADHUNTER') or hasAuthority('SCOPE_COLLABORATOR')")
+    @PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
     public AccountResp getAccountById(String id) {
         // find account by id
         Account account = accountRepo.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
 
         // map to resp
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     /**
@@ -102,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
         // Fetch a user by username from the repository
         Account account = accountRepo.findByUsername(contextName)
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     @Override
@@ -143,10 +143,12 @@ public class AccountServiceImpl implements AccountService {
                 .build();
 
         accountRepo.save(account);
-        return accountMapper.toAccountResp(account);
+
+        return toAccountResp(account);
     }
 
     @Override
+    @Transactional
     public AccountResp updateMyAccount(AccountUpdateReq req) {
         // get current account
         var context = SecurityContextHolder.getContext();
@@ -161,13 +163,48 @@ public class AccountServiceImpl implements AccountService {
             String imageUrl = uploadService.uploadFile(req.getAvatar());
             account.setImageUrl(imageUrl);
         }
-        account.setFullName(req.getFullName());
-        account.setPhone(req.getPhone());
-        account.setGender(req.getGender());
+        if (req.getEmail() != null) {
+            account.setEmail(req.getEmail());
+        }
+        if (req.getFullName() != null) {
+            account.setFullName(req.getFullName());
+        }
+        if (req.getPhone() != null) {
+            account.setPhone(req.getPhone());
+        }
+        if (req.getGender() != null) {
+            account.setGender(req.getGender());
+        }
         account.setUpdatedAt(LocalDateTime.now());
 
+        CandidateProfile candidateProfile = candidateProfileRepo.findByAccount_Id(account.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.CANDIDATE_PROFILE_NOT_FOUND));
+
+        if (req.getCurrentTitle() != null) {
+            candidateProfile.setCurrentTitle(req.getCurrentTitle());
+        }
+        if (req.getYearsOfExperience() != null) {
+            candidateProfile.setYearsOfExperience(req.getYearsOfExperience());
+        }
+        if (req.getExpectedSalaryMin() != null) {
+            candidateProfile.setExpectedSalaryMin(req.getExpectedSalaryMin());
+        }
+        if (req.getExpectedSalaryMax() != null) {
+            candidateProfile.setExpectedSalaryMax(req.getExpectedSalaryMax());
+        }
+        if (req.getBio() != null) {
+            candidateProfile.setBio(req.getBio());
+        }
+        if (req.getCity() != null) {
+            candidateProfile.setCity(req.getCity());
+        }
+        if (req.getOpenForWork() != null) {
+            candidateProfile.setOpenForWork(req.getOpenForWork());
+        }
+
         accountRepo.save(account);
-        return accountMapper.toAccountResp(account);
+        candidateProfileRepo.save(candidateProfile);
+        return toAccountResp(account);
     }
 
     /**
@@ -178,7 +215,7 @@ public class AccountServiceImpl implements AccountService {
      * @return AccountResp
      */
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize(SecurityConstants.ADMIN)
     public AccountResp updateStatus(String id, String status) {
         Account account = accountRepo.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
         try {
@@ -186,7 +223,7 @@ public class AccountServiceImpl implements AccountService {
             account.setStatus(newStatus);
             account.setUpdatedAt(LocalDateTime.now());
             accountRepo.save(account);
-            return accountMapper.toAccountResp(account);
+            return toAccountResp(account);
         } catch (Exception e) {
             throw new AppException(ErrorCode.INVALID_ACCOUNT_STATUS);
         }
@@ -224,13 +261,14 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepo.save(account);
 
-        accountMapper.toAccountResp(account);
+        toAccountResp(account);
 
         return "Change password successfully";
 
     }
 
     @Override
+    @PreAuthorize(SecurityConstants.ADMIN)
     public PagedResponse<AccountResp> searchAccounts(int page, int size, String keyword, String role, String status, String sort) {
         // sanitize input to avoid XSS
         String safeKeyword = keyword == null ? null : HtmlUtils.htmlEscape(keyword).trim();
@@ -281,7 +319,7 @@ public class AccountServiceImpl implements AccountService {
 
         Page<Account> result = accountRepo.findAll(spec, pageable);
 
-        List<AccountResp> data = result.stream().map(accountMapper::toAccountResp).collect(Collectors.toList());
+        List<AccountResp> data = toAccountResps(result.getContent());
 
         PagedResponse<AccountResp> resp = new PagedResponse<>();
         resp.setPage(pageIndex + 1);
@@ -358,11 +396,12 @@ public class AccountServiceImpl implements AccountService {
                     });
         }
 
-        // Link the profile and persist
+        // Link the profile and set status to PENDING (require admin approval)
         account.setBusinessProfile(businessProfile);
+        account.setStatus(AccountStatus.PENDING);
         accountRepo.save(account);
 
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     /**
@@ -406,7 +445,7 @@ public class AccountServiceImpl implements AccountService {
         collaboratorProfileRepo.save(collaboratorProfile);
         accountRepo.save(account);
 
-        return accountMapper.toAccountResp(account);
+        return toAccountResp(account);
     }
 
     @Override
@@ -452,7 +491,15 @@ public class AccountServiceImpl implements AccountService {
         candidateProfileRepo.save(candidateProfile);
         accountRepo.save(account);
 
-        return accountMapper.toAccountResp(account);
+        // create CandidateCv for candidate account if the role is CANDIDATE (field cv_url can be null at this point, but will be set later)
+        CandidateCv candidateCv = CandidateCv.builder()
+                .candidate(account)
+                .cvUrl(null)
+                .createdAt(LocalDateTime.now())
+                .build();
+        candidateCvRepo.save(candidateCv);
+
+        return toAccountResp(account);
     }
 
     @Override
@@ -470,5 +517,42 @@ public class AccountServiceImpl implements AccountService {
 
         return emailExists || usernameExists;
     }
+    @Override
+    public Account getCurrentAccount() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return accountRepo.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_FOUND));
+    }
 
+    private AccountResp toAccountResp(Account account) {
+        CandidateProfile candidateProfile = candidateProfileRepo.findByAccount_Id(account.getId()).orElse(null);
+        return accountMapper.toAccountResp(account, candidateProfile);
+    }
+
+        private List<AccountResp> toAccountResps(List<Account> accounts) {
+        if (accounts == null || accounts.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<String> accountIds = accounts.stream()
+            .map(Account::getId)
+            .filter(id -> id != null && !id.isBlank())
+            .collect(Collectors.toList());
+
+        Map<String, CandidateProfile> profilesByAccountId = candidateProfileRepo
+            .findByAccount_IdIn(accountIds)
+            .stream()
+            .filter(profile -> profile.getAccount() != null)
+            .collect(Collectors.toMap(
+                profile -> profile.getAccount().getId(),
+                Function.identity(),
+                (existing, replacement) -> existing
+            ));
+
+        return accounts.stream()
+            .map(account -> accountMapper.toAccountResp(
+                account,
+                profilesByAccountId.get(account.getId())
+            ))
+            .collect(Collectors.toList());
+        }
 }

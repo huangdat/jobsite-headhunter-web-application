@@ -1,0 +1,65 @@
+{
+  "page": {
+    "subtitleSaving": "Subtitle saving",
+    "subtitleSuccess": "Subtitle success",
+    "subtitleDefault": "Subtitle default",
+    "eyebrow": "Eyebrow",
+    "title": "Title"
+  },
+  "alerts": {
+    "saveErrorTitle": "Save error title",
+    "validationErrorTitle": "Validation error title",
+    "saveSuccessTitle": "Save success title",
+    "saveSuccessBody": "Save success body"
+  },
+  "actions": {
+    "discardChanges": "Discard changes",
+    "saving": "Saving",
+    "saveChanges": "Save changes"
+  },
+  "sidebar": {
+    "strengthTitle": "Strength title",
+    "strengthHint": "Strength hint",
+    "tipsTitle": "Tips title",
+    "tipOne": "Tip one",
+    "tipTwo": "Tip two",
+    "tipThree": "Tip three",
+    "insightEyebrow": "Insight eyebrow",
+    "insightBody": "Insight body"
+  },
+  "form": {
+    "sectionTitle": "Section title",
+    "sectionSubtitle": "Section subtitle",
+    "openForWork": "Open for work",
+    "fullName": "Full name",
+    "jobTitle": "Job title",
+    "currentTitlePlaceholder": "Current title placeholder",
+    "currentStatus": "Current status",
+    "currentStatusAria": "Current status aria",
+    "yearsOfExperience": "Years of experience",
+    "city": "City",
+    "cityPlaceholder": "City placeholder",
+    "salaryMin": "Salary min",
+    "salaryMax": "Salary max",
+    "professionalBio": "Professional bio",
+    "bioPlaceholder": "Bio placeholder"
+  },
+  "avatar": {
+    "section": {
+      "title": "Avatar"
+    },
+    "upload": {
+      "button": "Upload Avatar",
+      "changeButton": "Change Avatar"
+    },
+    "messages": {
+      "selected": "Avatar selected. Click 'Save Changes' to upload."
+    },
+    "validation": {
+      "maxSize": "Avatar size must be less than 5MB"
+    },
+    "selected": {
+      "filename": "New avatar: "
+    }
+  }
+}

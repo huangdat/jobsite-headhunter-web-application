@@ -1,0 +1,195 @@
+{
+  "breadcrumb": {
+    "business": "Doanh Nghiệp",
+    "profile": "Hồ Sơ"
+  },
+  "page": {
+    "title": "Hồ Sơ Doanh Nghiệp",
+    "description": "Quản lý thông tin doanh nghiệp của bạn và xác minh chi tiết công ty"
+  },
+  "button": {
+    "documentation": "Tài Liệu",
+    "preview": "Xem Trước Hồ Sơ",
+    "upgrade": "Nâng Cấp Lên Premium"
+  },
+  "form": {
+    "title": "Thông Tin Công Ty",
+    "subtitle": "Cập nhật chi tiết doanh nghiệp của bạn dưới đây",
+    "company_identity": "Nhận Diện Công Ty",
+    "company_identity_desc": "Nhập thông tin công ty cơ bản của bạn",
+    "company_name": "Tên Công Ty",
+    "company_name_placeholder": "Nhập tên công ty của bạn",
+    "company_size": "Quy Mô Công Ty",
+    "select_size": "Chọn quy mô công ty",
+    "size_small": "Nhỏ (50-100 nhân viên)",
+    "size_startup": "Khởi Nghiệp (10-50 nhân viên)",
+    "size_medium": "Vừa (100-500 nhân viên)",
+    "size_large": "Lớn (500+ nhân viên)",
+    "headquarters_address": "Địa Chỉ Trụ Sở",
+    "address_placeholder": "Nhập địa chỉ trụ sở của bạn",
+    "tax_id": "Mã Số Thuế",
+    "tax_id_placeholder": "Nhập mã số thuế của bạn",
+    "website": "Website",
+    "website_placeholder": "https://www.example.com",
+    "submit": "Gửi Hồ Sơ",
+    "submitting": "Đang Gửi...",
+    "back": "Quay Lại",
+    "cancel": "Hủy"
+  },
+  "success": {
+    "message": "Hồ sơ đã được gửi thành công!",
+    "submitted": "Hồ sơ doanh nghiệp của bạn đã được gửi để xem xét."
+  },
+  "error": {
+    "validation": "Vui lòng sửa các lỗi dưới đây"
+  },
+  "validation": {
+    "company_name_required": "Tên công ty là bắt buộc",
+    "company_name_min": "Tên công ty phải ít nhất 2 ký tự",
+    "company_name_max": "Tên công ty không thể vượt quá 255 ký tự",
+    "company_name_pattern": "Tên công ty chứa các ký tự không hợp lệ",
+    "tax_id_required": "Mã số thuế là bắt buộc",
+    "tax_id_pattern": "Mã số thuế phải có 10 hoặc 13 chữ số",
+    "tax_id_invalid": "Mã số thuế không hợp lệ",
+    "company_size_required": "Quy mô công ty là bắt buộc",
+    "website_required": "Website là bắt buộc",
+    "website_pattern": "Website phải bắt đầu bằng http:// hoặc https://",
+    "website_invalid": "URL website không hợp lệ",
+    "address_required": "Địa chỉ trụ sở là bắt buộc",
+    "address_min": "Địa chỉ phải ít nhất 10 ký tự",
+    "address_max": "Địa chỉ không thể vượt quá 500 ký tự"
+  },
+  "verification": {
+    "status": "Trạng Thái Xác Minh",
+    "status_desc": "Theo dõi tiến độ xác minh hồ sơ của bạn",
+    "status_pending": "Đang Chờ",
+    "status_approved": "Đã Duyệt",
+    "status_rejected": "Bị Từ Chối",
+    "PENDING": "Đang Chờ",
+    "APPROVED": "Đã Duyệt",
+    "REJECTED": "Bị Từ Chối",
+    "submitted": "Đã Gửi",
+    "submitted_desc": "Hồ sơ của bạn đang chờ xem xét",
+    "under_review": "Đang Xem Xét",
+    "approved": "Đã Duyệt",
+    "approved_desc": "Xác minh hồ sơ hoàn tất",
+    "approved_title": "Xác Minh Được Phê Duyệt",
+    "approved_message": "Chúc mừng! Hồ sơ doanh nghiệp của bạn đã được xác minh.",
+    "rejected": "Bị Từ Chối",
+    "rejected_desc": "Hồ sơ của bạn cần được sửa đổi",
+    "rejected_title": "Xác Minh Bị Từ Chối",
+    "in_progress": "Đang Xác Minh",
+    "title": "Xác minh",
+    "automatedAction": {
+      "initiated": "Bắt đầu",
+      "completed": "Hoàn thành",
+      "type": "Loại",
+      "id": "ID"
+    }
+  },
+  "documents": {
+    "title": "Tài Liệu Đã Gửi",
+    "subtitle": "Các tài liệu xác minh doanh nghiệp mà bạn đã tải lên",
+    "tax_certificate": "Giấy Chứng Nhận Thuế",
+    "business_license": "Giấy Phép Kinh Doanh",
+    "registration_certificate": "Giấy Chứng Nhận Đăng Ký",
+    "bank_statement": "Sao Kê Ngân Hàng",
+    "other": "Tài Liệu Khác",
+    "no_documents": "Chưa có tài liệu nào được tải lên",
+    "download": "Tải Xuống",
+    "delete": "Xóa"
+  },
+  "document": {
+    "no_documents": "Chưa có tài liệu nào được tải lên",
+    "no_documents_desc": "Tải lên các tài liệu doanh nghiệp để xác minh công ty của bạn",
+    "submitted": "Tài Liệu Đã Gửi",
+    "submitted_desc": "Các tài liệu của bạn đang chờ xác minh",
+    "verified": "Đã Xác Minh",
+    "uploaded": "Đã Tải Lên",
+    "download": "Tải Xuống Tài Liệu",
+    "delete": "Xóa Tài Liệu",
+    "confirm": "Bạn có chắc chắn muốn xóa tài liệu này?",
+    "cancel": "Hủy",
+    "deleting": "Đang Xóa...",
+    "delete_error": "Không thể xóa tài liệu. Vui lòng thử lại."
+  },
+  "strength": {
+    "title": "Độ Mạnh Hồ Sơ",
+    "subtitle": "Hoàn thành hồ sơ của bạn để tối đa hóa khả năng hiển thị",
+    "no_data": "Không có dữ liệu hồ sơ",
+    "complete": "Hồ Sơ Hoàn Chỉnh",
+    "of": "/ ",
+    "items": "mục",
+    "excellent": "Xuất Sắc",
+    "good": "Tốt",
+    "incomplete": "Chưa Hoàn Chỉnh",
+    "breakdown": "Chi Tiết Độ Mạnh",
+    "next_action": "Hành Động Tiếp Theo",
+    "updated": "Cập Nhật Lần Cuối"
+  },
+  "optimization": {
+    "title": "Mẹo Tối Ưu Hóa",
+    "subtitle": "Những cách đã chứng minh để cải thiện hồ sơ của bạn",
+    "start_here": "Bắt Đầu Từ Đây",
+    "additional": "Mẹo Bổ Sung",
+    "info": "Mẫu Vàng Để Thành Công",
+    "complete_profile": "Hoàn Thành Hồ Sơ Của Bạn",
+    "complete_profile_desc": "Điền vào tất cả các trường bắt buộc để cải thiện khả năng hiển thị hồ sơ",
+    "add_document": "Thêm Tài Liệu Doanh Nghiệp",
+    "add_document_desc": "Tải lên các tài liệu xác minh để xây dựng lòng tin",
+    "verify_info": "Xác Minh Thông Tin",
+    "verify_info_desc": "Đảm bảo tất cả thông tin chính xác và cập nhật",
+    "add_photos": "Thêm Ảnh Chuyên Nghiệp",
+    "add_photos_desc": "Bao gồm ảnh công ty để cải thiện hồ sơ của bạn"
+  },
+  "bestpractice": {
+    "title": "Những Quy Chuẩn Tốt Nhất",
+    "subtitle": "Những chiến lược đã được chứng minh để thành công",
+    "profile_accuracy": "Độ Chính Xác Hồ Sơ",
+    "profile_accuracy_desc": "Giữ cho thông tin của bạn chính xác và hiện tại",
+    "timely_response": "Phản Hồi Kịp Thời",
+    "timely_response_desc": "Phản hồi nhanh chóng các yêu cầu từ các nhà tuyển dụng",
+    "document_ready": "Chuẩn Bị Tài Liệu",
+    "document_ready_desc": "Tổ chức các tài liệu doanh nghiệp quan trọng",
+    "follow_tips": "Tuân Thủ Những Quy Chuẩn Này",
+    "follow_tips_desc": "để xây dựng lòng tin với các nhà tuyển dụng và tối đa hóa cơ hội",
+    "tip_accurate_info": "Duy trì thông tin chính xác và cập nhật",
+    "tip_update_regular": "Cập nhật hồ sơ của bạn thường xuyên",
+    "tip_professional_photos": "Sử dụng ảnh chuyên nghiệp chất lượng cao",
+    "tip_respond_quickly": "Phản hồi các yêu cầu trong vòng 24 giờ",
+    "tip_communicate_clearly": "Giao tiếp rõ ràng và chuyên nghiệp",
+    "tip_professional_tone": "Duy trì tôn độ chuyên nghiệp",
+    "tip_documents_uptodate": "Giữ tất cả tài liệu cập nhật",
+    "tip_high_quality": "Gửi bản quét tài liệu chất lượng cao",
+    "tip_organized": "Sắp xếp tài liệu theo danh mục"
+  },
+  "failedToLoadProfile": "Không thể tải hồ sơ",
+  "loading": {
+    "profile": "Đang tải hồ sơ...",
+    "documents": "Đang tải tài liệu...",
+    "verification": "Đang tải trạng thái xác minh..."
+  },
+  "privacy": {
+    "title": "Cài Đặt Quyền Riêng Tư",
+    "description": "Kiểm soát ai có thể xem hồ sơ doanh nghiệp của bạn"
+  },
+  "action": {
+    "configure": "Cấu Hình"
+  },
+  "premium": {
+    "title": "Dịch Vụ Premium",
+    "description": "Mở khóa các tính năng nâng cao để tăng khả năng hiển thị"
+  },
+  "state": {
+    "loading": "Đang tải thông tin hồ sơ..."
+  },
+  "profile": {
+    "read_only_note": "Thông tin này được đặt khi đăng ký tài khoản và không thể chỉnh sửa",
+    "status": "Thông Tin Công Ty",
+    "details_title": "Quản Lý Hồ Sơ Doanh Nghiệp",
+    "details_description": "Xem và quản lý thông tin công ty của bạn. Các chi tiết này được đặt khi tạo tài khoản.",
+    "info_title": "Thông Tin: Hồ Sơ Chỉ Đọc",
+    "info_description": "Thông tin doanh nghiệp của bạn được thiết lập khi đăng ký và không thể thay đổi. Nếu cần cập nhật, vui lòng liên hệ hỗ trợ.",
+    "no_profile": "Không tìm thấy hồ sơ doanh nghiệp"
+  }
+}

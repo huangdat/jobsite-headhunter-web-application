@@ -8,11 +8,13 @@ import com.rikkeisoft.backend.model.dto.resp.application.ApplicationResp;
 import com.rikkeisoft.backend.model.dto.resp.interview.InterviewResp;
 import com.rikkeisoft.backend.service.ApplicationService;
 import com.rikkeisoft.backend.service.InterviewService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.rikkeisoft.backend.enums.ApplicationStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,9 +31,14 @@ public class HeadhunterApplicationController {
 
     // GET /jobs/{jobId}/applications - Pipeline view
     @GetMapping("/jobs/{jobId}/applications")
-    public APIResponse<Page<ApplicationResp>> getJobPipeline(@PathVariable Long jobId, Pageable pageable) {
+    public APIResponse<Page<ApplicationResp>> getJobPipeline(
+            @PathVariable Long jobId,
+            @RequestParam(name = "status", required = false) ApplicationStatus status,
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @org.springframework.data.web.PageableDefault(size = 10) Pageable pageable) {
+
         return APIResponse.<Page<ApplicationResp>>builder()
-                .result(applicationService.getJobPipeline(jobId, pageable))
+                .result(applicationService.getJobPipeline(jobId, status, keyword, pageable))
                 .build();
     }
 
@@ -45,7 +52,7 @@ public class HeadhunterApplicationController {
 
     // PATCH /applications/{id}/status - Approve/Reject/Hire
     @PatchMapping("/applications/{id}/status")
-    public APIResponse<ApplicationDetailResp> updateStatus(@PathVariable Long id, @RequestBody ApplicationStatusUpdateReq req) {
+    public APIResponse<ApplicationDetailResp> updateStatus(@PathVariable Long id,@Valid @RequestBody ApplicationStatusUpdateReq req) {
         return APIResponse.<ApplicationDetailResp>builder()
                 .result(applicationService.updateStatus(id, req))
                 .build();
@@ -54,6 +61,7 @@ public class HeadhunterApplicationController {
     // PATCH /applications/{id}/interview - Schedule interview
     @PatchMapping("/applications/{id}/interview")
     public APIResponse<InterviewResp> scheduleInterview(@PathVariable Long id, @RequestBody InterviewCreateReq req) {
+        req.setApplicationId(id);
         return APIResponse.<InterviewResp>builder()
                 .result(interviewService.scheduleInterview(req))
                 .build();

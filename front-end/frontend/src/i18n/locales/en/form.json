@@ -1,0 +1,44 @@
+{
+  "validation": {
+    "fullNameRequired": "Form validation full name required",
+    "phoneNumberRequired": "Form validation phone number required",
+    "phoneNumberInvalid": "Form validation phone number invalid",
+    "bankNameRequired": "Form validation bank name required",
+    "accountNumberRequired": "Form validation account number required",
+    "accountHolderNameRequired": "Form validation account holder name required"
+  },
+  "section": {
+    "personalInfo": "Form section personal info",
+    "personalInfoDesc": "Form section personal info desc",
+    "bankingInfo": "Form section banking info",
+    "bankingInfoDesc": "Form section banking info desc"
+  },
+  "label": {
+    "fullName": "Form label full name",
+    "phoneNumber": "Form label phone number",
+    "bankName": "Form label bank name",
+    "accountNumber": "Form label account number",
+    "accountHolderName": "Form label account holder name",
+    "swiftCode": "Form label swift code"
+  },
+  "placeholder": {
+    "fullName": "Form placeholder full name",
+    "phoneNumber": "Form placeholder phone number",
+    "bankName": "Form placeholder bank name",
+    "accountNumber": "Form placeholder account number",
+    "accountHolderName": "Form placeholder account holder name",
+    "swiftCode": "Form placeholder swift code"
+  },
+  "help": {
+    "swiftCode": "Form help swift code",
+    "autoSave": "Form help auto save"
+  },
+  "register": {
+    "signIn": "Form register sign in",
+    "joinNetwork": "Form register join network",
+    "professional": "Form register professional"
+  },
+  "skill": {
+    "selectSkills": "Select skills..."
+  }
+}

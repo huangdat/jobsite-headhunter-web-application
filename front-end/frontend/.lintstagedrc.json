@@ -1,9 +1,4 @@
 {
-  "*.{ts,tsx}": [
-    "eslint --fix",
-    "prettier --write"
-  ],
-  "*.{json,md}": [
-    "prettier --write"
-  ]
+  "front-end/frontend/src/**/*.{ts,tsx}": "powershell -NoProfile -Command \"Set-Location -Path 'front-end/frontend'; npx eslint --fix\"",
+  "*.{json,md,cjs}": "powershell -NoProfile -Command \"Set-Location -Path 'front-end/frontend'; npx prettier --write\""
 }

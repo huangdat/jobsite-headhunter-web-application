@@ -1,7 +1,4 @@
-import { validateToken, logout } from "../services/authApi";
-
-const ACCESS_TOKEN_KEY = "accessToken";
-const AUTH_USER_KEY = "authUser";
+import { useAuthStore } from "@/shared/store/authStore";
 
 /**
  * IMPORTANT NAMING CONVENTION:
@@ -21,78 +18,48 @@ const AUTH_USER_KEY = "authUser";
 /**
  * Check if user is authenticated by validating token
  * Use this when app loads or on protected routes
+ *
+ * @deprecated Use useAuthStore().checkAuth() instead
  */
 export const checkAuth = async () => {
-  try {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-
-    if (!token) {
+  return useAuthStore
+    .getState()
+    .checkAuth()
+    .then((valid) => {
+      if (valid) {
+        return useAuthStore.getState().user;
+      }
       return null;
-    }
-
-    const result = await validateToken({ token });
-
-    if (result.valid) {
-      return {
-        id: result.id,
-        username: result.username,
-        role: result.role,
-        status: result.status,
-      };
-    }
-
-    // Token is invalid, clear storage
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    return null;
-  } catch (error) {
-    console.error("Auth check failed:", error);
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    return null;
-  }
+    });
 };
 
 /**
  * Logout user and clear session
  * Use this when user clicks logout button
+ *
+ * @deprecated Use useAuthStore().logout() or useAuthUser().logout() instead
  */
 export const handleLogout = async () => {
-  try {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-
-    if (token) {
-      await logout({ token });
-    }
-  } catch (error) {
-    console.error("Logout failed:", error);
-  } finally {
-    // Always clear local storage even if API fails
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(AUTH_USER_KEY);
-  }
+  await useAuthStore.getState().logout();
 };
 
 /**
  * Get current user's token
+ *
+ * @deprecated Use useAuthStore().token instead
  */
 export const getToken = () => {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+  return useAuthStore.getState().token;
 };
 
 /**
  * Check if user has specific role
+ *
+ * @deprecated Use useAuthStore().hasRole() or useAuthUser().hasRole() instead
  */
 export const hasRole = async (requiredRole: string): Promise<boolean> => {
-  try {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+  const isValid = await useAuthStore.getState().checkAuth();
+  if (!isValid) return false;
 
-    if (!token) {
-      return false;
-    }
-
-    const result = await validateToken({ token });
-
-    return result.valid && result.role === requiredRole;
-  } catch {
-    return false;
-  }
+  return useAuthStore.getState().hasRole(requiredRole);
 };

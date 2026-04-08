@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { useUsersTranslation } from "@/shared/hooks";
 
 interface UserListPaginationProps {
   currentPage: number;
@@ -17,13 +18,15 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
   onPageChange,
   onItemsPerPageChange,
 }) => {
+  const { t } = useUsersTranslation();
+
   const getPageNumbers = () => {
     const pages = [];
     const maxVisible = 5;
     const halfVisible = Math.floor(maxVisible / 2);
 
     let startPage = Math.max(1, currentPage - halfVisible);
-    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    const endPage = Math.min(totalPages, startPage + maxVisible - 1);
 
     if (endPage - startPage < maxVisible - 1) {
       startPage = Math.max(1, endPage - maxVisible + 1);
@@ -32,7 +35,7 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
     if (startPage > 1) {
       pages.push(1);
       if (startPage > 2) {
-        pages.push('...');
+        pages.push("...");
       }
     }
 
@@ -42,7 +45,7 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
 
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) {
-        pages.push('...');
+        pages.push("...");
       }
       pages.push(totalPages);
     }
@@ -57,13 +60,13 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
     <div className="px-6 py-4 flex items-center justify-between bg-slate-50 dark:bg-slate-800/30 border-t border-slate-200 dark:border-slate-800">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2 text-sm text-slate-500">
-          <span>Rows per page:</span>
+          <span>{t("list.rowsPerPage")}</span>
           <select
             value={itemsPerPage}
             onChange={(e) => onItemsPerPageChange?.(parseInt(e.target.value))}
             className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-primary"
-            title="Select rows per page"
-            aria-label="Select rows per page"
+            title={t("list.rowsPerPage")}
+            aria-label={t("list.rowsPerPage")}
           >
             <option value={10}>10</option>
             <option value={25}>25</option>
@@ -71,7 +74,10 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
           </select>
         </div>
         <p className="text-sm text-slate-500">
-          Showing {startItem}-{endItem} of {totalItems} users
+          {t("list.paginationInfo")
+            ?.replace("{{startItem}}", String(startItem))
+            .replace("{{endItem}}", String(endItem))
+            .replace("{{totalItems}}", String(totalItems))}
         </p>
       </div>
 
@@ -81,20 +87,22 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
           disabled={currentPage === 1}
           className="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <span className="material-symbols-outlined text-sm">chevron_left</span>
+          <span className="material-symbols-outlined text-sm">
+            chevron_left
+          </span>
         </button>
 
         {getPageNumbers().map((page, index) => (
           <React.Fragment key={index}>
-            {page === '...' ? (
+            {page === "..." ? (
               <span className="px-1 text-slate-400">...</span>
             ) : (
               <button
                 onClick={() => onPageChange?.(page as number)}
                 className={`size-8 flex items-center justify-center rounded-lg text-xs font-bold transition-colors ${
                   currentPage === page
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'hover:bg-primary/10 text-slate-600 dark:text-slate-400'
+                    ? "bg-primary text-white shadow-sm"
+                    : "hover:bg-primary/10 text-slate-600 dark:text-slate-400"
                 }`}
               >
                 {page}
@@ -108,7 +116,9 @@ export const UserListPagination: React.FC<UserListPaginationProps> = ({
           disabled={currentPage === totalPages}
           className="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <span className="material-symbols-outlined text-sm">chevron_right</span>
+          <span className="material-symbols-outlined text-sm">
+            chevron_right
+          </span>
         </button>
       </div>
     </div>

@@ -1,0 +1,85 @@
+{
+  "selectRole": {
+    "title": "Title",
+    "titleHighlight": "Select role title highlight",
+    "subtitle": "Subtitle",
+    "pageTitle": "Page title",
+    "pageSubtitle": "Page subtitle",
+    "continue": "Continue",
+    "alreadyHaveAccount": "Already have account"
+  },
+  "resetPasswordSuccess": {
+    "titleLeft": "Reset password success title left",
+    "titleHighlight": "Reset password success title highlight",
+    "subtitleLeft": "Reset password success subtitle left",
+    "checkItem1": "Reset password success check item1",
+    "checkItem2": "Reset password success check item2",
+    "title": "Reset password success title",
+    "subtitle": "Reset password success subtitle",
+    "signInButton": "Reset password success sign in button"
+  },
+  "signup": "Signup",
+  "buttons": {
+    "connecting": "Connecting..."
+  },
+  "social": {
+    "google": "Google",
+    "linkedin": "LinkedIn"
+  },
+  "login": {
+    "heroTitlePart1": "Login hero title part1",
+    "heroTitlePart2": "Login hero title part2",
+    "heroSubtitle": "Login hero subtitle",
+    "welcomeBack": "Login welcome back",
+    "subtitle": "Login subtitle",
+    "rememberMe": "Login remember me",
+    "forgotPasswordLink": "Login forgot password link",
+    "signingIn": "Login signing in",
+    "orContinueWith": "Login or continue with",
+    "noAccount": "Login no account",
+    "registerLink": "Login register link"
+  },
+  "changePassword": {
+    "securitySectionLabel": "Change password security section label",
+    "title": "Change password title",
+    "subtitle": "Change password subtitle",
+    "currentPasswordLabel": "Change password current password label",
+    "newPasswordLabel": "Change password new password label",
+    "confirmPasswordLabel": "Change password confirm password label",
+    "submitButton": "Change password submit button",
+    "cancelButton": "Change password cancel button",
+    "passwordRequirementsTitle": "Change password password requirements title",
+    "requirement1": "Change password requirement1",
+    "requirement2": "Change password requirement2",
+    "requirement3": "Change password requirement3"
+  },
+  "passwordRequirements": {
+    "title": "Password Requirements",
+    "minLength": "At least 8 characters",
+    "uppercase": "At least one uppercase letter",
+    "lowercase": "At least one lowercase letter",
+    "number": "At least one number"
+  },
+  "register": {
+    "candidate": {
+      "title": "Register candidate title",
+      "subtitle": "Register candidate subtitle"
+    },
+    "collaborator": {
+      "title": "Register collaborator title",
+      "subtitle": "Register collaborator subtitle"
+    },
+    "headhunter": {
+      "title": "Register headhunter title",
+      "subtitle": "Register headhunter subtitle"
+    },
+    "subtitle": "Register subtitle",
+    "haveAccount": "Register have account",
+    "signIn": "Register sign in"
+  },
+  "headhunterDetails": {
+    "companyName": "Headhunter details company name",
+    "registeredAddress": "Headhunter details registered address",
+    "registeredAddressHelp": "Headhunter details registered address help"
+  }
+}

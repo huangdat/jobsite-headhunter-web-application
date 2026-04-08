@@ -1,0 +1,144 @@
+{
+  "page": {
+    "title": "Hồ Sơ Hoa Hồng",
+    "subtitle": "Quản lý hoa hồng, giới thiệu và cài đặt thanh toán của bạn",
+    "description": "Hồ sơ hoa hồng cho nhà cộng tác viên"
+  },
+  "breadcrumb": {
+    "commission": "Hồ Sơ Hoa Hồng"
+  },
+  "section": {
+    "earnings": "Thu Nhập Của Bạn",
+    "benefits": "Lợi Ích Chương Trình Hoa Hồng",
+    "benefitsDescription": "Khám phá toàn bộ tiềm năng của khoảng đối tác giới thiệu của bạn với chúng tôi",
+    "howItWorks": "Cách Hoạt Động",
+    "faq": "Câu Hỏi Thường Gặp"
+  },
+  "form": {
+    "label": {
+      "fullName": "Họ Và Tên",
+      "phoneNumber": "Số Điện Thoại",
+      "bankName": "Tên Ngân Hàng",
+      "accountNumber": "Số Tài Khoản",
+      "accountHolderName": "Tên Chủ Tài Khoản",
+      "swiftCode": "Mã SWIFT (Tùy Chọn)"
+    },
+    "placeholder": {
+      "fullName": "Nhập họ tên của bạn",
+      "phoneNumber": "+84 123 456 789",
+      "bankName": "Ví dụ: Vietcombank, Techcombank",
+      "accountNumber": "12345678910",
+      "accountHolderName": "Nguyễn Văn A",
+      "swiftCode": "VIETTWVT"
+    },
+    "validation": {
+      "fullNameRequired": "Họ tên là bắt buộc",
+      "phoneNumberRequired": "Số điện thoại là bắt buộc",
+      "phoneNumberInvalid": "Vui lòng nhập số điện thoại hợp lệ",
+      "bankNameRequired": "Tên ngân hàng là bắt buộc",
+      "accountNumberRequired": "Số tài khoản là bắt buộc",
+      "accountHolderNameRequired": "Tên chủ tài khoản là bắt buộc"
+    },
+    "section": {
+      "personalInfo": "Thông Tin Cá Nhân",
+      "personalInfoDesc": "Chi tiết liên hệ cá nhân và thông tin tài khoản của bạn",
+      "bankingInfo": "Thông Tin Ngân Hàng",
+      "bankingInfoDesc": "Nơi hoa hồng của bạn sẽ được thanh toán"
+    },
+    "help": {
+      "autoSave": "Các thay đổi được lưu tự động",
+      "swiftCode": "Mã SWIFT được sử dụng để chuyển tiền quốc tế"
+    }
+  },
+  "button": {
+    "save": "Lưu Thay Đổi",
+    "saving": "Đang Lưu...",
+    "dismiss": "Đóng",
+    "requestPayout": "Yêu Cầu Thanh Toán"
+  },
+  "stats": {
+    "totalEarnings": "Tổng Thu Nhập",
+    "pending": "Hoa Hồng Chưa Thanh Toán",
+    "paid": "Hoa Hồng Đã Thanh Toán",
+    "referrals": "Tổng Giới Thiệu",
+    "activeJobs": "Công Việc Đang Hoạt Động",
+    "commissionRate": "Tỷ Lệ Hoa Hồng",
+    "conversionRate": "Tỷ Lệ Chuyển Đổi",
+    "lifetimeTotal": "Tổng cộng trong suốt thời gian",
+    "processingDays": "Thanh toán trong {{days}} ngày làm việc",
+    "completed": "Đã thanh toán thành công",
+    "referralsHint": "Các giới thiệu thành công đã thực hiện",
+    "ongoingJobs": "Công việc vẫn đang diễn ra",
+    "rateInfo": "Phần trăm hoa hồng giới thiệu của bạn",
+    "noEarningsYet": "Chưa có thu nhập. Bắt đầu thực hiện các giới thiệu để kiếm hoa hồng!"
+  },
+  "benefits": {
+    "quickPayout": {
+      "title": "Thanh Toán Nhanh",
+      "description": "Nhận tiền trong vòng 3 ngày làm việc sau khi đặt vị trí thành công"
+    },
+    "highRate": {
+      "title": "Hoa Hồng Cạnh Tranh",
+      "description": "Kiếm đến 15% hoa hồng cho mỗi giới thiệu thành công"
+    },
+    "support": {
+      "title": "Hỗ Trợ Chuyên Dụng",
+      "description": "Đội hỗ trợ 24/7 để giúp bạn thành công"
+    },
+    "transparent": {
+      "title": "Theo Dõi Minh Bạch",
+      "description": "Bảng điều khiển thời gian thực để theo dõi tất cả các giới thiệu và thu nhập của bạn"
+    },
+    "noLimit": {
+      "title": "Thu Nhập Không Giới Hạn",
+      "description": "Không có giới hạn về số tiền bạn có thể kiếm mỗi tháng"
+    },
+    "tools": {
+      "title": "Công Cụ Tiếp Thị",
+      "description": "Công cụ và tài nguyên miễn phí để giúp bạn quảng bá và tuyển dụng"
+    }
+  },
+  "howItWorks": {
+    "step1": {
+      "title": "Chia Sẻ Liên Kết Giới Thiệu Của Bạn",
+      "description": "Nhận liên kết giới thiệu duy nhất của bạn và chia sẻ với những ứng viên hoặc khách hàng tiềm năng"
+    },
+    "step2": {
+      "title": "Theo Dõi Đơn Vay",
+      "description": "Giám sát tất cả các ứng dụng và vị trí được thực hiện thông qua liên kết giới thiệu của bạn"
+    },
+    "step3": {
+      "title": "Đặt Vị Trí Thành Công",
+      "description": "Khi đặt vị trí thành công, bạn kiếm hoa hồng ngay lập tức"
+    },
+    "step4": {
+      "title": "Yêu Cầu Thanh Toán",
+      "description": "Rút tiền của bạn bất kỳ lúc nào vào tài khoản ngân hàng đã xác miện của bạn"
+    }
+  },
+  "faq": {
+    "item1": {
+      "question": "Cần bao lâu để tôi nhận được thanh toán hoa hồng?",
+      "answer": "Các khoản hoa hồng được xử lý và thanh toán trong vòng 3-5 ngày làm việc sau khi ứng viên hoàn thành thành công thời gian làm việc của họ. Bạn có thể yêu cầu thanh toán bất kỳ lúc nào và chúng tôi sẽ xử lý nó trong chu kỳ thanh toán tiếp theo của chúng tôi."
+    },
+    "item2": {
+      "question": "Số tiền tối thiểu mà tôi cần có để yêu cầu thanh toán?",
+      "answer": "Không có số tiền thanh toán tối thiểu. Bạn có thể yêu cầu thanh toán cho bất kỳ số tiền nào lớn hơn 0 VND. Tuy nhiên, để hiệu quả chuyển ngân hàng, chúng tôi khuyến nghị yêu cầu thanh toán khi bạn đã tích lũy ít nhất 500.000 VND."
+    },
+    "item3": {
+      "question": "Tôi có thể tăng tỷ lệ hoa hồng của mình không?",
+      "answer": "Tỷ lệ hoa hồng của bạn được xác định dựa trên tầng và hiệu suất của bạn. Khi bạn thực hiện nhiều giới thiệu thành công hơn, bạn có thể đủ điều kiện cho tỷ lệ hoa hồng cao hơn. Liên hệ với đội hỗ trợ của chúng tôi để thảo luận về nâng cấp tầng."
+    }
+  },
+  "success": {
+    "profileUpdated": "Hồ sơ của bạn đã được cập nhật thành công"
+  },
+  "failedToLoadCommission": "Không thể tải hoa hồng",
+  "failedToSaveProfile": "Không thể lưu hồ sơ",
+  "messages": {
+    "failedToRequestPayout": "Không thể gửi yêu cầu chi trả"
+  },
+  "errors": {
+    "title": "Có gì đó không ổn"
+  }
+}

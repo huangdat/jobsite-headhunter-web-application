@@ -1,0 +1,15 @@
+{
+  "accountNotFound": "Account not found with the provided credentials",
+  "userNotFound": "User not found",
+  "invalidCredentials": "Invalid username or email and password",
+  "unauthenticated": "Unauthorized request",
+  "forbidden": "No permission to access this resource",
+  "emailInvalid": "Invalid email address",
+  "usernameInvalid": "Invalid username",
+  "passwordInvalid": "Password does not meet security requirements",
+  "otpInvalid": "Invalid OTP code",
+  "otpExpired": "OTP has expired",
+  "tokenExpired": "Session has expired",
+  "tokenInvalid": "Session is invalid",
+  "dataInvalid": "Data is invalid"
+}

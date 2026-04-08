@@ -1,22 +1,25 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { login } from "../services/authApi";
-import type { LoginFormData } from "../types";
-import { useAuth } from "../context/useAuth";
-import { extractApiErrorMessage } from "../utils/apiError";
+import { login } from "@/features/auth/services/authApi";
+import type { LoginFormData } from "@/features/auth/types";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { useAuthTranslation } from "@/shared/hooks";
+import { extractApiErrorMessage } from "@/features/auth/utils/apiError";
 
 const REMEMBERED_LOGIN_KEY = "rememberedLogin"; // Stores username or email
 
 export const useLogin = () => {
   const navigate = useNavigate();
   const { signIn } = useAuth();
+  const { t } = useAuthTranslation();
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
     rememberMe: false,
   });
   const [errors, setErrors] = useState<Partial<LoginFormData>>({});
+  const [generalError, setGeneralError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = (data: LoginFormData): boolean => {
@@ -24,22 +27,22 @@ export const useLogin = () => {
 
     // Username or Email validation
     if (!data.email.trim()) {
-      newErrors.email = "Username or email is required";
+      newErrors.email = t("validation.usernameEmailRequired");
     } else {
       const input = data.email.trim();
       const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
       const isUsername = /^[a-zA-Z][a-zA-Z0-9_]{7,31}$/.test(input);
 
       if (!isEmail && !isUsername) {
-        newErrors.email = "Please enter a valid username or email address";
+        newErrors.email = t("validation.invalidUsername");
       }
     }
 
     // Password validation
     if (!data.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = t("validation.passwordRequired");
     } else if (data.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+      newErrors.password = t("validation.passwordMinLength");
     }
 
     setErrors(newErrors);
@@ -54,6 +57,7 @@ export const useLogin = () => {
 
     setIsLoading(true);
     setErrors({});
+    setGeneralError(null);
 
     try {
       // Send username/email as 'username' field (backend expects username)
@@ -73,17 +77,17 @@ export const useLogin = () => {
         }
 
         // Success Notification
-        toast.success("Welcome Back! Login Successful.");
+        toast.success(t("messages.signedInSuccess"));
 
         navigate("/home");
         return;
       }
 
-      throw new Error("Authentication failed.");
+      throw new Error(t("messages.authenticationFailed"));
     } catch (error: unknown) {
       const errorMessage = extractApiErrorMessage(
         error,
-        "Unable to sign in right now. Please try again.",
+        t("auth.messages.unableToSignInRightNow")
       );
       let errorField: "email" | "password" | "general" = "general";
 
@@ -129,10 +133,14 @@ export const useLogin = () => {
       // Set form error for the appropriate field
       if (errorField === "email") {
         setErrors({ email: errorMessage });
+        setGeneralError(null);
       } else if (errorField === "password") {
         setErrors({ password: errorMessage });
+        setGeneralError(null);
       } else {
-        setErrors({ email: errorMessage });
+        // General error - not field-specific
+        setErrors({});
+        setGeneralError(errorMessage);
       }
 
       console.error("Login detail error:", error);
@@ -141,10 +149,11 @@ export const useLogin = () => {
     }
   };
 
-  const handleChange =
+  const handleChange = useCallback(
     (field: keyof LoginFormData) => (value: string | boolean) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
 
+      // eslint-disable-next-line security/detect-object-injection
       if (field !== "rememberMe" && errors[field]) {
         setErrors((prev) => ({ ...prev, [field]: undefined }));
       }
@@ -153,9 +162,11 @@ export const useLogin = () => {
       if (field === "rememberMe" && value === false) {
         localStorage.removeItem(REMEMBERED_LOGIN_KEY);
       }
-    };
+    },
+    [errors]
+  );
 
-  const loadRememberedEmail = () => {
+  const loadRememberedEmail = useCallback(() => {
     const rememberedLogin = localStorage.getItem(REMEMBERED_LOGIN_KEY);
     if (rememberedLogin) {
       setFormData((prev) => ({
@@ -164,11 +175,12 @@ export const useLogin = () => {
         rememberMe: true,
       }));
     }
-  };
+  }, []);
 
   return {
     formData,
     errors,
+    generalError,
     isLoading,
     handleSubmit,
     handleChange,

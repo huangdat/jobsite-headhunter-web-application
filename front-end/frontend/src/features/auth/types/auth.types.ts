@@ -1,4 +1,8 @@
-export type UserRole = "candidate" | "collaborator" | "headhunter";
+// User roles for REGISTRATION FORM (lowercase - used during form flow)
+export type RegistrationUserRole = "candidate" | "collaborator" | "headhunter";
+
+// User roles for AUTHENTICATED USER from backend (uppercase - from API response)
+export type UserRole = "ADMIN" | "HEADHUNTER" | "COLLABORATOR" | "CANDIDATE";
 
 export interface AuthUser {
   id: string;
@@ -111,6 +115,7 @@ export interface AccountResp {
   phone: string;
   imageUrl?: string;
   gender?: "MALE" | "FEMALE" | "OTHER";
+  businessProfileId?: number | null;
   authProvider: "LOCAL" | "GOOGLE" | "FACEBOOK";
   status: "PENDING" | "ACTIVE" | "SUSPENDED" | "DELETED";
   roles: string[];

@@ -1,13 +1,14 @@
 package com.rikkeisoft.backend.service.impl;
 
-import com.azure.core.annotation.Post;
+import com.rikkeisoft.backend.constant.SecurityConstants;
 import com.rikkeisoft.backend.enums.ErrorCode;
 import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.model.dto.resp.business.MSTLookupResp;
 import com.rikkeisoft.backend.model.dto.resp.business.VietQRBusinessResp;
+import com.rikkeisoft.backend.model.dto.resp.job.JobDetailResp;
+import com.rikkeisoft.backend.model.dto.resp.job.JobResp;
+import com.rikkeisoft.backend.model.entity.Job;
 import com.rikkeisoft.backend.repository.*;
-import com.rikkeisoft.backend.enums.ErrorCode;
-import com.rikkeisoft.backend.exception.AppException;
 import com.rikkeisoft.backend.mapper.AccountMapper;
 import com.rikkeisoft.backend.mapper.BusinessProfileMapper;
 import com.rikkeisoft.backend.model.dto.resp.account.AccountResp;
@@ -26,6 +27,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -39,9 +41,9 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     AccountMapper accountMapper;
     ForumPostRepo forumPostRepo;
     ApplicationRepo applicationRepo;
+    JobRepo jobRepo;
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_HEADHUNTER')")
     public List<BusinessProfileResp> getAllBusinessProfiles() {
         if (businessProfileRepo.count() == 0) {
             throw new AppException(ErrorCode.NO_BUSINESS_PROFILES_STORED);
@@ -65,7 +67,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN') or hasAuthority('SCOPE_COLLABORATOR') or hasAuthority('SCOPE_HEADHUNTER')")
+    //@PreAuthorize(SecurityConstants.ADMIN_OR_HEADHUNTER_OR_COLLABORATOR)
     public BusinessProfileResp getBusinessProfileById(Long businessProfileId) {
         BusinessProfile businessProfile = businessProfileRepo.findById(businessProfileId)
                 .orElseThrow(() -> new AppException(ErrorCode.BUSINESS_PROFILE_NOT_FOUND));
@@ -99,6 +101,48 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
                 .toList();
     }
 
+    @Override
+    public List<JobDetailResp> getJobsByBusinessProfileId(Long businessProfileId) {
+        // find all account that has field businessProfileId = businessProfileId
+        List<String> accountIds = accountRepo.findByBusinessProfileId(businessProfileId).stream()
+                .map(account -> account.getId().toString())
+                .toList();
+        // find all jobs that has field headhunterAccountId in accountIds and map to list of JobDetailResp
+        List<Job> jobs = new ArrayList<>();
+        for (int i = 0; i < accountIds.size(); i++) {
+            //find all jobs that has field headhunterAccountId = accountIds.get(i) and add to jobs list
+            jobs.addAll(jobRepo.findByHeadhunterId(accountIds.get(i)));
+        }
+
+        // map to list of JobDetailResp
+        return jobs.stream()
+                .map(job -> JobDetailResp.builder()
+                        .id(job.getId())
+                        .jobCode(job.getJobCode())
+                        .title(job.getTitle())
+                        .description(job.getDescription())
+                        .responsibilities(job.getResponsibilities())
+                        .requirements(job.getRequirements())
+                        .benefits(job.getBenefits())
+                        .workingTime(job.getWorkingTime())
+                        .location(job.getLocation())
+                        .addressDetail(job.getAddressDetail())
+                        .experience(job.getExperience())
+                        .salaryMin(job.getSalaryMin())
+                        .salaryMax(job.getSalaryMax())
+                        .negotiable(job.isNegotiable())
+                        .currency(job.getCurrency().name())
+                        .quantity(job.getQuantity())
+                        .rankLevel(job.getRankLevel())
+                        .workingType(job.getWorkingType())
+                        .deadline(job.getDeadline())
+                        .status(job.getStatus())
+                        .createdAt(job.getCreatedAt())
+                        .imageUrl(job.getImageUrl())
+                        .build())
+                .toList();
+    }
+
     RestTemplate restTemplate;
 
     static final String VIETQR_BUSINESS_URL = "https://api.vietqr.io/v2/business/{taxCode}";
@@ -117,27 +161,46 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     }
 
     private MSTLookupResp lookupFromVietQR(String taxCode) {
-        VietQRBusinessResp response;
-        try {
-            response = restTemplate.getForObject(VIETQR_BUSINESS_URL, VietQRBusinessResp.class, taxCode);
-        } catch (HttpClientErrorException.NotFound e) {
-            throw new AppException(ErrorCode.MST_NOT_FOUND);
-        } catch (RestClientException e) {
-            log.error("Failed to call VietQR API for taxCode={}: {}", taxCode, e.getMessage());
-            throw new AppException(ErrorCode.MST_LOOKUP_FAILED);
+        int maxRetries = 3;
+        long initialDelay = 100; // milliseconds
+        
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                VietQRBusinessResp response = restTemplate.getForObject(VIETQR_BUSINESS_URL, VietQRBusinessResp.class, taxCode);
+                
+                if (response == null || !VIETQR_SUCCESS_CODE.equals(response.getCode()) || response.getData() == null) {
+                    throw new AppException(ErrorCode.MST_NOT_FOUND);
+                }
+                
+                VietQRBusinessResp.BusinessData data = response.getData();
+                return MSTLookupResp.builder()
+                        .companyName(data.getName())
+                        .taxCode(data.getId())
+                        .headquarterAddress(data.getAddress())
+                        .build();
+            } catch (HttpClientErrorException.NotFound e) {
+                throw new AppException(ErrorCode.MST_NOT_FOUND);
+            } catch (RestClientException e) {
+                log.warn("VietQR API call failed for taxCode={} (attempt {}/{}): {}", taxCode, attempt + 1, maxRetries, e.getMessage());
+                
+                if (attempt < maxRetries - 1) {
+                    // Exponential backoff: delay = initialDelay * (2^attempt)
+                    long delayMs = initialDelay * (long) Math.pow(2, attempt);
+                    try {
+                        Thread.sleep(delayMs);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        log.error("Retry sleep interrupted for taxCode={}", taxCode);
+                        throw new AppException(ErrorCode.MST_LOOKUP_FAILED);
+                    }
+                } else {
+                    log.error("All retry attempts failed for VietQR API lookup of taxCode={}", taxCode);
+                    throw new AppException(ErrorCode.MST_LOOKUP_FAILED);
+                }
+            }
         }
-
-        if (response == null || !VIETQR_SUCCESS_CODE.equals(response.getCode()) || response.getData() == null) {
-            throw new AppException(ErrorCode.MST_NOT_FOUND);
-        }
-
-        VietQRBusinessResp.BusinessData data = response.getData();
-
-        return MSTLookupResp.builder()
-                .companyName(data.getName())
-                .taxCode(data.getId())
-                .headquarterAddress(data.getAddress())
-                .build();
+        
+        throw new AppException(ErrorCode.MST_LOOKUP_FAILED);
     }
 
 }

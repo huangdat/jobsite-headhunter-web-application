@@ -1,0 +1,327 @@
+{
+  "breadcrumb": {
+    "home": "Home",
+    "jobs": "Jobs",
+    "jobDetail": "Job Detail",
+    "editJob": "Edit Job",
+    "createJob": "Create Job",
+    "savedJobs": "Saved Jobs",
+    "managePostings": "Manage Postings"
+  },
+  "jobs": {
+    "common": {
+      "total": "Total"
+    },
+
+    "jobPostings": "Job Postings",
+    "postNewJob": "Post New Job",
+    "candidates": "Candidates",
+    "status": {
+      "applied": "Applied",
+      "screening": "Screening",
+      "interview": "Interview",
+      "passed": "Hired",
+      "rejected": "Rejected"
+    }
+  },
+  "applications": {
+    "interview": {
+      "scheduledAt": "Interview scheduled at {{date}}"
+    }
+  },
+
+  "common": {
+    "total": "Total",
+    "appliedAt": "Applied at",
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "browseJobs": "Browse Jobs"
+  },
+  "listTabLabel": "List",
+  "list": {
+    "pageTitle": "Job Management",
+    "documentation": "Documentation",
+    "filterButton": "Filter",
+    "groupByLabel": "Group by:",
+    "groupByNone": "None",
+    "groupByStatus": "Status",
+    "noResults": "No jobs found",
+    "searchPlaceholder": "Search by title, company or location...",
+    "clearAllFilters": "Clear all filters",
+    "rowsPerPage": "Rows per page:",
+    "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} jobs",
+    "filters": {
+      "keywordPlaceholder": "Job title or skill",
+      "workingType": "Working Type",
+      "allTypes": "All types",
+      "rankLevel": "Rank Level",
+      "allLevels": "All levels",
+      "experience": "Experience",
+      "salary": "Salary (VND)",
+      "fromMillion": "From (mil)",
+      "toMillion": "To (mil)",
+      "applyCustomRange": "Apply custom range",
+      "clearAllFilters": "Clear all filters",
+      "salaryVND": "Jobs list filters salary v n d"
+    },
+
+    "detail": {
+      "accessDenied": "Access denied. Please sign in to view job details.",
+      "status": "Status: {{status}}",
+      "deadline": "Deadline: {{deadline}}"
+    },
+
+    "viewDetails": "View details →",
+    "noJobsFound": "No jobs found with the selected filters.",
+    "unableToLoad": "Unable to load jobs. Please try again later.",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "pagination": "Page {{page}} of {{totalPages}} — {{totalElements}} jobs",
+    "viewJobLabel": "View job {{title}}",
+    "applyBefore": "Apply before {{deadline}}",
+    "hero": {
+      "subtitle": "Opportunities for everyone",
+      "title": "Explore curated jobs that match your strengths.",
+      "description": "Filter by keywords, preferred work style, and salary expectations. Save your favorite roles or share them with friends."
+    }
+  },
+  "filters": {
+    "filterStatus": "Status",
+    "filterAllStatus": "All Status",
+    "applyFilter": "Apply Filter",
+    "resetFilter": "Reset"
+  },
+  "status": {
+    "DRAFT": "Draft",
+    "OPEN": "Open",
+    "CLOSED": "Closed"
+  },
+  "columns": {
+    "title": "TITLE",
+    "company": "COMPANY",
+    "status": "STATUS",
+    "applicants": "APPLICANTS",
+    "actions": "ACTIONS"
+  },
+  "actions": {
+    "viewDetails": "View Details"
+  },
+  "saved": {
+    "removeButton": "Remove",
+    "viewJobButton": "View Job",
+    "postedText": "Posted on",
+    "description": "Explore your saved jobs and find the perfect match for your career aspirations. Review job details, track application deadlines, and easily access your favorite opportunities all in one place.",
+    "pageTitle": "Saved Jobs"
+  },
+  "detail": {
+    "viewMore": "View more",
+    "jobDetailsSection": "Job details",
+    "jobCodeLabel": "Job code:",
+    "company": "Company",
+    "companySection": "Company",
+    "location": "Location",
+    "salary": "Salary",
+    "salaryNegotiable": "Negotiable",
+    "salaryOpen": "Open",
+    "experience": "Experience Level",
+    "responsibilities": "Responsibilities",
+    "requirements": "Requirements",
+    "benefits": "Benefits",
+    "requiredSkills": "Required skills",
+    "notAvailable": "Not available",
+    "deadline": "Application Deadline",
+    "status": "Status",
+    "applicants": "Applicants",
+    "notFound": "Job not found",
+    "accessDenied": "You don't have permission to view this job.",
+    "unableToLoad": "Unable to load job detail. Please try again later.",
+    "backToJobs": "Back to jobs",
+    "backToListings": "Back to listings",
+    "workingType": "Working type",
+    "workingHours": "Working hours",
+    "postedOn": "Posted on",
+    "applyNow": "Apply now",
+    "saveJob": "Save job",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "generalInfoSection": "General info",
+    "rank": "Rank",
+    "sizeLabel": "Size",
+    "websiteLabel": "Website",
+    "headcount": "Headcount"
+  },
+  "edit": {
+    "labels": {
+      "jobTitle": "Job Title",
+      "location": "Location",
+      "addressDetail": "Address Detail",
+      "deadline": "Deadline",
+      "rankLevel": "Rank Level",
+      "workingType": "Working Type",
+      "experience": "Experience",
+      "quantity": "Quantity",
+      "salaryMin": "Salary Min",
+      "salaryMax": "Salary Max",
+      "currency": "Currency",
+      "salaryNegotiable": "Salary Negotiable",
+      "description": "Description",
+      "responsibilities": "Responsibilities",
+      "requirements": "Requirements",
+      "benefits": "Benefits",
+      "workingTime": "Working Time",
+      "requiredSkills": "Required Skills"
+    },
+    "placeholders": {
+      "jobTitle": "Enter job title",
+      "location": "Enter location",
+      "addressDetail": "Enter address detail",
+      "description": "Enter description",
+      "responsibilities": "Enter responsibilities",
+      "requirements": "Enter requirements"
+    },
+    "validation": {
+      "titleRequired": "Title is required",
+      "locationRequired": "Location is required"
+    },
+    "messages": {
+      "unableToLoad": "Unable to load",
+      "invalidJobId": "Invalid job ID",
+      "updatedSuccess": "Updated successfully",
+      "failedToUpdate": "Failed to update",
+      "loading": "Loading",
+      "pageTitle": "Edit Job",
+      "heading": "Edit Job Details",
+      "subtitle": "Update job information",
+      "pickAtLeastOneSkill": "Please pick at least one skill"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving..."
+    }
+  },
+  "create": {
+    "labels": {
+      "jobTitle": "Job Title",
+      "location": "Location",
+      "addressDetail": "Address Detail",
+      "deadline": "Deadline",
+      "rankLevel": "Rank Level",
+      "workingType": "Working Type",
+      "experience": "Experience",
+      "quantity": "Quantity",
+      "salaryMin": "Salary Min",
+      "salaryMax": "Salary Max",
+      "currency": "Currency",
+      "salaryNegotiable": "Salary Negotiable",
+      "description": "Description",
+      "responsibilities": "Responsibilities",
+      "requirements": "Requirements",
+      "benefits": "Benefits",
+      "workingTime": "Working Time",
+      "requiredSkills": "Required Skills",
+      "coverImage": "Cover Image"
+    },
+    "placeholders": {
+      "jobTitle": "Enter job title",
+      "location": "Enter location",
+      "addressDetail": "Enter address detail",
+      "description": "Enter description",
+      "responsibilities": "Enter responsibilities",
+      "requirements": "Enter requirements"
+    },
+    "validation": {
+      "titleRequired": "Title is required",
+      "locationRequired": "Location is required",
+      "addressDetailRequired": "Address detail is required",
+      "descriptionRequired": "Description is required",
+      "responsibilitiesRequired": "Responsibilities are required",
+      "responsibilitiesMinLength": "Responsibilities must be at least 10 characters",
+      "requirementsRequired": "Requirements are required",
+      "requirementsMinLength": "Requirements must be at least 10 characters"
+    },
+    "messages": {
+      "subtitle": "Fill in the details to attract the best candidates for your team",
+      "failedToCreate": "Failed to create job",
+      "publishingJob": "Publishing job",
+      "publishJob": "Publish Job",
+      "pickAtLeastOneSkill": "Please pick at least one skill"
+    }
+  },
+  "home": {
+    "jobTypes": {
+      "full-time": "Full-time",
+      "remote": "Remote",
+      "onsite": "On-site",
+      "hybrid": "Hybrid"
+    }
+  },
+  "jobTypes": {
+    "full-time": "Full-time",
+    "remote": "Remote",
+    "onsite": "On-site",
+    "hybrid": "Hybrid"
+  },
+  "messages": {
+    "jobCreatedSuccess": "Job created successfully",
+    "closeJobConfirm": "Close this job?",
+    "jobClosed": "Job closed.",
+    "failedToCloseJob": "Failed to close job.",
+    "pleaseChooseDeadline": "Please choose a deadline.",
+    "invalidDeadlineMessage": "Invalid deadline. Please choose a future date.",
+    "jobOpened": "Job opened.",
+    "failedToOpenJob": "Failed to open job.",
+    "toggleVisibilityConfirm": "Are you sure you want to toggle visibility for this job?",
+    "jobVisibilityToggled": "Job visibility toggled.",
+    "failedToChangeVisibility": "Failed to change visibility.",
+    "pleaseSignInToSaveJobs": "Please sign in to save jobs.",
+    "jobRemovedFromSaved": "Job removed from saved list.",
+    "jobSaved": "Job saved.",
+    "unableToUpdateSavedJobs": "Unable to update saved jobs. Please try again.",
+    "confidentialCompany": "Confidential company",
+    "closeJobWarning": "This action will pause receiving applications for this job."
+  },
+  "manage": {
+    "pageTitle": "Manage Postings",
+    "viewCandidates": "Review Applicants",
+    "setNewDeadlineTitle": "Re-activate Job Posting",
+    "createNewButton": "Create new",
+    "noJobsYet": "No jobs yet.",
+    "loadingJobs": "Loading jobs...",
+    "hidden": "Hidden",
+    "visible": "Visible",
+    "statusDeadline": "Status: {{status}} • Deadline: {{deadline}}",
+    "editButton": "Edit",
+    "openButton": "Open",
+    "closeButton": "Close",
+    "updatingButton": "Updating...",
+    "hideButton": "Hide",
+    "unhideButton": "Unhide",
+    "currentlyHidden": "Currently hidden — click to unhide",
+    "currentlyVisible": "Currently visible — click to hide",
+    "setNewDeadlineDescription": "Choose a new deadline to re-open this job.",
+    "cancelButton": "Cancel",
+    "confirmButton": "Confirm"
+  },
+  "headhunter": {
+    "home": "Home",
+    "roleLabel": "Headhunter Panel",
+    "postNewJob": "Post New Job",
+    "approveApplications": "Manage Postings",
+    "loadingApplicants": "Loading applicants...",
+    "noApplicantsYet": "No applicants yet.",
+    "applicantPageInfo": "View and manage candidates who have applied to your job postings",
+    "refresh": "Refresh"
+  },
+  "validation": {
+    "quantityPositive": "Quantity must be greater than 0",
+    "unableToLoadSkills": "Unable to load skills list. Please retry later.",
+    "dateInFuture": "Deadline must be today or later",
+    "skillRequired": "At least one skill must be selected",
+    "minCharacters": "Responsibilities/Requirements must be at least 50 characters",
+    "salaryNegative": "Salary cannot be negative",
+    "salaryOrder": "Salary min cannot be greater than salary max"
+  }
+}

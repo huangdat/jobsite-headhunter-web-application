@@ -1,0 +1,270 @@
+{
+  "listTabLabel": "Danh sách",
+  "list": {
+    "pageTitle": "Quản lý Công việc",
+    "documentation": "Tài liệu",
+    "filterButton": "Bộ lọc",
+    "groupByLabel": "Nhóm theo:",
+    "groupByNone": "Không",
+    "groupByStatus": "Trạng thái",
+    "noResults": "Không tìm thấy công việc",
+    "searchPlaceholder": "Tìm kiếm theo tiêu đề, công ty hoặc vị trí...",
+    "clearAllFilters": "Xóa tất cả bộ lọc",
+    "rowsPerPage": "Dòng mỗi trang:",
+    "paginationInfo": "Hiển thị {{startItem}}-{{endItem}} của {{totalItems}} công việc",
+    "filters": {
+      "keywordPlaceholder": "Chức danh công việc hoặc kỹ năng",
+      "workingType": "Loại Làm việc",
+      "allTypes": "Tất cả loại",
+      "rankLevel": "Cấp độ",
+      "allLevels": "Tất cả cấp độ",
+      "experience": "Kinh nghiệm",
+      "salary": "Lương (VND)",
+      "fromMillion": "Từ (triệu)",
+      "toMillion": "Đến (triệu)",
+      "applyCustomRange": "Áp dụng khoảng tùy chỉnh",
+      "clearAllFilters": "Xóa tất cả bộ lọc",
+      "salaryVND": "Lương danh sách công việc (VND)"
+    },
+    "viewDetails": "Xem chi tiết →",
+    "noJobsFound": "Không tìm thấy công việc nào với các bộ lọc được chọn.",
+    "unableToLoad": "Không thể tải công việc. Vui lòng thử lại sau.",
+    "previousPage": "Trước",
+    "nextPage": "Tiếp theo",
+    "pagination": "Trang {{page}} của {{totalPages}} — {{totalElements}} công việc",
+    "viewJobLabel": "Xem công việc {{title}}",
+    "applyBefore": "Ứng tuyển trước {{deadline}}",
+    "hero": {
+      "subtitle": "Cơ hội cho mọi người",
+      "title": "Khám phá các công việc được lựa chọn phù hợp với điểm mạnh của bạn.",
+      "description": "Lọc theo từ khóa, phong cách làm việc ưa thích và kỳ vọng lương. Lưu các vai trò yêu thích hoặc chia sẻ chúng với bạn bè."
+    }
+  },
+  "filters": {
+    "filterStatus": "Trạng thái",
+    "filterAllStatus": "Tất cả Trạng thái",
+    "applyFilter": "Áp dụng Bộ lọc",
+    "resetFilter": "Đặt lại"
+  },
+  "status": {
+    "DRAFT": "Nháp",
+    "OPEN": "Đang Tuyển",
+    "CLOSED": "Đã Đóng"
+  },
+  "columns": {
+    "title": "TIÊU ĐỀ",
+    "company": "CÔNG TY",
+    "status": "TRẠNG THÁI",
+    "applicants": "NGƯỜI ỨNG TUYỂN",
+    "actions": "HÀNH ĐỘNG"
+  },
+  "actions": {
+    "viewDetails": "Xem Chi tiết"
+  },
+  "detail": {
+    "company": "Công ty",
+    "location": "Vị trí",
+    "experience": "Mức kinh nghiệm",
+    "requirements": "Yêu cầu",
+    "benefits": "Quyền lợi",
+    "deadline": "Hạn chót Ứng tuyển",
+    "status": "Trạng thái",
+    "applicants": "Người ứng tuyển",
+    "notFound": "Không tìm thấy công việc",
+    "unableToLoad": "Không thể tải chi tiết công việc. Vui lòng thử lại sau.",
+    "backToJobs": "Quay lại công việc",
+    "backToListings": "Quay lại danh sách",
+    "workingType": "Loại hình làm việc",
+    "workingHours": "Giờ làm việc",
+    "postedOn": "Đăng vào",
+    "applyNow": "Ứng tuyển ngay",
+    "saveJob": "Lưu công việc",
+    "jobDetailsSection": "Chi tiết công việc",
+    "jobCodeLabel": "Mã công việc:",
+    "companySection": "Thông tin công ty",
+    "salary": "Mức lương",
+    "salaryNegotiable": "Thương lượng",
+    "salaryOpen": "Mở",
+    "responsibilities": "Trách nhiệm",
+    "requiredSkills": "Kỹ năng cần thiết",
+    "notAvailable": "Không có sẵn",
+    "saving": "Đang lưu...",
+    "saved": " Đã lưu",
+    "generalInfoSection": "Thông tin chung",
+    "rank": "Cấp bậc",
+    "sizeLabel": "Quy mô",
+    "websiteLabel": "Website",
+    "headcount": "Số lượng tuyển"
+  },
+  "edit": {
+    "labels": {
+      "jobTitle": "Chức danh công việc",
+      "location": "Vị trí",
+      "addressDetail": "Chi tiết địa chỉ",
+      "deadline": "Hạn chót",
+      "rankLevel": "Cấp bậc",
+      "workingType": "Loại hình làm việc",
+      "experience": "Kinh nghiệm",
+      "quantity": "Số lượng",
+      "salaryMin": "Lương tối thiểu",
+      "salaryMax": "Lương tối đa",
+      "currency": "Tiền tệ",
+      "salaryNegotiable": "Lương thương lượng",
+      "description": "Mô tả",
+      "responsibilities": "Trách nhiệm",
+      "requirements": "Yêu cầu",
+      "benefits": "Lợi ích",
+      "workingTime": "Thời gian làm việc",
+      "requiredSkills": "Kỹ năng bắt buộc"
+    },
+    "placeholders": {
+      "jobTitle": "Nhập chức danh công việc",
+      "location": "Nhập vị trí",
+      "addressDetail": "Nhập chi tiết địa chỉ",
+      "description": "Nhập mô tả",
+      "responsibilities": "Nhập trách nhiệm",
+      "requirements": "Nhập yêu cầu"
+    },
+    "validation": {
+      "titleRequired": "Chức danh là bắt buộc",
+      "locationRequired": "Vị trí là bắt buộc"
+    },
+    "messages": {
+      "unableToLoad": "Không thể tải",
+      "invalidJobId": "ID công việc không hợp lệ",
+      "updatedSuccess": "Cập nhật thành công",
+      "failedToUpdate": "Cập nhật thất bại",
+      "loading": "Đang tải...",
+      "pageTitle": "Chỉnh sửa Công việc",
+      "heading": "Cập nhật thông tin công việc",
+      "subtitle": "Điều chỉnh chi tiết và yêu cầu",
+      "pickAtLeastOneSkill": "Vui lòng chọn ít nhất một kỹ năng"
+    },
+    "buttons": {
+      "cancel": "Hủy bỏ",
+      "save": "Lưu",
+      "saving": "Đang lưu..."
+    }
+  },
+  "create": {
+    "labels": {
+      "jobTitle": "Chức danh công việc",
+      "location": "Vị trí",
+      "addressDetail": "Chi tiết địa chỉ",
+      "deadline": "Hạn chót",
+      "rankLevel": "Cấp bậc",
+      "workingType": "Loại hình làm việc",
+      "experience": "Kinh nghiệm",
+      "quantity": "Số lượng",
+      "salaryMin": "Lương tối thiểu",
+      "salaryMax": "Lương tối đa",
+      "currency": "Tiền tệ",
+      "salaryNegotiable": "Lương thương lượng",
+      "description": "Mô tả",
+      "responsibilities": "Trách nhiệm",
+      "requirements": "Yêu cầu",
+      "benefits": "Lợi ích",
+      "workingTime": "Thời gian làm việc",
+      "requiredSkills": "Kỹ năng bắt buộc",
+      "coverImage": "Ảnh bìa"
+    },
+    "placeholders": {
+      "jobTitle": "Nhập chức danh công việc",
+      "location": "Nhập vị trí",
+      "addressDetail": "Nhập chi tiết địa chỉ",
+      "description": "Nhập mô tả",
+      "responsibilities": "Nhập trách nhiệm",
+      "requirements": "Nhập yêu cầu"
+    },
+    "validation": {
+      "titleRequired": "Chức danh là bắt buộc",
+      "locationRequired": "Vị trí là bắt buộc",
+      "addressDetailRequired": "Chi tiết địa chỉ là bắt buộc",
+      "descriptionRequired": "Mô tả là bắt buộc",
+      "responsibilitiesRequired": "Trách nhiệm là bắt buộc",
+      "responsibilitiesMinLength": "Trách nhiệm phải có ít nhất 10 ký tự",
+      "requirementsRequired": "Yêu cầu là bắt buộc",
+      "requirementsMinLength": "Yêu cầu phải có ít nhất 10 ký tự"
+    },
+    "messages": {
+      "subtitle": "Điền đầy đủ thông tin để thu hút những ứng viên tiềm năng nhất",
+      "failedToCreate": "Tạo thất bại",
+      "publishingJob": "Đang xuất bản công việc",
+      "publishJob": "Xuất bản công việc",
+      "pickAtLeastOneSkill": "Vui lòng chọn ít nhất một kỹ năng"
+    }
+  },
+  "types": {
+    "workingTypes": {
+      "ONSITE": "Tại văn phòng",
+      "REMOTE": "Làm việc từ xa",
+      "HYBRID": "Kết hợp"
+    }
+  },
+  "jobTypes": {
+    "full-time": "Toàn thời gian",
+    "remote": "Làm việc từ xa",
+    "onsite": "Tại văn phòng",
+    "hybrid": "Kết hợp"
+  },
+  "messages": {
+    "jobCreatedSuccess": "Công việc được tạo thành công",
+    "closeJobConfirm": "Đóng công việc này?",
+    "jobClosed": "Công việc đã đóng.",
+    "failedToCloseJob": "Không thể đóng công việc.",
+    "pleaseChooseDeadline": "Vui lòng chọn hạn chót.",
+    "invalidDeadlineMessage": "Hạn chót không hợp lệ. Vui lòng chọn một ngày trong tương lai.",
+    "jobOpened": "Công việc đã mở.",
+    "failedToOpenJob": "Không thể mở công việc.",
+    "toggleVisibilityConfirm": "Bạn có chắc chắn muốn thay đổi tính khả kiến của công việc này?",
+    "jobVisibilityToggled": "Tính khả kiến công việc đã thay đổi.",
+    "failedToChangeVisibility": "Không thể thay đổi tính khả kiến.",
+    "pleaseSignInToSaveJobs": "Vui lòng đăng nhập để lưu công việc.",
+    "jobRemovedFromSaved": "Công việc đã được xóa khỏi danh sách đã lưu.",
+    "jobSaved": "Công việc đã được lưu.",
+    "unableToUpdateSavedJobs": "Không thể cập nhật công việc đã lưu. Vui lòng thử lại.",
+    "confidentialCompany": "Công ty bảo mật"
+  },
+  "manage": {
+    "pageTitle": "Quản lý tin đăng",
+    "createNewButton": "Tạo mới",
+    "noJobsYet": "Chưa có công việc nào.",
+    "loadingJobs": "Đang tải công việc...",
+    "hidden": "Ẩn",
+    "visible": "Hiển thị",
+    "statusDeadline": "Trạng thái: {{status}} • Hạn chót: {{deadline}}",
+    "editButton": "Chỉnh sửa",
+    "openButton": "Mở",
+    "closeButton": "Đóng",
+    "updatingButton": "Đang cập nhật...",
+    "hideButton": "Ẩn",
+    "unhideButton": "Hiển thị",
+    "currentlyHidden": "Hiện đang ẩn — nhấp để hiển thị",
+    "currentlyVisible": "Hiện đang hiển thị — nhấp để ẩn",
+    "setNewDeadlineTitle": "Đặt hạn chót mới",
+    "setNewDeadlineDescription": "Chọn một hạn chót mới để mở lại công việc này.",
+    "cancelButton": "Hủy",
+    "confirmButton": "Xác nhận",
+    "viewCandidates": "Xem ứng viên"
+  },
+  "headhunter": {
+    "home": "Trang chủ",
+    "roleLabel": "Bảng Điều Khiển Nhà Tuyển Dụng",
+    "postNewJob": "Đăng Tin Mới",
+    "approveApplications": "Quản lý tin đăng",
+    "loadingApplicants": "Đang tải ứng viên...",
+    "noApplicantsYet": "Chưa có ứng viên nào.",
+    "applicantPageInfo": "Xem và quản lý các ứng viên đã ứng tuyển vào các công việc của bạn",
+    "refresh": "Làm mới",
+    "footer_copyright": "© 2026 Nền tảng JobSite"
+  },
+  "validation": {
+    "quantityPositive": "Số lượng phải lớn hơn 0",
+    "unableToLoadSkills": "Không thể tải danh sách kỹ năng. Vui lòng thử lại.",
+    "dateInFuture": "Thời hạn phải là hôm nay hoặc sau",
+    "skillRequired": "Ít nhất một kỹ năng phải được chọn",
+    "minCharacters": "Trách nhiệm/Yêu cầu phải có ít nhất 50 ký tự",
+    "salaryNegative": "Lương không thể âm",
+    "salaryOrder": "Lương tối thiểu không thể lớn hơn lương tối đa"
+  }
+}

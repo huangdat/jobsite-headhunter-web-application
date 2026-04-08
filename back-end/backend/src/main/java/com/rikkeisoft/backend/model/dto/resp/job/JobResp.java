@@ -30,8 +30,13 @@ public class JobResp {
     String description;
     LocalDate deadline;
     JobStatus status;
-    String city;
+    String location;
     LocalDateTime createdAt;
     String headhunterId;
     String headhunterName;
+    String companyName;
+    String companyWebsite;
+    String companySize;
+    String companyAddress;
+    boolean visible;
 }

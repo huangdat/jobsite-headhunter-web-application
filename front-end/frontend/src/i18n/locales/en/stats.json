@@ -1,0 +1,15 @@
+{
+  "totalEarnings": "Total earnings",
+  "lifetimeTotal": "Lifetime total",
+  "pending": "Pending",
+  "paid": "Paid",
+  "completed": "Completed",
+  "referrals": "Referrals",
+  "referralsHint": "Referrals hint",
+  "activeJobs": "Active jobs",
+  "ongoingJobs": "Ongoing jobs",
+  "commissionRate": "Commission rate",
+  "rateInfo": "Rate info",
+  "conversionRate": "Conversion rate",
+  "noEarningsYet": "No earnings yet"
+}

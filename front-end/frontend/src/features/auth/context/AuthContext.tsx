@@ -1,11 +1,9 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
-import { logout as logoutRequest, validateToken } from "../services/authApi";
+import {
+  logout as logoutRequest,
+  validateToken,
+} from "@/features/auth/services/authApi";
 
 const ACCESS_TOKEN_KEY = "accessToken";
 const AUTH_USER_KEY = "authUser";
@@ -47,7 +45,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
+      console.debug(
+        "[Auth] refreshAuth: validating token (masked):",
+        token ? `${token.slice(0, 8)}...${token.slice(-8)}` : null
+      );
       const result = await validateToken({ token });
+      console.debug("[Auth] refreshAuth: validateToken result:", result);
 
       if (!result?.valid) {
         clearAuthStorage();
@@ -55,10 +58,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return null;
       }
 
+      const normalizedRole = result.role
+        ? result.role.replace(/^roles\./i, "").toUpperCase()
+        : result.role;
+
       const nextUser: AuthSession = {
         id: result.id,
         username: result.username,
-        role: result.role,
+        role: normalizedRole,
         status: result.status,
       };
 
@@ -66,6 +73,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(nextUser);
       return nextUser;
     } catch {
+      console.error(
+        "[Auth] refreshAuth: validateToken failed, clearing auth storage"
+      );
       clearAuthStorage();
       setUser(null);
       return null;
@@ -77,7 +87,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
       return refreshAuth();
     },
-    [refreshAuth],
+    [refreshAuth]
   );
 
   const signOut = useCallback(async () => {

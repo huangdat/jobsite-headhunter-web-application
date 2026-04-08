@@ -1,19 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   UserListHeader,
   UserListTable,
-  UserListEmpty,
-  UserListLoading,
   UserListPagination,
-  FilterBadge,
-} from "../components";
-import { useUsers } from "../hooks/useUsers";
+} from "@/features/users/list/components";
+import { UserFilters } from "@/features/users/components/common/UserFilters";
+import { UserRoleChart } from "@/features/users/components/UserRoleChart";
+import { UserStatusChart } from "@/features/users/components/UserStatusChart";
+import { useUsers } from "@/features/users/list/hooks/useUsers";
+import { useUsersTranslation } from "@/shared/hooks";
+import { PageContainer } from "@/shared/common-blocks/layout";
+import { PageSkeleton, ErrorState } from "@/shared/common-blocks/states";
+import {
+  mockUserRoleStats,
+  mockUserStatusStats,
+} from "@/features/users/utils/mockuserStatsData";
 
 interface UserListPageProps {
   onAddNewUser?: () => void;
 }
 
 export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
+  const navigate = useNavigate();
+  const { t } = useUsersTranslation();
+  const [showFilters, setShowFilters] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setShowFilters(false);
+      }
+    };
+
+    if (showFilters) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showFilters]);
+
   const {
     users,
     loading,
@@ -23,83 +56,154 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
     totalPages,
     totalItems,
     itemsPerPage,
+    sortBy,
     filters,
     setSearchValue,
     setCurrentPage,
     setItemsPerPage,
     setFilters,
+    setSortBy,
     clearFilters,
   } = useUsers();
 
-  const [showFilters, setShowFilters] = useState(false);
+  const handleSort = (field: string, shiftKey?: boolean) => {
+    let newSort = [...sortBy];
+
+    if (shiftKey) {
+      // Multi-sort (Shift+Click)
+      const existingSort = newSort.findIndex((s) => s.field === field);
+      if (existingSort >= 0) {
+        // Toggle direction if already sorting by this field
+        // eslint-disable-next-line security/detect-object-injection
+        newSort[existingSort].direction =
+          // eslint-disable-next-line security/detect-object-injection
+          newSort[existingSort].direction === "asc" ? "desc" : "asc";
+      } else {
+        // Add new sort criteria
+        newSort.push({ field, direction: "asc" });
+      }
+    } else {
+      // Single sort (regular click)
+      const existingSort = newSort.find((s) => s.field === field);
+      if (existingSort) {
+        // Toggle direction if already sorting by this field
+        newSort = [
+          {
+            field,
+            direction: existingSort.direction === "asc" ? "desc" : "asc",
+          },
+        ];
+      } else {
+        // Reset and sort by this field
+        newSort = [{ field, direction: "asc" }];
+      }
+    }
+
+    setSortBy(newSort);
+  };
 
   const activeFilters = [
-    filters.role && { label: "Role", value: filters.role },
-    filters.status && { label: "Status", value: filters.status },
-    filters.company && { label: "Company", value: filters.company },
-  ].filter(Boolean) as Array<{ label: string; value: string }>;
+    filters.role && { type: "role" as const, value: filters.role },
+    filters.status && { type: "status" as const, value: filters.status },
+  ].filter(Boolean) as Array<{
+    type: "role" | "status";
+    value: string;
+  }>;
 
-  const handleRemoveFilter = (label: string) => {
-    const filterKey = label.toLowerCase() as keyof typeof filters;
-    setFilters({ ...filters, [filterKey]: undefined });
+  const handleRemoveFilter = (filterType: "role" | "status") => {
+    setFilters({ ...filters, [filterType]: undefined });
   };
 
   return (
-    <main className="flex-1 flex flex-col overflow-hidden bg-background-light dark:bg-background-dark">
-      {/* Header */}
+    <PageContainer variant="default" maxWidth="7xl">
+      {/* Header with inline filters */}
       <UserListHeader
         searchValue={searchValue}
         onSearchChange={setSearchValue}
         onFilterClick={() => setShowFilters(!showFilters)}
         onGroupByChange={(value) => {
-          console.log("Group by:", value);
+          // TODO: Implement group by feature
+          console.debug("Group by:", value);
         }}
         onAddUserClick={onAddNewUser}
+        activeFilters={activeFilters}
+        onRemoveFilter={handleRemoveFilter}
+        onClearFilters={clearFilters}
+        filterPanel={
+          showFilters && (
+            <>
+              {/* Backdrop overlay */}
+              <div
+                className="fixed inset-0 z-40"
+                onClick={() => setShowFilters(false)}
+              />
+
+              {/* Filter dropdown */}
+              <div
+                ref={filterRef}
+                className="absolute top-full left-0 mt-2 w-96 bg-white dark:bg-background-dark 
+                            border border-slate-200 dark:border-slate-800 rounded-lg shadow-xl z-50 
+                            max-h-125 overflow-y-auto"
+              >
+                <div className="p-4">
+                  <UserFilters
+                    filters={filters}
+                    onApply={(newFilters) => {
+                      setFilters(newFilters);
+                      setCurrentPage(1);
+                      setShowFilters(false);
+                    }}
+                    onClear={() => {
+                      clearFilters();
+                      setShowFilters(false);
+                    }}
+                  />
+                </div>
+              </div>
+            </>
+          )
+        }
       />
 
-      {/* Quick Filters Bar */}
-      {activeFilters.length > 0 && (
-        <div className="px-6 flex flex-wrap gap-2 items-center py-2 bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800">
-          {activeFilters.map((filter) => (
-            <FilterBadge
-              key={`${filter.label}-${filter.value}`}
-              label={filter.label}
-              value={filter.value}
-              onRemove={() => handleRemoveFilter(filter.label)}
-            />
-          ))}
-          {activeFilters.length > 0 && (
-            <button
-              onClick={clearFilters}
-              className="text-xs text-slate-500 hover:text-primary font-medium underline underline-offset-4 ml-2"
-            >
-              Clear all filters
-            </button>
-          )}
+      {/* Stats Charts Section */}
+      {!error && (
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <UserRoleChart data={mockUserRoleStats} />
+          <UserStatusChart data={mockUserStatusStats} />
         </div>
       )}
 
       {/* Content Area */}
-      <div className="flex-1 overflow-auto px-6 pb-6 pt-6">
+      <div className="mt-6">
         {error && (
-          <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-          </div>
+          <ErrorState
+            error={new Error(error)}
+            onRetry={() => window.location.reload()}
+            title={t("users.list.error.loadingFailed")}
+          />
         )}
 
-        {loading ? (
-          <UserListLoading />
-        ) : users.length === 0 ? (
-          <UserListEmpty onClearFilters={clearFilters} />
-        ) : (
+        {!error && loading && <PageSkeleton variant="table" count={5} />}
+
+        {!error && !loading && users.length === 0 ? (
+          <div className="text-center py-20 border-2 border-dashed rounded-3xl text-slate-400 dark:text-slate-500 dark:border-slate-700">
+            <p>No users found. Try adjusting your filters.</p>
+          </div>
+        ) : !error && !loading ? (
           <>
             <UserListTable
               users={users}
+              isLoading={loading}
+              sortBy={sortBy}
+              onSort={handleSort}
               onViewDetails={(userId) => {
-                console.log("📋 View user details:", userId);
+                navigate(`/admin/users/${userId}`);
               }}
               onLockUser={(userId) => {
                 console.log("🔒 Lock user action:", userId);
+              }}
+              onUnlockUser={(userId) => {
+                console.log("🔓 Unlock user action:", userId);
               }}
               onDeleteUser={(userId) => {
                 console.log("🗑️ Delete user action:", userId);
@@ -114,9 +218,9 @@ export const UserListPage: React.FC<UserListPageProps> = ({ onAddNewUser }) => {
               onItemsPerPageChange={setItemsPerPage}
             />
           </>
-        )}
+        ) : null}
       </div>
-    </main>
+    </PageContainer>
   );
 };
 

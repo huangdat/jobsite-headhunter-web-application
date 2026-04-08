@@ -1,0 +1,59 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { MetaText, SmallText } from "./typography/Typography";
+
+interface PasswordRequirement {
+  met: boolean;
+  label: string;
+}
+
+interface PasswordRequirementsProps {
+  minLength: boolean;
+  hasUpperCase: boolean;
+  hasLowerCase: boolean;
+  hasNumber: boolean;
+}
+
+export const PasswordRequirements: React.FC<PasswordRequirementsProps> = ({
+  minLength,
+  hasUpperCase,
+  hasLowerCase,
+  hasNumber,
+}) => {
+  const { t } = useTranslation();
+
+  const requirements: PasswordRequirement[] = [
+    { met: minLength, label: t("pages.passwordRequirements.minLength") },
+    {
+      met: hasUpperCase,
+      label: t("pages.passwordRequirements.uppercase"),
+    },
+    {
+      met: hasLowerCase,
+      label: t("pages.passwordRequirements.lowercase"),
+    },
+    { met: hasNumber, label: t("pages.passwordRequirements.number") },
+  ];
+
+  return (
+    <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-800">
+      <MetaText className="mb-3">
+        {t("pages.passwordRequirements.title")}
+      </MetaText>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {requirements.map((requirement, index) => (
+          <li key={index} className="flex items-center gap-2">
+            <span
+              className={`material-symbols-outlined text-lg ${
+                requirement.met ? "text-brand-primary" : "text-slate-300"
+              }`}
+            >
+              {requirement.met ? "check_circle" : "radio_button_unchecked"}
+            </span>
+            <SmallText variant="muted">{requirement.label}</SmallText>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};

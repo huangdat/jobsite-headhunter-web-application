@@ -41,13 +41,13 @@ public class AppStartConfig {
     ApplicationRunner appInitRunner(AccountRepo accountRepo) {
         return args -> {
             // Create an admin account if it has not existed
-            if (accountRepo.findByUsername("admin").isEmpty()) {
+            if (accountRepo.findByUsername("admin123").isEmpty()) {
 
                 HashSet roles = new HashSet();
                 roles.add("ADMIN");
 
                 Account admin = Account.builder()
-                        .username("admin")
+                        .username("admin123")
                         .email("datnh.work@gmail.com")
                         .password(passwordEncoder.encode("admin123"))
                         .fullName("Admin")
@@ -66,11 +66,42 @@ public class AppStartConfig {
 
                 System.out.println("Admin account created!");
             }
+
+            // Create a candidate account if it has not existed
+            if (accountRepo.findByUsername("candidate").isEmpty()) {
+
+                HashSet roles = new HashSet();
+                roles.add("CANDIDATE");
+
+                Account candidate = Account.builder()
+                        .username("candidate")
+                        .email("candidate.work@gmail.com")
+                        .password(passwordEncoder.encode("candidate123"))
+                        .fullName("Candidate")
+                        .phone("0123456789")
+                        .imageUrl("src/main/resources/static/img/admin-avatar.webp")
+                        .gender(Gender.OTHER)
+                        .roles(roles)
+                        .authProvider(AuthProvider.LOCAL)
+                        .providerId("")
+                        .status(AccountStatus.ACTIVE)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .build();
+
+                accountRepo.save(candidate);
+
+                System.out.println("Candidate account created!");
+            }
         };
     }
 
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
+        org.springframework.boot.web.client.RestTemplateBuilder builder = new org.springframework.boot.web.client.RestTemplateBuilder();
+        return builder
+                .setConnectTimeout(java.time.Duration.ofSeconds(5))
+                .setReadTimeout(java.time.Duration.ofSeconds(10))
+                .build();
     }
 }

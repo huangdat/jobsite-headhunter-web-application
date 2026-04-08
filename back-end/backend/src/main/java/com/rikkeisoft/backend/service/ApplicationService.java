@@ -1,5 +1,6 @@
 package com.rikkeisoft.backend.service;
 
+import com.rikkeisoft.backend.enums.ApplicationStatus;
 import com.rikkeisoft.backend.model.dto.req.application.ApplicationCreateReq;
 import com.rikkeisoft.backend.model.dto.req.application.ApplicationStatusUpdateReq;
 import com.rikkeisoft.backend.model.dto.resp.application.ApplicationDetailResp;
@@ -13,13 +14,16 @@ import org.springframework.data.domain.Pageable;
  */
 public interface ApplicationService {
     // Candidate features
-    ApplicationDetailResp applyForJob(ApplicationCreateReq req);
-    Page<ApplicationResp> getMyApplications(Pageable pageable);
+    ApplicationDetailResp applyForJob(Long jobId, ApplicationCreateReq req);
+
+    Page<ApplicationResp> getMyApplications(Pageable pageable, ApplicationStatus status);
 
     // Headhunter features
-    Page<ApplicationResp> getJobPipeline(Long jobId, Pageable pageable);
+    Page<ApplicationResp> getJobPipeline(Long jobId, ApplicationStatus status, String keyword, Pageable pageable);
+
     ApplicationDetailResp getApplicationDetail(Long applicationId);
 
-    // Status update (Includes logic for hiding profile and triggering commission if PASSED)
+    // Status update (Includes logic for hiding profile and triggering commission if
+    // PASSED)
     ApplicationDetailResp updateStatus(Long applicationId, ApplicationStatusUpdateReq req);
 }

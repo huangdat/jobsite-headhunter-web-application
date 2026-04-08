@@ -1,141 +1,105 @@
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { FormField } from "@/shared/components";
-import { useAppTranslation } from "@/shared/hooks";
+import { Input } from "@/shared/ui-primitives/input";
+import { Textarea } from "@/shared/ui-primitives/textarea";
+import { FormField } from "@/shared/common-blocks";
+import { useAuthTranslation } from "@/shared/hooks";
+import type { UseAppFormReturn } from "@/shared/hooks/useAppForm";
 import {
   MdWorkOutline,
   MdLocationCity,
   MdAttachMoney,
   MdCheckBox,
 } from "react-icons/md";
+import type { RegisterFormData } from "@/features/auth/types";
 
 interface CandidateDetailsStepProps {
-  formData: {
-    currentTitle?: string;
-    yearsOfExperience?: number;
-    expectedSalaryMin?: number;
-    expectedSalaryMax?: number;
-    bio?: string;
-    city?: string;
-    openForWork?: boolean;
-  };
-  errors?: Record<string, string>;
-  handleChange: (
-    field: string
-  ) => (value: string | boolean | number | undefined) => void;
+  form: UseAppFormReturn<RegisterFormData>;
 }
 
-export function CandidateDetailsStep({
-  formData,
-  handleChange,
-}: CandidateDetailsStepProps) {
-  const { t } = useAppTranslation();
+export function CandidateDetailsStep({ form }: CandidateDetailsStepProps) {
+  const { t } = useAuthTranslation();
+  const { register } = form;
   return (
     <div className="space-y-6">
       <p className="text-sm text-slate-600">
-        Optional fields to help recruiters find you faster
+        {t("descriptions.candidateDetails")}
       </p>
 
-      <FormField label="Current Job Title (Optional)">
+      <FormField label={t("labels.currentJobTitle")}>
         <Input
-          name="currentTitle"
+          {...register("currentTitle")}
           autoComplete="organization-title"
           icon={<MdWorkOutline />}
-          placeholder={t("auth.placeholders.jobTitle")}
-          value={formData.currentTitle || ""}
-          onChange={(e) => handleChange("currentTitle")(e.target.value)}
+          placeholder={t("placeholders.jobTitle")}
         />
       </FormField>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label="Years of Experience (Optional)">
+        <FormField label={t("labels.yearsOfExperience")}>
           <Input
-            name="yearsOfExperience"
+            {...register("yearsOfExperience", { valueAsNumber: true })}
             autoComplete="off"
             icon={<MdWorkOutline />}
             type="number"
-            placeholder={t("auth.placeholders.experience")}
-            value={formData.yearsOfExperience?.toString() || ""}
-            onChange={(e) =>
-              handleChange("yearsOfExperience")(
-                e.target.value ? parseInt(e.target.value) : undefined
-              )
-            }
+            placeholder={t("placeholders.experience")}
           />
         </FormField>
 
-        <FormField label="City (Optional)">
+        <FormField label={t("labels.city")}>
           <Input
-            name="city"
+            {...register("city")}
             autoComplete="address-level2"
             icon={<MdLocationCity />}
-            placeholder={t("auth.placeholders.location")}
-            value={formData.city || ""}
-            onChange={(e) => handleChange("city")(e.target.value)}
+            placeholder={t("placeholders.location")}
           />
         </FormField>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormField label="Expected Salary Min (USD, Optional)">
+        <FormField label={t("labels.expectedSalaryMin")}>
           <Input
-            name="expectedSalaryMin"
+            {...register("expectedSalaryMin", { valueAsNumber: true })}
             autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
-            placeholder={t("auth.placeholders.salaryMin")}
-            value={formData.expectedSalaryMin?.toString() || ""}
-            onChange={(e) =>
-              handleChange("expectedSalaryMin")(
-                e.target.value ? parseInt(e.target.value) : 0
-              )
-            }
+            placeholder={t("placeholders.salaryMin")}
           />
         </FormField>
 
-        <FormField label="Expected Salary Max (USD, Optional)">
+        <FormField label={t("labels.expectedSalaryMax")}>
           <Input
-            name="expectedSalaryMax"
+            {...register("expectedSalaryMax", { valueAsNumber: true })}
             autoComplete="off"
             icon={<MdAttachMoney />}
             type="number"
-            placeholder={t("auth.placeholders.salaryMax")}
-            value={formData.expectedSalaryMax?.toString() || ""}
-            onChange={(e) =>
-              handleChange("expectedSalaryMax")(
-                e.target.value ? parseInt(e.target.value) : 0
-              )
-            }
+            placeholder={t("placeholders.salaryMax")}
           />
         </FormField>
       </div>
 
-      <FormField label="Bio (Optional)">
+      <FormField label={t("labels.bio")}>
         <Textarea
-          name="bio"
+          {...register("bio")}
           autoComplete="off"
-          placeholder={t("auth.placeholders.bio")}
-          value={formData.bio || ""}
-          onChange={(e) => handleChange("bio")(e.target.value)}
+          placeholder={t("placeholders.bio")}
           rows={4}
         />
       </FormField>
 
-      <FormField label="Job Search Status">
+      <FormField label={t("labels.jobSearchStatus")}>
         <label className="flex items-center gap-3 cursor-pointer">
           <input
-            name="openForWork"
+            {...register("openForWork")}
             type="checkbox"
-            checked={formData.openForWork ?? false}
-            onChange={(e) => handleChange("openForWork")(e.target.checked)}
             className="w-5 h-5 text-brand-primary focus:ring-brand-primary border-slate-300 rounded"
           />
           <span className="flex items-center gap-2 text-slate-700">
             <MdCheckBox className="text-brand-primary" />
-            I'm open to new opportunities
+            {t("checkboxLabels.openForWork")}
           </span>
         </label>
       </FormField>
     </div>
   );
 }
+
+
