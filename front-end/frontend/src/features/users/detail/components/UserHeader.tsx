@@ -56,7 +56,13 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
         getSemanticClass("info", "text", true),
       icon: "📊",
     },
-    User: { color: getSemanticClass("info", "bg", true) + " " + getSemanticClass("info", "text", true), icon: "👥" },
+    User: {
+      color:
+        getSemanticClass("info", "bg", true) +
+        " " +
+        getSemanticClass("info", "text", true),
+      icon: "👥",
+    },
   };
 
   const status = statusConfig[user.status];
@@ -105,25 +111,9 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user }) => {
             </div>
           </div>
         </div>
-
-        {/* Buttons */}
-        <div className="flex gap-2 flex-0 lg:w-full lg:mt-4">
-          <Button
-            className={`px-4 py-2 ${getSemanticClass("success", "bg", true)} hover:${getSemanticClass("success", "bg", true)} text-white font-medium whitespace-nowrap`}
-          >
-            ✎ {t("detail.editProfile")}
-          </Button>
-          <Button
-            variant="outline"
-            className="px-4 py-2 font-medium whitespace-nowrap"
-          >
-            📥 {t("detail.exportData")}
-          </Button>
-        </div>
       </div>
     </div>
   );
 };
 
 export default UserHeader;
-

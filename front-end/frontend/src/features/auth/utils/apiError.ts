@@ -103,5 +103,5 @@ export const ERROR_MESSAGES = {
   dataInvalid: "auth.messages.dataInvalid",
   unauthorizedRequest: "auth.messages.unauthorizedRequest",
   resourceNotFound: "auth.messages.resourceNotFound",
-  networkError: "auth.messages.networkError",
+  networkError: "messages.networkError",
 } as const;

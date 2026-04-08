@@ -24,7 +24,6 @@ import {
   UserHeader,
   BasicInfoCard,
   AccountInfoCard,
-  LoginHistoryTable,
   DangerZoneCard,
   DeleteConfirmationModal,
 } from "@/features/users/detail/components";
@@ -46,14 +45,6 @@ interface User {
   avatar?: string;
 }
 
-interface LoginSession {
-  dateTime: string;
-  ipAddress: string;
-  deviceBrowser: string;
-  location: string;
-  status: "Successful" | "Failed";
-}
-
 const UserDetailPage: React.FC = () => {
   const { t } = useUsersTranslation();
   const { userId } = useParams<{ userId: string }>();
@@ -67,7 +58,6 @@ const UserDetailPage: React.FC = () => {
   const { lock } = useLockUser();
   const { unlock } = useUnlockUser();
   const [user, setUser] = useState<User | null>(null);
-  const [loginHistory, setLoginHistory] = useState<LoginSession[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<{
     type: "success" | "error";
@@ -93,11 +83,6 @@ const UserDetailPage: React.FC = () => {
       const mappedUser = userMapper.toDetailModel(userDetailData);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setUser(mappedUser);
-      const mappedLoginHistory = userMapper.toLoginSessions(
-        userDetailData.loginHistory
-      );
-
-      setLoginHistory(mappedLoginHistory);
 
       setError(null);
     } else if (apiError) {
@@ -300,23 +285,6 @@ const UserDetailPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <BasicInfoCard user={user} />
           <AccountInfoCard user={user} />
-        </div>
-
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow dark:shadow-slate-900/20 border dark:border-slate-700 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <SubsectionTitle className="flex items-center gap-2">
-              {t("sections.loginHistory")}
-            </SubsectionTitle>
-            <button
-              type="button"
-              className="text-brand-primary hover:text-brand-primary/80 bg-transparent border-none cursor-pointer"
-            >
-              <SmallText weight="bold" className="text-brand-primary">
-                {t("sections.viewAllSessions")}
-              </SmallText>
-            </button>
-          </div>
-          <LoginHistoryTable sessions={loginHistory} />
         </div>
 
         {!isViewingOtherAdmin && (
