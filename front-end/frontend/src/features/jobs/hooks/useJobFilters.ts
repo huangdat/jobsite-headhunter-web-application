@@ -46,8 +46,7 @@ export const useJobFilters = (
   // Sync keyword from filters
   useEffect(() => {
     const nextKeyword = filters.keyword ?? "";
-    if (nextKeyword !== keyword) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (nextKeyword !== keyword && !typingTimeoutRef.current) {
       setKeyword(nextKeyword);
     }
   }, [filters.keyword, keyword]);
@@ -155,7 +154,9 @@ export const useJobFilters = (
     }
     typingTimeoutRef.current = window.setTimeout(() => {
       onFilterChange({ ...filters, keyword: value || undefined, page: 1 });
-    }, 400);
+
+      typingTimeoutRef.current = null;
+    }, 200);
   };
 
   const handleExperienceChange = (value: string) => {

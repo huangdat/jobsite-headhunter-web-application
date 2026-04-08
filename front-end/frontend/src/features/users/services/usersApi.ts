@@ -63,15 +63,41 @@ const mapBackendStatus = (backendStatus: string): UserStatus => {
  *
  * Handles:
  * - Status enum conversion (AccountStatus → UserStatus)
- * - Role type casting (ensure UserRole type)
+ * - Role conversion: Backend returns roles (Set<String>), convert to single role string
+ * - Takes first role from Set, or defaults to "CANDIDATE" if empty
  */
-const adaptUserDetail = (backendUser: UserDetail): UserDetail => {
+const adaptUserDetail = (backendUser: any): UserDetail => {
+  // Backend returns roles as Set<String>, extract first one or default
+  let role: UserRole = "CANDIDATE";
+
+  if (
+    backendUser.roles &&
+    Array.isArray(backendUser.roles) &&
+    backendUser.roles.length > 0
+  ) {
+    // roles is an array/set, take the first one
+    const firstRole = backendUser.roles[0];
+    if (
+      ["ADMIN", "HEADHUNTER", "COLLABORATOR", "CANDIDATE"].includes(firstRole)
+    ) {
+      role = firstRole as UserRole;
+    }
+  } else if (backendUser.role) {
+    // Fallback if single role field exists
+    role = backendUser.role as UserRole;
+  }
+
   return {
-    ...backendUser,
-    // Ensure status is properly mapped
+    id: backendUser.id,
+    fullName: backendUser.fullName,
+    email: backendUser.email,
+    phone: backendUser.phone,
+    username: backendUser.username,
+    avatar: backendUser.imageUrl,
+    role,
     status: mapBackendStatus(backendUser.status),
-    // Ensure role is properly typed as UserRole
-    role: backendUser.role as UserRole,
+    createdAt: backendUser.createdAt,
+    loginHistory: backendUser.loginHistory,
   };
 };
 

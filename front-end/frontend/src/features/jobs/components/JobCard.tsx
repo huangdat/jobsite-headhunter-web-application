@@ -5,13 +5,17 @@ import { useQueryClient } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
+import { MapPin } from "lucide-react";
 import { Badge } from "@/shared/ui-primitives/badge";
 import { getSemanticClass } from "@/lib/design-tokens";
 import type { JobSummary } from "../types";
 import { formatSalary, formatDeadlineDate } from "../utils";
 import { getJobDetail } from "../services/jobsApi";
 import { jobKeys } from "@/shared/utils/queryKeys";
-import { SmallText, Caption } from "@/shared/common-blocks/typography/Typography";
+import {
+  SmallText,
+  Caption,
+} from "@/shared/common-blocks/typography/Typography";
 
 interface JobCardProps {
   job: JobSummary & { negotiable?: boolean };
@@ -35,12 +39,11 @@ export function JobCard({ job }: JobCardProps) {
     }
   };
 
-  // P2-7: Prefetch job detail on hover for instant navigation
   const handleMouseEnter = () => {
     queryClient.prefetchQuery({
       queryKey: jobKeys.detail(job.id),
       queryFn: () => getJobDetail(job.id),
-      staleTime: 1000 * 60 * 10, // Match SEMI_STATIC_DATA_CONFIG
+      staleTime: 1000 * 60 * 10,
     });
   };
 
@@ -82,11 +85,13 @@ export function JobCard({ job }: JobCardProps) {
       </div>
       <div className="mt-4 flex flex-wrap gap-3 text-sm text-slate-600 dark:text-slate-400">
         <span
-          className={`rounded-full ${getSemanticClass("success", "bg", true)} px-3 py-1 ${successText} dark:${getSemanticClass("success", "bg", true)}/30 dark:${successText}`}
+          className={`flex items-center gap-1.5 rounded-full ${getSemanticClass("success", "bg", true)} px-3 py-1 ${successText} dark:${getSemanticClass("success", "bg", true)}/30 dark:${successText}`}
+          title="Location"
         >
-          {job.city ?? "Flexible"}
+          <MapPin size={14} />
+          {job.location || job.city}
         </span>
-        <span className="rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800">
+        <span className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800">
           {formatSalary(job)}
         </span>
         {deadlineLabel && (
@@ -108,4 +113,3 @@ export function JobCard({ job }: JobCardProps) {
     </div>
   );
 }
-
