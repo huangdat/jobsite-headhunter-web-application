@@ -251,7 +251,7 @@ export function LoginPage() {
           error,
           t("messages.unableToSignIn")
         );
-        toast.error(message);
+        toast.error(t(message));
       } finally {
         clearOAuthCallbackParams();
         setLoadingProvider(null);
@@ -345,7 +345,7 @@ export function LoginPage() {
               <ErrorState
                 variant="card"
                 title={t("pages.login.signInFailed")}
-                message={generalError}
+                message={t(generalError)}
                 className={`mb-4 ${getSemanticClass("danger", "bg", true)} ${getSemanticClass("danger", "border", true)}`}
               />
             )}

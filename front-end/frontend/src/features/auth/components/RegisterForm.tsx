@@ -347,7 +347,7 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
         error,
         t("messages.failedToRegister") || t("messages.failedToSendOtp")
       );
-      toast.error(errorMessage);
+      toast.error(t(errorMessage));
     }
   };
 
@@ -542,5 +542,3 @@ export function RegisterForm({ role = "candidate" }: RegisterFormProps) {
     </AuthLayout>
   );
 }
-
-

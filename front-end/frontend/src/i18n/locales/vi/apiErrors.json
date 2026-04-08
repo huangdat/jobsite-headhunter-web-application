@@ -1,0 +1,15 @@
+{
+  "accountNotFound": "Không tìm thấy tài khoản với thông tin đã cung cấp",
+  "userNotFound": "Không tìm thấy người dùng",
+  "invalidCredentials": "Tên đăng nhập hoặc email hoặc mật khẩu không hợp lệ",
+  "unauthenticated": "Yêu cầu không được phép",
+  "forbidden": "Không có quyền truy cập tài nguyên này",
+  "emailInvalid": "Địa chỉ email không hợp lệ",
+  "usernameInvalid": "Tên đăng nhập không hợp lệ",
+  "passwordInvalid": "Mật khẩu không đạt yêu cầu bảo mật",
+  "otpInvalid": "Mã OTP không hợp lệ",
+  "otpExpired": "Mã OTP đã hết hạn",
+  "tokenExpired": "Phiên đã hết hạn",
+  "tokenInvalid": "Phiên không hợp lệ",
+  "dataInvalid": "Dữ liệu không hợp lệ"
+}
