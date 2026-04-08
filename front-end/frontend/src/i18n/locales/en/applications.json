@@ -24,7 +24,8 @@
   "common.code": "Code",
 
   "applications.confirm.cancelTitle": "Confirm Withdrawal",
-  "applications.confirm.cancelDescription": "Are you sure you want to withdraw this application? This action cannot be undone.",
+  "applications.confirm.rejectTitle": "Confirm Rejection",
+  "applications.confirm.rejectDescription": "Are you sure you want to reject this application? This action cannot be undone.",
   "applications.success.cancelled": "Application withdrawn successfully",
   "applications.error.noInterviewData": "Interview scheduled, but details are not available. Please contact hiring team.",
   "applications.empty.noInterviewDetails": "Interview details are being updated...",
