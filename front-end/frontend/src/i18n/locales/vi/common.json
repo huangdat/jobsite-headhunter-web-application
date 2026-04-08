@@ -43,5 +43,15 @@
     "noPermissionAccess": "Bạn không có quyền truy cập tính năng phân loại.",
     "sessionExpiredLoginAgain": "Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại.",
     "myJobs": "Công việc của tôi"
+  },
+  "editor": {
+    "bold": "In đậm (Ctrl+B)",
+    "italic": "In nghiêng (Ctrl+I)",
+    "bulletList": "Danh sách dấu đầu dòng",
+    "orderedList": "Danh sách có thứ tự",
+    "heading2": "Tiêu đề 2",
+    "undo": "Hoàn tác",
+    "redo": "Làm lại",
+    "enterText": "Nhập văn bản..."
   }
 }

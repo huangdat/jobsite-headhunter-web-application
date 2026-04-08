@@ -1,6 +1,7 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { forwardRef, useEffect, useRef } from "react";
+import { useAppTranslation } from "@/shared/hooks/useAppTranslation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/shared/ui-primitives/button";
 import {
@@ -17,22 +18,13 @@ import "./RichTextEditor.css";
 interface RichTextEditorProps {
   value: string;
   onChange: (content: string) => void;
-  placeholder?: string;
   disabled?: boolean;
   className?: string;
 }
 
 const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
-  (
-    {
-      value,
-      onChange,
-      placeholder = "Enter text...",
-      disabled = false,
-      className,
-    },
-    ref
-  ) => {
+  ({ value, onChange, disabled = false, className }, ref) => {
+    const { t } = useAppTranslation();
     const contentRef = useRef<string>(value || "");
 
     const editor = useEditor({
@@ -83,7 +75,7 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
               editor.isActive("bold") &&
                 "bg-slate-200 dark:bg-slate-600 text-brand-primary"
             )}
-            title="Bold (Ctrl+B)"
+            title={t("editor.bold")}
           >
             <Bold size={16} />
           </Button>
@@ -101,7 +93,7 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
               editor.isActive("italic") &&
                 "bg-slate-200 dark:bg-slate-600 text-brand-primary"
             )}
-            title="Italic (Ctrl+I)"
+            title={t("editor.italic")}
           >
             <Italic size={16} />
           </Button>
@@ -116,10 +108,11 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
             disabled={disabled}
             className={cn(
               "p-2 h-8 w-8",
+              // eslint-disable-next-line custom/no-hardcoded-strings
               editor.isActive("bulletList") &&
                 "bg-slate-200 dark:bg-slate-600 text-brand-primary"
             )}
-            title="Bullet List"
+            title={t("editor.bulletList")}
           >
             <List size={16} />
           </Button>
@@ -132,10 +125,11 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
             disabled={disabled}
             className={cn(
               "p-2 h-8 w-8",
+              // eslint-disable-next-line custom/no-hardcoded-strings
               editor.isActive("orderedList") &&
                 "bg-slate-200 dark:bg-slate-600 text-brand-primary"
             )}
-            title="Ordered List"
+            title={t("editor.orderedList")}
           >
             <ListOrdered size={16} />
           </Button>
@@ -153,7 +147,7 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
               editor.isActive("heading", { level: 2 }) &&
                 "bg-slate-200 dark:bg-slate-600 text-brand-primary"
             )}
-            title="Heading 2"
+            title={t("editor.heading2")}
           >
             <Heading2 size={16} />
           </Button>
@@ -167,7 +161,7 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
             onClick={() => editor.chain().focus().undo().run()}
             disabled={disabled || !editor.can().undo()}
             className="p-2 h-8 w-8"
-            title="Undo"
+            title={t("editor.undo")}
           >
             <Undo2 size={16} />
           </Button>
@@ -179,7 +173,7 @@ const RichTextEditorComponent = forwardRef<HTMLDivElement, RichTextEditorProps>(
             onClick={() => editor.chain().focus().redo().run()}
             disabled={disabled || !editor.can().redo()}
             className="p-2 h-8 w-8"
-            title="Redo"
+            title={t("editor.redo")}
           >
             <Redo2 size={16} />
           </Button>

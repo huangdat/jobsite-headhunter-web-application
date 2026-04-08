@@ -1,5 +1,6 @@
 import { getSemanticClass } from "@/lib/design-tokens";
 import { useCandidateTranslation } from "@/shared/hooks/useFeatureTranslation";
+import { useAriaTranslation } from "@/shared/hooks/useFeatureTranslation";
 import { Button } from "@/shared/ui-primitives/button";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -61,6 +62,7 @@ export function ProfileForm({
   onSave,
 }: ProfileFormProps) {
   const { t } = useCandidateTranslation();
+  const { t: tAria } = useAriaTranslation();
   const [isUploading, setIsUploading] = useState(false);
   const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
 
@@ -178,7 +180,7 @@ export function ProfileForm({
               <div className="mb-4 flex justify-center">
                 <img
                   src={avatarPreviewUrl}
-                  alt="Avatar"
+                  alt={t("avatar.section.title")}
                   className="w-24 h-24 rounded-xl object-cover border border-slate-200"
                 />
               </div>
@@ -191,7 +193,7 @@ export function ProfileForm({
             )}
 
             <input
-              aria-label="Upload avatar"
+              aria-label={tAria("uploadAvatar")}
               id="profile-avatar-input"
               type="file"
               accept="image/*"
