@@ -1,12 +1,14 @@
 import { ParticleBackground } from "./ParticleBackground";
-import { SearchBar } from "./SearchBar";
 import { useHomeTranslation } from "@/shared/hooks";
-import { Display, BodyText } from "@/shared/common-blocks/typography/Typography";
+import {
+  Display,
+  BodyText,
+} from "@/shared/common-blocks/typography/Typography";
 
 export function HeroSection() {
   const { t } = useHomeTranslation();
   return (
-    <section className="relative py-50 bg-linear-to-br from-slate-900 to-lime-100 overflow-hidden">
+    <section className="relative py-70 bg-linear-to-br from-slate-900 to-lime-100 overflow-hidden">
       {/* Gradient background */}
       <div className="absolute inset-0 bg-linear-to-br from-slate-900 to-lime-100 -z-20" />
 
@@ -23,8 +25,6 @@ export function HeroSection() {
         <BodyText className="mt-6 max-w-2xl mx-auto">
           {t("hero.description")}
         </BodyText>
-
-        <SearchBar />
       </div>
       {/* Wave Divider */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
@@ -42,4 +42,3 @@ export function HeroSection() {
     </section>
   );
 }
-
