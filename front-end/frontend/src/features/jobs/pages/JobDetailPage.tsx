@@ -155,9 +155,11 @@ export function JobDetailPage() {
     { label: t("detail.deadline"), value: deadlineLabel },
   ];
 
+  const defaultWorkingTime = `${t("defaults.workingTime") || "Mon - Fri"} (09:00 - 17:00)`;
+
   const generalInfo = [
     { label: t("detail.rank"), value: job.rankLevel },
-    { label: t("detail.workingHours"), value: job.workingTime },
+    { label: t("detail.workingHours"), value: job.workingTime || defaultWorkingTime },
     { label: t("detail.status"), value: job.status },
     {
       label: t("detail.postedOn"),
