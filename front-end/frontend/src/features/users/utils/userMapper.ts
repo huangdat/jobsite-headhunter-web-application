@@ -28,6 +28,7 @@ interface LoginSession {
 export const userMapper = {
   /**
    * Map UserDetail to UserTableRow for table display
+   * Note: Backend returns roles as Set<String>, we take the first role or default to 'CANDIDATE'
    */
   toTableRow: (user: UserDetail): UserTableRow => {
     return {
@@ -36,9 +37,9 @@ export const userMapper = {
       email: user.email,
       username: user.username,
       avatar: user.avatar,
-      role: user.role,
+      role: (user.role || "CANDIDATE") as string,
       status: user.status,
-      company: user.company || "",
+      company: "",
     };
   },
 

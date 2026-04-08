@@ -2,7 +2,11 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/shared/ui-primitives/button";
 import { Input } from "@/shared/ui-primitives/input";
-import { FormField, AuthLayout, SocialLoginButtons } from "@/shared/common-blocks";
+import {
+  FormField,
+  AuthLayout,
+  SocialLoginButtons,
+} from "@/shared/common-blocks";
 import { useAuthTranslation } from "@/shared/hooks";
 import { getSemanticClass } from "@/lib/design-tokens";
 import { AnimatedCheckbox } from "@/features/auth/components/AnimatedCheckbox";
@@ -450,5 +454,3 @@ export function LoginPage() {
     </AuthLayout>
   );
 }
-
-

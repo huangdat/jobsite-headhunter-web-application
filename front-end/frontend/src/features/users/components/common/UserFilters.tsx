@@ -60,7 +60,7 @@ export const UserFilters: React.FC<UserFiltersProps> = ({
           <option value="">{t("filters.filterAllRoles")}</option>
           {USERS_LIST_ROLE_VALUES.map((role) => (
             <option key={role} value={role}>
-              {t(`roles.${role.toLowerCase()}`)}
+              {t(`roles.${role}`)}
             </option>
           ))}
         </select>
@@ -99,4 +99,3 @@ export const UserFilters: React.FC<UserFiltersProps> = ({
     </div>
   );
 };
-

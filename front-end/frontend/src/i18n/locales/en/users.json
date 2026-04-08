@@ -39,6 +39,7 @@
     "rowsPerPage": "Rows per page:",
     "paginationInfo": "Showing {{startItem}}-{{endItem}} of {{totalItems}} users"
   },
+
   "user": {
     "list": {
       "empty": {
@@ -335,9 +336,11 @@
       "candidate": "Job Seekers"
     },
     "statuses": {
+      "ACTIVE": "Active",
       "pending": "Pending"
     },
     "statusSubtitles": {
+      "ACTIVE": "User account is active",
       "pending": "Waiting for email verification"
     },
     "unknown": "Unknown",

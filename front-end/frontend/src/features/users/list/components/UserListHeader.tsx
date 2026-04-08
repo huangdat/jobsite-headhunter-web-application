@@ -47,26 +47,6 @@ export const UserListHeader: React.FC<UserListHeaderProps> = ({
             </span>
             <span className="absolute top-2 right-2 size-2 bg-brand-primary rounded-full border-2 border-white dark:border-background-dark"></span>
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex items-center gap-2 px-3 py-1.5"
-          >
-            <span className="material-symbols-outlined text-sm">help</span>
-            <span className="text-sm font-medium">
-              {t("list.documentation")}
-            </span>
-          </Button>
-          <div className="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
-          <Button
-            onClick={onAddUserClick}
-            className="bg-brand-primary hover:bg-brand-hover text-white px-4 py-2 flex items-center gap-2 text-sm font-bold"
-          >
-            <span className="material-symbols-outlined text-lg">
-              person_add
-            </span>
-            {t("list.addUserButton")}
-          </Button>
         </div>
       </header>
 
@@ -105,22 +85,6 @@ export const UserListHeader: React.FC<UserListHeaderProps> = ({
               {/* RENDER FILTER PANEL Ở ĐÂY */}
               {filterPanel}
             </div>
-
-            <div className="h-8 w-px bg-slate-200 dark:bg-slate-800"></div>
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
-              <span>{t("list.groupByLabel")}</span>
-              <select
-                onChange={(e) => onGroupByChange?.(e.target.value)}
-                className="bg-white dark:bg-slate-900 border-none rounded-lg text-sm focus:ring-0 cursor-pointer"
-                title={t("list.groupByLabel")}
-                aria-label={t("list.groupByLabel")}
-              >
-                <option>{t("list.groupByNone")}</option>
-                <option>{t("list.groupByRole")}</option>
-                <option>{t("list.groupByStatus")}</option>
-                <option>{t("list.groupByCompany")}</option>
-              </select>
-            </div>
           </div>
         </div>
 
@@ -147,4 +111,3 @@ export const UserListHeader: React.FC<UserListHeaderProps> = ({
     </>
   );
 };
-

@@ -37,6 +37,7 @@
     "unknownError": "Unknown error occurred"
   },
   "messages": {
+    "accountNotFound": "Account not found with the provided credentials",
     "signedInSuccess": "Signed in successfully.",
     "failedToLoadCommission": "Failed to load commission data",
     "failedToSaveProfile": "Failed to save profile",

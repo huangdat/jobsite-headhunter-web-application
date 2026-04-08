@@ -41,13 +41,13 @@ public class AppStartConfig {
     ApplicationRunner appInitRunner(AccountRepo accountRepo) {
         return args -> {
             // Create an admin account if it has not existed
-            if (accountRepo.findByUsername("admin").isEmpty()) {
+            if (accountRepo.findByUsername("admin123").isEmpty()) {
 
                 HashSet roles = new HashSet();
                 roles.add("ADMIN");
 
                 Account admin = Account.builder()
-                        .username("admin")
+                        .username("admin123")
                         .email("datnh.work@gmail.com")
                         .password(passwordEncoder.encode("admin123"))
                         .fullName("Admin")
